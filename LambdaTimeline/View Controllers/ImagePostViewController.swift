@@ -114,6 +114,14 @@ class ImagePostViewController: ShiftableViewController {
         updateImage()
     }
     
+    @IBAction func hueSlider(_ sender: UISlider) {
+        updateImage()
+    }
+    
+    @IBAction func blurSlider(_ sender: UISlider) {
+        updateImage()
+    }
+    
     // MARK: - Private Functions
     private func updateImage() {
         guard let originalImage = originalImage else { return }
@@ -126,7 +134,14 @@ class ImagePostViewController: ShiftableViewController {
         
         ciColorFilter.setValue(ciImage, forKey: kCIInputImageKey)
         ciColorFilter.setValue(brightnessSlider.value, forKey: kCIInputBrightnessKey)
-        gammaFilter.setValue(ciColorFilter.outputImage, forKey: kCIInputImageKey)
+        
+        hueFilter.setValue(ciColorFilter.outputImage, forKey: kCIInputImageKey)
+        hueFilter.setValue(hueSlider.value, forKey: kCIInputAngleKey)
+        
+        blurFilter.setValue(hueFilter.outputImage, forKey: kCIInputImageKey)
+        blurFilter.setValue(blurSlider.value, forKey: kCIInputRadiusKey)
+        
+        gammaFilter.setValue(blurFilter.outputImage, forKey: kCIInputImageKey)
         gammaFilter.setValue(gammaSlider.value, forKey: "inputPower")
         
         if (noiseReductionToggle.isOn) {
@@ -154,14 +169,19 @@ class ImagePostViewController: ShiftableViewController {
             updateImage()
         }
     }
+    // MARK: - Filters
     private let ciColorFilter = CIFilter(name: "CIColorControls")!
     private let gammaFilter = CIFilter(name: "CIGammaAdjust")!
     private let noiseReducingFilter = CIFilter(name: "CIMedianFilter")!
+    private let hueFilter = CIFilter(name: "CIHueAdjust")!
+    private let blurFilter = CIFilter(name: "CIGaussianBlur")!
     private let context = CIContext(options: nil)
     
     @IBOutlet var noiseReductionToggle: UISwitch!
     @IBOutlet var gammaSlider: UISlider!
     @IBOutlet var brightnessSlider: UISlider!
+    @IBOutlet var hueSlider: UISlider!
+    @IBOutlet var blurSlider: UISlider!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
@@ -178,6 +198,10 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         originalImage = image
         gammaSlider.isEnabled = true
         brightnessSlider.isEnabled = true
+        hueSlider.isEnabled = true
+        blurSlider.isEnabled = true
+        noiseReductionToggle.isEnabled = true
+        
         setImageViewHeight(with: image.ratio)
     }
     
