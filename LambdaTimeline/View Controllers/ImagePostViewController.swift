@@ -106,6 +106,10 @@ class ImagePostViewController: ShiftableViewController {
         updateImage()
     }
     
+    @IBAction func changeGamma(_ sender: Any) {
+        updateImage()
+    }
+    
     // MARK: - Private Functions
     private func updateImage() {
         guard let originalImage = originalImage else { return }
@@ -118,8 +122,10 @@ class ImagePostViewController: ShiftableViewController {
         
         ciColorFilter.setValue(ciImage, forKey: kCIInputImageKey)
         ciColorFilter.setValue(brightnessSlider.value, forKey: kCIInputBrightnessKey)
+        gammaFilter.setValue(ciColorFilter.outputImage, forKey: kCIInputImageKey)
+        gammaFilter.setValue(gammaSlider.value, forKey: "inputPower")
         
-        guard let outputCIImage = ciColorFilter.outputImage,
+        guard let outputCIImage = gammaFilter.outputImage,
             let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else {
                 return nil
         }
@@ -137,8 +143,10 @@ class ImagePostViewController: ShiftableViewController {
         }
     }
     private let ciColorFilter = CIFilter(name: "CIColorControls")!
+    private let gammaFilter = CIFilter(name: "CIGammaAdjust")!
     private let context = CIContext(options: nil)
 
+    @IBOutlet var gammaSlider: UISlider!
     @IBOutlet var brightnessSlider: UISlider!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
@@ -153,7 +161,6 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         picker.dismiss(animated: true, completion: nil)
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
-//        imageView.image = image
         originalImage = image
         setImageViewHeight(with: image.ratio)
     }
