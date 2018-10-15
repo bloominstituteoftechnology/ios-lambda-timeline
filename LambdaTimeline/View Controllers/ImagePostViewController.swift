@@ -160,8 +160,10 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         chooseImageButton.setTitle("", for: [])
         picker.dismiss(animated: true, completion: nil)
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        
+
         originalImage = image
+        gammaSlider.isEnabled = true
+        brightnessSlider.isEnabled = true
         setImageViewHeight(with: image.ratio)
     }
 
