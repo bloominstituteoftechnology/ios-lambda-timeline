@@ -10,53 +10,53 @@ import UIKit
 import Photos
 
 class ImagePostViewController: ShiftableViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setImageViewHeight(with: 1.0)
         updateViews()
     }
-
+    
     func updateViews() {
         guard let imageData = imageData,
             let image = UIImage(data: imageData) else {
                 title = "New Post"
                 return
         }
-
+        
         title = post?.title
         setImageViewHeight(with: image.ratio)
         imageView.image = image
         chooseImageButton.setTitle("", for: [])
     }
-
+    
     private func presentImagePickerController() {
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
             presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
             return
         }
-
+        
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true, completion: nil)
     }
-
+    
     @IBAction func createPost(_ sender: Any) {
-
+        
         view.endEditing(true)
         
         guard let originalImage = originalImage,
             let image = self.image(byFiltering: originalImage) else {
                 return
         }
-
+        
         guard let imageData = image.jpegData(compressionQuality: 0.1),
             let title = titleTextField.text, title != "" else {
                 presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
                 return
         }
-
+        
         postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
             guard success else {
                 DispatchQueue.main.async {
@@ -69,11 +69,11 @@ class ImagePostViewController: ShiftableViewController {
             }
         }
     }
-
+    
     @IBAction func chooseImage(_ sender: Any) {
-
+        
         let authorizationStatus = PHPhotoLibrary.authorizationStatus()
-
+        
         switch authorizationStatus {
         case .authorized:
             presentImagePickerController()
@@ -84,19 +84,19 @@ class ImagePostViewController: ShiftableViewController {
                     self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
                     return
                 }
-
+                
                 self.presentImagePickerController()
             }
-
+            
         case .denied:
             self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
         case .restricted:
             self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
-
+            
         }
         presentImagePickerController()
     }
-
+    
     func setImageViewHeight(with aspectRatio: CGFloat) {
         imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
         view.layoutSubviews()
@@ -106,7 +106,11 @@ class ImagePostViewController: ShiftableViewController {
         updateImage()
     }
     
-    @IBAction func changeGamma(_ sender: Any) {
+    @IBAction func changeGamma(_ sender: UISlider) {
+        updateImage()
+    }
+    
+    @IBAction func reduceNoise(_ sender: UISwitch) {
         updateImage()
     }
     
@@ -125,14 +129,22 @@ class ImagePostViewController: ShiftableViewController {
         gammaFilter.setValue(ciColorFilter.outputImage, forKey: kCIInputImageKey)
         gammaFilter.setValue(gammaSlider.value, forKey: "inputPower")
         
+        if (noiseReductionToggle.isOn) {
+            noiseReducingFilter.setValue(gammaFilter.outputImage, forKey: kCIInputImageKey)
+            guard let outputCIImage = noiseReducingFilter.outputImage,
+                let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else {
+                    return nil
+            }
+            return UIImage(cgImage: outputCGImage)
+        }
+        
         guard let outputCIImage = gammaFilter.outputImage,
             let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else {
                 return nil
         }
-        
         return UIImage(cgImage: outputCGImage)
     }
-
+    
     // MARK: - Properties
     var postController: PostController!
     var post: Post?
@@ -144,8 +156,10 @@ class ImagePostViewController: ShiftableViewController {
     }
     private let ciColorFilter = CIFilter(name: "CIColorControls")!
     private let gammaFilter = CIFilter(name: "CIGammaAdjust")!
+    private let noiseReducingFilter = CIFilter(name: "CIMedianFilter")!
     private let context = CIContext(options: nil)
-
+    
+    @IBOutlet var noiseReductionToggle: UISwitch!
     @IBOutlet var gammaSlider: UISlider!
     @IBOutlet var brightnessSlider: UISlider!
     @IBOutlet weak var imageView: UIImageView!
@@ -160,13 +174,13 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         chooseImageButton.setTitle("", for: [])
         picker.dismiss(animated: true, completion: nil)
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-
+        
         originalImage = image
         gammaSlider.isEnabled = true
         brightnessSlider.isEnabled = true
         setImageViewHeight(with: image.ratio)
     }
-
+    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
