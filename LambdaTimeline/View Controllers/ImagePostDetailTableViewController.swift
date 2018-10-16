@@ -31,31 +31,59 @@ class ImagePostDetailTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     @IBAction func createComment(_ sender: Any) {
-        
-        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
-        
-        var commentTextField: UITextField?
-        
-        alert.addTextField { (textField) in
-            textField.placeholder = "Comment:"
-            commentTextField = textField
-        }
-        
-        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
-            
-            guard let commentText = commentTextField?.text else { return }
-            
-            self.postController.addComment(with: commentText, to: &self.post!)
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-        
+        let alert = UIAlertController(title: "Add a comment", message: "Choose a comment type below", preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        alert.addAction(addCommentAction)
+        let addTextCommentAction = UIAlertAction(title: "Add Text Comment", style: .default) { (_) in
+            var commentTextField: UITextField?
+            
+            let textAlert = UIAlertController(title: "Add a text comment", message: "Enter your text comment", preferredStyle: .alert)
+            let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
+    
+                guard let commentText = commentTextField?.text else { return }
+    
+                self.postController.addComment(with: commentText, to: &self.post!)
+    
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+            
+            textAlert.addTextField { (textField) in
+                textField.placeholder = "Comment"
+                commentTextField = textField
+            }
+            
+            textAlert.addAction(cancelAction)
+            textAlert.addAction(addCommentAction)
+            
+            self.present(textAlert, animated: true, completion: nil)
+        }
+        
+        let addAudioCommentAction = UIAlertAction(title: "Record Comment", style: .default) { (_) in
+            let recordAlert = UIAlertController(title: "Record a comment", message: "Click record to begin recording", preferredStyle: .alert)
+            let addRecordedAction = UIAlertAction(title: "Record", style: .default) { (_) in
+                
+                let recordingAlert = UIAlertController(title: "Recording...", message: "", preferredStyle: .alert)
+                
+                // Begin recording                
+                let doneRecordingAction = UIAlertAction(title: "Done Recording", style: .default) { (_) in
+                    // Stop recording
+                }
+                
+                recordingAlert.addAction(doneRecordingAction)
+                
+                self.present(recordingAlert, animated: true, completion: nil)
+            }
+            
+            recordAlert.addAction(cancelAction)
+            recordAlert.addAction(addRecordedAction)
+            self.present(recordAlert, animated: true, completion: nil)
+        }
+        
         alert.addAction(cancelAction)
+        alert.addAction(addTextCommentAction)
+        alert.addAction(addAudioCommentAction)
         
         present(alert, animated: true, completion: nil)
     }
