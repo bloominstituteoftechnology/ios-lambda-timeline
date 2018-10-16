@@ -7,9 +7,9 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ImagePostDetailTableViewController: UITableViewController {
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
@@ -28,57 +28,62 @@ class ImagePostDetailTableViewController: UITableViewController {
         authorLabel.text = post.author.displayName
     }
     
-    // MARK: - Table view data source
+    private func presentAddTextCommentDialog() {
+        var commentTextField: UITextField?
+        
+        let textAlert = UIAlertController(title: "Add a text comment", message: "Enter your text comment", preferredStyle: .alert)
+        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
+            
+            guard let commentText = commentTextField?.text else { return }
+            
+            self.postController.addComment(with: commentText, to: &self.post!)
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+        
+        textAlert.addTextField { (textField) in
+            textField.placeholder = "Comment"
+            commentTextField = textField
+        }
+        
+        textAlert.addAction(cancelAction)
+        textAlert.addAction(addCommentAction)
+        
+        self.present(textAlert, animated: true, completion: nil)
+    }
+    private func presentRecordCommentDialog() {
+        let recordAlert = UIAlertController(title: "Record a comment", message: "Click record to begin recording", preferredStyle: .alert)
+        
+        let addRecordedAction = UIAlertAction(title: "Record", style: .default) { (_) in
+            
+            let recordingAlert = UIAlertController(title: "Recording...", message: "", preferredStyle: .alert)
+            
+            // Begin recording
+            let doneRecordingAction = UIAlertAction(title: "Done Recording", style: .default) { (_) in
+                // Stop recording
+            }
+            
+            recordingAlert.addAction(doneRecordingAction)
+            
+            self.present(recordingAlert, animated: true, completion: nil)
+        }
+        
+        recordAlert.addAction(cancelAction)
+        recordAlert.addAction(addRecordedAction)
+        self.present(recordAlert, animated: true, completion: nil)
+    }
     
     @IBAction func createComment(_ sender: Any) {
         let alert = UIAlertController(title: "Add a comment", message: "Choose a comment type below", preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         let addTextCommentAction = UIAlertAction(title: "Add Text Comment", style: .default) { (_) in
-            var commentTextField: UITextField?
-            
-            let textAlert = UIAlertController(title: "Add a text comment", message: "Enter your text comment", preferredStyle: .alert)
-            let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
-    
-                guard let commentText = commentTextField?.text else { return }
-    
-                self.postController.addComment(with: commentText, to: &self.post!)
-    
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
-            
-            textAlert.addTextField { (textField) in
-                textField.placeholder = "Comment"
-                commentTextField = textField
-            }
-            
-            textAlert.addAction(cancelAction)
-            textAlert.addAction(addCommentAction)
-            
-            self.present(textAlert, animated: true, completion: nil)
+            self.presentAddTextCommentDialog()
         }
         
         let addAudioCommentAction = UIAlertAction(title: "Record Comment", style: .default) { (_) in
-            let recordAlert = UIAlertController(title: "Record a comment", message: "Click record to begin recording", preferredStyle: .alert)
-            let addRecordedAction = UIAlertAction(title: "Record", style: .default) { (_) in
-                
-                let recordingAlert = UIAlertController(title: "Recording...", message: "", preferredStyle: .alert)
-                
-                // Begin recording                
-                let doneRecordingAction = UIAlertAction(title: "Done Recording", style: .default) { (_) in
-                    // Stop recording
-                }
-                
-                recordingAlert.addAction(doneRecordingAction)
-                
-                self.present(recordingAlert, animated: true, completion: nil)
-            }
-            
-            recordAlert.addAction(cancelAction)
-            recordAlert.addAction(addRecordedAction)
-            self.present(recordAlert, animated: true, completion: nil)
+           self.presentRecordCommentDialog()
         }
         
         alert.addAction(cancelAction)
@@ -88,6 +93,7 @@ class ImagePostDetailTableViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (post?.comments.count ?? 0) - 1
     }
@@ -106,6 +112,7 @@ class ImagePostDetailTableViewController: UITableViewController {
     var post: Post!
     var postController: PostController!
     var imageData: Data?
+    private let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
