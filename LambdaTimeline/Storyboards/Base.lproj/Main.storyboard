@@ -422,6 +422,40 @@
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="RecordingCell" id="4kh-3L-fVB" customClass="RecordingTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="177" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4kh-3L-fVB" id="fcw-hd-Dqp">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YoR-tp-sk8">
+                                            <rect key="frame" x="16" y="11" width="52" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fnj-bY-Zbj">
+                                            <rect key="frame" x="321" y="6" width="30" height="30"/>
+                                            <state key="normal" title="Play"/>
+                                            <connections>
+                                                <action selector="playRecordingButtonTapped:" destination="4kh-3L-fVB" eventType="touchUpInside" id="EnG-aS-QIo"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="YoR-tp-sk8" firstAttribute="leading" secondItem="fcw-hd-Dqp" secondAttribute="leadingMargin" id="9sY-7d-bRh"/>
+                                        <constraint firstItem="YoR-tp-sk8" firstAttribute="top" secondItem="fcw-hd-Dqp" secondAttribute="topMargin" id="DFx-3J-RYF"/>
+                                        <constraint firstAttribute="trailing" secondItem="Fnj-bY-Zbj" secondAttribute="trailing" constant="24" id="LhQ-Z9-gjY"/>
+                                        <constraint firstItem="Fnj-bY-Zbj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="YoR-tp-sk8" secondAttribute="trailing" constant="8" symbolic="YES" id="SW6-Da-kNX"/>
+                                        <constraint firstItem="Fnj-bY-Zbj" firstAttribute="top" secondItem="fcw-hd-Dqp" secondAttribute="top" constant="6" id="SkW-np-q67"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="authorLabel" destination="YoR-tp-sk8" id="aXu-jm-GcZ"/>
+                                    <outlet property="playButton" destination="Fnj-bY-Zbj" id="toq-c1-9Q5"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="OyM-8q-Icp" id="hEW-Hv-MJ8"/>

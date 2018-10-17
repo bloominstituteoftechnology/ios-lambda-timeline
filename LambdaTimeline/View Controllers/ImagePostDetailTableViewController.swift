@@ -57,10 +57,9 @@ class ImagePostDetailTableViewController: UITableViewController {
         let recordAlert = UIAlertController(title: "Record a comment", message: "Click record to begin recording", preferredStyle: .alert)
         
         let addRecordedAction = UIAlertAction(title: "Record", style: .default) { (_) in
-            
-            let recordingAlert = UIAlertController(title: "Recording...", message: "", preferredStyle: .alert)
-            
             // Begin recording
+            
+            let recordingAlert = UIAlertController(title: "Recording...", message: "", preferredStyle: .alert)            
             let doneRecordingAction = UIAlertAction(title: "Done Recording", style: .default) { (_) in
                 // Stop recording
             }

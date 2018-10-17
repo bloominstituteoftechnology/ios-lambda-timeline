@@ -20,7 +20,7 @@ struct Post {
         self.ratio = ratio
         self.mediaType = .image
         self.author = author
-        self.comments = [Comment(text: title, author: author)]
+        self.comments = [Comment(text: title, author: author, audioURL: nil)]
         self.timestamp = timestamp
     }
     
