@@ -10,8 +10,6 @@ Today you will be adding audio comments.
 
 Create a new branch in the repository called `audioComments` and work off of it from where you left off yesterday.
 
-**As you go through the instructions, you are welcome to change the model objects to classes if you wish. In this project it may make the project a bit less complicated.**
-
 You're welcome to fulfill these instructions however you want. If you'd like suggestions on how to implement something, open the disclosure triangle and there are some suggestions for most of the instructions.
 
 1. Create UI that allows the user to create an audio comment. The UI should allow the user to record, stop, cancel, and send the recording.
