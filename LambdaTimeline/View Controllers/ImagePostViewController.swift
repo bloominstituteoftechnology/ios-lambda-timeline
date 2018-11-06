@@ -112,15 +112,36 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
+    // MARK: - Properties
+    
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    
+    private var originalImage: UIImage? {
+        didSet {
+            updateImage()
+        }
+    }
+    
+    private let vibranceFilter = CIFilter(name: "CIVibrance")
+    private let sepiaToneFilter = CIFilter(name: "CISepiaTone")
+    private let posterizeFilter = CIFilter(name: "CIColorPosterize")
+    
+    private let context = CIContext(options: nil)
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    @IBOutlet weak var vibranceSlider: UISlider!
+    @IBOutlet weak var sepiaToneSlider: UISlider!
+    @IBOutlet weak var posterizeSlider: UISlider!
+
+    
+    
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -136,9 +157,53 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         imageView.image = image
         
         setImageViewHeight(with: image.ratio)
+        
+        originalImage = image
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+}
+
+extension ImagePostViewController {
+    
+    // MARK: - Filtering
+    
+    @IBAction func changeVibranceSlider(_ sender: UISlider) {
+        updateImage()
+    }
+    
+    @IBAction func changeSepiaToneSlider(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func changePosterizeSlider(_ sender: Any) {
+        updateImage()
+    }
+    
+    private func updateImage() {
+        guard let originalImage = originalImage else { return }
+        imageView.image = image(byFiltering: originalImage)
+        
+    }
+    
+    func image(byFiltering image: UIImage) -> UIImage? {
+        
+        guard let cgImage = image.cgImage else { return image }
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        vibranceFilter?.setValue(ciImage, forKey: kCIInputImageKey)
+        vibranceFilter?.setValue(vibranceSlider.value, forKey: kCIInputAmountKey)
+        sepiaToneFilter?.setValue(vibranceFilter?.outputImage, forKey: kCIInputImageKey)
+        sepiaToneFilter?.setValue(sepiaToneSlider.value, forKey: kCIInputIntensityKey)
+        posterizeFilter?.setValue(sepiaToneFilter?.outputImage, forKey: kCIInputImageKey)
+        posterizeFilter?.setValue(posterizeSlider.value, forKey: "inputLevels")
+        
+        guard let outputCIImage = posterizeFilter?.outputImage,
+            let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return nil }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+    
 }
