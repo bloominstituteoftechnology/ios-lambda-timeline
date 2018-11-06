@@ -112,15 +112,30 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
+    // MARK: - Properties
+    
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    
+    private var originalImage: UIImage? {
+        didSet {
+            updateImage()
+        }
+    }
+    
+    private let filter = CIFilter(name: "CIVibrance")
+    private let context = CIContext(options: nil)
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    @IBOutlet weak var adjustImageSlider: UISlider!
+    @IBOutlet weak var filterLabel: UILabel!
+    
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -136,9 +151,41 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         imageView.image = image
         
         setImageViewHeight(with: image.ratio)
+        
+        originalImage = image
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+}
+
+extension ImagePostViewController {
+    
+    // MARK: - Filtering
+    
+    @IBAction func changeFilterSlider(_ sender: UISlider) {
+        updateImage()
+    }
+    
+    private func updateImage() {
+        guard let originalImage = originalImage else { return }
+        imageView.image = image(byFiltering: originalImage)
+        
+    }
+    
+    func image(byFiltering image: UIImage) -> UIImage? {
+        
+        guard let cgImage = image.cgImage else { return image }
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        filter?.setValue(ciImage, forKey: kCIInputImageKey)
+        filter?.setValue(adjustImageSlider.value, forKey: kCIInputAmountKey)
+        
+        guard let outputCIImage = filter?.outputImage,
+            let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return nil }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+    
 }
