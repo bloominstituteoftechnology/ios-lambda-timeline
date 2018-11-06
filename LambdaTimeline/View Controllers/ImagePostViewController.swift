@@ -124,7 +124,10 @@ class ImagePostViewController: ShiftableViewController {
         }
     }
     
-    private let filter = CIFilter(name: "CIVibrance")
+    private let vibranceFilter = CIFilter(name: "CIVibrance")
+    private let sepiaToneFilter = CIFilter(name: "CISepiaTone")
+    private let posterizeFilter = CIFilter(name: "CIColorPosterize")
+    
     private let context = CIContext(options: nil)
     
     @IBOutlet weak var imageView: UIImageView!
@@ -133,8 +136,11 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
     
-    @IBOutlet weak var adjustImageSlider: UISlider!
-    @IBOutlet weak var filterLabel: UILabel!
+    @IBOutlet weak var vibranceSlider: UISlider!
+    @IBOutlet weak var sepiaToneSlider: UISlider!
+    @IBOutlet weak var posterizeSlider: UISlider!
+
+    
     
 }
 
@@ -164,7 +170,15 @@ extension ImagePostViewController {
     
     // MARK: - Filtering
     
-    @IBAction func changeFilterSlider(_ sender: UISlider) {
+    @IBAction func changeVibranceSlider(_ sender: UISlider) {
+        updateImage()
+    }
+    
+    @IBAction func changeSepiaToneSlider(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func changePosterizeSlider(_ sender: Any) {
         updateImage()
     }
     
@@ -179,10 +193,14 @@ extension ImagePostViewController {
         guard let cgImage = image.cgImage else { return image }
         
         let ciImage = CIImage(cgImage: cgImage)
-        filter?.setValue(ciImage, forKey: kCIInputImageKey)
-        filter?.setValue(adjustImageSlider.value, forKey: kCIInputAmountKey)
+        vibranceFilter?.setValue(ciImage, forKey: kCIInputImageKey)
+        vibranceFilter?.setValue(vibranceSlider.value, forKey: kCIInputAmountKey)
+        sepiaToneFilter?.setValue(vibranceFilter?.outputImage, forKey: kCIInputImageKey)
+        sepiaToneFilter?.setValue(sepiaToneSlider.value, forKey: kCIInputIntensityKey)
+        posterizeFilter?.setValue(sepiaToneFilter?.outputImage, forKey: kCIInputImageKey)
+        posterizeFilter?.setValue(posterizeSlider.value, forKey: "inputLevels")
         
-        guard let outputCIImage = filter?.outputImage,
+        guard let outputCIImage = posterizeFilter?.outputImage,
             let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return nil }
         
         return UIImage(cgImage: outputCGImage)
