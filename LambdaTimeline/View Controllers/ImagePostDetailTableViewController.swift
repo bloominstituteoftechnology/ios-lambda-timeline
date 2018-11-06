@@ -52,9 +52,14 @@ class ImagePostDetailTableViewController: UITableViewController {
             }
         }
         
+        let addAudioCommentAction = UIAlertAction(title: "Add Audio", style: .default) { (_) in
+            print("Audio Comment Selected")
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(addCommentAction)
+        alert.addAction(addAudioCommentAction)
         alert.addAction(cancelAction)
         
         present(alert, animated: true, completion: nil)
