@@ -409,13 +409,38 @@
                     <connections>
                         <outlet property="authorLabel" destination="uQC-8y-kuu" id="OBX-uv-64E"/>
                         <outlet property="imageView" destination="Q0L-w5-qUw" id="0v7-ZB-mgi"/>
-                        <outlet property="imageViewAspectRatioConstraint" destination="y1B-iX-x3e" id="wIt-kh-Tzd"/>
+                        <outlet property="imageViewAspectRatioConstraint" destination="NDD-kD-8kt" id="yn8-ud-8LE"/>
+                        <outlet property="recordButton" destination="hCO-Vu-1V0" id="dNA-ST-cSF"/>
+                        <outlet property="recordPopOver" destination="NDD-kD-8kt" id="L9g-U8-l8O"/>
                         <outlet property="titleLabel" destination="jyy-BX-c2c" id="UEd-xO-ipC"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdL-Y3-4ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="NDD-kD-8kt">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hCO-Vu-1V0">
+                            <rect key="frame" x="34" y="46.666666666666657" width="172" height="45"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="27"/>
+                            <state key="normal" title="Tap to Record">
+                                <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="createComment:" destination="OyM-8q-Icp" eventType="touchUpInside" id="aSC-U5-0ld"/>
+                                <action selector="recordButton:" destination="OyM-8q-Icp" eventType="touchUpInside" id="Y9I-4w-ltF"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="hCO-Vu-1V0" firstAttribute="centerY" secondItem="pPJ-Mb-v2g" secondAttribute="centerY" id="3xW-M0-JZ2"/>
+                        <constraint firstItem="hCO-Vu-1V0" firstAttribute="centerX" secondItem="pPJ-Mb-v2g" secondAttribute="centerX" id="4eP-Do-1Ff"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="pPJ-Mb-v2g"/>
+                </view>
             </objects>
-            <point key="canvasLocation" x="1968.8" y="472.71364317841085"/>
+            <point key="canvasLocation" x="1969" y="587"/>
         </scene>
     </scenes>
 </document>
