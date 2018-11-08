@@ -98,6 +98,7 @@
                     <connections>
                         <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="jaI-fq-Woc"/>
                         <segue destination="OyM-8q-Icp" kind="show" identifier="ViewImagePost" id="hhs-es-AdQ"/>
+                        <segue destination="Owf-4h-3d6" kind="show" identifier="AddVideoPost" id="aXt-12-eFb"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -259,7 +260,53 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXa-A2-VJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1968.8" y="-195.6521739130435"/>
+            <point key="canvasLocation" x="1969" y="-252"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="XSJ-0c-uAx">
+            <objects>
+                <viewController id="Owf-4h-3d6" customClass="CameraViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sG2-gg-Kax">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KxI-3M-H5Q" customClass="CameraPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="88" width="375" height="690"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L2R-I0-MnV">
+                                        <rect key="frame" x="162.66666666666666" y="590" width="50" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="50" id="fhU-by-b8v"/>
+                                            <constraint firstAttribute="height" constant="50" id="kgW-ht-owZ"/>
+                                        </constraints>
+                                        <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="Record"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="L2R-I0-MnV" secondAttribute="bottom" constant="50" id="LDK-f5-2Rq"/>
+                                    <constraint firstItem="L2R-I0-MnV" firstAttribute="centerX" secondItem="KxI-3M-H5Q" secondAttribute="centerX" id="mHu-dg-VaV"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="aCK-DL-LaY" firstAttribute="bottom" secondItem="KxI-3M-H5Q" secondAttribute="bottom" id="7rt-VP-uE0"/>
+                            <constraint firstItem="KxI-3M-H5Q" firstAttribute="top" secondItem="aCK-DL-LaY" secondAttribute="top" id="8Lr-PD-5qK"/>
+                            <constraint firstItem="aCK-DL-LaY" firstAttribute="trailing" secondItem="KxI-3M-H5Q" secondAttribute="trailing" id="MTK-yK-7ga"/>
+                            <constraint firstItem="KxI-3M-H5Q" firstAttribute="leading" secondItem="aCK-DL-LaY" secondAttribute="leading" id="xQr-iw-9CE"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="aCK-DL-LaY"/>
+                    </view>
+                    <connections>
+                        <outlet property="previewView" destination="KxI-3M-H5Q" id="MRk-va-SXe"/>
+                        <outlet property="recordButton" destination="L2R-I0-MnV" id="AGg-jR-PCK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="icZ-l0-fnu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2714" y="108"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gdW-Je-ais">
@@ -440,7 +487,10 @@
                     <viewLayoutGuide key="safeArea" id="pPJ-Mb-v2g"/>
                 </view>
             </objects>
-            <point key="canvasLocation" x="1969" y="587"/>
+            <point key="canvasLocation" x="1969" y="590"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Record" width="116" height="116"/>
+    </resources>
 </document>

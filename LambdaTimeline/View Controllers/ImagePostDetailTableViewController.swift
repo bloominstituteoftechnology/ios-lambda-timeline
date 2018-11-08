@@ -30,7 +30,6 @@ class ImagePostDetailTableViewController: UITableViewController {
                 NSLog("Error setting AVAudioSession: \(error)")
             }
         }
-
     }
     
     func updateViews() {
@@ -71,16 +70,11 @@ class ImagePostDetailTableViewController: UITableViewController {
         }
         
         let addAudioCommentAction = UIAlertAction(title: "Add Audio", style: .default) { (_) in
- //           let alert = UIAlertController(title: "Record Audio", message: "Press Record Button to start recording.", preferredStyle: .alert)
+
             alert.dismiss(animated: true, completion: nil)
             self.view.addSubview(self.recordPopOver)
             self.recordPopOver.center = self.view.center
-            
-            
-//            alert.addAction(UIAlertAction(title: NSLocalizedString("⏺", comment: "Default action"), style: .default, handler: { _ in
-//                NSLog("The \"OK\" alert occured.")
-//            }))
-//            self.present(alert, animated: true, completion: nil)
+           self.present(alert, animated: true, completion: nil)
         
         }
         
