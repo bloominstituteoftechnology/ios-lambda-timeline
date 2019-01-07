@@ -21,6 +21,10 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var contrastSlider: UISlider!
     @IBOutlet weak var saturationSlider: UISlider!
     
+    @IBOutlet weak var uglifySwitch: UISwitch!
+    @IBOutlet weak var beautifySwitch: UISwitch!
+    
+    
     @IBOutlet weak var filterControls: UIView!
     
     var postController: PostController!
@@ -91,6 +95,14 @@ class ImagePostViewController: ShiftableViewController {
         updateImage()
     }
     
+    @IBAction func uglify(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func beautify(_ sender: Any) {
+        updateImage()
+    }
+    
     
     
     // Filter functions
@@ -113,6 +125,14 @@ class ImagePostViewController: ShiftableViewController {
         filter.setValue(saturationSlider.value, forKey: "inputSaturation")
         filter.setValue(brightnessSlider.value, forKey: "inputBrightness")
         filter.setValue(contrastSlider.value, forKey: "inputContrast")
+        
+        if uglifySwitch.isOn {
+            
+        }
+        
+        if beautifySwitch.isOn {
+            
+        }
         
         // The metadata to be processed. NOT the actual filtered image
         guard let outputCIImage = filter.outputImage else { return image }
