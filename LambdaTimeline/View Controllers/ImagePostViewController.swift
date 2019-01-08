@@ -14,7 +14,7 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
-    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
     
     @IBOutlet weak var brightnessSlider: UISlider!
@@ -60,7 +60,7 @@ class ImagePostViewController: ShiftableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setImageViewHeight(with: 1.0)
+//        setImageViewHeight(with: 1.0)
         
         updateViews()
     }
@@ -75,7 +75,7 @@ class ImagePostViewController: ShiftableViewController {
         
         title = post?.title
         
-        setImageViewHeight(with: image.ratio)
+//        setImageViewHeight(with: image.ratio)
         
         imageView.image = image
         
@@ -276,12 +276,12 @@ class ImagePostViewController: ShiftableViewController {
         presentImagePickerController()
     }
     
-    func setImageViewHeight(with aspectRatio: CGFloat) {
-        
-        imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
-        
-        view.layoutSubviews()
-    }
+//    func setImageViewHeight(with aspectRatio: CGFloat) {
+//
+//        imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
+//
+//        view.layoutSubviews()
+//    }
     
     
 }
@@ -298,7 +298,7 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         
         imageView.image = image
         
-        setImageViewHeight(with: image.ratio)
+//        setImageViewHeight(with: image.ratio)
         
         originalImage = image
         showFilterControls()
