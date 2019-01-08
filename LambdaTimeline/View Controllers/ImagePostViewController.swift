@@ -169,10 +169,16 @@ class ImagePostViewController: ShiftableViewController {
         imageView.image = image(byFiltering: originalImage)
         
         if changeSwitch.isOn {
-        imageView.image =  switchBW(image: originalImage)
-           
+         hueSlider.isHidden = true
+           hueLabel.isHidden = true
+            blurSlider.isHidden = true
+            blurLabel.isHidden = true
+        imageView.image = switchBW(image: originalImage)
+        } else { hueSlider.isHidden = false
+            hueLabel.isHidden = false
+            blurSlider.isHidden = false
+            blurLabel.isHidden = false
         }
-        
     }
     
     
@@ -230,7 +236,9 @@ class ImagePostViewController: ShiftableViewController {
     var imageData: Data?
    
     @IBOutlet weak var blurSlider: UISlider!
+    @IBOutlet weak var hueLabel: UILabel!
     
+    @IBOutlet weak var blurLabel: UILabel!
     @IBOutlet weak var hueSlider: UISlider!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
