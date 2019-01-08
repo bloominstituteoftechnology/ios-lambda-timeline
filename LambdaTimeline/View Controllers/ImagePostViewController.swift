@@ -126,26 +126,70 @@ class ImagePostViewController: ShiftableViewController {
         filter.setValue(brightnessSlider.value, forKey: "inputBrightness")
         filter.setValue(contrastSlider.value, forKey: "inputContrast")
         
-        if uglifySwitch.isOn {
-            
-        }
-        
-        if beautifySwitch.isOn {
-            
-        }
-        
         // The metadata to be processed. NOT the actual filtered image
         guard let outputCIImage = filter.outputImage else { return image }
         
         // This is a visual Image that has been processed
         guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
         
-        return UIImage(cgImage: outputCGImage)
+        let uiFinal = UIImage(cgImage: outputCGImage)
         
+        var uglyImage: UIImage?
+        if uglifySwitch.isOn {
+            uglyImage = uglify(image: uiFinal)
+        }
+        
+        var finalImage: UIImage?
+        if beautifySwitch.isOn {
+            if let uglyImage = uglyImage {
+                finalImage = beautify(image: uglyImage)
+            } else {
+                finalImage = beautify(image: uiFinal)
+            }
+        }
+        
+        if let finalImage = finalImage {
+            return finalImage
+        } else if let uglyImage = uglyImage {
+            return uglyImage
+        } else {
+            return uiFinal
+        }
+        
+        
+    }
+    
+    func uglify(image: UIImage) -> UIImage {
+        let uglyFilter = CIFilter(name: "CIColorInvert")!
+        guard let cgImage = image.cgImage else { return image}
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        uglyFilter.setValue(ciImage, forKey: "inputImage")
+        
+        guard let outputCIImage = uglyFilter.outputImage else { return image }
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    func beautify(image: UIImage) -> UIImage {
+        let beautyFilter = CIFilter(name: "CIPhotoEffectChrome")!
+        guard let cgImage = image.cgImage else { return image}
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        beautyFilter.setValue(ciImage, forKey: "inputImage")
+        
+        guard let outputCIImage = beautyFilter.outputImage else { return image }
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        
+        return UIImage(cgImage: outputCGImage)
     }
     
     func showFilterControls() {
         filterControls.isHidden = false
+        filterControls.isUserInteractionEnabled = true
     }
     
     
