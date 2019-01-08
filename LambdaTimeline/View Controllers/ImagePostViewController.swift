@@ -8,13 +8,27 @@
 
 import UIKit
 import Photos
+import ImageIO
 
 class ImagePostViewController: ShiftableViewController {
+    
+    
+    @IBAction func hue(_ sender: UISlider) {
+        updateImage()
+        
+        
+    }
+    
+    
+    @IBAction func blur(_ sender: UISlider) {
+        updateImage()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setImageViewHeight(with: 1.0)
+        
         
         updateViews()
     }
@@ -112,10 +126,70 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
+    
+    var originalImage: UIImage? {
+        didSet {
+            updateImage()
+            
+//            guard let originalImage = originalImage else { return }
+//
+//            // Height and width
+//            var scaledSize = imageView.bounds.size
+//
+//            // 1x, 2x, or 3x
+//            let scale = UIScreen.main.scale
+//
+//            scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+//
+//            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+        }
+    }
+    
+    
+    
+    
+    private func updateImage() {
+        
+        guard let originalImage = originalImage else { return }
+        imageView.image = image(byFiltering: originalImage)
+    }
+    
+    
+    private func image(byFiltering image: UIImage) -> UIImage {
+        
+        guard let cgImage = image.cgImage else { return image }
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        // Set the values of the filter's parameters
+        
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(hueSlider.value, forKey: kCIInputAngleKey)
+        filterBlur.setValue(filter.outputImage, forKey: kCIInputImageKey)
+        filterBlur.setValue(blurSlider.value, forKey: kCIInputRadiusKey)
+        
+        
+        // The metadata to be processed. NOT the actual filtered image
+        guard let outputCIImage = filterBlur.outputImage else { return image}
+        
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    
+    
+    private let context = CIContext(options: nil)
+    private let filter = CIFilter(name: "CIHueAdjust")!
+    private let filterBlur = CIFilter(name: "CIDiscBlur")!
+    
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+   
+    @IBOutlet weak var blurSlider: UISlider!
     
+    @IBOutlet weak var hueSlider: UISlider!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
@@ -136,9 +210,30 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         imageView.image = image
         
         setImageViewHeight(with: image.ratio)
+       originalImage = image
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+    
+    
+   
 }
+
+//extension UIImage {
+//    func imageByScaling(toSize size: CGSize) -> UIImage? {
+//        guard let data = pngData(),
+//            let imageSource = CGImageSourceCreateWithData(data as CFData, nil) else {
+//                return nil
+//        }
+//
+//        let options: [CFString: Any] = [
+//            kCGImageSourceThumbnailMaxPixelSize: max(size.width, size.height) / 2.0,
+//            kCGImageSourceCreateThumbnailFromImageAlways: true
+//        ]
+//
+//        return CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options as CFDictionary).flatMap { UIImage(cgImage: $0) }
+//    }
+//}
+
