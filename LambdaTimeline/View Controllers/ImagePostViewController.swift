@@ -12,6 +12,21 @@ import ImageIO
 
 class ImagePostViewController: ShiftableViewController {
     
+
+    
+
+    @IBOutlet weak var changeSwitch: UISwitch!
+    
+    @IBAction func SwitchOn(_ sender: Any) {
+        updateImage()
+       
+        
+    }
+    
+    
+    
+    
+    
     
     @IBAction func hue(_ sender: UISlider) {
         updateImage()
@@ -152,6 +167,12 @@ class ImagePostViewController: ShiftableViewController {
         
         guard let originalImage = originalImage else { return }
         imageView.image = image(byFiltering: originalImage)
+        
+        if changeSwitch.isOn {
+        imageView.image =  switchBW(image: originalImage)
+           
+        }
+        
     }
     
     
@@ -167,6 +188,8 @@ class ImagePostViewController: ShiftableViewController {
         filter.setValue(hueSlider.value, forKey: kCIInputAngleKey)
         filterBlur.setValue(filter.outputImage, forKey: kCIInputImageKey)
         filterBlur.setValue(blurSlider.value, forKey: kCIInputRadiusKey)
+       // filterBW.setValue(ciImage, forKey: "inputImage")
+        
         
         
         // The metadata to be processed. NOT the actual filtered image
@@ -174,14 +197,33 @@ class ImagePostViewController: ShiftableViewController {
         
         guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
         
+
+        
         return UIImage(cgImage: outputCGImage)
     }
     
+   
+    func switchBW(image: UIImage) -> UIImage {
+        
+        guard let cgImage = image.cgImage else { return image}
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        
+        filterBW.setValue(ciImage, forKey: "inputImage")
+        
+        guard let outputCIImage = filterBW.outputImage else { return image }
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        
+        return UIImage(cgImage: outputCGImage)
+    
+    }
     
     
     private let context = CIContext(options: nil)
     private let filter = CIFilter(name: "CIHueAdjust")!
     private let filterBlur = CIFilter(name: "CIDiscBlur")!
+    private let filterBW = CIFilter(name:"CIPhotoEffectNoir")!
     
     var postController: PostController!
     var post: Post?
