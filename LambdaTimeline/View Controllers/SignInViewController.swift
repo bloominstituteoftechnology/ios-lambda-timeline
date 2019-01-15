@@ -24,7 +24,7 @@ class SignInViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDele
         
         setUpSignInButton()
     }
-    
+
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         
         if let error = error {
