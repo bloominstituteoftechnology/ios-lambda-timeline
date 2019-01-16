@@ -14,27 +14,29 @@ class ImagePostViewController: ShiftableViewController {
     
 
     
+    
+    @IBAction func rotationSliderTunnel(_ sender: UISlider) {
+   updateImage()
+    }
+    
+    @IBAction func radiusSliderTunnel(_ sender: UISlider) {
+     updateImage()
+    }
+    
 
     @IBOutlet weak var changeSwitch: UISwitch!
     
     @IBAction func SwitchOn(_ sender: Any) {
         updateImage()
-       
-        
+  
     }
     
-    
-    
-    
-    
-    
+ 
     @IBAction func hue(_ sender: UISlider) {
         updateImage()
-        
-        
+
     }
-    
-    
+
     @IBAction func blur(_ sender: UISlider) {
         updateImage()
     }
@@ -169,15 +171,15 @@ class ImagePostViewController: ShiftableViewController {
         imageView.image = image(byFiltering: originalImage)
         
         if changeSwitch.isOn {
-         hueSlider.isHidden = true
-           hueLabel.isHidden = true
-            blurSlider.isHidden = true
-            blurLabel.isHidden = true
+//         hueSlider.isHidden = true
+//           hueLabel.isHidden = true
+//            blurSlider.isHidden = true
+//            blurLabel.isHidden = true
         imageView.image = switchBW(image: originalImage)
         } else { hueSlider.isHidden = false
-            hueLabel.isHidden = false
-            blurSlider.isHidden = false
-            blurLabel.isHidden = false
+//            hueLabel.isHidden = false
+//            blurSlider.isHidden = false
+//            blurLabel.isHidden = false
         }
     }
     
@@ -194,8 +196,10 @@ class ImagePostViewController: ShiftableViewController {
         filter.setValue(hueSlider.value, forKey: kCIInputAngleKey)
         filterBlur.setValue(filter.outputImage, forKey: kCIInputImageKey)
         filterBlur.setValue(blurSlider.value, forKey: kCIInputRadiusKey)
-       // filterBW.setValue(ciImage, forKey: "inputImage")
-        
+       filterTunnel.setValue(filterBW.outputImage, forKey: kCIInputImageKey)
+        //filterTunnel.setValue(CIVector(x:150, y:150), forKey: kCIInputCenterKey)
+        filterTunnel.setValue(tunnelSliderRotation.value, forKey: "inputRotation")
+        filterTunnel.setValue(tunnelSliderRadius.value, forKey: "inputRadius")
         
         
         // The metadata to be processed. NOT the actual filtered image
@@ -211,12 +215,12 @@ class ImagePostViewController: ShiftableViewController {
    
     func switchBW(image: UIImage) -> UIImage {
         
-        guard let cgImage = image.cgImage else { return image}
+//        guard let cgImage = image.cgImage else { return image}
+//
+//       let ciImage = CIImage(cgImage: cgImage)
         
-        let ciImage = CIImage(cgImage: cgImage)
         
-        
-        filterBW.setValue(ciImage, forKey: "inputImage")
+        filterBW.setValue(filterBlur.outputImage, forKey: "inputImage")
         
         guard let outputCIImage = filterBW.outputImage else { return image }
         guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
@@ -230,14 +234,17 @@ class ImagePostViewController: ShiftableViewController {
     private let filter = CIFilter(name: "CIHueAdjust")!
     private let filterBlur = CIFilter(name: "CIDiscBlur")!
     private let filterBW = CIFilter(name:"CIPhotoEffectNoir")!
+    private let filterTunnel = CIFilter(name:"CILightTunnel")!
     
     var postController: PostController!
     var post: Post?
     var imageData: Data?
    
+    @IBOutlet weak var tunnelSliderRadius: UISlider!
     @IBOutlet weak var blurSlider: UISlider!
     @IBOutlet weak var hueLabel: UILabel!
     
+    @IBOutlet weak var tunnelSliderRotation: UISlider!
     @IBOutlet weak var blurLabel: UILabel!
     @IBOutlet weak var hueSlider: UISlider!
     @IBOutlet weak var imageView: UIImageView!
