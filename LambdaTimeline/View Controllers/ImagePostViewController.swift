@@ -8,13 +8,44 @@
 
 import UIKit
 import Photos
+import ImageIO
 
 class ImagePostViewController: ShiftableViewController {
+    
+
+    
+    
+    @IBAction func rotationSliderTunnel(_ sender: UISlider) {
+   updateImage()
+    }
+    
+    @IBAction func radiusSliderTunnel(_ sender: UISlider) {
+     updateImage()
+    }
+    
+
+    @IBOutlet weak var changeSwitch: UISwitch!
+    
+    @IBAction func SwitchOn(_ sender: Any) {
+        updateImage()
+  
+    }
+    
+ 
+    @IBAction func hue(_ sender: UISlider) {
+        updateImage()
+
+    }
+
+    @IBAction func blur(_ sender: UISlider) {
+        updateImage()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setImageViewHeight(with: 1.0)
+        
         
         updateViews()
     }
@@ -112,10 +143,110 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
+    
+    var originalImage: UIImage? {
+        didSet {
+            updateImage()
+            
+//            guard let originalImage = originalImage else { return }
+//
+//            // Height and width
+//            var scaledSize = imageView.bounds.size
+//
+//            // 1x, 2x, or 3x
+//            let scale = UIScreen.main.scale
+//
+//            scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+//
+//            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+        }
+    }
+    
+    
+    
+    
+    private func updateImage() {
+        
+        guard let originalImage = originalImage else { return }
+        imageView.image = image(byFiltering: originalImage)
+        
+        if changeSwitch.isOn {
+//         hueSlider.isHidden = true
+//           hueLabel.isHidden = true
+//            blurSlider.isHidden = true
+//            blurLabel.isHidden = true
+        imageView.image = switchBW(image: originalImage)
+        } else { hueSlider.isHidden = false
+//            hueLabel.isHidden = false
+//            blurSlider.isHidden = false
+//            blurLabel.isHidden = false
+        }
+    }
+    
+    
+    private func image(byFiltering image: UIImage) -> UIImage {
+        
+        guard let cgImage = image.cgImage else { return image }
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        // Set the values of the filter's parameters
+        
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(hueSlider.value, forKey: kCIInputAngleKey)
+        filterBlur.setValue(filter.outputImage, forKey: kCIInputImageKey)
+        filterBlur.setValue(blurSlider.value, forKey: kCIInputRadiusKey)
+       filterTunnel.setValue(filterBW.outputImage, forKey: kCIInputImageKey)
+        //filterTunnel.setValue(CIVector(x:150, y:150), forKey: kCIInputCenterKey)
+        filterTunnel.setValue(tunnelSliderRotation.value, forKey: "inputRotation")
+        filterTunnel.setValue(tunnelSliderRadius.value, forKey: "inputRadius")
+        
+        
+        // The metadata to be processed. NOT the actual filtered image
+        guard let outputCIImage = filterBlur.outputImage else { return image}
+        
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        
+
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+   
+    func switchBW(image: UIImage) -> UIImage {
+        
+//        guard let cgImage = image.cgImage else { return image}
+//
+//       let ciImage = CIImage(cgImage: cgImage)
+        
+        
+        filterBW.setValue(filterBlur.outputImage, forKey: "inputImage")
+        
+        guard let outputCIImage = filterBW.outputImage else { return image }
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        
+        return UIImage(cgImage: outputCGImage)
+    
+    }
+    
+    
+    private let context = CIContext(options: nil)
+    private let filter = CIFilter(name: "CIHueAdjust")!
+    private let filterBlur = CIFilter(name: "CIDiscBlur")!
+    private let filterBW = CIFilter(name:"CIPhotoEffectNoir")!
+    private let filterTunnel = CIFilter(name:"CILightTunnel")!
+    
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+   
+    @IBOutlet weak var tunnelSliderRadius: UISlider!
+    @IBOutlet weak var blurSlider: UISlider!
+    @IBOutlet weak var hueLabel: UILabel!
     
+    @IBOutlet weak var tunnelSliderRotation: UISlider!
+    @IBOutlet weak var blurLabel: UILabel!
+    @IBOutlet weak var hueSlider: UISlider!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
@@ -136,9 +267,30 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         imageView.image = image
         
         setImageViewHeight(with: image.ratio)
+       originalImage = image
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+    
+    
+   
 }
+
+//extension UIImage {
+//    func imageByScaling(toSize size: CGSize) -> UIImage? {
+//        guard let data = pngData(),
+//            let imageSource = CGImageSourceCreateWithData(data as CFData, nil) else {
+//                return nil
+//        }
+//
+//        let options: [CFString: Any] = [
+//            kCGImageSourceThumbnailMaxPixelSize: max(size.width, size.height) / 2.0,
+//            kCGImageSourceCreateThumbnailFromImageAlways: true
+//        ]
+//
+//        return CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options as CFDictionary).flatMap { UIImage(cgImage: $0) }
+//    }
+//}
+

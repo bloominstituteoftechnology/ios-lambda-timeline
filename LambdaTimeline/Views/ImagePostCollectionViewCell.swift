@@ -39,6 +39,8 @@ class ImagePostCollectionViewCell: UICollectionViewCell {
     func setImage(_ image: UIImage?) {
         imageView.image = image
     }
+    
+    
 
     var post: Post? {
         didSet {

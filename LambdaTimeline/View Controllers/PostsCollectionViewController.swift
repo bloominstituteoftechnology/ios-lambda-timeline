@@ -9,6 +9,11 @@
 import UIKit
 import FirebaseAuth
 import FirebaseUI
+import Photos
+import ImageIO
+import AVKit
+import AVFoundation
+import MobileCoreServices
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -29,10 +34,25 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         let imagePostAction = UIAlertAction(title: "Image", style: .default) { (_) in
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
+        let videoPostAction = UIAlertAction(title: "Make Video", style: .default) { (_) in
+            self.performSegue(withIdentifier: "AddVideoPost", sender: nil)
+        }
+        let videoToAddAction = UIAlertAction(title: "Add Video", style: .default) { (_) in
+            //let authorizationStatus = PHPhotoLibrary.authorizationStatus()
+            
+             self.performSegue(withIdentifier: "showVideo", sender: nil)
+        }
+        
+            
+        
+        
+        
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
+        alert.addAction(videoToAddAction)
         alert.addAction(imagePostAction)
+        alert.addAction(videoPostAction)
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true, completion: nil)
@@ -57,6 +77,8 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
+        default:
+          return UICollectionViewCell()
         }
     }
     
@@ -73,6 +95,8 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             guard let ratio = post.ratio else { return size }
             
             size.height = size.width * ratio
+        default:
+            break
         }
         
         return size
@@ -162,8 +186,37 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         }
     }
     
+    
+    
+    
     private let postController = PostController()
     private var operations = [String : Operation]()
     private let mediaFetchQueue = OperationQueue()
     private let cache = Cache<String, Data>()
 }
+
+
+//extension PostsCollectionViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+//
+//    func galleryVideo()
+//    {
+//        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.savedPhotosAlbum) {
+//
+//            let videoPicker = UIImagePickerController()
+//            videoPicker.delegate = self
+//            videoPicker.sourceType = .photoLibrary
+//            videoPicker.mediaTypes = [kUTTypeMovie as String]
+//            self.present(videoPicker, animated: true, completion: nil)
+//
+//
+//        }
+//    }
+//
+//
+//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+//        picker.dismiss(animated: true, completion: nil)
+//    }
+//
+//
+//
+//}
