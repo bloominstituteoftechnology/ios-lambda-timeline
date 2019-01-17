@@ -100,11 +100,52 @@
                         <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="jaI-fq-Woc"/>
                         <segue destination="OyM-8q-Icp" kind="show" identifier="ViewImagePost" id="hhs-es-AdQ"/>
                         <segue destination="Acc-pE-iJO" kind="show" identifier="AddVideoPost" id="eVY-2N-T28"/>
+                        <segue destination="T8E-Ne-WE4" kind="presentation" identifier="showVideo" id="FXE-4v-41w"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="70" y="25"/>
+            <point key="canvasLocation" x="69.599999999999994" y="24.7376311844078"/>
+        </scene>
+        <!--Player View Controller-->
+        <scene sceneID="jRk-zz-QBr">
+            <objects>
+                <viewController id="T8E-Ne-WE4" customClass="PlayerViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CsP-3Y-0Oq">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="248-gN-44e">
+                                <rect key="frame" x="0.0" y="20" width="375" height="300"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="300" id="DTe-Mv-0CP"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="REX-Im-cOA">
+                                <rect key="frame" x="165" y="438" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Add"/>
+                                <connections>
+                                    <action selector="adding:" destination="T8E-Ne-WE4" eventType="touchUpInside" id="i33-BC-hpv"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="248-gN-44e" firstAttribute="top" secondItem="gU7-C1-RYh" secondAttribute="top" id="7V4-mK-SHU"/>
+                            <constraint firstItem="248-gN-44e" firstAttribute="leading" secondItem="gU7-C1-RYh" secondAttribute="leading" id="RvR-zj-VU5"/>
+                            <constraint firstItem="gU7-C1-RYh" firstAttribute="trailing" secondItem="248-gN-44e" secondAttribute="trailing" id="ULt-Pm-oJa"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="gU7-C1-RYh"/>
+                    </view>
+                    <connections>
+                        <outlet property="playerView" destination="248-gN-44e" id="I5S-KF-W1F"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AvR-Z1-mVR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="44" y="-701.19940029985014"/>
         </scene>
         <!--Camera View Controller-->
         <scene sceneID="jnE-dm-aBF">

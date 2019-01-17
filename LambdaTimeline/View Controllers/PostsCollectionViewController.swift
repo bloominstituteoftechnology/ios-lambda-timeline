@@ -38,31 +38,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             self.performSegue(withIdentifier: "AddVideoPost", sender: nil)
         }
         let videoToAddAction = UIAlertAction(title: "Add Video", style: .default) { (_) in
-            let authorizationStatus = PHPhotoLibrary.authorizationStatus()
+            //let authorizationStatus = PHPhotoLibrary.authorizationStatus()
             
-            switch authorizationStatus {
-            case .authorized:
-                self.presentPhotoPickerController()
-            case .notDetermined:
-                
-                PHPhotoLibrary.requestAuthorization { (status) in
-                    
-                    guard status == .authorized else {
-                        NSLog("User did not authorize access to the photo library")
-                        self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
-                        return
-                    }
-                    
-                    self.presentPhotoPickerController()
-                }
-                
-            case .denied:
-                self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
-            case .restricted:
-                self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
-                
-            }
-            self.presentPhotoPickerController()
+             self.performSegue(withIdentifier: "showVideo", sender: nil)
         }
         
             
@@ -208,22 +186,6 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         }
     }
     
-    private func presentPhotoPickerController() {
-        
-        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
-            presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
-            return
-        }
-        
-        let imagePicker = UIImagePickerController()
-        
-        imagePicker.delegate = self
-        
-        imagePicker.sourceType = .photoLibrary
-        imagePicker.mediaTypes = ["kUTTypeMovie"]
-        
-        present(imagePicker, animated: true, completion: nil)
-    }
     
     
     
@@ -234,25 +196,27 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 }
 
 
-extension PostsCollectionViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
-    func galleryVideo()
-    {
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.savedPhotosAlbum) {
-            
-            let videoPicker = UIImagePickerController()
-            videoPicker.delegate = self
-            videoPicker.sourceType = .photoLibrary
-            videoPicker.mediaTypes = [kUTTypeMovie as String]
-            self.present(videoPicker, animated: true, completion: nil)
-        }
-    }
-    
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-    }
-
-
-
-}
+//extension PostsCollectionViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+//
+//    func galleryVideo()
+//    {
+//        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.savedPhotosAlbum) {
+//
+//            let videoPicker = UIImagePickerController()
+//            videoPicker.delegate = self
+//            videoPicker.sourceType = .photoLibrary
+//            videoPicker.mediaTypes = [kUTTypeMovie as String]
+//            self.present(videoPicker, animated: true, completion: nil)
+//
+//
+//        }
+//    }
+//
+//
+//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+//        picker.dismiss(animated: true, completion: nil)
+//    }
+//
+//
+//
+//}
