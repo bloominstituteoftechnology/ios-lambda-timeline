@@ -133,7 +133,7 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
-        imageView.image = image
+        imageView.image = image //Write filter function then set it to this
         
         setImageViewHeight(with: image.ratio)
     }
