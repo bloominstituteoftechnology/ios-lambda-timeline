@@ -1,10 +1,3 @@
-//
-//  ImagePostViewController.swift
-//  LambdaTimeline
-//
-//  Created by Spencer Curtis on 10/12/18.
-//  Copyright © 2018 Lambda School. All rights reserved.
-//
 
 import UIKit
 import Photos
@@ -112,16 +105,52 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
+    @IBAction func switchChanged(_ sender: Any) {
+        
+    }
+    
+    @IBAction func sliderChanged(_ sender: Any) {
+        
+    }
+    
+    // MARK: - Properties
+    
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    
+    @IBOutlet weak var blackWhiteSwitch: UISwitch!
+    @IBOutlet weak var vintageSwitch: UISwitch!
+    @IBOutlet weak var monochromeSlider: UISlider!
+    @IBOutlet weak var pixellateSlider: UISlider!
+    @IBOutlet weak var zoomBlurSlider: UISlider!
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    
+    // CIPhotoEffectTonal: black and white [inputImage]
+    // CIPhotoEffectTransfer: vintage [inputImage]
+    
+    // CIColorMonochrome [inputImage, inputColor, inputIntensity]
+    //  - inputIntensity: slider [0.0...1.0]
+    //  - inputColor: cgColor
+    // CIPixellate [inputImage, inputCenter, inputScale]
+    //  - inputScale: slider [1...100]
+    //  - inputCenter: CIVector - default = ["150 150"]
+    // CIZoomBlur [inputImage, inputCenter, inputAmount]
+    //  - inputAmount: slider [-200...200]
+    //  - inputCenter: CIVector - default = ["150 150"]
 }
+
+
+
+
+
+
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
