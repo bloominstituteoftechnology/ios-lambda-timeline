@@ -15,7 +15,7 @@ class ImagePostViewController: ShiftableViewController {
         super.viewDidLoad()
         
         setImageViewHeight(with: 1.0)
-        
+        buildSliders()
         updateViews()
     }
     
@@ -48,8 +48,76 @@ class ImagePostViewController: ShiftableViewController {
         imagePicker.delegate = self
         
         imagePicker.sourceType = .photoLibrary
-
+        
         present(imagePicker, animated: true, completion: nil)
+    }
+    
+    private func buildSliders() {
+        for slider in sliders {
+            masterStack.removeArrangedSubview(slider.view)
+            slider.view.removeFromSuperview()
+        }
+        
+        sliders = (filter?.attributes.compactMap { (key, value) -> SliderInput? in
+            return SliderInput(name: key, attributes: value)
+            }.sorted {
+                $0.displayName < $1.displayName
+            })!
+        
+        let layoutGuide = UILayoutGuide()
+        view.addLayoutGuide(layoutGuide)
+        
+        for (offset, sliderInput) in sliders.enumerated() {
+            masterStack.insertArrangedSubview(sliderInput.view, at: offset)
+            
+            let slider = sliderInput.slider
+            
+            let equalWidth = slider.widthAnchor.constraint(equalTo: layoutGuide.widthAnchor)
+            equalWidth.isActive = true
+            
+            slider.addTarget(self, action: #selector(sliderChanged(_:)), for: .valueChanged)
+        }
+        
+    }
+    
+    private func updateImageView() {
+        guard let image = originalImage else { return }
+        imageView?.image = applyFilter(to: image)
+    }
+    
+    private func applyFilter(to image: UIImage) -> UIImage {
+        
+        let inputImage: CIImage
+        
+        if let ciImage = image.ciImage {
+            inputImage = ciImage
+        } else if let cgImage = image.cgImage {
+            inputImage = CIImage(cgImage: cgImage)
+        } else {
+            //FIXME: Not sure what's going on if we get to this point... should probably change code to prevent something like this from happening.
+            return image
+        }
+        
+        filter?.setValue(inputImage, forKey: kCIInputImageKey)
+        
+        for sliderAttribute in sliders {
+            let value = sliderAttribute.slider.value
+            filter?.setValue(value, forKey: sliderAttribute.attributeName)
+        }
+        
+        guard let outputImage = filter?.outputImage else {
+            return image
+        }
+        
+        guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+            return image
+        }
+        
+        return UIImage(cgImage: cgImage)
+    }
+    
+    @IBAction func sliderChanged(_ sender: Any) {
+        updateImageView()
     }
     
     @IBAction func createPost(_ sender: Any) {
@@ -58,8 +126,8 @@ class ImagePostViewController: ShiftableViewController {
         
         guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
             let title = titleTextField.text, title != "" else {
-            presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
-            return
+                presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
+                return
         }
         
         postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
@@ -112,10 +180,26 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
+    
+    
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    private var originalImage: UIImage? {
+        didSet {
+            updateImageView()
+        }
+    }
+    private var filter = CIFilter(name: "CIVortexDistortion") {
+        didSet {
+            buildSliders()
+            updateImageView()
+        }
+    }
+    private var sliders = Array<SliderInput>()
+    private let context = CIContext(options: nil)
     
+    @IBOutlet weak var masterStack: UIStackView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
@@ -126,7 +210,7 @@ class ImagePostViewController: ShiftableViewController {
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-
+        
         chooseImageButton.setTitle("", for: [])
         
         picker.dismiss(animated: true, completion: nil)
