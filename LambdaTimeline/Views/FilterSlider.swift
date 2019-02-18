@@ -16,18 +16,18 @@ class FilterSlider {
     let defaultValue: Float
     
     lazy var slider: UISlider = {
-        let s = UISlider()
-        s.minimumValue = minimumValue
-        s.maximumValue = maximumValue
-        s.value = defaultValue
-        return s
+        let slider = UISlider()
+        slider.minimumValue = minimumValue
+        slider.maximumValue = maximumValue
+        slider.value = defaultValue
+        return slider
     }()
     
     lazy var label: UILabel = {
-        let l = UILabel()
-        l.text = displayName
-        l.setContentCompressionResistancePriority(.required, for: .horizontal)
-        return l
+        let label = UILabel()
+        label.text = displayName
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
+        return label
     }()
     
     lazy var view: UIView = {
@@ -37,22 +37,26 @@ class FilterSlider {
         return stack
     }()
     
+    var value: Float {
+        return slider.value
+    }
+    
     init?(name: String, attributes: Any) {
-        guard let attrs = attributes as? Dictionary<String, Any> else { return nil }
+        guard let attributes = attributes as? Dictionary<String, Any> else { return nil }
         
-        guard let valueClassName = attrs[kCIAttributeClass] as? String else { return nil }
+        guard let valueClassName = attributes[kCIAttributeClass] as? String else { return nil }
         guard valueClassName == "NSNumber" else { return nil }
         
-        guard let minValue = attrs[kCIAttributeSliderMin] as? Float else { return nil }
-        guard let maxValue = attrs[kCIAttributeSliderMax] as? Float else { return nil }
+        guard let minValue = attributes[kCIAttributeSliderMin] as? Double else { return nil }
+        guard let maxValue = attributes[kCIAttributeSliderMax] as? Double else { return nil }
         
-        let identityValue = attrs[kCIAttributeIdentity] as? Float
-        let defaultValue = attrs[kCIAttributeDefault] as? Float
+        let identityValue = attributes[kCIAttributeIdentity] as? Float
+        let defaultValue = attributes[kCIAttributeDefault] as? Float
         
         self.attributeName = name
-        self.displayName = attrs[kCIAttributeDisplayName] as? String ?? name
-        self.minimumValue = minValue
-        self.maximumValue = maxValue
-        self.defaultValue = defaultValue ?? identityValue ?? minValue
+        self.displayName = attributes[kCIAttributeDisplayName] as? String ?? name
+        self.minimumValue = Float(minValue)
+        self.maximumValue = Float(maxValue)
+        self.defaultValue = defaultValue ?? identityValue ?? Float(minValue)
     }
 }

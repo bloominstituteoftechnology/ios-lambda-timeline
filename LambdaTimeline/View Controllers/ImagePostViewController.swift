@@ -15,10 +15,14 @@ class ImagePostViewController: ShiftableViewController {
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    var originalImage: UIImage? {
+        didSet { updateImageView() }
+    }
     var filter: CIFilter? {
-        didSet { setupFilterUI() }
+        didSet { setupFilterUI(); updateImageView(); print(filter?.attributes ?? "") }
     }
     
+    private let context = CIContext(options: nil)
     private var sliders: [FilterSlider] = []
     
     @IBOutlet weak var imageView: UIImageView!
@@ -91,21 +95,22 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     @IBAction func addFilter(_ sender: Any) {
+        originalImage = imageView.image
         presentFilterAlert()
     }
     
     // MARK: - Utility Methods
     private func updateViews() {
-        defer { updateAddFilterButton() }
         guard let imageData = imageData,
             let image = UIImage(data: imageData) else {
                 title = "New Post"
+                updateAddFilterButton()
                 return
         }
         
         title = post?.title
         setImageViewHeight(with: image.ratio)
-        imageView.image = image
+        originalImage = image
         chooseImageButton.setTitle("", for: [])
     }
     
@@ -116,6 +121,40 @@ class ImagePostViewController: ShiftableViewController {
     
     private func updateAddFilterButton() {
         addFilterButton.isHidden = imageView.image == nil
+    }
+    
+    @objc private func updateImageView() {
+        guard let image = originalImage else { return }
+        
+        imageView.image = applyFilter(to: image)
+
+        updateAddFilterButton()
+    }
+    
+    private func applyFilter(to image: UIImage) -> UIImage {
+        guard let filter = filter else { return image }
+        
+        let inputImage: CIImage
+        
+        if let ciImage = image.ciImage {
+            inputImage = ciImage
+        } else if let cgImage = image.cgImage {
+            inputImage = CIImage(cgImage: cgImage)
+        } else {
+            return image
+        }
+        
+        filter.setValue(inputImage, forKey: kCIInputImageKey)
+        
+        for slider in sliders {
+            filter.setValue(slider.value, forKey: slider.attributeName)
+        }
+        
+        guard let outputImage = filter.outputImage else { return image }
+        
+        guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else { return image }
+        
+        return UIImage(cgImage: cgImage)
     }
     
     private func setupFilterUI() {
@@ -143,7 +182,7 @@ class ImagePostViewController: ShiftableViewController {
             let equalWidth = slider.widthAnchor.constraint(equalTo: layoutGuide.widthAnchor)
             equalWidth.isActive = true
             
-//            slider.addTarget(self, action: #selector(sliderChanged(_:)), for: .valueChanged)
+            slider.addTarget(self, action: #selector(updateImageView), for: .valueChanged)
         }
     }
     
@@ -164,14 +203,36 @@ class ImagePostViewController: ShiftableViewController {
     private func presentFilterAlert() {
         let alert = UIAlertController(title: "Add Filter", message: "Which kind of filter do you want to add?", preferredStyle: .actionSheet)
         
+        let hueAction = UIAlertAction(title: "Hue", style: .default) { (_) in
+            self.filter = CIFilter(name: "CIHueAdjust")
+        }
+        alert.addAction(hueAction)
+        
         let BCSAction = UIAlertAction(title: "Brightness/Contrast/Saturation", style: .default) { (_) in
             self.filter = CIFilter(name: "CIColorControls")
         }
+        alert.addAction(BCSAction)
+        
+        let blurAction = UIAlertAction(title: "Blur", style: .default) { (_) in
+            self.filter = CIFilter(name: "CIDiscBlur")
+        }
+        alert.addAction(blurAction)
+        
+        let crystallizeAction = UIAlertAction(title: "Crystallize", style: .default) { (_) in
+            self.filter = CIFilter(name: "CICrystallize")
+        }
+        alert.addAction(crystallizeAction)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(BCSAction)
         alert.addAction(cancelAction)
+        
+        
+        if filter != nil {
+            let removeFiltersAction = UIAlertAction(title: "Remove Filter", style: .destructive) { (_) in
+                self.filter = nil
+            }
+            alert.addAction(removeFiltersAction)
+        }
         
         self.present(alert, animated: true, completion: nil)
     }
@@ -186,8 +247,7 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         picker.dismiss(animated: true, completion: nil)
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        imageView.image = image
-        updateAddFilterButton()
+        originalImage = image
         setImageViewHeight(with: image.ratio)
     }
     
