@@ -9,9 +9,6 @@ class ImagePostViewController: ShiftableViewController {
         
         setImageViewHeight(with: 1.0)
         
-        // Attributes come from the filter
-        //configureSlider(monochromeSlider, from: monochromeFilter?.attributes["InputImage", default: "InputColor"])
-        
         blackWhiteSwitch.isOn = false
         vintageSwitch.isOn = false
         
@@ -142,11 +139,13 @@ class ImagePostViewController: ShiftableViewController {
         guard let image = originalImage else { return }
         
         // Put image into my image view and apply any filter I might have to the image
-        imageView?.image = applyTonalFilter(to: image)
-        imageView?.image = applyTransferFilter(to: image)
-        imageView?.image = applyMonochromeFilter(to: image)
-        imageView?.image = applyPixellateFilter(to: image)
-        imageView?.image = applyZoomBlurFilter(to: image)
+//        imageView?.image = applyTonalFilter(to: image)
+//        imageView?.image = applyTransferFilter(to: image)
+//        imageView?.image = applyMonochromeFilter(to: image)
+//        imageView?.image = applyPixellateFilter(to: image)
+//        imageView?.image = applyZoomBlurFilter(to: image)
+        
+        imageView?.image = applyFilterChain(to: image)
         
     }
     
@@ -167,10 +166,42 @@ class ImagePostViewController: ShiftableViewController {
         
         // CIPhotoEffectTonal filter only takes an input image
         
-        let tonalFilteredImage = tonalFilter?.setValue(inputImage, forKey: "inputImage")
+        tonalFilter?.setValue(inputImage, forKey: kCIInputImageKey)
         
         // Pass result of tonal filter to CIPhotoEffectTransfer
-        let transferFilteredImage = transferFilter?.setValue(tonalFilteredImage, forKey: "inputImage")
+        if let tonalOutput = tonalFilter?.value(forKey: kCIOutputImageKey) as? CIImage {
+            transferFilter?.setValue(tonalOutput, forKey: kCIInputImageKey)
+            
+            if let transferOutput = transferFilter?.value(forKey: kCIOutputImageKey) as? CIImage {
+                monochromeFilter?.setValue(transferOutput, forKey: kCIInputImageKey)
+                monochromeFilter?.setValue(CIColor(red: 0.25, green: 0.92, blue: 0.83), forKey: "inputColor")
+                monochromeFilter?.setValue(monochromeSlider.value, forKey: kCIInputIntensityKey)
+                
+                if let monochromeOutput = monochromeFilter?.value(forKey: kCIOutputImageKey) as? CIImage {
+                    pixellateFilter?.setValue(monochromeOutput, forKey: kCIInputImageKey)
+                    pixellateFilter?.setValue(pixellateSlider.value, forKey: kCIInputScaleKey)
+                    
+                    if let pixellateOutput = pixellateFilter?.value(forKey: kCIOutputImageKey) as? CIImage {
+                        zoomBlurFilter?.setValue(pixellateOutput, forKey: kCIInputImageKey)
+                        zoomBlurFilter?.setValue(zoomBlurSlider.value, forKey: kCIInputAmountKey)
+                        
+                        if let zoomBlurOutput = zoomBlurFilter?.value(forKey: kCIOutputImageKey) as? CIImage {
+                            
+                            // Convert back
+                            guard let cgImage = context.createCGImage(zoomBlurOutput, from: zoomBlurOutput.extent) else {
+                                return image
+                            }
+                            
+                            self.imageView.image = UIImage(cgImage: cgImage)
+                            
+                            return UIImage(cgImage: cgImage)
+                            
+                        }
+                    }
+                }
+            }
+        }
+        
         
         return image
     }
@@ -249,6 +280,10 @@ class ImagePostViewController: ShiftableViewController {
     
     private func applyMonochromeFilter(to image: UIImage) -> UIImage {
         
+        // CIColorMonochrome [inputImage, inputColor, inputIntensity]
+        //  - inputIntensity: slider [0.0...1.0]
+        //  - inputColor: cgColor
+        
         let inputImage: CIImage
         
         // If we happen to have a CIImage, use that
@@ -264,7 +299,7 @@ class ImagePostViewController: ShiftableViewController {
             return image
         }
         
-        monochromeFilter?.setValue(inputImage, forKey: "inputImage")
+        monochromeFilter?.setValue(inputImage, forKey: kCIInputImageKey)
         monochromeFilter?.setValue(CIColor(red: 0.25, green: 0.92, blue: 0.83), forKey: "inputColor")
         monochromeFilter?.setValue(monochromeSlider.value, forKey: kCIInputIntensityKey)
         
@@ -278,17 +313,89 @@ class ImagePostViewController: ShiftableViewController {
             return image
         }
         
+        self.imageView.image = UIImage(cgImage: cgImage)
+        
         return UIImage(cgImage: cgImage)
+    
     }
     
     private func applyPixellateFilter(to image: UIImage) -> UIImage {
         
-        return image
+        // CIPixellate [inputImage, inputCenter, inputScale]
+        //  - inputScale: slider [1...100]
+        //  - inputCenter: CIVector - default = ["150 150"]
+        
+        let inputImage: CIImage
+        
+        // If we happen to have a CIImage, use that
+        if let ciImage = image.ciImage {
+            inputImage = ciImage
+            
+        } else if let cgImage = image.cgImage {
+            // if we get a cgImage, convert it to a ciImage
+            inputImage = CIImage(cgImage: cgImage)
+            
+        } else {
+            // 🤷🏼‍♀️ if we don't have either, we have no idea what to do in this case
+            return image
+        }
+        
+        pixellateFilter?.setValue(inputImage, forKey: kCIInputImageKey)
+        pixellateFilter?.setValue(pixellateSlider.value, forKey: kCIInputScaleKey)
+        
+        // Retrieve image from filter
+        guard let outputImage = pixellateFilter?.outputImage else {
+            return image
+        }
+        
+        // Convert back
+        guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+            return image
+        }
+        
+        self.imageView.image = UIImage(cgImage: cgImage)
+        
+        return UIImage(cgImage: cgImage)
     }
     
     private func applyZoomBlurFilter(to image: UIImage) -> UIImage {
         
-        return image
+        // CIZoomBlur [inputImage, inputCenter, inputAmount]
+        //  - inputAmount: slider [-200...200]
+        //  - inputCenter: CIVector - default = ["150 150"]
+        
+        let inputImage: CIImage
+        
+        // If we happen to have a CIImage, use that
+        if let ciImage = image.ciImage {
+            inputImage = ciImage
+            
+        } else if let cgImage = image.cgImage {
+            // if we get a cgImage, convert it to a ciImage
+            inputImage = CIImage(cgImage: cgImage)
+            
+        } else {
+            // 🤷🏼‍♀️ if we don't have either, we have no idea what to do in this case
+            return image
+        }
+        
+        zoomBlurFilter?.setValue(inputImage, forKey: kCIInputImageKey)
+        zoomBlurFilter?.setValue(zoomBlurSlider.value, forKey: kCIInputAmountKey)
+        
+        // Retrieve image from filter
+        guard let outputImage = zoomBlurFilter?.outputImage else {
+            return image
+        }
+        
+        // Convert back
+        guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+            return image
+        }
+        
+        self.imageView.image = UIImage(cgImage: cgImage)
+        
+        return UIImage(cgImage: cgImage)
+
     }
     
     
@@ -333,28 +440,7 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
     
-    
-    // CIPhotoEffectTonal: black and white [inputImage]
-    // CIPhotoEffectTransfer: vintage [inputImage]
-    
-    
-    // CIColorMonochrome [inputImage, inputColor, inputIntensity]
-    //  - inputIntensity: slider [0.0...1.0]
-    //  - inputColor: cgColor
-    
-    // CIPixellate [inputImage, inputCenter, inputScale]
-    //  - inputScale: slider [1...100]
-    //  - inputCenter: CIVector - default = ["150 150"]
-    
-    // CIZoomBlur [inputImage, inputCenter, inputAmount]
-    //  - inputAmount: slider [-200...200]
-    //  - inputCenter: CIVector - default = ["150 150"]
 }
-
-
-
-
-
 
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
