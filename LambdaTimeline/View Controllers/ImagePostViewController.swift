@@ -121,6 +121,51 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    
+    //LOTANNA'S ADDITIONS
+    
+    //Properties
+    var tempImage: CIImage?
+    var editedImage: UIImage?
+    let filter = CIFilter(name: "CIColorControls")!
+    let context = CIContext(options: nil)
+    
+    //Actions
+    @IBAction func blurButton(_ sender: UIButton) {
+        filter.setValue(tempImage, forKey: kCIInputImageKey)
+        
+        //Get the edited CIimage
+        guard let outputCIImage = filter.outputImage else { return }
+        //Convert edited CIimage to CGimage
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return }
+        //Convert edited CGImage to a UIImage
+        editedImage = UIImage(cgImage: outputCGImage)
+        imageView.image = editedImage //Write filter function then set it to this
+        
+        defer { setImageViewHeight(with: editedImage!.ratio) }
+    }
+    @IBAction func posterizeButton(_ sender: UIButton) {
+    }
+    @IBAction func depthOFButton(_ sender: UIButton) {
+    }
+    @IBAction func drosteButton(_ sender: UIButton) {
+    }
+    @IBAction func monochromeButton(_ sender: UIButton) {
+    }
+    @IBAction func falseColourButton(_ sender: UIButton) {
+    }
+    
+    
+    //Other Functions
+    
+    
+    
+    
+    
+    
+    
+    //END LOTANNA'S ADDITIONS
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -133,9 +178,13 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
-        imageView.image = image //Write filter function then set it to this
+        guard let tempCG = image.cgImage else { return }
         
-        setImageViewHeight(with: image.ratio)
+        tempImage = CIImage(cgImage: tempCG)
+        
+        //imageView.image = editedImage //Write filter function then set it to this
+        
+        //setImageViewHeight(with: image.ratio)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
