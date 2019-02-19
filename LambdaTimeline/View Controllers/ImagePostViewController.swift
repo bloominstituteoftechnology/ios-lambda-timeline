@@ -228,7 +228,7 @@ class ImagePostViewController: ShiftableViewController {
             tonalFilter?.setValue(inputImage, forKey: "inputImage")
             
             // Retrieve image from filter
-            guard let outputImage = monochromeFilter?.outputImage else {
+            guard let outputImage = tonalFilter?.outputImage else {
                 return image
             }
             
@@ -264,7 +264,7 @@ class ImagePostViewController: ShiftableViewController {
             transferFilter?.setValue(inputImage, forKey: "inputImage")
             
             // Retrieve image from filter
-            guard let outputImage = monochromeFilter?.outputImage else {
+            guard let outputImage = transferFilter?.outputImage else {
                 return image
             }
             
