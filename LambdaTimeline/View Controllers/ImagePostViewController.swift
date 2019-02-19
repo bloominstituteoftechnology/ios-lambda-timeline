@@ -7,12 +7,19 @@ class ImagePostViewController: ShiftableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        hideOrShowFiltering()
+        
         setImageViewHeight(with: 1.0)
         
         blackWhiteSwitch.isOn = false
         vintageSwitch.isOn = false
         
         updateViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        hideOrShowFiltering()
     }
     
     func updateViews() {
@@ -30,6 +37,14 @@ class ImagePostViewController: ShiftableViewController {
         imageView.image = image
         
         chooseImageButton.setTitle("", for: [])
+    }
+    
+    func hideOrShowFiltering() {
+        if imageView.image == nil {
+            filterEditingStack.isHidden = true
+        } else {
+            filterEditingStack.isHidden = false
+        }
     }
     
     private func presentImagePickerController() {
@@ -440,6 +455,8 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    @IBOutlet weak var filterEditingStack: UIStackView!
     
 }
 
