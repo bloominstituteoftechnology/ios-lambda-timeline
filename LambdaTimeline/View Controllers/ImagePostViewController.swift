@@ -9,6 +9,12 @@ class ImagePostViewController: ShiftableViewController {
         
         setImageViewHeight(with: 1.0)
         
+        // Attributes come from the filter
+        //configureSlider(monochromeSlider, from: monochromeFilter?.attributes[kc])
+        
+        blackWhiteSwitch.isOn = false
+        vintageSwitch.isOn = false
+        
         updateViews()
     }
     
@@ -105,15 +111,148 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
-    @IBAction func switchChanged(_ sender: Any) {
+    // MARK: - Private Properties
+    
+    private func configureSlider(_ slider: UISlider, from attributes: Any?) {
         
+        // If attributes are not actually a dictionary, use an empty dictionary
+        let attrs = attributes as? [String: Any] ?? [:]
+        
+        // Pull out 3 values that I care about
+        if let min = attrs[kCIAttributeSliderMin] as? Float,
+            let max = attrs[kCIAttributeSliderMax] as? Float,
+            let value = attrs[kCIAttributeDefault] as? Float {
+            
+            // Set the 3 values on my sliders
+            slider.minimumValue = min
+            slider.maximumValue = max
+            slider.value = value
+            
+        } else {
+            // if they are missing, choose a reasonable default
+            slider.minimumValue = 0
+            slider.maximumValue = 1
+            slider.value = 0.5
+        }
+    }
+    
+    private func updateImageView() {
+        
+        // Make sure I have an image
+        guard let image = originalImage else { return }
+        
+        // Put image into my image view and apply any filter I might have to the image
+        imageView?.image = applyTonalFilter(to: image)
+        imageView?.image = applyTransferFilter(to: image)
+        imageView?.image = applyMonochromeFilter(to: image)
+        imageView?.image = applyPixellateFilter(to: image)
+        imageView?.image = applyZoomBlurFilter(to: image)
+        
+    }
+    
+    private func applyTonalFilter(to image: UIImage) -> UIImage {
+        
+        let inputImage: CIImage
+        
+        // If we happen to have a CIImage, use that
+        if let ciImage = image.ciImage {
+            inputImage = ciImage
+            
+        } else if let cgImage = image.cgImage {
+            // if we get a cgImage, convert it to a ciImage
+            inputImage = CIImage(cgImage: cgImage)
+            
+        } else {
+            // 🤷🏼‍♀️ if we don't have either, we have no idea what to do in this case
+            return image
+        }
+        
+        //tonalFilter?.setValue
+        
+        if blackWhiteSwitch.isOn == false {
+            
+        }
+        
+        return image
+    }
+    
+    private func applyTransferFilter(to image: UIImage) -> UIImage {
+        
+        if vintageSwitch.isOn == false {
+            
+        }
+        
+        return image
+    }
+    
+    private func applyMonochromeFilter(to image: UIImage) -> UIImage {
+        
+        let inputImage: CIImage
+        
+        // If we happen to have a CIImage, use that
+        if let ciImage = image.ciImage {
+            inputImage = ciImage
+            
+        } else if let cgImage = image.cgImage {
+            // if we get a cgImage, convert it to a ciImage
+            inputImage = CIImage(cgImage: cgImage)
+            
+        } else {
+            // 🤷🏼‍♀️ if we don't have either, we have no idea what to do in this case
+            return image
+        }
+        
+        monochromeFilter?.setValue(inputImage, forKey: "inputImage")
+        monochromeFilter?.setValue(CIColor(red: 0.25, green: 0.92, blue: 0.83), forKey: "inputColor")
+        monochromeFilter?.setValue(monochromeSlider.value, forKey: kCIInputIntensityKey)
+        
+        // Retrieve image from filter
+        guard let outputImage = monochromeFilter?.outputImage else {
+            return image
+        }
+        
+        // Convert back
+        guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+            return image
+        }
+        
+        return UIImage(cgImage: cgImage)
+    }
+    
+    private func applyPixellateFilter(to image: UIImage) -> UIImage {
+        
+        return image
+    }
+    
+    private func applyZoomBlurFilter(to image: UIImage) -> UIImage {
+        
+        return image
+    }
+    
+    @IBAction func switchChanged(_ sender: Any) {
+        updateImageView()
     }
     
     @IBAction func sliderChanged(_ sender: Any) {
-        
+        updateImageView()
     }
     
     // MARK: - Properties
+    
+    private let tonalFilter = CIFilter(name: "CIPhotoEffectTonal")
+    private let transferFilter = CIFilter(name: "CIPhotoEffectTransfer")
+    private let monochromeFilter = CIFilter(name: "CIColorMonochrome")
+    private let pixellateFilter = CIFilter(name: "CIPixellate")
+    private let zoomBlurFilter = CIFilter(name: "CIZoomBlur")
+    
+    private let context = CIContext(options: nil)
+    
+    private var originalImage: UIImage? {
+        // Need to know when the user has picked the image
+        didSet {
+            updateImageView()
+        }
+    }
     
     var postController: PostController!
     var post: Post?
@@ -135,12 +274,15 @@ class ImagePostViewController: ShiftableViewController {
     // CIPhotoEffectTonal: black and white [inputImage]
     // CIPhotoEffectTransfer: vintage [inputImage]
     
+    
     // CIColorMonochrome [inputImage, inputColor, inputIntensity]
     //  - inputIntensity: slider [0.0...1.0]
     //  - inputColor: cgColor
+    
     // CIPixellate [inputImage, inputCenter, inputScale]
     //  - inputScale: slider [1...100]
     //  - inputCenter: CIVector - default = ["150 150"]
+    
     // CIZoomBlur [inputImage, inputCenter, inputAmount]
     //  - inputAmount: slider [-200...200]
     //  - inputCenter: CIVector - default = ["150 150"]
