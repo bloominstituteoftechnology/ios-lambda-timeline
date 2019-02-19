@@ -457,25 +457,36 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdL-Y3-4ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1969" y="485"/>
+            <point key="canvasLocation" x="1969" y="465"/>
         </scene>
-        <!--View Controller-->
+        <!--Record View Controller-->
         <scene sceneID="ZKZ-d9-5zY">
             <objects>
-                <viewController id="nd8-uk-zUu" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RecordViewController" id="nd8-uk-zUu" customClass="RecordViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7zS-vw-P9E">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="fjl-2E-d7w">
-                                <rect key="frame" x="20" y="280.5" width="335" height="106"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="fjl-2E-d7w">
+                                <rect key="frame" x="20" y="258.5" width="335" height="150"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j57-eg-Bd1">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Record"/>
+                                        <connections>
+                                            <action selector="tappedRecordButton:" destination="nd8-uk-zUu" eventType="touchUpInside" id="wfc-dO-M7H"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xG6-bC-0dG">
+                                        <rect key="frame" x="0.0" y="44" width="335" height="30"/>
+                                        <state key="normal" title="Play"/>
+                                        <connections>
+                                            <action selector="tappedPlayButton:" destination="nd8-uk-zUu" eventType="touchUpInside" id="JaO-xO-Emg"/>
+                                        </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Ymn-47-kHr">
-                                        <rect key="frame" x="0.0" y="38" width="335" height="30"/>
+                                        <rect key="frame" x="0.0" y="82" width="335" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ry-bz-nkb">
                                                 <rect key="frame" x="0.0" y="0.0" width="30.5" height="30"/>
@@ -499,14 +510,23 @@
                                         </constraints>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aQw-pz-H2i">
-                                        <rect key="frame" x="0.0" y="76" width="335" height="30"/>
+                                        <rect key="frame" x="0.0" y="120" width="335" height="30"/>
                                         <state key="normal" title="Add Comment"/>
+                                        <connections>
+                                            <action selector="addCommentButton:" destination="nd8-uk-zUu" eventType="touchUpInside" id="xH5-hY-D1W"/>
+                                        </connections>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="Ymn-47-kHr" firstAttribute="top" secondItem="xG6-bC-0dG" secondAttribute="bottom" constant="16" id="Zde-jV-R0h"/>
+                                </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uk0-Ac-iQ6">
                                 <rect key="frame" x="163.5" y="617" width="48" height="30"/>
                                 <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelButton:" destination="nd8-uk-zUu" eventType="touchUpInside" id="fNn-2S-iwS"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -520,6 +540,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jjh-QM-c4e"/>
                     </view>
+                    <connections>
+                        <outlet property="elapsedTimeLabel" destination="1Ry-bz-nkb" id="qJw-vu-6Po"/>
+                        <outlet property="playButton" destination="xG6-bC-0dG" id="RHl-2R-LPg"/>
+                        <outlet property="recordButton" destination="j57-eg-Bd1" id="0fm-Iq-7Yn"/>
+                        <outlet property="remainingTimeLabel" destination="Qfx-pz-UYx" id="c3r-kz-LqG"/>
+                        <outlet property="timerSlider" destination="Pxc-cM-tKi" id="Dpl-ea-JWX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cdA-mo-fTE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
