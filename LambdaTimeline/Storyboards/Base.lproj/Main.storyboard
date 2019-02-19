@@ -322,7 +322,7 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" textLabel="a1p-af-m2r" detailTextLabel="KxJ-Oh-Ju8" style="IBUITableViewCellStyleSubtitle" id="gWx-Ba-4ra">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CommentCell" textLabel="a1p-af-m2r" detailTextLabel="KxJ-Oh-Ju8" style="IBUITableViewCellStyleSubtitle" id="gWx-Ba-4ra">
                                 <rect key="frame" x="0.0" y="133" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gWx-Ba-4ra" id="wtQ-2t-2R8">
@@ -355,7 +355,7 @@
                     <navigationItem key="navigationItem" title="Title" id="ZF5-WY-6Y2">
                         <barButtonItem key="rightBarButtonItem" title="Comment" id="xrT-JD-ey3">
                             <connections>
-                                <action selector="createComment:" destination="OyM-8q-Icp" id="2IY-cQ-DLq"/>
+                                <segue destination="Np2-sX-VRr" kind="show" id="vXd-u5-X7w"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -369,6 +369,81 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdL-Y3-4ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1968.8" y="472.71364317841085"/>
+        </scene>
+        <!--Audio-->
+        <scene sceneID="Q3V-Xw-Ug1">
+            <objects>
+                <viewController id="4fP-Aq-i6D" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wgP-uF-tBX">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="sZO-Rk-Qo4"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Audio" id="hGE-zG-Kzw"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uI3-7T-c2V" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3776" y="825"/>
+        </scene>
+        <!--Text-->
+        <scene sceneID="6QJ-Rg-bnJ">
+            <objects>
+                <viewController id="Ljv-gy-btO" customClass="TextCommentViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zlv-sC-r3d">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text Comment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RTi-cn-Hbl">
+                                <rect key="frame" x="94" y="80" width="187.5" height="36"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="V7F-xs-KiR">
+                                <rect key="frame" x="20" y="136" width="335" height="462"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="V7F-xs-KiR" firstAttribute="top" secondItem="RTi-cn-Hbl" secondAttribute="bottom" constant="20" id="EhA-jF-Jqv"/>
+                            <constraint firstItem="V7F-xs-KiR" firstAttribute="leading" secondItem="TVd-Pc-eZu" secondAttribute="leading" constant="20" id="KMN-eJ-ziY"/>
+                            <constraint firstItem="TVd-Pc-eZu" firstAttribute="trailing" secondItem="V7F-xs-KiR" secondAttribute="trailing" constant="20" id="Pcu-m9-Uqw"/>
+                            <constraint firstItem="RTi-cn-Hbl" firstAttribute="top" secondItem="TVd-Pc-eZu" secondAttribute="top" constant="16" id="c1M-1n-5vJ"/>
+                            <constraint firstItem="RTi-cn-Hbl" firstAttribute="centerX" secondItem="zlv-sC-r3d" secondAttribute="centerX" id="dqB-Ff-xGs"/>
+                            <constraint firstItem="TVd-Pc-eZu" firstAttribute="bottom" secondItem="V7F-xs-KiR" secondAttribute="bottom" constant="20" id="ufB-KR-CEY"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="TVd-Pc-eZu"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Text" id="7Td-2w-nKa"/>
+                    <connections>
+                        <outlet property="commentTextView" destination="V7F-xs-KiR" id="gkY-my-MhM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z3F-d8-2rj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3776" y="160"/>
+        </scene>
+        <!--Comment Presenter View Controller-->
+        <scene sceneID="4F4-Q1-a3h">
+            <objects>
+                <tabBarController id="Np2-sX-VRr" customClass="CommentPresenterViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="hqc-ta-Pr9">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="Ljv-gy-btO" kind="relationship" relationship="viewControllers" id="CWt-Bc-SUx"/>
+                        <segue destination="4fP-Aq-i6D" kind="relationship" relationship="viewControllers" id="HjJ-gl-QFa"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qMY-sQ-AVt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2823" y="493"/>
         </scene>
     </scenes>
 </document>

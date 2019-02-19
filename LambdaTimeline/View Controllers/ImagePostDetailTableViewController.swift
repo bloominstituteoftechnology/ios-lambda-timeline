@@ -8,58 +8,73 @@
 
 import UIKit
 
-class ImagePostDetailTableViewController: UITableViewController {
+class ImagePostDetailTableViewController: UITableViewController, CommentPresenterViewControllerDelegate {
     
+    // MARK: - Properties
+    var post: Post!
+    var postController: PostController!
+    var imageData: Data?
+    var commentType: CommentType?
+    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
+    
+    // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
     }
-    
-    func updateViews() {
-        
-        guard let imageData = imageData,
-            let image = UIImage(data: imageData) else { return }
-        
-        title = post?.title
-        
-        imageView.image = image
-        
-        titleLabel.text = post.title
-        authorLabel.text = post.author.displayName
-    }
-    
-    // MARK: - Table view data source
-    
+
+    // MARK: - UI Actions
     @IBAction func createComment(_ sender: Any) {
         
-        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
+        let alert = UIAlertController(title: "New Comment", message: "Which kind of post do you want to create?", preferredStyle: .actionSheet)
         
-        var commentTextField: UITextField?
-        
-        alert.addTextField { (textField) in
-            textField.placeholder = "Comment:"
-            commentTextField = textField
+        let textCommentAction = UIAlertAction(title: "Text", style: .default) { (_) in
+            self.commentType = .text
+            self.performSegue(withIdentifier: "AddCommentSegue", sender: nil)
         }
         
-        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
-            
-            guard let commentText = commentTextField?.text else { return }
-            
-            self.postController.addComment(with: commentText, to: &self.post!)
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+        let audioCommentAction = UIAlertAction(title: "Audio", style: .default) { (_) in
+            self.commentType = .audio
+            self.performSegue(withIdentifier: "AddCommentSegue", sender: nil)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        alert.addAction(addCommentAction)
+        alert.addAction(textCommentAction)
+        alert.addAction(audioCommentAction)
         alert.addAction(cancelAction)
         
-        present(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
+        
+//        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
+//
+//        var commentTextField: UITextField?
+//
+//        alert.addTextField { (textField) in
+//            textField.placeholder = "Comment:"
+//            commentTextField = textField
+//        }
+//
+//        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
+//
+//            guard let commentText = commentTextField?.text else { return }
+//
+//
+//        }
+//
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//
+//        alert.addAction(addCommentAction)
+//        alert.addAction(cancelAction)
+//
+//        present(alert, animated: true, completion: nil)
     }
     
+    // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (post?.comments.count ?? 0) - 1
     }
@@ -75,14 +90,31 @@ class ImagePostDetailTableViewController: UITableViewController {
         return cell
     }
     
-    var post: Post!
-    var postController: PostController!
-    var imageData: Data?
+    // MARK: - Comments Present View Controller Delegate
+    func commentPresenter(_ commentPresenter: CommentPresenterViewController, didPublishText comment: String) {
+        self.postController.addComment(with: comment, to: &self.post!)
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
     
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destinationVC = segue.destination as? CommentPresenterViewController {
+            destinationVC.commentDelegate = self
+        }
+    }
     
-    
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var authorLabel: UILabel!
-    @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
+    // MARK: - Utility Methods
+    private func updateViews() {
+        guard let imageData = imageData,
+            let image = UIImage(data: imageData) else { return }
+        
+        title = post?.title
+        
+        imageView.image = image
+        
+        titleLabel.text = post.title
+        authorLabel.text = post.author.displayName
+    }
 }

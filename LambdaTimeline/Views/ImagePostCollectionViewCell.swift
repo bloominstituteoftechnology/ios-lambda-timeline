@@ -31,7 +31,7 @@ class ImagePostCollectionViewCell: UICollectionViewCell {
 
     func setupLabelBackgroundView() {
         let startColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.6)
-        let endColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.4)
+        let endColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.3)
         labelBackgroundView.setupGradient(startColor: startColor, endColor: endColor)
     }
     
