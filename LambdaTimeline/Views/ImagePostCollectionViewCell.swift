@@ -30,9 +30,9 @@ class ImagePostCollectionViewCell: UICollectionViewCell {
     }
 
     func setupLabelBackgroundView() {
-        let startColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.8)
+        let startColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.6)
         let endColor = UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.4)
-        labelBackgroundView.addGradient(startColor: startColor, endColor: endColor)
+        labelBackgroundView.setupGradient(startColor: startColor, endColor: endColor)
     }
     
     func setImage(_ image: UIImage?) {
@@ -48,6 +48,6 @@ class ImagePostCollectionViewCell: UICollectionViewCell {
 @IBOutlet weak var imageView: UIImageView!
 @IBOutlet weak var titleLabel: UILabel!
 @IBOutlet weak var authorLabel: UILabel!
-@IBOutlet weak var labelBackgroundView: UIView!
+@IBOutlet weak var labelBackgroundView: GradientView!
 
 }
