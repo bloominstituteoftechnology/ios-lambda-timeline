@@ -10,7 +10,7 @@ class ImagePostViewController: ShiftableViewController {
         setImageViewHeight(with: 1.0)
         
         // Attributes come from the filter
-        //configureSlider(monochromeSlider, from: monochromeFilter?.attributes[kc])
+        //configureSlider(monochromeSlider, from: monochromeFilter?.attributes["InputImage", default: "InputColor"])
         
         blackWhiteSwitch.isOn = false
         vintageSwitch.isOn = false
@@ -150,6 +150,31 @@ class ImagePostViewController: ShiftableViewController {
         
     }
     
+    private func applyFilterChain(to image: UIImage) -> UIImage {
+        
+        let inputImage: CIImage
+        
+        // If we happen to have a CIImage, use that
+        if let ciImage = image.ciImage {
+            inputImage = ciImage
+        } else if let cgImage = image.cgImage {
+            // if we get a cgImage, convert it to a ciImage
+            inputImage = CIImage(cgImage: cgImage)
+        } else {
+            // 🤷🏼‍♀️ if we don't have either, we have no idea what to do in this case
+            return image
+        }
+        
+        // CIPhotoEffectTonal filter only takes an input image
+        
+        let tonalFilteredImage = tonalFilter?.setValue(inputImage, forKey: "inputImage")
+        
+        // Pass result of tonal filter to CIPhotoEffectTransfer
+        let transferFilteredImage = transferFilter?.setValue(tonalFilteredImage, forKey: "inputImage")
+        
+        return image
+    }
+    
     private func applyTonalFilter(to image: UIImage) -> UIImage {
         
         let inputImage: CIImage
@@ -166,11 +191,21 @@ class ImagePostViewController: ShiftableViewController {
             // 🤷🏼‍♀️ if we don't have either, we have no idea what to do in this case
             return image
         }
-        
-        //tonalFilter?.setValue
-        
-        if blackWhiteSwitch.isOn == false {
+
+        if blackWhiteSwitch.isOn == true {
+            tonalFilter?.setValue(inputImage, forKey: "inputImage")
             
+            // Retrieve image from filter
+            guard let outputImage = monochromeFilter?.outputImage else {
+                return image
+            }
+            
+            // Convert back
+            guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+                return image
+            }
+            
+            return UIImage(cgImage: cgImage)
         }
         
         return image
@@ -178,8 +213,35 @@ class ImagePostViewController: ShiftableViewController {
     
     private func applyTransferFilter(to image: UIImage) -> UIImage {
         
-        if vintageSwitch.isOn == false {
+        let inputImage: CIImage
+        
+        // If we happen to have a CIImage, use that
+        if let ciImage = image.ciImage {
+            inputImage = ciImage
             
+        } else if let cgImage = image.cgImage {
+            // if we get a cgImage, convert it to a ciImage
+            inputImage = CIImage(cgImage: cgImage)
+            
+        } else {
+            // 🤷🏼‍♀️ if we don't have either, we have no idea what to do in this case
+            return image
+        }
+        
+        if vintageSwitch.isOn == true {
+            transferFilter?.setValue(inputImage, forKey: "inputImage")
+            
+            // Retrieve image from filter
+            guard let outputImage = monochromeFilter?.outputImage else {
+                return image
+            }
+            
+            // Convert back
+            guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+                return image
+            }
+            
+            return UIImage(cgImage: cgImage)
         }
         
         return image
@@ -228,6 +290,7 @@ class ImagePostViewController: ShiftableViewController {
         
         return image
     }
+    
     
     @IBAction func switchChanged(_ sender: Any) {
         updateImageView()
