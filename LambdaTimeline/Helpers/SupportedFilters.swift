@@ -11,6 +11,8 @@ import CoreImage
 let supportedFilters: [String: CIFilter] = [
     "Hue": CIFilter(name: "CIHueAdjust")!,
     "Brightness/Contrast/Saturation": CIFilter(name: "CIColorControls")!,
-    "Blur": CIFilter(name: "CIDiscBlur")!,
-    "Crystallize": CIFilter(name: "CICrystallize")!
+    "Noise Reduction": CIFilter(name: "CINoiseReduction")!,
+    "Gamma": CIFilter(name: "CIGammaAdjust")!,
+    "Vibrance": CIFilter(name: "CIVibrance")!,
+    "Exposure": CIFilter(name: "CIExposureAdjust")!
 ]

@@ -16,6 +16,9 @@ class ImagePostViewController: ShiftableViewController {
     var post: Post?
     var imageData: Data?
     var originalImage: UIImage? {
+        didSet { reducedImage = reduce(originalImage) }
+    }
+    var reducedImage: UIImage? {
         didSet { updateImageView() }
     }
     var filter: CIFilter? {
@@ -38,13 +41,14 @@ class ImagePostViewController: ShiftableViewController {
         super.viewDidLoad()
         
         setImageViewHeight(with: 1.0)
-        
+        titleTextField.delegate = self
         updateViews()
     }
     
     // MARK: - UI Actions
     @IBAction func createPost(_ sender: Any) {
         view.endEditing(true)
+        postButton.isEnabled = false
         
         guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
             let title = titleTextField.text, title != "" else {
@@ -56,6 +60,7 @@ class ImagePostViewController: ShiftableViewController {
             guard success else {
                 DispatchQueue.main.async {
                     self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
+                    self.postButton.isEnabled = true
                 }
                 return
             }
@@ -105,7 +110,7 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     @objc private func updateImageView() {
-        guard let image = originalImage else { return }
+        guard let image = reducedImage else { return }
         
         imageView.image = applyFilter(to: image)
 
@@ -113,17 +118,8 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     private func applyFilter(to image: UIImage) -> UIImage {
-        guard let filter = filter else { return image }
-        
-        let inputImage: CIImage
-        
-        if let ciImage = image.ciImage {
-            inputImage = ciImage
-        } else if let cgImage = image.cgImage {
-            inputImage = CIImage(cgImage: cgImage)
-        } else {
-            return image
-        }
+        guard let filter = filter,
+        let inputImage: CIImage = image.getCIImage() else { return image }
         
         filter.setValue(inputImage, forKey: kCIInputImageKey)
         
@@ -131,21 +127,26 @@ class ImagePostViewController: ShiftableViewController {
             filter.setValue(slider.value, forKey: slider.attributeName)
         }
         
-        guard var outputImage = filter.outputImage else { return image }
+        guard let outputImage = filter.outputImage,
+        let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else { return image }
+
+        return UIImage(cgImage: cgImage)
+    }
+    
+    private func reduce(_ image: UIImage?) -> UIImage? {
+        guard let inputImage: CIImage = image?.getCIImage() else { return image }
         
-        // TODO: Refactor so that this only gets called once.
-        let scale = 800 / max(outputImage.extent.size.width, outputImage.extent.size.height)
+        let scale = 800 / max(inputImage.extent.size.width, inputImage.extent.size.height)
         if scale < 1 {
             let scaleFilter = CIFilter(name: "CILanczosScaleTransform")!
-            scaleFilter.setValue(outputImage, forKey: kCIInputImageKey)
+            scaleFilter.setValue(inputImage, forKey: kCIInputImageKey)
             scaleFilter.setValue(scale, forKey: kCIInputScaleKey)
-            outputImage = scaleFilter.outputImage ?? outputImage
+            guard let outputImage = scaleFilter.outputImage,
+                let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else { return image }
+            
+            return UIImage(cgImage: cgImage)
         }
-        
-        print("Output image size: \(outputImage.extent.size)")
-        guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else { return image }
-        
-        return UIImage(cgImage: cgImage)
+        return image
     }
     
     private func setupFilterUI() {
@@ -196,7 +197,7 @@ class ImagePostViewController: ShiftableViewController {
         
         for (title, filter) in supportedFilters {
             let action = UIAlertAction(title: title, style: .default) { (_) in
-                self.originalImage = self.imageView.image
+                self.reducedImage = self.imageView.image
                 self.filter = filter
             }
             alert.addAction(action)
@@ -233,4 +234,12 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+}
+
+extension ImagePostViewController {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
 }
