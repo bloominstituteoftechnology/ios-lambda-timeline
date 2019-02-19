@@ -16,7 +16,6 @@ class ImagePostViewController: ShiftableViewController, FilterChooserViewControl
         
         setImageViewHeight(with: 1.0)
         hideFilterButton()
-        buildSliders()
         updateViews()
     }
     
@@ -225,7 +224,7 @@ class ImagePostViewController: ShiftableViewController, FilterChooserViewControl
     var imageData: Data?
     private var sliders = Array<SliderInput>()
     @IBOutlet weak var controlStackView: UIStackView!
-    private var filter = CIFilter(name: "CIFalseColor")! {
+    private var filter = CIFilter(name: "CIColorControls")! {
         didSet {
             buildSliders()
             updateImageView()
@@ -257,6 +256,7 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
         imageView.image = image
+        originalImage = info[.originalImage] as? UIImage
         unhideFilterButton()
         setImageViewHeight(with: image.ratio)
     }
