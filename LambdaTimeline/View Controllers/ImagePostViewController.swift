@@ -69,8 +69,11 @@ class ImagePostViewController: ShiftableViewController, UIPickerViewDelegate, UI
     @IBOutlet weak var filterPicker: UIPickerView!
     
     var pickerData: [String] = [
-//        "CIColorControls",
-//        "CICategoryBlur",
+        "CIColorControls" ]
+    
+    //"CIZoomBlur" ]
+    
+    
 //        "CICategoryColorAdjustment",
 //        "CICategoryColorEffect",
 //        "CICategoryCompositeOperation",
@@ -80,27 +83,27 @@ class ImagePostViewController: ShiftableViewController, UIPickerViewDelegate, UI
 //        "CICategoryGradient",
 //        "CICategoryHalftoneEffect"
 //        ]
-    kCICategoryBuiltIn,
-    kCICategoryColorAdjustment,
-    kCICategoryColorEffect,
-    kCICategoryDistortionEffect,
-    kCICategoryGeometryAdjustment,
-    kCICategoryCompositeOperation,
-    kCICategoryHalftoneEffect,
-    kCICategoryTransition,
-    kCICategoryTileEffect,
-    kCICategoryGenerator,
-    kCICategoryReduction,
-    kCICategoryGradient,
-    kCICategoryStylize,
-    kCICategorySharpen,
-    kCICategoryBlur,
-    kCICategoryVideo,
-    kCICategoryStillImage,
-    kCICategoryInterlaced,
-    kCICategoryNonSquarePixels,
-    kCICategoryHighDynamicRange
-       ]
+//    kCICategoryBuiltIn,
+//    kCICategoryColorAdjustment,
+//    kCICategoryColorEffect,
+//    kCICategoryDistortionEffect,
+//    kCICategoryGeometryAdjustment,
+//    kCICategoryCompositeOperation,
+//    kCICategoryHalftoneEffect,
+//    kCICategoryTransition,
+//    kCICategoryTileEffect,
+//    kCICategoryGenerator,
+//    kCICategoryReduction,
+//    kCICategoryGradient,
+//    kCICategoryStylize,
+//    kCICategorySharpen,
+//    kCICategoryBlur,
+//    kCICategoryVideo,
+//    kCICategoryStillImage,
+//    kCICategoryInterlaced,
+//    kCICategoryNonSquarePixels,
+//    kCICategoryHighDynamicRange
+//       ]
     @IBAction func savePhoto(_ sender: Any) {
     }
     @IBAction func sliderChange(_ sender: Any) {
