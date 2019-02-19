@@ -67,35 +67,16 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     @IBAction func chooseImage(_ sender: Any) {
-        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
-        
-        switch authorizationStatus {
-        case .authorized:
-            presentImagePickerController()
-        case .notDetermined:
-            
-            PHPhotoLibrary.requestAuthorization { (status) in
-                
-                guard status == .authorized else {
-                    NSLog("User did not authorize access to the photo library")
-                    self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
-                    return
-                }
-                
+        PhotoLibraryHelper.shared.checkAuthorizationStatus { (alertController) in
+            if let alertController = alertController {
+                self.present(alertController, animated: true)
+            } else {
                 self.presentImagePickerController()
             }
-            
-        case .denied:
-            self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
-        case .restricted:
-            self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
-            
         }
-        presentImagePickerController()
     }
     
     @IBAction func addFilter(_ sender: Any) {
-        originalImage = imageView.image
         presentFilterAlert()
     }
     
@@ -150,8 +131,18 @@ class ImagePostViewController: ShiftableViewController {
             filter.setValue(slider.value, forKey: slider.attributeName)
         }
         
-        guard let outputImage = filter.outputImage else { return image }
+        guard var outputImage = filter.outputImage else { return image }
         
+        // TODO: Refactor so that this only gets called once.
+        let scale = 800 / max(outputImage.extent.size.width, outputImage.extent.size.height)
+        if scale < 1 {
+            let scaleFilter = CIFilter(name: "CILanczosScaleTransform")!
+            scaleFilter.setValue(outputImage, forKey: kCIInputImageKey)
+            scaleFilter.setValue(scale, forKey: kCIInputScaleKey)
+            outputImage = scaleFilter.outputImage ?? outputImage
+        }
+        
+        print("Output image size: \(outputImage.extent.size)")
         guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else { return image }
         
         return UIImage(cgImage: cgImage)
@@ -203,25 +194,13 @@ class ImagePostViewController: ShiftableViewController {
     private func presentFilterAlert() {
         let alert = UIAlertController(title: "Add Filter", message: "Which kind of filter do you want to add?", preferredStyle: .actionSheet)
         
-        let hueAction = UIAlertAction(title: "Hue", style: .default) { (_) in
-            self.filter = CIFilter(name: "CIHueAdjust")
+        for (title, filter) in supportedFilters {
+            let action = UIAlertAction(title: title, style: .default) { (_) in
+                self.originalImage = self.imageView.image
+                self.filter = filter
+            }
+            alert.addAction(action)
         }
-        alert.addAction(hueAction)
-        
-        let BCSAction = UIAlertAction(title: "Brightness/Contrast/Saturation", style: .default) { (_) in
-            self.filter = CIFilter(name: "CIColorControls")
-        }
-        alert.addAction(BCSAction)
-        
-        let blurAction = UIAlertAction(title: "Blur", style: .default) { (_) in
-            self.filter = CIFilter(name: "CIDiscBlur")
-        }
-        alert.addAction(blurAction)
-        
-        let crystallizeAction = UIAlertAction(title: "Crystallize", style: .default) { (_) in
-            self.filter = CIFilter(name: "CICrystallize")
-        }
-        alert.addAction(crystallizeAction)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(cancelAction)
