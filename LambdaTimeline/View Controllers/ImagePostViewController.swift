@@ -136,16 +136,17 @@ class ImagePostViewController: ShiftableViewController {
     private func updateImageView() {
         
         // Make sure I have an image
-        guard let image = originalImage else { return }
+        guard var image = originalImage else { return }
         
         // Put image into my image view and apply any filter I might have to the image
-//        imageView?.image = applyTonalFilter(to: image)
-//        imageView?.image = applyTransferFilter(to: image)
-//        imageView?.image = applyMonochromeFilter(to: image)
-//        imageView?.image = applyPixellateFilter(to: image)
-//        imageView?.image = applyZoomBlurFilter(to: image)
+        image = applyTonalFilter(to: image)
+//        image = applyTransferFilter(to: image)
+//        image = applyMonochromeFilter(to: image)
+//        image = applyPixellateFilter(to: image)
+//        image = applyZoomBlurFilter(to: image)
         
-        imageView?.image = applyFilterChain(to: image)
+        //imageView?.image = applyFilterChain(to: image)
+        imageView.image = image
         
     }
     
@@ -223,7 +224,7 @@ class ImagePostViewController: ShiftableViewController {
             return image
         }
 
-        if blackWhiteSwitch.isOn == true {
+        if blackWhiteSwitch.isOn {
             tonalFilter?.setValue(inputImage, forKey: "inputImage")
             
             // Retrieve image from filter
@@ -453,7 +454,8 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
-        imageView.image = image
+        //imageView.image = image
+        originalImage = image
         
         setImageViewHeight(with: image.ratio)
     }
