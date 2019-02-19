@@ -140,10 +140,10 @@ class ImagePostViewController: ShiftableViewController {
         
         // Put image into my image view and apply any filter I might have to the image
         image = applyTonalFilter(to: image)
-//        image = applyTransferFilter(to: image)
-//        image = applyMonochromeFilter(to: image)
-//        image = applyPixellateFilter(to: image)
-//        image = applyZoomBlurFilter(to: image)
+        image = applyTransferFilter(to: image)
+        image = applyMonochromeFilter(to: image)
+        image = applyPixellateFilter(to: image)
+        image = applyZoomBlurFilter(to: image)
         
         //imageView?.image = applyFilterChain(to: image)
         imageView.image = image
