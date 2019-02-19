@@ -12,6 +12,10 @@ import Photos
 class ImagePostViewController: ShiftableViewController, FilterControlsViewControllerDelegate {
     
     func sliderChangedValues() {
+        filter()
+    }
+    
+    func filter() {
         guard let viewController = filterTabBarController?.selectedViewController else { return }
         guard let filterViewController = viewController as? FilterControlsViewController else { return }
         
@@ -165,6 +169,8 @@ class ImagePostViewController: ShiftableViewController, FilterControlsViewContro
     
     @IBAction func didSelectFilter(_ sender: Any) {
         filterTabBarController?.selectedIndex = filterSegmentedControl.selectedSegmentIndex
+        filter()
+        
     }
     
     var postController: PostController!

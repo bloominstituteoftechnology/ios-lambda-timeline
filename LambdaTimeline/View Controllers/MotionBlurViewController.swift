@@ -14,9 +14,19 @@ class MotionBlurViewController: FilterControlsViewController {
         super.viewDidLoad()
         
         filter = CIFilter(name: "CIMotionBlur")
+        
+        configureSlider(radiusSlider, from: filter.attributes[kCIInputRadiusKey])
+        configureSlider(angleSlider, from: filter.attributes[kCIInputAngleKey])
 
     }
-
+    
+    @IBAction func sliderChanged(_ sender: Any) {
+        filter.setValue(radiusSlider.value, forKey: kCIInputRadiusKey)
+        filter.setValue(angleSlider.value, forKey: kCIInputAngleKey)
+        
+        delegate?.sliderChangedValues()
+    }
+    
     @IBOutlet weak var radiusSlider: UISlider!
     @IBOutlet weak var angleSlider: UISlider!
 }

@@ -14,7 +14,17 @@ class NoiseReductionViewController: FilterControlsViewController {
         super.viewDidLoad()
 
         filter = CIFilter(name: "CINoiseReduction")
+        
+        //configureSlider(noiseLevelSlider, from: filter.attributes[])
+        configureSlider(sharpnessSlider, from: filter.attributes[kCIInputSharpnessKey])
 
+    }
+    
+    @IBAction func sliderChanged(_ sender: Any) {
+        //filter.setValue(noiseLevelSlider.value, forKey: )
+        filter.setValue(sharpnessSlider.value, forKey: kCIInputSharpnessKey)
+        
+        delegate?.sliderChangedValues()
     }
     
     @IBOutlet weak var noiseLevelSlider: UISlider!
