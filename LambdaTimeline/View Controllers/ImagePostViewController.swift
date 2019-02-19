@@ -15,7 +15,6 @@ class ImagePostViewController: ShiftableViewController {
         super.viewDidLoad()
         
         setImageViewHeight(with: 1.0)
-        buildSliders()
         updateViews()
     }
     
@@ -187,12 +186,12 @@ class ImagePostViewController: ShiftableViewController {
     var imageData: Data?
     private var originalImage: UIImage? {
         didSet {
+            buildSliders()
             updateImageView()
         }
     }
     private var filter = CIFilter(name: "CIVortexDistortion") {
         didSet {
-            buildSliders()
             updateImageView()
         }
     }
@@ -213,6 +212,8 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         
         chooseImageButton.setTitle("", for: [])
         
+        originalImage = info[.originalImage] as? UIImage
+        
         picker.dismiss(animated: true, completion: nil)
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
@@ -220,6 +221,8 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         imageView.image = image
         
         setImageViewHeight(with: image.ratio)
+        
+        buildSliders()
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
