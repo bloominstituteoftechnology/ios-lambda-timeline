@@ -27,6 +27,6 @@ class NoiseReductionViewController: FilterControlsViewController {
         delegate?.sliderChangedValues()
     }
     
-    @IBOutlet weak var noiseLevelSlider: UISlider!
+    //@IBOutlet weak var noiseLevelSlider: UISlider!
     @IBOutlet weak var sharpnessSlider: UISlider!
 }

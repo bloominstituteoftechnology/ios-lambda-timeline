@@ -15,21 +15,21 @@ class KaleidoscopeViewController: FilterControlsViewController {
 
         filter = CIFilter(name: "CIKaleidoscope")
         
-        //configureSlider(countSlider, from: filter.attributes[])
-        configureSlider(centerSlider, from: filter.attributes[kCIInputCenterKey])
+        //configureSlider(countSlider, from: filter.attributes["Count"])
+        //configureSlider(centerSlider, from: filter.attributes[kCIInputCenterKey])
         configureSlider(angleSlider, from: filter.attributes[kCIInputAngleKey])
 
     }
     
     @IBAction func sliderChanged(_ sender: Any) {
-        //filter.setValue(countSlider.value, forKey: )
-        filter.setValue(centerSlider.value, forKey: kCIInputCenterKey)
+        //filter.setValue(countSlider.value, forKey: "Count")
+        //filter.setValue(centerSlider.value, forKey: kCIInputCenterKey)
         filter.setValue(angleSlider.value, forKey: kCIInputAngleKey)
         
         delegate?.sliderChangedValues()
     }
     
-    @IBOutlet weak var countSlider: UISlider!
-    @IBOutlet weak var centerSlider: UISlider!
+//    @IBOutlet weak var countSlider: UISlider!
+//    @IBOutlet weak var centerSlider: UISlider!
     @IBOutlet weak var angleSlider: UISlider!
 }
