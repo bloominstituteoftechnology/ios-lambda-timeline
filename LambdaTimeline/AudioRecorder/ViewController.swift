@@ -3,6 +3,10 @@ import UIKit
 
 class ViewController: UIViewController, PlayerDelegate, RecorderDelegate {
 
+    
+    var post: Post!
+    var postController: PostController!
+    
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var timeRemaining: UILabel!
@@ -20,8 +24,17 @@ class ViewController: UIViewController, PlayerDelegate, RecorderDelegate {
             let recordAudioFile = segue.destination as! ImagePostTableViewCell
             recordAudioFile.recordFile = recorder
     }
-    @IBAction func save(_ sender: Any) {
+    @IBAction func sliderChanged(_ sender: Any) {
+        let duration = Float(player.totalTime)
+       // let sliderTime = TimeInterval(timerSlider.value) * duration
         
+    }
+    @IBAction func save(_ sender: Any) {
+        self.postController.addComment(with: "\(recorder.currentFile)", to: post)
+        DispatchQueue.main.async {
+            self.dismiss(animated: true, completion: nil)
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     private lazy var timeFormatter: DateComponentsFormatter = {
