@@ -8,13 +8,18 @@
 
 import UIKit
 
-class ImagePostDetailTableViewController: UITableViewController, CommentPresenterViewControllerDelegate {
+class ImagePostDetailTableViewController: UITableViewController, CommentPresenterViewControllerDelegate, AudioCommentTableViewCellDelegate, PlayerDelegate {
     
     // MARK: - Properties
     var post: Post!
     var postController: PostController!
     var imageData: Data?
     var commentType: CommentType?
+    
+    private var operations = [URL : Operation]()
+    private let audioFetchQueue = OperationQueue()
+    private let cache = Cache<URL, Data>()
+    private let player = Player()
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -24,70 +29,32 @@ class ImagePostDetailTableViewController: UITableViewController, CommentPresente
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        player.delegate = self
         updateViews()
     }
-
-    // MARK: - UI Actions
-    @IBAction func createComment(_ sender: Any) {
-        
-        let alert = UIAlertController(title: "New Comment", message: "Which kind of post do you want to create?", preferredStyle: .actionSheet)
-        
-        let textCommentAction = UIAlertAction(title: "Text", style: .default) { (_) in
-            self.commentType = .text
-            self.performSegue(withIdentifier: "AddCommentSegue", sender: nil)
-        }
-        
-        let audioCommentAction = UIAlertAction(title: "Audio", style: .default) { (_) in
-            self.commentType = .audio
-            self.performSegue(withIdentifier: "AddCommentSegue", sender: nil)
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(textCommentAction)
-        alert.addAction(audioCommentAction)
-        alert.addAction(cancelAction)
-        
-        self.present(alert, animated: true, completion: nil)
-        
-//        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
-//
-//        var commentTextField: UITextField?
-//
-//        alert.addTextField { (textField) in
-//            textField.placeholder = "Comment:"
-//            commentTextField = textField
-//        }
-//
-//        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
-//
-//            guard let commentText = commentTextField?.text else { return }
-//
-//
-//        }
-//
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-//
-//        alert.addAction(addCommentAction)
-//        alert.addAction(cancelAction)
-//
-//        present(alert, animated: true, completion: nil)
-    }
     
-    // MARK: - Table view data source
+    // MARK: - Table View Data Source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (post?.comments.count ?? 0) - 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+        guard let post = post else { return UITableViewCell() }
+        let comment = post.comments[indexPath.row + 1]
         
-        let comment = post?.comments[indexPath.row + 1]
-        
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author.displayName
-        
-        return cell
+        switch comment.commentType {
+        case .text:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+            cell.textLabel?.text = comment.text
+            cell.detailTextLabel?.text = comment.author.displayName
+            return cell
+        case .audio:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCell", for: indexPath) as! AudioCommentTableViewCell
+            cell.comment = comment
+            cell.delegate = self
+            loadAudio(for: cell, forItemAt: indexPath)
+            return cell
+        }
     }
     
     // MARK: - Comments Presenter View Controller Delegate
@@ -99,10 +66,27 @@ class ImagePostDetailTableViewController: UITableViewController, CommentPresente
     }
     
     func commentPresenter(_ commentPresenter: CommentPresenterViewController, didPublishAudio comment: URL) {
-        self.postController.addComment(with: comment, to: self.post!)
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
+        self.postController.addComment(with: comment, to: self.post!) {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
+    }
+    
+    // MARK: - Audio Comment Table View Cell Delegate
+    func audioCell(_ audioCell: AudioCommentTableViewCell, didPlayPauseAt url: URL) {
+        if let audioData = cache.value(for: url) {
+            player.playPause(data: audioData)
+        }
+    }
+    
+    func isPlaying(url: URL?) -> Bool {
+        return false
+    }
+    
+    // MARK: - Player Delegate
+    func playerDidChangeState(_ player: Player) {
+        
     }
     
     // MARK: - Navigation
@@ -123,5 +107,35 @@ class ImagePostDetailTableViewController: UITableViewController, CommentPresente
         
         titleLabel.text = post.title
         authorLabel.text = post.author.displayName
+    }
+    
+    func loadAudio(for audioCommentCell: AudioCommentTableViewCell, forItemAt indexPath: IndexPath) {
+        let comment = post.comments[indexPath.row + 1]
+        
+        guard let audioURL = comment.audioURL else { return }
+        
+        if let audioData = cache.value(for: audioURL) { return }
+        
+        let fetchOp = FetchAudioOperation(comment: comment, postController: postController)
+        
+        let cacheOp = BlockOperation {
+            if let data = fetchOp.audioData {
+                self.cache.cache(value: data, for: audioURL)
+            }
+        }
+        
+        let completionOp = BlockOperation {
+            self.operations.removeValue(forKey: audioURL)
+            print("Loaded audio for \(audioURL.absoluteString)")
+        }
+        
+        cacheOp.addDependency(fetchOp)
+        completionOp.addDependency(fetchOp)
+        
+        audioFetchQueue.addOperation(fetchOp)
+        audioFetchQueue.addOperation(cacheOp)
+        OperationQueue.main.addOperation(completionOp)
+        
+        operations[audioURL] = fetchOp
     }
 }

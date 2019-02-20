@@ -21,6 +21,14 @@ class Comment: FirebaseConvertible, Equatable {
     let author: Author
     let timestamp: Date
     
+    var commentType: CommentType {
+        if audioURL != nil {
+            return .audio
+        } else {
+            return .text
+        }
+    }
+    
     init(text: String? = nil, audioURL: URL? = nil, author: Author, timestamp: Date = Date()) {
         self.text = text
         self.audioURL = audioURL

@@ -346,29 +346,49 @@
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AudioCell" id="cYn-X9-bwD" customClass="AudioCommentTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="177" width="375" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="AudioCell" rowHeight="55" id="cYn-X9-bwD" customClass="AudioCommentTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="177" width="375" height="55"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cYn-X9-bwD" id="xgi-Si-Xrr">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="54.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Commenter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ic-hx-gsE">
-                                            <rect key="frame" x="16" y="11" width="91" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q1O-1I-9RJ">
-                                            <rect key="frame" x="315" y="6" width="42" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <state key="normal" title="Listen"/>
-                                            <connections>
-                                                <action selector="playPause:" destination="cYn-X9-bwD" eventType="touchUpInside" id="1O9-8G-2Qw"/>
-                                            </connections>
-                                        </button>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="4za-l4-bTU">
+                                            <rect key="frame" x="16" y="11" width="343" height="33"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="S1d-Is-eLp">
+                                                    <rect key="frame" x="0.0" y="0.0" width="293" height="33"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Audio Comment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="edh-XO-rP1">
+                                                            <rect key="frame" x="0.0" y="0.0" width="293" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Commenter" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Ic-hx-gsE">
+                                                            <rect key="frame" x="0.0" y="21.5" width="293" height="11.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q1O-1I-9RJ">
+                                                    <rect key="frame" x="301" y="0.0" width="42" height="33"/>
+                                                    <state key="normal" title="Listen"/>
+                                                    <connections>
+                                                        <action selector="playPause:" destination="cYn-X9-bwD" eventType="touchUpInside" id="1O9-8G-2Qw"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="4za-l4-bTU" firstAttribute="leading" secondItem="xgi-Si-Xrr" secondAttribute="leadingMargin" id="BBa-Ht-huF"/>
+                                        <constraint firstItem="4za-l4-bTU" firstAttribute="top" secondItem="xgi-Si-Xrr" secondAttribute="top" constant="11" id="cdb-2Y-XzG"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="4za-l4-bTU" secondAttribute="trailing" id="jvJ-I9-uEu"/>
+                                        <constraint firstAttribute="bottom" secondItem="4za-l4-bTU" secondAttribute="bottom" constant="10.5" id="r62-59-vdM"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="commenterLabel" destination="5Ic-hx-gsE" id="0ht-UI-R8K"/>

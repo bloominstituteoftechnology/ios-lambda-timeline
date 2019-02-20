@@ -36,19 +36,21 @@ class Player: NSObject, AVAudioPlayerDelegate {
         return Float(progress)
     }
     
-    func playPause(file: URL? = nil) {
+    func playPause(file: URL? = nil, data: Data? = nil) {
         if isPlaying {
             pause()
         } else {
-            play(file: file)
+            play(file: file, data: data)
         }
     }
     
-    func play(file: URL? = nil) {
-        guard let file = file else { return }
-        
-        if audioPlayer?.url != file {
+    func play(file: URL? = nil, data: Data? = nil) {
+
+        if let file = file, audioPlayer?.url != file {
             audioPlayer = try! AVAudioPlayer(contentsOf: file)
+            audioPlayer?.delegate = self
+        } else if let data = data, audioPlayer?.data != data {
+            audioPlayer = try! AVAudioPlayer(data: data)
             audioPlayer?.delegate = self
         }
         audioPlayer?.play()

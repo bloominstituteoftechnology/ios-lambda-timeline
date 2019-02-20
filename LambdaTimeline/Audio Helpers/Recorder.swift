@@ -41,9 +41,9 @@ class Recorder: NSObject {
         let documentDir = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         
         let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: [.withInternetDateTime])
-        let fileURL = documentDir.appendingPathComponent(name).appendingPathExtension("wav")
+        let fileURL = documentDir.appendingPathComponent(name).appendingPathExtension(".caf")
         
-        let format = AVAudioFormat(standardFormatWithSampleRate: 48000, channels: 1)!
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44100, channels: 1)!
         audioRecorder = try! AVAudioRecorder(url: fileURL, format: format)
         currentFile = fileURL
         
