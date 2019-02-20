@@ -7,12 +7,19 @@ class ImagePostViewController: ShiftableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        hideOrShowFiltering()
+        
         setImageViewHeight(with: 1.0)
         
         blackWhiteSwitch.isOn = false
         vintageSwitch.isOn = false
         
         updateViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        hideOrShowFiltering()
     }
     
     func updateViews() {
@@ -30,6 +37,14 @@ class ImagePostViewController: ShiftableViewController {
         imageView.image = image
         
         chooseImageButton.setTitle("", for: [])
+    }
+    
+    func hideOrShowFiltering() {
+        if imageView.image == nil {
+            filterEditingStack.isHidden = true
+        } else {
+            filterEditingStack.isHidden = false
+        }
     }
     
     private func presentImagePickerController() {
@@ -140,10 +155,10 @@ class ImagePostViewController: ShiftableViewController {
         
         // Put image into my image view and apply any filter I might have to the image
         image = applyTonalFilter(to: image)
-//        image = applyTransferFilter(to: image)
-//        image = applyMonochromeFilter(to: image)
-//        image = applyPixellateFilter(to: image)
-//        image = applyZoomBlurFilter(to: image)
+        image = applyTransferFilter(to: image)
+        image = applyMonochromeFilter(to: image)
+        image = applyPixellateFilter(to: image)
+        image = applyZoomBlurFilter(to: image)
         
         //imageView?.image = applyFilterChain(to: image)
         imageView.image = image
@@ -228,7 +243,7 @@ class ImagePostViewController: ShiftableViewController {
             tonalFilter?.setValue(inputImage, forKey: "inputImage")
             
             // Retrieve image from filter
-            guard let outputImage = monochromeFilter?.outputImage else {
+            guard let outputImage = tonalFilter?.outputImage else {
                 return image
             }
             
@@ -264,7 +279,7 @@ class ImagePostViewController: ShiftableViewController {
             transferFilter?.setValue(inputImage, forKey: "inputImage")
             
             // Retrieve image from filter
-            guard let outputImage = monochromeFilter?.outputImage else {
+            guard let outputImage = transferFilter?.outputImage else {
                 return image
             }
             
@@ -440,6 +455,8 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    @IBOutlet weak var filterEditingStack: UIStackView!
     
 }
 
