@@ -8,7 +8,15 @@
 
 import UIKit
 
-class ImagePostDetailTableViewController: UITableViewController {
+class ImagePostDetailTableViewController: UITableViewController, PlayerDelegate, RecorderDelegate {
+  
+    func recorderDidChangeState(_ recorder: Recorder) {
+        updateViews()
+    }
+    
+    func playerDidChangeState(_ playe: Player) {
+        updateViews()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,6 +24,8 @@ class ImagePostDetailTableViewController: UITableViewController {
         addChild(viewController)
         view.addSubview(viewController.view)
         viewController.didMove(toParent: self)
+        player.delegate = self
+        recorder.delegate = self
     }
     
     func updateViews() {
@@ -29,10 +39,16 @@ class ImagePostDetailTableViewController: UITableViewController {
         
         titleLabel.text = post.title
         authorLabel.text = post.author.displayName
+        
+        
     }
+    
     
     // MARK: - Table view data source
     let viewController = ViewController()
+    var recordFile: Recorder?
+    private let player = Player()
+    private let recorder = Recorder()
     @IBAction func createComment(_ sender: Any) {
         
         let alert = UIAlertController(title: "Leave Comment", message: "Please Select an Option", preferredStyle: .actionSheet)
@@ -67,8 +83,8 @@ class ImagePostDetailTableViewController: UITableViewController {
         alert.addAction(UIAlertAction(title: "Audio Comment", style: .default, handler: { (_) in
             print("User click Audio Comment button")
             let alert = UIAlertController(title: "Add a comment", message: "Record your audio comment below:", preferredStyle: .alert)
-            var recordButton: UIButton?
-            recordButton?.titleLabel?.text = "Record"
+//            var recordButton: UIButton?
+//            recordButton?.titleLabel?.text = "Record"
             
             let recordAction = UIAlertAction(title: "Record", style: .default) { (_) in
                 let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
@@ -102,12 +118,12 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as! ImagePostTableViewCell
         
         let comment = post?.comments[indexPath.row + 1]
         
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author.displayName
+        cell.comment?.text = comment?.text
+        cell.author?.text = comment?.author.displayName
         
         return cell
     }

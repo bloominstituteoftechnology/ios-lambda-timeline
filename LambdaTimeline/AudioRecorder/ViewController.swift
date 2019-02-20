@@ -15,6 +15,11 @@ class ViewController: UIViewController, PlayerDelegate, RecorderDelegate {
             self.navigationController?.popViewController(animated: true)
         }
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+            let recordAudioFile = segue.destination as! ImagePostTableViewCell
+            recordAudioFile.recordFile = recorder
+    }
     @IBAction func save(_ sender: Any) {
         
     }
@@ -27,17 +32,18 @@ class ViewController: UIViewController, PlayerDelegate, RecorderDelegate {
         return f
     }()
     
-    private let player = Player()
-    private let recorder = Recorder()
+     let player = Player()
+     let recorder = Recorder()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let fontSize = UIFont.systemFontSize
-        let font = UIFont.monospacedDigitSystemFont(ofSize: fontSize, weight: .regular)
+//        let font = UIFont.monospacedDigitSystemFont(ofSize: fontSize, weight: .regular)
+//
 //        timeLabel.font = font
 //        timeRemaining.font = font
-
+        
         player.delegate = self
         recorder.delegate = self
     }
