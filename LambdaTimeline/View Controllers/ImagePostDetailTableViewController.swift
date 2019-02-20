@@ -90,8 +90,15 @@ class ImagePostDetailTableViewController: UITableViewController, CommentPresente
         return cell
     }
     
-    // MARK: - Comments Present View Controller Delegate
+    // MARK: - Comments Presenter View Controller Delegate
     func commentPresenter(_ commentPresenter: CommentPresenterViewController, didPublishText comment: String) {
+        self.postController.addComment(with: comment, to: self.post!)
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
+    func commentPresenter(_ commentPresenter: CommentPresenterViewController, didPublishAudio comment: URL) {
         self.postController.addComment(with: comment, to: self.post!)
         DispatchQueue.main.async {
             self.tableView.reloadData()

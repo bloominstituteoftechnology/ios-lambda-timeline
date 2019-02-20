@@ -14,11 +14,13 @@ enum CommentType: String {
 
 protocol CommentPresenterViewControllerDelegate: class {
     func commentPresenter(_ commentPresenter: CommentPresenterViewController, didPublishText comment: String)
+    func commentPresenter(_ commentPresenter: CommentPresenterViewController, didPublishAudio comment: URL)
 }
 
-class CommentPresenterViewController: UITabBarController, TextCommentViewControllerDelegate {
+class CommentPresenterViewController: UITabBarController, TextCommentViewControllerDelegate, AudioCommentViewControllerDelegate {
     
     var textComment: String?
+    var audioURL: URL?
     
     weak var commentDelegate: CommentPresenterViewControllerDelegate?
     
@@ -33,6 +35,8 @@ class CommentPresenterViewController: UITabBarController, TextCommentViewControl
     @objc private func publishComment() {
         if let text = textComment {
             commentDelegate?.commentPresenter(self, didPublishText: text)
+        } else if let audioURL = audioURL {
+            commentDelegate?.commentPresenter(self, didPublishAudio: audioURL)
         }
         navigationController?.popViewController(animated: true)
     }
@@ -42,12 +46,19 @@ class CommentPresenterViewController: UITabBarController, TextCommentViewControl
         textComment = comment
     }
     
+    // MARK: - Audio Comment View Controller Delegate
+    func audioCommentController(_ audioCommentController: AudioCommentViewController, didCommitAudio comment: URL) {
+        audioURL = comment
+    }
+    
     
     // MARK: - Utility Methods
     private func addDelegatesToChildren() {
         for child in children {
             if let textVC = child as? TextCommentViewController {
                 textVC.delegate = self
+            }else if let audioVC = child as? AudioCommentViewController {
+                audioVC.delegate = self
             }
         }
     }

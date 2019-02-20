@@ -8,8 +8,14 @@
 
 import UIKit
 
+protocol AudioCommentViewControllerDelegate: class {
+    func audioCommentController(_ audioCommentController: AudioCommentViewController, didCommitAudio comment: URL )
+}
+
 class AudioCommentViewController: UIViewController, RecorderDelegate, PlayerDelegate {
 
+    weak var delegate: AudioCommentViewControllerDelegate?
+    
     private let recorder = Recorder()
     private let player = Player()
     
@@ -38,6 +44,9 @@ class AudioCommentViewController: UIViewController, RecorderDelegate, PlayerDele
 
     @IBAction func toggleRecord(_ sender: Any) {
         recorder.toggleRecording()
+        if let audioURL = recorder.currentFile {
+            delegate?.audioCommentController(self, didCommitAudio: audioURL)
+        }
     }
     
     @IBAction func playPause(_ sender: Any) {
