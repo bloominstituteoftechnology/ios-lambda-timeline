@@ -123,6 +123,9 @@
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4eK-5F-H5h">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="375" id="M1j-oX-eZN"/>
+                                                        </constraints>
                                                     </imageView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VxD-cu-jHT">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
@@ -135,43 +138,56 @@
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstItem="VxD-cu-jHT" firstAttribute="centerX" secondItem="4eK-5F-H5h" secondAttribute="centerX" id="4Fw-gO-5Xj"/>
-                                                    <constraint firstAttribute="trailing" secondItem="4eK-5F-H5h" secondAttribute="trailing" id="8Rm-1e-eOZ"/>
-                                                    <constraint firstItem="4eK-5F-H5h" firstAttribute="leading" secondItem="yQ3-V3-hIf" secondAttribute="leading" id="AEt-EQ-UY9"/>
-                                                    <constraint firstItem="VxD-cu-jHT" firstAttribute="height" secondItem="4eK-5F-H5h" secondAttribute="height" id="DsA-fG-zE8"/>
-                                                    <constraint firstAttribute="height" constant="375" id="MHD-wr-Gq9"/>
-                                                    <constraint firstItem="VxD-cu-jHT" firstAttribute="width" secondItem="4eK-5F-H5h" secondAttribute="width" id="cOC-eq-9QT"/>
-                                                    <constraint firstItem="4eK-5F-H5h" firstAttribute="top" secondItem="yQ3-V3-hIf" secondAttribute="top" id="fXV-Ir-jg1"/>
-                                                    <constraint firstAttribute="bottom" secondItem="4eK-5F-H5h" secondAttribute="bottom" id="haI-Dv-uE7"/>
-                                                    <constraint firstItem="VxD-cu-jHT" firstAttribute="top" secondItem="4eK-5F-H5h" secondAttribute="top" id="rjG-je-eTX"/>
+                                                    <constraint firstItem="VxD-cu-jHT" firstAttribute="bottom" secondItem="4eK-5F-H5h" secondAttribute="bottom" id="4E7-AW-hkU"/>
+                                                    <constraint firstItem="VxD-cu-jHT" firstAttribute="top" secondItem="yQ3-V3-hIf" secondAttribute="top" id="DjI-AF-QFG"/>
+                                                    <constraint firstAttribute="bottom" secondItem="VxD-cu-jHT" secondAttribute="bottom" id="MSZ-Ei-9wM"/>
+                                                    <constraint firstItem="4eK-5F-H5h" firstAttribute="trailing" secondItem="VxD-cu-jHT" secondAttribute="trailing" id="MZi-h3-oCp"/>
+                                                    <constraint firstItem="4eK-5F-H5h" firstAttribute="leading" secondItem="VxD-cu-jHT" secondAttribute="leading" id="PmP-yu-t80"/>
+                                                    <constraint firstItem="4eK-5F-H5h" firstAttribute="leading" secondItem="yQ3-V3-hIf" secondAttribute="leading" id="VFF-8u-Ler"/>
+                                                    <constraint firstAttribute="trailing" secondItem="4eK-5F-H5h" secondAttribute="trailing" id="VIa-r4-R4A"/>
+                                                    <constraint firstItem="4eK-5F-H5h" firstAttribute="top" secondItem="VxD-cu-jHT" secondAttribute="top" id="ovc-Ur-e2X"/>
                                                 </constraints>
                                             </view>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Give your post a title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Op6-OA-6Ou">
                                                 <rect key="frame" x="0.0" y="383" width="375" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="VFl-4g-oer"/>
+                                                </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                             </textField>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="413" id="uga-rt-HaI"/>
+                                            <constraint firstItem="Op6-OA-6Ou" firstAttribute="top" secondItem="yQ3-V3-hIf" secondAttribute="bottom" constant="8" symbolic="YES" id="wRX-6M-Iab"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="3eB-uc-YPu">
+                                        <rect key="frame" x="0.0" y="421" width="375" height="200"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="200" id="Xvl-9o-WU1"/>
+                                        </constraints>
                                     </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="PkI-rS-ua9" secondAttribute="trailing" id="1cC-FG-cAC"/>
-                                    <constraint firstItem="PkI-rS-ua9" firstAttribute="top" secondItem="9qd-If-ddw" secondAttribute="top" id="3tV-sW-NF1"/>
-                                    <constraint firstItem="PkI-rS-ua9" firstAttribute="leading" secondItem="9qd-If-ddw" secondAttribute="leading" id="bPK-xN-eaO"/>
-                                    <constraint firstAttribute="bottom" secondItem="PkI-rS-ua9" secondAttribute="bottom" id="cfV-7c-ubK"/>
-                                    <constraint firstItem="PkI-rS-ua9" firstAttribute="width" secondItem="9qd-If-ddw" secondAttribute="width" id="dWh-6N-mO7"/>
-                                    <constraint firstAttribute="height" priority="250" constant="603" id="qMm-7B-8rp"/>
+                                    <constraint firstItem="3eB-uc-YPu" firstAttribute="leading" secondItem="9qd-If-ddw" secondAttribute="leading" id="25r-Y7-0za"/>
+                                    <constraint firstAttribute="bottom" secondItem="3eB-uc-YPu" secondAttribute="bottom" id="BpQ-fR-ryh"/>
+                                    <constraint firstItem="PkI-rS-ua9" firstAttribute="trailing" secondItem="3eB-uc-YPu" secondAttribute="trailing" id="F98-hZ-UzV"/>
+                                    <constraint firstItem="3eB-uc-YPu" firstAttribute="top" secondItem="PkI-rS-ua9" secondAttribute="bottom" constant="8" id="PfF-nI-awB"/>
+                                    <constraint firstItem="PkI-rS-ua9" firstAttribute="centerX" secondItem="9qd-If-ddw" secondAttribute="centerX" id="Zdo-se-0ni"/>
+                                    <constraint firstItem="PkI-rS-ua9" firstAttribute="leading" secondItem="3eB-uc-YPu" secondAttribute="leading" id="bEA-74-eGq"/>
+                                    <constraint firstItem="PkI-rS-ua9" firstAttribute="top" secondItem="9qd-If-ddw" secondAttribute="top" id="gu6-Jg-ufz"/>
+                                    <constraint firstAttribute="trailing" secondItem="3eB-uc-YPu" secondAttribute="trailing" id="jtR-ir-120"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="9qd-If-ddw" firstAttribute="top" secondItem="qkF-dc-a1P" secondAttribute="top" id="4bk-f7-1pg"/>
-                            <constraint firstItem="9qd-If-ddw" firstAttribute="leading" secondItem="qkF-dc-a1P" secondAttribute="leading" id="DEG-Qb-LDS"/>
-                            <constraint firstItem="9qd-If-ddw" firstAttribute="bottom" secondItem="qkF-dc-a1P" secondAttribute="bottom" id="HEL-Zq-tSA"/>
-                            <constraint firstItem="9qd-If-ddw" firstAttribute="trailing" secondItem="qkF-dc-a1P" secondAttribute="trailing" id="Vbe-8x-HWR"/>
-                            <constraint firstItem="9qd-If-ddw" firstAttribute="bottom" secondItem="qkF-dc-a1P" secondAttribute="bottom" id="rHj-fg-999"/>
+                            <constraint firstItem="9qd-If-ddw" firstAttribute="bottom" secondItem="qkF-dc-a1P" secondAttribute="bottom" id="4Ws-rG-y3b"/>
+                            <constraint firstItem="9qd-If-ddw" firstAttribute="leading" secondItem="CkP-uJ-8jW" secondAttribute="leading" id="FZi-Me-VRi"/>
+                            <constraint firstAttribute="trailing" secondItem="9qd-If-ddw" secondAttribute="trailing" id="oX3-Q4-OjV"/>
+                            <constraint firstItem="9qd-If-ddw" firstAttribute="top" secondItem="qkF-dc-a1P" secondAttribute="top" id="rvS-Lq-kXu"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qkF-dc-a1P"/>
                     </view>
@@ -184,8 +200,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="chooseImageButton" destination="VxD-cu-jHT" id="KVs-no-MbU"/>
-                        <outlet property="imageHeightConstraint" destination="MHD-wr-Gq9" id="HyG-8g-Ck1"/>
+                        <outlet property="imageHeightConstraint" destination="M1j-oX-eZN" id="ucD-hR-doz"/>
                         <outlet property="imageView" destination="4eK-5F-H5h" id="e7m-c5-Xhz"/>
+                        <outlet property="masterStack" destination="3eB-uc-YPu" id="Mqi-oC-4N5"/>
                         <outlet property="postButton" destination="hsH-Uv-tug" id="ZBn-KE-cpU"/>
                         <outlet property="titleTextField" destination="Op6-OA-6Ou" id="JEe-cj-4mv"/>
                     </connections>
