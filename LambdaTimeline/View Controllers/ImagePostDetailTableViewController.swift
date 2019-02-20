@@ -87,23 +87,90 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as? CommentTableViewCell else { fatalError("Unable to dequeue cell as comment cell dequeue reusable cell.")}
         
         let comment = post?.comments[indexPath.row + 1]
         
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author.displayName
+        cell.titleLabel.text = comment?.text
+        cell.subtitleLabel.text = comment?.author.displayName
         
+        guard let audioURL = comment?.audioURL else {
+            cell.playStopButton.isEnabled = false
+            cell.playStopButton.isHidden = true
+            return cell
+        }
+        
+        loadAudio(post: post, for: cell, forItemAt: indexPath)
+        cell.audioURL = audioURL
         return cell
     }
+    
+    
+    func loadAudio(post: Post, for commentCell: CommentTableViewCell, forItemAt indexPath: IndexPath) {
+        let comment = post.comments[indexPath.row]
+        
+        guard let commentID = comment.audioURL?.absoluteString else { return }
+        
+        let fm = FileManager.default
+        let docs = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        
+        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: [.withInternetDateTime])
+        
+        let file = docs.appendingPathComponent(name).appendingPathExtension("caf")
+        
+        if let audioData = cache.value(for: commentID),
+            let audioURL = URL(dataRepresentation: audioData, relativeTo: file) {
+            commentCell.audioURL = audioURL
+            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+            return
+        }
+        
+        let fetchOp = FetchAudioOperation(post: post, comment: comment, postController: postController)
+        
+        let cacheOp = BlockOperation {
+            if let data = fetchOp.audioData {
+                self.cache.cache(value: data, for: commentID)
+                DispatchQueue.main.async {
+                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                }
+            }
+        }
+        
+        let completionOp = BlockOperation {
+            defer { self.operations.removeValue(forKey: commentID) }
+            
+            if let currentIndexPath = self.tableView?.indexPath(for: commentCell),
+                currentIndexPath != indexPath {
+                print("Got image for now-reused cell")
+                return
+            }
+            
+            if let data = fetchOp.audioData {
+                let audioURL = URL(dataRepresentation: data, relativeTo: file)
+                commentCell.audioURL = audioURL
+                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+        }
+        
+        cacheOp.addDependency(fetchOp)
+        completionOp.addDependency(fetchOp)
+        
+        audioFetchQueue.addOperation(fetchOp)
+        audioFetchQueue.addOperation(cacheOp)
+        OperationQueue.main.addOperation(completionOp)
+        
+        operations[commentID] = fetchOp
+    }
+    
 
     // Mark: - Properties
     var post: Post!
     var postController: PostController!
+    var player: Player = Player()
     var imageData: Data?
-    var isAnimating: Bool = false
-    var dropDownViewIsDisplayed: Bool = false
-    
+    private let cache = Cache<String, Data>()
+    private var operations = [String : Operation]()
+    private let audioFetchQueue = OperationQueue()
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
