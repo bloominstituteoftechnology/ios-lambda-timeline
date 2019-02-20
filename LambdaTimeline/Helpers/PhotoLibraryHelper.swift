@@ -23,24 +23,18 @@ class PhotoLibraryHelper {
             PHPhotoLibrary.requestAuthorization { (status) in
                 guard status == .authorized else {
                     NSLog("User did not authorize access to the photo library")
-                    completion(self.informationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it."))
+                    let alert = UIAlertController.informationalAlertController(message: "In order to access the photo library, you must allow this application access to it.")
+                    completion(alert)
                     return
                 }
                 completion(nil)
             }
         case .denied:
-            completion(informationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it."))
+            let alert = UIAlertController.informationalAlertController(message: "In order to access the photo library, you must allow this application access to it.")
+            completion(alert)
         case .restricted:
-            completion(informationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access."))
+            let alert = UIAlertController.informationalAlertController(message: "Unable to access the photo library. Your device's restrictions do not allow access.")
+            completion(alert)
         }
-    }
-    
-    private func informationalAlertController(title: String?, message: String?, dismissActionCompletion: ((UIAlertAction) -> Void)? = nil, completion: (() -> Void)? = nil) -> UIAlertController {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let dismissAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: dismissActionCompletion)
-        
-        alertController.addAction(dismissAction)
-        
-        return alertController
     }
 }

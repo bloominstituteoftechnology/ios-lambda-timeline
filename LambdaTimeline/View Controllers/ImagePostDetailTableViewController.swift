@@ -20,6 +20,7 @@ class ImagePostDetailTableViewController: UITableViewController, CommentPresente
     private let audioFetchQueue = OperationQueue()
     private let cache = Cache<URL, Data>()
     private let player = Player()
+    private var currentlyPlaying: (indexPath: IndexPath, cell: AudioCommentTableViewCell)?
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -31,6 +32,11 @@ class ImagePostDetailTableViewController: UITableViewController, CommentPresente
         super.viewDidLoad()
         player.delegate = self
         updateViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        AVSessionHelper.shared.setupSessionForAudioPlayback()
     }
     
     // MARK: - Table View Data Source
@@ -50,8 +56,8 @@ class ImagePostDetailTableViewController: UITableViewController, CommentPresente
             return cell
         case .audio:
             let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCell", for: indexPath) as! AudioCommentTableViewCell
-            cell.comment = comment
             cell.delegate = self
+            cell.comment = comment
             loadAudio(for: cell, forItemAt: indexPath)
             return cell
         }
@@ -75,18 +81,30 @@ class ImagePostDetailTableViewController: UITableViewController, CommentPresente
     
     // MARK: - Audio Comment Table View Cell Delegate
     func audioCell(_ audioCell: AudioCommentTableViewCell, didPlayPauseAt url: URL) {
-        if let audioData = cache.value(for: url) {
+        if let audioData = cache.value(for: url), let indexPath = tableView.indexPath(for: audioCell) {
             player.playPause(data: audioData)
+            currentlyPlaying = (indexPath, audioCell)
+            tableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }
     
     func isPlaying(url: URL?) -> Bool {
+        if let url = url, let data = cache.value(for: url), data == player.currentData {
+            return player.isPlaying
+        }
+        return false
+    }
+    
+    func isDownloaded(url: URL?) -> Bool {
+        if let url = url, cache.value(for: url) != nil { return true }
         return false
     }
     
     // MARK: - Player Delegate
     func playerDidChangeState(_ player: Player) {
-        
+        if let currentlyPlaying = currentlyPlaying,  let indexPath = tableView.indexPath(for: currentlyPlaying.cell), indexPath == currentlyPlaying.indexPath {
+            tableView.reloadRows(at: [indexPath], with: .none)
+        }
     }
     
     // MARK: - Navigation
@@ -114,7 +132,7 @@ class ImagePostDetailTableViewController: UITableViewController, CommentPresente
         
         guard let audioURL = comment.audioURL else { return }
         
-        if let audioData = cache.value(for: audioURL) { return }
+        if cache.value(for: audioURL) != nil { return }
         
         let fetchOp = FetchAudioOperation(comment: comment)
         
@@ -126,11 +144,17 @@ class ImagePostDetailTableViewController: UITableViewController, CommentPresente
         
         let completionOp = BlockOperation {
             self.operations.removeValue(forKey: audioURL)
-            print("Loaded audio for \(audioURL.absoluteString)")
+//            print("Loaded audio for \(audioURL.absoluteString)")
+            
+            if let currentIndexPath = self.tableView.indexPath(for: audioCommentCell),
+                currentIndexPath != indexPath { return }
+            
+            self.tableView.reloadRows(at: [indexPath], with: .none)
         }
         
         cacheOp.addDependency(fetchOp)
-        completionOp.addDependency(fetchOp)
+        
+        completionOp.addDependency(cacheOp)
         
         audioFetchQueue.addOperation(fetchOp)
         audioFetchQueue.addOperation(cacheOp)

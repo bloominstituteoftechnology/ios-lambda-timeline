@@ -99,6 +99,7 @@
                     <connections>
                         <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="jaI-fq-Woc"/>
                         <segue destination="OyM-8q-Icp" kind="show" identifier="ViewImagePost" id="hhs-es-AdQ"/>
+                        <segue destination="d8B-MJ-4QT" kind="show" identifier="AddVideoPostSegue" id="Yib-uJ-si0"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -213,6 +214,68 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXa-A2-VJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1969" y="-195"/>
+        </scene>
+        <!--Title-->
+        <scene sceneID="287-az-JVn">
+            <objects>
+                <viewController id="d8B-MJ-4QT" customClass="VideoPostViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hOK-9y-BDF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CQQ-hj-wYz" customClass="CameraPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="0cV-vh-krF" appends="YES" id="rrA-3e-YMU"/>
+                                </connections>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zmT-9k-Wak">
+                                <rect key="frame" x="147.5" y="607" width="80" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="WQL-VJ-P2G"/>
+                                    <constraint firstAttribute="width" constant="80" id="rx2-Ga-ZBm"/>
+                                </constraints>
+                                <color key="tintColor" red="0.73725490199999999" green="0.16078431369999999" blue="0.23921568630000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Record"/>
+                                <connections>
+                                    <action selector="toggleRecording:" destination="d8B-MJ-4QT" eventType="touchUpInside" id="GQE-Cm-Vab"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="CQQ-hj-wYz" firstAttribute="top" secondItem="ezY-nX-owJ" secondAttribute="top" id="3BV-zQ-Nzc"/>
+                            <constraint firstItem="ezY-nX-owJ" firstAttribute="bottom" secondItem="zmT-9k-Wak" secondAttribute="bottom" constant="20" id="73c-ST-b7p"/>
+                            <constraint firstItem="ezY-nX-owJ" firstAttribute="trailing" secondItem="CQQ-hj-wYz" secondAttribute="trailing" id="7kH-eP-u2n"/>
+                            <constraint firstItem="CQQ-hj-wYz" firstAttribute="leading" secondItem="ezY-nX-owJ" secondAttribute="leading" id="Jms-ab-VCd"/>
+                            <constraint firstAttribute="bottom" secondItem="CQQ-hj-wYz" secondAttribute="bottom" id="Lut-fe-FIl"/>
+                            <constraint firstItem="zmT-9k-Wak" firstAttribute="centerX" secondItem="hOK-9y-BDF" secondAttribute="centerX" id="qa8-2h-C4f"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ezY-nX-owJ"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Title" id="JCb-PX-3N0">
+                        <barButtonItem key="rightBarButtonItem" title="Post" id="Wk6-Ky-cLz">
+                            <connections>
+                                <action selector="postVideo:" destination="d8B-MJ-4QT" id="eYQ-hr-QRV"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cameraView" destination="CQQ-hj-wYz" id="i1O-1Q-ZrI"/>
+                        <outlet property="postButton" destination="Wk6-Ky-cLz" id="dwM-Xw-6q6"/>
+                        <outlet property="recordButton" destination="zmT-9k-Wak" id="WPV-7w-ia2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pDH-aW-kgo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="left" id="0cV-vh-krF">
+                    <connections>
+                        <action selector="swipeToChangeCameras:" destination="d8B-MJ-4QT" id="SyC-Dk-Otk"/>
+                    </connections>
+                </swipeGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1969" y="-865"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gdW-Je-ais">

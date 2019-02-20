@@ -11,6 +11,7 @@ import UIKit
 protocol AudioCommentTableViewCellDelegate: class {
     
     func audioCell(_ audioCell: AudioCommentTableViewCell, didPlayPauseAt url: URL)
+    func isDownloaded(url: URL?) -> Bool
     func isPlaying(url: URL?) -> Bool
 }
 
@@ -40,5 +41,7 @@ class AudioCommentTableViewCell: UITableViewCell {
         
         let listenTitle = isPlaying ? "Pause" : "Listen"
         listenButton.setTitle(listenTitle, for: .normal)
+        
+        listenButton.isEnabled = delegate?.isDownloaded(url: comment.audioURL) ?? false
     }
 }

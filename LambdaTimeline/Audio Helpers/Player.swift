@@ -19,6 +19,14 @@ class Player: NSObject, AVAudioPlayerDelegate {
     private var timer: Timer?
     weak var delegate: PlayerDelegate?
     
+    var currentURL: URL? {
+        return audioPlayer?.url
+    }
+    
+    var currentData: Data? {
+        return audioPlayer?.data
+    }
+    
     var isPlaying: Bool {
         return audioPlayer?.isPlaying ?? false
     }
@@ -52,6 +60,8 @@ class Player: NSObject, AVAudioPlayerDelegate {
         } else if let data = data, audioPlayer?.data != data {
             audioPlayer = try! AVAudioPlayer(data: data)
             audioPlayer?.delegate = self
+        } else {
+            return
         }
         audioPlayer?.play()
         timer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { [weak self] _ in

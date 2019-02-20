@@ -31,4 +31,14 @@ class AVSessionHelper {
             }
         }
     }
+    
+    func setupSessionForAudioPlayback() {
+        let session = AVAudioSession.sharedInstance()
+        do {
+            try session.setCategory(.playback, mode: .default, options: [.allowBluetooth, .allowAirPlay])
+            try session.setActive(true, options: [])
+        } catch {
+            NSLog("Error setting up audio session: \(error)")
+        }
+    }
 }
