@@ -13,6 +13,9 @@ class ImagePostDetailTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
+        addChild(viewController)
+        view.addSubview(viewController.view)
+        viewController.didMove(toParent: self)
     }
     
     func updateViews() {
@@ -29,35 +32,69 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     // MARK: - Table view data source
-    
+    let viewController = ViewController()
     @IBAction func createComment(_ sender: Any) {
         
-        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
-        
-        var commentTextField: UITextField?
-        
-        alert.addTextField { (textField) in
-            textField.placeholder = "Comment:"
-            commentTextField = textField
-        }
-        
-        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
+        let alert = UIAlertController(title: "Leave Comment", message: "Please Select an Option", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Text Comment", style: .default, handler: { (_) in
+            print("User click Text Comment button")
+            let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
+            var commentTextField: UITextField?
             
-            guard let commentText = commentTextField?.text else { return }
+            alert.addTextField { (textField) in
+                textField.placeholder = "Comment:"
+                commentTextField = textField
+            }
             
-            self.postController.addComment(with: commentText, to: &self.post!)
+            let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
+                
+                guard let commentText = commentTextField?.text else { return }
+                
+                self.postController.addComment(with: commentText, to: &self.post!)
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            
+            alert.addAction(addCommentAction)
+            alert.addAction(cancelAction)
+            
+            self.present(alert, animated: true, completion: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Audio Comment", style: .default, handler: { (_) in
+            print("User click Audio Comment button")
+            let alert = UIAlertController(title: "Add a comment", message: "Record your audio comment below:", preferredStyle: .alert)
+            var recordButton: UIButton?
+            recordButton?.titleLabel?.text = "Record"
+            
+            let recordAction = UIAlertAction(title: "Record", style: .default) { (_) in
+                let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+                let nextViewController = storyBoard.instantiateViewController(withIdentifier: "audio") as! ViewController
+                self.present(nextViewController, animated:true, completion:nil)
+            }
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
-        }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            
+            alert.addAction(recordAction)
+            alert.addAction(cancelAction)
+            
+            self.present(alert, animated: true, completion: nil)
+        }))
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: { (_) in
+            print("User click Dismiss button")
+        }))
         
-        alert.addAction(addCommentAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: {
+            print("completion block")
+        })
+    
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

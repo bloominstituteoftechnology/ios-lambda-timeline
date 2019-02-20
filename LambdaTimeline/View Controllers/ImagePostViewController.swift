@@ -9,35 +9,13 @@ import CoreImage
 import UIKit
 import Photos
 
-class ImagePostViewController: ShiftableViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ImagePostViewController: ShiftableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerData.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        
-        filterName = pickerData[row]
-        
-        return pickerData[row]
-    }
-    func setPicker() -> String {
-        if let filterName = filterName, filterName.count > 0 {
-            return filterName
-            
-        } else {
-            return "CIColorControls"
-        }
-    }
+   
   
-    let shiftableViewController = ShiftableViewController()
-    let filterChooserViewController = FilterChooserViewController()
-    var filterName: String?
-   // let filter = CIFilter(name: self.setPicker())
+   
+    
+  
     private let context = CIContext(options: nil)
     
     private var originalImage: UIImage? {
@@ -45,71 +23,56 @@ class ImagePostViewController: ShiftableViewController, UIPickerViewDelegate, UI
             updateImageView()
         }
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        hideElements()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        guard let filter = CIFilter(name: self.setPicker()) else { return }
+        hideElements()
+        let filter = CIFilter(name: "CIColorControls")!
+        let filterZoom = CIFilter(name: "CIZoomBlur")!
+        let filterPixel = CIFilter(name: "CIPixellate")!
+        let filterMask = CIFilter(name: "CIUnsharpMask")!
         setImageViewHeight(with: 1.0)
       // updateImageView()
         updateViews()
-        filterPicker.dataSource = self
-        filterPicker.delegate = self
-        configurationSlider(brightnessSliderOutlet, from: filter.attributes[kCIInputBrightnessKey])
-        configurationSlider(contrastSliderOutlet, from: filter.attributes[kCIInputContrastKey])
-        configurationSlider(saturationSliderOutlet, from: filter.attributes[kCIInputSaturationKey])
         
+        configurationSlider(brightnessSliderOutlet, from: filter.attributes[kCIInputBrightnessKey]!)
+        configurationSlider(contrastSliderOutlet, from: filter.attributes[kCIInputContrastKey]!)
+        configurationSlider(saturationSliderOutlet, from: filter.attributes[kCIInputSaturationKey]!)
+        configurationSlider(zoomSliderOutlet, from: filterZoom.attributes[kCIInputAmountKey]!)
+        configurationSlider(pixelSliderOutlet, from: filterPixel.attributes[kCIInputScaleKey]!)
+        configurationSlider(maskSliderOutlet, from: filterMask.attributes[kCIInputRadiusKey]!)
+        configurationSlider(intesitysSiderOutlet, from: filterMask.attributes[kCIInputIntensityKey]!)
        
     }
-    
-        @IBOutlet weak var brightnessSliderOutlet: UISlider!
-        @IBOutlet weak var contrastSliderOutlet: UISlider!
-        @IBOutlet weak var saturationSliderOutlet: UISlider!
-    
-    @IBOutlet weak var filterPicker: UIPickerView!
-    
-    var pickerData: [String] = [
-        "CIColorControls" ]
-    
-    //"CIZoomBlur" ]
-    
-    
-//        "CICategoryColorAdjustment",
-//        "CICategoryColorEffect",
-//        "CICategoryCompositeOperation",
-//        "CICategoryDistortionEffect",
-//        "CICategoryGenerator",
-//        "CICategoryGeometryAdjustment",
-//        "CICategoryGradient",
-//        "CICategoryHalftoneEffect"
-//        ]
-//    kCICategoryBuiltIn,
-//    kCICategoryColorAdjustment,
-//    kCICategoryColorEffect,
-//    kCICategoryDistortionEffect,
-//    kCICategoryGeometryAdjustment,
-//    kCICategoryCompositeOperation,
-//    kCICategoryHalftoneEffect,
-//    kCICategoryTransition,
-//    kCICategoryTileEffect,
-//    kCICategoryGenerator,
-//    kCICategoryReduction,
-//    kCICategoryGradient,
-//    kCICategoryStylize,
-//    kCICategorySharpen,
-//    kCICategoryBlur,
-//    kCICategoryVideo,
-//    kCICategoryStillImage,
-//    kCICategoryInterlaced,
-//    kCICategoryNonSquarePixels,
-//    kCICategoryHighDynamicRange
-//       ]
-    @IBAction func savePhoto(_ sender: Any) {
+    func hideElements() {
+        if imageView.image == nil {
+            elementStackView.isHidden = true
+        } else {
+            elementStackView.isHidden = false
+        }
     }
+    
+    @IBOutlet weak var elementStackView: UIStackView!
+    @IBOutlet weak var brightnessSliderOutlet: UISlider!
+    @IBOutlet weak var contrastSliderOutlet: UISlider!
+    @IBOutlet weak var saturationSliderOutlet: UISlider!
+    @IBOutlet weak var zoomSliderOutlet: UISlider!
+    @IBOutlet weak var pixelSliderOutlet: UISlider!
+    @IBOutlet weak var maskSliderOutlet: UISlider!
+    @IBOutlet weak var intesitysSiderOutlet: UISlider!
+    
+    
+    
     @IBAction func sliderChange(_ sender: Any) {
         updateImageView()
         
     }
+    
+    
     
     
     private func configurationSlider(_ slider: UISlider, from attributes: Any) {
@@ -123,6 +86,7 @@ class ImagePostViewController: ShiftableViewController, UIPickerViewDelegate, UI
             slider.minimumValue = min
             slider.maximumValue = max
             slider.value = value
+            
             
         } else {
             slider.minimumValue = 1
@@ -140,9 +104,11 @@ class ImagePostViewController: ShiftableViewController, UIPickerViewDelegate, UI
     }
     
     private func applyFilter(to image: UIImage) -> UIImage {
-      //  let name = CIFilter.filterNames(inCategory: setPicker())
-        let filter = CIFilter(name: setPicker())!
-        print(setPicker())
+    
+        let filter = CIFilter(name: "CIColorControls")!
+        let filterZoom = CIFilter(name: "CIZoomBlur")!
+        let filterPixel = CIFilter(name: "CIPixellate")!
+        let filterMask = CIFilter(name: "CIUnsharpMask")!
         let inputImage: CIImage
         if let ciImage = image.ciImage {
             inputImage = ciImage
@@ -153,16 +119,39 @@ class ImagePostViewController: ShiftableViewController, UIPickerViewDelegate, UI
             return image
         }
         filter.setValue(inputImage, forKey: kCIInputImageKey)
-        
         filter.setValue(brightnessSliderOutlet.value, forKey: kCIInputBrightnessKey)
         filter.setValue(contrastSliderOutlet.value, forKey: kCIInputContrastKey)
         filter.setValue(saturationSliderOutlet.value, forKey: kCIInputSaturationKey)
+        
         
         guard let outputImage = filter.outputImage else {
             return image
         }
         
-        guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+        filterZoom.setValue(outputImage, forKey: kCIInputImageKey)
+        filterZoom.setValue(zoomSliderOutlet.value/19, forKey: kCIInputAmountKey)
+        
+        guard let outputZoomImage = filterZoom.outputImage else {
+            return image
+        }
+        
+        filterPixel.setValue(outputZoomImage, forKey: kCIInputImageKey)
+        filterPixel.setValue(pixelSliderOutlet.value, forKey: kCIInputScaleKey)
+        
+        guard let outputFilteredImage = filterPixel.outputImage else {
+            return image
+        }
+        
+        filterMask.setValue(outputFilteredImage, forKey: kCIInputImageKey)
+        filterMask.setValue(maskSliderOutlet.value, forKey: kCIInputRadiusKey)
+        filterMask.setValue(intesitysSiderOutlet.value, forKey: kCIInputIntensityKey)
+            guard let outputFinalImage = filterMask.outputImage else {
+                return image
+            }
+        
+       
+    
+        guard let cgImage = context.createCGImage(outputFinalImage, from: outputFinalImage.extent) else {
             return image
         }
         
@@ -272,22 +261,8 @@ class ImagePostViewController: ShiftableViewController, UIPickerViewDelegate, UI
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
-//}
 
-//extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-//
-//        chooseImageButton.setTitle("", for: [])
-//
-//        picker.dismiss(animated: true, completion: nil)
-//
-//        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-//
-//        imageView.image = image
-//
-//        setImageViewHeight(with: image.ratio)
-//    }
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
         originalImage = info[.originalImage] as? UIImage

@@ -30,7 +30,11 @@
 		46D571F52173CF3E00E7FF73 /* UIImage+Ratio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D571F42173CF3E00E7FF73 /* UIImage+Ratio.swift */; };
 		46D571F82173FC2700E7FF73 /* ImagePostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */; };
 		A52FCAF0221B6CF80073AF00 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A52FCAEF221B6CF80073AF00 /* GoogleService-Info.plist */; };
-		A52FCAF2221B80140073AF00 /* FilterChooserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52FCAF1221B80140073AF00 /* FilterChooserViewController.swift */; };
+		A52FCB1C221D231E0073AF00 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52FCB1B221D231E0073AF00 /* LoadingViewController.swift */; };
+		A52FCB20221D24780073AF00 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52FCB1D221D24780073AF00 /* ViewController.swift */; };
+		A52FCB21221D24790073AF00 /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52FCB1E221D24780073AF00 /* Recorder.swift */; };
+		A52FCB22221D24790073AF00 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52FCB1F221D24780073AF00 /* Player.swift */; };
+		A52FCB25221D293C0073AF00 /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A52FCB24221D293C0073AF00 /* music.mp3 */; };
 		E453457955DF907FCBD117F1 /* Pods_LambdaTimeline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */; };
 /* End PBXBuildFile section */
 
@@ -62,7 +66,11 @@
 		46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePostDetailTableViewController.swift; sourceTree = "<group>"; };
 		5D2CCD6C68779B0A70AC37FA /* Pods-LambdaTimeline.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LambdaTimeline.release.xcconfig"; path = "Pods/Target Support Files/Pods-LambdaTimeline/Pods-LambdaTimeline.release.xcconfig"; sourceTree = "<group>"; };
 		A52FCAEF221B6CF80073AF00 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		A52FCAF1221B80140073AF00 /* FilterChooserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterChooserViewController.swift; sourceTree = "<group>"; };
+		A52FCB1B221D231E0073AF00 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
+		A52FCB1D221D24780073AF00 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		A52FCB1E221D24780073AF00 /* Recorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
+		A52FCB1F221D24780073AF00 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		A52FCB24221D293C0073AF00 /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
 		AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LambdaTimeline.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -108,6 +116,7 @@
 		4646377A216FDE4B00E7FF73 /* LambdaTimeline */ = {
 			isa = PBXGroup;
 			children = (
+				A52FCB23221D24840073AF00 /* AudioRecorder */,
 				46CFE7042171572900E7FF73 /* Views */,
 				46A0366B21700F6100E7FF73 /* View Controllers */,
 				4646379A2170090900E7FF73 /* Model Controllers */,
@@ -136,6 +145,7 @@
 				46463782216FDE4C00E7FF73 /* Assets.xcassets */,
 				46463787216FDE4C00E7FF73 /* Info.plist */,
 				A52FCAEF221B6CF80073AF00 /* GoogleService-Info.plist */,
+				A52FCB24221D293C0073AF00 /* music.mp3 */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -164,7 +174,7 @@
 				46A0366921700F5100E7FF73 /* PostsCollectionViewController.swift */,
 				46CFE6F421707D0000E7FF73 /* ImagePostViewController.swift */,
 				46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */,
-				A52FCAF1221B80140073AF00 /* FilterChooserViewController.swift */,
+				A52FCB1B221D231E0073AF00 /* LoadingViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -215,6 +225,16 @@
 				AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A52FCB23221D24840073AF00 /* AudioRecorder */ = {
+			isa = PBXGroup;
+			children = (
+				A52FCB1F221D24780073AF00 /* Player.swift */,
+				A52FCB1E221D24780073AF00 /* Recorder.swift */,
+				A52FCB1D221D24780073AF00 /* ViewController.swift */,
+			);
+			path = AudioRecorder;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -280,6 +300,7 @@
 			files = (
 				46463786216FDE4C00E7FF73 /* LaunchScreen.storyboard in Resources */,
 				A52FCAF0221B6CF80073AF00 /* GoogleService-Info.plist in Resources */,
+				A52FCB25221D293C0073AF00 /* music.mp3 in Resources */,
 				46463783216FDE4C00E7FF73 /* Assets.xcassets in Resources */,
 				46463781216FDE4B00E7FF73 /* Main.storyboard in Resources */,
 			);
@@ -394,21 +415,24 @@
 				46A0366D2170158900E7FF73 /* SignInViewController.swift in Sources */,
 				46CFE6FB21714E6100E7FF73 /* Author.swift in Sources */,
 				46CFE6F92170862C00E7FF73 /* ShiftableViewController.swift in Sources */,
+				A52FCB21221D24790073AF00 /* Recorder.swift in Sources */,
+				A52FCB22221D24790073AF00 /* Player.swift in Sources */,
 				4646377C216FDE4B00E7FF73 /* AppDelegate.swift in Sources */,
 				46CFE6FD217154F500E7FF73 /* Networking.swift in Sources */,
 				46CFE6F521707D0000E7FF73 /* ImagePostViewController.swift in Sources */,
 				46CFE6FF2171556D00E7FF73 /* ConcurrentOperation.swift in Sources */,
+				A52FCB1C221D231E0073AF00 /* LoadingViewController.swift in Sources */,
 				46463790216FFD1B00E7FF73 /* Post.swift in Sources */,
 				46CFE6F32170757F00E7FF73 /* User+DictionaryRepresentation.swift in Sources */,
 				46D571F32172D43B00E7FF73 /* Cache.swift in Sources */,
 				46CFE7012171559500E7FF73 /* FetchMediaOperation.swift in Sources */,
 				46D571F82173FC2700E7FF73 /* ImagePostDetailTableViewController.swift in Sources */,
-				A52FCAF2221B80140073AF00 /* FilterChooserViewController.swift in Sources */,
 				46CFE7032171572600E7FF73 /* ImagePostCollectionViewCell.swift in Sources */,
 				4646379C2170091A00E7FF73 /* PostController.swift in Sources */,
 				464637992170048900E7FF73 /* FirebaseConvertible.swift in Sources */,
 				46A0366A21700F5100E7FF73 /* PostsCollectionViewController.swift in Sources */,
 				46D571F52173CF3E00E7FF73 /* UIImage+Ratio.swift in Sources */,
+				A52FCB20221D24780073AF00 /* ViewController.swift in Sources */,
 				46463792216FFDD900E7FF73 /* Comment.swift in Sources */,
 				46CFE6F721707FA600E7FF73 /* UIViewController+InformationalAlert.swift in Sources */,
 			);
