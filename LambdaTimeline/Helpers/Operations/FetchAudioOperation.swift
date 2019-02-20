@@ -12,7 +12,6 @@ class FetchAudioOperation: ConcurrentOperation {
     
     // MARK: Properties
     let comment: Comment
-    let postController: PostController
     var audioData: Data?
     
     private let session: URLSession
@@ -20,9 +19,8 @@ class FetchAudioOperation: ConcurrentOperation {
     private var dataTask: URLSessionDataTask?
     
     // MARK: - Initializers
-    init(comment: Comment, postController: PostController, session: URLSession = URLSession.shared) {
+    init(comment: Comment, session: URLSession = URLSession.shared) {
         self.comment = comment
-        self.postController = postController
         self.session = session
         super.init()
     }

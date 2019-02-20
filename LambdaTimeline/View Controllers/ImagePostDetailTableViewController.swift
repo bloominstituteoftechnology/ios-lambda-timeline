@@ -116,7 +116,7 @@ class ImagePostDetailTableViewController: UITableViewController, CommentPresente
         
         if let audioData = cache.value(for: audioURL) { return }
         
-        let fetchOp = FetchAudioOperation(comment: comment, postController: postController)
+        let fetchOp = FetchAudioOperation(comment: comment)
         
         let cacheOp = BlockOperation {
             if let data = fetchOp.audioData {
