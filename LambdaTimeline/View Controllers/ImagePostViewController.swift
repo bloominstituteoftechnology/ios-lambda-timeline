@@ -1,10 +1,3 @@
-//
-//  ImagePostViewController.swift
-//  LambdaTimeline
-//
-//  Created by Spencer Curtis on 10/12/18.
-//  Copyright © 2018 Lambda School. All rights reserved.
-//
 
 import UIKit
 import Photos
@@ -14,9 +7,19 @@ class ImagePostViewController: ShiftableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        hideOrShowFiltering()
+        
         setImageViewHeight(with: 1.0)
         
+        blackWhiteSwitch.isOn = false
+        vintageSwitch.isOn = false
+        
         updateViews()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        hideOrShowFiltering()
     }
     
     func updateViews() {
@@ -34,6 +37,14 @@ class ImagePostViewController: ShiftableViewController {
         imageView.image = image
         
         chooseImageButton.setTitle("", for: [])
+    }
+    
+    func hideOrShowFiltering() {
+        if imageView.image == nil {
+            filterEditingStack.isHidden = true
+        } else {
+            filterEditingStack.isHidden = false
+        }
     }
     
     private func presentImagePickerController() {
@@ -112,16 +123,343 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
+    // MARK: - Private Properties
+    
+    private func configureSlider(_ slider: UISlider, from attributes: Any?) {
+        
+        // If attributes are not actually a dictionary, use an empty dictionary
+        let attrs = attributes as? [String: Any] ?? [:]
+        
+        // Pull out 3 values that I care about
+        if let min = attrs[kCIAttributeSliderMin] as? Float,
+            let max = attrs[kCIAttributeSliderMax] as? Float,
+            let value = attrs[kCIAttributeDefault] as? Float {
+            
+            // Set the 3 values on my sliders
+            slider.minimumValue = min
+            slider.maximumValue = max
+            slider.value = value
+            
+        } else {
+            // if they are missing, choose a reasonable default
+            slider.minimumValue = 0
+            slider.maximumValue = 1
+            slider.value = 0.5
+        }
+    }
+    
+    private func updateImageView() {
+        
+        // Make sure I have an image
+        guard var image = originalImage else { return }
+        
+        // Put image into my image view and apply any filter I might have to the image
+        image = applyTonalFilter(to: image)
+        image = applyTransferFilter(to: image)
+        image = applyMonochromeFilter(to: image)
+        image = applyPixellateFilter(to: image)
+        image = applyZoomBlurFilter(to: image)
+        
+        //imageView?.image = applyFilterChain(to: image)
+        imageView.image = image
+        
+    }
+    
+    private func applyFilterChain(to image: UIImage) -> UIImage {
+        
+        let inputImage: CIImage
+        
+        // If we happen to have a CIImage, use that
+        if let ciImage = image.ciImage {
+            inputImage = ciImage
+        } else if let cgImage = image.cgImage {
+            // if we get a cgImage, convert it to a ciImage
+            inputImage = CIImage(cgImage: cgImage)
+        } else {
+            // 🤷🏼‍♀️ if we don't have either, we have no idea what to do in this case
+            return image
+        }
+        
+        // CIPhotoEffectTonal filter only takes an input image
+        
+        tonalFilter?.setValue(inputImage, forKey: kCIInputImageKey)
+        
+        // Pass result of tonal filter to CIPhotoEffectTransfer
+        if let tonalOutput = tonalFilter?.value(forKey: kCIOutputImageKey) as? CIImage {
+            transferFilter?.setValue(tonalOutput, forKey: kCIInputImageKey)
+            
+            if let transferOutput = transferFilter?.value(forKey: kCIOutputImageKey) as? CIImage {
+                monochromeFilter?.setValue(transferOutput, forKey: kCIInputImageKey)
+                monochromeFilter?.setValue(CIColor(red: 0.25, green: 0.92, blue: 0.83), forKey: "inputColor")
+                monochromeFilter?.setValue(monochromeSlider.value, forKey: kCIInputIntensityKey)
+                
+                if let monochromeOutput = monochromeFilter?.value(forKey: kCIOutputImageKey) as? CIImage {
+                    pixellateFilter?.setValue(monochromeOutput, forKey: kCIInputImageKey)
+                    pixellateFilter?.setValue(pixellateSlider.value, forKey: kCIInputScaleKey)
+                    
+                    if let pixellateOutput = pixellateFilter?.value(forKey: kCIOutputImageKey) as? CIImage {
+                        zoomBlurFilter?.setValue(pixellateOutput, forKey: kCIInputImageKey)
+                        zoomBlurFilter?.setValue(zoomBlurSlider.value, forKey: kCIInputAmountKey)
+                        
+                        if let zoomBlurOutput = zoomBlurFilter?.value(forKey: kCIOutputImageKey) as? CIImage {
+                            
+                            // Convert back
+                            guard let cgImage = context.createCGImage(zoomBlurOutput, from: zoomBlurOutput.extent) else {
+                                return image
+                            }
+                            
+                            self.imageView.image = UIImage(cgImage: cgImage)
+                            
+                            return UIImage(cgImage: cgImage)
+                            
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+        return image
+    }
+    
+    private func applyTonalFilter(to image: UIImage) -> UIImage {
+        
+        let inputImage: CIImage
+        
+        // If we happen to have a CIImage, use that
+        if let ciImage = image.ciImage {
+            inputImage = ciImage
+            
+        } else if let cgImage = image.cgImage {
+            // if we get a cgImage, convert it to a ciImage
+            inputImage = CIImage(cgImage: cgImage)
+            
+        } else {
+            // 🤷🏼‍♀️ if we don't have either, we have no idea what to do in this case
+            return image
+        }
+
+        if blackWhiteSwitch.isOn {
+            tonalFilter?.setValue(inputImage, forKey: "inputImage")
+            
+            // Retrieve image from filter
+            guard let outputImage = tonalFilter?.outputImage else {
+                return image
+            }
+            
+            // Convert back
+            guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+                return image
+            }
+            
+            return UIImage(cgImage: cgImage)
+        }
+        
+        return image
+    }
+    
+    private func applyTransferFilter(to image: UIImage) -> UIImage {
+        
+        let inputImage: CIImage
+        
+        // If we happen to have a CIImage, use that
+        if let ciImage = image.ciImage {
+            inputImage = ciImage
+            
+        } else if let cgImage = image.cgImage {
+            // if we get a cgImage, convert it to a ciImage
+            inputImage = CIImage(cgImage: cgImage)
+            
+        } else {
+            // 🤷🏼‍♀️ if we don't have either, we have no idea what to do in this case
+            return image
+        }
+        
+        if vintageSwitch.isOn == true {
+            transferFilter?.setValue(inputImage, forKey: "inputImage")
+            
+            // Retrieve image from filter
+            guard let outputImage = transferFilter?.outputImage else {
+                return image
+            }
+            
+            // Convert back
+            guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+                return image
+            }
+            
+            return UIImage(cgImage: cgImage)
+        }
+        
+        return image
+    }
+    
+    private func applyMonochromeFilter(to image: UIImage) -> UIImage {
+        
+        // CIColorMonochrome [inputImage, inputColor, inputIntensity]
+        //  - inputIntensity: slider [0.0...1.0]
+        //  - inputColor: cgColor
+        
+        let inputImage: CIImage
+        
+        // If we happen to have a CIImage, use that
+        if let ciImage = image.ciImage {
+            inputImage = ciImage
+            
+        } else if let cgImage = image.cgImage {
+            // if we get a cgImage, convert it to a ciImage
+            inputImage = CIImage(cgImage: cgImage)
+            
+        } else {
+            // 🤷🏼‍♀️ if we don't have either, we have no idea what to do in this case
+            return image
+        }
+        
+        monochromeFilter?.setValue(inputImage, forKey: kCIInputImageKey)
+        monochromeFilter?.setValue(CIColor(red: 0.25, green: 0.92, blue: 0.83), forKey: "inputColor")
+        monochromeFilter?.setValue(monochromeSlider.value, forKey: kCIInputIntensityKey)
+        
+        // Retrieve image from filter
+        guard let outputImage = monochromeFilter?.outputImage else {
+            return image
+        }
+        
+        // Convert back
+        guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+            return image
+        }
+        
+        self.imageView.image = UIImage(cgImage: cgImage)
+        
+        return UIImage(cgImage: cgImage)
+    
+    }
+    
+    private func applyPixellateFilter(to image: UIImage) -> UIImage {
+        
+        // CIPixellate [inputImage, inputCenter, inputScale]
+        //  - inputScale: slider [1...100]
+        //  - inputCenter: CIVector - default = ["150 150"]
+        
+        let inputImage: CIImage
+        
+        // If we happen to have a CIImage, use that
+        if let ciImage = image.ciImage {
+            inputImage = ciImage
+            
+        } else if let cgImage = image.cgImage {
+            // if we get a cgImage, convert it to a ciImage
+            inputImage = CIImage(cgImage: cgImage)
+            
+        } else {
+            // 🤷🏼‍♀️ if we don't have either, we have no idea what to do in this case
+            return image
+        }
+        
+        pixellateFilter?.setValue(inputImage, forKey: kCIInputImageKey)
+        pixellateFilter?.setValue(pixellateSlider.value, forKey: kCIInputScaleKey)
+        
+        // Retrieve image from filter
+        guard let outputImage = pixellateFilter?.outputImage else {
+            return image
+        }
+        
+        // Convert back
+        guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+            return image
+        }
+        
+        self.imageView.image = UIImage(cgImage: cgImage)
+        
+        return UIImage(cgImage: cgImage)
+    }
+    
+    private func applyZoomBlurFilter(to image: UIImage) -> UIImage {
+        
+        // CIZoomBlur [inputImage, inputCenter, inputAmount]
+        //  - inputAmount: slider [-200...200]
+        //  - inputCenter: CIVector - default = ["150 150"]
+        
+        let inputImage: CIImage
+        
+        // If we happen to have a CIImage, use that
+        if let ciImage = image.ciImage {
+            inputImage = ciImage
+            
+        } else if let cgImage = image.cgImage {
+            // if we get a cgImage, convert it to a ciImage
+            inputImage = CIImage(cgImage: cgImage)
+            
+        } else {
+            // 🤷🏼‍♀️ if we don't have either, we have no idea what to do in this case
+            return image
+        }
+        
+        zoomBlurFilter?.setValue(inputImage, forKey: kCIInputImageKey)
+        zoomBlurFilter?.setValue(zoomBlurSlider.value, forKey: kCIInputAmountKey)
+        
+        // Retrieve image from filter
+        guard let outputImage = zoomBlurFilter?.outputImage else {
+            return image
+        }
+        
+        // Convert back
+        guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+            return image
+        }
+        
+        self.imageView.image = UIImage(cgImage: cgImage)
+        
+        return UIImage(cgImage: cgImage)
+
+    }
+    
+    
+    @IBAction func switchChanged(_ sender: Any) {
+        updateImageView()
+    }
+    
+    @IBAction func sliderChanged(_ sender: Any) {
+        updateImageView()
+    }
+    
+    // MARK: - Properties
+    
+    private let tonalFilter = CIFilter(name: "CIPhotoEffectTonal")
+    private let transferFilter = CIFilter(name: "CIPhotoEffectTransfer")
+    private let monochromeFilter = CIFilter(name: "CIColorMonochrome")
+    private let pixellateFilter = CIFilter(name: "CIPixellate")
+    private let zoomBlurFilter = CIFilter(name: "CIZoomBlur")
+    
+    private let context = CIContext(options: nil)
+    
+    private var originalImage: UIImage? {
+        // Need to know when the user has picked the image
+        didSet {
+            updateImageView()
+        }
+    }
+    
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    
+    @IBOutlet weak var blackWhiteSwitch: UISwitch!
+    @IBOutlet weak var vintageSwitch: UISwitch!
+    @IBOutlet weak var monochromeSlider: UISlider!
+    @IBOutlet weak var pixellateSlider: UISlider!
+    @IBOutlet weak var zoomBlurSlider: UISlider!
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    @IBOutlet weak var filterEditingStack: UIStackView!
+    
 }
+
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -133,7 +471,8 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
-        imageView.image = image
+        //imageView.image = image
+        originalImage = image
         
         setImageViewHeight(with: image.ratio)
     }
