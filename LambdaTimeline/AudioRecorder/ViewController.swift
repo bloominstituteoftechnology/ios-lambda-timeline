@@ -24,11 +24,11 @@ class ViewController: UIViewController, PlayerDelegate, RecorderDelegate {
             let recordAudioFile = segue.destination as! ImagePostTableViewCell
             recordAudioFile.recordFile = recorder
     }
-    @IBAction func sliderChanged(_ sender: Any) {
-        let duration = Float(player.totalTime)
-       // let sliderTime = TimeInterval(timerSlider.value) * duration
-        
-    }
+//    @IBAction func sliderChanged(_ sender: Any) {
+//        let duration = Float(player.totalTime)
+//       // let sliderTime = TimeInterval(timerSlider.value) * duration
+//        
+//    }
     @IBAction func save(_ sender: Any) {
         self.postController.addComment(with: "\(recorder.currentFile)", to: post)
         DispatchQueue.main.async {
