@@ -373,14 +373,65 @@
         <!--Audio-->
         <scene sceneID="Q3V-Xw-Ug1">
             <objects>
-                <viewController id="4fP-Aq-i6D" sceneMemberID="viewController">
+                <viewController id="4fP-Aq-i6D" customClass="AudioCommentViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wgP-uF-tBX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audio Comment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6W1-PR-Wfq">
+                                <rect key="frame" x="83" y="84" width="209" height="36"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="kHK-p3-uvg">
+                                <rect key="frame" x="37.5" y="304.5" width="300" height="58.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tU5-L3-k0U">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="EA1-bq-rSV">
+                                        <rect key="frame" x="0.0" y="28.5" width="300" height="30"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TBe-5Z-Mn2">
+                                                <rect key="frame" x="0.0" y="0.0" width="146" height="30"/>
+                                                <state key="normal" title="Listen"/>
+                                                <connections>
+                                                    <action selector="playPause:" destination="4fP-Aq-i6D" eventType="touchUpInside" id="1ke-Xp-5cA"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8SD-Ke-ZIH">
+                                                <rect key="frame" x="154" y="0.0" width="146" height="30"/>
+                                                <color key="tintColor" red="0.73725490199999999" green="0.16078431369999999" blue="0.23921568630000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="Record"/>
+                                                <connections>
+                                                    <action selector="toggleRecord:" destination="4fP-Aq-i6D" eventType="touchUpInside" id="lMv-QF-cYF"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="kHK-p3-uvg" firstAttribute="centerY" secondItem="wgP-uF-tBX" secondAttribute="centerY" id="5ke-t4-6OB"/>
+                            <constraint firstItem="kHK-p3-uvg" firstAttribute="width" secondItem="wgP-uF-tBX" secondAttribute="width" multiplier="0.8" id="kCV-gE-EDC"/>
+                            <constraint firstItem="6W1-PR-Wfq" firstAttribute="centerX" secondItem="wgP-uF-tBX" secondAttribute="centerX" id="qKa-Is-unP"/>
+                            <constraint firstItem="6W1-PR-Wfq" firstAttribute="top" secondItem="sZO-Rk-Qo4" secondAttribute="top" constant="20" id="svJ-nt-dBP"/>
+                            <constraint firstItem="kHK-p3-uvg" firstAttribute="centerX" secondItem="wgP-uF-tBX" secondAttribute="centerX" id="xuf-TB-vPL"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="sZO-Rk-Qo4"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Audio" id="hGE-zG-Kzw"/>
+                    <connections>
+                        <outlet property="listenButton" destination="TBe-5Z-Mn2" id="KRl-8I-ndj"/>
+                        <outlet property="recordButton" destination="8SD-Ke-ZIH" id="BUj-EE-Mfh"/>
+                        <outlet property="timeLabel" destination="tU5-L3-k0U" id="8Ng-ON-Yow"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uI3-7T-c2V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -15,6 +15,10 @@
 		34A55B12221CA35700635303 /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A55B11221CA35700635303 /* GradientView.swift */; };
 		34A55B14221CA8C200635303 /* CommentPresenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A55B13221CA8C200635303 /* CommentPresenterViewController.swift */; };
 		34A55B1E221CBE7200635303 /* TextCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A55B1D221CBE7200635303 /* TextCommentViewController.swift */; };
+		34A55B22221CCA8400635303 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A55B20221CCA8400635303 /* Player.swift */; };
+		34A55B23221CCA8400635303 /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A55B21221CCA8400635303 /* Recorder.swift */; };
+		34A55B25221CCB0600635303 /* AudioCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A55B24221CCB0600635303 /* AudioCommentViewController.swift */; };
+		34A55B27221CCE7E00635303 /* AVSessionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34A55B26221CCE7E00635303 /* AVSessionHelper.swift */; };
 		4646377C216FDE4B00E7FF73 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4646377B216FDE4B00E7FF73 /* AppDelegate.swift */; };
 		46463781216FDE4B00E7FF73 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4646377F216FDE4B00E7FF73 /* Main.storyboard */; };
 		46463783216FDE4C00E7FF73 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46463782216FDE4C00E7FF73 /* Assets.xcassets */; };
@@ -50,6 +54,10 @@
 		34A55B11221CA35700635303 /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		34A55B13221CA8C200635303 /* CommentPresenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentPresenterViewController.swift; sourceTree = "<group>"; };
 		34A55B1D221CBE7200635303 /* TextCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCommentViewController.swift; sourceTree = "<group>"; };
+		34A55B20221CCA8400635303 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		34A55B21221CCA8400635303 /* Recorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
+		34A55B24221CCB0600635303 /* AudioCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCommentViewController.swift; sourceTree = "<group>"; };
+		34A55B26221CCE7E00635303 /* AVSessionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AVSessionHelper.swift; path = "LambdaTimeline/Audio Helpers/AVSessionHelper.swift"; sourceTree = SOURCE_ROOT; };
 		46463778216FDE4B00E7FF73 /* LambdaTimeline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LambdaTimeline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4646377B216FDE4B00E7FF73 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		46463780216FDE4B00E7FF73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -99,6 +107,16 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		34A55B1F221CCA6E00635303 /* Audio Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				34A55B20221CCA8400635303 /* Player.swift */,
+				34A55B21221CCA8400635303 /* Recorder.swift */,
+				34A55B26221CCE7E00635303 /* AVSessionHelper.swift */,
+			);
+			path = "Audio Helpers";
+			sourceTree = "<group>";
+		};
 		4646376F216FDE4B00E7FF73 = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +138,7 @@
 		4646377A216FDE4B00E7FF73 /* LambdaTimeline */ = {
 			isa = PBXGroup;
 			children = (
+				34A55B1F221CCA6E00635303 /* Audio Helpers */,
 				46CFE7042171572900E7FF73 /* Views */,
 				46A0366B21700F6100E7FF73 /* View Controllers */,
 				4646379A2170090900E7FF73 /* Model Controllers */,
@@ -178,6 +197,7 @@
 				46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */,
 				34A55B13221CA8C200635303 /* CommentPresenterViewController.swift */,
 				34A55B1D221CBE7200635303 /* TextCommentViewController.swift */,
+				34A55B24221CCB0600635303 /* AudioCommentViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -412,12 +432,16 @@
 				4646379C2170091A00E7FF73 /* PostController.swift in Sources */,
 				346516A6221B55F100461CB4 /* FilterSlider.swift in Sources */,
 				34A55B14221CA8C200635303 /* CommentPresenterViewController.swift in Sources */,
+				34A55B23221CCA8400635303 /* Recorder.swift in Sources */,
 				346516AA221B87FE00461CB4 /* PhotoLibraryHelper.swift in Sources */,
 				464637992170048900E7FF73 /* FirebaseConvertible.swift in Sources */,
 				46A0366A21700F5100E7FF73 /* PostsCollectionViewController.swift in Sources */,
 				46D571F52173CF3E00E7FF73 /* UIImage+Ratio.swift in Sources */,
+				34A55B25221CCB0600635303 /* AudioCommentViewController.swift in Sources */,
 				34A55B12221CA35700635303 /* GradientView.swift in Sources */,
 				46463792216FFDD900E7FF73 /* Comment.swift in Sources */,
+				34A55B27221CCE7E00635303 /* AVSessionHelper.swift in Sources */,
+				34A55B22221CCA8400635303 /* Player.swift in Sources */,
 				46CFE6F721707FA600E7FF73 /* UIViewController+InformationalAlert.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
