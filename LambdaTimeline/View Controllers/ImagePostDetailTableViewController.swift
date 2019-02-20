@@ -61,7 +61,6 @@ class ImagePostDetailTableViewController: UITableViewController {
         
         let addAudioCommentAction = UIAlertAction(title: "Add Audio Comment", style: .default) { (_) in
             
-            
             guard let presentedViewController = self.storyboard?.instantiateViewController(withIdentifier: "AudioCommentViewController") as? AudioCommentViewController else {fatalError("could not cast presented view controller as AudioComment View Controller")}
             
             presentedViewController.post = self.post
@@ -71,7 +70,6 @@ class ImagePostDetailTableViewController: UITableViewController {
             presentedViewController.modalPresentationStyle = .overFullScreen
             presentedViewController.view.backgroundColor = UIColor.init(white: 0.4, alpha: 0.3)
             self.present(presentedViewController, animated: true, completion: nil)
-            
             
         }
         
@@ -98,9 +96,7 @@ class ImagePostDetailTableViewController: UITableViewController {
         
         return cell
     }
-    
-    
-    
+
     // Mark: - Properties
     var post: Post!
     var postController: PostController!

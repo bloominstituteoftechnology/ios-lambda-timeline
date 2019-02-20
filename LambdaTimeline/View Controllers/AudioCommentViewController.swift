@@ -77,13 +77,24 @@ class AudioCommentViewController: UIViewController, PlayerDelegate, RecorderDele
     }
     @IBAction func tappedPostCommentButton(_ sender: Any) {
         
+        
         if let post = post {
             guard let commentText = audioCommentTitleTextField?.text else { return }
-            self.postController.addComment(with: commentText, to: post)
             
-            DispatchQueue.main.async {
-                self.imagePostDVC?.tableView.reloadData()
+            guard let currentFile = recorder.currentFile else { return }
+            
+            let audioData =  try! Data(contentsOf: currentFile)
+            
+            self.postController.store(mediaData: audioData, mediaType: .audioComment) { url in
+                
+                self.postController.addCommentWithAudio(with: commentText, audioURL: url!, to: post)
+                DispatchQueue.main.async {
+                    self.imagePostDVC?.tableView.reloadData()
+                }
             }
+            
+            
+            
         }
         
         self.dismiss(animated: true, completion: nil)
@@ -97,7 +108,6 @@ class AudioCommentViewController: UIViewController, PlayerDelegate, RecorderDele
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var audioCommentTitleTextField: UITextField!
     @IBOutlet var postCommentButton: UIButton!
-    
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var remainingTimeLabel: UILabel!
