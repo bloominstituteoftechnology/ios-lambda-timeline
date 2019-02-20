@@ -43,6 +43,7 @@ class ImagePostViewController: ShiftableViewController {
     
     private let filter = CIFilter(name: "CIColorControls")!
     private let sepiaFilter = CIFilter(name:"CISepiaTone")!
+    private let blurFilter = CIFilter(name:"CIBoxBlur")!
     private let context = CIContext(options: nil)
     private var originalImage: UIImage? {
         didSet {
@@ -89,8 +90,9 @@ class ImagePostViewController: ShiftableViewController {
         configureSlider(contrastSlider, from: filter.attributes[kCIInputContrastKey])
         configureSlider(saturationSlider, from: filter.attributes[kCIInputSaturationKey])
         configureSlider(sepiaSlider, from: sepiaFilter.attributes[kCIInputIntensityKey])
+        configureSlider(blurSlider, from: blurFilter.attributes[kCIInputRadiusKey])
         setImageViewHeight(with: 1.0)
-        //configureSlider(blurSlider, from:)
+        
         updateViews()
     }
 
@@ -190,10 +192,13 @@ class ImagePostViewController: ShiftableViewController {
             //🤷‍♂️
             return image
         }
-        //blurf
+        blurFilter.setValue(inputImage, forKey: kCIInputImageKey)
+        blurFilter.setValue(blurSlider.value, forKey: kCIInputRadiusKey)
+        guard let otherOtherOutputImage = blurFilter.outputImage else {
+            return image
+        }
         
-        
-        filter.setValue(inputImage, forKey: kCIInputImageKey)
+        filter.setValue(otherOtherOutputImage, forKey: kCIInputImageKey)
         filter.setValue(brightnessSlider.value, forKey: kCIInputBrightnessKey)
         filter.setValue(contrastSlider.value, forKey: kCIInputContrastKey)
         filter.setValue(saturationSlider.value, forKey: kCIInputSaturationKey)
