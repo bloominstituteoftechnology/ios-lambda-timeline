@@ -80,6 +80,10 @@ class AudioCommentViewController: UIViewController, PlayerDelegate, RecorderDele
         if let post = post {
             guard let commentText = audioCommentTitleTextField?.text else { return }
             self.postController.addComment(with: commentText, to: post)
+            
+            DispatchQueue.main.async {
+                self.imagePostDVC?.tableView.reloadData()
+            }
         }
         
         self.dismiss(animated: true, completion: nil)
@@ -102,6 +106,7 @@ class AudioCommentViewController: UIViewController, PlayerDelegate, RecorderDele
     private let recorder = Recorder()
     var post: Post?
     var postController: PostController = PostController()
+    var imagePostDVC: ImagePostDetailTableViewController?
     private lazy var timeFormatter: DateComponentsFormatter = {
         let f = DateComponentsFormatter()
         f.unitsStyle = .positional

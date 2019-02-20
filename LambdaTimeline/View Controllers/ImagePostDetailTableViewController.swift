@@ -65,9 +65,10 @@ class ImagePostDetailTableViewController: UITableViewController {
             guard let presentedViewController = self.storyboard?.instantiateViewController(withIdentifier: "AudioCommentViewController") as? AudioCommentViewController else {fatalError("could not cast presented view controller as AudioComment View Controller")}
             
             presentedViewController.post = self.post
+            presentedViewController.imagePostDVC = self
             presentedViewController.providesPresentationContextTransitionStyle = true
             presentedViewController.definesPresentationContext = true
-            presentedViewController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext;
+            presentedViewController.modalPresentationStyle = .overFullScreen
             presentedViewController.view.backgroundColor = UIColor.init(white: 0.4, alpha: 0.3)
             self.present(presentedViewController, animated: true, completion: nil)
             
