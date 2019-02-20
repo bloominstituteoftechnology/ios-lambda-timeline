@@ -9,7 +9,6 @@ protocol PlayerDelegate: AnyObject {
 class Player: NSObject, AVAudioPlayerDelegate {
     
     private var audioPlayer: AVAudioPlayer?
-    
     private var timer: Timer?
     
     weak var delegate: PlayerDelegate?
@@ -35,19 +34,17 @@ class Player: NSObject, AVAudioPlayerDelegate {
         if isPlaying {
             pause()
         } else {
-            play()
+            play(file: file)
         }
     }
     
     func play(file: URL? = nil) {
 
-        let recordingFile = file ?? Bundle.main.url(forResource: "smallthoughts", withExtension: "m4a")!
+        guard let currentFile = file else { return }
         
-        if audioPlayer == nil || audioPlayer?.url != recordingFile {
-            audioPlayer = try! AVAudioPlayer(contentsOf: recordingFile)
-            
-            audioPlayer?.delegate = self
-        }
+        audioPlayer = try! AVAudioPlayer(contentsOf: currentFile)
+                
+        audioPlayer?.delegate = self
         
         audioPlayer?.play()
         

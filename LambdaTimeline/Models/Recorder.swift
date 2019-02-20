@@ -9,7 +9,6 @@ protocol  RecorderDelegate: AnyObject {
 class Recorder: NSObject {
     
     private var audioRecorder: AVAudioRecorder?
-    
     private(set) var currentFile: URL?
     
     weak var delegate: RecorderDelegate?

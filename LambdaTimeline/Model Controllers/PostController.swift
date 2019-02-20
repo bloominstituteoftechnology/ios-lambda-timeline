@@ -55,7 +55,6 @@ class PostController {
         post.comments.append(audioComment)
         
         savePostToFirebase(post)
-        
     }
 
     func observePosts(completion: @escaping (Error?) -> Void) {
