@@ -50,7 +50,7 @@ class ImagePostDetailTableViewController: UITableViewController {
                 
                 guard let commentText = commentTextField?.text else { return }
                 
-                self.postController.addComment(with: commentText, to: &self.post!)
+                self.postController.addComment(with: commentText, to: self.post!)
                 
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
@@ -94,14 +94,26 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
         
         let comment = post?.comments[indexPath.row + 1]
         
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author.displayName
-        
-        return cell
+        // If there is text, the comment is a text comment
+        if comment?.text != nil {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+            
+            cell.textLabel?.text = comment?.text
+            cell.detailTextLabel?.text = comment?.author.displayName
+            
+            return cell
+        } else {
+            // if there is no text, the comment is an audio comment
+            let cell = tableView.dequeueReusableCell(withIdentifier: "audiocell", for: indexPath) as! AudioCell
+            
+            cell.timestampOutlet.text = "\(comment?.timestamp)"
+            cell.nameOutlet.text = comment?.author.displayName
+            
+            return cell
+        }
     }
     
     var post: Post!

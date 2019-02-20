@@ -435,6 +435,58 @@
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="audiocell" id="WkX-OA-B6t" customClass="AudioCell" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="177" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="WkX-OA-B6t" id="yUd-09-53a">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="215" translatesAutoresizingMaskIntoConstraints="NO" id="svC-XS-KUP">
+                                            <rect key="frame" x="16" y="6" width="343" height="33.5"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6GZ-Ab-d6Q">
+                                                    <rect key="frame" x="0.0" y="0.0" width="94.5" height="33.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qk4-ix-G2y">
+                                                            <rect key="frame" x="0.0" y="0.0" width="94.5" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Timestamp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wxq-AE-aUH">
+                                                            <rect key="frame" x="0.0" y="20.5" width="94.5" height="13"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SCW-BX-uxR">
+                                                    <rect key="frame" x="309.5" y="0.0" width="33.5" height="33.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="SCW-BX-uxR" secondAttribute="height" id="2b4-2e-hOi"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Button" image="audio"/>
+                                                    <connections>
+                                                        <action selector="playAudioButton:" destination="WkX-OA-B6t" eventType="touchUpInside" id="J77-LE-Q2d"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="svC-XS-KUP" secondAttribute="trailing" constant="16" id="18W-dN-93Y"/>
+                                        <constraint firstItem="svC-XS-KUP" firstAttribute="leading" secondItem="yUd-09-53a" secondAttribute="leading" constant="16" id="4jL-cO-2hK"/>
+                                        <constraint firstItem="svC-XS-KUP" firstAttribute="top" secondItem="yUd-09-53a" secondAttribute="top" constant="6" id="QdI-tX-XCb"/>
+                                        <constraint firstAttribute="bottom" secondItem="svC-XS-KUP" secondAttribute="bottom" constant="4" id="T4R-nb-Anz"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="nameOutlet" destination="qk4-ix-G2y" id="IKQ-hP-Gme"/>
+                                    <outlet property="timestampOutlet" destination="wxq-AE-aUH" id="F4w-r0-l8B"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="OyM-8q-Icp" id="hEW-Hv-MJ8"/>
@@ -457,7 +509,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdL-Y3-4ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1969" y="465"/>
+            <point key="canvasLocation" x="1968.8" y="464.6176911544228"/>
         </scene>
         <!--Record View Controller-->
         <scene sceneID="ZKZ-d9-5zY">
@@ -553,4 +605,7 @@
             <point key="canvasLocation" x="2655" y="216"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="audio" width="30" height="30"/>
+    </resources>
 </document>
