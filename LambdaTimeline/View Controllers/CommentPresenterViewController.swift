@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum CommentType {
+enum CommentType: String {
     case text, audio
 }
 
