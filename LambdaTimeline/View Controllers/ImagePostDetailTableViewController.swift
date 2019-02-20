@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class ImagePostDetailTableViewController: UITableViewController {
     
@@ -14,6 +15,12 @@ class ImagePostDetailTableViewController: UITableViewController {
         super.viewDidLoad()
         updateViews()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
     
     func updateViews() {
         
@@ -45,15 +52,31 @@ class ImagePostDetailTableViewController: UITableViewController {
             
             guard let commentText = commentTextField?.text else { return }
             
-            self.postController.addComment(with: commentText, to: &self.post!)
+            self.postController.addComment(with: commentText, to: self.post)
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
         
+        let addAudioCommentAction = UIAlertAction(title: "Add Audio Comment", style: .default) { (_) in
+            
+            
+            guard let presentedViewController = self.storyboard?.instantiateViewController(withIdentifier: "AudioCommentViewController") as? AudioCommentViewController else {fatalError("could not cast presented view controller as AudioComment View Controller")}
+            
+            presentedViewController.post = self.post
+            presentedViewController.providesPresentationContextTransitionStyle = true
+            presentedViewController.definesPresentationContext = true
+            presentedViewController.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext;
+            presentedViewController.view.backgroundColor = UIColor.init(white: 0.4, alpha: 0.3)
+            self.present(presentedViewController, animated: true, completion: nil)
+            
+            
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
+        alert.addAction(addAudioCommentAction)
         alert.addAction(addCommentAction)
         alert.addAction(cancelAction)
         
@@ -75,11 +98,14 @@ class ImagePostDetailTableViewController: UITableViewController {
         return cell
     }
     
+    
+    
+    // Mark: - Properties
     var post: Post!
     var postController: PostController!
     var imageData: Data?
-    
-    
+    var isAnimating: Bool = false
+    var dropDownViewIsDisplayed: Bool = false
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
