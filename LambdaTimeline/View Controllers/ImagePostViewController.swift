@@ -35,6 +35,7 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var postButton: UIBarButtonItem!
     @IBOutlet weak var controlStackView: UIStackView!
     @IBOutlet weak var addFilterButton: UIButton!
+    @IBOutlet weak var geotagSwitch: UISwitch!
     
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
@@ -56,7 +57,9 @@ class ImagePostViewController: ShiftableViewController {
             return
         }
         
-        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
+        let geotag = geotagSwitch.isOn ? LocationHelper.shared.currentLoction?.coordinate : nil
+        
+        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio, geotag: geotag) { (success) in
             guard success else {
                 DispatchQueue.main.async {
                     self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
@@ -77,6 +80,20 @@ class ImagePostViewController: ShiftableViewController {
                 self.present(alertController, animated: true)
             } else {
                 self.presentImagePickerController()
+            }
+        }
+    }
+    
+    @IBAction func changeGeotagPreference(_ sender: UISwitch) {
+        if sender.isOn {
+            LocationHelper.shared.requestAccess() { granted in
+                if !granted {
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController.informationalAlertController(message: "You can't geotag the post if you don't give permission to use your location.")
+                        self.present(alert, animated: true)
+                        sender.isOn = false
+                    }
+                }
             }
         }
     }

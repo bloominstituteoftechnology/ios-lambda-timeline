@@ -177,7 +177,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="PkI-rS-ua9">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="451"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="490"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yQ3-V3-hIf">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
@@ -208,7 +208,7 @@
                                                 </constraints>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="vQj-6Q-JiV">
-                                                <rect key="frame" x="20" y="383" width="335" height="68"/>
+                                                <rect key="frame" x="20" y="383" width="335" height="107"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Give your post a title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Op6-OA-6Ou">
                                                         <rect key="frame" x="0.0" y="0.0" width="335" height="30"/>
@@ -216,8 +216,26 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                                     </textField>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ntc-Dv-BeT">
+                                                        <rect key="frame" x="0.0" y="38" width="335" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Geotag?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ExW-fy-UfW">
+                                                                <rect key="frame" x="0.0" y="0.0" width="286" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="vGk-Bd-fAt">
+                                                                <rect key="frame" x="286" y="0.0" width="51" height="31"/>
+                                                                <color key="onTintColor" red="0.73725490199999999" green="0.16078431369999999" blue="0.23921568630000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <connections>
+                                                                    <action selector="changeGeotagPreference:" destination="1Aw-4e-BW2" eventType="valueChanged" id="QtP-A3-77o"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ws-pP-cbk">
-                                                        <rect key="frame" x="0.0" y="38" width="335" height="30"/>
+                                                        <rect key="frame" x="0.0" y="77" width="335" height="30"/>
                                                         <state key="normal" title="Add Filter"/>
                                                         <connections>
                                                             <action selector="addFilter:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="Sbg-4K-Hau"/>
@@ -264,6 +282,7 @@
                         <outlet property="addFilterButton" destination="2ws-pP-cbk" id="ySV-q5-iYt"/>
                         <outlet property="chooseImageButton" destination="VxD-cu-jHT" id="KVs-no-MbU"/>
                         <outlet property="controlStackView" destination="vQj-6Q-JiV" id="Q8h-8H-rUi"/>
+                        <outlet property="geotagSwitch" destination="vGk-Bd-fAt" id="nW7-JD-no0"/>
                         <outlet property="imageHeightConstraint" destination="MHD-wr-Gq9" id="HyG-8g-Ck1"/>
                         <outlet property="imageView" destination="4eK-5F-H5h" id="e7m-c5-Xhz"/>
                         <outlet property="postButton" destination="hsH-Uv-tug" id="ZBn-KE-cpU"/>
@@ -674,6 +693,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="95" height="95"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="3OV-HT-G1H"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tPi-Ie-Ff9" userLabel="First Responder" sceneMemberID="firstResponder"/>
