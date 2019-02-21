@@ -63,6 +63,7 @@ class RecordViewController: UIViewController, PlayerDelegate, RecorderDelegate {
     
     @IBAction func addCommentButton(_ sender: Any) {
         
+        // Save the comment here
         
         navigationController?.popViewController(animated: true)
     }

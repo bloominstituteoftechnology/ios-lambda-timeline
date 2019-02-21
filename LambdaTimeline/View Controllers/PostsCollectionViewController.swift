@@ -31,7 +31,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         }
         
         let videoPostAction = UIAlertAction(title: "Video", style: .default) { (_) in
-            
+            self.performSegue(withIdentifier: "showCamera", sender: nil)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)

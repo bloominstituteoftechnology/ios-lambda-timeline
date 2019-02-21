@@ -115,38 +115,60 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hni-3o-xL1" customClass="CameraPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="20" width="375" height="567"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="595"/>
+                                <subviews>
+                                    <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Oha-SX-xMk">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                        <items>
+                                            <navigationItem id="aFz-d6-S3o">
+                                                <barButtonItem key="leftBarButtonItem" title="Cancel" id="8Xi-zS-VvQ">
+                                                    <connections>
+                                                        <action selector="cancel:" destination="mOe-ta-cmh" id="eKe-1g-eMN"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                                <barButtonItem key="rightBarButtonItem" title="Post" id="Ip5-6F-eGR">
+                                                    <connections>
+                                                        <action selector="postVideo:" destination="mOe-ta-cmh" id="L9r-c9-umV"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                            </navigationItem>
+                                        </items>
+                                    </navigationBar>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zz7-Do-giK">
-                                <rect key="frame" x="156.5" y="595" width="62" height="36"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <state key="normal" title="Record">
-                                    <color key="titleColor" red="0.2856094642" green="0.65191319690000005" blue="0.79685517130000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="toggleRecord:" destination="mOe-ta-cmh" eventType="touchUpInside" id="BPx-gQ-KU8"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZFN-1f-LuW">
-                                <rect key="frame" x="171" y="637" width="33" height="30"/>
-                                <state key="normal" title="Button" image="circled_play"/>
-                                <connections>
-                                    <action selector="playbackButton:" destination="mOe-ta-cmh" eventType="touchUpInside" id="pdd-0w-I8C"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="65" translatesAutoresizingMaskIntoConstraints="NO" id="jni-7f-rSl">
+                                <rect key="frame" x="82" y="623" width="211" height="36"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zz7-Do-giK">
+                                        <rect key="frame" x="0.0" y="0.0" width="62" height="36"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="Record">
+                                            <color key="titleColor" red="0.2856094642" green="0.65191319690000005" blue="0.79685517130000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="toggleRecord:" destination="mOe-ta-cmh" eventType="touchUpInside" id="BPx-gQ-KU8"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZFN-1f-LuW">
+                                        <rect key="frame" x="127" y="0.0" width="84" height="36"/>
+                                        <state key="normal" title="Button" image="play"/>
+                                        <connections>
+                                            <action selector="playbackButton:" destination="mOe-ta-cmh" eventType="touchUpInside" id="pdd-0w-I8C"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="hni-3o-xL1" firstAttribute="top" secondItem="esb-d0-ezH" secondAttribute="top" id="3ti-9X-4ag"/>
-                            <constraint firstItem="ZFN-1f-LuW" firstAttribute="leading" secondItem="esb-d0-ezH" secondAttribute="leading" constant="171" id="5ic-nz-OXr"/>
-                            <constraint firstItem="ZFN-1f-LuW" firstAttribute="centerX" secondItem="Zz7-Do-giK" secondAttribute="centerX" id="CIY-zB-eFf"/>
-                            <constraint firstItem="esb-d0-ezH" firstAttribute="trailing" secondItem="hni-3o-xL1" secondAttribute="trailing" id="DJ1-cU-lO5"/>
-                            <constraint firstItem="hni-3o-xL1" firstAttribute="leading" secondItem="esb-d0-ezH" secondAttribute="leading" id="LH2-6D-CqS"/>
-                            <constraint firstItem="ZFN-1f-LuW" firstAttribute="top" secondItem="Zz7-Do-giK" secondAttribute="bottom" constant="6" id="O4e-Gv-bZU"/>
-                            <constraint firstItem="ZFN-1f-LuW" firstAttribute="centerX" secondItem="Cdy-VU-2h5" secondAttribute="centerX" id="Pij-JK-xm0"/>
-                            <constraint firstItem="ZFN-1f-LuW" firstAttribute="bottom" secondItem="esb-d0-ezH" secondAttribute="bottom" id="g3v-Zw-g5Y"/>
-                            <constraint firstItem="esb-d0-ezH" firstAttribute="bottom" secondItem="hni-3o-xL1" secondAttribute="bottom" constant="80" id="qtS-1O-caq"/>
+                            <constraint firstAttribute="trailing" secondItem="hni-3o-xL1" secondAttribute="trailing" id="DJ1-cU-lO5"/>
+                            <constraint firstItem="hni-3o-xL1" firstAttribute="leading" secondItem="Cdy-VU-2h5" secondAttribute="leading" id="LH2-6D-CqS"/>
+                            <constraint firstItem="jni-7f-rSl" firstAttribute="centerX" secondItem="Cdy-VU-2h5" secondAttribute="centerX" id="ZPn-Ug-Q1R"/>
+                            <constraint firstItem="esb-d0-ezH" firstAttribute="bottom" secondItem="jni-7f-rSl" secondAttribute="bottom" constant="8" id="hR5-NV-ORO"/>
+                            <constraint firstItem="jni-7f-rSl" firstAttribute="top" secondItem="hni-3o-xL1" secondAttribute="bottom" constant="8" id="qtS-1O-caq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="esb-d0-ezH"/>
                     </view>
@@ -661,6 +683,6 @@
     </scenes>
     <resources>
         <image name="audio" width="30" height="30"/>
-        <image name="circled_play" width="30" height="30"/>
+        <image name="play" width="30" height="30"/>
     </resources>
 </document>
