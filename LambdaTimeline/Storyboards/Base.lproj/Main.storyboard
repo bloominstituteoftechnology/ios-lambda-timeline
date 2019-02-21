@@ -83,6 +83,29 @@
                                     <outlet property="titleLabel" destination="tHt-lC-hYm" id="uRt-J9-5cc"/>
                                 </connections>
                             </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VideoPostCell" id="KU2-lS-5bL" customClass="VideoPostCollectionViewCell" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="385" width="375" height="375"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GZf-xF-31O" customClass="VideoPlayerView" customModule="LambdaTimeline" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </view>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstItem="GZf-xF-31O" firstAttribute="top" secondItem="KU2-lS-5bL" secondAttribute="top" id="6Mz-Vx-Kt0"/>
+                                    <constraint firstAttribute="bottom" secondItem="GZf-xF-31O" secondAttribute="bottom" id="FzV-L9-0gX"/>
+                                    <constraint firstItem="GZf-xF-31O" firstAttribute="leading" secondItem="KU2-lS-5bL" secondAttribute="leading" id="NZg-rC-xK1"/>
+                                    <constraint firstAttribute="trailing" secondItem="GZf-xF-31O" secondAttribute="trailing" id="ovg-Q5-x7u"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="videoPlayerView" destination="GZf-xF-31O" id="Fx1-nw-7sj"/>
+                                </connections>
+                            </collectionViewCell>
                         </cells>
                         <connections>
                             <outlet property="dataSource" destination="hPa-Td-5A3" id="ygt-Fi-6zc"/>

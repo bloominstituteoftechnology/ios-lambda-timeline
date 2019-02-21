@@ -13,9 +13,15 @@ import AVKit
 class VideoPostViewController: UIViewController, AVCaptureFileOutputRecordingDelegate, AVPlayerViewControllerDelegate {
     
     // MARK: - Properties
+    var postController: PostController!
+    
+    
     private let captureSession = AVCaptureSession()
     private let fileOutput = AVCaptureMovieFileOutput()
     private var isOnBackCamera = true
+    private var videoTitle: String? {
+        didSet { postVideo() }
+    }
     private var currentURL: URL? {
         didSet { updatePostButton() }
     }
@@ -56,7 +62,7 @@ class VideoPostViewController: UIViewController, AVCaptureFileOutputRecordingDel
     }
     
     @IBAction func postVideo(_ sender: Any) {
-        
+        presentTitleAlert()
     }
     
     @IBAction func swipeToChangeCameras(_ sender: Any) {
@@ -111,8 +117,8 @@ class VideoPostViewController: UIViewController, AVCaptureFileOutputRecordingDel
             captureSession.addInput(microphoneInput)
         }
         
-        if captureSession.canSetSessionPreset(.low) {
-            captureSession.sessionPreset = .low
+        if captureSession.canSetSessionPreset(.medium) {
+            captureSession.sessionPreset = .medium
         }
         captureSession.commitConfiguration()
         
@@ -166,8 +172,16 @@ class VideoPostViewController: UIViewController, AVCaptureFileOutputRecordingDel
         return fileURL
     }
     
-    private func saveVideo(at url: URL) {
-        
+    private func postVideo() {
+        if let title = videoTitle, !title.isEmpty, let url = currentURL, let data = try? Data(contentsOf: url) {
+            
+            postController.createPost(with: title, ofType: .video, mediaData: data, ratio: 16/9) { success in
+                self.navigationController?.popViewController(animated: true)
+            }
+        } else {
+            let errorAlert = UIAlertController.informationalAlertController(message: "You need a title and a video to make a post!")
+            present(errorAlert, animated: true)
+        }
     }
     
     // MARK: UI Utilities
@@ -190,6 +204,27 @@ class VideoPostViewController: UIViewController, AVCaptureFileOutputRecordingDel
     
     private func updatePostButton() {
         postButton.isEnabled = currentURL != nil
+    }
+    
+    private func presentTitleAlert() {
+        let alertController = UIAlertController(title: "Give it a title", message: nil, preferredStyle: .alert)
+        
+        var titleTextField: UITextField!
+        alertController.addTextField { (textField) in
+            textField.placeholder = "Your title"
+            titleTextField = textField
+        }
+        
+        let submitAction = UIAlertAction(title: "Submit", style: .default) { (_) in
+            self.videoTitle = titleTextField.text
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in }
+        
+        alertController.addAction(submitAction)
+        alertController.addAction(cancelAction)
+        
+        present(alertController, animated: true)
     }
     
 }
