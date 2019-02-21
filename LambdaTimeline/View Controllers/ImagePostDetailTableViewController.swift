@@ -89,36 +89,36 @@ class ImagePostDetailTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as? CommentTableViewCell else { fatalError("Unable to dequeue cell as comment cell dequeue reusable cell.")}
         
-        let comment = post?.comments[indexPath.row + 1]
+        guard let comment = post?.comments[indexPath.row + 1] else { fatalError("unable to get comment for row") }
         
-        cell.titleLabel.text = comment?.text
-        cell.subtitleLabel.text = comment?.author.displayName
+        cell.titleLabel.text = comment.text
+        cell.subtitleLabel.text = comment.author.displayName
         
-        guard comment?.audioURL != nil else {
+        guard comment.audioURL != nil else {
             cell.playStopButton.isEnabled = false
             cell.playStopButton.isHidden = true
             return cell
         }
-        loadAudio(post: post, for: cell, forItemAt: indexPath)
+        
+        loadAudio(post: post, comment: comment, for: cell, forItemAt: indexPath)
         
         return cell
     }
     
     
-    func loadAudio(post: Post, for commentCell: CommentTableViewCell, forItemAt indexPath: IndexPath) {
-        let comment = post.comments[indexPath.row]
+    func loadAudio(post: Post, comment: Comment, for commentCell: CommentTableViewCell, forItemAt indexPath: IndexPath) {
         
         guard let commentID = comment.audioURL?.absoluteString else { return }
         
         let fm = FileManager.default
-        let docs = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        let docs = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true) // TODO: - change directory
         let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: [.withInternetDateTime])
-        let file = docs.appendingPathComponent(name).appendingPathExtension("caf")
+        let file = docs.appendingPathComponent(UUID().uuidString).appendingPathExtension("caf")
         
         if let audioData = cache.value(for: commentID) {
             try? audioData.write(to: file)
             commentCell.audioURL = file
-            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+            self.tableView.reloadRows(at: [indexPath], with: .left)
             return
         }
         
@@ -128,6 +128,7 @@ class ImagePostDetailTableViewController: UITableViewController {
             if let data = fetchOp.audioData {
                 self.cache.cache(value: data, for: commentID)
                 DispatchQueue.main.async {
+                    
                     self.tableView.reloadRows(at: [indexPath], with: .automatic)
                 }
             }
@@ -145,7 +146,8 @@ class ImagePostDetailTableViewController: UITableViewController {
             if let data = fetchOp.audioData {
                 try? data.write(to: file)
                 commentCell.audioURL = file
-                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                
+                self.tableView.reloadRows(at: [indexPath], with: .right)
             }
         }
         
