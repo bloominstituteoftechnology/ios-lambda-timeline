@@ -9,13 +9,14 @@
 import Foundation
 import FirebaseAuth
 import CoreLocation
+import MapKit
 
 enum MediaType: String {
     case image
     case video
 }
 
-class Post {
+class Post: NSObject {
     
     init(title: String, mediaType: MediaType, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date(), geotag: CLLocationCoordinate2D? = nil) {
         self.mediaURL = mediaURL
@@ -87,6 +88,18 @@ class Post {
     static private let timestampKey = "timestamp"
     static private let idKey = "id"
     static private let geotagKey = "geotag"
+}
+
+extension Post: MKAnnotation {
+    var coordinate: CLLocationCoordinate2D {
+        return geotag ?? CLLocationCoordinate2D(latitude: 0, longitude: 0)
+    }
+    
+    var subtitle: String? {
+        return author.displayName
+    }
+    
+    
 }
 
 
