@@ -97,8 +97,8 @@ class ImagePostDetailTableViewController: UITableViewController {
         
         let comment = post?.comments[indexPath.row + 1]
         
-        // If there is text, the comment is a text comment
-        if comment?.text != nil {
+        // If the audioURL is nil, the comment is a text comment
+        if comment?.audioURL == nil {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
             
             cell.textLabel?.text = comment?.text
@@ -106,7 +106,7 @@ class ImagePostDetailTableViewController: UITableViewController {
             
             return cell
         } else {
-            // if there is no text, the comment is an audio comment
+            // if the audioURL is not nil, the comment is an audio comment
             let cell = tableView.dequeueReusableCell(withIdentifier: "audiocell", for: indexPath) as! AudioCell
             
             cell.timestampOutlet.text = "\(comment?.timestamp)"

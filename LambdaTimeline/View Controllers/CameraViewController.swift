@@ -48,7 +48,38 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        captureSession.startRunning()
+        
+        // Request permission to use the camera
+        
+        // Get authorization status
+        let authorizationStatus = AVCaptureDevice.authorizationStatus(for: .video)
+        
+        // switch over enum with 4 scenarios we need to handle
+        switch authorizationStatus {
+            
+        case .notDetermined:
+            // We have not asked the user yet for authorization
+            AVCaptureDevice.requestAccess(for: .video) { granted in
+                if granted == false {
+                    fatalError("Need to ask the user for authorization")
+                }
+                DispatchQueue.main.async {
+                    // Now that we have access we want to perform the segue
+                    self.captureSession.startRunning()
+                }
+            }
+        case .restricted:
+            // Parental controls on the device prevent access to the cameras
+            fatalError("Parental controls on the device are preventing access to the camera")
+        case .denied:
+            // We asked for permission, but they said "no"
+            fatalError("User has denied access to the camera")
+        case .authorized:
+            // We asked for permission, and they said "yes"
+            captureSession.startRunning()
+        }
+        
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -78,7 +109,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             
             let videoTitle = alertController.textFields?[0].text
             
-            var commentTextField: UITextField?
+            // Create post
+            // videoTitle is assigned to Post.title
             
         }
         
@@ -96,6 +128,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     @IBAction func cancel(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
+        
     }
     
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
@@ -107,6 +140,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         DispatchQueue.main.async {
             self.updateViews()
+            
+            // Save to firebase using url
             
             
         }

@@ -8,8 +8,11 @@ class AudioCell: UITableViewCell {
     @IBOutlet weak var nameOutlet: UILabel!
     @IBOutlet weak var timestampOutlet: UILabel!
     
+    var audioURL: URL?
+    var player: Player = Player()
+    
     @IBAction func playAudioButton(_ sender: Any) {
-        //Player.play()
+        player.play(file: audioURL)
     }
     
 }
