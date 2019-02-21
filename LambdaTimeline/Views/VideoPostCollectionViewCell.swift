@@ -32,6 +32,7 @@ class VideoPostCollectionViewCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
+        isPlaying = false
         player = nil
         titleLabel.text = ""
         authorLabel.text = ""

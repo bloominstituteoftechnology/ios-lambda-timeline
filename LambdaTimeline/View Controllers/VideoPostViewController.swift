@@ -117,8 +117,8 @@ class VideoPostViewController: UIViewController, AVCaptureFileOutputRecordingDel
             captureSession.addInput(microphoneInput)
         }
         
-        if captureSession.canSetSessionPreset(.iFrame960x540) {
-            captureSession.sessionPreset = .iFrame960x540
+        if captureSession.canSetSessionPreset(.medium) {
+            captureSession.sessionPreset = .medium
         }
         captureSession.commitConfiguration()
         
@@ -176,7 +176,7 @@ class VideoPostViewController: UIViewController, AVCaptureFileOutputRecordingDel
         if let title = videoTitle, !title.isEmpty, let url = currentURL, let data = try? Data(contentsOf: url) {
             postButton.isEnabled = false
             recordButton.isEnabled = false
-            postController.createPost(with: title, ofType: .video, mediaData: data, ratio: 960/540) { success in
+            postController.createPost(with: title, ofType: .video, mediaData: data, ratio: 4/3) { success in
                 self.navigationController?.popViewController(animated: true)
                 // TODO: Handle unsuccessful posting
             }
