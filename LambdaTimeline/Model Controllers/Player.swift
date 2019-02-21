@@ -69,6 +69,11 @@ class Player: NSObject, AVAudioPlayerDelegate {
         notifyDelegate()
     }
     
+    func stop(){
+        audioPlayer?.stop()
+        notifyDelegate()
+    }
+    
     // MARK: - Private Methods
     private func notifyDelegate(){
         delegate?.playerDidChangeState(self)

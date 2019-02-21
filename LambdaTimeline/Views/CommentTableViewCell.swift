@@ -8,9 +8,22 @@
 
 import UIKit
 
-class CommentTableViewCell: UITableViewCell {
-
+class CommentTableViewCell: UITableViewCell, PlayerDelegate {
     
+    override func awakeFromNib() {
+        player.delegate = self
+    }
+
+    func playerDidChangeState(_ player: Player) {
+        updateViews()
+    }
+    
+    private func updateViews(){
+        
+        let isPlaying = player.isPlaying
+        playStopButton.imageView?.image = isPlaying ? UIImage(named: "stop") : UIImage(named: "circle")
+
+    }
     
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
@@ -19,8 +32,12 @@ class CommentTableViewCell: UITableViewCell {
     var player: Player = Player()
     
     @IBAction func playStopButtonClicked(_ sender: Any) {
-//        player.play(song: audioURL)
-       player.play(song: audioURL)
+        if player.isPlaying {
+            player.stop()
+        } else {
+            player.play(song: audioURL)
+        }
+        
     }
     
 }

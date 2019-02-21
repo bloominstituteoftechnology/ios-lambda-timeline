@@ -94,14 +94,13 @@ class ImagePostDetailTableViewController: UITableViewController {
         cell.titleLabel.text = comment?.text
         cell.subtitleLabel.text = comment?.author.displayName
         
-        guard let audioURL = comment?.audioURL else {
+        guard comment?.audioURL != nil else {
             cell.playStopButton.isEnabled = false
             cell.playStopButton.isHidden = true
             return cell
         }
-        
         loadAudio(post: post, for: cell, forItemAt: indexPath)
-        cell.audioURL = audioURL
+        
         return cell
     }
     
@@ -113,14 +112,12 @@ class ImagePostDetailTableViewController: UITableViewController {
         
         let fm = FileManager.default
         let docs = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        
         let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: [.withInternetDateTime])
-        
         let file = docs.appendingPathComponent(name).appendingPathExtension("caf")
         
-        if let audioData = cache.value(for: commentID),
-            let audioURL = URL(dataRepresentation: audioData, relativeTo: file) {
-            commentCell.audioURL = audioURL
+        if let audioData = cache.value(for: commentID) {
+            try? audioData.write(to: file)
+            commentCell.audioURL = file
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
             return
         }
@@ -146,8 +143,8 @@ class ImagePostDetailTableViewController: UITableViewController {
             }
             
             if let data = fetchOp.audioData {
-                let audioURL = URL(dataRepresentation: data, relativeTo: file)
-                commentCell.audioURL = audioURL
+                try? data.write(to: file)
+                commentCell.audioURL = file
                 self.tableView.reloadRows(at: [indexPath], with: .automatic)
             }
         }

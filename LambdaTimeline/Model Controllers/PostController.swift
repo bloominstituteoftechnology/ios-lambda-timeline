@@ -69,7 +69,6 @@ class PostController {
                 
                 guard let post = Post(dictionary: value, id: key) else { continue }
                 
-                print(post.comments)
                 posts.append(post)
             }
             
