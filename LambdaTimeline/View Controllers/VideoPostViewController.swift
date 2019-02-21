@@ -82,7 +82,6 @@ class VideoPostViewController: UIViewController, AVCaptureFileOutputRecordingDel
         
         let playerViewController = AVPlayerViewController()
         playerViewController.entersFullScreenWhenPlaybackBegins = true
-        playerViewController.delegate = self
         playerViewController.showsPlaybackControls = true
         playerViewController.player = player
         present(playerViewController, animated: true)
