@@ -22,7 +22,7 @@ class ImagePostDetailTableViewController: UITableViewController, CommentPresente
     private let player = Player()
     private var currentlyPlaying: (indexPath: IndexPath, cell: AudioCommentTableViewCell)?
     
-    @IBOutlet weak var imageView: UIImageView!
+    
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
@@ -111,17 +111,15 @@ class ImagePostDetailTableViewController: UITableViewController, CommentPresente
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destinationVC = segue.destination as? CommentPresenterViewController {
             destinationVC.commentDelegate = self
+        } else if let destinationVC = segue.destination as? PostContentViewController {
+            destinationVC.post = post
+            destinationVC.imageData = imageData
         }
     }
     
     // MARK: - Utility Methods
-    private func updateViews() {
-        guard let imageData = imageData,
-            let image = UIImage(data: imageData) else { return }
-        
+    private func updateViews() {        
         title = post?.title
-        
-        imageView.image = image
         
         titleLabel.text = post.title
         authorLabel.text = post.author.displayName
@@ -144,7 +142,6 @@ class ImagePostDetailTableViewController: UITableViewController, CommentPresente
         
         let completionOp = BlockOperation {
             self.operations.removeValue(forKey: audioURL)
-//            print("Loaded audio for \(audioURL.absoluteString)")
             
             if let currentIndexPath = self.tableView.indexPath(for: audioCommentCell),
                 currentIndexPath != indexPath { return }

@@ -98,20 +98,28 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         return size
     }
     
+    // MARK: - UI Collection View Delegate
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
         
         if let cell = cell as? ImagePostCollectionViewCell,
             cell.imageView.image != nil {
-            self.performSegue(withIdentifier: "ViewImagePost", sender: nil)
-        } else if let cell = cell as? VideoPostCollectionViewCell {
+        }
+        self.performSegue(withIdentifier: "ViewImagePost", sender: nil)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didHighlightItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        if let cell = cell as? VideoPostCollectionViewCell {
             cell.playPause()
         }
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+    override func collectionView(_ collectionView: UICollectionView, didUnhighlightItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
-        
         if let cell = cell as? VideoPostCollectionViewCell {
             cell.pause()
         }

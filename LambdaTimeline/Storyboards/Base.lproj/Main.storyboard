@@ -406,12 +406,15 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="34" translatesAutoresizingMaskIntoConstraints="NO" id="du3-3a-NOA">
                                     <rect key="frame" x="8" y="2" width="359" height="95"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Q0L-w5-qUw">
+                                        <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oPW-bd-Nuo">
                                             <rect key="frame" x="0.0" y="0.0" width="95" height="95"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" secondItem="Q0L-w5-qUw" secondAttribute="height" multiplier="1:1" id="y1B-iX-x3e"/>
+                                                <constraint firstAttribute="width" secondItem="oPW-bd-Nuo" secondAttribute="height" id="u2i-DT-XXc"/>
                                             </constraints>
-                                        </imageView>
+                                            <connections>
+                                                <segue destination="IXI-Sd-jcS" kind="embed" id="McJ-sl-ABx"/>
+                                            </connections>
+                                        </containerView>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Jed-zo-yZu">
                                             <rect key="frame" x="129" y="23" width="230" height="49"/>
                                             <subviews>
@@ -430,14 +433,12 @@
                                             </subviews>
                                         </stackView>
                                     </subviews>
-                                    <constraints>
-                                        <constraint firstItem="Q0L-w5-qUw" firstAttribute="width" relation="lessThanOrEqual" secondItem="du3-3a-NOA" secondAttribute="width" multiplier="1/2" id="PO2-SF-KKU"/>
-                                    </constraints>
                                 </stackView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="du3-3a-NOA" firstAttribute="leading" secondItem="hJv-Sf-vzU" secondAttribute="leading" constant="8" id="Df7-ar-556"/>
+                                <constraint firstItem="oPW-bd-Nuo" firstAttribute="width" relation="lessThanOrEqual" secondItem="hJv-Sf-vzU" secondAttribute="width" multiplier="1/2" id="E0k-Ve-x51"/>
                                 <constraint firstAttribute="trailing" secondItem="du3-3a-NOA" secondAttribute="trailing" constant="8" id="n1W-uf-RVq"/>
                                 <constraint firstAttribute="bottom" secondItem="du3-3a-NOA" secondAttribute="bottom" constant="8" id="sjC-YG-uS6"/>
                                 <constraint firstItem="du3-3a-NOA" firstAttribute="top" secondItem="hJv-Sf-vzU" secondAttribute="top" constant="2" id="xQd-UK-Bmn"/>
@@ -532,8 +533,6 @@
                     </navigationItem>
                     <connections>
                         <outlet property="authorLabel" destination="uQC-8y-kuu" id="OBX-uv-64E"/>
-                        <outlet property="imageView" destination="Q0L-w5-qUw" id="0v7-ZB-mgi"/>
-                        <outlet property="imageViewAspectRatioConstraint" destination="y1B-iX-x3e" id="wIt-kh-Tzd"/>
                         <outlet property="titleLabel" destination="jyy-BX-c2c" id="UEd-xO-ipC"/>
                     </connections>
                 </tableViewController>
@@ -666,6 +665,20 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qMY-sQ-AVt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2823" y="493"/>
+        </scene>
+        <!--Post Content View Controller-->
+        <scene sceneID="3YQ-fx-jeg">
+            <objects>
+                <viewController id="IXI-Sd-jcS" customClass="PostContentViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EYw-3a-sja">
+                        <rect key="frame" x="0.0" y="0.0" width="95" height="95"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tPi-Ie-Ff9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1489" y="655"/>
         </scene>
     </scenes>
 </document>
