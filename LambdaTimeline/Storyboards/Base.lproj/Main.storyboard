@@ -94,6 +94,36 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FNC-8p-3yi" customClass="GradientView" customModule="LambdaTimeline" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="321" width="375" height="54"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Age-iQ-sBp">
+                                                    <rect key="frame" x="16" y="8" width="351" height="38"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ehT-fb-VXi">
+                                                            <rect key="frame" x="0.0" y="0.0" width="351" height="20.5"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="b21-Tv-OTR">
+                                                            <rect key="frame" x="0.0" y="24.5" width="351" height="13.5"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="Age-iQ-sBp" firstAttribute="leading" secondItem="FNC-8p-3yi" secondAttribute="leading" constant="16" id="6dY-fn-nUs"/>
+                                                <constraint firstAttribute="trailing" secondItem="Age-iQ-sBp" secondAttribute="trailing" constant="8" id="Ats-an-lyv"/>
+                                                <constraint firstAttribute="height" relation="lessThanOrEqual" constant="128" id="B1f-08-4Nb"/>
+                                                <constraint firstItem="Age-iQ-sBp" firstAttribute="top" secondItem="FNC-8p-3yi" secondAttribute="top" constant="8" id="YlF-Yy-lZm"/>
+                                                <constraint firstAttribute="bottom" secondItem="Age-iQ-sBp" secondAttribute="bottom" constant="8" id="lji-SL-VMT"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                 </view>
                                 <constraints>
@@ -101,8 +131,14 @@
                                     <constraint firstAttribute="bottom" secondItem="GZf-xF-31O" secondAttribute="bottom" id="FzV-L9-0gX"/>
                                     <constraint firstItem="GZf-xF-31O" firstAttribute="leading" secondItem="KU2-lS-5bL" secondAttribute="leading" id="NZg-rC-xK1"/>
                                     <constraint firstAttribute="trailing" secondItem="GZf-xF-31O" secondAttribute="trailing" id="ovg-Q5-x7u"/>
+                                    <constraint firstAttribute="trailing" secondItem="FNC-8p-3yi" secondAttribute="trailing" id="pqD-1x-2VP"/>
+                                    <constraint firstItem="FNC-8p-3yi" firstAttribute="leading" secondItem="KU2-lS-5bL" secondAttribute="leading" id="rs2-aG-n3N"/>
+                                    <constraint firstAttribute="bottom" secondItem="FNC-8p-3yi" secondAttribute="bottom" id="xjD-aV-2Pf"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="authorLabel" destination="b21-Tv-OTR" id="Hnh-JG-4vv"/>
+                                    <outlet property="labelBackgroundView" destination="FNC-8p-3yi" id="50l-pa-80R"/>
+                                    <outlet property="titleLabel" destination="ehT-fb-VXi" id="MC8-pe-d6Q"/>
                                     <outlet property="videoPlayerView" destination="GZf-xF-31O" id="Fx1-nw-7sj"/>
                                 </connections>
                             </collectionViewCell>

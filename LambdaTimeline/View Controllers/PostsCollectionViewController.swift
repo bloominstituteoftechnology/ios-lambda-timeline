@@ -69,7 +69,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             return cell
             
         case .video:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPostCell", for: indexPath)
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPostCell", for: indexPath) as! VideoPostCollectionViewCell
+            
+            cell.post = post
             
             return cell
         }
@@ -90,7 +92,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             size.height = size.width * ratio
             
         case .video:
-            break
+            if let ratio = post.ratio { size.height = size.width * ratio }
         }
         
         return size
@@ -102,6 +104,16 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         if let cell = cell as? ImagePostCollectionViewCell,
             cell.imageView.image != nil {
             self.performSegue(withIdentifier: "ViewImagePost", sender: nil)
+        } else if let cell = cell as? VideoPostCollectionViewCell {
+            cell.playPause()
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath)
+        
+        if let cell = cell as? VideoPostCollectionViewCell {
+            cell.pause()
         }
     }
     
@@ -162,7 +174,6 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             
             if let currentIndexPath = self.collectionView?.indexPath(for: imagePostCell),
                 currentIndexPath != indexPath {
-                print("Got image for now-reused cell")
                 return
             }
             

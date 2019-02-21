@@ -117,8 +117,8 @@ class VideoPostViewController: UIViewController, AVCaptureFileOutputRecordingDel
             captureSession.addInput(microphoneInput)
         }
         
-        if captureSession.canSetSessionPreset(.medium) {
-            captureSession.sessionPreset = .medium
+        if captureSession.canSetSessionPreset(.iFrame960x540) {
+            captureSession.sessionPreset = .iFrame960x540
         }
         captureSession.commitConfiguration()
         
@@ -174,13 +174,17 @@ class VideoPostViewController: UIViewController, AVCaptureFileOutputRecordingDel
     
     private func postVideo() {
         if let title = videoTitle, !title.isEmpty, let url = currentURL, let data = try? Data(contentsOf: url) {
-            
-            postController.createPost(with: title, ofType: .video, mediaData: data, ratio: 16/9) { success in
+            postButton.isEnabled = false
+            recordButton.isEnabled = false
+            postController.createPost(with: title, ofType: .video, mediaData: data, ratio: 960/540) { success in
                 self.navigationController?.popViewController(animated: true)
+                // TODO: Handle unsuccessful posting
             }
         } else {
             let errorAlert = UIAlertController.informationalAlertController(message: "You need a title and a video to make a post!")
             present(errorAlert, animated: true)
+            recordButton.isEnabled = true
+            updatePostButton()
         }
     }
     

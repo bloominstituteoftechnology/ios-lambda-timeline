@@ -96,8 +96,9 @@ class PostController {
     private func store(mediaData: Data, mediaType: String, completion: @escaping (URL?) -> Void) {
         
         let mediaID = UUID().uuidString
+        let mediaExtension: String = mediaType == "video" ? ".mov" : ""
         
-        let mediaRef = storageRef.child(mediaType).child(mediaID)
+        let mediaRef = storageRef.child(mediaType).child(mediaID+mediaExtension)
         
         let uploadTask = mediaRef.putData(mediaData, metadata: nil) { (metadata, error) in
             if let error = error {
