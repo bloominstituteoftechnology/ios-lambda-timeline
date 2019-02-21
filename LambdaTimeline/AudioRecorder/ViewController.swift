@@ -4,9 +4,9 @@ import UIKit
 class ViewController: UIViewController, PlayerDelegate, RecorderDelegate {
 
     
-    var post: Post!
-    var postController: PostController!
-    
+   
+    let imageDetail = ImagePostDetailTableViewController()
+    let imagePostTableViewCell = ImagePostTableViewCell()
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var timeRemaining: UILabel!
@@ -19,18 +19,12 @@ class ViewController: UIViewController, PlayerDelegate, RecorderDelegate {
             self.navigationController?.popViewController(animated: true)
         }
     }
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-            let recordAudioFile = segue.destination as! ImagePostTableViewCell
-            recordAudioFile.recordFile = recorder
-    }
-//    @IBAction func sliderChanged(_ sender: Any) {
-//        let duration = Float(player.totalTime)
-//       // let sliderTime = TimeInterval(timerSlider.value) * duration
-//        
-//    }
+   
     @IBAction func save(_ sender: Any) {
-        self.postController.addComment(with: "\(recorder.currentFile)", to: post)
+        //self.postController.addAudioComment(with: recorder.currentFile!, to: post)
+        
+        imagePostTableViewCell.recordFile = recorder.currentFile
+        imageDetail.recordFile = recorder.currentFile
         DispatchQueue.main.async {
             self.dismiss(animated: true, completion: nil)
             self.navigationController?.popViewController(animated: true)

@@ -35,6 +35,9 @@
 		A52FCB22221D24790073AF00 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52FCB1F221D24780073AF00 /* Player.swift */; };
 		A52FCB25221D293C0073AF00 /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A52FCB24221D293C0073AF00 /* music.mp3 */; };
 		A52FCB27221D40D70073AF00 /* ImagePostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A52FCB26221D40D70073AF00 /* ImagePostTableViewCell.swift */; };
+		A57CB386221E7672004F0927 /* PlayIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = A57CB385221E7671004F0927 /* PlayIcon.png */; };
+		A57CB38B221E8496004F0927 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57CB388221E8495004F0927 /* CameraViewController.swift */; };
+		A57CB38D221E8496004F0927 /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57CB38A221E8495004F0927 /* CameraPreviewView.swift */; };
 		E453457955DF907FCBD117F1 /* Pods_LambdaTimeline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +74,9 @@
 		A52FCB1F221D24780073AF00 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		A52FCB24221D293C0073AF00 /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
 		A52FCB26221D40D70073AF00 /* ImagePostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePostTableViewCell.swift; sourceTree = "<group>"; };
+		A57CB385221E7671004F0927 /* PlayIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlayIcon.png; sourceTree = "<group>"; };
+		A57CB388221E8495004F0927 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		A57CB38A221E8495004F0927 /* CameraPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
 		AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LambdaTimeline.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -146,6 +152,7 @@
 				46463787216FDE4C00E7FF73 /* Info.plist */,
 				A52FCAEF221B6CF80073AF00 /* GoogleService-Info.plist */,
 				A52FCB24221D293C0073AF00 /* music.mp3 */,
+				A57CB385221E7671004F0927 /* PlayIcon.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -170,6 +177,7 @@
 		46A0366B21700F6100E7FF73 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A57CB387221E845A004F0927 /* Video Controllers */,
 				46A0366C2170158900E7FF73 /* SignInViewController.swift */,
 				46A0366921700F5100E7FF73 /* PostsCollectionViewController.swift */,
 				46CFE6F421707D0000E7FF73 /* ImagePostViewController.swift */,
@@ -237,6 +245,15 @@
 			path = AudioRecorder;
 			sourceTree = "<group>";
 		};
+		A57CB387221E845A004F0927 /* Video Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				A57CB38A221E8495004F0927 /* CameraPreviewView.swift */,
+				A57CB388221E8495004F0927 /* CameraViewController.swift */,
+			);
+			path = "Video Controllers";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -298,6 +315,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A57CB386221E7672004F0927 /* PlayIcon.png in Resources */,
 				46463786216FDE4C00E7FF73 /* LaunchScreen.storyboard in Resources */,
 				A52FCAF0221B6CF80073AF00 /* GoogleService-Info.plist in Resources */,
 				A52FCB25221D293C0073AF00 /* music.mp3 in Resources */,
@@ -417,9 +435,11 @@
 				46CFE6F92170862C00E7FF73 /* ShiftableViewController.swift in Sources */,
 				A52FCB21221D24790073AF00 /* Recorder.swift in Sources */,
 				A52FCB22221D24790073AF00 /* Player.swift in Sources */,
+				A57CB38B221E8496004F0927 /* CameraViewController.swift in Sources */,
 				4646377C216FDE4B00E7FF73 /* AppDelegate.swift in Sources */,
 				46CFE6FD217154F500E7FF73 /* Networking.swift in Sources */,
 				46CFE6F521707D0000E7FF73 /* ImagePostViewController.swift in Sources */,
+				A57CB38D221E8496004F0927 /* CameraPreviewView.swift in Sources */,
 				A52FCB27221D40D70073AF00 /* ImagePostTableViewCell.swift in Sources */,
 				46CFE6FF2171556D00E7FF73 /* ConcurrentOperation.swift in Sources */,
 				46463790216FFD1B00E7FF73 /* Post.swift in Sources */,

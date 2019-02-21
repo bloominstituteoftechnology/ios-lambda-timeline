@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ImagePostDetailTableViewController: UITableViewController, PlayerDelegate, RecorderDelegate {
   
@@ -21,9 +22,6 @@ class ImagePostDetailTableViewController: UITableViewController, PlayerDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
-        addChild(viewController)
-        view.addSubview(viewController.view)
-        viewController.didMove(toParent: self)
         player.delegate = self
         recorder.delegate = self
     }
@@ -42,11 +40,10 @@ class ImagePostDetailTableViewController: UITableViewController, PlayerDelegate,
         
         
     }
-    
-    
+   
     // MARK: - Table view data source
-    let viewController = ViewController()
-    var recordFile: Recorder?
+    var cameraBool: Bool = false
+    var recordFile: URL?
     private let player = Player()
     private let recorder = Recorder()
     @IBAction func createComment(_ sender: Any) {
@@ -82,23 +79,31 @@ class ImagePostDetailTableViewController: UITableViewController, PlayerDelegate,
         
         alert.addAction(UIAlertAction(title: "Audio Comment", style: .default, handler: { (_) in
             print("User click Audio Comment button")
-            let alert = UIAlertController(title: "Add a comment", message: "Record your audio comment below:", preferredStyle: .alert)
-//            var recordButton: UIButton?
-//            recordButton?.titleLabel?.text = "Record"
-            
-            let recordAction = UIAlertAction(title: "Record", style: .default) { (_) in
+
                 let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
                 let nextViewController = storyBoard.instantiateViewController(withIdentifier: "audio") as! ViewController
                 self.present(nextViewController, animated:true, completion:nil)
+         
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
+         
+            
+            self.present(alert, animated: true, completion: nil)
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Video Comment", style: .default, handler: { (_) in
+            print("User click Video Comment button")
+            
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "Video") as! CameraViewController
+            self.present(nextViewController, animated:true, completion:nil)
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             
-            alert.addAction(recordAction)
-            alert.addAction(cancelAction)
             
             self.present(alert, animated: true, completion: nil)
         }))
@@ -124,7 +129,8 @@ class ImagePostDetailTableViewController: UITableViewController, PlayerDelegate,
         
         cell.comment?.text = comment?.text
         cell.author?.text = comment?.author.displayName
-        
+        //cell.play.titleLabel?.text = comment?.audio!.absoluteString
+        cell.playAction(player.play(song: recordFile))
         return cell
     }
     

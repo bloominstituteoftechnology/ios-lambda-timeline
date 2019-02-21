@@ -56,13 +56,14 @@ class Player: NSObject, AVAudioPlayerDelegate {
     func play(song: URL? = nil) {
         
         // First figure out which file I should be playing - I prefer it to be a song if I have one
-        let file = song ?? Bundle.main.url(forResource: "music", withExtension: "mp3")!
+       // let file = song ?? nil //Bundle.main.url(forResource: "music", withExtension: "mp3")!
         
         // URL it's currently playing - if the file that is currently playing is not the file I want to be playing, then recreate the audio player to play the thing I want to be playing
-        if audioPlayer == nil || audioPlayer?.url != file {
+       // if audioPlayer == nil || audioPlayer?.url != file {
             // If audioPlayer is nil, make an audio player
             //let songURL = Bundle.main.url(forResource: "smallthoughts", withExtension: "m4a")!
             //audioPlayer = try! AVAudioPlayer(contentsOf: songURL)
+        if let file = song {
             audioPlayer = try! AVAudioPlayer(contentsOf: file)
             
             audioPlayer?.delegate = self

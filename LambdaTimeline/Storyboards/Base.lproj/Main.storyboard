@@ -356,7 +356,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GFJ-OO-MVi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="277.60000000000002" y="108.39580209895054"/>
+            <point key="canvasLocation" x="441" y="108"/>
         </scene>
         <!--Sign In View Controller-->
         <scene sceneID="O74-ZV-TrY">
@@ -476,18 +476,15 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" axis="vertical" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="N0o-II-m3X">
-                                                    <rect key="frame" x="310" y="0.0" width="49" height="72.5"/>
+                                                    <rect key="frame" x="284" y="0.0" width="75" height="72.5"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MhM-IH-fre">
-                                                            <rect key="frame" x="0.0" y="0.0" width="49" height="32.5"/>
-                                                            <state key="normal" title="Record"/>
-                                                            <connections>
-                                                                <action selector="recordAction:" destination="gWx-Ba-4ra" eventType="touchUpInside" id="rQ1-Je-alp"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uOB-RM-AjZ">
-                                                            <rect key="frame" x="0.0" y="40.5" width="49" height="32"/>
-                                                            <state key="normal" title="Play"/>
+                                                        <button opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uOB-RM-AjZ">
+                                                            <rect key="frame" x="0.0" y="0.0" width="75" height="72.5"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="75" id="4fL-jR-0gR"/>
+                                                                <constraint firstAttribute="height" constant="72.5" id="Uc0-ZY-Qkd"/>
+                                                            </constraints>
+                                                            <state key="normal" image="PlayIcon.png"/>
                                                             <connections>
                                                                 <action selector="playAction:" destination="gWx-Ba-4ra" eventType="touchUpInside" id="lec-vZ-END"/>
                                                             </connections>
@@ -508,7 +505,6 @@
                                     <outlet property="author" destination="4HY-sy-NZv" id="0Rx-yo-c6M"/>
                                     <outlet property="comment" destination="Qll-Yj-XTj" id="t7u-Qb-WUj"/>
                                     <outlet property="play" destination="uOB-RM-AjZ" id="gKM-qi-WHj"/>
-                                    <outlet property="record" destination="MhM-IH-fre" id="cD6-oH-4xs"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -538,92 +534,101 @@
         <!--View Controller-->
         <scene sceneID="FhC-bF-ejM">
             <objects>
-                <viewController storyboardIdentifier="audio" id="MC2-nM-0Qk" customClass="ViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="audio" modalPresentationStyle="overCurrentContext" id="MC2-nM-0Qk" customClass="ViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OPt-UH-5Wt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="bbT-ei-58J">
-                                <rect key="frame" x="8" y="272.5" width="359" height="122"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KXY-dQ-5mu">
+                                <rect key="frame" x="0.0" y="264.5" width="375" height="138"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="OeK-66-sO9">
-                                        <rect key="frame" x="0.0" y="0.0" width="359" height="30"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="bbT-ei-58J">
+                                        <rect key="frame" x="8" y="8" width="359" height="122"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Sn-B1-aC8">
-                                                <rect key="frame" x="0.0" y="0.0" width="179.5" height="30"/>
-                                                <state key="normal" title="Record">
-                                                    <color key="titleColor" red="1" green="0.097888789810000001" blue="0.1009366376" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="tappedRecordButton:" destination="MC2-nM-0Qk" eventType="touchUpInside" id="pHw-xb-Zpf"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Dl-ue-v4O">
-                                                <rect key="frame" x="179.5" y="0.0" width="179.5" height="30"/>
-                                                <state key="normal" title="Play">
-                                                    <color key="titleColor" red="0.2856094642" green="0.65191319690000005" blue="0.79685517130000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="tappedPlayButton:" destination="MC2-nM-0Qk" eventType="touchUpInside" id="dsh-Dr-BC8"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="wPI-r3-iMv">
-                                        <rect key="frame" x="0.0" y="46" width="359" height="30"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7R-oc-gwN">
-                                                <rect key="frame" x="0.0" y="0.0" width="36" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="B9S-3f-AgC">
-                                                <rect key="frame" x="42" y="0.0" width="275" height="31"/>
-                                                <color key="tintColor" red="0.2856094642" green="0.65191319690000005" blue="0.79685517130000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <connections>
-                                                    <action selector="sliderChanged:" destination="MC2-nM-0Qk" eventType="valueChanged" id="oWQ-PW-uqv"/>
-                                                </connections>
-                                            </slider>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2YB-VU-RlM">
-                                                <rect key="frame" x="323" y="0.0" width="36" height="30"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstItem="2YB-VU-RlM" firstAttribute="width" secondItem="u7R-oc-gwN" secondAttribute="width" id="qZ5-g0-Gox"/>
-                                        </constraints>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="LCd-Qz-ARi">
-                                        <rect key="frame" x="0.0" y="92" width="359" height="30"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3nh-au-3Kz">
-                                                <rect key="frame" x="0.0" y="0.0" width="175.5" height="30"/>
-                                                <state key="normal" title="Cancel"/>
-                                                <connections>
-                                                    <action selector="cancel:" destination="MC2-nM-0Qk" eventType="touchUpInside" id="Ut3-k6-HOd"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A1s-3w-RdU">
-                                                <rect key="frame" x="183.5" y="0.0" width="175.5" height="30"/>
-                                                <state key="normal" title="Save"/>
-                                                <connections>
-                                                    <action selector="save:" destination="MC2-nM-0Qk" eventType="touchUpInside" id="nQP-WS-3pZ"/>
-                                                </connections>
-                                            </button>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="OeK-66-sO9">
+                                                <rect key="frame" x="0.0" y="0.0" width="359" height="30"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Sn-B1-aC8">
+                                                        <rect key="frame" x="0.0" y="0.0" width="179.5" height="30"/>
+                                                        <state key="normal" title="Record">
+                                                            <color key="titleColor" red="1" green="0.097888789810000001" blue="0.1009366376" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="tappedRecordButton:" destination="MC2-nM-0Qk" eventType="touchUpInside" id="pHw-xb-Zpf"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Dl-ue-v4O">
+                                                        <rect key="frame" x="179.5" y="0.0" width="179.5" height="30"/>
+                                                        <state key="normal" title="Play">
+                                                            <color key="titleColor" red="0.2856094642" green="0.65191319690000005" blue="0.79685517130000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="tappedPlayButton:" destination="MC2-nM-0Qk" eventType="touchUpInside" id="dsh-Dr-BC8"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="wPI-r3-iMv">
+                                                <rect key="frame" x="0.0" y="46" width="359" height="30"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u7R-oc-gwN">
+                                                        <rect key="frame" x="0.0" y="0.0" width="36" height="30"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="B9S-3f-AgC">
+                                                        <rect key="frame" x="42" y="0.0" width="275" height="31"/>
+                                                        <color key="tintColor" red="0.2856094642" green="0.65191319690000005" blue="0.79685517130000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </slider>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2YB-VU-RlM">
+                                                        <rect key="frame" x="323" y="0.0" width="36" height="30"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="2YB-VU-RlM" firstAttribute="width" secondItem="u7R-oc-gwN" secondAttribute="width" id="qZ5-g0-Gox"/>
+                                                </constraints>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="LCd-Qz-ARi">
+                                                <rect key="frame" x="0.0" y="92" width="359" height="30"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3nh-au-3Kz">
+                                                        <rect key="frame" x="0.0" y="0.0" width="175.5" height="30"/>
+                                                        <state key="normal" title="Cancel"/>
+                                                        <connections>
+                                                            <action selector="cancel:" destination="MC2-nM-0Qk" eventType="touchUpInside" id="Ut3-k6-HOd"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A1s-3w-RdU">
+                                                        <rect key="frame" x="183.5" y="0.0" width="175.5" height="30"/>
+                                                        <state key="normal" title="Save"/>
+                                                        <connections>
+                                                            <action selector="save:" destination="MC2-nM-0Qk" eventType="touchUpInside" id="nQP-WS-3pZ"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                            </stackView>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="bbT-ei-58J" secondAttribute="trailing" constant="8" id="89r-Ll-rQY"/>
+                                    <constraint firstAttribute="bottom" secondItem="bbT-ei-58J" secondAttribute="bottom" constant="8" id="Sfa-PV-6F6"/>
+                                    <constraint firstItem="bbT-ei-58J" firstAttribute="leading" secondItem="KXY-dQ-5mu" secondAttribute="leading" constant="8" id="dAM-xA-X6N"/>
+                                    <constraint firstItem="bbT-ei-58J" firstAttribute="top" secondItem="KXY-dQ-5mu" secondAttribute="top" constant="8" id="dPS-qr-k3P"/>
+                                </constraints>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="0.41553403253424659" alpha="0.29781142979452052" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="bbT-ei-58J" firstAttribute="leading" secondItem="OPt-UH-5Wt" secondAttribute="leading" constant="8" id="OqZ-CC-0sN"/>
-                            <constraint firstAttribute="trailing" secondItem="bbT-ei-58J" secondAttribute="trailing" constant="8" id="TvD-eI-eiV"/>
-                            <constraint firstItem="bbT-ei-58J" firstAttribute="centerY" secondItem="OPt-UH-5Wt" secondAttribute="centerY" id="ebe-F1-3pH"/>
-                            <constraint firstItem="bbT-ei-58J" firstAttribute="centerX" secondItem="OPt-UH-5Wt" secondAttribute="centerX" id="jkO-Es-vZl"/>
+                            <constraint firstItem="KXY-dQ-5mu" firstAttribute="leading" secondItem="OPt-UH-5Wt" secondAttribute="leading" id="0pM-b1-Z1u"/>
+                            <constraint firstItem="KXY-dQ-5mu" firstAttribute="centerX" secondItem="OPt-UH-5Wt" secondAttribute="centerX" id="A4b-QB-wBI"/>
+                            <constraint firstAttribute="trailing" secondItem="KXY-dQ-5mu" secondAttribute="trailing" id="iwa-k7-BMR"/>
+                            <constraint firstItem="KXY-dQ-5mu" firstAttribute="centerY" secondItem="OPt-UH-5Wt" secondAttribute="centerY" id="ogS-zZ-GdU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="9lw-SV-afT"/>
                     </view>
@@ -637,7 +642,63 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9vA-mS-te1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2938" y="518"/>
+            <point key="canvasLocation" x="2710" y="502"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="pvb-Mm-c8V">
+            <objects>
+                <viewController storyboardIdentifier="Video" modalPresentationStyle="overCurrentContext" id="EzW-ZD-MNj" customClass="CameraViewController" customModule="VideoRecorder" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2Qv-HA-GUS">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XZy-T3-jTg" customClass="CameraPreviewView" customModule="VideoRecorder" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="gOA-HH-fJx">
+                                <rect key="frame" x="128.5" y="587" width="118" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="52U-N8-XvW">
+                                        <rect key="frame" x="0.0" y="0.0" width="49" height="30"/>
+                                        <state key="normal" title="Record"/>
+                                        <connections>
+                                            <action selector="recordButton:" destination="EzW-ZD-MNj" eventType="touchUpInside" id="6zy-po-ogB"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JbW-Wq-BpM">
+                                        <rect key="frame" x="69" y="0.0" width="49" height="30"/>
+                                        <state key="normal" title="Save"/>
+                                        <connections>
+                                            <action selector="recordButton:" destination="EzW-ZD-MNj" eventType="touchUpInside" id="d6b-d3-fC7"/>
+                                            <action selector="saveButton:" destination="EzW-ZD-MNj" eventType="touchUpInside" id="c3u-F1-HlK"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="XZy-T3-jTg" firstAttribute="top" secondItem="2Qv-HA-GUS" secondAttribute="top" constant="20" id="0H7-hd-WNQ"/>
+                            <constraint firstItem="XZy-T3-jTg" firstAttribute="leading" secondItem="eKd-BO-LvW" secondAttribute="leading" id="1r5-kk-qtt"/>
+                            <constraint firstItem="gOA-HH-fJx" firstAttribute="centerX" secondItem="2Qv-HA-GUS" secondAttribute="centerX" id="21S-yC-8xO"/>
+                            <constraint firstItem="eKd-BO-LvW" firstAttribute="trailing" secondItem="XZy-T3-jTg" secondAttribute="trailing" id="8Pk-dF-R8X"/>
+                            <constraint firstItem="eKd-BO-LvW" firstAttribute="bottom" secondItem="gOA-HH-fJx" secondAttribute="bottom" constant="50" id="DKD-Eo-EFg"/>
+                            <constraint firstAttribute="bottom" secondItem="XZy-T3-jTg" secondAttribute="bottom" id="aqg-2m-YTE"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="eKd-BO-LvW"/>
+                    </view>
+                    <connections>
+                        <outlet property="cameraView" destination="XZy-T3-jTg" id="I5G-iM-uwp"/>
+                        <outlet property="record" destination="52U-N8-XvW" id="QGB-S1-hMR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5X-pD-n4i" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2710" y="-196"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="PlayIcon.png" width="223" height="216"/>
+    </resources>
 </document>

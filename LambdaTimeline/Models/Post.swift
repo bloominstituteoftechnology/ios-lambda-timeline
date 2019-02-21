@@ -21,6 +21,7 @@ class Post {
         self.mediaType = .image
         self.author = author
         self.comments = [Comment(text: title, author: author)]
+        
         self.timestamp = timestamp
     }
     
