@@ -10,7 +10,7 @@ import Foundation
 import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
-import CoreLocation
+import MapKit
 
 class PostController {
     
@@ -131,6 +131,11 @@ class PostController {
         }
         
         uploadTask.resume()
+    }
+    
+    func postsWithAnnotations() -> Set<Post> {
+        let posts = self.posts.filter() { $0.geotag != nil }
+        return Set(posts)
     }
     
     var posts: [Post] = []

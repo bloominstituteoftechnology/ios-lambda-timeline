@@ -163,7 +163,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1216.8" y="108.39580209895054"/>
+            <point key="canvasLocation" x="1111" y="107"/>
         </scene>
         <!--Title-->
         <scene sceneID="kP9-yp-I8H">
@@ -174,7 +174,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9qd-If-ddw">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="PkI-rS-ua9">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="490"/>
@@ -291,7 +291,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXa-A2-VJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1969" y="-195"/>
+            <point key="canvasLocation" x="1969" y="-193"/>
         </scene>
         <!--Title-->
         <scene sceneID="287-az-JVn">
@@ -310,7 +310,7 @@
                                 </connections>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zmT-9k-Wak">
-                                <rect key="frame" x="147.5" y="607" width="80" height="40"/>
+                                <rect key="frame" x="147.5" y="558" width="80" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="WQL-VJ-P2G"/>
                                     <constraint firstAttribute="width" constant="80" id="rx2-Ga-ZBm"/>
@@ -355,10 +355,41 @@
             </objects>
             <point key="canvasLocation" x="1969" y="-865"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Map-->
+        <scene sceneID="bDh-Af-631">
+            <objects>
+                <viewController id="jVj-XZ-vw3" customClass="MapViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="JZe-AL-cV2">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="DcG-o6-c4z">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="DcG-o6-c4z" firstAttribute="top" secondItem="JZe-AL-cV2" secondAttribute="top" id="BLC-z2-mpJ"/>
+                            <constraint firstItem="DcG-o6-c4z" firstAttribute="leading" secondItem="JZe-AL-cV2" secondAttribute="leading" id="BZs-IJ-jj6"/>
+                            <constraint firstAttribute="bottom" secondItem="DcG-o6-c4z" secondAttribute="bottom" id="BfS-h6-HvA"/>
+                            <constraint firstAttribute="trailing" secondItem="DcG-o6-c4z" secondAttribute="trailing" id="bgo-Ua-9YD"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="TdK-wr-F4a"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Map" id="Edr-W8-gJ2"/>
+                    <connections>
+                        <outlet property="mapView" destination="DcG-o6-c4z" id="gYK-wN-tcj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AFd-gu-hk5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="172" y="-628"/>
+        </scene>
+        <!--Timeline-->
         <scene sceneID="gdW-Je-ais">
             <objects>
                 <navigationController storyboardIdentifier="PostsNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="ohA-ly-1Yj" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Timeline" id="Npk-bf-tW7"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="XJY-X6-mEY">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -371,7 +402,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GFJ-OO-MVi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="277.60000000000002" y="108.39580209895054"/>
+            <point key="canvasLocation" x="172" y="107"/>
         </scene>
         <!--Sign In View Controller-->
         <scene sceneID="O74-ZV-TrY">
@@ -408,7 +439,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xA4-1f-Wlf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-450.39999999999998" y="107.49625187406298"/>
+            <point key="canvasLocation" x="-1719" y="108"/>
         </scene>
         <!--Title-->
         <scene sceneID="9zi-Aq-zJI">
@@ -546,7 +577,7 @@
                     <navigationItem key="navigationItem" title="Title" id="ZF5-WY-6Y2">
                         <barButtonItem key="rightBarButtonItem" title="Comment" id="xrT-JD-ey3">
                             <connections>
-                                <segue destination="Np2-sX-VRr" kind="show" id="vXd-u5-X7w"/>
+                                <segue destination="Np2-sX-VRr" kind="presentation" id="By2-A9-LHl"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -557,7 +588,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdL-Y3-4ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1968.8" y="472.71364317841085"/>
+            <point key="canvasLocation" x="1969" y="493"/>
         </scene>
         <!--Audio-->
         <scene sceneID="Q3V-Xw-Ug1">
@@ -568,7 +599,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audio Comment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6W1-PR-Wfq">
-                                <rect key="frame" x="83" y="84" width="209" height="36"/>
+                                <rect key="frame" x="83" y="40" width="209" height="36"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -624,7 +655,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uI3-7T-c2V" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3776" y="825"/>
+            <point key="canvasLocation" x="4033" y="874"/>
         </scene>
         <!--Text-->
         <scene sceneID="6QJ-Rg-bnJ">
@@ -635,13 +666,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text Comment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RTi-cn-Hbl">
-                                <rect key="frame" x="94" y="80" width="187.5" height="36"/>
+                                <rect key="frame" x="94" y="36" width="187.5" height="36"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="V7F-xs-KiR">
-                                <rect key="frame" x="20" y="136" width="335" height="462"/>
+                                <rect key="frame" x="20" y="92" width="335" height="506"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
@@ -665,7 +696,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z3F-d8-2rj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3776" y="160"/>
+            <point key="canvasLocation" x="4033" y="166"/>
         </scene>
         <!--Comment Presenter View Controller-->
         <scene sceneID="4F4-Q1-a3h">
@@ -683,7 +714,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qMY-sQ-AVt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2823" y="493"/>
+            <point key="canvasLocation" x="2998" y="493"/>
         </scene>
         <!--Post Content View Controller-->
         <scene sceneID="3YQ-fx-jeg">
@@ -699,6 +730,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tPi-Ie-Ff9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1377" y="654"/>
+        </scene>
+        <!--Main Tab Bar View Controller-->
+        <scene sceneID="mDt-0X-not">
+            <objects>
+                <tabBarController storyboardIdentifier="PostsTabBarController" automaticallyAdjustsScrollViewInsets="NO" id="UKr-G2-2OO" customClass="MainTabBarViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="yhl-2K-HAf">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="ohA-ly-1Yj" kind="relationship" relationship="viewControllers" id="yh5-rI-gMJ"/>
+                        <segue destination="jVj-XZ-vw3" kind="relationship" relationship="viewControllers" id="7SY-PE-2pS"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7x9-4m-9Q7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-767" y="107"/>
         </scene>
     </scenes>
 </document>

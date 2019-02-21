@@ -10,10 +10,10 @@ import UIKit
 import FirebaseAuth
 import FirebaseUI
 
-class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, TabBarContained {
     
     // MARK: - Properties
-    private let postController = PostController()
+    var postController: PostController!
     private var operations = [String : Operation]()
     private let mediaFetchQueue = OperationQueue()
     private let cache = Cache<String, Data>()
