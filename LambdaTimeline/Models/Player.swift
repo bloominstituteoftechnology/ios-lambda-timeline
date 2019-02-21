@@ -42,6 +42,7 @@ class Player: NSObject, AVAudioPlayerDelegate {
 
         guard let currentFile = file else { return }
         
+        // Make an audio player
         audioPlayer = try! AVAudioPlayer(contentsOf: currentFile)
                 
         audioPlayer?.delegate = self

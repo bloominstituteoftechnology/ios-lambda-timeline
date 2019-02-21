@@ -64,7 +64,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                     fatalError("Need to ask the user for authorization")
                 }
                 DispatchQueue.main.async {
-                    // Now that we have access we want to perform the segue
+                    // Now that we have access we want to begin running the captureSession
                     self.captureSession.startRunning()
                 }
             }
@@ -78,8 +78,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             // We asked for permission, and they said "yes"
             captureSession.startRunning()
         }
-        
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
