@@ -20,6 +20,7 @@ class PostContentViewController: UIViewController {
         case .image:
             setupImageView()
         case .video:
+            // TODO: Actually show video content.
             break
         }
         
