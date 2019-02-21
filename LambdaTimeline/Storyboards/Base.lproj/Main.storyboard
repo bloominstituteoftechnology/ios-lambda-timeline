@@ -99,11 +99,65 @@
                     <connections>
                         <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="jaI-fq-Woc"/>
                         <segue destination="OyM-8q-Icp" kind="show" identifier="ViewImagePost" id="hhs-es-AdQ"/>
+                        <segue destination="mOe-ta-cmh" kind="presentation" identifier="showCamera" id="S9F-FU-VaH"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1216.8" y="108.39580209895054"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="h2f-i2-cXI">
+            <objects>
+                <viewController id="mOe-ta-cmh" customClass="CameraViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Cdy-VU-2h5">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hni-3o-xL1" customClass="CameraPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="20" width="375" height="567"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zz7-Do-giK">
+                                <rect key="frame" x="156.5" y="595" width="62" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Record">
+                                    <color key="titleColor" red="0.2856094642" green="0.65191319690000005" blue="0.79685517130000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="toggleRecord:" destination="mOe-ta-cmh" eventType="touchUpInside" id="BPx-gQ-KU8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZFN-1f-LuW">
+                                <rect key="frame" x="171" y="637" width="33" height="30"/>
+                                <state key="normal" title="Button" image="circled_play"/>
+                                <connections>
+                                    <action selector="playbackButton:" destination="mOe-ta-cmh" eventType="touchUpInside" id="pdd-0w-I8C"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="hni-3o-xL1" firstAttribute="top" secondItem="esb-d0-ezH" secondAttribute="top" id="3ti-9X-4ag"/>
+                            <constraint firstItem="ZFN-1f-LuW" firstAttribute="leading" secondItem="esb-d0-ezH" secondAttribute="leading" constant="171" id="5ic-nz-OXr"/>
+                            <constraint firstItem="ZFN-1f-LuW" firstAttribute="centerX" secondItem="Zz7-Do-giK" secondAttribute="centerX" id="CIY-zB-eFf"/>
+                            <constraint firstItem="esb-d0-ezH" firstAttribute="trailing" secondItem="hni-3o-xL1" secondAttribute="trailing" id="DJ1-cU-lO5"/>
+                            <constraint firstItem="hni-3o-xL1" firstAttribute="leading" secondItem="esb-d0-ezH" secondAttribute="leading" id="LH2-6D-CqS"/>
+                            <constraint firstItem="ZFN-1f-LuW" firstAttribute="top" secondItem="Zz7-Do-giK" secondAttribute="bottom" constant="6" id="O4e-Gv-bZU"/>
+                            <constraint firstItem="ZFN-1f-LuW" firstAttribute="centerX" secondItem="Cdy-VU-2h5" secondAttribute="centerX" id="Pij-JK-xm0"/>
+                            <constraint firstItem="ZFN-1f-LuW" firstAttribute="bottom" secondItem="esb-d0-ezH" secondAttribute="bottom" id="g3v-Zw-g5Y"/>
+                            <constraint firstItem="esb-d0-ezH" firstAttribute="bottom" secondItem="hni-3o-xL1" secondAttribute="bottom" constant="80" id="qtS-1O-caq"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="esb-d0-ezH"/>
+                    </view>
+                    <connections>
+                        <outlet property="cameraView" destination="hni-3o-xL1" id="AlG-xt-9Ce"/>
+                        <outlet property="recordButton" destination="Zz7-Do-giK" id="pW5-Rr-22e"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="t2q-zy-mz1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2621.5999999999999" y="-195.6521739130435"/>
         </scene>
         <!--Title-->
         <scene sceneID="kP9-yp-I8H">
@@ -602,10 +656,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cdA-mo-fTE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2655" y="216"/>
+            <point key="canvasLocation" x="2623" y="465"/>
         </scene>
     </scenes>
     <resources>
         <image name="audio" width="30" height="30"/>
+        <image name="circled_play" width="30" height="30"/>
     </resources>
 </document>
