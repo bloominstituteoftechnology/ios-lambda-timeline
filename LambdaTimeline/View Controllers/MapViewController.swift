@@ -53,13 +53,17 @@ class MapViewController: UIViewController, MKMapViewDelegate, TabBarContained {
     
     // MARK: - MK Map View Delegate
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard annotation is Post else { return nil }
+        guard let post = annotation as? Post else { return nil }
         
         let postView = mapView.dequeueReusableAnnotationView(withIdentifier: "PostAnnotationView", for: annotation) as! MKMarkerAnnotationView
         
-        switch
-        postView.glyphImage = UIImage(named: "imageGlyph")
-        postView.glyphTintColor = .white
+        switch post.mediaType {
+        case .image:
+            postView.glyphImage = UIImage(named: "imageGlyph")
+            postView.glyphTintColor = .white
+        case .video:
+            break
+        }
         
         return postView
     }
