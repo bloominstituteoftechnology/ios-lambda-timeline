@@ -46,12 +46,12 @@ class PostMapViewController: UIViewController, MKMapViewDelegate {
         let currentRegion = CoordinateRegion(mapRect: currentArea)
         
         // TODO: Implement fetch methods on postController
-//        postController.fetchQuakes { (posts, error) in
-//            if let error = error {
-//                NSLog("Error fetching quakes: \(error)")
-//            }
-//            self.posts = posts ?? []
-//        }
+        postController.fetchPostAnnotations { (postAnnotations, error) in
+            if let error = error {
+                NSLog("Error fetching quakes: \(error)")
+            }
+            self.postAnnotations = posts ?? []
+        }
     }
     
     // MARK: - MapViewDelegate
