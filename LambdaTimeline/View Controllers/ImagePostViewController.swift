@@ -9,13 +9,13 @@
 import UIKit
 import Photos
 
-class ImagePostViewController: ShiftableViewController {
+class ImagePostViewController: ShiftableViewController, FilterChooserViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setImageViewHeight(with: 1.0)
-        
+        hideFilterButton()
         updateViews()
     }
     
@@ -52,6 +52,8 @@ class ImagePostViewController: ShiftableViewController {
         present(imagePicker, animated: true, completion: nil)
     }
     
+    // MARK: - Actions
+    
     @IBAction func createPost(_ sender: Any) {
         
         view.endEditing(true)
@@ -62,7 +64,11 @@ class ImagePostViewController: ShiftableViewController {
             return
         }
         
-        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
+        if enableLocationSharingSwitch.isOn {
+            geotag = locationManager.fetchUsersLocation()
+        }
+        
+        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio, geotag: geotag) { (success) in
             guard success else {
                 DispatchQueue.main.async {
                     self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
@@ -105,6 +111,10 @@ class ImagePostViewController: ShiftableViewController {
         presentImagePickerController()
     }
     
+    @IBAction func sliderChanged(_ sender: Any) {
+        updateImageView()
+    }
+    
     func setImageViewHeight(with aspectRatio: CGFloat) {
         
         imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
@@ -112,15 +122,136 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
-    var postController: PostController!
-    var post: Post?
-    var imageData: Data?
+    // MARK: Filter Selection
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "chooseFilter" {
+            
+            let navWrapper = segue.destination as! UINavigationController
+            let filterChooser = navWrapper.viewControllers[0] as! FilterChooserViewController
+            
+            filterChooser.delegate = self
+        }
+    }
+    
+    func filterChooserViewController(_ viewController: FilterChooserViewController, didChooseFilter filter: CIFilter?) {
+        
+        viewController.dismiss(animated: true, completion: nil)
+        
+        if let newFilter = filter {
+            self.filter = newFilter
+        }
+        
+    }
+
+    // MARK: - Private methods
+    
+    private func buildSliders() {
+        for slider in sliders {
+            controlStackView.removeArrangedSubview(slider.view)
+            slider.view.removeFromSuperview()
+        }
+        
+        sliders = filter.attributes.compactMap { (key, value) -> SliderInput? in
+            return SliderInput(name: key, attributes: value)
+            }.sorted {
+                $0.displayName < $1.displayName
+        }
+        
+        let layoutGuide = UILayoutGuide()
+        view.addLayoutGuide(layoutGuide)
+        
+        for (offset, sliderInput) in sliders.enumerated() {
+            controlStackView.insertArrangedSubview(sliderInput.view, at: offset)
+            
+            let slider = sliderInput.slider
+            
+            let equalWidth = slider.widthAnchor.constraint(equalTo: layoutGuide.widthAnchor)
+            equalWidth.isActive = true
+            
+            slider.addTarget(self, action: #selector(sliderChanged(_:)), for: .valueChanged)
+        }
+    }
+    
+    private func hideFilterButton() {
+        addFilterButton.isEnabled = false
+        addFilterButton.tintColor = UIColor.clear
+    }
+    
+    private func unhideFilterButton() {
+        addFilterButton.isEnabled = true
+        addFilterButton.tintColor = UIColor(red: 0/255, green: 122/255, blue: 255/255, alpha: 1)
+    }
+    
+    private func applyFilter(to image: UIImage) -> UIImage {
+        
+        let inputImage: CIImage
+        
+        if let ciImage = image.ciImage {
+            inputImage = ciImage
+        } else if let cgImage = image.cgImage {
+            inputImage = CIImage(cgImage: cgImage)
+        } else {
+            // 🤷‍♂️
+            return image
+        }
+        
+        filter.setValue(inputImage, forKey: kCIInputImageKey)
+        
+        for sliderAttribute in sliders {
+            let value = sliderAttribute.slider.value
+            filter.setValue(value, forKey: sliderAttribute.attributeName)
+        }
+        
+        
+        guard let outputImage = filter.outputImage else {
+            return image
+        }
+        
+        // convert to CGImage because Photos only likes images with CGImage data
+        guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+            return image
+        }
+        
+        return UIImage(cgImage: cgImage)
+    }
+    
+    private func updateImageView() {
+        guard let image = originalImage else { return }
+        imageView?.image = applyFilter(to: image)
+    }
+    
+    // MARK: - Properties
+    
+    
+    var postController: PostController!
+    var locationManager: LocationHelper = LocationHelper()
+    var post: Post?
+    var geotag: CLLocationCoordinate2D?
+    var imageData: Data?
+    private var sliders = Array<SliderInput>()
+    @IBOutlet weak var controlStackView: UIStackView!
+    private var filter = CIFilter(name: "CIColorControls")! {
+        didSet {
+            buildSliders()
+            updateImageView()
+        }
+    }
+    private var originalImage: UIImage? {
+        didSet {
+            updateImageView()
+        }
+    }
+    private let context = CIContext(options: nil)
+    @IBOutlet weak var enableLocationSharingSwitch: UISwitch!
+    @IBOutlet weak var addFilterButton: UIBarButtonItem!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -134,7 +265,8 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
         imageView.image = image
-        
+        originalImage = info[.originalImage] as? UIImage
+        unhideFilterButton()
         setImageViewHeight(with: image.ratio)
     }
     

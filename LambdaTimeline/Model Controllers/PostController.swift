@@ -10,20 +10,21 @@ import Foundation
 import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
+import CoreLocation
 
 class PostController {
     
-    func createPost(with title: String, ofType mediaType: MediaType, mediaData: Data, ratio: CGFloat? = nil, completion: @escaping (Bool) -> Void = { _ in }) {
+    func createPost(with title: String, ofType mediaType: MediaType, mediaData: Data, ratio: CGFloat? = nil, geotag: CLLocationCoordinate2D? = nil, completion: @escaping (Bool) -> Void = { _ in }) {
         
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
+        
         
         store(mediaData: mediaData, mediaType: mediaType) { (mediaURL) in
             
             guard let mediaURL = mediaURL else { completion(false); return }
             
-            let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
-            
+            let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author, geotag: geotag)
             self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
                 if let error = error {
                     NSLog("Error posting image post: \(error)")
@@ -35,12 +36,12 @@ class PostController {
         }
     }
     
-    func addComment(with text: String, to post: inout Post) {
+    func addComment(with text: String, to post: Post, audioURL: URL? = nil) {
         
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
         
-        let comment = Comment(text: text, author: author)
+        let comment = Comment(text: text, author: author, audioURL: audioURL)
         post.comments.append(comment)
         
         savePostToFirebase(post)
@@ -79,7 +80,7 @@ class PostController {
         ref.setValue(post.dictionaryRepresentation)
     }
 
-    private func store(mediaData: Data, mediaType: MediaType, completion: @escaping (URL?) -> Void) {
+    func store(mediaData: Data, mediaType: MediaType, completion: @escaping (URL?) -> Void) {
         
         let mediaID = UUID().uuidString
         
@@ -120,8 +121,6 @@ class PostController {
     var posts: [Post] = []
     let currentUser = Auth.auth().currentUser
     let postsRef = Database.database().reference().child("posts")
-    
     let storageRef = Storage.storage().reference()
-    
     
 }

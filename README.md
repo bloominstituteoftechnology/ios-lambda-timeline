@@ -6,11 +6,15 @@ The goal of this project is to take an existing project called LambdaTimeline an
 
 Today you will be adding geotagging to posts.
 
+
 ## Instructions
 
 Create a new branch in the repository called `postGeotags` and work off of it from where you left off yesterday.
 
+
+
 You're welcome to fulfill these instructions however you want. If you'd like suggestions on how to implement something, open the disclosure triangle and there are some suggestions for you. Of course, you can also ask the PMs and instructors for help as well.
+
 
 1. Add a `geotag: CLLocationCoordinate2D?` property as well. The user should have the choice to geotag posts or not.
 
