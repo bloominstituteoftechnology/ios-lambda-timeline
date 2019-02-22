@@ -9,15 +9,33 @@
 import UIKit
 import AVFoundation
 import Photos
+import AVKit
+
 
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
     var post: Post?
     let postController = PostController()
     var vidoeRecordedURL: URL?
+    var player: AVPlayer?
     
     @IBOutlet weak var record: UIButton!
+    @IBOutlet weak var playVideo: UIButton!
     @IBOutlet weak var cameraView: CameraPreviewView!
+    @IBAction func playRecordedVidoe(_ sender: Any) {
+        let player = AVPlayer(url: vidoeRecordedURL!)
+        let vc = AVPlayerViewController()
+        vc.player = player
+        present(vc, animated: true) {
+            vc.player?.play()
+        }
+    }
+    
+   
+  
+    
+   
+    
     @IBAction func saveButton(_ sender: Any) {
     
         guard let videoURL = vidoeRecordedURL else { return }
@@ -40,7 +58,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     }
     
-        
     
     
     func deleteFile(_ filePath:URL) {

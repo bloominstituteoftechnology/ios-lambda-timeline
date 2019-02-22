@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import AVKit
 
 class ImagePostDetailTableViewController: UITableViewController, PlayerDelegate, RecorderDelegate {
   

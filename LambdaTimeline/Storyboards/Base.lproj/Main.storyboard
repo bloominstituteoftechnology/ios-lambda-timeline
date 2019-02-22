@@ -657,7 +657,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="gOA-HH-fJx">
-                                <rect key="frame" x="128.5" y="587" width="118" height="30"/>
+                                <rect key="frame" x="94" y="587" width="187" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="52U-N8-XvW">
                                         <rect key="frame" x="0.0" y="0.0" width="49" height="30"/>
@@ -666,8 +666,15 @@
                                             <action selector="recordButton:" destination="EzW-ZD-MNj" eventType="touchUpInside" id="6zy-po-ogB"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JbW-Wq-BpM">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NcU-pF-b4D">
                                         <rect key="frame" x="69" y="0.0" width="49" height="30"/>
+                                        <state key="normal" title="Play"/>
+                                        <connections>
+                                            <action selector="playRecordedVidoe:" destination="EzW-ZD-MNj" eventType="touchUpInside" id="ptw-mY-mJv"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JbW-Wq-BpM">
+                                        <rect key="frame" x="138" y="0.0" width="49" height="30"/>
                                         <state key="normal" title="Save"/>
                                         <connections>
                                             <action selector="recordButton:" destination="EzW-ZD-MNj" eventType="touchUpInside" id="d6b-d3-fC7"/>
@@ -690,6 +697,7 @@
                     </view>
                     <connections>
                         <outlet property="cameraView" destination="XZy-T3-jTg" id="I5G-iM-uwp"/>
+                        <outlet property="playVideo" destination="NcU-pF-b4D" id="VNr-UT-2ge"/>
                         <outlet property="record" destination="52U-N8-XvW" id="QGB-S1-hMR"/>
                     </connections>
                 </viewController>
