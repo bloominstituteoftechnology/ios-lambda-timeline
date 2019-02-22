@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController, TabBarContained {
+class MapViewController: UIViewController, MKMapViewDelegate, TabBarContained {
 
     @IBOutlet weak var mapView: MKMapView!
     
@@ -29,7 +29,6 @@ class MapViewController: UIViewController, TabBarContained {
         }
     }
     
-    
     // MARK: - Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,7 +47,7 @@ class MapViewController: UIViewController, TabBarContained {
         })
         
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "PostAnnotationView")
-        
+        mapView.delegate = self
         fetchPosts()
     }
     
@@ -58,9 +57,9 @@ class MapViewController: UIViewController, TabBarContained {
         
         let postView = mapView.dequeueReusableAnnotationView(withIdentifier: "PostAnnotationView", for: annotation) as! MKMarkerAnnotationView
         
-        // TODO: Add a glyph for the annotations
-//        postView.glyphImage = UIImage(named: "")!
-//        postView.glyphTintColor = .white
+        switch
+        postView.glyphImage = UIImage(named: "imageGlyph")
+        postView.glyphTintColor = .white
         
         return postView
     }
