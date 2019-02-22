@@ -87,7 +87,7 @@ class AudioCommentViewController: UIViewController, PlayerDelegate, RecorderDele
             
             self.postController.store(mediaData: audioData, mediaType: .audioComment) { url in
                 
-                self.postController.addCommentWithAudio(with: commentText, audioURL: url!, to: post)
+                self.postController.addComment(with: commentText, to: post, audioURL: url!)
                 DispatchQueue.main.async {
                     self.imagePostDVC?.tableView.reloadData()
                 }

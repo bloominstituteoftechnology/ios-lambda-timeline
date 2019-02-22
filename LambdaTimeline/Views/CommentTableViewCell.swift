@@ -32,7 +32,7 @@ class CommentTableViewCell: UITableViewCell, PlayerDelegate {
     var player: Player = Player()
     
     @IBAction func playStopButtonClicked(_ sender: Any) {
-        if player.isPlaying {
+        if player.isPlaying {  
             player.stop()
         } else {
             player.play(song: audioURL)
