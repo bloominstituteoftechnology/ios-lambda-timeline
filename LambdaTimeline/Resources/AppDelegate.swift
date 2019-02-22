@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import GoogleSignIn
+import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,10 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if Auth.auth().currentUser != nil {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")
-            window?.rootViewController = postsNavigationController
+            let postsTabBarController = storyboard.instantiateViewController(withIdentifier: "PostsTabBarController")
+            window?.rootViewController = postsTabBarController
             window?.makeKeyAndVisible()
         }
+        
+        
         
         return true
     }

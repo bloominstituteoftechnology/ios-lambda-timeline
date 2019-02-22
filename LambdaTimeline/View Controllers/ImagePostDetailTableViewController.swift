@@ -21,7 +21,6 @@ class ImagePostDetailTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    
     func updateViews() {
         
         guard let imageData = imageData,
@@ -118,7 +117,7 @@ class ImagePostDetailTableViewController: UITableViewController {
         if let audioData = cache.value(for: commentID) {
             try? audioData.write(to: file)
             commentCell.audioURL = file
-            self.tableView.reloadRows(at: [indexPath], with: .left)
+            self.tableView.reloadRows(at: [indexPath], with: .none)
             return
         }
         
@@ -147,7 +146,7 @@ class ImagePostDetailTableViewController: UITableViewController {
                 try? data.write(to: file)
                 commentCell.audioURL = file
                 
-                self.tableView.reloadRows(at: [indexPath], with: .right)
+                self.tableView.reloadRows(at: [indexPath], with: .none)
             }
         }
         
