@@ -8,6 +8,7 @@
 
 import Foundation
 import FirebaseAuth
+import CoreLocation
 
 enum MediaType: String {
     case image
@@ -16,6 +17,7 @@ enum MediaType: String {
 }
 
 class Post {
+
     
     init(title: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date()) {
         self.mediaURL = mediaURL

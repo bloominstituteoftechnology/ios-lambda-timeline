@@ -18,6 +18,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     let postController = PostController()
     var vidoeRecordedURL: URL?
     var player: AVPlayer?
+    var audioController: AudioViewController?
     
     @IBOutlet weak var record: UIButton!
     @IBOutlet weak var playVideo: UIButton!
@@ -28,6 +29,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         vc.player = player
         present(vc, animated: true) {
             vc.player?.play()
+            self.audioController?.player.playPause()
         }
     }
     
@@ -76,7 +78,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if fileOutput.isRecording {
             fileOutput.stopRecording()
         } else {
-            
+            audioController?.recorder.record()
             fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
         }
     }

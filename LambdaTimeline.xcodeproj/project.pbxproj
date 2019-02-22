@@ -38,6 +38,9 @@
 		A57CB386221E7672004F0927 /* PlayIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = A57CB385221E7671004F0927 /* PlayIcon.png */; };
 		A57CB38B221E8496004F0927 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57CB388221E8495004F0927 /* CameraViewController.swift */; };
 		A57CB38D221E8496004F0927 /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57CB38A221E8495004F0927 /* CameraPreviewView.swift */; };
+		A57CB38F221FBA3C004F0927 /* GeoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57CB38E221FBA3C004F0927 /* GeoViewController.swift */; };
+		A57CB391221FBCFB004F0927 /* CoordinateRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57CB390221FBCFB004F0927 /* CoordinateRegion.swift */; };
+		A57CB393221FDB7A004F0927 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A57CB392221FDB7A004F0927 /* MapKit.framework */; };
 		E453457955DF907FCBD117F1 /* Pods_LambdaTimeline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +80,9 @@
 		A57CB385221E7671004F0927 /* PlayIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlayIcon.png; sourceTree = "<group>"; };
 		A57CB388221E8495004F0927 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		A57CB38A221E8495004F0927 /* CameraPreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
+		A57CB38E221FBA3C004F0927 /* GeoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoViewController.swift; sourceTree = "<group>"; };
+		A57CB390221FBCFB004F0927 /* CoordinateRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinateRegion.swift; sourceTree = "<group>"; };
+		A57CB392221FDB7A004F0927 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LambdaTimeline.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -85,6 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A57CB393221FDB7A004F0927 /* MapKit.framework in Frameworks */,
 				E453457955DF907FCBD117F1 /* Pods_LambdaTimeline.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -123,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				A52FCB23221D24840073AF00 /* AudioRecorder */,
+				A57CB387221E845A004F0927 /* Video Controllers */,
 				46CFE7042171572900E7FF73 /* Views */,
 				46A0366B21700F6100E7FF73 /* View Controllers */,
 				4646379A2170090900E7FF73 /* Model Controllers */,
@@ -177,12 +185,13 @@
 		46A0366B21700F6100E7FF73 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				A57CB387221E845A004F0927 /* Video Controllers */,
 				46A0366C2170158900E7FF73 /* SignInViewController.swift */,
 				46A0366921700F5100E7FF73 /* PostsCollectionViewController.swift */,
 				46CFE6F421707D0000E7FF73 /* ImagePostViewController.swift */,
 				46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */,
 				A52FCB26221D40D70073AF00 /* ImagePostTableViewCell.swift */,
+				A57CB390221FBCFB004F0927 /* CoordinateRegion.swift */,
+				A57CB38E221FBA3C004F0927 /* GeoViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -230,6 +239,7 @@
 		7C2A25429FC0F968FC1D35E7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A57CB392221FDB7A004F0927 /* MapKit.framework */,
 				AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */,
 			);
 			name = Frameworks;
@@ -440,8 +450,10 @@
 				46CFE6FD217154F500E7FF73 /* Networking.swift in Sources */,
 				46CFE6F521707D0000E7FF73 /* ImagePostViewController.swift in Sources */,
 				A57CB38D221E8496004F0927 /* CameraPreviewView.swift in Sources */,
+				A57CB391221FBCFB004F0927 /* CoordinateRegion.swift in Sources */,
 				A52FCB27221D40D70073AF00 /* ImagePostTableViewCell.swift in Sources */,
 				46CFE6FF2171556D00E7FF73 /* ConcurrentOperation.swift in Sources */,
+				A57CB38F221FBA3C004F0927 /* GeoViewController.swift in Sources */,
 				46463790216FFD1B00E7FF73 /* Post.swift in Sources */,
 				46CFE6F32170757F00E7FF73 /* User+DictionaryRepresentation.swift in Sources */,
 				46D571F32172D43B00E7FF73 /* Cache.swift in Sources */,
