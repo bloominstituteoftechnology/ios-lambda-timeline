@@ -1,12 +1,18 @@
 
 import UIKit
 
-class ViewController: UIViewController, PlayerDelegate, RecorderDelegate {
+protocol AudioPostDelegate {
+    func recordedFile(audio: URL)
+}
 
-    
+class AudioViewController: UIViewController, PlayerDelegate, RecorderDelegate {
    
     let imageDetail = ImagePostDetailTableViewController()
     let imagePostTableViewCell = ImagePostTableViewCell()
+    var post: Post?
+    let postController: PostController = PostController()
+    
+    
     @IBOutlet weak var playButton: UIButton!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var timeRemaining: UILabel!
@@ -21,10 +27,16 @@ class ViewController: UIViewController, PlayerDelegate, RecorderDelegate {
     }
    
     @IBAction func save(_ sender: Any) {
-        //self.postController.addAudioComment(with: recorder.currentFile!, to: post)
         
-        imagePostTableViewCell.recordFile = recorder.currentFile
-        imageDetail.recordFile = recorder.currentFile
+        guard let audioURL = recorder.currentFile else { return }
+       
+        let data = try? Data(contentsOf: audioURL)
+    
+        self.postController.store(mediaData: data!, mediaType: .audio) { (url) in
+            
+            guard let url = url else { return }
+            self.postController.addComment(with: "Audio post", audio: url, to: self.post!)
+        }
         DispatchQueue.main.async {
             self.dismiss(animated: true, completion: nil)
             self.navigationController?.popViewController(animated: true)
@@ -45,14 +57,18 @@ class ViewController: UIViewController, PlayerDelegate, RecorderDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         let fontSize = UIFont.systemFontSize
-//        let font = UIFont.monospacedDigitSystemFont(ofSize: fontSize, weight: .regular)
-//
-//        timeLabel.font = font
-//        timeRemaining.font = font
+        let font = UIFont.monospacedDigitSystemFont(ofSize: fontSize, weight: .regular)
+
+        if timeLabel.text != nil {
+        timeLabel.font = font
+        timeRemaining.font = font
         
         player.delegate = self
         recorder.delegate = self
+        }
     }
 
 

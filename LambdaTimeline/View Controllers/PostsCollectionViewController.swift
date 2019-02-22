@@ -56,6 +56,15 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             cell.post = post
             
             loadImage(for: cell, forItemAt: indexPath)
+            return cell
+            
+        case .audio:
+            
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
+            
+            return cell
+        case .video:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
             
             return cell
         }
@@ -74,6 +83,10 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             guard let ratio = post.ratio else { return size }
             
             size.height = size.width * ratio
+        case .audio:
+            break
+        case .video:
+            break
         }
         
         return size

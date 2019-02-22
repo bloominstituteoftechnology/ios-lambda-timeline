@@ -12,15 +12,49 @@ import Photos
 
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
+    var post: Post?
+    let postController = PostController()
+    var vidoeRecordedURL: URL?
+    
     @IBOutlet weak var record: UIButton!
     @IBOutlet weak var cameraView: CameraPreviewView!
     @IBAction func saveButton(_ sender: Any) {
     
+        guard let videoURL = vidoeRecordedURL else { return }
+        
+        let data = try? Data(contentsOf: videoURL)
+        
+        
+        
+        
+        self.postController.store(mediaData: data! as Data, mediaType: .video) { (url) in
+
+            guard let url = url else { return }
+            self.postController.addComment(with: "Video post", video: url, to: self.post!)
+        }
+        
         DispatchQueue.main.async {
             self.dismiss(animated: true, completion: nil)
             self.navigationController?.popViewController(animated: true)
         }
+    
     }
+    
+        
+    
+    
+    func deleteFile(_ filePath:URL) {
+        guard FileManager.default.fileExists(atPath: filePath.path) else {
+            return
+        }
+        
+        do {
+            try FileManager.default.removeItem(atPath: filePath.path)
+        }catch{
+            fatalError("Unable to delete file: \(error) : \(#function).")
+        }
+    }
+    
     @IBAction func recordButton(_ sender: Any) {
         if fileOutput.isRecording {
             fileOutput.stopRecording()
@@ -108,18 +142,21 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         DispatchQueue.main.async {
         self.updateViews()
         }
-        PHPhotoLibrary.requestAuthorization { status in
-            guard status == .authorized else { return }
-            PHPhotoLibrary.shared().performChanges({
-                PHAssetCreationRequest.creationRequestForAssetFromVideo(atFileURL: outputFileURL)
-            }, completionHandler: { (success, error) in
-                if let error = error {
-                    NSLog("error saving video: \(error)")
-                } else {
-                    NSLog("saving video succeeded")
-                }
-            })
-        }
+        
+        vidoeRecordedURL = outputFileURL
+        
+//        PHPhotoLibrary.requestAuthorization { status in
+//            guard status == .authorized else { return }
+//            PHPhotoLibrary.shared().performChanges({
+//                PHAssetCreationRequest.creationRequestForAssetFromVideo(atFileURL: outputFileURL)
+//            }, completionHandler: { (success, error) in
+//                if let error = error {
+//                    NSLog("error saving video: \(error)")
+//                } else {
+//                    NSLog("saving video succeeded")
+//                }
+//            })
+//        }
     }
     
     

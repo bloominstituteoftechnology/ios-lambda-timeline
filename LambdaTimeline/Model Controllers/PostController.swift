@@ -48,7 +48,7 @@ class PostController {
         savePostToFirebase(post)
     }
     
-    func addComment(with text: String, to post: Post) {
+    func addComment(with text: String, audio: URL? = nil, video: URL? = nil, to post: Post) {
         
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
@@ -92,7 +92,7 @@ class PostController {
         ref.setValue(post.dictionaryRepresentation)
     }
 
-    private func store(mediaData: Data, mediaType: MediaType, completion: @escaping (URL?) -> Void) {
+     func store(mediaData: Data, mediaType: MediaType, completion: @escaping (URL?) -> Void) {
         
         let mediaID = UUID().uuidString
         

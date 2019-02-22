@@ -15,17 +15,20 @@ class Comment: FirebaseConvertible, Equatable {
     static private let author = "author"
     static private let timestampKey = "timestamp"
     static private let audioKey = "audio"
+    static private let videoKey = "video"
     
     let text: String?
     let author: Author
     let timestamp: Date
     let audio: URL?
+    let video: URL?
     
-    init(text: String = "", author: Author, timestamp: Date = Date(), audio: URL? = nil) {
+    init(text: String = "", author: Author, timestamp: Date = Date(), video: URL? = nil, audio: URL? = nil) {
         self.text = text
         self.author = author
         self.timestamp = timestamp
         self.audio = audio
+        self.video = video
     }
     
     init?(dictionary: [String : Any]) {
@@ -34,22 +37,30 @@ class Comment: FirebaseConvertible, Equatable {
             let author = Author(dictionary: authorDictionary),
            
             let timestampTimeInterval = dictionary[Comment.timestampKey] as? TimeInterval else { return nil }
-        var audio: URL?
+        
         if let audioURL = dictionary[Comment.audioKey] as? String {
             audio = URL(string: audioURL)
+        } else {
+            self.audio = nil
+        }
+        if let videoURL = dictionary[Comment.videoKey] as? String {
+            video = URL(string: videoURL)
+        } else {
+            self.video = nil
         }
         
         self.text = text
         self.author = author
         self.timestamp = Date(timeIntervalSince1970: timestampTimeInterval)
-        self.audio = audio
+       
     }
     
     var dictionaryRepresentation: [String: Any] {
         return [Comment.textKey: text,
                 Comment.author: author.dictionaryRepresentation,
                 Comment.timestampKey: timestamp.timeIntervalSince1970,
-                Comment.audioKey: audio?.absoluteString]
+                Comment.audioKey: audio?.absoluteString,
+                Comment.videoKey: video?.absoluteString]
     }
     
     static func ==(lhs: Comment, rhs: Comment) -> Bool {

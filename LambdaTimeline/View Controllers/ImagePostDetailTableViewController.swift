@@ -18,6 +18,10 @@ class ImagePostDetailTableViewController: UITableViewController, PlayerDelegate,
     func playerDidChangeState(_ playe: Player) {
         updateViews()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.reloadData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,7 +85,8 @@ class ImagePostDetailTableViewController: UITableViewController, PlayerDelegate,
             print("User click Audio Comment button")
 
                 let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-                let nextViewController = storyBoard.instantiateViewController(withIdentifier: "audio") as! ViewController
+                let nextViewController = storyBoard.instantiateViewController(withIdentifier: "audio") as! AudioViewController
+                nextViewController.post = self.post
                 self.present(nextViewController, animated:true, completion:nil)
          
             DispatchQueue.main.async {
@@ -98,6 +103,7 @@ class ImagePostDetailTableViewController: UITableViewController, PlayerDelegate,
             
             let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             let nextViewController = storyBoard.instantiateViewController(withIdentifier: "Video") as! CameraViewController
+            nextViewController.post = self.post
             self.present(nextViewController, animated:true, completion:nil)
             
             DispatchQueue.main.async {
