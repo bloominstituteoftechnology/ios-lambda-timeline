@@ -39,10 +39,11 @@
 		D1BC0751221E0A7700097D70 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BC0750221E0A7700097D70 /* CommentTableViewCell.swift */; };
 		D1BC0753221E11CB00097D70 /* FetchAudioOpertion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BC0752221E11CB00097D70 /* FetchAudioOpertion.swift */; };
 		D1CE5260221F52E600289D86 /* PostAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CE525F221F52E600289D86 /* PostAnnotation.swift */; };
-		D1CE5262221F99ED00289D86 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CE5261221F99ED00289D86 /* LocationManager.swift */; };
+		D1CE5262221F99ED00289D86 /* LocationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CE5261221F99ED00289D86 /* LocationHelper.swift */; };
 		D1CE5266221FA72300289D86 /* PostMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CE5265221FA72300289D86 /* PostMapViewController.swift */; };
 		D1CE5268221FAA7500289D86 /* PostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CE5267221FAA7500289D86 /* PostDetailView.swift */; };
 		D1CE526B221FAE8500289D86 /* CoordinateRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CE526A221FAE8500289D86 /* CoordinateRegion.swift */; };
+		D1CE526D221FC8CB00289D86 /* PostsTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CE526C221FC8CB00289D86 /* PostsTabBarController.swift */; };
 		E453457955DF907FCBD117F1 /* Pods_LambdaTimeline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */; };
 /* End PBXBuildFile section */
 
@@ -84,10 +85,11 @@
 		D1BC0750221E0A7700097D70 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		D1BC0752221E11CB00097D70 /* FetchAudioOpertion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchAudioOpertion.swift; sourceTree = "<group>"; };
 		D1CE525F221F52E600289D86 /* PostAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAnnotation.swift; sourceTree = "<group>"; };
-		D1CE5261221F99ED00289D86 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		D1CE5261221F99ED00289D86 /* LocationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHelper.swift; sourceTree = "<group>"; };
 		D1CE5265221FA72300289D86 /* PostMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostMapViewController.swift; sourceTree = "<group>"; };
 		D1CE5267221FAA7500289D86 /* PostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailView.swift; sourceTree = "<group>"; };
 		D1CE526A221FAE8500289D86 /* CoordinateRegion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinateRegion.swift; sourceTree = "<group>"; };
+		D1CE526C221FC8CB00289D86 /* PostsTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostsTabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,6 +197,7 @@
 				D13C095E221B68850082041C /* FilterChooserViewController.swift */,
 				D1BC06F0221CB5DA00097D70 /* AudioCommentViewController.swift */,
 				D1CE5265221FA72300289D86 /* PostMapViewController.swift */,
+				D1CE526C221FC8CB00289D86 /* PostsTabBarController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -226,6 +229,7 @@
 				46CFE7052171573200E7FF73 /* Operations */,
 				46D571F62173D6D200E7FF73 /* Extensions */,
 				46D571F22172D43B00E7FF73 /* Cache.swift */,
+				D1CE5261221F99ED00289D86 /* LocationHelper.swift */,
 				464637982170048900E7FF73 /* FirebaseConvertible.swift */,
 				46CFE6FC217154F500E7FF73 /* Networking.swift */,
 				46CFE6F82170862C00E7FF73 /* ShiftableViewController.swift */,
@@ -240,7 +244,6 @@
 				46CFE6F22170757F00E7FF73 /* User+DictionaryRepresentation.swift */,
 				46D571F42173CF3E00E7FF73 /* UIImage+Ratio.swift */,
 				46CFE6F621707FA600E7FF73 /* UIViewController+InformationalAlert.swift */,
-				D1CE5261221F99ED00289D86 /* LocationManager.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -446,11 +449,12 @@
 				46A0366A21700F5100E7FF73 /* PostsCollectionViewController.swift in Sources */,
 				D1BC0753221E11CB00097D70 /* FetchAudioOpertion.swift in Sources */,
 				D13C0961221B68E60082041C /* SliderInput.swift in Sources */,
-				D1CE5262221F99ED00289D86 /* LocationManager.swift in Sources */,
+				D1CE5262221F99ED00289D86 /* LocationHelper.swift in Sources */,
 				D1CE526B221FAE8500289D86 /* CoordinateRegion.swift in Sources */,
 				46D571F52173CF3E00E7FF73 /* UIImage+Ratio.swift in Sources */,
 				46463792216FFDD900E7FF73 /* Comment.swift in Sources */,
 				46CFE6F721707FA600E7FF73 /* UIViewController+InformationalAlert.swift in Sources */,
+				D1CE526D221FC8CB00289D86 /* PostsTabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

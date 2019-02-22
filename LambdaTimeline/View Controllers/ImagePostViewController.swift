@@ -64,7 +64,11 @@ class ImagePostViewController: ShiftableViewController, FilterChooserViewControl
             return
         }
         
-        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
+        if enableLocationSharingSwitch.isOn {
+            geotag = locationManager.fetchUsersLocation()
+        }
+        
+        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio, geotag: geotag) { (success) in
             guard success else {
                 DispatchQueue.main.async {
                     self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
@@ -219,8 +223,11 @@ class ImagePostViewController: ShiftableViewController, FilterChooserViewControl
     
     // MARK: - Properties
     
+    
     var postController: PostController!
+    var locationManager: LocationHelper = LocationHelper()
     var post: Post?
+    var geotag: CLLocationCoordinate2D?
     var imageData: Data?
     private var sliders = Array<SliderInput>()
     @IBOutlet weak var controlStackView: UIStackView!
@@ -236,13 +243,15 @@ class ImagePostViewController: ShiftableViewController, FilterChooserViewControl
         }
     }
     private let context = CIContext(options: nil)
-    
+    @IBOutlet weak var enableLocationSharingSwitch: UISwitch!
     @IBOutlet weak var addFilterButton: UIBarButtonItem!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

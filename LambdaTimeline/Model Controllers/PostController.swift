@@ -24,8 +24,7 @@ class PostController {
             
             guard let mediaURL = mediaURL else { completion(false); return }
             
-            let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
-            
+            let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author, geotag: geotag)
             self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
                 if let error = error {
                     NSLog("Error posting image post: \(error)")
@@ -123,6 +122,5 @@ class PostController {
     let currentUser = Auth.auth().currentUser
     let postsRef = Database.database().reference().child("posts")
     let storageRef = Storage.storage().reference()
-    
     
 }

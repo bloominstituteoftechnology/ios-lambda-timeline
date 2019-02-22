@@ -88,7 +88,13 @@
                             <outlet property="delegate" destination="hPa-Td-5A3" id="s19-fb-fqF"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Title" id="2BL-ZV-Whs"/>
+                    <navigationItem key="navigationItem" title="Title" id="2BL-ZV-Whs">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="QCF-de-FJa">
+                            <connections>
+                                <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="XXk-6W-sK1"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="jaI-fq-Woc"/>
                         <segue destination="OyM-8q-Icp" kind="show" identifier="ViewImagePost" id="hhs-es-AdQ"/>
@@ -110,7 +116,7 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="PkI-rS-ua9">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="529"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="564"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yQ3-V3-hIf">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
@@ -140,18 +146,40 @@
                                                     <constraint firstItem="VxD-cu-jHT" firstAttribute="top" secondItem="4eK-5F-H5h" secondAttribute="top" id="rjG-je-eTX"/>
                                                 </constraints>
                                             </view>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Give your post a title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Op6-OA-6Ou">
-                                                <rect key="frame" x="0.0" y="383" width="375" height="30"/>
-                                                <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                                            </textField>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="ksZ-j1-3Bc">
+                                                <rect key="frame" x="0.0" y="383" width="375" height="65"/>
+                                                <subviews>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Give your post a title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Op6-OA-6Ou">
+                                                        <rect key="frame" x="0.0" y="0.0" width="317" height="65"/>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                    </textField>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="b6h-CL-gYj">
+                                                        <rect key="frame" x="319" y="0.0" width="56" height="65"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Location" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B8h-CG-dLN">
+                                                                <rect key="frame" x="0.0" y="0.0" width="56" height="34"/>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="lJ3-jD-yHh">
+                                                                <rect key="frame" x="0.0" y="34" width="58" height="31"/>
+                                                            </switch>
+                                                        </subviews>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="56" id="d2j-uF-7yG"/>
+                                                        </constraints>
+                                                    </stackView>
+                                                </subviews>
+                                            </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wdw-Gz-OZu">
-                                                <rect key="frame" x="0.0" y="421" width="375" height="50"/>
+                                                <rect key="frame" x="0.0" y="456" width="375" height="50"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="POb-Tq-UW7">
-                                                <rect key="frame" x="0.0" y="479" width="375" height="50"/>
+                                                <rect key="frame" x="0.0" y="514" width="375" height="50"/>
                                             </stackView>
                                         </subviews>
                                     </stackView>
@@ -194,6 +222,7 @@
                         <outlet property="addFilterButton" destination="3xC-cc-IkT" id="4u3-sH-8mM"/>
                         <outlet property="chooseImageButton" destination="VxD-cu-jHT" id="KVs-no-MbU"/>
                         <outlet property="controlStackView" destination="POb-Tq-UW7" id="qoW-Wf-kyU"/>
+                        <outlet property="enableLocationSharingSwitch" destination="lJ3-jD-yHh" id="ZXB-Qi-T19"/>
                         <outlet property="imageHeightConstraint" destination="MHD-wr-Gq9" id="HyG-8g-Ck1"/>
                         <outlet property="imageView" destination="4eK-5F-H5h" id="e7m-c5-Xhz"/>
                         <outlet property="postButton" destination="hsH-Uv-tug" id="ZBn-KE-cpU"/>
@@ -232,7 +261,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mn3-E0-ZVn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2175" y="883"/>
+            <point key="canvasLocation" x="2345" y="883"/>
         </scene>
         <!--Sign In View Controller-->
         <scene sceneID="O74-ZV-TrY">
@@ -596,10 +625,10 @@
             </objects>
             <point key="canvasLocation" x="4711.1999999999998" y="-317.09145427286359"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Posts Tab Bar Controller-->
         <scene sceneID="Cpg-Qz-91f">
             <objects>
-                <tabBarController storyboardIdentifier="PostsTabBarController" automaticallyAdjustsScrollViewInsets="NO" id="FUW-AQ-LQ5" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="PostsTabBarController" automaticallyAdjustsScrollViewInsets="NO" id="FUW-AQ-LQ5" customClass="PostsTabBarController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="AdP-4t-ees">
                         <autoresizingMask key="autoresizingMask"/>
@@ -658,4 +687,7 @@
         <image name="map_marker" width="30" height="30"/>
         <image name="news" width="30" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="XXk-6W-sK1"/>
+    </inferredMetricsTieBreakers>
 </document>

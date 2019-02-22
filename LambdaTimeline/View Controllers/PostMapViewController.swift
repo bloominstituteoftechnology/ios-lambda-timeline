@@ -20,7 +20,7 @@ class PostMapViewController: UIViewController, MKMapViewDelegate {
     // MARK: - Properties
     
     @IBOutlet weak var mapView: MKMapView!
-    private var postController = PostController()
+    var postController: PostController?
     private var postAnnotations = Array<PostAnnotation>() {
         didSet {
             let oldPosts = Set(oldValue)

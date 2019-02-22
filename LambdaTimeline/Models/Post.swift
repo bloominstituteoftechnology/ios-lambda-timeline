@@ -16,7 +16,7 @@ enum MediaType: String {
     case video
 }
 
-enum LatLongType: Double {
+enum LatLongType: String {
     case latitude
     case longitude
 }
@@ -75,7 +75,7 @@ class Post {
         }
         
         if let geotag = self.geotag {
-            dict[Post.geotagKey] = [LatLongType.latitude: geotag.latitude, LatLongType.longitude: geotag.longitude]
+            dict[Post.geotagKey] = [Post.latitudeKey: geotag.latitude, Post.longitudeKey: geotag.longitude]
         }
         
         return dict
@@ -102,4 +102,6 @@ class Post {
     static private let timestampKey = "timestamp"
     static private let idKey = "id"
     static private let geotagKey = "geotag"
+    static private let latitudeKey = "latitude"
+    static private let longitudeKey = "longitude"
 }
