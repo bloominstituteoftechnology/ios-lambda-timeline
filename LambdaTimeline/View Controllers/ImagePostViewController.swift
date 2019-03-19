@@ -130,95 +130,46 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     @IBAction func changeBlur(_ sender: Any) {
-        updateWithBlurImage()
+        updateImage()
     }
     
     @IBAction func changeExposure(_ sender: Any) {
-        updateExposureImage()
+        updateImage()
     }
     
-    private func image(withComicEffect image: UIImage) -> UIImage {
-        
-        guard comicFilterOn == true else { return image }
-        
-        // UIIamge -> CGImage -> CIImage
+    private func image(byFiltering image: UIImage) -> UIImage {
         
         guard let cgImage = image.cgImage else { return image }
         
         let ciImage = CIImage(cgImage: cgImage)
         
-        // Set  the filter's parameters to the slider's values
+        let comicOutputCIImage: CIImage?
         
-        comicFilter.setValue(ciImage, forKey: "inputImage")
+        if comicFilterOn {
+            comicFilter.setValue(ciImage, forKey: "inputImage")
+            comicOutputCIImage = comicFilter.outputImage
+        } else {
+            comicOutputCIImage = ciImage
+        }
         
-        // CIImage -> CGImage -> UIImage
-        
-        guard let outputCIImage = comicFilter.outputImage,
-            let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
-        
-        return UIImage(cgImage: outputCGImage)
-    }
-    
-    private func image(withBlurEffect image: UIImage) -> UIImage {
-        
-        // UIIamge -> CGImage -> CIImage
-        
-        guard let cgImage = image.cgImage else { return image }
-        
-        let ciImage = CIImage(cgImage: cgImage)
-        
-        // Set  the filter's parameters to the slider's values
-        
-        blurFilter.setValue(ciImage, forKey: "inputImage")
+        blurFilter.setValue(comicOutputCIImage, forKey: "inputImage")
         blurFilter.setValue(blurSlider.value, forKey: "inputRadius")
+        guard let blurOutputCIImage = blurFilter.outputImage else { return image }
         
-        // CIImage -> CGImage -> UIImage
-        
-        guard let outputCIImage = blurFilter.outputImage,
-            let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
-        
-        return UIImage(cgImage: outputCGImage)
-    }
-    
-    private func image(withExposure image: UIImage) -> UIImage {
-        
-        // UIIamge -> CGImage -> CIImage
-        
-        guard let cgImage = image.cgImage else { return image }
-        
-        let ciImage = CIImage(cgImage: cgImage)
-        
-        // Set  the filter's parameters to the slider's values
-        
-        exposureFilter.setValue(ciImage, forKey: "inputImage")
+        exposureFilter.setValue(blurOutputCIImage, forKey: "inputImage")
         exposureFilter.setValue(exposureSlider.value, forKey: "inputEV")
+        guard let outputCIImage = exposureFilter.outputImage else { return image }
         
-        // CIImage -> CGImage -> UIImage
-        
-        guard let outputCIImage = exposureFilter.outputImage,
-            let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
         
         return UIImage(cgImage: outputCGImage)
     }
     
-    private func updateWithBlurImage() {
+    private func updateImage() {
         if let scaledImage = scaledImage {
-            imageView.image = image(withBlurEffect: scaledImage)
+            imageView.image = image(byFiltering: scaledImage)
         }
     }
-    
-    private func updateWithComicImage() {
-        if let scaledImage = scaledImage {
-            imageView.image = image(withComicEffect: scaledImage)
-        }
-    }
-    
-    private func updateExposureImage() {
-        if let scaledImage = scaledImage {
-            imageView.image = image(withExposure: scaledImage)
-        }
-    }
-    
     
     var postController: PostController!
     var post: Post?
@@ -234,7 +185,7 @@ class ImagePostViewController: ShiftableViewController {
     
     var comicFilterOn: Bool = false {
         didSet {
-            updateWithComicImage()
+            updateImage()
         }
     }
     
@@ -259,9 +210,7 @@ class ImagePostViewController: ShiftableViewController {
     
     var scaledImage: UIImage? {
         didSet {
-            updateExposureImage()
-            updateWithBlurImage()
-            updateWithComicImage()
+            updateImage()
         }
     }
     
