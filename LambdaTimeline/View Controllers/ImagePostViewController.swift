@@ -130,11 +130,11 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     @IBAction func changeBlur(_ sender: Any) {
-        updateImage()
+        updateWithBlurImage()
     }
     
     @IBAction func changeExposure(_ sender: Any) {
-        updateImage()
+        updateExposureImage()
     }
     
     private func image(withComicEffect image: UIImage) -> UIImage {
@@ -201,33 +201,24 @@ class ImagePostViewController: ShiftableViewController {
         return UIImage(cgImage: outputCGImage)
     }
     
-    private func updateImage() {
+    private func updateWithBlurImage() {
         if let scaledImage = scaledImage {
-            imageWithEffects(scaledImage: scaledImage)
-        }
-    }
-    
-    private func imageWithEffects(scaledImage: UIImage) {
-        queue.sync {
-            
-            imageView.image = image(withExposure: scaledImage)
-            
-        }
-        queue.sync {
-            
             imageView.image = image(withBlurEffect: scaledImage)
-            
-        }
-        queue.sync {
-
-            imageView.image = image(withComicEffect: scaledImage)
-
         }
     }
     
-    let queue = DispatchQueue(label: "com.MosesRobinson.Concurrency.FilterQueue", attributes: .concurrent)
+    private func updateWithComicImage() {
+        if let scaledImage = scaledImage {
+            imageView.image = image(withComicEffect: scaledImage)
+        }
+    }
     
-    let group = DispatchGroup()
+    private func updateExposureImage() {
+        if let scaledImage = scaledImage {
+            imageView.image = image(withExposure: scaledImage)
+        }
+    }
+    
     
     var postController: PostController!
     var post: Post?
@@ -243,7 +234,7 @@ class ImagePostViewController: ShiftableViewController {
     
     var comicFilterOn: Bool = false {
         didSet {
-            updateImage()
+            updateWithComicImage()
         }
     }
     
@@ -268,7 +259,9 @@ class ImagePostViewController: ShiftableViewController {
     
     var scaledImage: UIImage? {
         didSet {
-            updateImage()
+            updateExposureImage()
+            updateWithBlurImage()
+            updateWithComicImage()
         }
     }
     
