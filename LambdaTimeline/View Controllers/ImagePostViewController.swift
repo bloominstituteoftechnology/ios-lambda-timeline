@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import CoreImage
 
 class ImagePostViewController: ShiftableViewController {
     
@@ -17,6 +18,8 @@ class ImagePostViewController: ShiftableViewController {
         setImageViewHeight(with: 1.0)
         
         updateViews()
+        blurStack.isHidden = true
+        exposureStack.isHidden = true
     }
     
     func updateViews() {
@@ -48,7 +51,7 @@ class ImagePostViewController: ShiftableViewController {
         imagePicker.delegate = self
         
         imagePicker.sourceType = .photoLibrary
-
+        
         present(imagePicker, animated: true, completion: nil)
     }
     
@@ -58,8 +61,8 @@ class ImagePostViewController: ShiftableViewController {
         
         guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
             let title = titleTextField.text, title != "" else {
-            presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
-            return
+                presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
+                return
         }
         
         postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
@@ -112,28 +115,185 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
+    @IBAction func useBlur(_ sender: Any) {
+        blurStack.isHidden.toggle()
+        exposureStack.isHidden = true
+    }
+    
+    @IBAction func useExposure(_ sender: Any) {
+        exposureStack.isHidden.toggle()
+        blurStack.isHidden = true
+    }
+    
+    @IBAction func useComicEffect(_ sender: Any) {
+        comicFilterOn.toggle()
+    }
+    
+    @IBAction func changeBlur(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func changeExposure(_ sender: Any) {
+        updateImage()
+    }
+    
+    private func image(withComicEffect image: UIImage) -> UIImage {
+        
+        guard comicFilterOn == true else { return image }
+        
+        // UIIamge -> CGImage -> CIImage
+        
+        guard let cgImage = image.cgImage else { return image }
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        // Set  the filter's parameters to the slider's values
+        
+        comicFilter.setValue(ciImage, forKey: "inputImage")
+        
+        // CIImage -> CGImage -> UIImage
+        
+        guard let outputCIImage = comicFilter.outputImage,
+            let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    private func image(withBlurEffect image: UIImage) -> UIImage {
+        
+        // UIIamge -> CGImage -> CIImage
+        
+        guard let cgImage = image.cgImage else { return image }
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        // Set  the filter's parameters to the slider's values
+        
+        blurFilter.setValue(ciImage, forKey: "inputImage")
+        blurFilter.setValue(blurSlider.value, forKey: "inputRadius")
+        
+        // CIImage -> CGImage -> UIImage
+        
+        guard let outputCIImage = blurFilter.outputImage,
+            let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    private func image(withExposure image: UIImage) -> UIImage {
+        
+        // UIIamge -> CGImage -> CIImage
+        
+        guard let cgImage = image.cgImage else { return image }
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        // Set  the filter's parameters to the slider's values
+        
+        exposureFilter.setValue(ciImage, forKey: "inputImage")
+        exposureFilter.setValue(exposureSlider.value, forKey: "inputEV")
+        
+        // CIImage -> CGImage -> UIImage
+        
+        guard let outputCIImage = exposureFilter.outputImage,
+            let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    private func updateImage() {
+        if let scaledImage = scaledImage {
+            imageWithEffects(scaledImage: scaledImage)
+        }
+    }
+    
+    private func imageWithEffects(scaledImage: UIImage) {
+        queue.sync {
+            
+            imageView.image = image(withExposure: scaledImage)
+            
+        }
+        queue.sync {
+            
+            imageView.image = image(withBlurEffect: scaledImage)
+            
+        }
+        queue.sync {
+
+            imageView.image = image(withComicEffect: scaledImage)
+
+        }
+    }
+    
+    let queue = DispatchQueue(label: "com.MosesRobinson.Concurrency.FilterQueue", attributes: .concurrent)
+    
+    let group = DispatchGroup()
+    
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    
+    // Take care of rendering the filter image
+    let context = CIContext(options: nil)
+    
+    // A template for how to render the image
+    let blurFilter = CIFilter(name: "CIDiscBlur")!
+    let exposureFilter = CIFilter(name: "CIExposureAdjust")!
+    let comicFilter = CIFilter(name: "CIComicEffect")!
+    
+    var comicFilterOn: Bool = false {
+        didSet {
+            updateImage()
+        }
+    }
+    
+    var originalImage: UIImage? {
+        didSet {
+            
+            // Get a scaled down version of the original image
+            
+            guard let originalImage = originalImage else { return }
+            
+            // 300 x 400
+            let originalSize = imageView.bounds.size
+            
+            let deviceScale = UIScreen.main.scale // 1x, 2x, or 3x depending on the device
+            
+            // 900 x 1200 (if a 3x device)
+            let scaledSize = CGSize(width: originalSize.width * deviceScale, height: originalSize.height * deviceScale)
+            
+            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+        }
+    }
+    
+    var scaledImage: UIImage? {
+        didSet {
+            updateImage()
+        }
+    }
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    @IBOutlet var blurSlider: UISlider!
+    @IBOutlet var exposureSlider: UISlider!
+    @IBOutlet var blurStack: UIStackView!
+    @IBOutlet var exposureStack: UIStackView!
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-
+        
         chooseImageButton.setTitle("", for: [])
         
         picker.dismiss(animated: true, completion: nil)
         
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        guard let image = info[.originalImage] as? UIImage else { return }
         
-        imageView.image = image
+        originalImage = image
         
         setImageViewHeight(with: image.ratio)
     }
