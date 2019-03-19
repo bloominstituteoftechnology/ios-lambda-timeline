@@ -59,7 +59,11 @@ class ImagePostViewController: ShiftableViewController {
         
         view.endEditing(true)
         
-        guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
+        guard let originalImage = originalImage else { return }
+        
+        let filteredImage = image(byFiltering: originalImage)
+        
+        guard let imageData = filteredImage.jpegData(compressionQuality: 0.1),
             let title = titleTextField.text, title != "" else {
                 presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
                 return
