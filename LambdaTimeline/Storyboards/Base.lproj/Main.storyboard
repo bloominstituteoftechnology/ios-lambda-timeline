@@ -6,6 +6,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -440,23 +441,63 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eiw-hQ-sAu">
-                                <rect key="frame" x="318" y="40" width="37" height="30"/>
-                                <state key="normal" title="Done"/>
+                                <rect key="frame" x="300" y="40" width="55" height="30"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelPost:" destination="7R1-eJ-Zgp" eventType="touchUpInside" id="8IE-iH-uea"/>
+                                </connections>
+                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Cj7-Pf-vBx">
+                                <rect key="frame" x="80" y="259.5" width="215" height="68"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fpj-5g-tMg">
+                                        <rect key="frame" x="0.0" y="0.0" width="215" height="30"/>
+                                        <state key="normal" title="Record"/>
+                                        <connections>
+                                            <action selector="record:" destination="7R1-eJ-Zgp" eventType="touchUpInside" id="ZIE-1r-PVA"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G9a-rd-PY0">
+                                        <rect key="frame" x="0.0" y="38" width="215" height="30"/>
+                                        <state key="normal" title="Play Back"/>
+                                        <connections>
+                                            <action selector="play:" destination="7R1-eJ-Zgp" eventType="touchUpInside" id="Q6b-vF-b3w"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HAI-aq-DsV">
+                                <rect key="frame" x="80" y="377.5" width="215" height="30"/>
+                                <state key="normal" title="Post"/>
+                                <connections>
+                                    <action selector="postRecording:" destination="7R1-eJ-Zgp" eventType="touchUpInside" id="y1H-1g-lKQ"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="eiw-hQ-sAu" firstAttribute="top" secondItem="aUQ-8M-Gwr" secondAttribute="top" constant="20" id="5K6-Ds-5yS"/>
+                            <constraint firstItem="Cj7-Pf-vBx" firstAttribute="centerX" secondItem="L7s-sc-wH8" secondAttribute="centerX" id="DwO-eI-FO0"/>
+                            <constraint firstItem="aUQ-8M-Gwr" firstAttribute="trailing" secondItem="Cj7-Pf-vBx" secondAttribute="trailing" constant="80" id="J0y-Th-uUA"/>
+                            <constraint firstItem="HAI-aq-DsV" firstAttribute="top" secondItem="Cj7-Pf-vBx" secondAttribute="bottom" constant="50" id="JZa-wQ-spp"/>
                             <constraint firstItem="aUQ-8M-Gwr" firstAttribute="trailing" secondItem="eiw-hQ-sAu" secondAttribute="trailing" constant="20" id="T2A-r9-veW"/>
+                            <constraint firstItem="Cj7-Pf-vBx" firstAttribute="centerY" secondItem="L7s-sc-wH8" secondAttribute="centerY" constant="-40" id="c0O-ZV-bKA"/>
+                            <constraint firstItem="Cj7-Pf-vBx" firstAttribute="leading" secondItem="aUQ-8M-Gwr" secondAttribute="leading" constant="80" id="cJN-x3-8FF"/>
                             <constraint firstItem="aUQ-8M-Gwr" firstAttribute="bottom" secondItem="eiw-hQ-sAu" secondAttribute="bottom" constant="597" id="eGy-JK-Sem"/>
-                            <constraint firstItem="eiw-hQ-sAu" firstAttribute="leading" secondItem="aUQ-8M-Gwr" secondAttribute="leading" constant="318" id="qB3-3M-65G"/>
+                            <constraint firstItem="HAI-aq-DsV" firstAttribute="leading" secondItem="aUQ-8M-Gwr" secondAttribute="leading" constant="80" id="hVT-gx-eUy"/>
+                            <constraint firstItem="eiw-hQ-sAu" firstAttribute="leading" secondItem="aUQ-8M-Gwr" secondAttribute="leading" constant="300" id="ovj-zU-QE2"/>
+                            <constraint firstItem="aUQ-8M-Gwr" firstAttribute="trailing" secondItem="HAI-aq-DsV" secondAttribute="trailing" constant="80" id="xA2-qM-biX"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="aUQ-8M-Gwr"/>
                     </view>
+                    <connections>
+                        <outlet property="playButton" destination="G9a-rd-PY0" id="thX-d8-vLo"/>
+                        <outlet property="recordButton" destination="fpj-5g-tMg" id="Tn9-yK-bxh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="isW-nB-tMQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2806" y="483"/>
+            <point key="canvasLocation" x="2750" y="483"/>
         </scene>
     </scenes>
 </document>
