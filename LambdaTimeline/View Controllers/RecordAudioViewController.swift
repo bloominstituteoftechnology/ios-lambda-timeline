@@ -21,6 +21,8 @@ class RecordAudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudi
     
     @IBAction func record(_ sender: Any) {
         
+        guard !isPlaying else { return }
+        
         if isRecording {
             recorder?.stop()
             return
@@ -41,10 +43,13 @@ class RecordAudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudi
     
     @IBAction func play(_ sender: Any) {
         
+        guard !isRecording else { return }
+        
         guard let recordingURL = recordingURL else { return }
         
-        if isPLaying {
+        if isPlaying {
             player?.stop()
+            updateButtons()
             return
         }
         
@@ -84,7 +89,7 @@ class RecordAudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudi
     
     private func updateButtons() {
         
-        let playButtonTitle = isPLaying ? "Stop Playing" : "Play Back"
+        let playButtonTitle = isPlaying ? "Stop Playing" : "Play Back"
         playButton.setTitle(playButtonTitle, for: .normal)
         
         let recordButtonTitle = isRecording ? "Stop Recording" : "Record Comment"
@@ -116,7 +121,7 @@ class RecordAudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudi
     
     private var player: AVAudioPlayer?
     
-    var isPLaying: Bool {
+    var isPlaying: Bool {
         return player?.isPlaying ?? false
     }
     
