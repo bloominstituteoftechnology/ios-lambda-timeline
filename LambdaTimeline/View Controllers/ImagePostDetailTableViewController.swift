@@ -52,8 +52,14 @@ class ImagePostDetailTableViewController: UITableViewController {
             }
         }
         
+        let addRecordingAction = UIAlertAction(title: "Add Recording", style: .default) { (_) in
+            
+            self.performSegue(withIdentifier: "CreateAudio", sender: nil)
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
+        alert.addAction(addRecordingAction)
         alert.addAction(addCommentAction)
         alert.addAction(cancelAction)
         
