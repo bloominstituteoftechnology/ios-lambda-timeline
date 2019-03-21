@@ -7,15 +7,35 @@
 //
 
 import UIKit
+import AVFoundation
+
+protocol RecordingTableViewCellDelegate: class {
+    func playAudio(for cell: RecordingTableViewCell)
+}
 
 class RecordingTableViewCell: UITableViewCell {
 
     private func updateViews() {
         
+        guard let comment = comment else { return }
         
+        authorLabel.text = comment.author.displayName
+        
+        let playButtonTitle = isPlaying ? "Stop" : "Play"
+        playButton.setTitle(playButtonTitle, for: .normal)
+        
+        delegate?.playAudio(for: self)
     }
     
     // MARK: - Properties
+    
+    var player: AVAudioPlayer?
+    
+    var delegate: RecordingTableViewCellDelegate?
+    
+    var isPlaying: Bool {
+        return player?.isPlaying ?? false
+    }
 
     var comment: Comment? {
         didSet {
@@ -25,5 +45,4 @@ class RecordingTableViewCell: UITableViewCell {
     
     @IBOutlet var authorLabel: UILabel!
     @IBOutlet var playButton: UIButton!
-    
 }

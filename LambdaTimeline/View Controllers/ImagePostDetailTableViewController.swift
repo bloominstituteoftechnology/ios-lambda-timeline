@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import AVFoundation
 
-class ImagePostDetailTableViewController: UITableViewController {
+class ImagePostDetailTableViewController: UITableViewController, RecordingTableViewCellDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,15 +82,92 @@ class ImagePostDetailTableViewController: UITableViewController {
         cell.detailTextLabel?.text = comment?.author.displayName
         
         recordingCell.comment = comment
+        loadAudio(for: recordingCell, forItemAt: indexPath)
+        recordingCell.delegate = self
         
-        return cell
+        return comment?.audioURL == nil ? cell : recordingCell
     }
     
-    var post: Post!
+    func playAudio(for cell: RecordingTableViewCell) {
+        
+        if cell.isPlaying {
+            cell.player?.stop()
+            return
+        }
+        
+        cell.player?.play()
+    }
+    
+    // MARK: -- Private Functions
+    
+    func loadAudio(for audioCommentCell: RecordingTableViewCell, forItemAt indexPath: IndexPath) {
+        guard let comment = post?.comments[indexPath.row + 1] else { return }
+        
+        let commentID = comment.timestamp
+        
+        if let audioData = cache.value(for: commentID) {
+            let player = try! AVAudioPlayer(data: audioData)
+            audioCommentCell.player = player
+            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+            return
+        }
+        
+        let fetchOp = FetchAudioOperation(comment: comment, postController: postController)
+        
+        let cacheOp = BlockOperation {
+            if let data = fetchOp.audioData {
+                self.cache.cache(value: data, for: commentID)
+                DispatchQueue.main.async {
+                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                }
+            }
+        }
+        
+        let completionOp = BlockOperation {
+            defer { self.operations.removeValue(forKey: commentID) }
+            
+            if let currentIndexPath = self.tableView?.indexPath(for: audioCommentCell),
+                currentIndexPath != indexPath {
+                print("Got audio for now-reused cell")
+                return
+            }
+            
+            if let data = fetchOp.audioData {
+                audioCommentCell.player = try! AVAudioPlayer(data: data)
+                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+        }
+        
+        cacheOp.addDependency(fetchOp)
+        completionOp.addDependency(fetchOp)
+        
+        mediaFetchQueue.addOperation(fetchOp)
+        mediaFetchQueue.addOperation(cacheOp)
+        OperationQueue.main.addOperation(completionOp)
+        
+        operations[commentID] = fetchOp
+    }
+    
+    // MARK: -- Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "CreateAudio" {
+            guard let destination = segue.destination as? RecordAudioViewController else { return }
+            
+            destination.post = post
+            destination.postController = postController
+        }
+    }
+    
+    // MARK: -- Properties
+    
+    var post: Post! 
     var postController: PostController!
     var imageData: Data?
     
-    
+    private var operations = [Date : Operation]()
+    private let mediaFetchQueue = OperationQueue()
+    private let cache = Cache<Date, Data>()
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!

@@ -72,6 +72,11 @@ class RecordAudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudi
     
     @IBAction func postRecording(_ sender: Any) {
         
+        guard let audioURL = recordingURL else { return }
+        
+        postController?.addAudioComment(with: audioURL, to: &post!, completion: { (error) in
+            self.dismiss(animated: true, completion: nil)
+        })
     }
     
     // MARK: - Private Functions
@@ -116,6 +121,9 @@ class RecordAudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudi
     }
     
     // MARK: - Properties
+    
+    var postController: PostController?
+    var post: Post?
     
     var recordingURL: URL?
     

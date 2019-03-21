@@ -46,12 +46,12 @@ class PostController {
         savePostToFirebase(post)
     }
     
-    func addAudioComment(with audioURL: URL, to post: inout Post) {
+    func addAudioComment(with audioURL: URL, to post: inout Post, completion: @escaping (Error?) -> Void) {
         
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
         
-        let audioComment = Comment(text: nil, audioURL: audioURL, author: author)
+        let audioComment = Comment(audioURL: audioURL, author: author)
         post.comments.append(audioComment)
         
         savePostToFirebase(post)
