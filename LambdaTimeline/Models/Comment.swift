@@ -21,15 +21,15 @@ class Comment: FirebaseConvertible, Equatable {
     let author: Author
     let timestamp: Date
     
-    init(text: String?, author: Author, timestamp: Date = Date()) {
+    init(text: String?, audioURL: URL? = nil, author: Author, timestamp: Date = Date()) {
         self.text = text
         self.author = author
         self.timestamp = timestamp
-        self.audioURL = nil
+        self.audioURL = audioURL
     }
     
-    init(audioURL: URL?, author: Author, timestamp: Date = Date()) {
-        self.text = nil
+    init(audioURL: URL?, text: String? = nil, author: Author, timestamp: Date = Date()) {
+        self.text = text
         self.author = author
         self.timestamp = timestamp
         self.audioURL = audioURL
@@ -50,8 +50,8 @@ class Comment: FirebaseConvertible, Equatable {
     
     var dictionaryRepresentation: [String: Any] {
 
-        return [Comment.textKey: text!,
-                Comment.audioKey: audioURL!,
+        return [Comment.textKey: text ?? "",
+                Comment.audioKey: audioURL?.absoluteString,
                 Comment.author: author.dictionaryRepresentation,
                 Comment.timestampKey: timestamp.timeIntervalSince1970]
     }

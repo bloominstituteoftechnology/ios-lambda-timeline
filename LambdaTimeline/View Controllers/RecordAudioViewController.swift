@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 
 class RecordAudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDelegate {
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -72,11 +72,14 @@ class RecordAudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudi
     
     @IBAction func postRecording(_ sender: Any) {
         
-        guard let audioURL = recordingURL else { return }
+        guard var post = post,
+            let audioURL = recordingURL else { return }
         
-        postController?.addAudioComment(with: audioURL, to: &post!, completion: { (error) in
+        postController?.addAudioComment(with: audioURL, to: &post)
+        
+        DispatchQueue.main.async {
             self.dismiss(animated: true, completion: nil)
-        })
+        }
     }
     
     // MARK: - Private Functions
@@ -107,7 +110,7 @@ class RecordAudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudi
         
         return documentsDirectory.appendingPathComponent(UUID().uuidString).appendingPathExtension("caf")
     }
-
+    
     // MARK: - AVAudio Delegates
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
@@ -127,7 +130,7 @@ class RecordAudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudi
     
     var recordingURL: URL?
     
-    private var player: AVAudioPlayer?
+    var player: AVAudioPlayer?
     
     var isPlaying: Bool {
         return player?.isPlaying ?? false

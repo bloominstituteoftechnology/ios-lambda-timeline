@@ -105,7 +105,7 @@ class ImagePostDetailTableViewController: UITableViewController, RecordingTableV
         
         let commentID = comment.timestamp
         
-        if let audioData = cache.value(for: commentID) {
+        if let audioData = audioCache.value(for: commentID) {
             let player = try! AVAudioPlayer(data: audioData)
             audioCommentCell.player = player
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
@@ -116,7 +116,7 @@ class ImagePostDetailTableViewController: UITableViewController, RecordingTableV
         
         let cacheOp = BlockOperation {
             if let data = fetchOp.audioData {
-                self.cache.cache(value: data, for: commentID)
+                self.audioCache.cache(value: data, for: commentID)
                 DispatchQueue.main.async {
                     self.tableView.reloadRows(at: [indexPath], with: .automatic)
                 }
@@ -167,7 +167,7 @@ class ImagePostDetailTableViewController: UITableViewController, RecordingTableV
     
     private var operations = [Date : Operation]()
     private let mediaFetchQueue = OperationQueue()
-    private let cache = Cache<Date, Data>()
+    private let audioCache = Cache<Date, Data>()
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
