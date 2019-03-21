@@ -53,7 +53,7 @@ class PostController {
         
         let audioComment = Comment(audioURL: audioURL, author: author)
         post.comments.append(audioComment)
-        print(post.comments)
+        print(post.comments.map { ($0.audioURL) })
         savePostToFirebase(post)
     }
 

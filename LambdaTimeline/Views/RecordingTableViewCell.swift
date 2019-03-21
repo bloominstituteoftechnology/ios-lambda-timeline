@@ -14,6 +14,11 @@ protocol RecordingTableViewCellDelegate: class {
 }
 
 class RecordingTableViewCell: UITableViewCell {
+    
+    @IBAction func playButtonPressed(_ sender: Any) {
+        delegate?.playAudio(for: self)
+    }
+    
 
     private func updateViews() {
         
@@ -23,8 +28,6 @@ class RecordingTableViewCell: UITableViewCell {
         
         let playButtonTitle = isPlaying ? "Stop" : "Play"
         playButton.setTitle(playButtonTitle, for: .normal)
-        
-        delegate?.playAudio(for: self)
     }
     
     // MARK: - Properties

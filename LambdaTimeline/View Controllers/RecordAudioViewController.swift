@@ -14,7 +14,7 @@ class RecordAudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudi
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        clearDirectoryOfRecordings()
+//        clearDirectoryOfRecordings()
     }
     
     // MARK: - Actions
@@ -77,9 +77,7 @@ class RecordAudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudi
         
         postController?.addAudioComment(with: audioURL, to: &post)
         
-        DispatchQueue.main.async {
-            self.dismiss(animated: true, completion: nil)
-        }
+        self.dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Private Functions

@@ -16,6 +16,11 @@ class ImagePostDetailTableViewController: UITableViewController, RecordingTableV
         updateViews()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
     func updateViews() {
         
         guard let imageData = imageData,
@@ -72,20 +77,20 @@ class ImagePostDetailTableViewController: UITableViewController, RecordingTableV
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
         
         let recordingCell = tableView.dequeueReusableCell(withIdentifier: "RecordingCell", for: indexPath) as! RecordingTableViewCell
         
         let comment = post?.comments[indexPath.row + 1]
         
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author.displayName
+//        cell.textLabel?.text = comment?.text
+//        cell.detailTextLabel?.text = comment?.author.displayName
         
         recordingCell.comment = comment
         loadAudio(for: recordingCell, forItemAt: indexPath)
         recordingCell.delegate = self
         
-        return comment?.audioURL == nil ? cell : recordingCell
+        return recordingCell
     }
     
     func playAudio(for cell: RecordingTableViewCell) {
