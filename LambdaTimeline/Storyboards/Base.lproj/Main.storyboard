@@ -414,28 +414,30 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XlS-QE-AZw">
-                                            <rect key="frame" x="24" y="19" width="33.5" height="6"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z7k-BB-uXQ">
-                                            <rect key="frame" x="300.5" y="8" width="54.5" height="27.5"/>
-                                            <state key="normal" title="Play"/>
-                                            <connections>
-                                                <action selector="playButtonPressed:" destination="1eH-F1-Rdw" eventType="touchUpInside" id="WPn-bm-0nn"/>
-                                            </connections>
-                                        </button>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Hmr-bz-szx">
+                                            <rect key="frame" x="16" y="8" width="343" height="27.5"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XlS-QE-AZw">
+                                                    <rect key="frame" x="0.0" y="0.0" width="293" height="27.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z7k-BB-uXQ">
+                                                    <rect key="frame" x="313" y="0.0" width="30" height="27.5"/>
+                                                    <state key="normal" title="Play"/>
+                                                    <connections>
+                                                        <action selector="playButtonPressed:" destination="1eH-F1-Rdw" eventType="touchUpInside" id="WPn-bm-0nn"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="Z7k-BB-uXQ" secondAttribute="bottom" constant="8" id="VNY-WT-TZN"/>
-                                        <constraint firstItem="XlS-QE-AZw" firstAttribute="leading" secondItem="vs5-S5-CST" secondAttribute="leadingMargin" constant="8" id="VZH-s8-uQY"/>
-                                        <constraint firstItem="Z7k-BB-uXQ" firstAttribute="leading" secondItem="XlS-QE-AZw" secondAttribute="trailing" constant="243" id="Vf6-C7-87j"/>
-                                        <constraint firstAttribute="trailing" secondItem="Z7k-BB-uXQ" secondAttribute="trailing" constant="20" id="kvZ-aS-R34"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="XlS-QE-AZw" secondAttribute="bottom" constant="8" id="ndQ-J8-7TD"/>
-                                        <constraint firstItem="XlS-QE-AZw" firstAttribute="top" secondItem="vs5-S5-CST" secondAttribute="topMargin" constant="8" id="oKe-ay-Wrz"/>
-                                        <constraint firstItem="Z7k-BB-uXQ" firstAttribute="top" secondItem="vs5-S5-CST" secondAttribute="top" constant="8" id="rgB-Fh-W04"/>
+                                        <constraint firstAttribute="bottom" secondItem="Hmr-bz-szx" secondAttribute="bottom" constant="8" id="183-Hp-fPT"/>
+                                        <constraint firstItem="Hmr-bz-szx" firstAttribute="leading" secondItem="vs5-S5-CST" secondAttribute="leading" constant="16" id="9j2-Jw-ztC"/>
+                                        <constraint firstItem="Hmr-bz-szx" firstAttribute="top" secondItem="vs5-S5-CST" secondAttribute="top" constant="8" id="BJJ-cN-g73"/>
+                                        <constraint firstAttribute="trailing" secondItem="Hmr-bz-szx" secondAttribute="trailing" constant="16" id="NnO-qa-moI"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>

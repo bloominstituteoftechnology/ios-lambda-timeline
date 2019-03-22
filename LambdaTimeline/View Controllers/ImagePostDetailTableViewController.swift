@@ -77,20 +77,25 @@ class ImagePostDetailTableViewController: UITableViewController, RecordingTableV
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
-        
-        let recordingCell = tableView.dequeueReusableCell(withIdentifier: "RecordingCell", for: indexPath) as! RecordingTableViewCell
         
         let comment = post?.comments[indexPath.row + 1]
         
-//        cell.textLabel?.text = comment?.text
-//        cell.detailTextLabel?.text = comment?.author.displayName
-        
-        recordingCell.comment = comment
-        loadAudio(for: recordingCell, forItemAt: indexPath)
-        recordingCell.delegate = self
-        
-        return recordingCell
+        if comment?.audioURL != nil {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "RecordingCell", for: indexPath) as! RecordingTableViewCell
+            
+            cell.comment = comment
+            loadAudio(for: cell, forItemAt: indexPath)
+            cell.delegate = self
+            
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+            
+            cell.textLabel?.text = comment?.text
+            cell.detailTextLabel?.text = comment?.author.displayName
+            
+            return cell
+        }
     }
     
     func playAudio(for cell: RecordingTableViewCell) {
@@ -103,16 +108,21 @@ class ImagePostDetailTableViewController: UITableViewController, RecordingTableV
         cell.player?.play()
     }
     
+    private func updateButton(for cell: RecordingTableViewCell) {
+        let playButtonTitle = cell.isPlaying ? "Stop" : "Play"
+        cell.playButton.setTitle(playButtonTitle, for: .normal)
+    }
+    
     // MARK: -- Private Functions
     
-    func loadAudio(for audioCommentCell: RecordingTableViewCell, forItemAt indexPath: IndexPath) {
+    func loadAudio(for cell: RecordingTableViewCell, forItemAt indexPath: IndexPath) {
         guard let comment = post?.comments[indexPath.row + 1] else { return }
         
         let commentID = comment.timestamp
         
         if let audioData = audioCache.value(for: commentID) {
             let player = try! AVAudioPlayer(data: audioData)
-            audioCommentCell.player = player
+            cell.player = player
             self.tableView.reloadRows(at: [indexPath], with: .automatic)
             return
         }
@@ -131,14 +141,14 @@ class ImagePostDetailTableViewController: UITableViewController, RecordingTableV
         let completionOp = BlockOperation {
             defer { self.operations.removeValue(forKey: commentID) }
             
-            if let currentIndexPath = self.tableView?.indexPath(for: audioCommentCell),
+            if let currentIndexPath = self.tableView?.indexPath(for: cell),
                 currentIndexPath != indexPath {
                 print("Got audio for now-reused cell")
                 return
             }
             
             if let data = fetchOp.audioData {
-                audioCommentCell.player = try! AVAudioPlayer(data: data)
+                cell.player = try! AVAudioPlayer(data: data)
                 self.tableView.reloadRows(at: [indexPath], with: .automatic)
             }
         }

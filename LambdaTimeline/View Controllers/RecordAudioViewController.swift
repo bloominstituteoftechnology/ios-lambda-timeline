@@ -66,7 +66,7 @@ class RecordAudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudi
     }
     
     @IBAction func cancelPost(_ sender: Any) {
-        clearDirectoryOfRecordings()
+      //  clearDirectoryOfRecordings()
         dismiss(animated: true, completion: nil)
     }
     
