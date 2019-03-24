@@ -19,6 +19,7 @@ class ImagePostDetailTableViewController: UITableViewController, RecordingTableV
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
+        updateViews()
     }
     
     func updateViews() {
@@ -73,6 +74,7 @@ class ImagePostDetailTableViewController: UITableViewController, RecordingTableV
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print((post?.comments.count ?? 0) - 1)
         return (post?.comments.count ?? 0) - 1
     }
     
@@ -118,7 +120,7 @@ class ImagePostDetailTableViewController: UITableViewController, RecordingTableV
     func loadAudio(for cell: RecordingTableViewCell, forItemAt indexPath: IndexPath) {
         guard let comment = post?.comments[indexPath.row + 1] else { return }
         
-        let commentID = comment.timestamp
+        let commentID = comment.author.uid
         
         if let audioData = audioCache.value(for: commentID) {
             let player = try! AVAudioPlayer(data: audioData)
@@ -180,9 +182,9 @@ class ImagePostDetailTableViewController: UITableViewController, RecordingTableV
     var postController: PostController!
     var imageData: Data?
     
-    private var operations = [Date : Operation]()
+    private var operations = [String : Operation]()
     private let mediaFetchQueue = OperationQueue()
-    private let audioCache = Cache<Date, Data>()
+    private let audioCache = Cache<String, Data>()
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!

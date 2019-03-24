@@ -51,10 +51,20 @@ class PostController {
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
         
-        let audioComment = Comment(audioURL: audioURL, author: author)
-        post.comments.append(audioComment)
-        print(post.comments.map { ($0.audioURL) })
-        savePostToFirebase(post)
+        let mediaData = try! Data(contentsOf: audioURL)
+        
+        var audioComment: Comment?
+        
+        store(mediaData: mediaData, mediaType: .audio) { (url) in
+            
+            guard let url = url else { return }
+            
+            audioComment = Comment(audioURL: url, author: author)
+        }
+        
+        post.comments.append(audioComment!)
+        
+        self.savePostToFirebase(post)
     }
 
     func observePosts(completion: @escaping (Error?) -> Void) {

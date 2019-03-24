@@ -14,7 +14,7 @@ class RecordAudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudi
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        clearDirectoryOfRecordings()
+       clearDirectoryOfRecordings()
     }
     
     // MARK: - Actions
@@ -66,17 +66,17 @@ class RecordAudioViewController: UIViewController, AVAudioPlayerDelegate, AVAudi
     }
     
     @IBAction func cancelPost(_ sender: Any) {
-      //  clearDirectoryOfRecordings()
+        clearDirectoryOfRecordings()
         dismiss(animated: true, completion: nil)
     }
     
     @IBAction func postRecording(_ sender: Any) {
         
-        guard var post = post,
-            let audioURL = recordingURL else { return }
+        guard let audioURL = recordingURL else { return }
         
-        postController?.addAudioComment(with: audioURL, to: &post)
+        postController?.addAudioComment(with: audioURL, to: &self.post!)
         
+        clearDirectoryOfRecordings()
         self.dismiss(animated: true, completion: nil)
     }
     
