@@ -30,11 +30,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
         
-        let audioPostAction = UIAlertAction(title: "Audio", style: .default) { (_) in
-            self.performSegue(withIdentifier: "ViewImagePost", sender: nil)
-        }
-        
-        let textPostAction = UIAlertAction(title: "Text", style: .default) { (_) in
+        let audioPostAction = UIAlertAction(title: "Audio or Text", style: .default) { (_) in
             self.performSegue(withIdentifier: "ViewImagePost", sender: nil)
         }
         
@@ -42,7 +38,6 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         
         alert.addAction(imagePostAction)
         alert.addAction(audioPostAction)
-        alert.addAction(textPostAction)
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true, completion: nil)
