@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import CoreImage
 
 class ImagePostViewController: ShiftableViewController {
     
@@ -35,6 +36,30 @@ class ImagePostViewController: ShiftableViewController {
         
         chooseImageButton.setTitle("", for: [])
     }
+    
+    
+    private func image(byFiltering image: UIImage) -> UIImage {
+        
+        //let ciImage = image.ciImage
+        
+        guard let cgImage = image.cgImage else { return image }
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        filter.setValue(ciImage, forKey: kCIInputImageKey) // "inputImage")
+        filter.setValue(brightnessSlider.value, forKey: kCIInputBrightnessKey)
+        filter.setValue(contrastSlider.value, forKey: kCIInputContrastKey)
+        filter.setValue(saturationSlider.value, forKey: kCIInputSaturationKey)
+        
+        // Recipe ... meta data
+        guard let outputCIImage = filter.outputImage else { return image }
+        
+        // Create the graphics and apply the filter
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+    
     
     private func presentImagePickerController() {
         
@@ -115,6 +140,10 @@ class ImagePostViewController: ShiftableViewController {
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    
+    private let context = CIContext(options: nil)
+    //private let filter = CIFilter(name: "")!
+    
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
