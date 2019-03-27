@@ -13,6 +13,7 @@ class ImagePostDetailTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
+        recordButton.isEnabled = false
     }
     
     func updateViews() {
@@ -32,32 +33,43 @@ class ImagePostDetailTableViewController: UITableViewController {
     
     @IBAction func createComment(_ sender: Any) {
         
-        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
+        let optionAlert = UIAlertController(title: "Choose comment style", message: "You can write a text comment or record an audio comment.", preferredStyle: .alert)
         
-        var commentTextField: UITextField?
-        
-        alert.addTextField { (textField) in
-            textField.placeholder = "Comment:"
-            commentTextField = textField
-        }
-        
-        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
+        let textAction = UIAlertAction(title: "Text", style: .default, handler: { (_) in
             
-            guard let commentText = commentTextField?.text else { return }
+            let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
             
-            self.postController.addComment(with: commentText, to: &self.post!)
+            var commentTextField: UITextField?
             
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+            alert.addTextField { (textField) in
+                textField.placeholder = "Comment:"
+                commentTextField = textField
             }
-        }
+            
+            let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
+                
+                guard let commentText = commentTextField?.text else { return }
+                
+                self.postController.addComment(with: commentText, to: &self.post!)
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            
+            alert.addAction(addCommentAction)
+            alert.addAction(cancelAction)
+            
+            self.present(alert, animated: true, completion: nil)
+        })
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        optionAlert.addAction(textAction)
         
-        alert.addAction(addCommentAction)
-        alert.addAction(cancelAction)
+        self.present(optionAlert, animated: true, completion: nil)
         
-        present(alert, animated: true, completion: nil)
+        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -85,4 +97,9 @@ class ImagePostDetailTableViewController: UITableViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
+    @IBOutlet weak var recordButton: UIButton!
+    @IBAction func recordButtonPressed(_ sender: Any) {
+        
+        
+    }
 }

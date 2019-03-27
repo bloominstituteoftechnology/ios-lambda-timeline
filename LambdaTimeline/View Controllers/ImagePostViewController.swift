@@ -38,27 +38,27 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     
-    private func image(byFiltering image: UIImage) -> UIImage {
-        
-        //let ciImage = image.ciImage
-        
-        guard let cgImage = image.cgImage else { return image }
-        
-        let ciImage = CIImage(cgImage: cgImage)
-        
-        filter.setValue(ciImage, forKey: kCIInputImageKey) // "inputImage")
-        filter.setValue(brightnessSlider.value, forKey: kCIInputBrightnessKey)
-        filter.setValue(contrastSlider.value, forKey: kCIInputContrastKey)
-        filter.setValue(saturationSlider.value, forKey: kCIInputSaturationKey)
-        
-        // Recipe ... meta data
-        guard let outputCIImage = filter.outputImage else { return image }
-        
-        // Create the graphics and apply the filter
-        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
-        
-        return UIImage(cgImage: outputCGImage)
-    }
+//    private func image(byFiltering image: UIImage) -> UIImage {
+//        
+//        //let ciImage = image.ciImage
+//        
+//        guard let cgImage = image.cgImage else { return image }
+//        
+//        let ciImage = CIImage(cgImage: cgImage)
+//        
+//        filter.setValue(ciImage, forKey: kCIInputImageKey) // "inputImage")
+//        filter.setValue(brightnessSlider.value, forKey: kCIInputBrightnessKey)
+//        filter.setValue(contrastSlider.value, forKey: kCIInputContrastKey)
+//        filter.setValue(saturationSlider.value, forKey: kCIInputSaturationKey)
+//        
+//        // Recipe ... meta data
+//        guard let outputCIImage = filter.outputImage else { return image }
+//        
+//        // Create the graphics and apply the filter
+//        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+//        
+//        return UIImage(cgImage: outputCGImage)
+//    }
     
     
     private func presentImagePickerController() {

@@ -362,6 +362,29 @@
                                 <constraint firstItem="du3-3a-NOA" firstAttribute="top" secondItem="hJv-Sf-vzU" secondAttribute="top" constant="2" id="xQd-UK-Bmn"/>
                             </constraints>
                         </view>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="HP6-MP-u97">
+                            <rect key="frame" x="0.0" y="177" width="375" height="110"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gc8-ap-2sA">
+                                    <rect key="frame" x="112.5" y="25" width="150" height="60"/>
+                                    <color key="backgroundColor" white="0.77577718098958337" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="60" id="3rV-rv-vIE"/>
+                                        <constraint firstAttribute="width" constant="150" id="nqi-ZE-53S"/>
+                                    </constraints>
+                                    <state key="normal" image="microphone.png"/>
+                                    <connections>
+                                        <action selector="recordButtonPressed:" destination="OyM-8q-Icp" eventType="touchUpInside" id="ccc-T8-Lb7"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstItem="gc8-ap-2sA" firstAttribute="centerY" secondItem="HP6-MP-u97" secondAttribute="centerY" id="AYq-Ad-8jk"/>
+                                <constraint firstItem="gc8-ap-2sA" firstAttribute="centerX" secondItem="HP6-MP-u97" secondAttribute="centerX" id="QsH-NZ-5tS"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" textLabel="a1p-af-m2r" detailTextLabel="KxJ-Oh-Ju8" style="IBUITableViewCellStyleSubtitle" id="gWx-Ba-4ra">
                                 <rect key="frame" x="0.0" y="133" width="375" height="44"/>
@@ -404,6 +427,7 @@
                         <outlet property="authorLabel" destination="uQC-8y-kuu" id="OBX-uv-64E"/>
                         <outlet property="imageView" destination="Q0L-w5-qUw" id="0v7-ZB-mgi"/>
                         <outlet property="imageViewAspectRatioConstraint" destination="y1B-iX-x3e" id="wIt-kh-Tzd"/>
+                        <outlet property="recordButton" destination="gc8-ap-2sA" id="LnC-aA-q2m"/>
                         <outlet property="titleLabel" destination="jyy-BX-c2c" id="UEd-xO-ipC"/>
                     </connections>
                 </tableViewController>
@@ -412,4 +436,7 @@
             <point key="canvasLocation" x="1968.8" y="472.71364317841085"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="microphone.png" width="48" height="48"/>
+    </resources>
 </document>
