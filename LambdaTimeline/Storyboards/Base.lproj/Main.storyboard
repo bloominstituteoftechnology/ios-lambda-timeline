@@ -314,10 +314,11 @@
         <scene sceneID="9zi-Aq-zJI">
             <objects>
                 <tableViewController id="OyM-8q-Icp" customClass="ImagePostDetailTableViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="moa-Dk-chJ">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="moa-Dk-chJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.77254901960784317" green="0.77647058823529413" blue="0.77254901960784317" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <inset key="scrollIndicatorInsets" minX="12" minY="4" maxX="13" maxY="4"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="hJv-Sf-vzU">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="105"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -393,11 +394,11 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="78.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="HPR-gR-bKp">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="48"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="HPR-gR-bKp">
+                                            <rect key="frame" x="0.0" y="15.5" width="375" height="48"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ihh-bP-vu2">
-                                                    <rect key="frame" x="0.0" y="3" width="326" height="42.5"/>
+                                                    <rect key="frame" x="0.0" y="2.5" width="326" height="42.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j0c-kv-ul6">
                                                             <rect key="frame" x="0.0" y="0.0" width="326" height="22"/>
@@ -434,6 +435,7 @@
                                         <constraint firstItem="HPR-gR-bKp" firstAttribute="leading" secondItem="wtQ-2t-2R8" secondAttribute="leading" id="2C2-qe-9hT"/>
                                         <constraint firstItem="HPR-gR-bKp" firstAttribute="width" secondItem="wtQ-2t-2R8" secondAttribute="width" id="Lm3-Rt-2s8"/>
                                         <constraint firstAttribute="trailing" secondItem="HPR-gR-bKp" secondAttribute="trailing" id="Qaj-Sa-TsA"/>
+                                        <constraint firstItem="HPR-gR-bKp" firstAttribute="centerY" secondItem="wtQ-2t-2R8" secondAttribute="centerY" id="fzj-nL-G3M"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
