@@ -20,7 +20,7 @@ class Recorder: NSObject {
         
     }
     
-    // record
+    // record audio
     func record() {
         
         // Create a recorder
