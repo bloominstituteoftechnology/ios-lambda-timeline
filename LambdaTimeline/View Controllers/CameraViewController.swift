@@ -123,7 +123,7 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         
         let uploadTask = videoRef.putFile(from: outputFileURL, metadata: nil) { (nil, error) in
             if let error = error {
-                print("Error uploading video to Firebase: \(error.localizedDescription)")
+                print("Error uploading video to Firebase : \(error.localizedDescription)")
             } else {
                 storageRef.downloadURL(completion: { (url, error) in
                     if let error = error {
