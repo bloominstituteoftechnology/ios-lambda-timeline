@@ -94,6 +94,10 @@ class CameraViewController: UIViewController {
         recordButton.isSelected = fileOutput.isRecording
     }
     
+    override func performSegue(withIdentifier identifier: String, sender: Any?) {
+        // pass newly created video URL to the collection VC so it can add it as a cell
+    }
+    
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     
@@ -121,18 +125,27 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         let storageRef = storage.reference()
         let videoURL = ("video/" + randomString(length: 9))
         let videoRef = storageRef.child(videoURL)
-        self.downloadURL = URL(fileURLWithPath: videoURL)
+        //self.downloadURL = URL(fileURLWithPath: videoURL)
         let uploadTask = videoRef.putFile(from: outputFileURL, metadata: nil) { (nil, error) in
             if let error = error {
                 print("Error uploading video to Firebase : \(error.localizedDescription)")
             } else {
-                storageRef.downloadURL(completion: { (url, error) in
+                
+                videoRef.downloadURL(completion: { (url, error) in
                     if let error = error {
-                        print("Error returning download url from uploaded video: \(error.localizedDescription)")
+                         print("Error returning download url from uploaded video: \(error.localizedDescription)")
                     } else {
-                        self.downloadURL = url
+                        guard let downloadURL = url else { return }
+                        print("URL: \(downloadURL)")
                     }
                 })
+//                storageRef.downloadURL(completion: { (url, error) in
+//                    if let error = error {
+//                        print("Error returning download url from uploaded video: \(error.localizedDescription)")
+//                    } else {
+//
+//                    }
+//                })
             }
         }
         
