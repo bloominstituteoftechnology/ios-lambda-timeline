@@ -116,7 +116,7 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
     
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         
-        // Saving video to Firebase storage
+        // Saving video to Firebase storage.
         let storageRef = storage.reference()
         
         let videoRef = storageRef.child(outputFileURL.absoluteString)
