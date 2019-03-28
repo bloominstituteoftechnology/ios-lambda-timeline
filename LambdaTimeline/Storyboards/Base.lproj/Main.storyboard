@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xB5-Kl-GM2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xB5-Kl-GM2">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -154,14 +154,54 @@
                                             </textField>
                                         </subviews>
                                     </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aBj-F0-Vpy">
+                                        <rect key="frame" x="0.0" y="457.5" width="375" height="128"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xIL-lD-aPT">
+                                                <rect key="frame" x="8" y="8" width="359" height="30"/>
+                                                <state key="normal" title="Change Filter"/>
+                                                <connections>
+                                                    <action selector="changeFilter:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="v5N-Ab-F85"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="128" id="DdY-YP-7pF"/>
+                                            <constraint firstItem="xIL-lD-aPT" firstAttribute="top" secondItem="aBj-F0-Vpy" secondAttribute="top" constant="8" id="Ds0-5q-PEe"/>
+                                            <constraint firstAttribute="trailing" secondItem="xIL-lD-aPT" secondAttribute="trailing" constant="8" id="jU4-pG-mha"/>
+                                            <constraint firstItem="xIL-lD-aPT" firstAttribute="leading" secondItem="aBj-F0-Vpy" secondAttribute="leading" constant="8" id="nbj-xK-wcK"/>
+                                        </constraints>
+                                    </view>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="0I3-50-DHZ">
+                                        <rect key="frame" x="80" y="421" width="289" height="31"/>
+                                        <connections>
+                                            <action selector="intensityChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="VR9-al-at7"/>
+                                        </connections>
+                                    </slider>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Intensity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eQ8-ul-lJp">
+                                        <rect key="frame" x="8" y="425" width="65.5" height="21.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="PkI-rS-ua9" secondAttribute="trailing" id="1cC-FG-cAC"/>
                                     <constraint firstItem="PkI-rS-ua9" firstAttribute="top" secondItem="9qd-If-ddw" secondAttribute="top" id="3tV-sW-NF1"/>
+                                    <constraint firstItem="aBj-F0-Vpy" firstAttribute="top" secondItem="0I3-50-DHZ" secondAttribute="bottom" constant="6.5" id="9Z4-OP-cqA"/>
+                                    <constraint firstAttribute="trailing" secondItem="aBj-F0-Vpy" secondAttribute="trailing" id="Qm2-6O-qyZ"/>
+                                    <constraint firstItem="eQ8-ul-lJp" firstAttribute="leading" secondItem="9qd-If-ddw" secondAttribute="leading" constant="8" id="XQa-pq-uFQ"/>
                                     <constraint firstItem="PkI-rS-ua9" firstAttribute="leading" secondItem="9qd-If-ddw" secondAttribute="leading" id="bPK-xN-eaO"/>
                                     <constraint firstAttribute="bottom" secondItem="PkI-rS-ua9" secondAttribute="bottom" id="cfV-7c-ubK"/>
                                     <constraint firstItem="PkI-rS-ua9" firstAttribute="width" secondItem="9qd-If-ddw" secondAttribute="width" id="dWh-6N-mO7"/>
+                                    <constraint firstItem="eQ8-ul-lJp" firstAttribute="top" secondItem="PkI-rS-ua9" secondAttribute="bottom" constant="12" id="i7P-Ak-4la"/>
+                                    <constraint firstAttribute="trailing" secondItem="0I3-50-DHZ" secondAttribute="trailing" constant="8" id="p5P-Lw-J4S"/>
                                     <constraint firstAttribute="height" priority="250" constant="603" id="qMm-7B-8rp"/>
+                                    <constraint firstItem="aBj-F0-Vpy" firstAttribute="top" secondItem="eQ8-ul-lJp" secondAttribute="bottom" constant="11" id="vuv-gG-A2P"/>
+                                    <constraint firstItem="0I3-50-DHZ" firstAttribute="top" secondItem="PkI-rS-ua9" secondAttribute="bottom" constant="8" id="xtQ-Gb-igD"/>
+                                    <constraint firstItem="0I3-50-DHZ" firstAttribute="leading" secondItem="eQ8-ul-lJp" secondAttribute="trailing" constant="8.5" id="yEv-tm-QIS"/>
+                                    <constraint firstItem="aBj-F0-Vpy" firstAttribute="leading" secondItem="9qd-If-ddw" secondAttribute="leading" id="zkb-Cc-n68"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -186,13 +226,14 @@
                         <outlet property="chooseImageButton" destination="VxD-cu-jHT" id="KVs-no-MbU"/>
                         <outlet property="imageHeightConstraint" destination="MHD-wr-Gq9" id="HyG-8g-Ck1"/>
                         <outlet property="imageView" destination="4eK-5F-H5h" id="e7m-c5-Xhz"/>
+                        <outlet property="intensity" destination="0I3-50-DHZ" id="9Dk-aM-TDW"/>
                         <outlet property="postButton" destination="hsH-Uv-tug" id="ZBn-KE-cpU"/>
                         <outlet property="titleTextField" destination="Op6-OA-6Ou" id="JEe-cj-4mv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXa-A2-VJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1969" y="-195"/>
+            <point key="canvasLocation" x="1968.8" y="-195.6521739130435"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gdW-Je-ais">
