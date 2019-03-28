@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Collection View Controller-->
+        <!--Posts Collection View Controller-->
         <scene sceneID="JFE-md-uAO">
             <objects>
-                <collectionViewController id="hPa-Td-5A3" sceneMemberID="viewController">
+                <collectionViewController id="hPa-Td-5A3" customClass="PostsCollectionViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="RVQ-9Q-e54">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -90,9 +90,9 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" id="KIg-ug-6aP">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="cyx-zg-Fv9">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Fwl-8a-PhC">
                             <connections>
-                                <action selector="addPost:" destination="hPa-Td-5A3" id="7DV-9r-fSz"/>
+                                <action selector="addPost:" destination="hPa-Td-5A3" id="zTt-pU-nXe"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -263,9 +263,40 @@
                     <view key="view" contentMode="scaleToFill" id="Rft-JZ-6Qx">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W8p-34-R73" customClass="CameraPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ci-qe-7VP">
+                                        <rect key="frame" x="129.5" y="521" width="116" height="116"/>
+                                        <color key="tintColor" red="0.98823529409999999" green="0.4039215686" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="Record"/>
+                                        <state key="selected" image="Stop"/>
+                                        <connections>
+                                            <action selector="recordButtonPressed:" destination="jfj-au-6NQ" eventType="touchUpInside" id="uYy-8o-GYj"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="2ci-qe-7VP" secondAttribute="bottom" constant="30" id="FQd-yh-5VG"/>
+                                    <constraint firstItem="2ci-qe-7VP" firstAttribute="centerX" secondItem="W8p-34-R73" secondAttribute="centerX" id="R9j-En-UPb"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="W8p-34-R73" firstAttribute="top" secondItem="Rft-JZ-6Qx" secondAttribute="top" id="Leb-rS-GcA"/>
+                            <constraint firstItem="W8p-34-R73" firstAttribute="bottom" secondItem="Mn0-CX-Pfa" secondAttribute="bottom" id="bdj-4T-HmE"/>
+                            <constraint firstItem="W8p-34-R73" firstAttribute="leading" secondItem="Mn0-CX-Pfa" secondAttribute="leading" id="jUF-gp-Qj8"/>
+                            <constraint firstItem="W8p-34-R73" firstAttribute="trailing" secondItem="Mn0-CX-Pfa" secondAttribute="trailing" id="uwv-Cp-RYQ"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Mn0-CX-Pfa"/>
                     </view>
+                    <connections>
+                        <outlet property="cameraPreviewView" destination="W8p-34-R73" id="2T3-In-gy5"/>
+                        <outlet property="recordButton" destination="2ci-qe-7VP" id="qEO-vL-qlB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MHE-l8-KjH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -487,6 +518,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Record" width="116" height="116"/>
+        <image name="Stop" width="116" height="116"/>
         <image name="microphone.png" width="48" height="48"/>
         <image name="play-alt.png" width="48" height="48"/>
     </resources>

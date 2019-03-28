@@ -40,7 +40,7 @@ class CameraViewController: UIViewController {
         }
         
         captureSession.commitConfiguration()
-        cameraView.session = captureSession
+        cameraPreviewView.session = captureSession
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -99,9 +99,10 @@ class CameraViewController: UIViewController {
     
     var storage = Storage.storage()
     var downloadURL: URL?
-    
-    @IBOutlet weak var cameraView: CameraPreviewView!
+
+    @IBOutlet weak var cameraPreviewView: CameraPreviewView!
     @IBOutlet weak var recordButton: UIButton!
+    
 }
 
 
@@ -118,9 +119,9 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         
         // Saving video to Firebase storage
         let storageRef = storage.reference()
-        
-        let videoRef = storageRef.child(outputFileURL.absoluteString)
-        
+        let videoURL = ("video/" + randomString(length: 9))
+        let videoRef = storageRef.child(videoURL)
+        self.downloadURL = URL(fileURLWithPath: videoURL)
         let uploadTask = videoRef.putFile(from: outputFileURL, metadata: nil) { (nil, error) in
             if let error = error {
                 print("Error uploading video to Firebase : \(error.localizedDescription)")
@@ -155,7 +156,14 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         
         DispatchQueue.main.async {
             self.updateViews()
+            self.dismiss(animated: true, completion: nil)
         }
     }
     
+}
+
+
+func randomString(length: Int) -> String {
+    let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    return String((0...length-1).map{ _ in letters.randomElement()! })
 }
