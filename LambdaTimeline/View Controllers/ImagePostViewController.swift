@@ -128,12 +128,13 @@ class ImagePostViewController: ShiftableViewController {
     //Properties
     var tempImage: CIImage?
     var editedImage: UIImage?
-    let filter = CIFilter(name: "CIColorControls")!
+    let filter = CIFilter(name: "CIColorControls")! //Change this
     let context = CIContext(options: nil)
     
     //Actions
     @IBAction func blurButton(_ sender: UIButton) {
         filter.setValue(tempImage, forKey: kCIInputImageKey)
+        //Need to change the value for the blur factors.
         
         //Get the edited CIimage
         guard let outputCIImage = filter.outputImage else { return }
