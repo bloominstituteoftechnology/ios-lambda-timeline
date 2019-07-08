@@ -121,6 +121,19 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    // MARK: - Slider IBOutlets
+    @IBOutlet weak var blurSlider: UISlider!
+    @IBOutlet weak var hueSlider: UISlider!
+    
+    // MARK: - Slider IBActions
+    @IBAction func blurSliderMoved(_ sender: Any) {
+        
+    }
+    @IBAction func hueSliderMoved(_ sender: Any) {
+        
+    }
+    
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

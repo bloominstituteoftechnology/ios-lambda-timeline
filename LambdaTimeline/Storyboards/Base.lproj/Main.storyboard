@@ -169,6 +169,9 @@
                                                     </label>
                                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="Gkr-2h-ag2">
                                                         <rect key="frame" x="90" y="0.0" width="231.5" height="31"/>
+                                                        <connections>
+                                                            <action selector="blurSliderMoved:" destination="1Aw-4e-BW2" eventType="valueChanged" id="Qsa-nt-bVt"/>
+                                                        </connections>
                                                     </slider>
                                                 </subviews>
                                             </stackView>
@@ -183,6 +186,9 @@
                                                     </label>
                                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-3.14159265358979" maxValue="3.14159265358979" translatesAutoresizingMaskIntoConstraints="NO" id="hZ3-ic-72e">
                                                         <rect key="frame" x="90" y="0.0" width="231.5" height="31"/>
+                                                        <connections>
+                                                            <action selector="hueSliderMoved:" destination="1Aw-4e-BW2" eventType="valueChanged" id="qwA-Ww-mis"/>
+                                                        </connections>
                                                     </slider>
                                                 </subviews>
                                             </stackView>
@@ -224,7 +230,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="blurSlider" destination="Gkr-2h-ag2" id="icP-4Y-hif"/>
                         <outlet property="chooseImageButton" destination="VxD-cu-jHT" id="KVs-no-MbU"/>
+                        <outlet property="hueSlider" destination="hZ3-ic-72e" id="PRC-K5-B7h"/>
                         <outlet property="imageHeightConstraint" destination="MHD-wr-Gq9" id="HyG-8g-Ck1"/>
                         <outlet property="imageView" destination="4eK-5F-H5h" id="e7m-c5-Xhz"/>
                         <outlet property="postButton" destination="hsH-Uv-tug" id="ZBn-KE-cpU"/>
