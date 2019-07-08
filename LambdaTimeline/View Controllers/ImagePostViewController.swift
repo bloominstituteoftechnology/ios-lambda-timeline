@@ -9,6 +9,7 @@
 import UIKit
 import Photos
 
+
 class ImagePostViewController: ShiftableViewController {
     
     override func viewDidLoad() {
@@ -121,6 +122,9 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+	
+	private let filter = CIFilter(name: "CIColorControls")
+	private let context = CIContext(options: nil)
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
