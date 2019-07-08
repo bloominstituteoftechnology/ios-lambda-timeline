@@ -11,10 +11,16 @@ import Photos
 
 class ImagePostViewController: ShiftableViewController {
     
+    var originalImage: UIImage? {
+        didSet {
+            updateImage()
+        }
+    }
+    
     private let blurFilter = CIFilter(name: "CIGaussianBlur")
     private let gammaFilter = CIFilter(name: "CIGammaAdjust")
     private let invertFilter = CIFilter(name: "CIColorInvert")
-    private let pixelFilter = CIFilter(name: "CIPixellate")
+    private let monoFilter = CIFilter(name: "CIPhotoEffectMono")
     private let fadeFilter = CIFilter(name: "CIPhotoEffectFade")
     private let context = CIContext(options: nil)
     
@@ -32,9 +38,37 @@ class ImagePostViewController: ShiftableViewController {
         setImageViewHeight(with: 1.0)
         
         updateViews()
+       
+    }
+    
+    func updateImage() {
+        if let originalImage = originalImage {
+            //based on selected segment index change type of filter.
+                
+                switch filterSegmentedControl.selectedSegmentIndex {
+            case 0:
+                //blur filter
+                imageView.image = blurImage(image: originalImage)
+            case 1:
+                //gamma filter
+                imageView.image = gammaImage(image: originalImage)
+            case 2:
+                //invert filter
+                imageView.image = invertImage(image: originalImage)
+            case 3:
+                //pixel filter
+                imageView.image = monoImage(image: originalImage)
+            default:
+                // Fade
+                imageView.image = fadeImage(image: originalImage)
+            }
+        } else {
+            imageView.image = nil
+        }
     }
     
     @IBAction func segmentedControlChanged(_ sender: Any) {
+        updateImage()
     }
     
     
@@ -59,6 +93,94 @@ class ImagePostViewController: ShiftableViewController {
         imageView.image = image
         
         chooseImageButton.setTitle("", for: [])
+        
+//        switch filterSegmentedControl.selectedSegmentIndex {
+//        case 0:
+//            sliderLabel1.isHidden = false
+//            sliderLabel1.text = "Blur Radius"
+//            slider1.isHidden = false
+//            sliderLabel2.isHidden = true
+//            slider2.isHidden = true
+//        case 1:
+//            sliderLabel1.isHidden = false
+//            sliderLabel1.text = "Power"
+//            slider1.isHidden = false
+//            slider2.isHidden = true
+//            sliderLabel2.isHidden = true
+//        case 2:
+//            sliderLabel1.isHidden = true
+//            slider1.isHidden = true
+//            sliderLabel2.isHidden = true
+//            slider2.isHidden = true
+//        case 3:
+//            slider1.isHidden = false
+//            sliderLabel1.isHidden = false
+//            sliderLabel1.text = "Center"
+//            slider2.isHidden = false
+//            sliderLabel2.isHidden = false
+//            sliderLabel2.text = "Scale"
+//
+//        default:
+//            sliderLabel1.isHidden = true
+//            slider1.isHidden = true
+//            sliderLabel2.isHidden = true
+//            slider2.isHidden = true
+//        }
+       
+    }
+    
+    private func invertImage(image: UIImage) -> UIImage? {
+        guard let cgImage = image.cgImage else { return image }
+        let ciImage = CIImage(cgImage: cgImage)
+
+        invertFilter?.setValue(ciImage, forKey: "inputImage")
+
+        guard let outputCIImage = invertFilter?.outputImage else { return image }
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    private func fadeImage(image: UIImage) -> UIImage? {
+        guard let cgImage = image.cgImage else { return image }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        fadeFilter?.setValue(ciImage, forKey: "inputImage")
+        
+        guard let outputCIImage = fadeFilter?.outputImage else { return image }
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    private func gammaImage(image: UIImage) -> UIImage? {
+        guard let cgImage = image.cgImage else { return image }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        gammaFilter?.setValue(ciImage, forKey: "inputImage")
+        gammaFilter?.setValue(0.75, forKey: "inputPower")
+        guard let outputCIImage = gammaFilter?.outputImage else { return image }
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    private func blurImage(image: UIImage) -> UIImage? {
+        guard let cgImage = image.cgImage else { return image }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        blurFilter?.setValue(ciImage, forKey: "inputImage")
+        blurFilter?.setValue(10.00, forKey: "inputRadius")
+        guard let outputCIImage = blurFilter?.outputImage else { return image }
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    private func monoImage(image: UIImage) -> UIImage? {
+        guard let cgImage = image.cgImage else { return image }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        monoFilter?.setValue(ciImage, forKey: "inputImage")
+        guard let outputCIImage = monoFilter?.outputImage else { return image }
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        return UIImage(cgImage: outputCGImage)
     }
     
     private func presentImagePickerController() {
@@ -159,6 +281,7 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
         imageView.image = image
+        originalImage = image
         
         setImageViewHeight(with: image.ratio)
     }
