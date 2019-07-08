@@ -13,12 +13,19 @@ class ImagePostViewController: ShiftableViewController {
     
     let blur = CIFilter(name: "CIDiscBlur")!
     let hueAdjust = CIFilter(name: "CIHueAdjust")
+    let filter = CIFilter(name: "CILineOverlay")
     
     let context = CIContext(options: nil)
     
     var scaledImage: UIImage? {
         didSet {
             updateImageView()
+        }
+    }
+    
+    var originalImage2: UIImage? {
+        didSet {
+            updateImage2View()
         }
     }
     
@@ -60,9 +67,33 @@ class ImagePostViewController: ShiftableViewController {
         return UIImage(cgImage: outputCGImage)
     }
     
+    private func image2(byFiltering image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage else { return image }
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        filter?.setValue(ciImage, forKey: "inputImage")
+        filter?.setValue(noiseLevelSlider.value, forKey: "inputNRNoiseLevel")
+        filter?.setValue(sharpnessSlider.value, forKey: "inputNRSharpness")
+        filter?.setValue(edgeIntensitySlider.value, forKey: "inputEdgeIntensity")
+        filter?.setValue(ThresholdSlider.value, forKey: "inputThreshold")
+        filter?.setValue(contrastSlider.value, forKey: "inputContrast")
+        
+        guard let outputCIImage = filter?.outputImage else { return image }
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    func updateImage2View() {
+        if let originalImage = originalImage2 {
+            imageView.image = image2(byFiltering: originalImage)
+        }
+    }
+    
     func updateImageView() {
         if let scaledImage = scaledImage {
-            imageView.image = image(byFiltering: scaledImage)
+            imageView.image = image2(byFiltering: scaledImage)
         }
     }
     
@@ -173,12 +204,33 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var blurSlider: UISlider!
     @IBOutlet weak var hueSlider: UISlider!
     
+    @IBOutlet weak var noiseLevelSlider: UISlider!
+    @IBOutlet weak var sharpnessSlider: UISlider!
+    @IBOutlet weak var edgeIntensitySlider: UISlider!
+    @IBOutlet weak var ThresholdSlider: UISlider!
+    @IBOutlet weak var contrastSlider: UISlider!
+    
     // MARK: - Slider IBActions
     @IBAction func blurSliderMoved(_ sender: Any) {
         updateImageView()
     }
     @IBAction func hueSliderMoved(_ sender: Any) {
         updateImageView()
+    }
+    @IBAction func noiseLevelSliderMoved(_ sender: Any) {
+        updateImage2View()
+    }
+    @IBAction func sharpnessSliderMoved(_ sender: Any) {
+        updateImage2View()
+    }
+    @IBAction func edgeIntensitySilderMoved(_ sender: Any) {
+        updateImage2View()
+    }
+    @IBAction func thresholdSliderMoved(_ sender: Any) {
+        updateImage2View()
+    }
+    @IBAction func contrastSliderMoved(_ sender: Any) {
+        updateImage2View()
     }
     
 }
@@ -194,7 +246,7 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
 //        imageView.image = image
-        originalImage = image
+        originalImage2 = image
         
         setImageViewHeight(with: image.ratio)
     }
