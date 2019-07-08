@@ -6,6 +6,23 @@
 //  Copyright © 2018 Lambda School. All rights reserved.
 //
 
+// My Firebase Project ID: lambda-timeline-11164
+// My Firebase database URL: https://lambda-timeline-11164.firebaseio.com/
+// File storage URL: gs://lambda-timeline-11164.appspot.com
+
+/*
+ Set up Cloud Storage
+ service firebase.storage {
+ match /b/{bucket}/o {
+ match /{allPaths=**} {
+ allow read, write: if request.auth != null;
+ }
+ }
+ }
+ 
+ */
+
+
 import Foundation
 import FirebaseAuth
 import FirebaseDatabase

@@ -52,12 +52,17 @@ class ImagePostDetailTableViewController: UITableViewController {
             }
         }
         
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(addCommentAction)
         alert.addAction(cancelAction)
         
         present(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func filterImageButtonTapped(_ sender: Any) {
+        print("Filter button tapped")
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
