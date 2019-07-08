@@ -30,7 +30,7 @@ class ImagePostViewController: ShiftableViewController {
         title = post?.title
         
         setImageViewHeight(with: image.ratio)
-        
+        originalImage = image
         imageView.image = image
         
         chooseImageButton.setTitle("", for: [])
@@ -105,6 +105,93 @@ class ImagePostViewController: ShiftableViewController {
         presentImagePickerController()
     }
     
+    @IBAction func instantFilterButtonTapped(_ sender: Any) {
+        
+        guard let cgImage = imageView.image?.cgImage else { return }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        let filter = CIFilter(name: "CIPhotoEffectInstant")
+        filter?.setValue(ciImage, forKey: "inputImage")
+        
+        guard let ciOutputImage = filter?.outputImage,
+        let outputCGImage = context.createCGImage(ciOutputImage, from: ciOutputImage.extent)
+        else { return}
+        
+        let outputImage = UIImage(cgImage: outputCGImage)
+        self.imageData = outputImage.pngData()
+        updateViews()
+    }
+    
+    @IBAction func monoFilterButtonTapped(_ sender: Any) {
+        guard let cgImage = imageView.image?.cgImage else { return }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        let filter = CIFilter(name: "CIPhotoEffectMono")
+        filter?.setValue(ciImage, forKey: "inputImage")
+        
+        guard let ciOutputImage = filter?.outputImage,
+            let outputCGImage = context.createCGImage(ciOutputImage, from: ciOutputImage.extent)
+            else { return}
+        
+        let outputImage = UIImage(cgImage: outputCGImage)
+        self.imageData = outputImage.pngData()
+        updateViews()
+    }
+    
+    @IBAction func processFilterButtonTapped(_ sender: Any) {
+        guard let cgImage = imageView.image?.cgImage else { return }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        let filter = CIFilter(name: "CIPhotoEffectProcess")
+        filter?.setValue(ciImage, forKey: "inputImage")
+        
+        guard let ciOutputImage = filter?.outputImage,
+            let outputCGImage = context.createCGImage(ciOutputImage, from: ciOutputImage.extent)
+            else { return}
+        
+        let outputImage = UIImage(cgImage: outputCGImage)
+        self.imageData = outputImage.pngData()
+        updateViews()
+        
+    }
+    
+    @IBAction func blurSliderValueChanged(_ sender: Any) {
+        
+        guard let image = originalImage,
+        let cgImage = image.cgImage
+        else { return }
+        let ciImage = CIImage(cgImage: cgImage)
+
+        let filter = CIFilter(name: "CIGaussianBlur")
+        filter?.setValue(ciImage, forKey: "inputImage")
+        filter?.setValue(blurSlider.value, forKey: "inputRadius")
+
+        guard let ciOutputImage = filter?.outputImage,
+            let outputCGImage = context.createCGImage(ciOutputImage, from: ciOutputImage.extent)
+            else { return}
+
+        imageView.image = UIImage(cgImage: outputCGImage)
+    }
+    
+    @IBAction func distortionSliderValueChanged(_ sender: Any) {
+       
+        guard let image = originalImage,
+            let cgImage = image.cgImage
+            else { return }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        let filter = CIFilter(name: "CIHoleDistortion")
+        filter?.setValue(ciImage, forKey: "inputImage")
+        filter?.setValue(CIVector(x: imageView.center.x, y: imageView.center.y), forKey: "inputCenter")
+        filter?.setValue(distortionSlider.value, forKey: "inputRadius")
+        
+        guard let ciOutputImage = filter?.outputImage,
+            let outputCGImage = context.createCGImage(ciOutputImage, from: ciOutputImage.extent)
+            else { return}
+        
+        imageView.image = UIImage(cgImage: outputCGImage)
+    }
+    
     func setImageViewHeight(with aspectRatio: CGFloat) {
         
         imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
@@ -115,12 +202,17 @@ class ImagePostViewController: ShiftableViewController {
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    var originalImage: UIImage?
+    let context = CIContext(options: nil)
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    @IBOutlet weak var blurSlider: UISlider!
+    @IBOutlet weak var distortionSlider: UISlider!
+    
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -134,7 +226,7 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
         imageView.image = image
-        
+        originalImage = image
         setImageViewHeight(with: image.ratio)
     }
     
