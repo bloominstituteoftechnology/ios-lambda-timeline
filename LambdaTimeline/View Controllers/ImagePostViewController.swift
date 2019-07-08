@@ -20,20 +20,39 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     func updateViews() {
-        
-        guard let imageData = imageData,
-            let image = UIImage(data: imageData) else {
-                title = "New Post"
-                return
+
+        if let originalImage = originalImage {
+            imageView.image = image(byFiltering: originalImage)
+            title = post?.title
+            chooseImageButton.setTitle("", for: [])
+            setImageViewHeight(with: originalImage.ratio)
+        } else {
+            imageView.image = nil
+            title = "New Post"
         }
+
+
+    }
+
+    private func image(byFiltering image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage else { return image}
+
+        let ciImage = CIImage(cgImage: cgImage)
+
+        blurZoomFilter?.setValue(ciImage, forKey: kCIInputImageKey)
+        blurZoomFilter?.setValue(zoomBlurSlider.value, forKey: "inputAmount")
+
+
+        circularFilter?.setValue(blurZoomFilter?.outputImage, forKey: kCIInputImageKey)
+        circularFilter?.setValue(zoomXSlider.value, forKey: "inputWidth")
         
-        title = post?.title
-        
-        setImageViewHeight(with: image.ratio)
-        
-        imageView.image = image
-        
-        chooseImageButton.setTitle("", for: [])
+
+        guard let outputCIImage = circularFilter?.outputImage else { return image }
+
+
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image}
+
+        return UIImage(cgImage: outputCGImage)
     }
     
     private func presentImagePickerController() {
@@ -109,8 +128,15 @@ class ImagePostViewController: ShiftableViewController {
 
 
     @IBAction func zoomBlurChanged(_ sender: Any) {
+        updateViews()
     }
 
+    @IBAction func zoomXChanged(_ sender: Any) {
+        updateViews()
+    }
+    @IBAction func zoomYChanged(_ sender: Any) {
+        updateViews()
+    }
 
     
     func setImageViewHeight(with aspectRatio: CGFloat) {
@@ -123,13 +149,25 @@ class ImagePostViewController: ShiftableViewController {
     var postController: PostController!
     var post: Post?
     var imageData: Data?
-    
+    var originalImage: UIImage? {
+        didSet {
+            updateViews()
+        }
+    }
+
+    private let blurZoomFilter = CIFilter(name: "CIZoomBlur")
+    private let circularFilter = CIFilter(name: "CICircularScreen")
+
+    private let context = CIContext(options: nil)
+
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
     @IBOutlet weak var zoomBlurSlider: UISlider!
+    @IBOutlet weak var zoomXSlider: UISlider!
+    @IBOutlet weak var zoomYSlider: UISlider!
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -138,13 +176,12 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
 
         chooseImageButton.setTitle("", for: [])
         
+        if let image = info[.originalImage] as? UIImage {
+            originalImage = image
+        }
+
+
         picker.dismiss(animated: true, completion: nil)
-        
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        
-        imageView.image = image
-        
-        setImageViewHeight(with: image.ratio)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

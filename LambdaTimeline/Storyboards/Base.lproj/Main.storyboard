@@ -155,13 +155,13 @@
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit Image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VIG-Nk-KeH">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Edit Image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VIG-Nk-KeH">
                                         <rect key="frame" x="152" y="421" width="109.5" height="29"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ola-uC-hdB">
+                                    <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ola-uC-hdB">
                                         <rect key="frame" x="20" y="458" width="374" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Zoom Blur" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xZY-M6-KPe">
@@ -170,7 +170,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="kj9-wn-KHr">
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-100" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="kj9-wn-KHr">
                                                 <rect key="frame" x="85.5" y="0.0" width="290.5" height="31"/>
                                                 <connections>
                                                     <action selector="zoomBlurChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="JpQ-Sb-bUs"/>
@@ -178,11 +178,33 @@
                                             </slider>
                                         </subviews>
                                     </stackView>
+                                    <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="9Gc-Dk-b3m">
+                                        <rect key="frame" x="20" y="496" width="386" height="30"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Circle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4tL-ps-YMG">
+                                                <rect key="frame" x="0.0" y="0.0" width="44" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="6" minValue="2" maxValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="eMv-xn-ggz">
+                                                <rect key="frame" x="50" y="0.0" width="338" height="31"/>
+                                                <connections>
+                                                    <action selector="zoomBlurChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="9NZ-77-Nyc"/>
+                                                    <action selector="zoomXChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="jTZ-Mu-b4H"/>
+                                                </connections>
+                                            </slider>
+                                        </subviews>
+                                        <viewLayoutGuide key="safeArea" id="810-Nt-ICu"/>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="PkI-rS-ua9" secondAttribute="trailing" id="1cC-FG-cAC"/>
                                     <constraint firstItem="PkI-rS-ua9" firstAttribute="top" secondItem="9qd-If-ddw" secondAttribute="top" id="3tV-sW-NF1"/>
+                                    <constraint firstItem="9Gc-Dk-b3m" firstAttribute="leading" secondItem="9qd-If-ddw" secondAttribute="leading" constant="20" id="DZa-sK-y7d"/>
                                     <constraint firstItem="VIG-Nk-KeH" firstAttribute="top" secondItem="PkI-rS-ua9" secondAttribute="bottom" constant="8" id="KTe-Od-Gk2"/>
+                                    <constraint firstAttribute="trailing" secondItem="9Gc-Dk-b3m" secondAttribute="trailing" constant="8" id="NPb-Us-MX4"/>
+                                    <constraint firstItem="9Gc-Dk-b3m" firstAttribute="top" secondItem="ola-uC-hdB" secondAttribute="bottom" constant="8" id="Wyi-sO-25a"/>
                                     <constraint firstItem="ola-uC-hdB" firstAttribute="top" secondItem="VIG-Nk-KeH" secondAttribute="bottom" constant="8" id="YxP-gZ-eMc"/>
                                     <constraint firstItem="PkI-rS-ua9" firstAttribute="leading" secondItem="9qd-If-ddw" secondAttribute="leading" id="bPK-xN-eaO"/>
                                     <constraint firstAttribute="bottom" secondItem="PkI-rS-ua9" secondAttribute="bottom" id="cfV-7c-ubK"/>
@@ -219,9 +241,29 @@
                         <outlet property="postButton" destination="hsH-Uv-tug" id="ZBn-KE-cpU"/>
                         <outlet property="titleTextField" destination="Op6-OA-6Ou" id="JEe-cj-4mv"/>
                         <outlet property="zoomBlurSlider" destination="kj9-wn-KHr" id="zSG-Os-Wd6"/>
+                        <outlet property="zoomXSlider" destination="eMv-xn-ggz" id="yOs-f6-hTq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXa-A2-VJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" id="bPO-Ix-2Jj">
+                    <rect key="frame" x="0.0" y="0.0" width="374" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Zoom Blur" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yOa-cQ-ePw">
+                            <rect key="frame" x="0.0" y="0.0" width="79.5" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-200" maxValue="200" translatesAutoresizingMaskIntoConstraints="NO" id="NRt-rl-v4l">
+                            <rect key="frame" x="85.5" y="0.0" width="290.5" height="31"/>
+                            <connections>
+                                <action selector="zoomBlurChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="B0I-VF-zgA"/>
+                            </connections>
+                        </slider>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="oGV-m2-dpe"/>
+                </stackView>
             </objects>
             <point key="canvasLocation" x="1968.1159420289857" y="-195.53571428571428"/>
         </scene>
