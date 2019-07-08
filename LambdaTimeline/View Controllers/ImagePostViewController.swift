@@ -11,12 +11,37 @@ import Photos
 
 class ImagePostViewController: ShiftableViewController {
     
+    private let blurFilter = CIFilter(name: "CIGaussianBlur")
+    private let gammaFilter = CIFilter(name: "CIGammaAdjust")
+    private let invertFilter = CIFilter(name: "CIColorInvert")
+    private let pixelFilter = CIFilter(name: "CIPixellate")
+    private let fadeFilter = CIFilter(name: "CIPhotoEffectFade")
+    private let context = CIContext(options: nil)
+    
+    @IBOutlet weak var filterSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var sliderLabel1: UILabel!
+    @IBOutlet weak var sliderLabel2: UILabel!
+    
+    @IBOutlet weak var slider1: UISlider!
+    @IBOutlet weak var slider2: UISlider!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setImageViewHeight(with: 1.0)
         
         updateViews()
+    }
+    
+    @IBAction func segmentedControlChanged(_ sender: Any) {
+    }
+    
+    
+    @IBAction func slider1ValueChanged(_ sender: Any) {
+    }
+    
+    @IBAction func slider2ValueChanged(_ sender: Any) {
     }
     
     func updateViews() {
