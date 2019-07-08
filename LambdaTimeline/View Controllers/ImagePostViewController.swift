@@ -11,12 +11,59 @@ import Photos
 
 class ImagePostViewController: ShiftableViewController {
     
+    let blur = CIFilter(name: "CIDiscBlur")!
+    let hueAdjust = CIFilter(name: "CIHueAdjust")
+    
+    let context = CIContext(options: nil)
+    
+    var scaledImage: UIImage? {
+        didSet {
+            updateImageView()
+        }
+    }
+    
+    var originalImage: UIImage? {
+        didSet {
+            guard let originalImage = originalImage else { return }
+            let originalSizeOfImage = imageView.bounds.size
+            let deviceScreenSize = UIScreen.main.scale
+            
+            let scaledSize = CGSize(width: originalSizeOfImage.width * deviceScreenSize, height: originalSizeOfImage.height * deviceScreenSize)
+            
+            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setImageViewHeight(with: 1.0)
         
         updateViews()
+    }
+    
+    private func image(byFiltering image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage else { return image }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        blur.setValue(ciImage, forKey: "inputImage")
+        blur.setValue(blurSlider.value, forKey: "inputRadius")
+        
+        guard let blurOutputCIImage = blur.outputImage else { return image }
+        
+        hueAdjust?.setValue(blurOutputCIImage, forKey: "inputImage")
+        hueAdjust?.setValue(hueSlider.value, forKey: "inputAngle")
+        
+        guard let outputCIImage = hueAdjust?.outputImage else { return image }
+        
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    func updateImageView() {
+        if let scaledImage = scaledImage {
+            imageView.image = image(byFiltering: scaledImage)
+        }
     }
     
     func updateViews() {
@@ -48,7 +95,7 @@ class ImagePostViewController: ShiftableViewController {
         imagePicker.delegate = self
         
         imagePicker.sourceType = .photoLibrary
-
+        
         present(imagePicker, animated: true, completion: nil)
     }
     
@@ -58,8 +105,8 @@ class ImagePostViewController: ShiftableViewController {
         
         guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
             let title = titleTextField.text, title != "" else {
-            presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
-            return
+                presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
+                return
         }
         
         postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
@@ -128,10 +175,10 @@ class ImagePostViewController: ShiftableViewController {
     
     // MARK: - Slider IBActions
     @IBAction func blurSliderMoved(_ sender: Any) {
-        
+        updateImageView()
     }
     @IBAction func hueSliderMoved(_ sender: Any) {
-        
+        updateImageView()
     }
     
 }
@@ -139,14 +186,15 @@ class ImagePostViewController: ShiftableViewController {
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-
+        
         chooseImageButton.setTitle("", for: [])
         
         picker.dismiss(animated: true, completion: nil)
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
-        imageView.image = image
+//        imageView.image = image
+        originalImage = image
         
         setImageViewHeight(with: image.ratio)
     }
