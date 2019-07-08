@@ -101,9 +101,17 @@ class ImagePostViewController: ShiftableViewController {
         case .restricted:
             self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
             
+        @unknown default:
+            break
         }
         presentImagePickerController()
     }
+
+
+    @IBAction func zoomBlurChanged(_ sender: Any) {
+    }
+
+
     
     func setImageViewHeight(with aspectRatio: CGFloat) {
         
@@ -121,6 +129,7 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    @IBOutlet weak var zoomBlurSlider: UISlider!
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
