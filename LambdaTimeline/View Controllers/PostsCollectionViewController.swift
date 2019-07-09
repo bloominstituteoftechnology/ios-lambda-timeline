@@ -14,6 +14,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+		
         
         postController.observePosts { (_) in
             DispatchQueue.main.async {
