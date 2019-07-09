@@ -11,7 +11,10 @@ import Photos
 
 
 class ImagePostViewController: ShiftableViewController {
-    
+	
+	private let filter = CIFilter(name: "CIColorControls")
+	private let context = CIContext(options: nil)
+	
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -122,9 +125,7 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
-	
-//	private let filter = CIFilter(name: "CIColorControls")
-//	private let context = CIContext(options: nil)
+
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -145,4 +146,22 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+}
+
+
+extension ImagePostViewController {
+	
+	private func image(byFiltering image: UIImage) -> UIImage {
+		guard let cgImage = image.cgImage else { return image }
+		
+		let ciImage = CIImage(cgImage: cgImage)
+		filter?.setValue(ciImage, forKey: kCIInputImageKey)
+		filter?.setValue(<#T##value: Any?##Any?#>, forKey: kCIInputSaturationKey)
+		filter?.setValue(<#T##value: Any?##Any?#>, forKey: kCIInputBrightnessKey)
+		filter?.setValue(<#T##value: Any?##Any?#>, forKey: kCIInputContrastKey)
+		
+		return image
+	}
+	
+	
 }
