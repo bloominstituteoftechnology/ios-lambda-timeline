@@ -17,10 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
-        
+        	
         let signIn = GIDSignIn.sharedInstance()
         signIn?.clientID = FirebaseApp.app()?.options.clientID
-        
+		
+		print(signIn!.clientID)
         if Auth.auth().currentUser != nil {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")

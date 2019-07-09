@@ -9,16 +9,51 @@
 import UIKit
 import Photos
 
+
 class ImagePostViewController: ShiftableViewController {
-    
+	
+	private let filter = CIFilter(name: "CIColorControls")
+	private let filterBlur = CIFilter(name: "CIBoxBlur")
+	
+	
+	private let context = CIContext(options: nil)
+//	private let blurcontext = CIContext(options: nil)
+	
+	var originalImage: UIImage?  {
+		didSet { updateImage()
+			
+		}
+	}
+	
+	@IBOutlet var saturationSlider: UISlider!
+	@IBOutlet var brightnessSlider: UISlider!
+	@IBOutlet var contrastSlider: UISlider!
+	@IBOutlet var blurSlider: UISlider!
+	
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setImageViewHeight(with: 1.0)
-        
         updateViews()
     }
-    
+	
+	@IBAction func saturationSliderValueCahnged(_ sender: Any) {
+		updateImage()
+	}
+	
+	@IBAction func brightnessSliderValueCahnged(_ sender: Any) {
+		updateImage()
+	}
+	
+	@IBAction func contrastSliderValueCahnged(_ sender: Any) {
+		updateImage()
+	}
+	
+	@IBAction func blureSliderValueChanged(_ sender: Any) {
+		if let image = imageView.image {
+			imageBlur(byFiltering: image)
+		}
+	}
+
     func updateViews() {
         
         guard let imageData = imageData,
@@ -107,7 +142,7 @@ class ImagePostViewController: ShiftableViewController {
     
     func setImageViewHeight(with aspectRatio: CGFloat) {
         
-        imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
+        imageHeightConstraint?.constant = imageView.frame.size.width * aspectRatio
         
         view.layoutSubviews()
     }
@@ -116,11 +151,14 @@ class ImagePostViewController: ShiftableViewController {
     var post: Post?
     var imageData: Data?
     
-    @IBOutlet weak var imageView: UIImageView!
+	@IBOutlet weak var imageView: UIImageView!
+	
+	
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -133,12 +171,69 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
-        imageView.image = image
-        
+        originalImage = image
         setImageViewHeight(with: image.ratio)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+}
+
+
+extension ImagePostViewController {
+	
+	private func updateImage() {
+		if let originalImage = originalImage {
+			imageView.image = image(byFiltering: originalImage)
+		} else {
+			imageView.image = nil
+		}
+	}
+	
+	private func image(byFiltering image: UIImage) -> UIImage {
+		guard let cgImage = image.cgImage else { return image }
+		
+		let ciImage = CIImage(cgImage: cgImage)
+		filter?.setValue(ciImage, forKey: kCIInputImageKey)
+		filter?.setValue(saturationSlider.value, forKey: kCIInputSaturationKey)
+		filter?.setValue(brightnessSlider.value, forKey: kCIInputBrightnessKey )
+		filter?.setValue(contrastSlider.value, forKey: kCIInputContrastKey)
+
+		guard let outputImage = filter?.outputImage else {
+			NSLog("Error outputing Image")
+			return image
+		}
+
+		guard let outputCGImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+			return  image
+		}
+		
+		return UIImage(cgImage: outputCGImage)
+	}
+	
+	private func imageBlur(byFiltering image: UIImage)  {
+		guard let cgImage = image.cgImage else { return }
+		
+		let ciImage = CIImage(cgImage: cgImage)
+		filterBlur?.setValue(ciImage, forKey: kCIInputImageKey)
+		filterBlur?.setValue(blurSlider.value * 200, forKey: kCIInputRadiusKey)
+		
+		guard let blurImage = filterBlur?.outputImage else {
+			NSLog("error with blurImage filter")
+			return
+		}
+		
+		guard let outputCGImage = context.createCGImage(blurImage, from: blurImage.extent) else {
+			NSLog("error with blurcontext ")
+			return
+		}
+		
+		imageView.image = UIImage(cgImage: outputCGImage)
+		
+	}
+	
+	
+	
+	
 }
