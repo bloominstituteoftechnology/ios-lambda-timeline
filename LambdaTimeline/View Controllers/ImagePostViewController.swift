@@ -7,9 +7,20 @@
 //
 
 import UIKit
+//import CoreImage
 import Photos
 
 class ImagePostViewController: ShiftableViewController {
+    
+    let context = CIContext(options: nil)
+    
+    let filter = CIFilter(name: "CIColorControls")!
+    
+    var originalImage: UIImage? {
+        didSet {
+            updateViews()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,19 +32,17 @@ class ImagePostViewController: ShiftableViewController {
     
     func updateViews() {
         
-        guard let imageData = imageData,
-            let image = UIImage(data: imageData) else {
-                title = "New Post"
-                return
+        if let originalImage = originalImage {
+            imageView.image = image(byFiltering: originalImage)
+            title = post?.title
+            chooseImageButton.setTitle("", for: [])
+            setImageViewHeight(with: originalImage.ratio)
+        } else {
+            imageView.image = nil
+            title = "New Post"
         }
         
-        title = post?.title
         
-        setImageViewHeight(with: image.ratio)
-        
-        imageView.image = image
-        
-        chooseImageButton.setTitle("", for: [])
     }
     
     private func presentImagePickerController() {
@@ -121,21 +130,76 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    // Actions
+    @IBAction func contrastValue(_ sender: Any) {
+        updateViews()
+    }
+    @IBAction func brightnessValue(_ sender: Any) {
+        updateViews()
+    }
+    @IBAction func hueValue(_ sender: Any) {
+    }
+    @IBAction func saturationValue(_ sender: Any) {
+        updateViews()
+    }
+    @IBAction func bumpValue(_ sender: Any) {
+    }
+    
+    //Outlets
+    @IBOutlet weak var contrastSlider: UISlider!
+    @IBOutlet weak var brightnessSlider: UISlider!
+    @IBOutlet weak var hueSlider: UISlider!
+    @IBOutlet weak var saturationSlider: UISlider!
+    @IBOutlet weak var bumpSlider: UISlider!
+    
+    private func applyFilter() {
+        
+    }
+    
+    private func image(byFiltering image: UIImage) -> UIImage {
+        //UIImage -> CGImage -> CIImage
+        
+        guard let cgImage = image.cgImage else {return image}
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        //Set the filters params to the sliders values
+        filter.setValue(ciImage, forKey: "inputImage")
+        filter.setValue(saturationSlider.value, forKey: "inputSaturation")
+        filter.setValue(brightnessSlider.value, forKey: "inputBrightness")
+        filter.setValue(contrastSlider.value, forKey: "inputContrast")
+       
+        //CIImage -> CGImage -> UIImage
+      
+        //the metadata about how the image should be rendered with the filter
+        guard let outputCIImage = filter.outputImage else {return image}
+        
+        //take the ciimage and run it through the CIcontext to create a tangible CGImage
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else {return image}
+        
+        return UIImage(cgImage: outputCGImage)
+        
+    }
+    
+ 
+    
+    
 }
+
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-
+        
         chooseImageButton.setTitle("", for: [])
         
+        if let image = info[.originalImage] as? UIImage {
+            originalImage = image
+        }
+        
+        
         picker.dismiss(animated: true, completion: nil)
-        
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        
-        imageView.image = image
-        
-        setImageViewHeight(with: image.ratio)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
