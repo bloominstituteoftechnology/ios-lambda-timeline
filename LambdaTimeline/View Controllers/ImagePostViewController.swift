@@ -108,7 +108,7 @@ class ImagePostViewController: ShiftableViewController {
     
     func setImageViewHeight(with aspectRatio: CGFloat) {
         
-        imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
+        imageHeightConstraint?.constant = imageView.frame.size.width * aspectRatio
         
         view.layoutSubviews()
     }
@@ -123,8 +123,8 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
 	
-	private let filter = CIFilter(name: "CIColorControls")
-	private let context = CIContext(options: nil)
+//	private let filter = CIFilter(name: "CIColorControls")
+//	private let context = CIContext(options: nil)
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
