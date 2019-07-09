@@ -13,7 +13,7 @@ import Photos
 class ImagePostViewController: ShiftableViewController {
 	
 	private let filter = CIFilter(name: "CIColorControls")
-	private let filterBlur = CIFilter(name: "CIGaussianBlur")
+	private let filterBlur = CIFilter(name: "CIBoxBlur")
 	
 	
 	private let context = CIContext(options: nil)
@@ -47,7 +47,7 @@ class ImagePostViewController: ShiftableViewController {
 	}
 	
 	@IBAction func blureSliderValueChanged(_ sender: Any) {
-		if let originalImage = imageView.image {
+		if let originalImage = originalImage {
 			imageView.image = imageBlur(byFiltering: originalImage)
 		} else {
 			imageView.image = nil
@@ -171,7 +171,6 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
-        imageView.image = image
         originalImage = image
         setImageViewHeight(with: image.ratio)
     }
@@ -198,8 +197,8 @@ extension ImagePostViewController {
 		let ciImage = CIImage(cgImage: cgImage)
 		filter?.setValue(ciImage, forKey: kCIInputImageKey)
 		filter?.setValue(saturationSlider.value, forKey: kCIInputSaturationKey)
-		filter?.setValue(brightnessSlider.value, forKey: kCIInputContrastKey)
-		filter?.setValue(contrastSlider.value, forKey: kCIInputBrightnessKey)
+		filter?.setValue(brightnessSlider.value, forKey: kCIInputBrightnessKey )
+		filter?.setValue(contrastSlider.value, forKey: kCIInputContrastKey)
 
 		guard let outputImage = filter?.outputImage else {
 			NSLog("Error outputing Image")
