@@ -15,18 +15,34 @@ class ImagePostViewController: ShiftableViewController {
 	private let filter = CIFilter(name: "CIColorControls")
 	private let context = CIContext(options: nil)
 	
+	var originalImage: UIImage?  {
+		didSet { updateImage() }
+	}
+	
 	@IBOutlet var saturationSlider: UISlider!
 	@IBOutlet var brightnessSlider: UISlider!
 	@IBOutlet var contrastSlider: UISlider!
 	
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setImageViewHeight(with: 1.0)
-        
         updateViews()
     }
-    
+	
+	@IBAction func saturationSliderValueCahnged(_ sender: Any) {
+		updateImage()
+	}
+	
+	@IBAction func brightnessSliderValueCahnged(_ sender: Any) {
+		updateImage()
+	}
+	
+	@IBAction func contrastSliderValueCahnged(_ sender: Any) {
+		updateImage()
+	}
+	
+	
+	
     func updateViews() {
         
         guard let imageData = imageData,
@@ -124,7 +140,9 @@ class ImagePostViewController: ShiftableViewController {
     var post: Post?
     var imageData: Data?
     
-    @IBOutlet weak var imageView: UIImageView!
+	@IBOutlet weak var imageView: UIImageView!
+	
+	
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
@@ -142,7 +160,7 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
-        imageView.image = image
+        originalImage = image
         
         setImageViewHeight(with: image.ratio)
     }
@@ -155,17 +173,38 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
 
 extension ImagePostViewController {
 	
+	private func updateImage() {
+		if let originalImage = originalImage {
+			imageView.image = image(byFiltering: originalImage)
+		} else {
+			imageView.image = nil
+		}
+	}
+	
 	private func image(byFiltering image: UIImage) -> UIImage {
 		guard let cgImage = image.cgImage else { return image }
 		
 		let ciImage = CIImage(cgImage: cgImage)
 		filter?.setValue(ciImage, forKey: kCIInputImageKey)
-		filter?.setValue(<#T##value: Any?##Any?#>, forKey: kCIInputSaturationKey)
-		filter?.setValue(<#T##value: Any?##Any?#>, forKey: kCIInputBrightnessKey)
-		filter?.setValue(<#T##value: Any?##Any?#>, forKey: kCIInputContrastKey)
+		filter?.setValue(saturationSlider.value, forKey: kCIInputSaturationKey)
+		filter?.setValue(brightnessSlider.value, forKey: kCIInputBrightnessKey)
+		filter?.setValue(contrastSlider.value, forKey: kCIInputContrastKey)
 		
-		return image
+		guard let outputImage = filter?.outputImage else {
+			NSLog("Error outputing Image")
+			return image
+		}
+		
+		guard let outputCGImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+			return  image
+		}
+		
+		return UIImage(cgImage: outputCGImage)
 	}
+	
+	
+	
+	
 	
 	
 }
