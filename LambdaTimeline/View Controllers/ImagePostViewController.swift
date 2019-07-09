@@ -26,6 +26,8 @@ class ImagePostViewController: ShiftableViewController {
             title = post?.title
             chooseImageButton.setTitle("", for: [])
             setImageViewHeight(with: originalImage.ratio)
+            zoomBlurSlider.isEnabled = true
+            zoomXSlider.isEnabled = true
         } else {
             imageView.image = nil
             title = "New Post"
