@@ -193,14 +193,8 @@ class ImagePostViewController: ShiftableViewController {
     
     var postController: PostController!
     var post: Post?
-    var imageData: Data? {
-        didSet {
-//            print("imageData set and triggered.")
-//            updateImage()
-        }
-    }
-  
-    
+    var imageData: Data?
+     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
