@@ -7,7 +7,7 @@
 //
 
 import UIKit
-//import CoreImage
+import CoreImage
 import Photos
 
 class ImagePostViewController: ShiftableViewController {
@@ -15,6 +15,9 @@ class ImagePostViewController: ShiftableViewController {
     let context = CIContext(options: nil)
     
     let filter = CIFilter(name: "CIColorControls")!
+    let hueFilter = CIFilter(name: "CIHueAdjust")!
+    let sephiaFilter = CIFilter(name: "CISepiaTone")!
+ 
     
     var originalImage: UIImage? {
         didSet {
@@ -139,11 +142,13 @@ class ImagePostViewController: ShiftableViewController {
         updateViews()
     }
     @IBAction func hueValue(_ sender: Any) {
+        updateViews()
     }
     @IBAction func saturationValue(_ sender: Any) {
         updateViews()
     }
     @IBAction func bumpValue(_ sender: Any) {
+        updateViews()
     }
     
     //Outlets
@@ -153,9 +158,6 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var saturationSlider: UISlider!
     @IBOutlet weak var bumpSlider: UISlider!
     
-    private func applyFilter() {
-        
-    }
     
     private func image(byFiltering image: UIImage) -> UIImage {
         //UIImage -> CGImage -> CIImage
@@ -169,11 +171,16 @@ class ImagePostViewController: ShiftableViewController {
         filter.setValue(saturationSlider.value, forKey: "inputSaturation")
         filter.setValue(brightnessSlider.value, forKey: "inputBrightness")
         filter.setValue(contrastSlider.value, forKey: "inputContrast")
-       
+        
+        hueFilter.setValue(filter.outputImage, forKey: kCIInputImageKey)
+        hueFilter.setValue(hueSlider.value, forKey: kCIInputAngleKey)
+        
+        sephiaFilter.setValue(hueFilter.outputImage, forKey: kCIInputImageKey)
+        sephiaFilter.setValue(bumpSlider.value, forKey: kCIInputIntensityKey)
         //CIImage -> CGImage -> UIImage
       
         //the metadata about how the image should be rendered with the filter
-        guard let outputCIImage = filter.outputImage else {return image}
+        guard let outputCIImage = sephiaFilter.outputImage else {return image}
         
         //take the ciimage and run it through the CIcontext to create a tangible CGImage
         guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else {return image}
