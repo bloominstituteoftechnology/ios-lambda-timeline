@@ -467,37 +467,56 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ExX-Yq-auK">
-                                <rect key="frame" x="183" y="433" width="49" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Record"/>
-                                <connections>
-                                    <action selector="recordButtonPressed:" destination="W8y-hG-PAl" eventType="touchUpInside" id="gIO-pA-Ysq"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9o1-6K-xPW">
-                                <rect key="frame" x="189" y="471" width="37" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Done"/>
-                                <connections>
-                                    <action selector="doneButtonPressed:" destination="W8y-hG-PAl" eventType="touchUpInside" id="6Gd-Uz-Zuq"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mxO-de-Lye">
-                                <rect key="frame" x="183" y="395" width="48" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Cancel"/>
-                                <connections>
-                                    <action selector="cancelButtonPressed:" destination="W8y-hG-PAl" eventType="touchUpInside" id="jQk-eE-IaO"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="UdI-7p-gsF">
+                                <rect key="frame" x="122.5" y="278" width="169" height="340"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mxO-de-Lye">
+                                        <rect key="frame" x="0.0" y="0.0" width="169" height="79"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="56"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="cancelButtonPressed:" destination="W8y-hG-PAl" eventType="touchUpInside" id="jQk-eE-IaO"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ExX-Yq-auK">
+                                        <rect key="frame" x="0.0" y="87" width="169" height="79"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="56"/>
+                                        <state key="normal" title="Record"/>
+                                        <connections>
+                                            <action selector="recordButtonPressed:" destination="W8y-hG-PAl" eventType="touchUpInside" id="XD4-VO-YC5"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kYM-n0-swa">
+                                        <rect key="frame" x="0.0" y="174" width="169" height="79"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="56"/>
+                                        <state key="normal" title="Play"/>
+                                        <connections>
+                                            <action selector="playButtonPressed:" destination="W8y-hG-PAl" eventType="touchUpInside" id="EIx-JP-dxO"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9o1-6K-xPW">
+                                        <rect key="frame" x="0.0" y="261" width="169" height="79"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="56"/>
+                                        <state key="normal" title="Done"/>
+                                        <connections>
+                                            <action selector="doneButtonPressed:" destination="W8y-hG-PAl" eventType="touchUpInside" id="6Gd-Uz-Zuq"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="UdI-7p-gsF" firstAttribute="centerY" secondItem="cjf-Wq-QXP" secondAttribute="centerY" id="6SF-Tl-b7d"/>
+                            <constraint firstItem="UdI-7p-gsF" firstAttribute="centerX" secondItem="cjf-Wq-QXP" secondAttribute="centerX" id="lyf-6A-luP"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Y2g-LU-ho4"/>
                     </view>
                     <connections>
-                        <outlet property="cancelButton" destination="mxO-de-Lye" id="ij4-b3-zX3"/>
                         <outlet property="doneButton" destination="9o1-6K-xPW" id="nIR-nZ-v8c"/>
+                        <outlet property="playButton" destination="kYM-n0-swa" id="GMo-7A-f9I"/>
                         <outlet property="recordButton" destination="ExX-Yq-auK" id="vas-YI-A2r"/>
                     </connections>
                 </viewController>
