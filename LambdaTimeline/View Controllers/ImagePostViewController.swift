@@ -13,7 +13,11 @@ import Photos
 class ImagePostViewController: ShiftableViewController {
 	
 	private let filter = CIFilter(name: "CIColorControls")
+	private let filterBlur = CIFilter(name: "CIGaussianBlur")
+	
+	
 	private let context = CIContext(options: nil)
+	private let blurcontext = CIContext(options: nil)
 	
 	var originalImage: UIImage?  {
 		didSet { updateImage() }
@@ -22,6 +26,7 @@ class ImagePostViewController: ShiftableViewController {
 	@IBOutlet var saturationSlider: UISlider!
 	@IBOutlet var brightnessSlider: UISlider!
 	@IBOutlet var contrastSlider: UISlider!
+	@IBOutlet var blurSlider: UISlider!
 	
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,8 +46,14 @@ class ImagePostViewController: ShiftableViewController {
 		updateImage()
 	}
 	
-	
-	
+	@IBAction func blureSliderValueChanged(_ sender: Any) {
+		if let originalImage = imageView.image {
+			imageView.image = imageBlur(byFiltering: originalImage)
+		} else {
+			imageView.image = nil
+		}
+	}
+
     func updateViews() {
         
         guard let imageData = imageData,
@@ -160,8 +171,8 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
+        imageView.image = image
         originalImage = image
-        
         setImageViewHeight(with: image.ratio)
     }
     
@@ -187,14 +198,14 @@ extension ImagePostViewController {
 		let ciImage = CIImage(cgImage: cgImage)
 		filter?.setValue(ciImage, forKey: kCIInputImageKey)
 		filter?.setValue(saturationSlider.value, forKey: kCIInputSaturationKey)
-		filter?.setValue(brightnessSlider.value, forKey: kCIInputBrightnessKey)
-		filter?.setValue(contrastSlider.value, forKey: kCIInputContrastKey)
-		
+		filter?.setValue(brightnessSlider.value, forKey: kCIInputContrastKey)
+		filter?.setValue(contrastSlider.value, forKey: kCIInputBrightnessKey)
+
 		guard let outputImage = filter?.outputImage else {
 			NSLog("Error outputing Image")
 			return image
 		}
-		
+
 		guard let outputCGImage = context.createCGImage(outputImage, from: outputImage.extent) else {
 			return  image
 		}
@@ -202,7 +213,23 @@ extension ImagePostViewController {
 		return UIImage(cgImage: outputCGImage)
 	}
 	
-	
+	private func imageBlur(byFiltering image: UIImage) -> UIImage {
+		guard let cgImage = image.cgImage else { return image }
+		
+		let ciImage = CIImage(cgImage: cgImage)
+		filterBlur?.setValue(ciImage, forKey: kCIInputImageKey)
+		filterBlur?.setValue(blurSlider.value, forKey: kCIInputRadiusKey)
+		
+		guard let blurImage = filterBlur?.outputImage else {
+			return image
+		}
+		
+		guard let outputCGImage = blurcontext.createCGImage(blurImage, from: blurImage.extent) else {
+			return  image
+		}
+
+		return UIImage(cgImage: outputCGImage)
+	}
 	
 	
 	
