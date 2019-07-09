@@ -17,10 +17,12 @@ class ImagePostViewController: ShiftableViewController {
 	
 	
 	private let context = CIContext(options: nil)
-	private let blurcontext = CIContext(options: nil)
+//	private let blurcontext = CIContext(options: nil)
 	
 	var originalImage: UIImage?  {
-		didSet { updateImage() }
+		didSet { updateImage()
+			
+		}
 	}
 	
 	@IBOutlet var saturationSlider: UISlider!
@@ -47,10 +49,8 @@ class ImagePostViewController: ShiftableViewController {
 	}
 	
 	@IBAction func blureSliderValueChanged(_ sender: Any) {
-		if let originalImage = originalImage {
-			imageView.image = imageBlur(byFiltering: originalImage)
-		} else {
-			imageView.image = nil
+		if let image = imageView.image {
+			imageBlur(byFiltering: image)
 		}
 	}
 
@@ -212,22 +212,25 @@ extension ImagePostViewController {
 		return UIImage(cgImage: outputCGImage)
 	}
 	
-	private func imageBlur(byFiltering image: UIImage) -> UIImage {
-		guard let cgImage = image.cgImage else { return image }
+	private func imageBlur(byFiltering image: UIImage)  {
+		guard let cgImage = image.cgImage else { return }
 		
 		let ciImage = CIImage(cgImage: cgImage)
 		filterBlur?.setValue(ciImage, forKey: kCIInputImageKey)
-		filterBlur?.setValue(blurSlider.value, forKey: kCIInputRadiusKey)
+		filterBlur?.setValue(blurSlider.value * 200, forKey: kCIInputRadiusKey)
 		
 		guard let blurImage = filterBlur?.outputImage else {
-			return image
+			NSLog("error with blurImage filter")
+			return
 		}
 		
-		guard let outputCGImage = blurcontext.createCGImage(blurImage, from: blurImage.extent) else {
-			return  image
+		guard let outputCGImage = context.createCGImage(blurImage, from: blurImage.extent) else {
+			NSLog("error with blurcontext ")
+			return
 		}
-
-		return UIImage(cgImage: outputCGImage)
+		
+		imageView.image = UIImage(cgImage: outputCGImage)
+		
 	}
 	
 	
