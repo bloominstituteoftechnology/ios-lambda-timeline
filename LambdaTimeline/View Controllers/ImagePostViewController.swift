@@ -15,6 +15,10 @@ class ImagePostViewController: ShiftableViewController {
 	private let filter = CIFilter(name: "CIColorControls")
 	private let context = CIContext(options: nil)
 	
+	@IBOutlet var saturationSlider: UISlider!
+	@IBOutlet var brightnessSlider: UISlider!
+	@IBOutlet var contrastSlider: UISlider!
+	
     override func viewDidLoad() {
         super.viewDidLoad()
         
