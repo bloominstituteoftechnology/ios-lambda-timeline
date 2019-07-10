@@ -7,13 +7,25 @@
 //
 
 import UIKit
+import AVFoundation
 
 class VideoPostCollectionViewCell: UICollectionViewCell {
     
+    var player: AVPlayer!
+    
+    func playMovie(url: URL) {
+        player = AVPlayer(url: url)
+        let playerLayer = AVPlayerLayer(player: player)
+        
+       self.contentView.layer.addSublayer(playerLayer)
+        
+        player.play()
+    }
+    
     func updateViews() {
         guard let post = post else { return }
-        
-       //update with video
+        playMovie(url: post.mediaURL)
+       
     }
 
     

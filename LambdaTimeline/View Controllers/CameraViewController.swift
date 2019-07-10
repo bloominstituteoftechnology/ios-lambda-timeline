@@ -149,7 +149,7 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         }
 
         //  Wait for playmovie to finish then present alert.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
             let alert = UIAlertController(title: "New Post", message: "Add a title and save video", preferredStyle: .alert)
             
             alert.addTextField { (textField) in
@@ -160,6 +160,7 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
                 guard let newTitle = textField?.text, !newTitle.isEmpty else { return }
                 //create post and send to Firebase
                 self.postController.createPost(with: newTitle, ofType: .video, mediaData: try! Data(contentsOf: outputFileURL))
+                self.navigationController?.popViewController(animated: true)
             }))
             
             self.present(alert, animated:true, completion: nil)
