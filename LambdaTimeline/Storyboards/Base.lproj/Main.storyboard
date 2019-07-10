@@ -82,6 +82,27 @@
                                     <outlet property="titleLabel" destination="tHt-lC-hYm" id="uRt-J9-5cc"/>
                                 </connections>
                             </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VideoCell" id="emO-ls-oUc">
+                                <rect key="frame" x="96" y="385" width="183" height="169"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                    <rect key="frame" x="0.0" y="0.0" width="183" height="169"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TQ9-wy-zMw">
+                                            <rect key="frame" x="8" y="28" width="167" height="133"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </view>
+                                    </subviews>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="bottomMargin" secondItem="TQ9-wy-zMw" secondAttribute="bottom" id="3Z2-7R-2Oy"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="TQ9-wy-zMw" secondAttribute="trailing" id="U9s-qi-4zd"/>
+                                    <constraint firstItem="TQ9-wy-zMw" firstAttribute="leading" secondItem="emO-ls-oUc" secondAttribute="leadingMargin" id="a2k-Cj-KYq"/>
+                                    <constraint firstItem="TQ9-wy-zMw" firstAttribute="top" secondItem="emO-ls-oUc" secondAttribute="topMargin" id="x9m-jn-HuC"/>
+                                </constraints>
+                                <size key="customSize" width="183" height="169"/>
+                            </collectionViewCell>
                         </cells>
                         <connections>
                             <outlet property="dataSource" destination="hPa-Td-5A3" id="ygt-Fi-6zc"/>
@@ -152,7 +173,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fPP-2j-fRa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1968.8" y="-971.06446776611699"/>
+            <point key="canvasLocation" x="1969" y="-878"/>
         </scene>
         <!--Title-->
         <scene sceneID="kP9-yp-I8H">

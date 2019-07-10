@@ -11,7 +11,7 @@ import AVFoundation
 
 class CameraViewController: UIViewController {
     
-    
+    var postController = PostController()
     @IBOutlet weak var cameraView: CameraPreviewView!
     @IBOutlet weak var recordButton: UIButton!
 
@@ -140,11 +140,36 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         }
     }
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        let group = DispatchGroup()
+        group.enter()
         DispatchQueue.main.async {
             self.updateViews()
             self.playMovie(url: outputFileURL)
+            group.leave()
         }
-    }
+
+        //  Wait for playmovie to finish then present alert.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            let alert = UIAlertController(title: "New Post", message: "Add a title and save video", preferredStyle: .alert)
+            
+            alert.addTextField { (textField) in
+                textField.placeholder = "Enter title"
+            }
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+                let textField = alert?.textFields![0]
+                guard let newTitle = textField?.text, !newTitle.isEmpty else { return }
+                //create post and send to Firebase
+                self.postController.createPost(with: newTitle, ofType: .video, mediaData: try! Data(contentsOf: outputFileURL))
+            }))
+            
+            self.present(alert, animated:true, completion: nil)
+            }
+        }
+    
+        
+    
+    
+    
 }
     
     
