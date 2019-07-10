@@ -64,8 +64,13 @@ class RecorderViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRe
     }
 
      @IBAction func doneButtonPressed(_ sender: UIButton) {
-        guard let recordingUrl = recordingUrl else { return }
-        postController.addAudioComment(with: recordingUrl, to: &self.post)
+        guard let recordingUrl = recordingUrl,
+        let data = try? Data(contentsOf: recordingUrl),
+        let post = post,
+        let postController = postController else { return }
+        postController.addComment(with: data, to: post) {
+            
+        }
         self.dismiss(animated: true, completion: nil)
     }
 
