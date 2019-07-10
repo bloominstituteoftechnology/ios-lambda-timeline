@@ -10,11 +10,17 @@ import UIKit
 import AVFoundation
 
 class CameraViewController: UIViewController {
-
+    
+    
+    private lazy var captureSession = AVCaptureSession() //we want this to be executed at a later time
+    private var player: AVPlayer!
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-       //test
+    
     }
     
 
