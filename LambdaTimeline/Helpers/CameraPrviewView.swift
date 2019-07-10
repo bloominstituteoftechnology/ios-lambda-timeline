@@ -26,5 +26,5 @@ class CameraPrviewView: UIView {
         get { return videoPlayerView.session }
         set { return videoPlayerView.session = newValue }
     }
-
+    
 }
