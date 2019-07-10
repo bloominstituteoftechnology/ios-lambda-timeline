@@ -38,12 +38,27 @@ class PostController {
     func addComment(with text: String, to post: inout Post) {
         
         guard let currentUser = Auth.auth().currentUser,
-            let author = Author(user: currentUser) else { return }
+        let author = Author(user: currentUser) else { return }
         
         let comment = Comment(text: text, author: author)
         post.comments.append(comment)
         
         savePostToFirebase(post)
+    }
+    
+    func addAudioComment(with audio: Data, to post: Post) {
+        
+        guard let currentUser = Auth.auth().currentUser,
+        let author = Author(user: currentUser)
+        else { return }
+        
+        store(mediaData: audio, mediaType: .audio) { url in
+            
+            let comment = Comment(text: "", author: author, isTextComment: false, audioURL: url)
+            post.comments.append(comment)
+            
+            self.savePostToFirebase(post)
+        }
     }
 
     func observePosts(completion: @escaping (Error?) -> Void) {

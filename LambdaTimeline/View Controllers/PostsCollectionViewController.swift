@@ -57,6 +57,8 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
+        case .audio:
+            return UICollectionViewCell()
         }
     }
     
@@ -73,6 +75,8 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             guard let ratio = post.ratio else { return size }
             
             size.height = size.width * ratio
+        case .audio:
+            return CGSize(width: 0, height: 0)
         }
         
         return size
@@ -141,6 +145,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         
         operations[postID] = fetchOp
     }
+    
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation

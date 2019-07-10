@@ -31,22 +31,43 @@ class ImagePostDetailTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     @IBAction func createComment(_ sender: Any) {
+        typeOfCommentAlert()
+    }
+    
+    private func typeOfCommentAlert() {
         
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let textCommentAction = UIAlertAction(title: "Text Comment", style: .default) { action in
+            self.textComment()
+        }
+        let audioCommentAction = UIAlertAction(title: "Audio Comment", style: .default) { action in
+            self.performSegue(withIdentifier: "ShowAudioCommentView", sender: nil)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(textCommentAction)
+        alert.addAction(audioCommentAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true)
+    }
+    
+    private func textComment() {
         let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
         
         var commentTextField: UITextField?
-        
+
         alert.addTextField { (textField) in
             textField.placeholder = "Comment:"
             commentTextField = textField
         }
         
         let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
-            
+        
             guard let commentText = commentTextField?.text else { return }
-            
+        
             self.postController.addComment(with: commentText, to: &self.post!)
-            
+        
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -65,14 +86,30 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as? CommentTableViewCell else { return UITableViewCell() }
         
-        let comment = post?.comments[indexPath.row + 1]
+        guard let comment = post?.comments[indexPath.row + 1] else { return UITableViewCell() }
         
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author.displayName
+//        cell.textLabel?.text = comment?.text
+//        cell.detailTextLabel?.text = comment?.author.displayName
+
+        if comment.isTextComment {
+            cell.titleLabel.text = comment.text
+            cell.subtitleLabel.text = comment.author.displayName
+            cell.playButton.isHidden = true
+        } else {
+            cell.titleLabel.text = comment.author.displayName
+            cell.subtitleLabel.text = ""
+        }
         
         return cell
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "ShowAudioCommentView" {
+            
+        }
     }
     
     var post: Post!
