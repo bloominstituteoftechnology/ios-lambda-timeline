@@ -34,9 +34,9 @@ class ImagePostDetailTableViewController: UITableViewController {
         
         let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
         //adding a way to add an audio comment
-        let addAudioComment = UIAlertAction(title: "Add Audio Comment", style: .default) { (_) in
+        let addAudioCommentAction = UIAlertAction(title: "Add Audio Comment", style: .default) { (_) in
             //Transition to another screen
-            
+            self.performSegue(withIdentifier: "ToAudioRecorder", sender: nil)
         }
         var commentTextField: UITextField?
         
@@ -59,6 +59,7 @@ class ImagePostDetailTableViewController: UITableViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(addCommentAction)
+        alert.addAction(addAudioCommentAction)
         alert.addAction(cancelAction)
         
         present(alert, animated: true, completion: nil)
