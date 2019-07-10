@@ -419,13 +419,14 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" title="Play Audio"/>
                                             <connections>
-                                                <action selector="playButtonPressed:" destination="izD-PK-3w2" eventType="touchUpInside" id="mLr-Kw-Ad9"/>
+                                                <action selector="playRecording:" destination="izD-PK-3w2" eventType="touchUpInside" id="nuf-Wl-jiv"/>
                                             </connections>
                                         </button>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="authorLabel" destination="n97-cv-gOU" id="R59-XN-QR6"/>
+                                    <outlet property="authorLabel" destination="n97-cv-gOU" id="yAh-tm-viF"/>
+                                    <outlet property="playRecordingButton" destination="80w-cL-9K7" id="VNM-QM-8M7"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -477,7 +478,7 @@
                                             <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="cancelButtonPressed:" destination="W8y-hG-PAl" eventType="touchUpInside" id="jQk-eE-IaO"/>
+                                            <action selector="cancelButtonPressed:" destination="W8y-hG-PAl" eventType="touchUpInside" id="Vee-hR-i6X"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ExX-Yq-auK">
@@ -485,7 +486,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="56"/>
                                         <state key="normal" title="Record"/>
                                         <connections>
-                                            <action selector="recordButtonPressed:" destination="W8y-hG-PAl" eventType="touchUpInside" id="XD4-VO-YC5"/>
+                                            <action selector="recordButtonPressed:" destination="W8y-hG-PAl" eventType="touchUpInside" id="JDP-DI-c5I"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kYM-n0-swa">
@@ -493,7 +494,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="56"/>
                                         <state key="normal" title="Play"/>
                                         <connections>
-                                            <action selector="playButtonPressed:" destination="W8y-hG-PAl" eventType="touchUpInside" id="EIx-JP-dxO"/>
+                                            <action selector="playButtonPressed:" destination="W8y-hG-PAl" eventType="touchUpInside" id="oMK-kN-0Ef"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9o1-6K-xPW">
@@ -501,7 +502,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="56"/>
                                         <state key="normal" title="Done"/>
                                         <connections>
-                                            <action selector="doneButtonPressed:" destination="W8y-hG-PAl" eventType="touchUpInside" id="6Gd-Uz-Zuq"/>
+                                            <action selector="doneButtonPressed:" destination="W8y-hG-PAl" eventType="touchUpInside" id="nup-rC-tAd"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -515,9 +516,9 @@
                         <viewLayoutGuide key="safeArea" id="Y2g-LU-ho4"/>
                     </view>
                     <connections>
-                        <outlet property="doneButton" destination="9o1-6K-xPW" id="nIR-nZ-v8c"/>
-                        <outlet property="playButton" destination="kYM-n0-swa" id="GMo-7A-f9I"/>
-                        <outlet property="recordButton" destination="ExX-Yq-auK" id="vas-YI-A2r"/>
+                        <outlet property="doneButton" destination="9o1-6K-xPW" id="aa9-ah-ggg"/>
+                        <outlet property="playButton" destination="kYM-n0-swa" id="hDM-QA-eCb"/>
+                        <outlet property="recordButton" destination="ExX-Yq-auK" id="Rar-Qo-uzI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RCh-zd-6XK" userLabel="First Responder" sceneMemberID="firstResponder"/>
