@@ -13,13 +13,20 @@ import UIKit
 
 class AudioCommentViewController: UIViewController {
 
+    @IBOutlet weak var recordProperties: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
+    @IBAction func recordButtonPressed(_ sender: UIButton) {
+    }
     
-
+    @IBAction func cancelButtonPressed(_ sender: UIButton) {
+    }
+    
+    @IBAction func sendButtonPressed(_ sender: UIButton) {
+    }
     /*
     // MARK: - Navigation
 
