@@ -302,10 +302,10 @@
             </objects>
             <point key="canvasLocation" x="700" y="896"/>
         </scene>
-        <!--View Controller-->
+        <!--Camera View Controller-->
         <scene sceneID="tGd-Ab-8RO">
             <objects>
-                <viewController id="y8k-M7-68g" sceneMemberID="viewController">
+                <viewController id="y8k-M7-68g" customClass="CameraViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dxt-Ew-cdQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -314,16 +314,33 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cY7-ex-F2j">
+                                <rect key="frame" x="137.5" y="507" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="aOp-8Z-4cK"/>
+                                    <constraint firstAttribute="width" constant="100" id="qs4-zU-sUW"/>
+                                </constraints>
+                                <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="Record"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="y8k-M7-68g" eventType="touchUpInside" id="67j-Yz-9LU"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="Xjn-Q7-pbO" firstAttribute="bottom" secondItem="cY7-ex-F2j" secondAttribute="bottom" constant="60" id="IZy-Zm-OkJ"/>
                             <constraint firstItem="beh-Zk-sEk" firstAttribute="leading" secondItem="Xjn-Q7-pbO" secondAttribute="leading" id="KTo-dN-Uy3"/>
                             <constraint firstItem="Xjn-Q7-pbO" firstAttribute="trailing" secondItem="beh-Zk-sEk" secondAttribute="trailing" id="Ooz-AS-oDY"/>
+                            <constraint firstItem="cY7-ex-F2j" firstAttribute="centerX" secondItem="dxt-Ew-cdQ" secondAttribute="centerX" id="e0z-Ef-E6R"/>
                             <constraint firstItem="Xjn-Q7-pbO" firstAttribute="bottom" secondItem="beh-Zk-sEk" secondAttribute="bottom" id="pJl-wO-rRg"/>
                             <constraint firstItem="beh-Zk-sEk" firstAttribute="top" secondItem="Xjn-Q7-pbO" secondAttribute="top" constant="-20" id="ylf-Tp-f3i"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Xjn-Q7-pbO"/>
                     </view>
+                    <connections>
+                        <outlet property="recordButton" destination="cY7-ex-F2j" id="dr3-sJ-AXF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r2V-MK-k4k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -541,4 +558,7 @@
             <point key="canvasLocation" x="2809" y="108"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Record" width="116" height="116"/>
+    </resources>
 </document>

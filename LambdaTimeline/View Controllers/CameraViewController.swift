@@ -15,12 +15,14 @@ class CameraViewController: UIViewController {
     private lazy var captureSession = AVCaptureSession() //we want this to be executed at a later time
     private var player: AVPlayer!
     
-    
+    @IBOutlet weak var recordButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+    }
     
+    @IBAction func recordButtonPressed(_ sender: UIButton) {
     }
     
 
