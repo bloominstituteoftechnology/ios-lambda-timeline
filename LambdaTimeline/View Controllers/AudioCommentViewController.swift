@@ -9,11 +9,10 @@
 import UIKit
 
 
-
-
 class AudioCommentViewController: UIViewController {
 
     @IBOutlet weak var recordProperties: UIButton!
+    @IBOutlet weak var playProperties: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,6 +26,11 @@ class AudioCommentViewController: UIViewController {
     
     @IBAction func sendButtonPressed(_ sender: UIButton) {
     }
+    
+    @IBAction func playButtonPressed(_ sender: UIButton) {
+        //hide the play button until the until the record button has been pressed and stopped. 
+    }
+    
     /*
     // MARK: - Navigation
 
