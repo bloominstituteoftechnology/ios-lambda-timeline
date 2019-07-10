@@ -340,6 +340,55 @@
             </objects>
             <point key="canvasLocation" x="-450.39999999999998" y="107.49625187406298"/>
         </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="GVM-US-ZKk">
+            <objects>
+                <viewController id="5xM-UI-Xka" customClass="CameraViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9x2-Gq-qaf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uMa-BL-jBW" customClass="CameraPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oPI-I0-Rh1">
+                                        <rect key="frame" x="137.5" y="507" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="8sT-X1-ItV"/>
+                                            <constraint firstAttribute="width" constant="100" id="rlM-tN-lU3"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.74086707750000003" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" image="Record"/>
+                                        <connections>
+                                            <action selector="recordButtonPressed:" destination="5xM-UI-Xka" eventType="touchUpInside" id="lHD-eo-4Kt"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="oPI-I0-Rh1" secondAttribute="bottom" constant="60" id="0zK-Js-xo4"/>
+                                    <constraint firstItem="oPI-I0-Rh1" firstAttribute="centerX" secondItem="uMa-BL-jBW" secondAttribute="centerX" id="YDk-2U-DI3"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="hcd-eP-Bs0" firstAttribute="trailing" secondItem="uMa-BL-jBW" secondAttribute="trailing" id="1br-xe-NQW"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="uMa-BL-jBW" secondAttribute="bottom" id="5v6-fu-wYk"/>
+                            <constraint firstItem="uMa-BL-jBW" firstAttribute="top" secondItem="9x2-Gq-qaf" secondAttribute="top" id="NVW-u0-8D2"/>
+                            <constraint firstItem="uMa-BL-jBW" firstAttribute="leading" secondItem="hcd-eP-Bs0" secondAttribute="leading" id="cbY-ZO-8Gw"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="hcd-eP-Bs0"/>
+                    </view>
+                    <connections>
+                        <outlet property="cameraView" destination="uMa-BL-jBW" id="lQ0-6P-p8R"/>
+                        <outlet property="recordButton" destination="oPI-I0-Rh1" id="XMs-Ku-5IO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9ha-9A-Zsk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2668" y="1648"/>
+        </scene>
         <!--Title-->
         <scene sceneID="9zi-Aq-zJI">
             <objects>
@@ -459,6 +508,7 @@
                         <outlet property="imageViewAspectRatioConstraint" destination="y1B-iX-x3e" id="wIt-kh-Tzd"/>
                         <outlet property="titleLabel" destination="jyy-BX-c2c" id="UEd-xO-ipC"/>
                         <segue destination="KrY-1V-5SF" kind="show" identifier="ShowAudioCommentView" id="fis-pL-ffp"/>
+                        <segue destination="5xM-UI-Xka" kind="presentation" identifier="ShowVideoComment" id="erz-Lo-fzw"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdL-Y3-4ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -502,4 +552,7 @@
             <point key="canvasLocation" x="2919" y="881"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Record" width="116" height="116"/>
+    </resources>
 </document>

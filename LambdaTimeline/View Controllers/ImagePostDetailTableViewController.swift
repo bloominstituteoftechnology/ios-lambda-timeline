@@ -40,13 +40,20 @@ class ImagePostDetailTableViewController: UITableViewController {
         let textCommentAction = UIAlertAction(title: "Text Comment", style: .default) { action in
             self.textComment()
         }
+        
         let audioCommentAction = UIAlertAction(title: "Audio Comment", style: .default) { action in
             self.performSegue(withIdentifier: "ShowAudioCommentView", sender: nil)
         }
+        
+        let videoCommentAction = UIAlertAction(title: "Video Comment", style: .default) { action in
+            self.performSegue(withIdentifier: "ShowVideoComment", sender: nil)
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(textCommentAction)
         alert.addAction(audioCommentAction)
+        alert.addAction(videoCommentAction)
         alert.addAction(cancelAction)
         
         present(alert, animated: true)
@@ -107,7 +114,7 @@ class ImagePostDetailTableViewController: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "ShowAudioCommentView" {
+        if segue.identifier == "ShowVideoComment" {
             
         }
     }
