@@ -105,20 +105,54 @@
             </objects>
             <point key="canvasLocation" x="1216.8" y="108.39580209895054"/>
         </scene>
-        <!--View Controller-->
+        <!--Camera View Controller-->
         <scene sceneID="STn-z0-pyc">
             <objects>
-                <viewController id="rQJ-fU-VOQ" sceneMemberID="viewController">
+                <viewController id="rQJ-fU-VOQ" customClass="CameraViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NY3-2R-Kl9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="auS-g4-FEG" customClass="CameraPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="neE-cf-C5x">
+                                        <rect key="frame" x="127.5" y="487" width="120" height="120"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="120" id="YQl-lD-LQg"/>
+                                            <constraint firstAttribute="width" constant="120" id="nvc-sd-At3"/>
+                                        </constraints>
+                                        <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="Record"/>
+                                        <connections>
+                                            <action selector="recordButtonPressed:" destination="rQJ-fU-VOQ" eventType="touchUpInside" id="Pz9-At-ANx"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="neE-cf-C5x" secondAttribute="bottom" constant="60" id="0iw-dY-r9v"/>
+                                    <constraint firstItem="neE-cf-C5x" firstAttribute="centerX" secondItem="auS-g4-FEG" secondAttribute="centerX" id="u4I-Ch-JPT"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="auS-g4-FEG" firstAttribute="bottom" secondItem="zaJ-Eh-mus" secondAttribute="bottom" id="Ie9-MB-tV1"/>
+                            <constraint firstItem="auS-g4-FEG" firstAttribute="leading" secondItem="zaJ-Eh-mus" secondAttribute="leading" id="QSl-BY-Csy"/>
+                            <constraint firstItem="auS-g4-FEG" firstAttribute="trailing" secondItem="zaJ-Eh-mus" secondAttribute="trailing" id="QZV-L1-w5p"/>
+                            <constraint firstItem="auS-g4-FEG" firstAttribute="top" secondItem="NY3-2R-Kl9" secondAttribute="top" id="nG0-BL-hoP"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="zaJ-Eh-mus"/>
                     </view>
+                    <connections>
+                        <outlet property="cameraView" destination="auS-g4-FEG" id="c1f-x2-KE3"/>
+                        <outlet property="recordButton" destination="neE-cf-C5x" id="HJu-Cy-BSd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fPP-2j-fRa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1969" y="-971"/>
+            <point key="canvasLocation" x="1968.8" y="-971.06446776611699"/>
         </scene>
         <!--Title-->
         <scene sceneID="kP9-yp-I8H">
@@ -435,4 +469,7 @@
             <point key="canvasLocation" x="1968.8" y="472.71364317841085"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Record" width="116" height="116"/>
+    </resources>
 </document>
