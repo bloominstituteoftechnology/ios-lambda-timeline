@@ -7,6 +7,9 @@
 //
 
 import AVFoundation
+protocol PlayerDelegate: AnyObject { // because we subclass NSObject we have to conform to any object here
+    func playerDidChangeState(player: Player)
+}
 
 class Player: NSObject { //has to be of nsobject so that we can conform to a protocol
     
@@ -15,18 +18,35 @@ class Player: NSObject { //has to be of nsobject so that we can conform to a pro
     var isPlaying: Bool {
         return audioPlayer?.isPlaying ?? false
     }
+    weak var delegate: PlayerDelegate?
     
     //MARK: Functionality of the player
     
     //playing
     func play(){
         audioPlayer?.play()
+        //notifiy delegate
+        notifyDelegate()
     }
  
     //pausing
     func pause(){
         audioPlayer?.pause()
+        //notify delegate
+        notifyDelegate()
     }
     
+    func playPause(){
+        if isPlaying {
+            pause()
+        } else {
+            play()
+        }
+    }
+    
+    //create a function to notify the delegate
+    func notifyDelegate(){
+        delegate?.playerDidChangeState(player: self)
+    }
     
 }
