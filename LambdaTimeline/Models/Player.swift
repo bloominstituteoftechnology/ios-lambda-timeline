@@ -20,6 +20,12 @@ class Player: NSObject { //has to be of nsobject so that we can conform to a pro
     }
     weak var delegate: PlayerDelegate?
     
+    
+    //player needs a url to play
+    override init(){
+        super.init()
+    }
+    
     //MARK: Functionality of the player
     
     //playing

@@ -23,9 +23,9 @@ class Recorder: NSObject {
         return audioRecorder?.isRecording ?? false
     }
     //since we are subclassing NSObject we have to initialize the super.init
-    override init(){
-        super.init()
-    }
+//    override init(){
+//        super.init()
+//    }
     
     //what functionality do we want to abstract?
     func toggleRecording(){
@@ -48,10 +48,13 @@ class Recorder: NSObject {
         //format the AudioFormat: khz & channels & initialize avaudioRecorder with the khz and format
         let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
         audioRecorder = try! AVAudioRecorder(url: fileURL!, format: format)
+        
         //set the audioRecorder delegate here
         audioRecorder?.delegate = self
+        
         //RECORD
         audioRecorder?.record()
+        
         //notifiyDelegate
         notifyDelegate()
     }
@@ -73,9 +76,11 @@ extension Recorder: AVAudioRecorderDelegate {
         print("Error with audioRecorder: \(String(describing: error?.localizedDescription)), MOREDetailed: \(String(describing: error))")
         
         //notify delegate
+        notifyDelegate()
     }
     
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         //notifiy delegate
+        notifyDelegate()
     }
 }
