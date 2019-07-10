@@ -33,7 +33,11 @@ class ImagePostDetailTableViewController: UITableViewController {
     @IBAction func createComment(_ sender: Any) {
         
         let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
-        
+        //adding a way to add an audio comment
+        let addAudioComment = UIAlertAction(title: "Add Audio Comment", style: .default) { (_) in
+            //Transition to another screen
+            
+        }
         var commentTextField: UITextField?
         
         alert.addTextField { (textField) in

@@ -65,11 +65,12 @@ class ImagePostViewController: ShiftableViewController {
         controlFilter?.setValue(brightnessSlider.value, forKey: kCIInputBrightnessKey) //this is an example of where we use the key to avoid stringly typed code
         controlFilter?.setValue(contrastSlider.value, forKey: kCIInputContrastKey)
         
-        //motionBlurFilter
+        //motionBlurFilter --run it through one filter for the output
         blurFilter?.setValue(controlFilter?.outputImage, forKey: "inputImage")
         blurFilter?.setValue(radiusSlider.value, forKey: kCIInputRadiusKey)
         blurFilter?.setValue(angleSlider.value, forKey: kCIInputAngleKey)
         
+        //make the ciiOutput image the other filter
         guard let outputCIImage = blurFilter?.outputImage else { return image }
         
         //render the image - actually apply our filters
@@ -194,7 +195,7 @@ class ImagePostViewController: ShiftableViewController {
     var postController: PostController!
     var post: Post?
     var imageData: Data?
-     
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
