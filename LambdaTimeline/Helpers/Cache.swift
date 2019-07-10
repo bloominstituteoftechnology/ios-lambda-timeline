@@ -10,12 +10,14 @@ import Foundation
 
 class Cache<Key: Hashable, Value> {
     
+    //pushing
     func cache(value: Value, for key: Key) {
         queue.async {
             self.cache[key] = value
         }
     }
     
+    //poping
     func value(for key: Key) -> Value? {
         return queue.sync { cache[key] }
     }

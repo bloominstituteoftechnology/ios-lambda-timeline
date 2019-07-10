@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseUI
+import AVFoundation
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -30,9 +31,41 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
         
+        //WED- videos
+        let videoPostAction = UIAlertAction(title: "Video", style: .default) { (_) in
+            
+            //ask permission to get access to camera
+            let status = AVCaptureDevice.authorizationStatus(for: .video)
+            
+            switch status {
+            case .notDetermined:
+                //we have not asked the user for permission
+                //request access
+                AVCaptureDevice.requestAccess(for: .video) { (granted) in
+                    if granted == false {
+                        fatalError("Please request user to enable camera usage in setting privacy.")
+                    }
+                    DispatchQueue.main.async {
+                        self.performSegue(withIdentifier: "ToVideoController", sender: nil)
+                    }
+                }
+            case .restricted:
+                //we don't have permission from the user because of parental controls
+                fatalError("Please inform the user they cannot use app due to parental restirctions.")
+            case .denied:
+                //user has said NO
+                fatalError("Please request user to enable camera usage in setting privacy.")
+            case .authorized:
+                //user has given us permission
+               self.performSegue(withIdentifier: "ToVideoController", sender: nil)
+                
+            }
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(imagePostAction)
+        alert.addAction(videoPostAction)
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true, completion: nil)
