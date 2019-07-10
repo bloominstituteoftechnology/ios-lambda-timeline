@@ -474,15 +474,24 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ooQ-T0-cjX">
-                                <rect key="frame" x="163" y="318" width="48" height="30"/>
+                                <rect key="frame" x="172" y="333" width="48" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Cancel"/>
                                 <connections>
                                     <action selector="cancelButtonPressed:" destination="L3P-8n-Y6U" eventType="touchUpInside" id="O0J-Yl-bSs"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u30-ER-mSG">
+                                <rect key="frame" x="181" y="279" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Play"/>
+                                <connections>
+                                    <action selector="playButtonPressed:" destination="L3P-8n-Y6U" eventType="touchUpInside" id="NQl-nB-21u"/>
+                                    <action selector="sendButtonPressed:" destination="L3P-8n-Y6U" eventType="touchUpInside" id="sk0-4l-dAl"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wqA-Vx-7Ti">
-                                <rect key="frame" x="294" y="318" width="36" height="30"/>
+                                <rect key="frame" x="178" y="384" width="36" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Send"/>
                                 <connections>
@@ -494,6 +503,7 @@
                         <viewLayoutGuide key="safeArea" id="M9R-Jd-ZPQ"/>
                     </view>
                     <connections>
+                        <outlet property="playProperties" destination="u30-ER-mSG" id="hWY-c8-6Og"/>
                         <outlet property="recordProperties" destination="ATU-g7-LnF" id="zXV-zV-KeV"/>
                     </connections>
                 </viewController>
