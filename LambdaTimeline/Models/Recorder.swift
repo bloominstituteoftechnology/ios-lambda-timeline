@@ -16,7 +16,12 @@ class Recorder: NSObject {
     
     private var audioRecorder: AVAudioRecorder?
     var fileURL: URL?
+    weak var delegate: RecorderDelegate?
     
+    //this is to help with the toggle function
+    var isRecording: Bool {
+        return audioRecorder?.isRecording ?? false
+    }
     //since we are subclassing NSObject we have to initialize the super.init
     override init(){
         super.init()
@@ -24,7 +29,11 @@ class Recorder: NSObject {
     
     //what functionality do we want to abstract?
     func toggleRecording(){
-        
+        if isRecording {
+            stop()
+        } else {
+            record()
+        }
     }
     
     func record(){
@@ -44,12 +53,18 @@ class Recorder: NSObject {
         //RECORD
         audioRecorder?.record()
         //notifiyDelegate
-        
+        notifyDelegate()
     }
     
     func stop(){
         audioRecorder?.stop() //we have to stop it and set it to nil to erase
         audioRecorder = nil
+        notifyDelegate()
+    }
+    
+  //create a function that will notifiy delegate when recorder has changed/has been triggered
+    func notifyDelegate(){
+        delegate?.recorderDidChangeState(recorder: self)
     }
 }
 
