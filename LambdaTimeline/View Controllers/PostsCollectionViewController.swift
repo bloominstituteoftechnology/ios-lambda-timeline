@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseUI
+import AVFoundation
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -22,6 +23,10 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         }
     }
     
+    private func showCamera() {
+        self.performSegue(withIdentifier: "AddVideoPost", sender: nil)
+    }
+    
     @IBAction func addPost(_ sender: Any) {
         
         let alert = UIAlertController(title: "New Post", message: "Which kind of post do you want to create?", preferredStyle: .actionSheet)
@@ -29,9 +34,38 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         let imagePostAction = UIAlertAction(title: "Image", style: .default) { (_) in
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
+        let videoPostAction = UIAlertAction(title: "Video", style: .default) { (_) in
+            
+            let status = AVCaptureDevice.authorizationStatus(for: .video)
+            
+            switch status {
+            case .notDetermined:
+                // we have not asked the user for permission
+                //request access
+                AVCaptureDevice.requestAccess(for: .video) { (granted) in
+                    if granted == false {
+                        fatalError("Please request user enable camera in Settings > Privacy")
+                    }
+                    DispatchQueue.main.async {
+                        self.showCamera()
+                    }
+                }
+            case .restricted:
+                // we don't have permission from the user because of parental controls
+                fatalError("Please inform the user they cannot use the app due to parental restrictions")
+            case .denied:
+                //we asked for permission, but the user said no.
+                fatalError("Please request user to enable camera usage in Settings > Privacy")
+            case .authorized:
+                // we have permission from the user.
+                self.showCamera()
+                
+            }
+            
+        }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
+        alert.addAction(videoPostAction)
         alert.addAction(imagePostAction)
         alert.addAction(cancelAction)
         
@@ -55,8 +89,13 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             cell.post = post
             
             loadImage(for: cell, forItemAt: indexPath)
-            
             return cell
+            
+        case .video:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPostCell", for: indexPath) as? VideoPostCollectionViewCell else { return UICollectionViewCell() }
+            cell.post = post
+            
+           return cell
         }
     }
     
@@ -72,6 +111,10 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             
             guard let ratio = post.ratio else { return size }
             
+            size.height = size.width * ratio
+            
+        case .video:
+            guard let ratio = post.ratio else { return size }
             size.height = size.width * ratio
         }
         
