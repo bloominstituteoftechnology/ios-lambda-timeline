@@ -99,6 +99,7 @@
                     <connections>
                         <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="jaI-fq-Woc"/>
                         <segue destination="OyM-8q-Icp" kind="show" identifier="ViewImagePost" id="hhs-es-AdQ"/>
+                        <segue destination="y8k-M7-68g" kind="presentation" identifier="ToVideoController" id="v2e-u8-MRc"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -299,7 +300,34 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXa-A2-VJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1968.8" y="-195.6521739130435"/>
+            <point key="canvasLocation" x="700" y="896"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="tGd-Ab-8RO">
+            <objects>
+                <viewController id="y8k-M7-68g" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dxt-Ew-cdQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="beh-Zk-sEk">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="beh-Zk-sEk" firstAttribute="leading" secondItem="Xjn-Q7-pbO" secondAttribute="leading" id="KTo-dN-Uy3"/>
+                            <constraint firstItem="Xjn-Q7-pbO" firstAttribute="trailing" secondItem="beh-Zk-sEk" secondAttribute="trailing" id="Ooz-AS-oDY"/>
+                            <constraint firstItem="Xjn-Q7-pbO" firstAttribute="bottom" secondItem="beh-Zk-sEk" secondAttribute="bottom" id="pJl-wO-rRg"/>
+                            <constraint firstItem="beh-Zk-sEk" firstAttribute="top" secondItem="Xjn-Q7-pbO" secondAttribute="top" constant="-20" id="ylf-Tp-f3i"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Xjn-Q7-pbO"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="r2V-MK-k4k" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1688.8" y="895.50224887556226"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gdW-Je-ais">
@@ -456,7 +484,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdL-Y3-4ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1968.8" y="472.71364317841085"/>
+            <point key="canvasLocation" x="2081" y="108"/>
         </scene>
         <!--Audio Comment View Controller-->
         <scene sceneID="sD9-iS-0v9">
@@ -510,7 +538,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RBD-R6-kKm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2848" y="466"/>
+            <point key="canvasLocation" x="2809" y="108"/>
         </scene>
     </scenes>
 </document>
