@@ -47,7 +47,7 @@ class ImagePostDetailTableViewController: UITableViewController {
             
             guard let commentText = commentTextField?.text else { return }
             
-            self.postController.addComment(with: commentText, to: &self.post!)
+            self.postController.addComment(with: commentText, to: &self.post)
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -75,6 +75,15 @@ class ImagePostDetailTableViewController: UITableViewController {
         cell.detailTextLabel?.text = comment?.author.displayName
         
         return cell
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "CreateAudioComment" {
+            let destinationVC = segue.destination as! RecorderViewController
+
+            destinationVC.post = self.post
+            destinationVC.postController = self.postController
+        }
     }
     
     var post: Post!

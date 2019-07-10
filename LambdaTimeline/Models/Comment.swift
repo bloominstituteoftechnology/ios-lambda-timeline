@@ -60,11 +60,6 @@ class Comment: FirebaseConvertible, Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(timestamp.hashValue ^ author.displayName!.hashValue)
     }
-    //
-    //    var hashValue: Int {
-    //        return timestamp.hashValue ^
-    //            author.displayName!.hashValue
-    //    }
 
     static func ==(lhs: Comment, rhs: Comment) -> Bool {
         return lhs.author == rhs.author &&

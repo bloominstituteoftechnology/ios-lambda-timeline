@@ -13,13 +13,9 @@ import AVFoundation
 class RecorderViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRecorderDelegate {
 
 
-    
-
-
-
     private func newRecordingUrl() -> URL {
-        let documentsDir = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        return documentsDir.appendingPathComponent(UUID().uuidString).appendingPathExtension("caf")
+        let documentsDirectory = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        return documentsDirectory.appendingPathComponent(UUID().uuidString).appendingPathExtension("caf")
     }
 
     private func updateButtons() {
@@ -44,9 +40,6 @@ class RecorderViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRe
 
 
     @IBAction func playButtonPressed(_ sender: UIButton) {
-        //get audio url
-        //  let sampleAudioUrl = Bundle.main.url(forResource: "piano", withExtension: "mp3")!
-
         guard let recordingUrl = recordingUrl else {return}
 
         if isPlaying {
@@ -54,14 +47,9 @@ class RecorderViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRe
             return
         }
 
-        //create player and tell it to start playing
         do {
-            //Set up the player with the sample audio file
             player = try AVAudioPlayer(contentsOf: recordingUrl)
-
             player?.play()
-
-            //the VC adding itself as the observer of the delegate method.
             player?.delegate = self
         } catch {
             NSLog("Error attmepting to start playing audio: \(error)")
@@ -76,6 +64,9 @@ class RecorderViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRe
     }
 
      @IBAction func doneButtonPressed(_ sender: UIButton) {
+        guard let recordingUrl = recordingUrl else { return }
+        postController.addAudioComment(with: recordingUrl, to: &self.post)
+        self.dismiss(animated: true, completion: nil)
     }
 
     @IBAction func recordButtonPressed(_ sender: UIButton) {
@@ -85,7 +76,6 @@ class RecorderViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRe
             return
         }
         do {
-            //Choose the format
             let format = AVAudioFormat(standardFormatWithSampleRate: 44100.0, channels: 2)!
             recorder = try AVAudioRecorder(url: newRecordingUrl(), format: format)
             recorder?.record()
@@ -109,11 +99,12 @@ class RecorderViewController: UIViewController, AVAudioPlayerDelegate, AVAudioRe
     var isPlaying: Bool {
         return player?.isPlaying ?? false
     }
-
     var isRecording: Bool {
         return recorder?.isRecording ?? false
     }
-
     var recordingUrl: URL?
+
+    var post: Post!
+    var postController: PostController!
 }
 
