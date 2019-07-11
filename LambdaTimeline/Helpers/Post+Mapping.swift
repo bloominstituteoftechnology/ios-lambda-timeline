@@ -8,11 +8,10 @@
 
 import MapKit
 
-//extension Post: MKAnnotation {
-//
-//    var geotag: CLLocationCoordinate2D {
-//        return geometry.location
-//    }
-//}
+extension Post: MKAnnotation, CLLocationManagerDelegate {
+    var coordinate: CLLocationCoordinate2D {
+        return // location
+    }
+}
 
 

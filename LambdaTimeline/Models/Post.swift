@@ -15,15 +15,17 @@ enum MediaType: String {
     case video
 }
 
-class Post {
+class Post: NSObject {
+    let locationManager = CLLocationManager()
     
-    init(title: String, mediaURL: URL, ratio: CGFloat? = nil, mediaType: MediaType, author: Author, timestamp: Date = Date()) {
+    init(title: String, mediaURL: URL, ratio: CGFloat? = nil, mediaType: MediaType, author: Author, timestamp: Date = Date(), latitude: Double, longitude: Double) {
         self.mediaURL = mediaURL
         self.ratio = ratio
         self.mediaType = mediaType
         self.author = author
         self.comments = [Comment(text: title, author: author)]
         self.timestamp = timestamp
+       
     }
     
     init?(dictionary: [String : Any], id: String) {
@@ -34,7 +36,8 @@ class Post {
             let authorDictionary = dictionary[Post.authorKey] as? [String: Any],
             let author = Author(dictionary: authorDictionary),
             let timestampTimeInterval = dictionary[Post.timestampKey] as? TimeInterval,
-            let captionDictionaries = dictionary[Post.commentsKey] as? [[String: Any]] else { return nil }
+            let captionDictionaries = dictionary[Post.commentsKey] as? [[String: Any]]
+            else { return nil }
         
         self.mediaURL = mediaURL
         self.mediaType = mediaType
@@ -58,28 +61,6 @@ class Post {
         
         return dict
     }
-    
-    struct Geometry: Codable {
-        let location: CLLocationCoordinate2D
-        enum GeometryCodingKeys: String, CodingKey {
-            case coordinates
-        }
-        
-        init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: GeometryCodingKeys.self)
-            var coordinatesContainer = try container.nestedUnkeyedContainer(forKey: .coordinates)
-            
-            let longitude = try coordinatesContainer.decode(Double.self)
-            let latitude = try coordinatesContainer.decode(Double.self)
-            
-            location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-        }
-        func encode(to encoder: Encoder) throws {
-            var container = encoder.container(keyedBy: GeometryCodingKeys.self)
-            var coordinatesContainer = try container.nestedUnkeyedContainer(forKey: .coordinates)
-           // try coordinatesContainer.encode(//pass in dictionary rep for coordinates)
-        }
-    }
 
  
     
@@ -90,7 +71,7 @@ class Post {
     var comments: [Comment]
     var id: String?
     var ratio: CGFloat?
-    var geometry: Geometry
+    var geotag: CLLocationCoordinate2D?
     
     var title: String? {
         return comments.first?.text
