@@ -8,6 +8,7 @@
 
 import Foundation
 import FirebaseAuth
+import CoreLocation
 
 enum MediaType: String {
     case image
@@ -58,6 +59,30 @@ class Post {
         return dict
     }
     
+    struct Geometry: Codable {
+        let location: CLLocationCoordinate2D
+        enum GeometryCodingKeys: String, CodingKey {
+            case coordinates
+        }
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: GeometryCodingKeys.self)
+            var coordinatesContainer = try container.nestedUnkeyedContainer(forKey: .coordinates)
+            
+            let longitude = try coordinatesContainer.decode(Double.self)
+            let latitude = try coordinatesContainer.decode(Double.self)
+            
+            location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        }
+        func encode(to encoder: Encoder) throws {
+            var container = encoder.container(keyedBy: GeometryCodingKeys.self)
+            var coordinatesContainer = try container.nestedUnkeyedContainer(forKey: .coordinates)
+           // try coordinatesContainer.encode(//pass in dictionary rep for coordinates)
+        }
+    }
+
+ 
+    
     var mediaURL: URL
     let mediaType: MediaType
     let author: Author
@@ -65,6 +90,7 @@ class Post {
     var comments: [Comment]
     var id: String?
     var ratio: CGFloat?
+    var geometry: Geometry
     
     var title: String? {
         return comments.first?.text
