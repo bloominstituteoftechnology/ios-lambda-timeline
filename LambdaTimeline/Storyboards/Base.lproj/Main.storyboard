@@ -11,6 +11,50 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Camera View Controller-->
+        <scene sceneID="fxy-12-Byr">
+            <objects>
+                <viewController id="jxP-f4-EgB" customClass="CameraViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="YXP-Ht-Bpg">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3C4-ch-ldR" customClass="CameraPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dfM-PU-bkG">
+                                        <rect key="frame" x="157" y="648" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="YDm-LU-HOG"/>
+                                            <constraint firstAttribute="height" constant="100" id="ylo-VH-qgT"/>
+                                        </constraints>
+                                        <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="Record"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="dfM-PU-bkG" secondAttribute="trailing" constant="157" id="Ksf-xS-QCw"/>
+                                    <constraint firstItem="dfM-PU-bkG" firstAttribute="centerX" secondItem="3C4-ch-ldR" secondAttribute="centerX" id="SaL-Gn-A0x"/>
+                                    <constraint firstItem="dfM-PU-bkG" firstAttribute="leading" secondItem="3C4-ch-ldR" secondAttribute="leading" constant="157" id="YxG-G7-eab"/>
+                                    <constraint firstAttribute="bottom" secondItem="dfM-PU-bkG" secondAttribute="bottom" constant="60" id="sBW-Ew-3wk"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="3C4-ch-ldR" firstAttribute="top" secondItem="rxx-NE-MfY" secondAttribute="top" id="6nK-o9-fzm"/>
+                            <constraint firstAttribute="bottom" secondItem="3C4-ch-ldR" secondAttribute="bottom" id="S05-1a-iff"/>
+                            <constraint firstItem="3C4-ch-ldR" firstAttribute="trailing" secondItem="rxx-NE-MfY" secondAttribute="trailing" id="fbj-Xs-bkA"/>
+                            <constraint firstItem="3C4-ch-ldR" firstAttribute="leading" secondItem="rxx-NE-MfY" secondAttribute="leading" id="pPo-ij-1q1"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="rxx-NE-MfY"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rnb-av-Gqx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1885.5072463768117" y="-623.4375"/>
+        </scene>
         <!--Posts Collection View Controller-->
         <scene sceneID="JFE-md-uAO">
             <objects>
@@ -100,6 +144,7 @@
                     <connections>
                         <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="jaI-fq-Woc"/>
                         <segue destination="OyM-8q-Icp" kind="show" identifier="ViewImagePost" id="hhs-es-AdQ"/>
+                        <segue destination="jxP-f4-EgB" kind="show" identifier="AddVideoPost" id="gzS-Jj-ion"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -266,7 +311,7 @@
                     <viewLayoutGuide key="safeArea" id="oGV-m2-dpe"/>
                 </stackView>
             </objects>
-            <point key="canvasLocation" x="1968.1159420289857" y="-195.53571428571428"/>
+            <point key="canvasLocation" x="2400" y="86"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gdW-Je-ais">
@@ -458,7 +503,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdL-Y3-4ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1968.1159420289857" y="472.09821428571428"/>
+            <point key="canvasLocation" x="2141" y="804"/>
         </scene>
         <!--Recorder View Controller-->
         <scene sceneID="MrU-KL-SCp">
@@ -523,7 +568,10 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RCh-zd-6XK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2906" y="472"/>
+            <point key="canvasLocation" x="3078" y="804"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Record" width="116" height="116"/>
+    </resources>
 </document>
