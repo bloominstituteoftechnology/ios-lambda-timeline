@@ -88,7 +88,12 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
 
             return cell
+        case .video:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
+            return cell
         }
+
+
 
     }
     
@@ -108,6 +113,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 
         case .audio:
             break
+        case .video:
+            break
+
         }
         
         return size

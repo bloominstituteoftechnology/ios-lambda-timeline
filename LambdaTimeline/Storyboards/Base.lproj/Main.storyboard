@@ -11,7 +11,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Camera View Controller-->
+        <!--Record a Video-->
         <scene sceneID="fxy-12-Byr">
             <objects>
                 <viewController id="jxP-f4-EgB" customClass="CameraViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
@@ -22,7 +22,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3C4-ch-ldR" customClass="CameraPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="88" width="414" height="808"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dfM-PU-bkG">
+                                    <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dfM-PU-bkG">
                                         <rect key="frame" x="157" y="648" width="100" height="100"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="100" id="YDm-LU-HOG"/>
@@ -30,6 +30,9 @@
                                         </constraints>
                                         <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="Record"/>
+                                        <connections>
+                                            <action selector="recordButtonPressed:" destination="jxP-f4-EgB" eventType="touchUpInside" id="YRu-vo-hwV"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -50,6 +53,17 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="rxx-NE-MfY"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Record a Video" id="GED-D7-xxK">
+                        <barButtonItem key="rightBarButtonItem" title="Post" id="nvD-ul-Kio">
+                            <connections>
+                                <action selector="postButtonPressed:" destination="jxP-f4-EgB" id="zkI-Fq-Pli"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cameraView" destination="3C4-ch-ldR" id="7w4-nE-eqC"/>
+                        <outlet property="recordButton" destination="dfM-PU-bkG" id="zdV-lQ-mT2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rnb-av-Gqx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -291,6 +305,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXa-A2-VJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="X0V-R7-vSu">
+                    <rect key="frame" x="0.0" y="0.0" width="46" height="30"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <state key="normal" title="Button"/>
+                </button>
                 <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" id="bPO-Ix-2Jj">
                     <rect key="frame" x="0.0" y="0.0" width="374" height="30"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -572,6 +591,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Record" width="116" height="116"/>
+        <image name="Record" width="128" height="128"/>
     </resources>
 </document>

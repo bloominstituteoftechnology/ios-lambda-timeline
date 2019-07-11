@@ -1,132 +1,149 @@
 import UIKit
 import AVFoundation
-import Photos
 
-class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
+class CameraViewController: UIViewController {
 
-    @IBOutlet weak var previewView: CameraPreviewView!
-    @IBOutlet weak var recordButton: UIButton!
+    lazy private var captureSession = AVCaptureSession()
+    lazy private var fileOutput = AVCaptureMovieFileOutput()
+    private var player: AVPlayer!
 
 
-    private var captureSession: AVCaptureSession!
-    private var recordOutput: AVCaptureMovieFileOutput!
-
+    @IBOutlet var recordButton: UIButton!
+    @IBOutlet var cameraView: CameraPreviewView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupCapture()
+        recordButton.tintColor = .red
+        let camera = bestCamera()
+
+        guard let cameraInput = try? AVCaptureDeviceInput(device: camera) else {
+            fatalError("Can't create input from camera")
+        }
+
+        // Setup inputs
+        if captureSession.canAddInput(cameraInput) {
+            captureSession.addInput(cameraInput)
+        }
+
+        guard let microphone = AVCaptureDevice.default(for: .audio) else {
+            fatalError("Can't find microphone")
+        }
+
+        guard let microphoneInput = try? AVCaptureDeviceInput(device: microphone) else {
+            fatalError("Can't create input from microphone")
+        }
+
+        if captureSession.canAddInput(microphoneInput) {
+            captureSession.addInput(microphoneInput)
+        }
+
+
+        // Setup outputs
+        if captureSession.canAddOutput(fileOutput) {
+            captureSession.addOutput(fileOutput)
+        }
+
+        if captureSession.canSetSessionPreset(.hd1920x1080) {
+            captureSession.canSetSessionPreset(.hd1920x1080)
+        }
+
+        captureSession.commitConfiguration()
+
+        cameraView.session = captureSession
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+        view.addGestureRecognizer(tapGesture)
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+    @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
+        print("Play movie")
+        if let player = player {
+            player.seek(to: CMTime.zero)
+            player.play()
+        }
+    }
+
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         captureSession.startRunning()
     }
 
-
     override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(true)
+        super.viewDidDisappear(animated)
         captureSession.stopRunning()
     }
+    private func bestCamera() -> AVCaptureDevice {
+        if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
+            return device
+        }
 
-
-    func updateViews() {
-        guard isViewLoaded else { return }
-        let recordButtonImageName = recordOutput.isRecording ? "Stop" : "Record"
-        recordButton.setImage(UIImage(named: recordButtonImageName)!, for: .normal)
+        fatalError("No cameras exist - you're probably running on the simulator")
     }
 
+    func newRecordingURL() -> URL {
 
-    @IBAction func toggleRecording(_ sender: Any) {
-        if recordOutput.isRecording {
-            recordOutput.stopRecording()
+        let documentsDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+
+        let name = "Movie"
+        let url = documentsDir.appendingPathComponent(name).appendingPathExtension("mov")
+        print("Url: \(url)")
+
+        return url
+
+    }
+
+    func updateViews() {
+        if fileOutput.isRecording {
+            recordButton.setImage(UIImage(named: "Stop"), for: .normal)
+            recordButton.tintColor = .black
         } else {
-            recordOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
+            recordButton.setImage(UIImage(named: "Record"), for: .normal)
+            recordButton.tintColor = .red
+        }
+    }
+
+    func playMovie(url: URL) {
+        player = AVPlayer(url: url)
+        let playerLayer = AVPlayerLayer(player: player)
+        var topRect = self.view.bounds
+        topRect.size.width = topRect.width / 4
+        topRect.size.height = topRect.height / 4
+        topRect.origin.y = view.layoutMargins.top
+        playerLayer.frame = topRect
+
+        view.layer.addSublayer(playerLayer)
+
+        player.play()
+
+
+    }
+    @IBAction func postButtonPressed(_ sender: Any) {
+    }
+    
+    @IBAction func recordButtonPressed(_ sender: Any) {
+        print("Record")
+
+        if fileOutput.isRecording {
+            fileOutput.stopRecording()
+        } else {
+            fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
         }
 
     }
+}
 
-    private func newRecordingURL() -> URL {
-        let fm = FileManager.default
-        let documentDir = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        return documentDir.appendingPathComponent(UUID().uuidString).appendingPathExtension("mov")
-    }
-
-    // MARK: - AVCaptureFileOutputRecordingDelegate
-
+extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
         DispatchQueue.main.async {
             self.updateViews()
         }
     }
 
-
-
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         DispatchQueue.main.async {
             self.updateViews()
-
-            PHPhotoLibrary.requestAuthorization({ (status) in
-                if status != .authorized {
-                    NSLog("Please give app access to your photos in settings")
-                    return
-                }
-
-                PHPhotoLibrary.shared().performChanges({
-                    PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: outputFileURL)
-                }, completionHandler: { (success, error) in
-                    if let error = error {
-                        NSLog("Error saving video to photo library: \(error)")
-                    }
-                })
-            })
-
+            self.playMovie(url: outputFileURL)
         }
     }
-
-    // MARK: - Setup Recording
-
-    private func setupCapture() {
-        let captureSession = AVCaptureSession()
-        let device = bestCamera()
-
-        guard let videoDeviceInput = try? AVCaptureDeviceInput(device: device),
-            captureSession.canAddInput(videoDeviceInput) else {
-                fatalError()
-        }
-
-
-
-
-        captureSession.addInput(videoDeviceInput)
-
-        let fileOutput = AVCaptureMovieFileOutput()
-
-        guard captureSession.canAddOutput(fileOutput) else { fatalError() }
-
-        captureSession.addOutput(fileOutput)
-
-        captureSession.sessionPreset = .hd1920x1080
-        captureSession.commitConfiguration()
-
-        self.recordOutput = fileOutput
-        self.captureSession = captureSession
-        previewView.videoPreviewLayer.session = captureSession
-
-    }
-
-
-
-    private func bestCamera() -> AVCaptureDevice {
-        if let device = AVCaptureDevice.default(.builtInDualCamera, for: .video, position: .back) {
-            return device
-        } else if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
-            return device
-        } else {
-            fatalError("Missing expected back camera device")
-        }
-    }
-
-
-
-
 }
