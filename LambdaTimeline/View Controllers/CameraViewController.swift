@@ -6,7 +6,8 @@ class CameraViewController: UIViewController {
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     private var player: AVPlayer!
-
+    var postController: PostController?
+    var videoURL: URL?
 
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
@@ -119,6 +120,38 @@ class CameraViewController: UIViewController {
 
     }
     @IBAction func postButtonPressed(_ sender: Any) {
+        if videoURL != nil {
+
+            let alert = UIAlertController(title: "Add a title", message: "Write the title below:", preferredStyle: .alert)
+
+            var commentTextField: UITextField?
+
+            alert.addTextField { (textField) in
+                textField.placeholder = "Title:"
+                commentTextField = textField
+            }
+
+            let addCommentAction = UIAlertAction(title: "Add Title", style: .default) { (_) in
+
+                guard let commentText = commentTextField?.text else { return }
+
+                if commentText.isEmpty != true {
+                    guard let postController = self.postController,
+                        let videoURL = self.videoURL else { return }
+                    let data = try! Data(contentsOf: videoURL)
+                    postController.createPost(with: commentText, ofType: .video, mediaData: data)
+                    self.dismiss(animated: true, completion: nil)
+                }
+            }
+
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+            alert.addAction(addCommentAction)
+            alert.addAction(cancelAction)
+
+            present(alert, animated: true, completion: nil)
+        
+        }
     }
     
     @IBAction func recordButtonPressed(_ sender: Any) {
@@ -144,6 +177,8 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         DispatchQueue.main.async {
             self.updateViews()
             self.playMovie(url: outputFileURL)
+            self.videoURL = outputFileURL
+
         }
     }
 }
