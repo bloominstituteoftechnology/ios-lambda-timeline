@@ -11,9 +11,10 @@ import FirebaseAuth
 
 enum MediaType: String {
     case image
+    case audio
 }
 
-struct Post {
+class Post {
     
     init(title: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date()) {
         self.mediaURL = mediaURL
