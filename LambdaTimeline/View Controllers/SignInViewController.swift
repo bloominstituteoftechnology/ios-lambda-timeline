@@ -2,8 +2,8 @@
 //  SignInViewController.swift
 //  LambdaTimeline
 //
-//  Created by Spencer Curtis on 10/11/18.
-//  Copyright © 2018 Lambda School. All rights reserved.
+//  Created by Michael Stoffer on 9/24/19.
+//  Copyright © 2019 Lambda School. All rights reserved.
 //
 
 import UIKit

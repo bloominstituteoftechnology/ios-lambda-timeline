@@ -1,6 +1,9 @@
 //
-//  Created by Spencer Curtis.
-//  Copyright © 2017-2018 Spencer Curtis. All rights reserved.
+//  ShiftableViewController.swift
+//  LambdaTimeline
+//
+//  Created by Michael Stoffer on 9/24/19.
+//  Copyright © 2019 Lambda School. All rights reserved.
 //
 
 /*

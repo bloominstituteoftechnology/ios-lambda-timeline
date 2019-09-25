@@ -2,8 +2,8 @@
 //  Cache.swift
 //  LambdaTimeline
 //
-//  Created by Spencer Curtis on 10/13/18.
-//  Copyright © 2018 Lambda School. All rights reserved.
+//  Created by Michael Stoffer on 9/24/19.
+//  Copyright © 2019 Lambda School. All rights reserved.
 //
 
 import Foundation
@@ -21,5 +21,5 @@ class Cache<Key: Hashable, Value> {
     }
     
     private var cache = [Key : Value]()
-    private let queue = DispatchQueue(label: "com.LambdaSchool.LambdaTimeline.CacheQueue")
+    private let queue = DispatchQueue(label: "com.michaelstoffer.LambdaTimeline.CacheQueue")
 }
