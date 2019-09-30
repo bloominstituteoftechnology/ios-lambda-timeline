@@ -10,6 +10,19 @@ import UIKit
 import Photos
 
 class ImagePostViewController: ShiftableViewController {
+    var postController: PostController!
+    var post: Post?
+    var imageData: Data?
+    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var chooseImageButton: UIButton!
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var postButton: UIBarButtonItem!
+    @IBOutlet weak var filterSelector: UISegmentedControl!
+    @IBOutlet weak var slider: UISlider!
+    @IBOutlet weak var toggleSwitch: UISwitch!
+    @IBOutlet weak var typeLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +47,45 @@ class ImagePostViewController: ShiftableViewController {
         imageView.image = image
         
         chooseImageButton.setTitle("", for: [])
+    }
+    
+    private func updateSlider() {
+        switch filterSelector.selectedSegmentIndex {
+        case 0:
+            slider.value = 0
+            slider.minimumValue = -1
+            slider.maximumValue = 1
+            slider.isHidden = false
+            toggleSwitch.isHidden = true
+            typeLabel.text = "Adjust brightness"
+        case 1:
+            slider.value = 0
+            slider.minimumValue = -1
+            slider.maximumValue = 1
+            slider.isHidden = false
+            toggleSwitch.isHidden = true
+            typeLabel.text = "Adjust brightness"
+        case 2:
+            slider.value = 0
+            slider.minimumValue = -1
+            slider.maximumValue = 1
+            slider.isHidden = false
+            toggleSwitch.isHidden = true
+            typeLabel.text = "Adjust brightness"
+        case 3:
+            slider.isHidden = true
+            toggleSwitch.isHidden = false
+            typeLabel.text = "Adjust brightness"
+        case 4:
+            slider.value = 0
+            slider.minimumValue = -1
+            slider.maximumValue = 1
+            slider.isHidden = false
+            toggleSwitch.isHidden = true
+            typeLabel.text = "Adjust brightness"
+        default:
+            break
+        }
     }
     
     private func presentImagePickerController() {
@@ -112,15 +164,7 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
-    var postController: PostController!
-    var post: Post?
-    var imageData: Data?
-    
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var chooseImageButton: UIButton!
-    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var postButton: UIBarButtonItem!
+
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
