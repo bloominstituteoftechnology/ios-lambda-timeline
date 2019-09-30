@@ -17,6 +17,7 @@ class ImagePostViewController: ShiftableViewController {
     private let context = CIContext(options:nil)
     private let colorControlFilter = CIFilter(name: "CIColorControls")!
     private let colorInvertFilter = CIFilter(name: "CIColorInvert")!
+    private let colorBloomFilter = CIFilter(name: "CIBloom")!
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
@@ -27,6 +28,7 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var toggleSwitch: UISwitch!
     @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var toolBoxView: UIView!
     
     var brightnessValue: Float = 0
     var contrastValue: Float = 0.5
@@ -42,6 +44,8 @@ class ImagePostViewController: ShiftableViewController {
         
         updateViews()
         updateSlider()
+        
+        toolBoxView.isHidden = true
     }
     
     func updateViews() {
@@ -57,6 +61,8 @@ class ImagePostViewController: ShiftableViewController {
         setImageViewHeight(with: image.ratio)
         
         imageView.image = image
+        
+        toolBoxView.isHidden = false
         
         chooseImageButton.setTitle("", for: [])
     }
@@ -89,8 +95,8 @@ class ImagePostViewController: ShiftableViewController {
             toggleSwitch.isHidden = false
             typeLabel.text = "Invert color"
         case 4:
-            slider.value = 0
-            slider.minimumValue = -1
+            slider.value = bloomIntensity
+            slider.minimumValue = 0
             slider.maximumValue = 1
             slider.isHidden = false
             toggleSwitch.isHidden = true
@@ -118,6 +124,24 @@ class ImagePostViewController: ShiftableViewController {
         return UIImage(cgImage: outputCGImage)
     }
     
+    
+    private func colorBloomFilterImage(_ image: UIImage) -> UIImage {
+        //let CIImage = image.ciImage //nil, not going to work
+        guard let cgImage = image.cgImage else { fatalError("No image available for filtering")}
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        colorBloomFilter.setValue(ciImage, forKey: kCIInputImageKey)
+        colorBloomFilter.setValue(bloomIntensity, forKey: kCIInputIntensityKey)
+        
+        
+        guard let outputCIImage = colorBloomFilter.outputImage else { fatalError("cant make out put CI image") }
+        //outputCIImage.cgImage // nil with a CIImage
+        
+        //render the image
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else { fatalError("cant make out put CG image")}
+        return UIImage(cgImage: outputCGImage)
+    }
+    
     private func colorInvertFilterImage(_ image: UIImage) -> UIImage {
         guard let cgImage = image.cgImage else { fatalError("No image available for filtering")}
         let ciImage = CIImage(cgImage: cgImage)
@@ -134,6 +158,7 @@ class ImagePostViewController: ShiftableViewController {
             if let image = imageView.image {
                 let colorInvertedImage = colorInvertFilterImage(image)
                 imageView.image = colorInvertedImage
+                isColorInverted.toggle()
             }
         }
     }
@@ -149,12 +174,27 @@ class ImagePostViewController: ShiftableViewController {
         case 2:
             saturationValue = slider.value
             print("change saturation")
+        case 4:
+            bloomIntensity = slider.value
+            if let image = imageWithoutColorChange {
+                let bloomedImage = colorBloomFilterImage(image)
+                imageView.image = bloomedImage
+                return
+            }
+            
+            
         default:
             return
         }
         if let image = imageWithoutColorChange {
             let filteredImage = colorControlFilterImage(image)
-            imageView.image = filteredImage
+            if isColorInverted {
+                let invertedImage = colorInvertFilterImage(filteredImage)
+                
+                imageView.image = invertedImage
+            } else {
+                imageView.image = filteredImage
+            }
         }
     }
     
@@ -256,6 +296,8 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         imageView.image = image
         
         imageWithoutColorChange = image
+        
+        toolBoxView.isHidden = false
         
         setImageViewHeight(with: image.ratio)
     }
