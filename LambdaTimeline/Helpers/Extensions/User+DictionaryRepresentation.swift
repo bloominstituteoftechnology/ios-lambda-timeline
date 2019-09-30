@@ -10,12 +10,12 @@ import Foundation
 import FirebaseAuth
 
 extension User {
-    
-    private static let uidKey = "uid"
-    private static let displayNameKey = "displayName"
-    
-    var dictionaryRepresentation: [String: String] {
-        return [User.uidKey: uid,
-                User.displayNameKey: displayName ?? "No display name"]
-    }
+	
+	private static let uidKey = "uid"
+	private static let displayNameKey = "displayName"
+	
+	var dictionaryRepresentation: [String: String] {
+		return [User.uidKey: uid,
+				User.displayNameKey: displayName ?? "No display name"]
+	}
 }
