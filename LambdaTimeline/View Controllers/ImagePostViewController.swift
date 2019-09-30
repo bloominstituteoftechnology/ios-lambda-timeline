@@ -28,11 +28,12 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var toggleSwitch: UISwitch!
     @IBOutlet weak var typeLabel: UILabel!
     
-    var brightnessValue: CGFloat = 0
-    var contrastValue: CGFloat = 0
-    var saturationValue: CGFloat = 0
+    var brightnessValue: Float = 0
+    var contrastValue: Float = 0.5
+    var saturationValue: Float = 0.5
     var isColorInverted = false
-    var bloomIntensity: CGFloat = 0.5
+    var bloomIntensity: Float = 0.5
+    var imageWithoutColorChange: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,22 +64,22 @@ class ImagePostViewController: ShiftableViewController {
     private func updateSlider() {
         switch filterSelector.selectedSegmentIndex {
         case 0:
-            slider.value = 0
+            slider.value = brightnessValue
             slider.minimumValue = -1
             slider.maximumValue = 1
             slider.isHidden = false
             toggleSwitch.isHidden = true
             typeLabel.text = "Adjust brightness"
         case 1:
-            slider.value = 0
-            slider.minimumValue = -1
-            slider.maximumValue = 1
+            slider.value = contrastValue
+            slider.minimumValue = 0.25
+            slider.maximumValue = 4
             slider.isHidden = false
             toggleSwitch.isHidden = true
             typeLabel.text = "Adjust contrast"
         case 2:
-            slider.value = 0
-            slider.minimumValue = -1
+            slider.value = saturationValue
+            slider.minimumValue = 0
             slider.maximumValue = 1
             slider.isHidden = false
             toggleSwitch.isHidden = true
@@ -136,6 +137,27 @@ class ImagePostViewController: ShiftableViewController {
             }
         }
     }
+    
+    @IBAction func sliderChanged(_ sender: Any) {
+        switch filterSelector.selectedSegmentIndex {
+        case 0:
+            brightnessValue = slider.value
+            print("change brightness")
+        case 1:
+            contrastValue = slider.value
+            print("change contrast")
+        case 2:
+            saturationValue = slider.value
+            print("change saturation")
+        default:
+            return
+        }
+        if let image = imageWithoutColorChange {
+            let filteredImage = colorControlFilterImage(image)
+            imageView.image = filteredImage
+        }
+    }
+    
     
     @IBAction func filterSelectorChanged(_ sender: Any) {
         updateSlider()
@@ -232,6 +254,8 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
         imageView.image = image
+        
+        imageWithoutColorChange = image
         
         setImageViewHeight(with: image.ratio)
     }
