@@ -14,6 +14,10 @@ class ImagePostViewController: ShiftableViewController {
     var post: Post?
     var imageData: Data?
     
+    private let context = CIContext(options:nil)
+    private let colorControlFilter = CIFilter(name: "CIColorControls")!
+    private let colorInvertFilter = CIFilter(name: "CIColorInvert")!
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
@@ -24,12 +28,19 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var toggleSwitch: UISwitch!
     @IBOutlet weak var typeLabel: UILabel!
     
+    var brightnessValue: CGFloat = 0
+    var contrastValue: CGFloat = 0
+    var saturationValue: CGFloat = 0
+    var isColorInverted = false
+    var bloomIntensity: CGFloat = 0.5
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setImageViewHeight(with: 1.0)
         
         updateViews()
+        updateSlider()
     }
     
     func updateViews() {
@@ -64,29 +75,72 @@ class ImagePostViewController: ShiftableViewController {
             slider.maximumValue = 1
             slider.isHidden = false
             toggleSwitch.isHidden = true
-            typeLabel.text = "Adjust brightness"
+            typeLabel.text = "Adjust contrast"
         case 2:
             slider.value = 0
             slider.minimumValue = -1
             slider.maximumValue = 1
             slider.isHidden = false
             toggleSwitch.isHidden = true
-            typeLabel.text = "Adjust brightness"
+            typeLabel.text = "Adjust saturation"
         case 3:
             slider.isHidden = true
             toggleSwitch.isHidden = false
-            typeLabel.text = "Adjust brightness"
+            typeLabel.text = "Invert color"
         case 4:
             slider.value = 0
             slider.minimumValue = -1
             slider.maximumValue = 1
             slider.isHidden = false
             toggleSwitch.isHidden = true
-            typeLabel.text = "Adjust brightness"
+            typeLabel.text = "Smooth edges"
         default:
             break
         }
     }
+    
+    private func colorControlFilterImage(_ image: UIImage) -> UIImage {
+        //let CIImage = image.ciImage //nil, not going to work
+        guard let cgImage = image.cgImage else { fatalError("No image available for filtering")}
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        colorControlFilter.setValue(ciImage, forKey: kCIInputImageKey)
+        colorControlFilter.setValue(brightnessValue, forKey: kCIInputBrightnessKey)
+        colorControlFilter.setValue(contrastValue, forKey: kCIInputContrastKey)
+        colorControlFilter.setValue(saturationValue, forKey: kCIInputSaturationKey)
+        
+        guard let outputCIImage = colorControlFilter.outputImage else { fatalError("cant make out put CI image") }
+        //outputCIImage.cgImage // nil with a CIImage
+        
+        //render the image
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else { fatalError("cant make out put CG image")}
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    private func colorInvertFilterImage(_ image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage else { fatalError("No image available for filtering")}
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        colorInvertFilter.setValue(ciImage, forKey: kCIInputImageKey)
+        
+        guard let outputCIImage = colorInvertFilter.outputImage else { fatalError("cant make out put ci image with color invert filter")}
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else { fatalError("cant make out put CG image with color invert filter")}
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    @IBAction func toggleChanged(_ sender: Any) {
+        if filterSelector.selectedSegmentIndex == 3 {
+            if let image = imageView.image {
+                let colorInvertedImage = colorInvertFilterImage(image)
+                imageView.image = colorInvertedImage
+            }
+        }
+    }
+    
+    @IBAction func filterSelectorChanged(_ sender: Any) {
+        updateSlider()
+    }
+    
     
     private func presentImagePickerController() {
         

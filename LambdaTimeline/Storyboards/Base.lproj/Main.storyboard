@@ -164,12 +164,18 @@
                                                             <segment title="Invert"/>
                                                             <segment title="Bloom"/>
                                                         </segments>
+                                                        <connections>
+                                                            <action selector="filterSelectorChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="R0k-Da-NxJ"/>
+                                                        </connections>
                                                     </segmentedControl>
                                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ydA-IB-FMk">
                                                         <rect key="frame" x="6" y="48.5" width="363" height="31"/>
                                                     </slider>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IV2-ft-5rp">
                                                         <rect key="frame" x="163" y="49.5" width="49" height="31"/>
+                                                        <connections>
+                                                            <action selector="toggleChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="O2K-N0-Jk3"/>
+                                                        </connections>
                                                     </switch>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KtT-WK-1TW">
                                                         <rect key="frame" x="100" y="88.5" width="175" height="20.5"/>
@@ -190,6 +196,7 @@
                                                     <constraint firstItem="IV2-ft-5rp" firstAttribute="top" secondItem="PYR-CK-VcV" secondAttribute="bottom" constant="15" id="MMm-3s-JIQ"/>
                                                     <constraint firstAttribute="trailingMargin" secondItem="ydA-IB-FMk" secondAttribute="trailing" id="NY5-cf-5uk"/>
                                                     <constraint firstItem="KtT-WK-1TW" firstAttribute="leading" secondItem="vZU-Ij-hJJ" secondAttribute="leading" constant="100" id="UZt-16-UZp"/>
+                                                    <constraint firstAttribute="height" constant="128" id="WSF-xJ-dhR"/>
                                                     <constraint firstAttribute="trailing" secondItem="IV2-ft-5rp" secondAttribute="trailing" constant="165" id="ZjE-ja-a4A"/>
                                                     <constraint firstItem="ydA-IB-FMk" firstAttribute="leading" secondItem="vZU-Ij-hJJ" secondAttribute="leadingMargin" id="dNa-QW-VIu"/>
                                                     <constraint firstAttribute="trailingMargin" secondItem="PYR-CK-VcV" secondAttribute="trailing" id="vdh-Yv-Zq4"/>
