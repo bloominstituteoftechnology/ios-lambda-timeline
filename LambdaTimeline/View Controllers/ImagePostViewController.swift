@@ -14,6 +14,7 @@ class ImagePostViewController: ShiftableViewController {
 	var postController: PostController!
 	var post: Post?
 	var imageData: Data?
+	private let context = CIContext(options: nil)
 
 	@IBOutlet weak var imageView: UIImageView!
 	@IBOutlet weak var titleTextField: UITextField!
@@ -28,6 +29,22 @@ class ImagePostViewController: ShiftableViewController {
 	}
 
 	var filterHolders = [FilterHolder]()
+
+	private var originalImage: UIImage? {
+		didSet {
+			let image = originalImage
+			let scale = UIScreen.main.scale
+			var maxSize = imageView.bounds.size
+			maxSize = CGSize(width: maxSize.width * scale, height: maxSize.height * scale)
+			scaledImage = image?.imageByScaling(toSize: maxSize)
+		}
+	}
+
+	private var scaledImage: UIImage? {
+		didSet {
+			updatePreview()
+		}
+	}
 	
 	func updateViews() {
 		guard let imageData = imageData, let image = UIImage(data: imageData) else {
@@ -55,7 +72,7 @@ class ImagePostViewController: ShiftableViewController {
 	@IBAction func createPost(_ sender: Any) {
 		view.endEditing(true)
 		
-		guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
+		guard let imageData = processFilters(from: originalImage)?.jpegData(compressionQuality: 0.5),
 			let title = titleTextField.text, title != "" else {
 			presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
 			return
@@ -108,7 +125,7 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
 		picker.dismiss(animated: true, completion: nil)
 		
 		guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-		imageView.image = image
+		originalImage = image
 	}
 	
 	func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -159,6 +176,7 @@ extension ImagePostViewController: UITableViewDelegate, UITableViewDataSource {
 		if editingStyle == .delete {
 			filterHolders.remove(at: indexPath.row)
 			tableView.deleteRows(at: [indexPath], with: .automatic)
+			updatePreview()
 		}
 	}
 }
@@ -187,7 +205,42 @@ extension ImagePostViewController: AddFilterCellDelegate {
 	}
 
 	func addFilter(named name: String) {
-		filterHolders.append(FilterHolder(filter: CIFilter(name: name)!))
+		let filterHolder = FilterHolder(filter: CIFilter(name: name)!)
+		filterHolder.delegate = self
+		filterHolders.append(filterHolder)
 		filterTableView.reloadData()
+	}
+
+	func processFilters(from image: UIImage?) -> UIImage? {
+		guard let image = image else { return nil }
+
+		guard let ciImage = CIImage(image: image) else { fatalError("No Image available") }
+
+		var outputImage = ciImage
+		for filterHolder in filterHolders {
+			let filter = filterHolder.filter
+			filter.setValue(outputImage, forKey: kCIInputImageKey)
+
+			for (attribute, value) in filterHolder.currentValues {
+				filter.setValue(value as NSNumber, forKey: attribute.name)
+			}
+
+			outputImage = filter.outputImage ?? outputImage
+		}
+
+
+		guard let cgImageResult = context.createCGImage(outputImage, from: CGRect(origin: .zero, size: image.size)) else { fatalError("No output image") }
+
+		return UIImage(cgImage: cgImageResult)
+	}
+
+	private func updatePreview() {
+		imageView.image = processFilters(from: scaledImage)
+	}
+}
+
+extension ImagePostViewController: FilterHolderDelegate {
+	func filterHolderFilterHasChanged(_ filterHolder: FilterHolder) {
+		updatePreview()
 	}
 }

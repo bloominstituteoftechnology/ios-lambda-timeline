@@ -8,9 +8,19 @@
 
 import CoreImage
 
+protocol FilterHolderDelegate: AnyObject {
+	func filterHolderFilterHasChanged(_ filterHolder: FilterHolder)
+}
+
 class FilterHolder {
 	let filter: CIFilter
-	var currentValues: [FilterAttributes.FilterAttribute: CGFloat] = [:]
+	var currentValues: [FilterAttributes.FilterAttribute: CGFloat] = [:] {
+		didSet {
+			delegate?.filterHolderFilterHasChanged(self)
+		}
+	}
+
+	weak var delegate: FilterHolderDelegate?
 
 	init(filter: CIFilter) {
 		self.filter = filter
