@@ -29,9 +29,21 @@ class FilterSettingsTableViewCell: UITableViewCell {
 			setting.maxValue = attribute.sliderMax?.floatValue ?? attribute.maximum?.floatValue ?? 1
 			setting.minValue = attribute.sliderMin?.floatValue ?? attribute.minimum?.floatValue ?? 0
 			setting.value = filterHolder?.currentValues[attribute]?.floatValue ?? 0.5
+			setting.delegate = self
 			stackView.addArrangedSubview(setting)
 		}
 
 	}
 
+}
+
+extension FilterSettingsTableViewCell: SettingSliderDelegate {
+	func settingSlider(_ settingSlider: SettingSlider, changedValue value: Float) {
+		guard let filter = filterHolder?.filter, let filterAttributes = filter.info else { return }
+		for attribute in filterAttributes.attributes {
+			if attribute.displayName == settingSlider.title {
+				filterHolder?.currentValues[attribute] = CGFloat(value)
+			}
+		}
+	}
 }

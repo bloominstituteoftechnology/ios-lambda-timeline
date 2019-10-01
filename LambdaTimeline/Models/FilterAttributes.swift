@@ -51,7 +51,7 @@ struct FilterAttributes {
 			return filterAttribute
 		}
 
-		self.attributes = attributes
+		self.attributes = attributes.sorted { $0.displayName < $1.displayName }
 	}
 }
 
