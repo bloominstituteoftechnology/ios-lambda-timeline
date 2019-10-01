@@ -44,7 +44,7 @@ class AudioPlayer: NSObject {
         self.audioPlayer = AVAudioPlayer.init()
         //load the url for the mp3
         super.init()
-        let song = Bundle.main.url(forResource: "piano", withExtension: "mp3")!
+        let song = Bundle.main.url(forResource: "voiceRecording", withExtension: "mp3")!
         try! load(url: song)
     }
     
