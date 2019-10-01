@@ -37,8 +37,6 @@ class ImagePostDetailTableViewController: UITableViewController {
 		authorLabel.text = post.author.displayName
 	}
 	
-	// MARK: - Table view data source
-	
 	@IBAction func createComment(_ sender: Any) {
 		let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
 
@@ -47,7 +45,7 @@ class ImagePostDetailTableViewController: UITableViewController {
 			textField.placeholder = "Comment:"
 			commentTextField = textField
 		}
-		
+
 		let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { _ in
 			guard let commentText = commentTextField?.text else { return }
 			self.postController.addComment(with: commentText, to: &self.post!)
@@ -62,7 +60,10 @@ class ImagePostDetailTableViewController: UITableViewController {
 		
 		present(alert, animated: true, completion: nil)
 	}
-	
+}
+
+// MARK: - Table view data source
+extension ImagePostDetailTableViewController {
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return (post?.comments.count ?? 0) - 1
 	}
