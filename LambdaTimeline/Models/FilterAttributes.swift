@@ -24,7 +24,8 @@ struct FilterAttributes {
 		let sliderMax: CGFloat?
 	}
 
-	init?(from dictionary: [String: Any]) {
+	init?(from filter: CIFilter) {
+		let dictionary = filter.attributes
 		guard let displayName = dictionary["CIAttributeFilterDisplayName"] as? String,
 		let filterName = dictionary["CIAttributeFilterName"] as? String
 		else { return nil }
@@ -51,6 +52,12 @@ struct FilterAttributes {
 		}
 
 		self.attributes = attributes
+	}
+}
+
+extension CIFilter {
+	var info: FilterAttributes? {
+		return FilterAttributes(from: self)
 	}
 }
 

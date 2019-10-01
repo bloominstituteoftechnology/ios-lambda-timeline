@@ -136,7 +136,7 @@ extension ImagePostViewController: UITableViewDelegate, UITableViewDataSource {
 
 		switch indexPath.section {
 		case 0:
-			cell = getFilterCell(fromTableView: tableView, atIndex: indexPath)
+			cell = getFilterCell(fromTableView: tableView, at: indexPath)
 		default:
 			cell = getNewFilterButtonCell(fromTableView: tableView, atIndex: indexPath)
 		}
@@ -149,9 +149,10 @@ extension ImagePostViewController: UITableViewDelegate, UITableViewDataSource {
 		return cell
 	}
 
-	func getFilterCell(fromTableView tableView: UITableView, atIndex: IndexPath) -> FilterSettingsTableViewCell {
-		guard let cell = tableView.dequeueReusableCell(withIdentifier: "FilterCell", for: atIndex) as? FilterSettingsTableViewCell else { fatalError("CELL NO EXIST") }
+	func getFilterCell(fromTableView tableView: UITableView, at indexPath: IndexPath) -> FilterSettingsTableViewCell {
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: "FilterCell", for: indexPath) as? FilterSettingsTableViewCell else { fatalError("CELL NO EXIST") }
 //		cell.delegate = self
+		cell.filter = filters[indexPath.row]
 		return cell
 	}
 }

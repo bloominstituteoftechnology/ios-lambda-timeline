@@ -19,10 +19,16 @@ class FilterSettingsTableViewCell: UITableViewCell {
 	}
 
 	private func updateViews() {
-		guard let filter = filter else { return }
-		for att in filter.attributes {
-			att
+		stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+		guard let filter = filter, let filterAttributes = filter.info else { return }
+		filterNameLabel.text = filterAttributes.displayName
+
+		for attribute in filterAttributes.attributes {
+			let temp = UILabel()
+			temp.text = attribute.displayName
+			stackView.addArrangedSubview(temp)
 		}
+
 	}
 
 }
