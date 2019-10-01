@@ -27,7 +27,7 @@ class ImagePostViewController: ShiftableViewController {
 		filterTableView.tableFooterView = UIView()
 	}
 
-	var filters = [CIFilter]()
+	var filterHolders = [FilterHolder]()
 	
 	func updateViews() {
 		guard let imageData = imageData, let image = UIImage(data: imageData) else {
@@ -124,7 +124,7 @@ extension ImagePostViewController: UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		switch section {
 		case 0:
-			return filters.count
+			return filterHolders.count
 		default:
 			return 1
 		}
@@ -151,8 +151,7 @@ extension ImagePostViewController: UITableViewDelegate, UITableViewDataSource {
 
 	func getFilterCell(fromTableView tableView: UITableView, at indexPath: IndexPath) -> FilterSettingsTableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: "FilterCell", for: indexPath) as? FilterSettingsTableViewCell else { fatalError("CELL NO EXIST") }
-//		cell.delegate = self
-		cell.filter = filters[indexPath.row]
+		cell.filterHolder = filterHolders[indexPath.row]
 		return cell
 	}
 }
@@ -160,6 +159,7 @@ extension ImagePostViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - Filter Stuff
 extension ImagePostViewController: AddFilterCellDelegate {
 	func addFilterCellWasInvoked(_ cell: AddFilterTableViewCell) {
-		print("add new filter")
+		filterHolders.append(FilterHolder(filter: CIFilter(name: "CIColorControls")!))
+		filterTableView.reloadData()
 	}
 }

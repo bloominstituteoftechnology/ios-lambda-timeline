@@ -12,7 +12,7 @@ class FilterSettingsTableViewCell: UITableViewCell {
 	@IBOutlet private var stackView: UIStackView!
 	@IBOutlet private var filterNameLabel: UILabel!
 
-	var filter: CIFilter? {
+	var filterHolder: FilterHolder? {
 		didSet {
 			updateViews()
 		}
@@ -20,7 +20,7 @@ class FilterSettingsTableViewCell: UITableViewCell {
 
 	private func updateViews() {
 		stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-		guard let filter = filter, let filterAttributes = filter.info else { return }
+		guard let filter = filterHolder?.filter, let filterAttributes = filter.info else { return }
 		filterNameLabel.text = filterAttributes.displayName
 
 		for attribute in filterAttributes.attributes {

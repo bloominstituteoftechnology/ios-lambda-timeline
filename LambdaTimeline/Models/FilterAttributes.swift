@@ -13,7 +13,7 @@ struct FilterAttributes {
 	let filterName: String
 	let attributes: [FilterAttribute]
 
-	struct FilterAttribute {
+	struct FilterAttribute: Hashable {
 		let displayName: String
 		let name: String
 		let identity: CGFloat
