@@ -414,6 +414,9 @@
                                 <state key="normal" title="Record">
                                     <color key="titleColor" red="0.067182148972602745" green="0.90871147260273977" blue="0.23003888413242007" alpha="0.56370398116438358" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="recordButtonTapped:" destination="nrq-Ni-LWQ" eventType="touchUpInside" id="dZz-Lp-rEK"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="glS-A7-IOJ">
                                 <rect key="frame" x="120" y="306" width="135" height="30"/>
@@ -421,6 +424,9 @@
                                 <state key="normal" title="Play">
                                     <color key="titleColor" red="0.067182148969999994" green="0.90871147259999996" blue="0.23003888410000001" alpha="0.56370398119999998" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="playButtonTapped:" destination="nrq-Ni-LWQ" eventType="touchUpInside" id="aBP-G2-qEu"/>
+                                </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="bok-HX-SgQ">
                                 <rect key="frame" x="75" y="269" width="225" height="31"/>
@@ -436,7 +442,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bs3-5h-RLX">
-                                <rect key="frame" x="312" y="272" width="37" height="23"/>
+                                <rect key="frame" x="326" y="272" width="39" height="23"/>
                                 <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
                                 <color key="textColor" systemColor="systemTealColor" red="0.35294117647058826" green="0.78431372549019607" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -447,25 +453,43 @@
                                 <state key="normal" title="Create Comment">
                                     <color key="titleColor" red="0.067182148969999994" green="0.90871147259999996" blue="0.23003888410000001" alpha="0.56370398119999998" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="createCommentButtonTapped:" destination="nrq-Ni-LWQ" eventType="touchUpInside" id="5tZ-mo-wTD"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cKu-qF-rEA">
+                                <rect key="frame" x="224" y="51" width="135" height="30"/>
+                                <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="17"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" red="0.067182148969999994" green="0.90871147259999996" blue="0.23003888410000001" alpha="0.56370398119999998" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelButtonTapped:" destination="nrq-Ni-LWQ" eventType="touchUpInside" id="WUX-Uj-NeV"/>
+                                    <action selector="recordButtonTapped:" destination="nrq-Ni-LWQ" eventType="touchUpInside" id="R4g-qf-Tj3"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.26666666666666666" alpha="0.56370398116438358" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="cKu-qF-rEA" firstAttribute="top" secondItem="eN1-zb-hvo" secondAttribute="top" constant="51" id="14C-LF-6Z8"/>
                             <constraint firstItem="Fv9-Qn-kcs" firstAttribute="top" secondItem="eN1-zb-hvo" secondAttribute="top" constant="273" id="2Ao-68-Zyo"/>
                             <constraint firstItem="Fv9-Qn-kcs" firstAttribute="leading" secondItem="eN1-zb-hvo" secondAttribute="leading" constant="25" id="2Xc-b6-Coh"/>
                             <constraint firstItem="glS-A7-IOJ" firstAttribute="leading" secondItem="eN1-zb-hvo" secondAttribute="leading" constant="120" id="2wE-SV-KUf"/>
+                            <constraint firstItem="DlT-qM-s60" firstAttribute="top" secondItem="cKu-qF-rEA" secondAttribute="bottom" constant="158" id="6ZH-CE-QWh"/>
                             <constraint firstItem="DlT-qM-s60" firstAttribute="top" secondItem="eN1-zb-hvo" secondAttribute="top" constant="239" id="8pG-Lm-qHw"/>
                             <constraint firstItem="pUJ-UW-VP7" firstAttribute="leading" secondItem="eN1-zb-hvo" secondAttribute="leading" constant="120" id="Dkl-0s-C2t"/>
                             <constraint firstItem="bs3-5h-RLX" firstAttribute="top" secondItem="eN1-zb-hvo" secondAttribute="top" constant="272" id="Dvk-24-NbO"/>
                             <constraint firstItem="eN1-zb-hvo" firstAttribute="trailing" secondItem="DlT-qM-s60" secondAttribute="trailing" constant="120" id="Edb-ba-A0g"/>
                             <constraint firstAttribute="bottomMargin" secondItem="DlT-qM-s60" secondAttribute="bottom" constant="398" id="FWP-c3-sbW"/>
-                            <constraint firstItem="eN1-zb-hvo" firstAttribute="trailing" secondItem="bs3-5h-RLX" secondAttribute="trailing" constant="26" id="GJE-WI-c6n"/>
+                            <constraint firstItem="eN1-zb-hvo" firstAttribute="trailing" secondItem="bs3-5h-RLX" secondAttribute="trailing" constant="10" id="GJE-WI-c6n"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Fv9-Qn-kcs" secondAttribute="trailing" constant="297" id="Jcv-Z9-acP"/>
                             <constraint firstItem="bok-HX-SgQ" firstAttribute="leading" secondItem="eN1-zb-hvo" secondAttribute="leading" constant="77" id="KiK-kF-F6F"/>
                             <constraint firstItem="bok-HX-SgQ" firstAttribute="top" secondItem="kIU-XL-CVa" secondAttribute="topMargin" constant="269" id="LB9-1e-v4H"/>
                             <constraint firstItem="eN1-zb-hvo" firstAttribute="bottom" secondItem="glS-A7-IOJ" secondAttribute="bottom" constant="331" id="MrM-Lb-kXC"/>
-                            <constraint firstItem="bs3-5h-RLX" firstAttribute="leading" secondItem="kIU-XL-CVa" secondAttribute="leadingMargin" constant="296" id="Uz8-xm-WBi"/>
+                            <constraint firstItem="eN1-zb-hvo" firstAttribute="trailing" secondItem="cKu-qF-rEA" secondAttribute="trailing" constant="16" id="Qfu-ea-tPB"/>
+                            <constraint firstItem="bs3-5h-RLX" firstAttribute="leading" secondItem="kIU-XL-CVa" secondAttribute="leadingMargin" constant="310" id="Uz8-xm-WBi"/>
                             <constraint firstItem="pUJ-UW-VP7" firstAttribute="top" secondItem="kIU-XL-CVa" secondAttribute="topMargin" constant="443" id="YPd-Pn-y5Y"/>
+                            <constraint firstItem="cKu-qF-rEA" firstAttribute="leading" secondItem="eN1-zb-hvo" secondAttribute="leading" constant="224" id="YYQ-p9-qhD"/>
                             <constraint firstItem="eN1-zb-hvo" firstAttribute="trailing" secondItem="pUJ-UW-VP7" secondAttribute="trailing" constant="120" id="cAO-5O-XT2"/>
                             <constraint firstItem="DlT-qM-s60" firstAttribute="leading" secondItem="eN1-zb-hvo" secondAttribute="leading" constant="120" id="ftc-Q2-byI"/>
                             <constraint firstItem="eN1-zb-hvo" firstAttribute="trailing" secondItem="bok-HX-SgQ" secondAttribute="trailing" constant="77" id="gh6-6c-sad"/>
@@ -474,6 +498,11 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eN1-zb-hvo"/>
                     </view>
+                    <connections>
+                        <outlet property="timeLabel" destination="Fv9-Qn-kcs" id="gi6-gC-L9p"/>
+                        <outlet property="timeRemainingLabel" destination="bs3-5h-RLX" id="TDh-H4-VNI"/>
+                        <outlet property="timeSlider" destination="bok-HX-SgQ" id="eSg-VJ-yzF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Jd-K5-mWS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
