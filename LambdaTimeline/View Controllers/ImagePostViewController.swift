@@ -19,11 +19,15 @@ class ImagePostViewController: ShiftableViewController {
 	@IBOutlet weak var titleTextField: UITextField!
 	@IBOutlet weak var chooseImageButton: UIButton!
 	@IBOutlet weak var postButton: UIBarButtonItem!
-	
+	@IBOutlet var filterTableView: UITableView!
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		updateViews()
+		filterTableView.tableFooterView = UIView()
 	}
+
+	var filters = [CIFilter]()
 	
 	func updateViews() {
 		guard let imageData = imageData, let image = UIImage(data: imageData) else {
@@ -109,5 +113,52 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
 	
 	func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
 		picker.dismiss(animated: true, completion: nil)
+	}
+}
+
+extension ImagePostViewController: UITableViewDelegate, UITableViewDataSource {
+	func numberOfSections(in tableView: UITableView) -> Int {
+		return 2
+	}
+
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		switch section {
+		case 0:
+			return filters.count
+		default:
+			return 1
+		}
+	}
+
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+		let cell: UITableViewCell
+
+		switch indexPath.section {
+		case 0:
+			cell = getFilterCell(fromTableView: tableView, atIndex: indexPath)
+		default:
+			cell = getNewFilterButtonCell(fromTableView: tableView, atIndex: indexPath)
+		}
+		return cell
+	}
+
+	func getNewFilterButtonCell(fromTableView tableView: UITableView, atIndex: IndexPath) -> AddFilterTableViewCell {
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: "AddCell", for: atIndex) as? AddFilterTableViewCell else { fatalError("CELL NO EXIST") }
+		cell.delegate = self
+		return cell
+	}
+
+	func getFilterCell(fromTableView tableView: UITableView, atIndex: IndexPath) -> FilterSettingsTableViewCell {
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: "FilterCell", for: atIndex) as? FilterSettingsTableViewCell else { fatalError("CELL NO EXIST") }
+//		cell.delegate = self
+		return cell
+	}
+}
+
+// MARK: - Filter Stuff
+extension ImagePostViewController: AddFilterCellDelegate {
+	func addFilterCellWasInvoked(_ cell: AddFilterTableViewCell) {
+		print("add new filter")
 	}
 }

@@ -166,27 +166,42 @@
                                 <rect key="frame" x="0.0" y="360" width="375" height="307"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="hfF-BH-JSV">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="43.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FilterCell" id="hfF-BH-JSV" customClass="FilterSettingsTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="91"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hfF-BH-JSV" id="SfN-Ak-HxM">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="91"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="vSv-PA-EBb">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xgZ-7e-jzu">
+                                                    <rect key="frame" x="16" y="8" width="343" height="83"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Csn-2o-kK8">
+                                                            <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="vSv-PA-EBb">
+                                                            <rect key="frame" x="0.0" y="28.5" width="343" height="54.5"/>
+                                                        </stackView>
+                                                    </subviews>
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="vSv-PA-EBb" secondAttribute="bottom" id="E8P-Dh-51e"/>
-                                                <constraint firstAttribute="trailing" secondItem="vSv-PA-EBb" secondAttribute="trailing" id="RyE-Vm-ZkA"/>
-                                                <constraint firstItem="vSv-PA-EBb" firstAttribute="leading" secondItem="SfN-Ak-HxM" secondAttribute="leading" id="oha-Sk-Dq5"/>
-                                                <constraint firstItem="vSv-PA-EBb" firstAttribute="top" secondItem="SfN-Ak-HxM" secondAttribute="top" id="sjm-Fw-DIR"/>
+                                                <constraint firstItem="xgZ-7e-jzu" firstAttribute="leading" secondItem="SfN-Ak-HxM" secondAttribute="leading" constant="16" id="82R-oZ-hFt"/>
+                                                <constraint firstItem="xgZ-7e-jzu" firstAttribute="top" secondItem="SfN-Ak-HxM" secondAttribute="top" constant="8" id="9t1-nh-MCU"/>
+                                                <constraint firstAttribute="trailing" secondItem="xgZ-7e-jzu" secondAttribute="trailing" constant="16" id="URh-MM-LmA"/>
+                                                <constraint firstAttribute="bottom" secondItem="xgZ-7e-jzu" secondAttribute="bottom" id="hhy-xV-GMH"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="filterNameLabel" destination="Csn-2o-kK8" id="4x2-8h-AfZ"/>
+                                            <outlet property="stackView" destination="vSv-PA-EBb" id="yk2-jU-XWM"/>
+                                        </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddCell" id="2B3-vn-bmD">
-                                        <rect key="frame" x="0.0" y="71.5" width="375" height="46.5"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddCell" id="2B3-vn-bmD" customClass="AddFilterTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="119" width="375" height="46.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2B3-vn-bmD" id="jfr-kR-CL2">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="46.5"/>
@@ -195,6 +210,9 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Clj-Jq-g23">
                                                     <rect key="frame" x="20" y="8" width="335" height="30.5"/>
                                                     <state key="normal" title="Add Filter"/>
+                                                    <connections>
+                                                        <action selector="addFilterButtonPressed:" destination="2B3-vn-bmD" eventType="touchUpInside" id="Yrk-wX-5Di"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -206,6 +224,10 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="1Aw-4e-BW2" id="sbB-Ng-AxU"/>
+                                    <outlet property="delegate" destination="1Aw-4e-BW2" id="Iv2-hZ-RQZ"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -229,6 +251,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="chooseImageButton" destination="VxD-cu-jHT" id="KVs-no-MbU"/>
+                        <outlet property="filterTableView" destination="vHu-jt-AZU" id="GTW-HY-pZc"/>
                         <outlet property="imageView" destination="4eK-5F-H5h" id="e7m-c5-Xhz"/>
                         <outlet property="postButton" destination="hsH-Uv-tug" id="ZBn-KE-cpU"/>
                         <outlet property="titleTextField" destination="Op6-OA-6Ou" id="JEe-cj-4mv"/>
