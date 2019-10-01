@@ -367,6 +367,53 @@
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AudioCell" rowHeight="54" id="owS-pQ-vuN" customClass="AudioTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="188.5" width="375" height="54"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="owS-pQ-vuN" id="0ez-ak-F4e">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Senders Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CGD-lc-hiZ">
+                                            <rect key="frame" x="16" y="7" width="113" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nea-dF-uYx">
+                                            <rect key="frame" x="303" y="12" width="46" height="30"/>
+                                            <color key="tintColor" red="0.067182148969999994" green="0.90871147259999996" blue="0.23003888410000001" alpha="0.56370398119999998" colorSpace="calibratedRGB"/>
+                                            <state key="normal" backgroundImage="play.rectangle.fill" catalog="system">
+                                                <color key="titleColor" red="0.067182148969999994" green="0.90871147259999996" blue="0.23003888410000001" alpha="0.56370398119999998" colorSpace="calibratedRGB"/>
+                                                <color key="titleShadowColor" red="0.067182148969999994" green="0.90871147259999996" blue="0.23003888410000001" alpha="0.56370398119999998" colorSpace="calibratedRGB"/>
+                                            </state>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Voice Recording" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nhk-m1-4Ni">
+                                            <rect key="frame" x="16" y="29" width="86" height="13.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Nhk-m1-4Ni" firstAttribute="leading" secondItem="0ez-ak-F4e" secondAttribute="leadingMargin" id="6MK-Kk-dkQ"/>
+                                        <constraint firstItem="nea-dF-uYx" firstAttribute="bottom" secondItem="0ez-ak-F4e" secondAttribute="bottomMargin" id="D4r-cG-yI4"/>
+                                        <constraint firstItem="CGD-lc-hiZ" firstAttribute="leading" secondItem="0ez-ak-F4e" secondAttribute="leading" constant="16" id="GOT-Jl-I3z"/>
+                                        <constraint firstItem="nea-dF-uYx" firstAttribute="top" secondItem="0ez-ak-F4e" secondAttribute="topMargin" id="PjK-6J-xoH"/>
+                                        <constraint firstAttribute="trailing" secondItem="CGD-lc-hiZ" secondAttribute="trailing" constant="246" id="WJv-04-8gE"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="nea-dF-uYx" secondAttribute="trailing" constant="10" id="ZpV-GD-F7O"/>
+                                        <constraint firstItem="Nhk-m1-4Ni" firstAttribute="top" secondItem="0ez-ak-F4e" secondAttribute="topMargin" constant="18" id="cWY-eo-rIY"/>
+                                        <constraint firstItem="nea-dF-uYx" firstAttribute="leading" secondItem="0ez-ak-F4e" secondAttribute="leadingMargin" constant="287" id="eBZ-me-Fr5"/>
+                                        <constraint firstItem="CGD-lc-hiZ" firstAttribute="top" secondItem="0ez-ak-F4e" secondAttribute="top" constant="7" id="iuf-kt-wuS"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Nhk-m1-4Ni" secondAttribute="trailing" constant="257" id="vpc-9R-Zdb"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="playRecording" destination="nea-dF-uYx" id="PYX-L7-P9Y"/>
+                                    <outlet property="playRecordingTapped" destination="nea-dF-uYx" id="kmx-Dy-Z5f"/>
+                                    <outlet property="sendersName" destination="CGD-lc-hiZ" id="MTu-Nf-iFC"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="OyM-8q-Icp" id="hEW-Hv-MJ8"/>
@@ -509,4 +556,7 @@
             <point key="canvasLocation" x="2722.4000000000001" y="485.30734632683664"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="play.rectangle.fill" catalog="system" width="64" height="48"/>
+    </resources>
 </document>
