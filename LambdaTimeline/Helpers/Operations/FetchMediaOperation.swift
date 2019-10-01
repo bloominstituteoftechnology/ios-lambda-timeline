@@ -5,6 +5,7 @@
 //  Created by Spencer Curtis on 10/12/18.
 //  Copyright © 2018 Lambda School. All rights reserved.
 //
+//swiftlint:disable conditional_returns_on_newline
 
 import Foundation
 
@@ -32,7 +33,7 @@ class FetchMediaOperation: ConcurrentOperation {
 
 		let url = post.mediaURL
 
-		let task = session.dataTask(with: url) { (data, response, error) in
+		let task = session.dataTask(with: url) { data, _, error in
 			defer { self.state = .isFinished }
 			if self.isCancelled { return }
 			if let error = error {

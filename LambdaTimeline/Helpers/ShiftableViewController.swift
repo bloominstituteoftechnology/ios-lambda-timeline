@@ -24,8 +24,14 @@ class ShiftableViewController: UIViewController, UITextFieldDelegate, UITextView
 		
 		setupKeyboardDismissTapGestureRecognizer()
 		
-		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-		NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+		NotificationCenter.default.addObserver(self,
+											   selector: #selector(keyboardWillShow(notification:)),
+											   name: UIResponder.keyboardWillShowNotification,
+											   object: nil)
+		NotificationCenter.default.addObserver(self,
+											   selector: #selector(keyboardWillHide(notification:)),
+											   name: UIResponder.keyboardWillHideNotification,
+											   object: nil)
 	}
 	
 	@objc func stopEditingTextInput() {
@@ -70,7 +76,7 @@ class ShiftableViewController: UIViewController, UITextFieldDelegate, UITextView
 			keyboardSize = keyboardRect
 		}
 		
-		if let textField = textFieldBeingEdited  {
+		if let textField = textFieldBeingEdited {
 			if self.view.frame.origin.y == 0 {
 				
 				let yShift = yShiftWhenKeyboardAppearsFor(textInput: textField, keyboardSize: keyboardSize, nextY: keyboardSize.height)

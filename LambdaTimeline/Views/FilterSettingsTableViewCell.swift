@@ -32,18 +32,14 @@ class FilterSettingsTableViewCell: UITableViewCell {
 			setting.delegate = self
 			stackView.addArrangedSubview(setting)
 		}
-
 	}
-
 }
 
 extension FilterSettingsTableViewCell: SettingSliderDelegate {
 	func settingSlider(_ settingSlider: SettingSlider, changedValue value: Float) {
 		guard let filter = filterHolder?.filter, let filterAttributes = filter.info else { return }
-		for attribute in filterAttributes.attributes {
-			if attribute.displayName == settingSlider.title {
-				filterHolder?.currentValues[attribute] = CGFloat(value)
-			}
+		for attribute in filterAttributes.attributes where attribute.displayName == settingSlider.title {
+			filterHolder?.currentValues[attribute] = CGFloat(value)
 		}
 	}
 }

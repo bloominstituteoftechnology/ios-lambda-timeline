@@ -47,7 +47,14 @@ struct FilterAttributes {
 			let sliderMinimum = attribute[kCIAttributeSliderMin] as? NSNumber
 			let name = $0.key
 
-			let filterAttribute = FilterAttribute(displayName: displayName, name: name, identity: identity.cgFloatValue, default: defaultValue.cgFloatValue, minimum: minimum?.cgFloatValue, maximum: maximum?.cgFloatValue, sliderMin: sliderMinimum?.cgFloatValue, sliderMax: sliderMaximum?.cgFloatValue)
+			let filterAttribute = FilterAttribute(displayName: displayName,
+												  name: name,
+												  identity: identity.cgFloatValue,
+												  default: defaultValue.cgFloatValue,
+												  minimum: minimum?.cgFloatValue,
+												  maximum: maximum?.cgFloatValue,
+												  sliderMin: sliderMinimum?.cgFloatValue,
+												  sliderMax: sliderMaximum?.cgFloatValue)
 			return filterAttribute
 		}
 

@@ -13,10 +13,10 @@ class ImagePostDetailTableViewController: UITableViewController {
 	var postController: PostController!
 	var imageData: Data?
 
-	@IBOutlet weak var imageView: UIImageView!
-	@IBOutlet weak var titleLabel: UILabel!
-	@IBOutlet weak var authorLabel: UILabel!
-	@IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
+	@IBOutlet private weak var imageView: UIImageView!
+	@IBOutlet private weak var titleLabel: UILabel!
+	@IBOutlet private weak var authorLabel: UILabel!
+	@IBOutlet private weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
 
 
 	override func viewDidLoad() {
@@ -45,12 +45,12 @@ class ImagePostDetailTableViewController: UITableViewController {
 		
 		var commentTextField: UITextField?
 		
-		alert.addTextField { (textField) in
+		alert.addTextField { textField in
 			textField.placeholder = "Comment:"
 			commentTextField = textField
 		}
 		
-		let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
+		let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { _ in
 			
 			guard let commentText = commentTextField?.text else { return }
 			

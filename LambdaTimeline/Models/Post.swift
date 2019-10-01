@@ -5,6 +5,7 @@
 //  Created by Spencer Curtis on 10/11/18.
 //  Copyright © 2018 Lambda School. All rights reserved.
 //
+//swiftlint:disable function_default_parameter_at_end
 
 import Foundation
 import FirebaseAuth
@@ -27,13 +28,13 @@ class Post {
 		return comments.first?.text
 	}
 
-	static private let mediaKey = "media"
-	static private let ratioKey = "ratio"
-	static private let mediaTypeKey = "mediaType"
-	static private let authorKey = "author"
-	static private let commentsKey = "comments"
-	static private let timestampKey = "timestamp"
-	static private let idKey = "id"
+	private static let mediaKey = "media"
+	private static let ratioKey = "ratio"
+	private static let mediaTypeKey = "mediaType"
+	private static let authorKey = "author"
+	private static let commentsKey = "comments"
+	private static let timestampKey = "timestamp"
+	private static let idKey = "id"
 
 	init(title: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date()) {
 		self.mediaURL = mediaURL
@@ -44,7 +45,7 @@ class Post {
 		self.timestamp = timestamp
 	}
 	
-	init?(dictionary: [String : Any], id: String) {
+	init?(dictionary: [String: Any], id: String) {
 		guard let mediaURLString = dictionary[Post.mediaKey] as? String,
 			let mediaURL = URL(string: mediaURLString),
 			let mediaTypeString = dictionary[Post.mediaTypeKey] as? String,
@@ -63,7 +64,7 @@ class Post {
 		self.id = id
 	}
 	
-	var dictionaryRepresentation: [String : Any] {
+	var dictionaryRepresentation: [String: Any] {
 		var dict: [String: Any] = [Post.mediaKey: mediaURL.absoluteString,
 				Post.mediaTypeKey: mediaType.rawValue,
 				Post.commentsKey: comments.map({ $0.dictionaryRepresentation }),

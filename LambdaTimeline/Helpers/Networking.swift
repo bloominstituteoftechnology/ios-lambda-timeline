@@ -18,7 +18,12 @@ enum HTTPMethod: String {
 
 enum Networking {
 	
-	static func performRequestFor(url: URL, httpMethod: HTTPMethod, parameters: [String: String]? = nil, headers: [String: String]? = nil, body: Data? = nil, completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
+	static func performRequestFor(url: URL,
+								  httpMethod: HTTPMethod,
+								  parameters: [String: String]? = nil,
+								  headers: [String: String]? = nil,
+								  body: Data? = nil,
+								  completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
 		
 		var formattedURL: URL? = url
 		
@@ -32,7 +37,7 @@ enum Networking {
 		request.httpBody = body
 		
 		if let headers = headers {
-			headers.forEach { (key, value) in
+			headers.forEach { key, value in
 				request.setValue(value, forHTTPHeaderField: key)
 			}
 		}
@@ -40,12 +45,13 @@ enum Networking {
 		URLSession.shared.dataTask(with: request, completionHandler: completion).resume()
 	}
 	
-	static private func format(url: URL, with queryParameters: [String: String]) -> URL? {
+	private static func format(url: URL, with queryParameters: [String: String]) -> URL? {
 		
 		var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
 		
 		urlComponents?.queryItems = queryParameters.compactMap({ URLQueryItem(name: $0.key, value: $0.value) })
 		
-		return urlComponents?.url ?? nil
+//		return urlComponents?.url ?? nil
+		return urlComponents?.url
 	}
 }

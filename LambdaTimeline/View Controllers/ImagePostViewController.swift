@@ -16,11 +16,11 @@ class ImagePostViewController: ShiftableViewController {
 	var imageData: Data?
 	private let context = CIContext(options: nil)
 
-	@IBOutlet weak var imageView: UIImageView!
-	@IBOutlet weak var titleTextField: UITextField!
-	@IBOutlet weak var chooseImageButton: UIButton!
-	@IBOutlet weak var postButton: UIBarButtonItem!
-	@IBOutlet var filterTableView: UITableView!
+	@IBOutlet private weak var imageView: UIImageView!
+	@IBOutlet private weak var titleTextField: UITextField!
+	@IBOutlet private weak var chooseImageButton: UIButton!
+	@IBOutlet private weak var postButton: UIBarButtonItem!
+	@IBOutlet private var filterTableView: UITableView!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -78,7 +78,7 @@ class ImagePostViewController: ShiftableViewController {
 			return
 		}
 		
-		postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
+		postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { success in
 			guard success else {
 				DispatchQueue.main.async {
 					self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
@@ -98,7 +98,7 @@ class ImagePostViewController: ShiftableViewController {
 		case .authorized:
 			presentImagePickerController()
 		case .notDetermined:
-			PHPhotoLibrary.requestAuthorization { (status) in
+			PHPhotoLibrary.requestAuthorization { status in
 				guard status == .authorized else {
 					NSLog("User did not authorize access to the photo library")
 					self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
@@ -120,7 +120,8 @@ class ImagePostViewController: ShiftableViewController {
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	
-	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+	func imagePickerController(_ picker: UIImagePickerController,
+							   didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 		chooseImageButton.setTitle("", for: [])
 		picker.dismiss(animated: true, completion: nil)
 		
@@ -167,7 +168,9 @@ extension ImagePostViewController: UITableViewDelegate, UITableViewDataSource {
 	}
 
 	func getFilterCell(fromTableView tableView: UITableView, at indexPath: IndexPath) -> FilterSettingsTableViewCell {
-		guard let cell = tableView.dequeueReusableCell(withIdentifier: "FilterCell", for: indexPath) as? FilterSettingsTableViewCell else { fatalError("CELL NO EXIST") }
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: "FilterCell",
+													   for: indexPath) as? FilterSettingsTableViewCell
+			else { fatalError("CELL NO EXIST") }
 		cell.filterHolder = filterHolders[indexPath.row]
 		return cell
 	}
@@ -227,7 +230,6 @@ extension ImagePostViewController: AddFilterCellDelegate {
 
 			outputImage = filter.outputImage ?? outputImage
 		}
-
 
 		guard let cgImageResult = context.createCGImage(outputImage, from: CGRect(origin: .zero, size: image.size)) else { fatalError("No output image") }
 

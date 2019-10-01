@@ -12,17 +12,17 @@ import FirebaseUI
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 	private let postController = PostController()
-	private var operations = [String : Operation]()
+	private var operations = [String: Operation]()
 	private let mediaFetchQueue = OperationQueue()
 	private let cache = Cache<String, Data>()
 
-	@IBOutlet var emptyCollectionFillView: UIView!
-	@IBOutlet var emptyCollectionViewBG: UIView!
+	@IBOutlet private var emptyCollectionFillView: UIView!
+	@IBOutlet private var emptyCollectionViewBG: UIView!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		postController.observePosts { (_) in
+		postController.observePosts { _ in
 			DispatchQueue.main.async {
 				self.collectionView.reloadData()
 			}
@@ -49,7 +49,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 		
 		let alert = UIAlertController(title: "New Post", message: "Which kind of post do you want to create?", preferredStyle: .actionSheet)
 		
-		let imagePostAction = UIAlertAction(title: "Image", style: .default) { (_) in
+		let imagePostAction = UIAlertAction(title: "Image", style: .default) { _ in
 			self.performSegue(withIdentifier: "AddImagePost", sender: nil)
 		}
 		
@@ -64,13 +64,12 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 	// MARK: UICollectionViewDataSource
 	
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		let count = postController.posts.count
-		if count == 0 {
+		if postController.posts.isEmpty {
 			showStarterView(true)
 		} else {
 			showStarterView(false)
 		}
-		return count
+		return postController.posts.count
 	}
 	
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -79,12 +78,11 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 		switch post.mediaType {
 			
 		case .image:
-			guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
-			
+			guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell",
+																for: indexPath) as? ImagePostCollectionViewCell
+				else { return UICollectionViewCell() }
 			cell.post = post
-			
 			loadImage(for: cell, forItemAt: indexPath)
-			
 			return cell
 		}
 	}
@@ -117,7 +115,10 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 		}
 	}
 	
-	override func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
+	override func collectionView(_ collectionView: UICollectionView,
+								 didEndDisplayingSupplementaryView view: UICollectionReusableView,
+								 forElementOfKind elementKind: String,
+								 at indexPath: IndexPath) {
 		
 		guard let postID = postController.posts[indexPath.row].id else { return }
 		operations[postID]?.cancel()

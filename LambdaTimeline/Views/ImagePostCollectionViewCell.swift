@@ -5,15 +5,16 @@
 //  Created by Spencer Curtis on 10/12/18.
 //  Copyright © 2018 Lambda School. All rights reserved.
 //
+//swiftlint:disable private_outlet
 
 import UIKit
 
 class ImagePostCollectionViewCell: UICollectionViewCell {
 
 	@IBOutlet weak var imageView: UIImageView!
-	@IBOutlet weak var titleLabel: UILabel!
-	@IBOutlet weak var authorLabel: UILabel!
-	@IBOutlet weak var labelBackgroundView: UIView!
+	@IBOutlet private weak var titleLabel: UILabel!
+	@IBOutlet private weak var authorLabel: UILabel!
+	@IBOutlet private weak var labelBackgroundView: UIView!
 
 	override func layoutSubviews() {
 		super.layoutSubviews()

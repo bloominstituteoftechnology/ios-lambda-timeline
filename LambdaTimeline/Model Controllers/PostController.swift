@@ -5,6 +5,7 @@
 //  Created by Spencer Curtis on 10/11/18.
 //  Copyright © 2018 Lambda School. All rights reserved.
 //
+//swiftlint:disable multiple_closures_with_trailing_closure
 
 import Foundation
 import FirebaseAuth
@@ -23,13 +24,13 @@ class PostController {
 		guard let currentUser = Auth.auth().currentUser,
 			let author = Author(user: currentUser) else { return }
 		
-		store(mediaData: mediaData, mediaType: mediaType) { (mediaURL) in
+		store(mediaData: mediaData, mediaType: mediaType) { mediaURL in
 			
 			guard let mediaURL = mediaURL else { completion(false); return }
 			
 			let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
 			
-			self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
+			self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { error, _ in
 				if let error = error {
 					NSLog("Error posting image post: \(error)")
 					completion(false)
@@ -53,7 +54,7 @@ class PostController {
 
 	func observePosts(completion: @escaping (Error?) -> Void) {
 		
-		postsRef.observe(.value, with: { (snapshot) in
+		postsRef.observe(.value, with: { snapshot in
 			
 			guard let postDictionaries = snapshot.value as? [String: [String: Any]] else { return }
 			
@@ -70,7 +71,7 @@ class PostController {
 			
 			completion(nil)
 			
-		}) { (error) in
+		}) { error in
 			NSLog("Error fetching posts: \(error)")
 		}
 	}
@@ -90,7 +91,7 @@ class PostController {
 		
 		let mediaRef = storageRef.child(mediaType.rawValue).child(mediaID)
 		
-		let uploadTask = mediaRef.putData(mediaData, metadata: nil) { (metadata, error) in
+		let uploadTask = mediaRef.putData(mediaData, metadata: nil) { metadata, error in
 			if let error = error {
 				NSLog("Error storing media data: \(error)")
 				completion(nil)
@@ -103,7 +104,7 @@ class PostController {
 				return
 			}
 			
-			mediaRef.downloadURL(completion: { (url, error) in
+			mediaRef.downloadURL(completion: { url, error in
 				
 				if let error = error {
 					NSLog("Error getting download url of media: \(error)")

@@ -36,7 +36,7 @@ class SignInViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDele
 		
 		let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
 		
-		Auth.auth().signInAndRetrieveData(with: credential) { (authResult, error) in
+		Auth.auth().signInAndRetrieveData(with: credential) { _, error in
 			if let error = error {
 				NSLog("Error signing in with Google: \(error)")
 				return
