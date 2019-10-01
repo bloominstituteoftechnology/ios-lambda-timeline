@@ -16,20 +16,22 @@ class ImagePostViewController: ShiftableViewController {
     var postController: PostController!
     var post: Post?
     var imageData: Data?
-    let colorClampFilter = CIFilter(name: "CIColorClamp")  //every filter is optional
-    private var originalImage: UIImage?
+    let colorClampFilter = CIFilter(name: "CIColorClamp")!
+    private let context = CIContext(options: nil)
     
-    @IBOutlet var colorClamp: UIButton!
-    @IBOutlet var hueAdjust: UIButton!
-    @IBOutlet var photoEffectInstant: UIButton!
-    @IBOutlet var vignette: UIButton!
-    @IBOutlet var linearGradient: UIButton!
+    private var originalImage: UIImage? {
+        didSet {
+            updateImage()
+        }
+    }
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
     
+    @IBOutlet var colorClampSlider: UISlider!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,22 +83,9 @@ class ImagePostViewController: ShiftableViewController {
         presentImagePickerController()
     }
     
-    
-    @IBAction func colorClampTapped(_ sender: UIButton) {
+    @IBAction func colorClampChanged(_ sender: UISlider) {
+        updateImage()
     }
-    
-    @IBAction func hueAdjustTapped(_ sender: UIButton) {
-    }
-    
-    @IBAction func photoEffectInstantTapped(_ sender: UIButton) {
-    }
-    
-    @IBAction func vignetteTapped(_ sender: UIButton) {
-    }
-    
-    @IBAction func linearGradientTapped(_ sender: UIButton) {
-    }
-    
     
     func updateViews() {
         guard let imageData = imageData,
@@ -134,7 +123,15 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     func filterColorClamp(image: UIImage) -> UIImage? {
-        
+        //turn image into CIImage
+        guard let cgImage = image.cgImage else {return image}
+        let ciImage = CIImage(cgImage: cgImage)
+        colorClampFilter.setValue(ciImage, forKey: kCIInputImageKey)
+        colorClampFilter.setValue(colorClampSlider, forKey: kCIAttributeMin)
+        colorClampSlider.setValue(colorClampSlider, forKey: kCIAttributeMax)
+        guard let outputCIImage = colorClampFilter.outputImage,
+            let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else {return nil}
+        return UIImage(cgImage: outputCGImage)
     }
     
 }

@@ -152,57 +152,34 @@
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="4Xw-hM-ory">
-                                        <rect key="frame" x="50" y="433" width="275" height="150"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="73" translatesAutoresizingMaskIntoConstraints="NO" id="F1o-bx-7jq">
+                                        <rect key="frame" x="31" y="434" width="286" height="30"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cIc-dy-lvV">
-                                                <rect key="frame" x="0.0" y="0.0" width="275" height="30"/>
-                                                <state key="normal" title="CIColorClamp"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color Clamp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CsF-Dm-rUt">
+                                                <rect key="frame" x="0.0" y="0.0" width="95" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="JAX-PE-pPY">
+                                                <rect key="frame" x="166" y="0.0" width="122" height="31"/>
                                                 <connections>
-                                                    <action selector="colorClampTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="npI-fU-Rmn"/>
+                                                    <action selector="colorClampChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="eeQ-cC-5ov"/>
                                                 </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qeI-vK-wG2">
-                                                <rect key="frame" x="0.0" y="30" width="275" height="30"/>
-                                                <state key="normal" title="CIHueAdjust"/>
-                                                <connections>
-                                                    <action selector="hueAdjustTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="ijk-rJ-G3d"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bXg-zE-tT9">
-                                                <rect key="frame" x="0.0" y="60" width="275" height="30"/>
-                                                <state key="normal" title="CIPhotoEffectInstant"/>
-                                                <connections>
-                                                    <action selector="photoEffectInstantTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="dbC-g2-bfQ"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2He-JK-I6q">
-                                                <rect key="frame" x="0.0" y="90" width="275" height="30"/>
-                                                <state key="normal" title="CIVignette"/>
-                                                <connections>
-                                                    <action selector="vignetteTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="nyc-Yy-6iU"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bCA-8U-8OB">
-                                                <rect key="frame" x="0.0" y="120" width="275" height="30"/>
-                                                <state key="normal" title="CILinearGradient"/>
-                                                <connections>
-                                                    <action selector="linearGradientTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="IyD-b1-PJ4"/>
-                                                </connections>
-                                            </button>
+                                            </slider>
                                         </subviews>
                                     </stackView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="PkI-rS-ua9" secondAttribute="trailing" id="1cC-FG-cAC"/>
-                                    <constraint firstAttribute="trailing" secondItem="4Xw-hM-ory" secondAttribute="trailing" constant="50" id="2hf-q0-RB6"/>
                                     <constraint firstItem="PkI-rS-ua9" firstAttribute="top" secondItem="9qd-If-ddw" secondAttribute="top" id="3tV-sW-NF1"/>
+                                    <constraint firstItem="F1o-bx-7jq" firstAttribute="top" secondItem="PkI-rS-ua9" secondAttribute="bottom" constant="17" id="EFA-0s-tcG"/>
+                                    <constraint firstItem="F1o-bx-7jq" firstAttribute="leading" secondItem="9qd-If-ddw" secondAttribute="leading" constant="31" id="HDG-fl-eIj"/>
                                     <constraint firstItem="PkI-rS-ua9" firstAttribute="leading" secondItem="9qd-If-ddw" secondAttribute="leading" id="bPK-xN-eaO"/>
                                     <constraint firstAttribute="bottom" secondItem="PkI-rS-ua9" secondAttribute="bottom" id="cfV-7c-ubK"/>
                                     <constraint firstItem="PkI-rS-ua9" firstAttribute="width" secondItem="9qd-If-ddw" secondAttribute="width" id="dWh-6N-mO7"/>
-                                    <constraint firstItem="4Xw-hM-ory" firstAttribute="leading" secondItem="9qd-If-ddw" secondAttribute="leading" constant="50" id="fEf-Ds-eny"/>
                                     <constraint firstAttribute="height" priority="250" constant="603" id="qMm-7B-8rp"/>
-                                    <constraint firstItem="4Xw-hM-ory" firstAttribute="top" secondItem="PkI-rS-ua9" secondAttribute="bottom" constant="16" id="qW0-0q-tcH"/>
+                                    <constraint firstAttribute="trailing" secondItem="F1o-bx-7jq" secondAttribute="trailing" constant="58" id="vhQ-Un-Vb1"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -225,15 +202,11 @@
                     </navigationItem>
                     <connections>
                         <outlet property="chooseImageButton" destination="VxD-cu-jHT" id="KVs-no-MbU"/>
-                        <outlet property="colorClamp" destination="cIc-dy-lvV" id="P52-jq-2eJ"/>
-                        <outlet property="hueAdjust" destination="qeI-vK-wG2" id="JlD-GY-KBG"/>
+                        <outlet property="colorClampSlider" destination="JAX-PE-pPY" id="Xca-85-M0g"/>
                         <outlet property="imageHeightConstraint" destination="MHD-wr-Gq9" id="HyG-8g-Ck1"/>
                         <outlet property="imageView" destination="4eK-5F-H5h" id="e7m-c5-Xhz"/>
-                        <outlet property="linearGradient" destination="bCA-8U-8OB" id="XrQ-QF-Ywo"/>
-                        <outlet property="photoEffectInstant" destination="bXg-zE-tT9" id="i03-lK-rc8"/>
                         <outlet property="postButton" destination="hsH-Uv-tug" id="ZBn-KE-cpU"/>
                         <outlet property="titleTextField" destination="Op6-OA-6Ou" id="JEe-cj-4mv"/>
-                        <outlet property="vignette" destination="2He-JK-I6q" id="DQt-RI-7Vd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXa-A2-VJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
