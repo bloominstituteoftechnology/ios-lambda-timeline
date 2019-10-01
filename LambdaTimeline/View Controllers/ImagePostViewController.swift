@@ -16,14 +16,15 @@ class ImagePostViewController: ShiftableViewController {
     var postController: PostController!
     var post: Post?
     var imageData: Data?
-    let colorClampFilter = CIFilter(name: "CIColorClamp")!
+    let hueFilter = CIFilter(name: "CIHueAdjust")!
+    let monoFilter = CIFilter(name: "CIPhotoEffectMono")!
+    let transferFilter = CIFilter(name: "CIPhotoEffectTransfer")!
+    let sepiaFilter = CIFilter(name: "CISepiaTone")!
+    let invertFilter = CIFilter(name: "CIColorInvert")!
+    
     private let context = CIContext(options: nil)
     
-    private var originalImage: UIImage? {
-        didSet {
-            updateImage()
-        }
-    }
+    private var originalImage: UIImage?
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
@@ -31,7 +32,6 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
     
-    @IBOutlet var colorClampSlider: UISlider!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,8 +43,8 @@ class ImagePostViewController: ShiftableViewController {
         view.endEditing(true)
         guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
             let title = titleTextField.text, title != "" else {
-            presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
-            return
+                presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
+                return
         }
         
         postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
@@ -83,10 +83,19 @@ class ImagePostViewController: ShiftableViewController {
         presentImagePickerController()
     }
     
-    @IBAction func colorClampChanged(_ sender: UISlider) {
-        updateImage()
+    @IBAction func hueButtonTapped(_ sender: Any) {
+       
+    }
+    @IBAction func monoButtonTapped(_ sender: Any) {
+    }
+    @IBAction func sepiaButtonTapped(_ sender: Any) {
+         updateImage()
     }
     
+    @IBAction func invertButtonTapped(_ sender: Any) {
+    }
+    @IBAction func transferButtonTapped(_ sender: Any) {
+    }
     func updateViews() {
         guard let imageData = imageData,
             let image = UIImage(data: imageData) else {
@@ -118,19 +127,24 @@ class ImagePostViewController: ShiftableViewController {
     
     
     func updateImage() {
-        guard let originalImage = originalImage else {return}
-        imageView?.image = filterColorClamp(image: originalImage)
+        guard let originalImage = originalImage   else {return}
+        var maxSize = imageView.bounds.size
+        let scale = UIScreen.main.scale
+        
+        maxSize = CGSize(width: maxSize.width * scale,
+                            height: maxSize.height * scale)
+
+        guard let scaledImage = originalImage.imageByScaling(toSize: maxSize) else {return}
+            imageView?.image = filterSepia(image: scaledImage)
     }
     
-    func filterColorClamp(image: UIImage) -> UIImage? {
-        //turn image into CIImage
+    func filterSepia(image: UIImage) -> UIImage? {
+
         guard let cgImage = image.cgImage else {return image}
         let ciImage = CIImage(cgImage: cgImage)
-        colorClampFilter.setValue(ciImage, forKey: kCIInputImageKey)
-        colorClampFilter.setValue(colorClampSlider, forKey: kCIAttributeMin)
-        colorClampSlider.setValue(colorClampSlider, forKey: kCIAttributeMax)
-        guard let outputCIImage = colorClampFilter.outputImage,
-            let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else {return nil}
+        sepiaFilter.setValue(ciImage, forKey: kCIInputIntensityKey)
+        guard let outputCIImage = sepiaFilter.outputImage,
+            let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else {return nil}
         return UIImage(cgImage: outputCGImage)
     }
     
@@ -139,7 +153,7 @@ class ImagePostViewController: ShiftableViewController {
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-
+        
         chooseImageButton.setTitle("", for: [])
         
         picker.dismiss(animated: true, completion: nil)
@@ -147,6 +161,8 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
         imageView.image = image
+        
+        originalImage = image
         
         setImageViewHeight(with: image.ratio)
     }
