@@ -7,55 +7,38 @@
 //
 
 import UIKit
+import CoreImage
 import Photos
 
 class ImagePostViewController: ShiftableViewController {
     
+    
+    var postController: PostController!
+    var post: Post?
+    var imageData: Data?
+    let colorClampFilter = CIFilter(name: "CIColorClamp")  //every filter is optional
+    private var originalImage: UIImage?
+    
+    @IBOutlet var colorClamp: UIButton!
+    @IBOutlet var hueAdjust: UIButton!
+    @IBOutlet var photoEffectInstant: UIButton!
+    @IBOutlet var vignette: UIButton!
+    @IBOutlet var linearGradient: UIButton!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var chooseImageButton: UIButton!
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setImageViewHeight(with: 1.0)
-        
         updateViews()
     }
     
-    func updateViews() {
-        
-        guard let imageData = imageData,
-            let image = UIImage(data: imageData) else {
-                title = "New Post"
-                return
-        }
-        
-        title = post?.title
-        
-        setImageViewHeight(with: image.ratio)
-        
-        imageView.image = image
-        
-        chooseImageButton.setTitle("", for: [])
-    }
-    
-    private func presentImagePickerController() {
-        
-        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
-            presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
-            return
-        }
-        
-        let imagePicker = UIImagePickerController()
-        
-        imagePicker.delegate = self
-        
-        imagePicker.sourceType = .photoLibrary
-
-        present(imagePicker, animated: true, completion: nil)
-    }
-    
     @IBAction func createPost(_ sender: Any) {
-        
         view.endEditing(true)
-        
         guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
             let title = titleTextField.text, title != "" else {
             presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
@@ -69,7 +52,6 @@ class ImagePostViewController: ShiftableViewController {
                 }
                 return
             }
-            
             DispatchQueue.main.async {
                 self.navigationController?.popViewController(animated: true)
             }
@@ -77,25 +59,19 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     @IBAction func chooseImage(_ sender: Any) {
-        
         let authorizationStatus = PHPhotoLibrary.authorizationStatus()
-        
         switch authorizationStatus {
         case .authorized:
             presentImagePickerController()
         case .notDetermined:
-            
             PHPhotoLibrary.requestAuthorization { (status) in
-                
                 guard status == .authorized else {
                     NSLog("User did not authorize access to the photo library")
                     self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
                     return
                 }
-                
                 self.presentImagePickerController()
             }
-            
         case .denied:
             self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
         case .restricted:
@@ -105,22 +81,62 @@ class ImagePostViewController: ShiftableViewController {
         presentImagePickerController()
     }
     
+    
+    @IBAction func colorClampTapped(_ sender: UIButton) {
+    }
+    
+    @IBAction func hueAdjustTapped(_ sender: UIButton) {
+    }
+    
+    @IBAction func photoEffectInstantTapped(_ sender: UIButton) {
+    }
+    
+    @IBAction func vignetteTapped(_ sender: UIButton) {
+    }
+    
+    @IBAction func linearGradientTapped(_ sender: UIButton) {
+    }
+    
+    
+    func updateViews() {
+        guard let imageData = imageData,
+            let image = UIImage(data: imageData) else {
+                title = "New Post"
+                return
+        }
+        title = post?.title
+        setImageViewHeight(with: image.ratio)
+        imageView.image = image
+        chooseImageButton.setTitle("", for: [])
+    }
+    
+    private func presentImagePickerController() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
+            return
+        }
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
     func setImageViewHeight(with aspectRatio: CGFloat) {
-        
         imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
-        
         view.layoutSubviews()
     }
     
-    var postController: PostController!
-    var post: Post?
-    var imageData: Data?
     
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var chooseImageButton: UIButton!
-    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var postButton: UIBarButtonItem!
+    func updateImage() {
+        guard let originalImage = originalImage else {return}
+        imageView?.image = filterColorClamp(image: originalImage)
+    }
+    
+    func filterColorClamp(image: UIImage) -> UIImage? {
+        
+    }
+    
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
