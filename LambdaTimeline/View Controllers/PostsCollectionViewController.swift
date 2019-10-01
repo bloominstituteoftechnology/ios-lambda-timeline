@@ -15,6 +15,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 	private var operations = [String : Operation]()
 	private let mediaFetchQueue = OperationQueue()
 	private let cache = Cache<String, Data>()
+
+	@IBOutlet var emptyCollectionFillView: UIView!
+	@IBOutlet var emptyCollectionViewBG: UIView!
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -23,6 +26,22 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 			DispatchQueue.main.async {
 				self.collectionView.reloadData()
 			}
+		}
+
+		emptyCollectionViewBG.layer.cornerRadius = 20
+	}
+
+	private func setupStarterView() {
+		emptyCollectionFillView.frame = collectionView.bounds
+		emptyCollectionFillView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+		view.addSubview(emptyCollectionFillView)
+	}
+
+	private func showStarterView(_ show: Bool) {
+		if show {
+			setupStarterView()
+		} else {
+			emptyCollectionFillView.removeFromSuperview()
 		}
 	}
 	
@@ -45,7 +64,13 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 	// MARK: UICollectionViewDataSource
 	
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return postController.posts.count
+		let count = postController.posts.count
+		if count == 0 {
+			showStarterView(true)
+		} else {
+			showStarterView(false)
+		}
+		return count
 	}
 	
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

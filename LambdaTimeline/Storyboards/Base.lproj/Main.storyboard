@@ -96,11 +96,43 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="emptyCollectionFillView" destination="Zcb-nz-XeS" id="ojl-h6-LTX"/>
+                        <outlet property="emptyCollectionViewBG" destination="cqp-QT-5w5" id="kq3-2R-t8r"/>
                         <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="jaI-fq-Woc"/>
                         <segue destination="OyM-8q-Icp" kind="show" identifier="ViewImagePost" id="hhs-es-AdQ"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="Zcb-nz-XeS">
+                    <rect key="frame" x="0.0" y="0.0" width="379" height="316"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cqp-QT-5w5">
+                            <rect key="frame" x="20" y="108" width="339" height="100.5"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Press the + button above to begin!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sZN-O5-g4f">
+                                    <rect key="frame" x="20" y="40" width="299" height="20.5"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="sZN-O5-g4f" secondAttribute="trailing" constant="20" id="cmP-KW-DUA"/>
+                                <constraint firstAttribute="bottom" secondItem="sZN-O5-g4f" secondAttribute="bottom" constant="40" id="eQG-0W-yik"/>
+                                <constraint firstItem="sZN-O5-g4f" firstAttribute="top" secondItem="cqp-QT-5w5" secondAttribute="top" constant="40" id="ip9-BW-xdd"/>
+                                <constraint firstItem="sZN-O5-g4f" firstAttribute="leading" secondItem="cqp-QT-5w5" secondAttribute="leading" constant="20" id="mHl-Jm-efV"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="cqp-QT-5w5" firstAttribute="centerY" secondItem="Zcb-nz-XeS" secondAttribute="centerY" id="JI7-X7-dfO"/>
+                        <constraint firstItem="cqp-QT-5w5" firstAttribute="leading" secondItem="Zcb-nz-XeS" secondAttribute="leading" constant="20" id="Rau-qL-cPl"/>
+                        <constraint firstAttribute="trailing" secondItem="cqp-QT-5w5" secondAttribute="trailing" constant="20" id="ToD-e8-9iY"/>
+                    </constraints>
+                </view>
             </objects>
             <point key="canvasLocation" x="1216.8" y="108.39580209895054"/>
         </scene>
