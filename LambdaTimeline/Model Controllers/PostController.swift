@@ -119,7 +119,7 @@ class PostController {
     
     var posts: [Post] = []
     let currentUser = Auth.auth().currentUser
-    let postsRef = Database.database().reference().child("posts")
+	let postsRef = Database.database().reference().child("LambdaTimeline/posts")
     
     let storageRef = Storage.storage().reference()
     

@@ -8,13 +8,17 @@
 
 import UIKit
 import Photos
+import CoreImage
 
 class ImagePostViewController: ShiftableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setImageViewHeight(with: 1.0)
+//        setImageViewHeight(with: 1.0)
+		filterCollectionView.dataSource = self
+		filterCollectionView.delegate = self
+		filterCollectionView.isHidden = true
         
         updateViews()
     }
@@ -29,9 +33,9 @@ class ImagePostViewController: ShiftableViewController {
         
         title = post?.title
         
-        setImageViewHeight(with: image.ratio)
+//        setImageViewHeight(with: image.ratio)
         
-        imageView.image = image
+        originalImage = image
         
         chooseImageButton.setTitle("", for: [])
     }
@@ -105,12 +109,12 @@ class ImagePostViewController: ShiftableViewController {
         presentImagePickerController()
     }
     
-    func setImageViewHeight(with aspectRatio: CGFloat) {
-        
-        imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
-        
-        view.layoutSubviews()
-    }
+//    func setImageViewHeight(with aspectRatio: CGFloat) {
+//
+//        imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
+//
+//        view.layoutSubviews()
+//    }
     
     var postController: PostController!
     var post: Post?
@@ -119,8 +123,95 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
-    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+	
+	// MARK: - JEFF Code
+	
+	// MARK: IBOutlets
+	
+	@IBOutlet weak var filterCollectionView: UICollectionView!
+	
+	// MARK: Properties
+	
+	private var originalImage: UIImage? {
+		didSet {
+			imageView.image = originalImage
+			filterCollectionView.reloadData()
+			filterCollectionView.isHidden = false
+		}
+	}
+	let filters: [FilterType] = [.Original, .Chrome, .Fade, .Instant, .Noir]
+	
+	// MARK: IBActions
+	
+	
+	// MARK: Helpers
+	
+}
+
+enum FilterType : String {
+	case Original = "Original"
+	case Chrome = "CIPhotoEffectChrome"
+	case Fade = "CIPhotoEffectFade"
+	case Instant = "CIPhotoEffectInstant"
+	case Mono = "CIPhotoEffectMono"
+	case Noir = "CIPhotoEffectNoir"
+	case Process = "CIPhotoEffectProcess"
+	case Tonal = "CIPhotoEffectTonal"
+	case Transfer =  "CIPhotoEffectTransfer"
+	
+	var regularText: String {
+		self.rawValue.replacingOccurrences(of: "CIPhotoEffect", with: "")
+	}
+}
+
+// MARK: UIImage Extension
+
+extension UIImage {
+	func addFilter(filter: FilterType) -> UIImage? {
+		let filter = CIFilter(name: filter.rawValue)
+		let ciInput = CIImage(image: self)
+		let ciContext = CIContext()
+		
+		filter?.setValue(ciInput, forKey: kCIInputImageKey)
+		
+		guard let ciOutput = filter?.outputImage,
+			let cgImage = ciContext.createCGImage(ciOutput, from: (ciOutput.extent)) else { return nil }
+		
+		return UIImage(cgImage: cgImage)
+	}
+}
+
+// MARK: CollectionView DataSource & Delegate
+
+extension ImagePostViewController: UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		filters.count
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath) as? FilterCell else { return UICollectionViewCell() }
+		
+		cell.delegate = self
+		cell.setupView(with: originalImage
+			, applying: filters[indexPath.item])
+		
+		return cell
+	}
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+         let cellHeight = filterCollectionView.bounds.height
+         
+         return CGSize(width: 100, height: 100)
+     }
+}
+
+// MARK: FilterCell Delegate
+
+extension ImagePostViewController: FilterCellDelegate {
+	func selectedFilter(_ filter: FilterType) {
+		imageView.image = originalImage?.addFilter(filter: filter) ?? originalImage
+	}
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -133,9 +224,9 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
-        imageView.image = image
+        originalImage = image
         
-        setImageViewHeight(with: image.ratio)
+//        setImageViewHeight(with: image.ratio)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
