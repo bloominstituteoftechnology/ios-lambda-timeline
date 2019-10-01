@@ -10,6 +10,7 @@ import UIKit
 
 class AudioCommentViewController: UIViewController {
 
+    @IBOutlet var recordButton: UIButton!
     @IBOutlet var timeLabel: UILabel!
     @IBOutlet var timeRemainingLabel: UILabel!
     @IBOutlet var timeSlider: UISlider!

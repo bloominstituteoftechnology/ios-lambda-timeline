@@ -85,4 +85,6 @@ class ImagePostDetailTableViewController: UITableViewController {
         
         return cell
     }
+    
 }
+

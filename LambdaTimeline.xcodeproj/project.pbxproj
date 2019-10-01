@@ -34,6 +34,9 @@
 		EF38E3092342B79600209225 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EF38E3082342B79600209225 /* GoogleService-Info.plist */; };
 		EF8B63C12343EF4700EF4B13 /* AudioCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B63C02343EF4700EF4B13 /* AudioCommentViewController.swift */; };
 		EF8B63C32343F45700EF4B13 /* AudioTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B63C22343F45700EF4B13 /* AudioTableViewCell.swift */; };
+		EF8B63C52343FE9100EF4B13 /* FetchAudioOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B63C42343FE9100EF4B13 /* FetchAudioOperation.swift */; };
+		EF8B63CB23440C7800EF4B13 /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B63CA23440C7800EF4B13 /* Recorder.swift */; };
+		EF8B63CD23440CA000EF4B13 /* AudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF8B63CC23440CA000EF4B13 /* AudioPlayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +71,9 @@
 		EF38E3082342B79600209225 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EF8B63C02343EF4700EF4B13 /* AudioCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AudioCommentViewController.swift; path = "LambdaTimeline/View Controllers/AudioCommentViewController.swift"; sourceTree = SOURCE_ROOT; };
 		EF8B63C22343F45700EF4B13 /* AudioTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AudioTableViewCell.swift; path = LambdaTimeline/Views/AudioTableViewCell.swift; sourceTree = SOURCE_ROOT; };
+		EF8B63C42343FE9100EF4B13 /* FetchAudioOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchAudioOperation.swift; sourceTree = "<group>"; };
+		EF8B63CA23440C7800EF4B13 /* Recorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
+		EF8B63CC23440CA000EF4B13 /* AudioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				46CFE7002171559500E7FF73 /* FetchMediaOperation.swift */,
+				EF8B63C42343FE9100EF4B13 /* FetchAudioOperation.swift */,
 				46CFE6FE2171556D00E7FF73 /* ConcurrentOperation.swift */,
 			);
 			path = Operations;
@@ -200,6 +207,8 @@
 				46D571F22172D43B00E7FF73 /* Cache.swift */,
 				464637982170048900E7FF73 /* FirebaseConvertible.swift */,
 				46CFE6FC217154F500E7FF73 /* Networking.swift */,
+				EF8B63CC23440CA000EF4B13 /* AudioPlayer.swift */,
+				EF8B63CA23440C7800EF4B13 /* Recorder.swift */,
 				46CFE6F82170862C00E7FF73 /* ShiftableViewController.swift */,
 			);
 			path = Helpers;
@@ -357,6 +366,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF8B63C52343FE9100EF4B13 /* FetchAudioOperation.swift in Sources */,
 				46A0366D2170158900E7FF73 /* SignInViewController.swift in Sources */,
 				46CFE6FB21714E6100E7FF73 /* Author.swift in Sources */,
 				46CFE6F92170862C00E7FF73 /* ShiftableViewController.swift in Sources */,
@@ -368,9 +378,11 @@
 				46CFE6F32170757F00E7FF73 /* User+DictionaryRepresentation.swift in Sources */,
 				46D571F32172D43B00E7FF73 /* Cache.swift in Sources */,
 				46CFE7012171559500E7FF73 /* FetchMediaOperation.swift in Sources */,
+				EF8B63CD23440CA000EF4B13 /* AudioPlayer.swift in Sources */,
 				46D571F82173FC2700E7FF73 /* ImagePostDetailTableViewController.swift in Sources */,
 				46CFE7032171572600E7FF73 /* ImagePostCollectionViewCell.swift in Sources */,
 				EF023B4023439E1300E0C94D /* Image+Scaling.swift in Sources */,
+				EF8B63CB23440C7800EF4B13 /* Recorder.swift in Sources */,
 				4646379C2170091A00E7FF73 /* PostController.swift in Sources */,
 				464637992170048900E7FF73 /* FirebaseConvertible.swift in Sources */,
 				46A0366A21700F5100E7FF73 /* PostsCollectionViewController.swift in Sources */,
