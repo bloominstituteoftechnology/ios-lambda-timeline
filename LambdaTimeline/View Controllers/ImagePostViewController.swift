@@ -159,7 +159,28 @@ extension ImagePostViewController: UITableViewDelegate, UITableViewDataSource {
 // MARK: - Filter Stuff
 extension ImagePostViewController: AddFilterCellDelegate {
 	func addFilterCellWasInvoked(_ cell: AddFilterTableViewCell) {
-		filterHolders.append(FilterHolder(filter: CIFilter(name: "CIColorControls")!))
+		let alertVC = UIAlertController(title: "New Filter", message: "What filter would you like to add?", preferredStyle: .actionSheet)
+		alertVC.addAction(UIAlertAction(title: "Motion Blur", style: .default, handler: { _ in
+			self.addFilter(named: "CIMotionBlur")
+		}))
+		alertVC.addAction(UIAlertAction(title: "Vignette", style: .default, handler: { _ in
+			self.addFilter(named: "CIVignette")
+		}))
+		alertVC.addAction(UIAlertAction(title: "Sharpen", style: .default, handler: { _ in
+			self.addFilter(named: "CIUnsharpMask")
+		}))
+		alertVC.addAction(UIAlertAction(title: "Vibrance", style: .default, handler: { _ in
+			self.addFilter(named: "CIVibrance")
+		}))
+		alertVC.addAction(UIAlertAction(title: "Exposure", style: .default, handler: { _ in
+			self.addFilter(named: "CIExposureAdjust")
+		}))
+		alertVC.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+		present(alertVC, animated: true)
+	}
+
+	func addFilter(named name: String) {
+		filterHolders.append(FilterHolder(filter: CIFilter(name: name)!))
 		filterTableView.reloadData()
 	}
 }
