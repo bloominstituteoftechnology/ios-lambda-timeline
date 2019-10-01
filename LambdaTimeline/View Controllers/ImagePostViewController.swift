@@ -104,8 +104,9 @@ class ImagePostViewController: ShiftableViewController {
 					self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
 					return
 				}
-				
-				self.presentImagePickerController()
+				DispatchQueue.main.async {
+					self.presentImagePickerController()
+				}
 			}
 		case .denied:
 			self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
@@ -114,7 +115,6 @@ class ImagePostViewController: ShiftableViewController {
 		@unknown default:
 			self.presentInformationalAlertController(title: "Error", message: "Unknown status ocurred. Notify the pope.")
 		}
-		presentImagePickerController()
 	}
 }
 
