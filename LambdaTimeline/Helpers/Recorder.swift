@@ -31,6 +31,7 @@ class Recorder: NSObject {
         let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
         
         recorder = try! AVAudioRecorder(url: file, format: format)
+        
         recorder?.delegate = self
         
         recorder?.record()
