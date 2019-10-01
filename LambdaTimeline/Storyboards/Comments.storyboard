@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fAV-Ig-LTq">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Comment Page View Controller-->
+        <scene sceneID="h4b-kz-l8G">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="pageCurl" navigationOrientation="horizontal" spineLocation="min" id="fAV-Ig-LTq" customClass="CommentPageViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qmf-IF-Qaz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="164" y="74"/>
+        </scene>
+        <!--Prose Comment-->
+        <scene sceneID="In0-sE-0rW">
+            <objects>
+                <viewController storyboardIdentifier="ProseCommentViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Hrg-cF-UCA" customClass="ProseCommentViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1tz-BB-eYT">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="prose" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jti-K3-i5A">
+                                <rect key="frame" x="185" y="437.5" width="44" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Jti-K3-i5A" firstAttribute="centerY" secondItem="1tz-BB-eYT" secondAttribute="centerY" id="CBH-2K-GG0"/>
+                            <constraint firstItem="Jti-K3-i5A" firstAttribute="centerX" secondItem="1tz-BB-eYT" secondAttribute="centerX" id="Rcx-jJ-wm8"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="zn7-ZP-ifx"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Prose Comment" id="K4u-n2-dHG"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JXQ-cs-tCt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1243" y="-283"/>
+        </scene>
+        <!--Singing Comment-->
+        <scene sceneID="YWe-Ud-3WT">
+            <objects>
+                <viewController storyboardIdentifier="SingingCommentViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Dbt-kj-54n" customClass="SingingCommentViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UjZ-uI-Xd4">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="singing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OtY-hL-NnE">
+                                <rect key="frame" x="179.5" y="437.5" width="55.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="OtY-hL-NnE" firstAttribute="centerY" secondItem="UjZ-uI-Xd4" secondAttribute="centerY" id="49q-hB-hCd"/>
+                            <constraint firstItem="OtY-hL-NnE" firstAttribute="centerX" secondItem="UjZ-uI-Xd4" secondAttribute="centerX" id="nvl-6b-qS6"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="b6E-eY-kJg"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Singing Comment" id="hIg-CF-Thf"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0H1-sv-Xb6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1243" y="415"/>
+        </scene>
+    </scenes>
+</document>
