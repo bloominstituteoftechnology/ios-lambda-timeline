@@ -136,32 +136,27 @@ class ImagePostViewController: ShiftableViewController {
 	private var originalImage: UIImage? {
 		didSet {
 			imageView.image = originalImage
-			filterCollectionView.reloadData()
-			filterCollectionView.isHidden = false
+			filterController = FilterController(image: originalImage)
 		}
 	}
-	let filters: [FilterType] = [.Original, .Chrome, .Fade, .Instant, .Noir]
+	var filterController: FilterController? {
+		didSet {
+			displayFilters()
+		}
+	}
 	
 	// MARK: IBActions
 	
 	
 	// MARK: Helpers
 	
-}
-
-enum FilterType : String {
-	case Original = "Original"
-	case Chrome = "CIPhotoEffectChrome"
-	case Fade = "CIPhotoEffectFade"
-	case Instant = "CIPhotoEffectInstant"
-	case Mono = "CIPhotoEffectMono"
-	case Noir = "CIPhotoEffectNoir"
-	case Process = "CIPhotoEffectProcess"
-	case Tonal = "CIPhotoEffectTonal"
-	case Transfer =  "CIPhotoEffectTransfer"
-	
-	var regularText: String {
-		self.rawValue.replacingOccurrences(of: "CIPhotoEffect", with: "")
+	private func displayFilters() {
+		filterController?.createFilters {
+			DispatchQueue.main.async {
+				self.filterCollectionView.reloadData()
+				self.filterCollectionView.isHidden = false
+			}
+		}
 	}
 }
 
@@ -186,23 +181,23 @@ extension UIImage {
 
 extension ImagePostViewController: UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
 	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		filters.count
+		filterController?.filters.count ?? 0
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath) as? FilterCell else { return UICollectionViewCell() }
+		guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath) as? FilterCell,
+			let filter = filterController?.getFilter(at: indexPath.item) else { return UICollectionViewCell() }
 		
 		cell.delegate = self
-		cell.setupView(with: originalImage
-			, applying: filters[indexPath.item])
+		cell.setupView(with: filter.image, from: filter.type)
 		
 		return cell
 	}
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-         let cellHeight = filterCollectionView.bounds.height
+		let cellHeight = filterCollectionView.bounds.height * 0.7
          
-         return CGSize(width: 100, height: 100)
+         return CGSize(width: cellHeight, height: cellHeight)
      }
 }
 

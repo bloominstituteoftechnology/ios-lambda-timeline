@@ -15,6 +15,7 @@ protocol FilterCellDelegate {
 class FilterCell: UICollectionViewCell {
     
 	@IBOutlet weak private var imageView: UIImageView!
+	@IBOutlet weak var filterLbl: UILabel!
 	@IBOutlet weak private var filterBtn: UIButton!
 	
 	var delegate: FilterCellDelegate?
@@ -24,11 +25,11 @@ class FilterCell: UICollectionViewCell {
 		delegate?.selectedFilter(filter)
 	}
 	
-	func setupView(with image: UIImage?, applying filter: FilterType) {
-		let filteredImage = image?.addFilter(filter: filter) ?? image
+	func setupView(with image: UIImage, from filter: FilterType) {
 		
-		imageView.image = filteredImage?.imageByScaling(toSize: imageView.frame.size)
-		filterBtn.setTitle(filter.regularText, for: .normal)
+		imageView.image = image.addFilter(filter: filter)
+		filterLbl.text = filter.regularText
+		filterBtn.setTitle("", for: .normal)
 		self.filter = filter
 	}
 }
