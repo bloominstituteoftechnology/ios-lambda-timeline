@@ -55,6 +55,16 @@ class SettingSlider: UIView {
 		}
 	}
 
+	override init(frame: CGRect) {
+		super.init(frame: frame)
+		commonInit()
+	}
+
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		commonInit()
+	}
+
 	private func commonInit() {
 		let nib = UINib(nibName: "SettingSlider", bundle: nil)
 		nib.instantiate(withOwner: self, options: nil)

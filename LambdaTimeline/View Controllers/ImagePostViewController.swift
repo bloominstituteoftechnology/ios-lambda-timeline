@@ -154,6 +154,13 @@ extension ImagePostViewController: UITableViewDelegate, UITableViewDataSource {
 		cell.filterHolder = filterHolders[indexPath.row]
 		return cell
 	}
+
+	func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+		if editingStyle == .delete {
+			filterHolders.remove(at: indexPath.row)
+			tableView.deleteRows(at: [indexPath], with: .automatic)
+		}
+	}
 }
 
 // MARK: - Filter Stuff

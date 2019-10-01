@@ -24,9 +24,12 @@ class FilterSettingsTableViewCell: UITableViewCell {
 		filterNameLabel.text = filterAttributes.displayName
 
 		for attribute in filterAttributes.attributes {
-			let temp = UILabel()
-			temp.text = attribute.displayName
-			stackView.addArrangedSubview(temp)
+			let setting = SettingSlider()
+			setting.title = attribute.displayName
+			setting.maxValue = attribute.sliderMax?.floatValue ?? attribute.maximum?.floatValue ?? 1
+			setting.minValue = attribute.sliderMin?.floatValue ?? attribute.minimum?.floatValue ?? 0
+			setting.value = filterHolder?.currentValues[attribute]?.floatValue ?? 0.5
+			stackView.addArrangedSubview(setting)
 		}
 
 	}

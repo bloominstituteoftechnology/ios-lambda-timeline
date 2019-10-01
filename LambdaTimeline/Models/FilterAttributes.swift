@@ -66,3 +66,9 @@ extension NSNumber {
 		return CGFloat(truncating: self)
 	}
 }
+
+extension CGFloat {
+	var floatValue: Float {
+		return Float(self)
+	}
+}
