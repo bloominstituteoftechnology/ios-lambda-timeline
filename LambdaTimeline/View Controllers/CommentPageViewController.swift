@@ -25,6 +25,7 @@ class CommentPageViewController: UIPageViewController {
 		super.viewDidLoad()
 		dataSource = self
 		setViewControllers([pagedViewController(at: 0)].compactMap { $0 }, direction: .forward, animated: true)
+		view.backgroundColor = .white
 	}
 
 	func pagedViewController(at index: Int) -> UIViewController? {

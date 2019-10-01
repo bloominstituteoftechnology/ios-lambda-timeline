@@ -27,8 +27,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			window?.rootViewController = postsNavigationController
 			window?.makeKeyAndVisible()
 		}
-		
-		
+
+
+		UIPageControl.appearance().currentPageIndicatorTintColor = .black
+		UIPageControl.appearance().pageIndicatorTintColor = .lightGray
+
 		return true
 	}
 	
