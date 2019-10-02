@@ -20,11 +20,11 @@ class ImagePostDetailTableViewController: UITableViewController {
         guard let imageData = imageData,
             let image = UIImage(data: imageData) else { return }
         
-        title = post?.title
+		title = post.description
         
         imageView.image = image
         
-        titleLabel.text = post.title
+        titleLabel.text = post.description
         authorLabel.text = post.author.displayName
     }
     

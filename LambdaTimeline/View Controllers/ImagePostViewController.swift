@@ -31,7 +31,7 @@ class ImagePostViewController: ShiftableViewController {
                 return
         }
         
-        title = post?.title
+		title = post?.description
         
 //        setImageViewHeight(with: image.ratio)
         
@@ -66,7 +66,7 @@ class ImagePostViewController: ShiftableViewController {
             return
         }
         
-        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
+		postController.createPost(description: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
             guard success else {
                 DispatchQueue.main.async {
                     self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")

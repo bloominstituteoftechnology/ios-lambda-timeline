@@ -15,12 +15,13 @@ enum MediaType: String {
 
 class Post {
     
-    init(title: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date()) {
+	init(mediaURL: URL, ratio: CGFloat? = nil, description: String?, author: Author, timestamp: Date = Date()) {
         self.mediaURL = mediaURL
         self.ratio = ratio
         self.mediaType = .image
+		self.description = description ?? ""
         self.author = author
-        self.comments = [Comment(text: title, author: author)]
+		self.comments = []
         self.timestamp = timestamp
     }
     
@@ -32,14 +33,16 @@ class Post {
             let authorDictionary = dictionary[Post.authorKey] as? [String: Any],
             let author = Author(dictionary: authorDictionary),
             let timestampTimeInterval = dictionary[Post.timestampKey] as? TimeInterval,
-            let captionDictionaries = dictionary[Post.commentsKey] as? [[String: Any]] else { return nil }
-        
+			let description = dictionary[Post.descriptionKey] as? String else { return nil }
+		let captionDictionaries = dictionary[Post.commentsKey] as? [[String: Any]]
+		
         self.mediaURL = mediaURL
         self.mediaType = mediaType
         self.ratio = dictionary[Post.ratioKey] as? CGFloat
+		self.description = description
         self.author = author
         self.timestamp = Date(timeIntervalSince1970: timestampTimeInterval)
-        self.comments = captionDictionaries.compactMap({ Comment(dictionary: $0) })
+		self.comments = captionDictionaries?.compactMap({ Comment(dictionary: $0) }) ?? []
         self.id = id
     }
     
@@ -48,6 +51,7 @@ class Post {
 			Post.mediaKey: mediaURL.absoluteString,
 			Post.mediaTypeKey: mediaType.rawValue,
 			Post.commentsKey: comments.map({ $0.dictionaryRepresentation }),
+			Post.descriptionKey: description,
 			Post.authorKey: author.dictionaryRepresentation,
 			Post.timestampKey: timestamp.timeIntervalSince1970
 		]
@@ -61,19 +65,17 @@ class Post {
     
     var mediaURL: URL
     let mediaType: MediaType
+	let description: String
     let author: Author
     let timestamp: Date
     var comments: [Comment]
     var id: String?
     var ratio: CGFloat?
     
-    var title: String? {
-        return comments.first?.text
-    }
-    
     static private let mediaKey = "media"
     static private let ratioKey = "ratio"
     static private let mediaTypeKey = "mediaType"
+    static private let descriptionKey = "description"
     static private let authorKey = "author"
     static private let commentsKey = "comments"
     static private let timestampKey = "timestamp"
