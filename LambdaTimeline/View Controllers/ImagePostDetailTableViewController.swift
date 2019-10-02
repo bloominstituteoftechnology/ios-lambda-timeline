@@ -69,13 +69,29 @@ extension ImagePostDetailTableViewController {
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+		let cell: UITableViewCell
 		
 		let comment = post?.comments[indexPath.row + 1]
-		
-		cell.textLabel?.text = comment?.text
-		cell.detailTextLabel?.text = comment?.author.displayName
-		
+		if comment?.audioURL != nil {
+			let audioCell = audioCommentCell(at: indexPath)
+			audioCell.comment = comment
+			cell = audioCell
+		} else {
+			cell = textCommentCell(at: indexPath)
+			cell.textLabel?.text = comment?.text
+			cell.detailTextLabel?.text = comment?.author.displayName
+		}
+
 		return cell
 	}
+
+	private func textCommentCell(at indexPath: IndexPath) -> UITableViewCell {
+		tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+	}
+
+	private func audioCommentCell(at indexPath: IndexPath) -> AudioCommentTableViewCell {
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCommentCell", for: indexPath) as? AudioCommentTableViewCell else { return AudioCommentTableViewCell() }
+		return cell
+	}
+
 }
