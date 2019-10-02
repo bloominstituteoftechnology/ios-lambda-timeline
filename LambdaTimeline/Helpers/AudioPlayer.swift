@@ -50,6 +50,12 @@ class AudioPlayer: NSObject {
 		avPlayer.delegate = self
 	}
 
+	init(with data: Data) throws {
+		avPlayer = try AVAudioPlayer(data: data)
+		super.init()
+		avPlayer.delegate = self
+	}
+
 	deinit {
 		avPlayer.stop()
 		stopTimer()
