@@ -12,6 +12,9 @@ class AudioCommentViewController: UIViewController {
     
        lazy private var audioPlayer = AudioPlayer()
        lazy private var recorder = Recorder()
+       var postController: PostController!
+       var post: Post!
+    var recordingURL: URL?
 
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var timeLabel: UILabel!
@@ -46,6 +49,13 @@ class AudioCommentViewController: UIViewController {
         updateSlider()
     }
     @IBAction func createCommentButtonTapped(_ sender: UIButton) {
+        
+        guard let recording = recordingURL else {return}
+        self.postController.addAudioComment(with: recording, to: &self.post!)
+        DispatchQueue.main.async {
+            self.dismiss(animated: true, completion: nil)
+        }
+        
     }
     @IBAction func cancelButtonTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -79,6 +89,7 @@ extension AudioCommentViewController: RecorderDelegate {
     func recorderDidFinishSavingFile(recorder: Recorder, url: URL) {
         if !recorder.isRecording {
            try!  audioPlayer.load(url: url)
+            recordingURL = url
         }
     }
 }

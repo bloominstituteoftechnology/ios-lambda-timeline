@@ -14,5 +14,10 @@ class AudioTableViewCell: UITableViewCell {
     
     @IBOutlet var playRecording: UIButton!
     
-    @IBOutlet var playRecordingTapped: UIButton!
+    var buttonAction: ((_ sender: AnyObject) -> Void)?
+    
+    @IBAction func playButtonTapped(_ sender: UIButton) {
+        self.buttonAction?(sender)
+    }
+    
 }
