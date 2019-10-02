@@ -47,7 +47,7 @@ class ImagePostDetailTableViewController: UITableViewController {
 				
 				guard let commentText = commentTextField?.text else { return }
 				
-				self.postController.addComment(with: commentText, to: &self.post!)
+				self.postController.addComment(with: commentText, audioURL: nil, to: &self.post!)
 				
 				DispatchQueue.main.async {
 					self.tableView.reloadData()
