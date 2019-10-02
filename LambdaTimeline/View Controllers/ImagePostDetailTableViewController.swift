@@ -7,12 +7,30 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ImagePostDetailTableViewController: UITableViewController {
+    
+    
+    
+    var post: Post!
+    var postController: PostController!
+    var imageData: Data?
+    var audioPlayer = AudioPlayer()
+    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.reloadData()
     }
     
     func updateViews() {
@@ -27,6 +45,7 @@ class ImagePostDetailTableViewController: UITableViewController {
         titleLabel.text = post.title
         authorLabel.text = post.author.displayName
     }
+    
     
     // MARK: - Table view data source
     
@@ -65,24 +84,34 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+       
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
-        
         let comment = post?.comments[indexPath.row + 1]
-        
         cell.textLabel?.text = comment?.text
         cell.detailTextLabel?.text = comment?.author.displayName
-        
         return cell
+        
+//            guard let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCell", for: indexPath) as? AudioTableViewCell,  let comment = post?.comments[indexPath.row + 1], let url = comment.audioURL  else {return UITableViewCell()}
+//            cell.sendersName.text = comment.author.displayName
+//            cell.buttonAction = { (sender) in
+//               try! self.audioPlayer.load(url: url)
+//                self.audioPlayer.play()
+//            }
+//
+//        }
+//        return UITableViewCell()
     }
     
-    var post: Post!
-    var postController: PostController!
-    var imageData: Data?
+
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AudioComment" {
+            guard let destinationVC = segue.destination as? AudioCommentViewController else {return}
+            
+            destinationVC.postController = postController
+            destinationVC.post = post
+        }
+    }
     
-    
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var authorLabel: UILabel!
-    @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
 }
+
