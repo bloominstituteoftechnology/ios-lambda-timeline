@@ -46,7 +46,6 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 	}
 	
 	@IBAction func addPost(_ sender: Any) {
-		
 		let alert = UIAlertController(title: "New Post", message: "Which kind of post do you want to create?", preferredStyle: .actionSheet)
 		
 		let imagePostAction = UIAlertAction(title: "Image", style: .default) { _ in
@@ -76,7 +75,6 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 		let post = postController.posts[indexPath.row]
 		
 		switch post.mediaType {
-			
 		case .image:
 			guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell",
 																for: indexPath) as? ImagePostCollectionViewCell
@@ -84,6 +82,8 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 			cell.post = post
 			loadImage(for: cell, forItemAt: indexPath)
 			return cell
+		case .video:
+			fatalError("fix this")
 		}
 	}
 	
@@ -94,12 +94,11 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 		let post = postController.posts[indexPath.row]
 		
 		switch post.mediaType {
-			
 		case .image:
-			
 			guard let ratio = post.ratio else { return size }
-			
 			size.height = size.width * ratio
+		case .video:
+			fatalError("fix this")
 		}
 		
 		return size
