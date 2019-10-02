@@ -85,22 +85,21 @@ class ImagePostDetailTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        
-        if indexPath.row == 1 {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
         let comment = post?.comments[indexPath.row + 1]
         cell.textLabel?.text = comment?.text
         cell.detailTextLabel?.text = comment?.author.displayName
         return cell
-        } else if indexPath.row == 2 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCell", for: indexPath) as? AudioTableViewCell,  let comment = post?.comments[indexPath.row + 2], let url = comment.audioURL  else {return UITableViewCell()}
-            cell.sendersName.text = comment.author.displayName
-            cell.buttonAction = { (sender) in
-               try! self.audioPlayer.load(url: url)
-                self.audioPlayer.play()
-            }
-            
-        }
-        return UITableViewCell()
+        
+//            guard let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCell", for: indexPath) as? AudioTableViewCell,  let comment = post?.comments[indexPath.row + 1], let url = comment.audioURL  else {return UITableViewCell()}
+//            cell.sendersName.text = comment.author.displayName
+//            cell.buttonAction = { (sender) in
+//               try! self.audioPlayer.load(url: url)
+//                self.audioPlayer.play()
+//            }
+//
+//        }
+//        return UITableViewCell()
     }
     
 

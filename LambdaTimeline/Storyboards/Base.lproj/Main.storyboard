@@ -367,48 +367,41 @@
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AudioCell" rowHeight="54" id="owS-pQ-vuN" customClass="AudioTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="188.5" width="375" height="54"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AudioCell" rowHeight="88" id="owS-pQ-vuN" customClass="AudioTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="188.5" width="375" height="88"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="owS-pQ-vuN" id="0ez-ak-F4e">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="54"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Senders Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CGD-lc-hiZ">
-                                            <rect key="frame" x="16" y="7" width="113" height="20.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nea-dF-uYx">
-                                            <rect key="frame" x="303" y="12" width="46" height="30"/>
-                                            <color key="tintColor" red="0.067182148969999994" green="0.90871147259999996" blue="0.23003888410000001" alpha="0.56370398119999998" colorSpace="calibratedRGB"/>
-                                            <state key="normal" backgroundImage="play.rectangle.fill" catalog="system">
-                                                <color key="titleColor" red="0.067182148969999994" green="0.90871147259999996" blue="0.23003888410000001" alpha="0.56370398119999998" colorSpace="calibratedRGB"/>
-                                                <color key="titleShadowColor" red="0.067182148969999994" green="0.90871147259999996" blue="0.23003888410000001" alpha="0.56370398119999998" colorSpace="calibratedRGB"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="playButtonTapped:" destination="owS-pQ-vuN" eventType="touchUpInside" id="pB6-hZ-1P2"/>
-                                            </connections>
-                                        </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Voice Recording" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nhk-m1-4Ni">
-                                            <rect key="frame" x="16" y="29" width="86" height="13.5"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="4Yp-fP-dPy">
+                                            <rect key="frame" x="16" y="23" width="139" height="43"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Senders Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CGD-lc-hiZ">
+                                                    <rect key="frame" x="13.5" y="0.0" width="112.5" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nea-dF-uYx">
+                                                    <rect key="frame" x="57.5" y="21.5" width="24" height="20.5"/>
+                                                    <color key="tintColor" red="0.067182148969999994" green="0.90871147259999996" blue="0.23003888410000001" alpha="0.56370398119999998" colorSpace="calibratedRGB"/>
+                                                    <state key="normal" backgroundImage="play.rectangle.fill" catalog="system">
+                                                        <color key="titleColor" red="0.067182148969999994" green="0.90871147259999996" blue="0.23003888410000001" alpha="0.56370398119999998" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" red="0.067182148969999994" green="0.90871147259999996" blue="0.23003888410000001" alpha="0.56370398119999998" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="playButtonTapped:" destination="owS-pQ-vuN" eventType="touchUpInside" id="pB6-hZ-1P2"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="Nhk-m1-4Ni" firstAttribute="leading" secondItem="0ez-ak-F4e" secondAttribute="leadingMargin" id="6MK-Kk-dkQ"/>
-                                        <constraint firstItem="nea-dF-uYx" firstAttribute="bottom" secondItem="0ez-ak-F4e" secondAttribute="bottomMargin" id="D4r-cG-yI4"/>
-                                        <constraint firstItem="CGD-lc-hiZ" firstAttribute="leading" secondItem="0ez-ak-F4e" secondAttribute="leading" constant="16" id="GOT-Jl-I3z"/>
-                                        <constraint firstItem="nea-dF-uYx" firstAttribute="top" secondItem="0ez-ak-F4e" secondAttribute="topMargin" id="PjK-6J-xoH"/>
-                                        <constraint firstAttribute="trailing" secondItem="CGD-lc-hiZ" secondAttribute="trailing" constant="246" id="WJv-04-8gE"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="nea-dF-uYx" secondAttribute="trailing" constant="10" id="ZpV-GD-F7O"/>
-                                        <constraint firstItem="Nhk-m1-4Ni" firstAttribute="top" secondItem="0ez-ak-F4e" secondAttribute="topMargin" constant="18" id="cWY-eo-rIY"/>
-                                        <constraint firstItem="nea-dF-uYx" firstAttribute="leading" secondItem="0ez-ak-F4e" secondAttribute="leadingMargin" constant="287" id="eBZ-me-Fr5"/>
-                                        <constraint firstItem="CGD-lc-hiZ" firstAttribute="top" secondItem="0ez-ak-F4e" secondAttribute="top" constant="7" id="iuf-kt-wuS"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Nhk-m1-4Ni" secondAttribute="trailing" constant="257" id="vpc-9R-Zdb"/>
+                                        <constraint firstItem="4Yp-fP-dPy" firstAttribute="top" secondItem="0ez-ak-F4e" secondAttribute="top" constant="23" id="8Gr-yK-a6y"/>
+                                        <constraint firstAttribute="bottom" secondItem="4Yp-fP-dPy" secondAttribute="bottom" constant="22" id="asF-GK-o8w"/>
+                                        <constraint firstAttribute="trailing" secondItem="4Yp-fP-dPy" secondAttribute="trailing" constant="220" id="xF2-Sq-RwI"/>
+                                        <constraint firstItem="4Yp-fP-dPy" firstAttribute="leading" secondItem="0ez-ak-F4e" secondAttribute="leading" constant="16" id="z1X-Mg-i4X"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
