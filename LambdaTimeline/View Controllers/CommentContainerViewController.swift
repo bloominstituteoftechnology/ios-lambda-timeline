@@ -32,6 +32,13 @@ class CommentContainerViewController: UIViewController {
 		if let navController = segue.destination as? CommentNavController {
 			navController.postController = postController
 			navController.post = post
+			navController.navDelegate = self
 		}
+	}
+}
+
+extension CommentContainerViewController: CommentNavControllerDelegate {
+	func commentNavControllerDidFinish(_ cnVC: CommentNavController) {
+		dismiss(animated: true)
 	}
 }

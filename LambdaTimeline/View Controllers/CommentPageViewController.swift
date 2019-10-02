@@ -8,9 +8,15 @@
 
 import UIKit
 
+protocol CommentPageViewControllerDelegate: AnyObject {
+	func commentPageViewControllerDidFinish(_ cpVC: CommentPageViewController)
+}
+
 class CommentPageViewController: UIPageViewController {
 	var postController: PostController?
 	var post: Post?
+
+	weak var navDelegate: CommentPageViewControllerDelegate?
 
 	var proseVC: ProseCommentViewController? = {
 		UIStoryboard(name: "Comments", bundle: nil).instantiateViewController(withIdentifier: "ProseCommentViewController") as? ProseCommentViewController
@@ -59,6 +65,7 @@ class CommentPageViewController: UIPageViewController {
 	}
 
 	@IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
+		navDelegate?.commentPageViewControllerDidFinish(self)
 	}
 }
 

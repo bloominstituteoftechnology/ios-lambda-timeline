@@ -8,10 +8,16 @@
 
 import UIKit
 
+protocol CommentNavControllerDelegate: AnyObject {
+	func commentNavControllerDidFinish(_ cnVC: CommentNavController)
+}
+
 class CommentNavController: UINavigationController {
 
 	var postController: PostController?
 	var post: Post?
+
+	weak var navDelegate: CommentNavControllerDelegate?
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -19,8 +25,14 @@ class CommentNavController: UINavigationController {
 			if let commentPageVC = vc as? CommentPageViewController {
 				commentPageVC.postController = postController
 				commentPageVC.post = post
+				commentPageVC.navDelegate = self
 			}
 		}
 	}
+}
 
+extension CommentNavController: CommentPageViewControllerDelegate {
+	func commentPageViewControllerDidFinish(_ cpVC: CommentPageViewController) {
+		navDelegate?.commentNavControllerDidFinish(self)
+	}
 }
