@@ -55,6 +55,12 @@ class AudioRecorder: NSObject {
 		avRecorder.delegate = self
 	}
 
+	deinit {
+		if isRecording {
+			avRecorder.stop() // save to disk
+		}
+	}
+
 	func record() {
 		avRecorder.record()
 		notifyDelegate()

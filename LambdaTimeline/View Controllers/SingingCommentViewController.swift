@@ -46,7 +46,7 @@ class SingingCommentViewController: UIViewController {
 
 	override func viewDidDisappear(_ animated: Bool) {
 		super.viewDidDisappear(animated)
-		recorder?.stop()
+		recorder = nil
 	}
 
 	private func updateViews() {
