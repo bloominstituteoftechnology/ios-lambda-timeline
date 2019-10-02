@@ -68,15 +68,23 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-755" y="74"/>
+            <point key="canvasLocation" x="-794" y="74"/>
         </scene>
         <!--Add a Comment-->
         <scene sceneID="h4b-kz-l8G">
             <objects>
                 <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="fAV-Ig-LTq" customClass="CommentPageViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="Add a Comment" id="jmy-PE-0WK">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="e9k-Ey-iPk"/>
-                        <barButtonItem key="rightBarButtonItem" title="Submit" id="6ha-JO-XOz"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="e9k-Ey-iPk">
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="fAV-Ig-LTq" id="DBo-Ay-b8Q"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Submit" id="6ha-JO-XOz">
+                            <connections>
+                                <action selector="submitButtonPressed:" destination="fAV-Ig-LTq" id="lMk-nX-elf"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qmf-IF-Qaz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -188,10 +196,10 @@
             </objects>
             <point key="canvasLocation" x="2149.275362318841" y="414.50892857142856"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Comment Nav Controller-->
         <scene sceneID="BEP-LE-Mus">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Yji-ZV-JvO" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Yji-ZV-JvO" customClass="CommentNavController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="UDq-Rg-bcB">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

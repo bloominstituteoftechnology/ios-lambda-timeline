@@ -12,6 +12,10 @@ class ProseCommentViewController: UIViewController {
 
 	@IBOutlet private var commentTextView: UITextView!
 
+	var commentText: String {
+		commentTextView.text ?? "No comment"
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		commentTextView.layer.cornerRadius = 10

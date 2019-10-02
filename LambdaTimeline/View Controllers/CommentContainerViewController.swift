@@ -13,6 +13,8 @@ class CommentContainerViewController: UIViewController {
 	@IBOutlet private var backgroundView: UIView!
 	@IBOutlet private var pageViewContainer: UIView!
 
+	var postController: PostController?
+	var post: Post?
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -24,5 +26,12 @@ class CommentContainerViewController: UIViewController {
 
 	@IBAction func backgroundViewTapped(_ sender: UITapGestureRecognizer) {
 		dismiss(animated: true)
+	}
+
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if let navController = segue.destination as? CommentNavController {
+			navController.postController = postController
+			navController.post = post
+		}
 	}
 }

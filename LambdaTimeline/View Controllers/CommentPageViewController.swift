@@ -9,6 +9,9 @@
 import UIKit
 
 class CommentPageViewController: UIPageViewController {
+	var postController: PostController?
+	var post: Post?
+
 	var proseVC: ProseCommentViewController? = {
 		UIStoryboard(name: "Comments", bundle: nil).instantiateViewController(withIdentifier: "ProseCommentViewController") as? ProseCommentViewController
 	}()
@@ -16,6 +19,10 @@ class CommentPageViewController: UIPageViewController {
 	var singingVC: SingingCommentViewController? = {
 		UIStoryboard(name: "Comments", bundle: nil).instantiateViewController(withIdentifier: "SingingCommentViewController") as? SingingCommentViewController
 	}()
+
+	var currentVC: UIViewController? {
+		return viewControllers?.first
+	}
 
 	lazy var pagedVCs: [UIViewController] = {
 		[proseVC, singingVC].compactMap { $0 }
@@ -38,6 +45,21 @@ class CommentPageViewController: UIPageViewController {
 	private func updateTitle() {
 		navigationItem.title = viewControllers?.first?.navigationItem.title ?? navigationItem.title
 	}
+
+	@IBAction func submitButtonPressed(_ sender: UIBarButtonItem) {
+		guard var post = post else { return }
+		if let singingVC = currentVC as? SingingCommentViewController {
+			guard let data = singingVC.recordedData else { return }
+			postController?.addComment(with: data, to: post)
+		}
+
+		if let proseVC = currentVC as? ProseCommentViewController {
+			postController?.addComment(with: proseVC.commentText, to: &post)
+		}
+	}
+
+	@IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
+	}
 }
 
 extension CommentPageViewController: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
@@ -54,7 +76,7 @@ extension CommentPageViewController: UIPageViewControllerDataSource, UIPageViewC
 	}
 
 	func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-		guard let currentVC = pageViewController.viewControllers?.first else { return 0 }
+		guard let currentVC = currentVC else { return 0 }
 		return pagedVCs.firstIndex(of: currentVC) ?? 0
 	}
 

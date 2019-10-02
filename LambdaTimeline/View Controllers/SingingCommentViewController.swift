@@ -17,6 +17,10 @@ class SingingCommentViewController: UIViewController {
 	var recorder: AudioRecorder?
 	var playbackPreview: AudioPlayer?
 	var lastRecording: URL?
+	var recordedData: Data? {
+		guard let lastRecording = lastRecording else { return nil }
+		return try? Data(contentsOf: lastRecording)
+	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
