@@ -97,11 +97,72 @@
                     <connections>
                         <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="jaI-fq-Woc"/>
                         <segue destination="OyM-8q-Icp" kind="show" identifier="ViewImagePost" id="hhs-es-AdQ"/>
+                        <segue destination="FGQ-XF-vHF" kind="show" identifier="VideoPostDetailShowSegue" id="1eX-kM-7Pz"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1216.8" y="108.39580209895054"/>
+        </scene>
+        <!--Video Detail View Controller-->
+        <scene sceneID="Fa8-gc-To0">
+            <objects>
+                <viewController id="FGQ-XF-vHF" customClass="VideoDetailViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9RI-zr-0MM">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="FZK-cx-7hI"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="dZD-qe-dwt"/>
+                    <connections>
+                        <segue destination="mj5-yD-x2b" kind="presentation" identifier="CameraModalSegue" modalPresentationStyle="fullScreen" id="ntY-6c-eQ2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cox-UA-u5y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="924" y="-663"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="RbH-mv-wVM">
+            <objects>
+                <viewController id="mj5-yD-x2b" customClass="CameraViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7z0-rk-AVd">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ml8-N6-RgN" customClass="CameraPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qlr-zc-GXh">
+                                <rect key="frame" x="129.5" y="501" width="116" height="116"/>
+                                <state key="normal" image="Record"/>
+                                <state key="selected" image="Stop"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="mj5-yD-x2b" eventType="touchUpInside" id="nnh-ed-g1F"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Ml8-N6-RgN" firstAttribute="top" secondItem="Wmm-xq-7rr" secondAttribute="top" id="5tS-uG-egF"/>
+                            <constraint firstItem="Wmm-xq-7rr" firstAttribute="bottom" secondItem="Qlr-zc-GXh" secondAttribute="bottom" constant="50" id="8qd-Vb-fYJ"/>
+                            <constraint firstItem="Ml8-N6-RgN" firstAttribute="leading" secondItem="Wmm-xq-7rr" secondAttribute="leading" id="9jo-NH-RAY"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="Ml8-N6-RgN" secondAttribute="bottom" id="IBS-Wv-sIE"/>
+                            <constraint firstItem="Wmm-xq-7rr" firstAttribute="trailing" secondItem="Ml8-N6-RgN" secondAttribute="trailing" id="h2i-Km-6Md"/>
+                            <constraint firstItem="Qlr-zc-GXh" firstAttribute="centerX" secondItem="7z0-rk-AVd" secondAttribute="centerX" id="xrE-dq-eZb"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Wmm-xq-7rr"/>
+                    </view>
+                    <connections>
+                        <outlet property="cameraView" destination="Ml8-N6-RgN" id="1NY-Qf-y9n"/>
+                        <outlet property="recordButton" destination="Qlr-zc-GXh" id="eVx-YV-nxd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tPX-jv-z3q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1903" y="-647"/>
         </scene>
         <!--Title-->
         <scene sceneID="kP9-yp-I8H">
@@ -248,7 +309,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXa-A2-VJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1969" y="-195"/>
+            <point key="canvasLocation" x="2458" y="-156"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gdW-Je-ais">
@@ -435,7 +496,7 @@
                         <outlet property="imageView" destination="Q0L-w5-qUw" id="0v7-ZB-mgi"/>
                         <outlet property="imageViewAspectRatioConstraint" destination="y1B-iX-x3e" id="wIt-kh-Tzd"/>
                         <outlet property="titleLabel" destination="jyy-BX-c2c" id="UEd-xO-ipC"/>
-                        <segue destination="j6K-p0-aR0" kind="presentation" identifier="AudioCommentShowSegue" id="Oe8-g0-Z7l"/>
+                        <segue destination="j6K-p0-aR0" kind="presentation" identifier="AudioCommentShowSegue" modalPresentationStyle="fullScreen" id="Oe8-g0-Z7l"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdL-Y3-4ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -447,11 +508,11 @@
             <objects>
                 <viewController id="j6K-p0-aR0" customClass="AudioCommentViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HtQ-bY-pQA">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="UBB-Gh-KJE">
-                                <rect key="frame" x="133" y="228.5" width="109" height="190"/>
+                                <rect key="frame" x="133" y="238.5" width="109" height="190"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gPy-7y-18M">
                                         <rect key="frame" x="30" y="0.0" width="49" height="30"/>
@@ -495,4 +556,8 @@
             <point key="canvasLocation" x="2700" y="473"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Record" width="116" height="116"/>
+        <image name="Stop" width="116" height="116"/>
+    </resources>
 </document>
