@@ -56,11 +56,21 @@ class CommentPageViewController: UIPageViewController {
 		guard var post = post else { return }
 		if let singingVC = currentVC as? SingingCommentViewController {
 			guard let data = singingVC.recordedData else { return }
-			postController?.addComment(with: data, to: post)
+			postController?.addComment(with: data, to: post) { [weak self] in
+				guard let self = self else { return }
+				DispatchQueue.main.async {
+					self.navDelegate?.commentPageViewControllerDidFinish(self)
+				}
+			}
 		}
 
 		if let proseVC = currentVC as? ProseCommentViewController {
-			postController?.addComment(with: proseVC.commentText, to: &post)
+			postController?.addComment(with: proseVC.commentText, to: &post) { [weak self] in
+				guard let self = self else { return }
+				DispatchQueue.main.async {
+					self.navDelegate?.commentPageViewControllerDidFinish(self)
+				}
+			}
 		}
 	}
 
