@@ -64,8 +64,9 @@ class ImagePostDetailTableViewController: UITableViewController {
 		let action2 = UIAlertAction(title: "Audio", style: .default) { (_) in
 			self.performSegue(withIdentifier: "RecordAudioSegue", sender: nil)
 		}
+		let action3 = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-		[action1, action2].forEach({ actionSheet.addAction($0) })
+		[action1, action2, action3].forEach({ actionSheet.addAction($0) })
 		present(actionSheet, animated: true, completion: nil)
         
     }
