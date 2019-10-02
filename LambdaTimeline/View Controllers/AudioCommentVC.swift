@@ -17,9 +17,12 @@ class AudioCommentVC: UIViewController {
 	@IBOutlet weak var durationLabel: UILabel!
 	@IBOutlet weak var previewButton: UIButton!
 	@IBOutlet weak var recordButton: UIButton!
+	@IBOutlet weak var postButton: UIButton!
 	
 	// MARK: - Properties
-
+	
+    var postController: PostController!
+	var post: Post!
 	private var player = AudioPlayer()
 	private var recorder = AudioRecorder()
 	private lazy var timeFormatter: DateComponentsFormatter = {
@@ -29,9 +32,10 @@ class AudioCommentVC: UIViewController {
 		formatting.allowedUnits = [.minute, .second]
 		return formatting
 	}()
-	var audioProgressPercentage: Float {
+	private var audioProgressPercentage: Float {
 		Float(player.elapsedTime / player.duration) * 100
 	}
+	private var audioURL: URL?
 	
 	// MARK: - Life Cycle
 	
@@ -50,6 +54,7 @@ class AudioCommentVC: UIViewController {
 		let documentDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
 		print("Doc dir: \(documentDir.path)")
 		
+		postButton.isEnabled = false
 		updateViews()
 	}
 	
@@ -62,6 +67,15 @@ class AudioCommentVC: UIViewController {
 	
 	@IBAction func recordButtonPressed(_ sender: Any) {
 		recorder.toggleRecording()
+	}
+	
+	@IBAction func postBtnTapped(_ sender: Any) {
+		postController.addComment(with: nil, audioURL: audioURL, to: &self.post!)
+		dismiss(animated: true, completion: nil)
+	}
+	
+	@IBAction func cancelBtnTapped(_ sender: Any) {
+		dismiss(animated: true, completion: nil)
 	}
 	
 	// MARK: - Helpers
@@ -94,8 +108,13 @@ extension AudioCommentVC: AudioRecorderDelegate {
 	
 	func recorderDidFinishSavingFile(_ recorder: AudioRecorder, url: URL) {
 		if !recorder.isRecording {
-			#warning("Bang-bang")
-			try! player.load(url: url)
+			do {
+				try player.load(url: url)
+				audioURL = url
+				postButton.isEnabled = true
+			} catch {
+				NSLog("Could not play recording")
+			}
 		}
 	}
 }

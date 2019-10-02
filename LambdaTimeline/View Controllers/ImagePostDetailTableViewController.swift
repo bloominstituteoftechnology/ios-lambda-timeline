@@ -85,12 +85,17 @@ class ImagePostDetailTableViewController: UITableViewController {
         
         return cell
     }
+	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if let audioCommentVC = segue.destination as? AudioCommentVC {
+			audioCommentVC.postController = postController
+			audioCommentVC.post = post
+		}
+	}
     
     var post: Post!
     var postController: PostController!
     var imageData: Data?
-    
-    
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
