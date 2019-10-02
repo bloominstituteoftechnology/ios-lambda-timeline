@@ -11,7 +11,6 @@ import FirebaseAuth
 
 enum MediaType: String {
     case image
-    case audio
 }
 
 class Post {

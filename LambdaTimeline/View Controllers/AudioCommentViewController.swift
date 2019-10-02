@@ -16,6 +16,8 @@ class AudioCommentViewController: UIViewController {
     
     let recorder = Recorder()
     var postController: PostController!
+    var post: Post!
+    var audioURL: URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +35,8 @@ class AudioCommentViewController: UIViewController {
         recorder.cancelRecord()
     }
     @IBAction func sendButtonTapped(_ sender: UIButton) {
-        
+        let audioData = try! Data(contentsOf: audioURL!)
+        postController.addAudioComment(with: audioData, to: post)
     }
     
     private func updateViews() {
@@ -49,6 +52,7 @@ extension AudioCommentViewController: RecorderDelegate {
     }
     
     func recorderDidFinishSavingFile(_ recorder: Recorder, url: URL) {
+        audioURL = url
         sendButton.isHidden = false
     }
     

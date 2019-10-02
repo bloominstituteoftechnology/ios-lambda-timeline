@@ -52,10 +52,16 @@ class ImagePostDetailTableViewController: UITableViewController {
             }
         }
         
+        let addAudioCommentAction = UIAlertAction(title: "Add AudioComment", style: .default) { (_) in
+            self.performSegue(withIdentifier: "AudioCommentShowSegue", sender: self)
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(addCommentAction)
+        alert.addAction(addAudioCommentAction)
         alert.addAction(cancelAction)
+        
         
         present(alert, animated: true, completion: nil)
     }
@@ -65,20 +71,28 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
         
         let comment = post?.comments[indexPath.row + 1]
+        if let audioURL = comment?.audioURL {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+            
+            
+            
+            cell.textLabel?.text = comment?.text
+            cell.detailTextLabel?.text = comment?.author.displayName
+            
+            return cell
+        }
         
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author.displayName
-        
-        return cell
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "" {
+        if segue.identifier == "AudioCommentShowSegue" {
             guard let audioCommentVC = segue.destination as? AudioCommentViewController else { return }
             audioCommentVC.postController = postController
+            audioCommentVC.post = post
         }
     }
     

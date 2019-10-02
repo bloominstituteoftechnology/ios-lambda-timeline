@@ -28,6 +28,7 @@ class Recorder: NSObject {
         
         //44.1 KHz - typical
         let file = documentDirectory.appendingPathComponent(name).appendingPathExtension("caf")
+        print(documentDirectory)
         let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
         
         recorder = try! AVAudioRecorder(url: file, format: format)
