@@ -130,7 +130,11 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
         DispatchQueue.main.async {
             self.updateViews()
-            self.delegate?.passURLToVideoDetailVC(url: outputFileURL)
+            self.dismiss(animated: true) {
+                self.delegate?.passURLToVideoDetailVC(url: outputFileURL)
+            }
+           
+            
         }
         
     }

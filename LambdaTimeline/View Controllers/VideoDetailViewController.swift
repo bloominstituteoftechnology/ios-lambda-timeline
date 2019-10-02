@@ -10,17 +10,25 @@ import UIKit
 import AVFoundation
 
 class VideoDetailViewController: UIViewController {
-
+    
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var postButton: UIButton!
+    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var videoPreviewView: UIView!
+    
+    private var player: AVPlayer!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        titleTextField.delegate = self
 
-        // Do any additional setup after loading the view.
+        requestCameraPermission()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        requestCameraPermission()
+        
     }
     
     private func requestCameraPermission() {
@@ -52,20 +60,44 @@ class VideoDetailViewController: UIViewController {
         performSegue(withIdentifier: "CameraModalSegue", sender: self)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "CameraModalSegue" {
+            guard let cameraVC = segue.destination as? CameraViewController else { fatalError("cant make camera vc") }
+            cameraVC.delegate = self
+        }
+    }
+    
 
-//    func playMovie(url: URL) {
-//         player = AVPlayer(url: url)
-//
-//         let playerLayer = AVPlayerLayer(player: player)
-//         var topRect = self.view.bounds
-//         topRect.size.height /= 4
-//         topRect.size.width /= 4
-//         topRect.origin.y = view.layoutMargins.top
-//
-//         playerLayer.frame = topRect
-//         view.layer.addSublayer(playerLayer)
-//
-//         player.play()
-//     }
+    func playMovie(url: URL) {
+        player = AVPlayer(url: url)
+        
+        let playerLayer = AVPlayerLayer(player: player)
+        
+        playerLayer.frame = videoPreviewView.bounds
+        videoPreviewView.layer.addSublayer(playerLayer)
+        
+        player.seek(to: .zero)
+        
+        player.play()
+    }
+    
+    @IBAction func playButtonTapped(_ sender: UIButton) {
+        player.seek(to: .zero)
+        player.play()
+    }
+    @IBAction func postButtonTapped(_ sender: UIButton) {
+    }
+    
 
+}
+extension VideoDetailViewController: CameraViewControllerDelegate {
+    func passURLToVideoDetailVC(url: URL) {
+        playMovie(url: url)
+    }
+}
+extension VideoDetailViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
+        return true
+    }
 }

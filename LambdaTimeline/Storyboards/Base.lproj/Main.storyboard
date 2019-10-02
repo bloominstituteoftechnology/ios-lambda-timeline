@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xB5-Kl-GM2">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -111,17 +110,59 @@
                     <view key="view" contentMode="scaleToFill" id="9RI-zr-0MM">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XoC-55-hQb">
+                                <rect key="frame" x="0.0" y="104" width="375" height="423"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter title here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="h8A-NM-KS6">
+                                <rect key="frame" x="20" y="54" width="335" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R7O-Xe-KU0">
+                                <rect key="frame" x="172" y="587" width="31" height="30"/>
+                                <state key="normal" title="post"/>
+                                <connections>
+                                    <action selector="postButtonTapped:" destination="FGQ-XF-vHF" eventType="touchUpInside" id="vOr-Nd-ejx"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3ex-he-Rgq">
+                                <rect key="frame" x="172.5" y="547" width="30" height="30"/>
+                                <state key="normal" title="Play"/>
+                                <connections>
+                                    <action selector="playButtonTapped:" destination="FGQ-XF-vHF" eventType="touchUpInside" id="gGD-C3-zJf"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="R7O-Xe-KU0" firstAttribute="centerX" secondItem="9RI-zr-0MM" secondAttribute="centerX" id="8ls-WS-drV"/>
+                            <constraint firstItem="XoC-55-hQb" firstAttribute="top" secondItem="h8A-NM-KS6" secondAttribute="bottom" constant="16" id="As3-mM-CzX"/>
+                            <constraint firstItem="3ex-he-Rgq" firstAttribute="centerX" secondItem="9RI-zr-0MM" secondAttribute="centerX" id="KmW-8A-WA1"/>
+                            <constraint firstItem="h8A-NM-KS6" firstAttribute="leading" secondItem="FZK-cx-7hI" secondAttribute="leading" constant="20" id="MSt-5f-2b4"/>
+                            <constraint firstItem="FZK-cx-7hI" firstAttribute="trailing" secondItem="h8A-NM-KS6" secondAttribute="trailing" constant="20" id="OlB-wX-uCA"/>
+                            <constraint firstItem="XoC-55-hQb" firstAttribute="leading" secondItem="FZK-cx-7hI" secondAttribute="leading" id="ZWd-Jr-4Vb"/>
+                            <constraint firstItem="XoC-55-hQb" firstAttribute="trailing" secondItem="FZK-cx-7hI" secondAttribute="trailing" id="aa3-EO-8yY"/>
+                            <constraint firstItem="R7O-Xe-KU0" firstAttribute="top" secondItem="3ex-he-Rgq" secondAttribute="bottom" constant="10" id="axw-Cw-uOU"/>
+                            <constraint firstItem="3ex-he-Rgq" firstAttribute="top" secondItem="XoC-55-hQb" secondAttribute="bottom" constant="20" id="dn3-8i-pcc"/>
+                            <constraint firstItem="h8A-NM-KS6" firstAttribute="top" secondItem="FZK-cx-7hI" secondAttribute="top" constant="10" id="nWT-RJ-ebf"/>
+                            <constraint firstItem="FZK-cx-7hI" firstAttribute="bottom" secondItem="R7O-Xe-KU0" secondAttribute="bottom" constant="50" id="wLz-4H-5p9"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="FZK-cx-7hI"/>
                     </view>
                     <navigationItem key="navigationItem" id="dZD-qe-dwt"/>
                     <connections>
+                        <outlet property="playButton" destination="3ex-he-Rgq" id="U9D-bU-mGH"/>
+                        <outlet property="postButton" destination="R7O-Xe-KU0" id="POL-9J-Itx"/>
+                        <outlet property="titleTextField" destination="h8A-NM-KS6" id="jXF-SG-VuL"/>
+                        <outlet property="videoPreviewView" destination="XoC-55-hQb" id="gHd-SL-aja"/>
                         <segue destination="mj5-yD-x2b" kind="presentation" identifier="CameraModalSegue" modalPresentationStyle="fullScreen" id="ntY-6c-eQ2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cox-UA-u5y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="924" y="-663"/>
+            <point key="canvasLocation" x="924" y="-663.41829085457277"/>
         </scene>
         <!--Camera View Controller-->
         <scene sceneID="RbH-mv-wVM">
