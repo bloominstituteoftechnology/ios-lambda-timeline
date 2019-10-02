@@ -99,7 +99,7 @@
                         <outlet property="emptyCollectionViewBG" destination="cqp-QT-5w5" id="kq3-2R-t8r"/>
                         <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="jaI-fq-Woc"/>
                         <segue destination="OyM-8q-Icp" kind="show" identifier="ViewImagePost" id="hhs-es-AdQ"/>
-                        <segue destination="GhE-94-kOw" kind="show" id="L9d-7M-GDe"/>
+                        <segue destination="GhE-94-kOw" kind="show" identifier="AddVideoPost" id="L9d-7M-GDe"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -136,21 +136,113 @@
             </objects>
             <point key="canvasLocation" x="1216.8" y="108.39580209895054"/>
         </scene>
-        <!--View Controller-->
+        <!--Video Recording View Controller-->
         <scene sceneID="ehU-yx-Fb2">
             <objects>
-                <viewController id="GhE-94-kOw" sceneMemberID="viewController">
+                <viewController id="GhE-94-kOw" customClass="VideoRecordingViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pr2-9D-wD7">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3C5-TP-Off" userLabel="camera view">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" systemColor="systemBrownColor" red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3du-V0-Nao" userLabel="indicator container">
+                                <rect key="frame" x="0.0" y="44" width="375" height="574"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="recordingIndicator" translatesAutoresizingMaskIntoConstraints="NO" id="h4o-4A-mg7" userLabel="recording indicator">
+                                        <rect key="frame" x="20" y="20" width="335" height="534"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NOT RECORDING!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qgz-nx-0v6">
+                                        <rect key="frame" x="66" y="269" width="243" height="36"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                        <color key="textColor" systemColor="systemOrangeColor" red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="qgz-nx-0v6" firstAttribute="centerX" secondItem="3du-V0-Nao" secondAttribute="centerX" id="0UO-4i-P5f"/>
+                                    <constraint firstAttribute="trailing" secondItem="h4o-4A-mg7" secondAttribute="trailing" constant="20" id="9IO-Gs-ySe"/>
+                                    <constraint firstAttribute="bottom" secondItem="h4o-4A-mg7" secondAttribute="bottom" constant="20" id="ONF-7e-y0g"/>
+                                    <constraint firstItem="qgz-nx-0v6" firstAttribute="centerY" secondItem="3du-V0-Nao" secondAttribute="centerY" id="X3R-LA-4DD"/>
+                                    <constraint firstItem="h4o-4A-mg7" firstAttribute="top" secondItem="3du-V0-Nao" secondAttribute="top" constant="20" id="ixI-Gp-uHz"/>
+                                    <constraint firstItem="h4o-4A-mg7" firstAttribute="leading" secondItem="3du-V0-Nao" secondAttribute="leading" constant="20" id="jmm-Al-nli"/>
+                                </constraints>
+                            </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l7x-fj-HSZ" userLabel="playback preview">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b16-uG-xDQ" userLabel="button container">
+                                <rect key="frame" x="0.0" y="517" width="375" height="150"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KqN-IN-3ld">
+                                        <rect key="frame" x="147.5" y="20.5" width="80" height="79.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="KqN-IN-3ld" secondAttribute="height" id="ldF-xu-0Di"/>
+                                        </constraints>
+                                        <state key="normal" backgroundImage="video.circle" catalog="system"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q97-1z-aG2">
+                                        <rect key="frame" x="267.5" y="40.5" width="40" height="39.5"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="Q97-1z-aG2" secondAttribute="height" id="E5f-ph-CSE"/>
+                                            <constraint firstAttribute="width" constant="40" id="aKa-C6-652"/>
+                                        </constraints>
+                                        <state key="normal" backgroundImage="play.circle" catalog="system"/>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.30538072183098591" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Q97-1z-aG2" firstAttribute="leading" secondItem="KqN-IN-3ld" secondAttribute="trailing" constant="40" id="9pg-mb-A9d"/>
+                                    <constraint firstItem="KqN-IN-3ld" firstAttribute="top" secondItem="b16-uG-xDQ" secondAttribute="top" constant="20" id="dvc-PL-w4n"/>
+                                    <constraint firstItem="KqN-IN-3ld" firstAttribute="centerX" secondItem="b16-uG-xDQ" secondAttribute="centerX" id="iZc-xK-z7r"/>
+                                    <constraint firstItem="Q97-1z-aG2" firstAttribute="centerY" secondItem="KqN-IN-3ld" secondAttribute="centerY" id="nfe-Cv-r8Q"/>
+                                    <constraint firstItem="KqN-IN-3ld" firstAttribute="width" secondItem="Q97-1z-aG2" secondAttribute="width" multiplier="2" id="prq-i5-yOK"/>
+                                    <constraint firstAttribute="height" constant="150" id="sUo-dT-ySa"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="l7x-fj-HSZ" secondAttribute="trailing" id="19I-Rl-cXc"/>
+                            <constraint firstItem="l7x-fj-HSZ" firstAttribute="leading" secondItem="pr2-9D-wD7" secondAttribute="leading" id="1IH-LD-vX5"/>
+                            <constraint firstItem="3du-V0-Nao" firstAttribute="bottom" secondItem="IwT-l5-aHO" secondAttribute="bottom" id="88F-0K-a2c"/>
+                            <constraint firstAttribute="bottom" secondItem="l7x-fj-HSZ" secondAttribute="bottom" id="9VT-mU-tka"/>
+                            <constraint firstItem="l7x-fj-HSZ" firstAttribute="top" secondItem="pr2-9D-wD7" secondAttribute="top" id="CcP-6W-qb4"/>
+                            <constraint firstItem="3C5-TP-Off" firstAttribute="leading" secondItem="pr2-9D-wD7" secondAttribute="leading" id="DKG-1d-C6n"/>
+                            <constraint firstAttribute="bottom" secondItem="3C5-TP-Off" secondAttribute="bottom" id="DvH-zu-e8e"/>
+                            <constraint firstItem="3C5-TP-Off" firstAttribute="top" secondItem="pr2-9D-wD7" secondAttribute="top" id="IGO-A1-FTV"/>
+                            <constraint firstItem="3du-V0-Nao" firstAttribute="trailing" secondItem="IwT-l5-aHO" secondAttribute="trailing" id="JsM-YJ-1mm"/>
+                            <constraint firstItem="3du-V0-Nao" firstAttribute="leading" secondItem="IwT-l5-aHO" secondAttribute="leading" id="L3J-Xv-8nm"/>
+                            <constraint firstAttribute="bottom" secondItem="b16-uG-xDQ" secondAttribute="bottom" id="ex0-rY-lXw"/>
+                            <constraint firstAttribute="trailing" secondItem="3C5-TP-Off" secondAttribute="trailing" id="ihz-Xa-JsS"/>
+                            <constraint firstItem="b16-uG-xDQ" firstAttribute="leading" secondItem="IwT-l5-aHO" secondAttribute="leading" id="k8F-eW-0Ff"/>
+                            <constraint firstItem="IwT-l5-aHO" firstAttribute="trailing" secondItem="b16-uG-xDQ" secondAttribute="trailing" id="m4c-T2-BV0"/>
+                            <constraint firstItem="3du-V0-Nao" firstAttribute="top" secondItem="IwT-l5-aHO" secondAttribute="top" id="uM1-dK-vWB"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="IwT-l5-aHO"/>
                     </view>
-                    <navigationItem key="navigationItem" id="G8N-lO-auA"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="G8N-lO-auA">
+                        <barButtonItem key="rightBarButtonItem" title="Post" id="IXj-BV-3Ca">
+                            <connections>
+                                <action selector="createPost:" destination="1Aw-4e-BW2" id="ny6-kD-1Yz"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="indicatorContainer" destination="3du-V0-Nao" id="OCT-rY-pFP"/>
+                        <outlet property="playbackButton" destination="Q97-1z-aG2" id="Rnh-pI-5uj"/>
+                        <outlet property="recordButton" destination="KqN-IN-3ld" id="QEO-K0-b9e"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5q4-Mx-HHt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2135" y="-684"/>
+            <point key="canvasLocation" x="2133.5999999999999" y="-684.10794602698661"/>
         </scene>
         <!--Title-->
         <scene sceneID="kP9-yp-I8H">
@@ -215,14 +307,14 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FilterCell" id="hfF-BH-JSV" customClass="FilterSettingsTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="102.5"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="103"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hfF-BH-JSV" id="SfN-Ak-HxM">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="102.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="103"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xgZ-7e-jzu">
-                                                    <rect key="frame" x="16" y="8" width="343" height="86.5"/>
+                                                    <rect key="frame" x="16" y="8" width="343" height="87"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Csn-2o-kK8">
                                                             <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
@@ -231,7 +323,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="vSv-PA-EBb">
-                                                            <rect key="frame" x="0.0" y="28.5" width="343" height="58"/>
+                                                            <rect key="frame" x="0.0" y="28.5" width="343" height="58.5"/>
                                                         </stackView>
                                                     </subviews>
                                                 </stackView>
@@ -249,7 +341,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddCell" id="2B3-vn-bmD" customClass="AddFilterTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="130.5" width="375" height="46.5"/>
+                                        <rect key="frame" x="0.0" y="131" width="375" height="46.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2B3-vn-bmD" id="jfr-kR-CL2">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="46.5"/>
@@ -527,6 +619,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="play.circle" catalog="system" width="64" height="62"/>
         <image name="play.fill" catalog="system" width="58" height="64"/>
+        <image name="recordingIndicator" width="250" height="250"/>
+        <image name="video.circle" catalog="system" width="64" height="62"/>
     </resources>
 </document>
