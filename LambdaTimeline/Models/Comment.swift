@@ -10,12 +10,10 @@ import Foundation
 import FirebaseAuth
 
 class Comment: FirebaseConvertible, Equatable {
-	
 	private static let textKey = "text"
 	private static let author = "author"
 	private static let timestampKey = "timestamp"
 	private static let audioURLKey = "audioURL"
-
 	
 	let text: String?
 	let audioURL: URL?

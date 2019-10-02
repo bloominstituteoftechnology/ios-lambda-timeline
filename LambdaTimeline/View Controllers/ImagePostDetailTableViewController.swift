@@ -25,7 +25,6 @@ class ImagePostDetailTableViewController: UITableViewController {
 	}
 	
 	func updateViews() {
-		
 		guard let imageData = imageData,
 			let image = UIImage(data: imageData) else { return }
 		

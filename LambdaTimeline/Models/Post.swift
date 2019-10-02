@@ -15,7 +15,6 @@ enum MediaType: String {
 }
 
 class Post {
-
 	var mediaURL: URL
 	let mediaType: MediaType
 	let author: Author
