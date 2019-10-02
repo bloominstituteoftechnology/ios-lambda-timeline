@@ -184,6 +184,10 @@
                                             <constraint firstAttribute="width" secondItem="KqN-IN-3ld" secondAttribute="height" id="ldF-xu-0Di"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="video.circle" catalog="system"/>
+                                        <connections>
+                                            <action selector="recordButtonDown:" destination="GhE-94-kOw" eventType="touchDown" id="ecy-NF-91H"/>
+                                            <action selector="recordButtonUp:" destination="GhE-94-kOw" eventType="touchUpInside" id="6ug-uC-iyT"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q97-1z-aG2">
                                         <rect key="frame" x="267.5" y="40.5" width="40" height="39.5"/>
@@ -192,6 +196,9 @@
                                             <constraint firstAttribute="width" constant="40" id="aKa-C6-652"/>
                                         </constraints>
                                         <state key="normal" backgroundImage="play.circle" catalog="system"/>
+                                        <connections>
+                                            <action selector="playButtonPressed:" destination="GhE-94-kOw" eventType="touchUpInside" id="dqo-UX-OLr"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.30538072183098591" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -199,9 +206,9 @@
                                     <constraint firstItem="Q97-1z-aG2" firstAttribute="leading" secondItem="KqN-IN-3ld" secondAttribute="trailing" constant="40" id="9pg-mb-A9d"/>
                                     <constraint firstItem="KqN-IN-3ld" firstAttribute="top" secondItem="b16-uG-xDQ" secondAttribute="top" constant="20" id="dvc-PL-w4n"/>
                                     <constraint firstItem="KqN-IN-3ld" firstAttribute="centerX" secondItem="b16-uG-xDQ" secondAttribute="centerX" id="iZc-xK-z7r"/>
+                                    <constraint firstAttribute="bottom" secondItem="KqN-IN-3ld" secondAttribute="bottom" constant="50" id="m7e-ap-bRL"/>
                                     <constraint firstItem="Q97-1z-aG2" firstAttribute="centerY" secondItem="KqN-IN-3ld" secondAttribute="centerY" id="nfe-Cv-r8Q"/>
                                     <constraint firstItem="KqN-IN-3ld" firstAttribute="width" secondItem="Q97-1z-aG2" secondAttribute="width" multiplier="2" id="prq-i5-yOK"/>
-                                    <constraint firstAttribute="height" constant="150" id="sUo-dT-ySa"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -307,14 +314,14 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FilterCell" id="hfF-BH-JSV" customClass="FilterSettingsTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="103"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="103.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hfF-BH-JSV" id="SfN-Ak-HxM">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="103"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="103.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xgZ-7e-jzu">
-                                                    <rect key="frame" x="16" y="8" width="343" height="87"/>
+                                                    <rect key="frame" x="16" y="8" width="343" height="87.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Csn-2o-kK8">
                                                             <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
@@ -323,7 +330,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="vSv-PA-EBb">
-                                                            <rect key="frame" x="0.0" y="28.5" width="343" height="58.5"/>
+                                                            <rect key="frame" x="0.0" y="28.5" width="343" height="59"/>
                                                         </stackView>
                                                     </subviews>
                                                 </stackView>
@@ -341,7 +348,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddCell" id="2B3-vn-bmD" customClass="AddFilterTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="131" width="375" height="46.5"/>
+                                        <rect key="frame" x="0.0" y="131.5" width="375" height="46.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2B3-vn-bmD" id="jfr-kR-CL2">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="46.5"/>

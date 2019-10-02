@@ -14,13 +14,22 @@ class VideoRecordingViewController: UIViewController {
 	@IBOutlet private var recordButton: UIButton!
 	@IBOutlet private var playbackButton: UIButton!
 
-	
-
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		recordButton.tintColor = .systemRed
 		playbackButton.tintColor = .systemGreen
+	}
+
+	@IBAction func recordButtonDown(_ sender: UIButton) {
+		indicatorContainer.isHidden = true
+	}
+
+	@IBAction func recordButtonUp(_ sender: UIButton) {
+		indicatorContainer.isHidden = false
+	}
+
+	@IBAction func playButtonPressed(_ sender: UIButton) {
 	}
 
 }
