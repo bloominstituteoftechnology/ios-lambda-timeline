@@ -33,6 +33,9 @@
 		758CDB6C23440EEC005834EA /* AudioCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758CDB6B23440EEC005834EA /* AudioCommentViewController.swift */; };
 		758CDB6E23440FFB005834EA /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758CDB6D23440FFB005834EA /* Recorder.swift */; };
 		758CDB7023444704005834EA /* AudioCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758CDB6F23444704005834EA /* AudioCommentTableViewCell.swift */; };
+		758CDB722344490A005834EA /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758CDB712344490A005834EA /* Player.swift */; };
+		758CDB7423444E0F005834EA /* piano.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 758CDB7323444E0F005834EA /* piano.mp3 */; };
+		758CDB7623444FA7005834EA /* FetchAudioOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 758CDB7523444FA7005834EA /* FetchAudioOperation.swift */; };
 		E453457955DF907FCBD117F1 /* Pods_LambdaTimeline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +70,9 @@
 		758CDB6B23440EEC005834EA /* AudioCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCommentViewController.swift; sourceTree = "<group>"; };
 		758CDB6D23440FFB005834EA /* Recorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
 		758CDB6F23444704005834EA /* AudioCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCommentTableViewCell.swift; sourceTree = "<group>"; };
+		758CDB712344490A005834EA /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		758CDB7323444E0F005834EA /* piano.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = piano.mp3; sourceTree = "<group>"; };
+		758CDB7523444FA7005834EA /* FetchAudioOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchAudioOperation.swift; sourceTree = "<group>"; };
 		AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LambdaTimeline.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -136,6 +142,7 @@
 		46463796216FFF6900E7FF73 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				758CDB7323444E0F005834EA /* piano.mp3 */,
 				4646377B216FDE4B00E7FF73 /* AppDelegate.swift */,
 				46463782216FDE4C00E7FF73 /* Assets.xcassets */,
 				46463787216FDE4C00E7FF73 /* Info.plist */,
@@ -187,6 +194,7 @@
 			children = (
 				46CFE7002171559500E7FF73 /* FetchMediaOperation.swift */,
 				46CFE6FE2171556D00E7FF73 /* ConcurrentOperation.swift */,
+				758CDB7523444FA7005834EA /* FetchAudioOperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -197,6 +205,7 @@
 				46CFE7052171573200E7FF73 /* Operations */,
 				46D571F62173D6D200E7FF73 /* Extensions */,
 				46D571F22172D43B00E7FF73 /* Cache.swift */,
+				758CDB712344490A005834EA /* Player.swift */,
 				464637982170048900E7FF73 /* FirebaseConvertible.swift */,
 				46CFE6FC217154F500E7FF73 /* Networking.swift */,
 				46CFE6F82170862C00E7FF73 /* ShiftableViewController.swift */,
@@ -287,6 +296,7 @@
 			files = (
 				46463786216FDE4C00E7FF73 /* LaunchScreen.storyboard in Resources */,
 				46463783216FDE4C00E7FF73 /* Assets.xcassets in Resources */,
+				758CDB7423444E0F005834EA /* piano.mp3 in Resources */,
 				46463781216FDE4B00E7FF73 /* Main.storyboard in Resources */,
 				7509BE5C23429EF000EEEA09 /* GoogleService-Info.plist in Resources */,
 			);
@@ -362,10 +372,12 @@
 				46CFE6FB21714E6100E7FF73 /* Author.swift in Sources */,
 				46CFE6F92170862C00E7FF73 /* ShiftableViewController.swift in Sources */,
 				4646377C216FDE4B00E7FF73 /* AppDelegate.swift in Sources */,
+				758CDB722344490A005834EA /* Player.swift in Sources */,
 				46CFE6FD217154F500E7FF73 /* Networking.swift in Sources */,
 				46CFE6F521707D0000E7FF73 /* ImagePostViewController.swift in Sources */,
 				758CDB6C23440EEC005834EA /* AudioCommentViewController.swift in Sources */,
 				46CFE6FF2171556D00E7FF73 /* ConcurrentOperation.swift in Sources */,
+				758CDB7623444FA7005834EA /* FetchAudioOperation.swift in Sources */,
 				46463790216FFD1B00E7FF73 /* Post.swift in Sources */,
 				46CFE6F32170757F00E7FF73 /* User+DictionaryRepresentation.swift in Sources */,
 				46D571F32172D43B00E7FF73 /* Cache.swift in Sources */,

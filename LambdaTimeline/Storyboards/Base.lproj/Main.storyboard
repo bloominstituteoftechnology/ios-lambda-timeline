@@ -382,27 +382,40 @@
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AudioCommentCell" id="Rno-8F-VwL">
-                                <rect key="frame" x="0.0" y="188.5" width="375" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AudioCommentCell" id="Rno-8F-VwL" customClass="AudioCommentTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="188.5" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Rno-8F-VwL" id="xza-Wd-xL7">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Author" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Jt-o0-4a3">
-                                            <rect key="frame" x="16" y="11" width="52" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Jt-o0-4a3">
+                                            <rect key="frame" x="16" y="11" width="51.5" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B26-HN-TKr">
-                                            <rect key="frame" x="307" y="7" width="46" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B26-HN-TKr">
+                                            <rect key="frame" x="323" y="7" width="30" height="30.5"/>
                                             <state key="normal" title="Play"/>
+                                            <connections>
+                                                <action selector="playButtonTapped:" destination="Rno-8F-VwL" eventType="touchUpInside" id="zlV-J5-VkS"/>
+                                            </connections>
                                         </button>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="B26-HN-TKr" secondAttribute="bottom" constant="6.5" id="9yL-1L-rAc"/>
+                                        <constraint firstAttribute="trailing" secondItem="B26-HN-TKr" secondAttribute="trailing" constant="22" id="W5x-Ju-G05"/>
+                                        <constraint firstItem="B26-HN-TKr" firstAttribute="top" secondItem="xza-Wd-xL7" secondAttribute="top" constant="7" id="ms4-Xq-NXu"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="8Jt-o0-4a3" secondAttribute="bottom" constant="1" id="taB-7W-IFz"/>
+                                        <constraint firstItem="8Jt-o0-4a3" firstAttribute="top" secondItem="xza-Wd-xL7" secondAttribute="topMargin" id="uIF-3h-xiv"/>
+                                        <constraint firstItem="8Jt-o0-4a3" firstAttribute="leading" secondItem="xza-Wd-xL7" secondAttribute="leadingMargin" id="yFo-GG-aFw"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="authorLabel" destination="8Jt-o0-4a3" id="aKa-sp-XCa"/>
+                                    <outlet property="playButton" destination="B26-HN-TKr" id="lhm-xa-I9c"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

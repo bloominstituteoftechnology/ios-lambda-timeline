@@ -10,15 +10,51 @@ import UIKit
 
 class AudioCommentTableViewCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var playButton: UIButton!
+    
+    var player: Player!
+    var audioURLString: String? {
+        didSet {
+            setupPlayer()
+        }
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    
+    private func setupPlayer() {
+        player = Player()
+        
+        
+        //try! player.load(url: url)
+        player.delegate = self
     }
-
+    
+    func setupAudio(data: Data) {
+        do {
+            try player.load(data: data)
+        } catch {
+            print("Error init player: \(error)")
+        }
+        
+    }
+    
+    
+    
+    private func updateViews() {
+        let title = player.isPlaying ? "Pause" : "Play"
+        playButton.setTitle(title, for: .normal)
+    }
+    
+    @IBAction func playButtonTapped(_ sender: Any) {
+        player.playPause()
+    }
+    
+}
+extension AudioCommentTableViewCell: PlayerDelegate {
+    func playerStateDidChange() {
+        updateViews()
+    }
+    
+    
 }
