@@ -29,11 +29,11 @@ class Comment: FirebaseConvertible, Equatable {
     }
     
     init?(dictionary: [String : Any]) {
-        guard let text = dictionary[Comment.textKey] as? String,
-            let authorDictionary = dictionary[Comment.author] as? [String: Any],
+        guard let authorDictionary = dictionary[Comment.author] as? [String: Any],
             let author = Author(dictionary: authorDictionary),
-			let audioPath = dictionary[Comment.audioURLKey] as? URL,
             let timestampTimeInterval = dictionary[Comment.timestampKey] as? TimeInterval else { return nil }
+		let text = dictionary[Comment.textKey] as? String
+		let audioPath = dictionary[Comment.audioURLKey] as? URL
         
         self.text = text
         self.author = author
