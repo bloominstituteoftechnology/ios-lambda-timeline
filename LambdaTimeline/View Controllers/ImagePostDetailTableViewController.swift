@@ -71,13 +71,13 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (post?.comments.count ?? 0) - 1
+        return post?.comments.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
         
-        let comment = post?.comments[indexPath.row + 1]
+        let comment = post?.comments[indexPath.row]
         
         cell.textLabel?.text = comment?.text
         cell.detailTextLabel?.text = comment?.author.displayName
