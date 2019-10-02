@@ -90,17 +90,42 @@
                     <view key="view" contentMode="scaleToFill" id="1tz-BB-eYT">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="vOX-PV-dXi">
+                                <rect key="frame" x="20" y="108" width="374" height="220"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="bE5-4H-VU1">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="220"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="220" id="d6P-ZP-vK7"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="zn7-ZP-ifx" firstAttribute="trailing" secondItem="vOX-PV-dXi" secondAttribute="trailing" constant="20" id="biE-ms-DfS"/>
+                            <constraint firstItem="vOX-PV-dXi" firstAttribute="top" secondItem="zn7-ZP-ifx" secondAttribute="top" constant="20" id="jC3-tx-zKg"/>
+                            <constraint firstItem="vOX-PV-dXi" firstAttribute="leading" secondItem="1tz-BB-eYT" secondAttribute="leading" constant="20" id="z9d-Wz-0RO"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="zn7-ZP-ifx"/>
                     </view>
                     <navigationItem key="navigationItem" title="Prose Comment" id="K4u-n2-dHG"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="commentTextView" destination="bE5-4H-VU1" id="QEj-L0-P5Y"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JXQ-cs-tCt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2147.826086956522" y="-321.42857142857139"/>
         </scene>
-        <!--Singing Comment-->
+        <!--Sing a Comment-->
         <scene sceneID="YWe-Ud-3WT">
             <objects>
                 <viewController storyboardIdentifier="SingingCommentViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Dbt-kj-54n" customClass="SingingCommentViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
@@ -108,22 +133,56 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="singing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OtY-hL-NnE">
-                                <rect key="frame" x="179.5" y="437.5" width="55.5" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="QTn-5m-uan">
+                                <rect key="frame" x="20" y="108" width="374" height="120"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9mA-Wv-Afb">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="20"/>
+                                        <subviews>
+                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="1rz-E9-Nu7">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="20"/>
+                                            </activityIndicatorView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="1rz-E9-Nu7" secondAttribute="bottom" id="GJj-85-eOd"/>
+                                            <constraint firstItem="1rz-E9-Nu7" firstAttribute="top" secondItem="9mA-Wv-Afb" secondAttribute="top" id="gbf-Cn-E0q"/>
+                                            <constraint firstItem="1rz-E9-Nu7" firstAttribute="leading" secondItem="9mA-Wv-Afb" secondAttribute="leading" id="haS-Lx-nv2"/>
+                                            <constraint firstAttribute="trailing" secondItem="1rz-E9-Nu7" secondAttribute="trailing" id="saE-fE-POQ"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZYn-h4-c7u">
+                                        <rect key="frame" x="0.0" y="40" width="374" height="30"/>
+                                        <state key="normal" title="Record"/>
+                                        <connections>
+                                            <action selector="recordButtonPressed:" destination="Dbt-kj-54n" eventType="touchUpInside" id="sUE-X0-CpR"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8z2-rL-rhH">
+                                        <rect key="frame" x="0.0" y="90" width="374" height="30"/>
+                                        <state key="normal" title="Preview"/>
+                                        <connections>
+                                            <action selector="previewButtonPressed:" destination="Dbt-kj-54n" eventType="touchUpInside" id="ZPF-dg-UNA"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="OtY-hL-NnE" firstAttribute="centerY" secondItem="UjZ-uI-Xd4" secondAttribute="centerY" id="49q-hB-hCd"/>
-                            <constraint firstItem="OtY-hL-NnE" firstAttribute="centerX" secondItem="UjZ-uI-Xd4" secondAttribute="centerX" id="nvl-6b-qS6"/>
+                            <constraint firstItem="QTn-5m-uan" firstAttribute="leading" secondItem="b6E-eY-kJg" secondAttribute="leading" constant="20" id="HHF-dX-vvV"/>
+                            <constraint firstAttribute="trailing" secondItem="QTn-5m-uan" secondAttribute="trailing" constant="20" id="Pxd-2c-cbp"/>
+                            <constraint firstItem="QTn-5m-uan" firstAttribute="top" secondItem="b6E-eY-kJg" secondAttribute="top" constant="20" id="vxh-v2-70o"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="b6E-eY-kJg"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Singing Comment" id="hIg-CF-Thf"/>
+                    <navigationItem key="navigationItem" title="Sing a Comment" id="hIg-CF-Thf"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="1rz-E9-Nu7" id="H2s-Kr-sRa"/>
+                        <outlet property="previewButton" destination="8z2-rL-rhH" id="ikH-XZ-GL5"/>
+                        <outlet property="recordButton" destination="ZYn-h4-c7u" id="gKY-VP-Kti"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0H1-sv-Xb6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

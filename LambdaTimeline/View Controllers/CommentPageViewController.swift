@@ -24,13 +24,19 @@ class CommentPageViewController: UIPageViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		dataSource = self
+		delegate = self
 		setViewControllers([pagedViewController(at: 0)].compactMap { $0 }, direction: .forward, animated: true)
 		view.backgroundColor = .white
+		updateTitle()
 	}
 
 	func pagedViewController(at index: Int) -> UIViewController? {
 		guard index >= 0, index < pagedVCs.count else { return nil }
 		return pagedVCs[index]
+	}
+
+	private func updateTitle() {
+		navigationItem.title = viewControllers?.first?.navigationItem.title ?? navigationItem.title
 	}
 }
 
@@ -54,5 +60,12 @@ extension CommentPageViewController: UIPageViewControllerDataSource, UIPageViewC
 
 	func presentationCount(for pageViewController: UIPageViewController) -> Int {
 		return pagedVCs.count
+	}
+
+	func pageViewController(_ pageViewController: UIPageViewController,
+							didFinishAnimating finished: Bool,
+							previousViewControllers: [UIViewController],
+							transitionCompleted completed: Bool) {
+		updateTitle()
 	}
 }
