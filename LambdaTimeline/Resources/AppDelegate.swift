@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import GoogleSignIn
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -28,6 +29,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.makeKeyAndVisible()
         }
         
+		let session = AVAudioSession.sharedInstance()
+		session.requestRecordPermission { granted in
+			guard granted == true else {
+				print("We need microphone access")
+				return
+			}
+
+			do {
+				try session.setCategory(.playAndRecord, mode: .default, options: [])
+				try session.overrideOutputAudioPort(.speaker)
+				try session.setActive(true, options: [])
+			} catch {
+				NSLog("Error setting up audio session: \(error)")
+			}
+		}
         
         return true
     }

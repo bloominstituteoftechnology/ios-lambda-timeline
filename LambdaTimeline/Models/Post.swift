@@ -44,12 +44,14 @@ class Post {
     }
     
     var dictionaryRepresentation: [String : Any] {
-        var dict: [String: Any] = [Post.mediaKey: mediaURL.absoluteString,
-                Post.mediaTypeKey: mediaType.rawValue,
-                Post.commentsKey: comments.map({ $0.dictionaryRepresentation }),
-                Post.authorKey: author.dictionaryRepresentation,
-                Post.timestampKey: timestamp.timeIntervalSince1970]
-        
+        var dict: [String: Any] = [
+			Post.mediaKey: mediaURL.absoluteString,
+			Post.mediaTypeKey: mediaType.rawValue,
+			Post.commentsKey: comments.map({ $0.dictionaryRepresentation }),
+			Post.authorKey: author.dictionaryRepresentation,
+			Post.timestampKey: timestamp.timeIntervalSince1970
+		]
+		
         guard let ratio = self.ratio else { return dict }
         
         dict[Post.ratioKey] = ratio
