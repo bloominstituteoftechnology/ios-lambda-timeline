@@ -15,6 +15,9 @@ class AudioCommentTableViewCell: UITableViewCell {
 	@IBOutlet private var progressSlider: UISlider!
 	@IBOutlet private var timeProgressLabel: UILabel!
 
+	let playImage = UIImage(systemName: "play.fill")
+	let pauseImage = UIImage(systemName: "pause.fill")
+
 	var comment: Comment? {
 		didSet {
 			updateViews()
@@ -25,6 +28,7 @@ class AudioCommentTableViewCell: UITableViewCell {
 		didSet {
 			guard let audioData = audioData else { return }
 			audioPlayer = try? AudioPlayer(with: audioData)
+			audioPlayer?.delegate = self
 			updateViews()
 		}
 	}
@@ -67,10 +71,23 @@ class AudioCommentTableViewCell: UITableViewCell {
 		}
 	}
 
+	private func audioUpdateLoop() {
+		guard let audioPlayer = audioPlayer else { return }
+		progressSlider.value = audioPlayer.elapsedTime.floatValue
+		progressSlider.maximumValue = audioPlayer.duration.floatValue
+		timeProgressLabel.text = timeFormatter.string(from: audioPlayer.elapsedTime)
+
+		if audioPlayer.isPlaying {
+			playPauseButton.setImage(pauseImage, for: .normal)
+		} else {
+			playPauseButton.setImage(playImage, for: .normal)
+		}
+	}
+
 	private func downloadAudio() {
 		guard let audioURL = comment?.audioURL else { return }
 		audioDownloadTask?.cancel()
-		audioDownloadTask = URLSession.shared.dataTask(with: audioURL, completionHandler: { audioData, response, error in
+		audioDownloadTask = URLSession.shared.dataTask(with: audioURL, completionHandler: { audioData, _, error in
 			if let error = error {
 				NSLog("Error downloading file: \(error)")
 				return
@@ -87,4 +104,14 @@ class AudioCommentTableViewCell: UITableViewCell {
 		audioPlayer?.playPause()
 	}
 
+}
+
+extension AudioCommentTableViewCell: AudioPlayerDelegate {
+	func playerDidChangeState(_ player: AudioPlayer) {
+		audioUpdateLoop()
+	}
+
+	func playerPlaybackLoopUpdated(_ player: AudioPlayer) {
+		audioUpdateLoop()
+	}
 }
