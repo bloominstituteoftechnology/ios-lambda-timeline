@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fAV-Ig-LTq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="V9z-BJ-jL2">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -8,6 +8,68 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Comment Container View Controller-->
+        <scene sceneID="C6x-3d-s5L">
+            <objects>
+                <viewController id="V9z-BJ-jL2" customClass="CommentContainerViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0uw-R5-3AX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h7u-1Y-GJh" userLabel="background container">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yum-NA-NRd">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="319"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="cvq-4b-LuS" appends="YES" id="QL4-ck-1i5"/>
+                                        </connections>
+                                    </view>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bQQ-Ry-Z15">
+                                        <rect key="frame" x="0.0" y="269" width="414" height="627"/>
+                                        <connections>
+                                            <segue destination="fAV-Ig-LTq" kind="embed" id="M7S-Eg-8Of"/>
+                                        </connections>
+                                    </containerView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="bQQ-Ry-Z15" secondAttribute="trailing" id="HC7-6j-UoM"/>
+                                    <constraint firstAttribute="bottom" secondItem="bQQ-Ry-Z15" secondAttribute="bottom" id="aDv-tR-21q"/>
+                                    <constraint firstItem="Yum-NA-NRd" firstAttribute="leading" secondItem="h7u-1Y-GJh" secondAttribute="leading" id="jPm-w4-3NE"/>
+                                    <constraint firstItem="bQQ-Ry-Z15" firstAttribute="height" secondItem="h7u-1Y-GJh" secondAttribute="height" multiplier="0.7" id="pM3-Jq-R1z"/>
+                                    <constraint firstItem="bQQ-Ry-Z15" firstAttribute="leading" secondItem="h7u-1Y-GJh" secondAttribute="leading" id="pWZ-dI-hqX"/>
+                                    <constraint firstAttribute="trailing" secondItem="Yum-NA-NRd" secondAttribute="trailing" id="qzF-0B-8EJ"/>
+                                    <constraint firstItem="Yum-NA-NRd" firstAttribute="top" secondItem="h7u-1Y-GJh" secondAttribute="top" id="rGJ-1P-Jxw"/>
+                                    <constraint firstItem="bQQ-Ry-Z15" firstAttribute="top" secondItem="Yum-NA-NRd" secondAttribute="bottom" constant="-50" id="rGP-5v-1i3"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="h7u-1Y-GJh" firstAttribute="leading" secondItem="0uw-R5-3AX" secondAttribute="leading" id="0Mz-zE-A3E"/>
+                            <constraint firstAttribute="trailing" secondItem="h7u-1Y-GJh" secondAttribute="trailing" id="ABM-DB-Nml"/>
+                            <constraint firstItem="h7u-1Y-GJh" firstAttribute="top" secondItem="0uw-R5-3AX" secondAttribute="top" id="Buh-Ze-PHK"/>
+                            <constraint firstAttribute="bottom" secondItem="h7u-1Y-GJh" secondAttribute="bottom" id="H2V-WT-6wE"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="R2s-NB-gq9"/>
+                    </view>
+                    <connections>
+                        <outlet property="backgroundView" destination="Yum-NA-NRd" id="dvH-LS-IzP"/>
+                        <outlet property="pageViewContainer" destination="bQQ-Ry-Z15" id="LzS-37-7m2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Nem-eC-rZN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="cvq-4b-LuS">
+                    <connections>
+                        <action selector="backgroundViewTapped:" destination="V9z-BJ-jL2" id="zWA-7X-KTe"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="-755" y="74"/>
+        </scene>
         <!--Comment Page View Controller-->
         <scene sceneID="h4b-kz-l8G">
             <objects>
