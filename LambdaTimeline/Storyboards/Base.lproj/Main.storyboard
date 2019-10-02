@@ -450,32 +450,38 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gPy-7y-18M">
-                                <rect key="frame" x="164" y="215" width="49" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Record"/>
-                                <connections>
-                                    <action selector="recordButtonTapped:" destination="j6K-p0-aR0" eventType="touchUpInside" id="47Q-J3-w4J"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uuA-DS-cvH">
-                                <rect key="frame" x="165" y="287" width="48" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Cancel"/>
-                                <connections>
-                                    <action selector="cancelButtonTapped:" destination="j6K-p0-aR0" eventType="touchUpInside" id="mxb-xs-C0C"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wNO-9c-Tgu">
-                                <rect key="frame" x="133" y="375" width="109" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Send Recording"/>
-                                <connections>
-                                    <action selector="sendButtonTapped:" destination="j6K-p0-aR0" eventType="touchUpInside" id="E9w-ZF-mI7"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="UBB-Gh-KJE">
+                                <rect key="frame" x="133" y="228.5" width="109" height="190"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gPy-7y-18M">
+                                        <rect key="frame" x="30" y="0.0" width="49" height="30"/>
+                                        <state key="normal" title="Record"/>
+                                        <connections>
+                                            <action selector="recordButtonTapped:" destination="j6K-p0-aR0" eventType="touchUpInside" id="47Q-J3-w4J"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uuA-DS-cvH">
+                                        <rect key="frame" x="30.5" y="80" width="48" height="30"/>
+                                        <state key="normal" title="Cancel"/>
+                                        <connections>
+                                            <action selector="cancelButtonTapped:" destination="j6K-p0-aR0" eventType="touchUpInside" id="mxb-xs-C0C"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wNO-9c-Tgu">
+                                        <rect key="frame" x="0.0" y="160" width="109" height="30"/>
+                                        <state key="normal" title="Send Recording"/>
+                                        <connections>
+                                            <action selector="sendButtonTapped:" destination="j6K-p0-aR0" eventType="touchUpInside" id="E9w-ZF-mI7"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="UBB-Gh-KJE" firstAttribute="centerY" secondItem="HtQ-bY-pQA" secondAttribute="centerY" id="2dT-2e-FjF"/>
+                            <constraint firstItem="UBB-Gh-KJE" firstAttribute="centerX" secondItem="HtQ-bY-pQA" secondAttribute="centerX" id="A6S-hT-04V"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="kWb-tc-Tpd"/>
                     </view>
                     <connections>

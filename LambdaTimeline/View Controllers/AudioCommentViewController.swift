@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol AudioCommentViewControllerDelegate {
+    func updatePost(post: Post)
+}
+
 class AudioCommentViewController: UIViewController {
 
     @IBOutlet weak var recordButton: UIButton!
@@ -18,6 +22,7 @@ class AudioCommentViewController: UIViewController {
     var postController: PostController!
     var post: Post!
     var audioURL: URL?
+    var delegate: AudioCommentViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +41,10 @@ class AudioCommentViewController: UIViewController {
     }
     @IBAction func sendButtonTapped(_ sender: UIButton) {
         let audioData = try! Data(contentsOf: audioURL!)
-        postController.addAudioComment(with: audioData, to: post)
+        postController.addAudioComment(with: audioData, to: post) { post in
+            self.delegate?.updatePost(post: post)
+        }
+        self.dismiss(animated: true, completion: nil)
     }
     
     private func updateViews() {

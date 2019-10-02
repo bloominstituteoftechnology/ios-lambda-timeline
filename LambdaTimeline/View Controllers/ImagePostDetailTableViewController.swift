@@ -30,6 +30,10 @@ class ImagePostDetailTableViewController: UITableViewController {
         super.viewDidLoad()
         updateViews()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
     
     func updateViews() {
         
@@ -113,6 +117,7 @@ class ImagePostDetailTableViewController: UITableViewController {
             guard let audioCommentVC = segue.destination as? AudioCommentViewController else { return }
             audioCommentVC.postController = postController
             audioCommentVC.post = post
+            audioCommentVC.delegate = self
         }
     }
     
@@ -163,4 +168,11 @@ class ImagePostDetailTableViewController: UITableViewController {
         operations[comment.author.uid+"\(comment.timestamp)"] = fetchOp
     }
 
+}
+
+extension ImagePostDetailTableViewController: AudioCommentViewControllerDelegate {
+    func updatePost(post: Post) {
+        self.post = post
+        self.tableView.reloadData()
+    }
 }
