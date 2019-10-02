@@ -47,13 +47,15 @@ class ImagePostViewController: ShiftableViewController {
             return
         }
         
-        let imagePicker = UIImagePickerController()
-        
-        imagePicker.delegate = self
-        
-        imagePicker.sourceType = .photoLibrary
+		DispatchQueue.main.async {
+			let imagePicker = UIImagePickerController()
+			
+			imagePicker.delegate = self
+			
+			imagePicker.sourceType = .photoLibrary
 
-        present(imagePicker, animated: true, completion: nil)
+			self.present(imagePicker, animated: true, completion: nil)
+		}
     }
     
     @IBAction func createPost(_ sender: Any) {
