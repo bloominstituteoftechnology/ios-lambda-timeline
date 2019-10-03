@@ -89,6 +89,7 @@ class ImagePostDetailTableViewController: UITableViewController {
 		if let audioCommentVC = segue.destination as? AudioCommentVC {
 			audioCommentVC.postController = postController
 			audioCommentVC.post = post
+			audioCommentVC.delegate = self
 		}
 	}
     
@@ -100,4 +101,13 @@ class ImagePostDetailTableViewController: UITableViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
+}
+
+extension ImagePostDetailTableViewController: AudioCommentDelegate {
+	
+	func didSaveAudioComment(newComment: Comment?) {
+		guard let comment = newComment else { return }
+		post.comments.append(comment)
+		tableView.reloadData()
+	}
 }

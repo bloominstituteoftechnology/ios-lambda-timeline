@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol AudioCommentDelegate {
+	func didSaveAudioComment(newComment: Comment?)
+}
+
 class AudioCommentVC: UIViewController {
 
 	// MARK: - IBOutlets
@@ -23,7 +27,8 @@ class AudioCommentVC: UIViewController {
 	
     var postController: PostController!
 	var post: Post!
-	private var player = AudioPlayer()
+	var delegate: AudioCommentDelegate?
+	private var player: AudioPlayer?
 	private var recorder = AudioRecorder()
 	private lazy var timeFormatter: DateComponentsFormatter = {
 		let formatting = DateComponentsFormatter()
@@ -33,9 +38,11 @@ class AudioCommentVC: UIViewController {
 		return formatting
 	}()
 	private var audioProgressPercentage: Float {
-		Float(player.elapsedTime / player.duration) * 100
+		guard let player = player else { return 0 }
+		return Float(player.elapsedTime / player.duration) * 100
 	}
 	private var audioURL: URL?
+	
 	
 	// MARK: - Life Cycle
 	
@@ -47,7 +54,6 @@ class AudioCommentVC: UIViewController {
 		durationLabel.font = UIFont.monospacedDigitSystemFont(ofSize: durationLabel.font.pointSize,
 																   weight: .regular)
 		
-		player.delegate = self
 		recorder.delegate = self
 		
 		#warning("Clean up file manager")
@@ -61,7 +67,7 @@ class AudioCommentVC: UIViewController {
 	// MARK: - IBActions
 	
 	@IBAction func previewButtonPressed(_ sender: Any) {
-		player.play()
+		player?.play()
 		updateProgressBar()
 	}
 	
@@ -70,7 +76,13 @@ class AudioCommentVC: UIViewController {
 	}
 	
 	@IBAction func postBtnTapped(_ sender: Any) {
-		postController.addComment(with: nil, audioURL: audioURL, to: &self.post!)
+		guard let url = audioURL,
+			let audioData = try? Data(contentsOf: url) else { return }
+		
+		postController.addAudioComment(with: audioData, to: post) { comment in
+			self.delegate?.didSaveAudioComment(newComment: comment)
+		}
+		
 		dismiss(animated: true, completion: nil)
 	}
 	
@@ -81,6 +93,7 @@ class AudioCommentVC: UIViewController {
 	// MARK: - Helpers
 	
 	private func updateViews() {
+		guard let player = player else { return }
 		previewButton.isEnabled = !player.isPlaying
 		recordButton.tintColor = recorder.isRecording ? .gray : .red
 		elapsedTimeLabel.text = timeFormatter.string(from: player.elapsedTime)
@@ -109,7 +122,8 @@ extension AudioCommentVC: AudioRecorderDelegate {
 	func recorderDidFinishSavingFile(_ recorder: AudioRecorder, url: URL) {
 		if !recorder.isRecording {
 			do {
-				try player.load(url: url)
+				player = try AudioPlayer(with: url)
+				player?.delegate = self
 				audioURL = url
 				postButton.isEnabled = true
 			} catch {

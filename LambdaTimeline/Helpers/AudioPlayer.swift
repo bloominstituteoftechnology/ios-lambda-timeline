@@ -34,14 +34,15 @@ class AudioPlayer: NSObject {
 	
 	// MARK: - Life Cycle
 	
-	override init() {
-		audioPlayer = AVAudioPlayer()
-		
+	init(with url: URL) throws {
+		audioPlayer = try AVAudioPlayer(contentsOf: url)
 		super.init()
-		
-		let song = Bundle.main.url(forResource: "piano", withExtension: "mp3")!
-		try! load(url: song)
-		
+		audioPlayer.delegate = self
+	}
+	
+	init(with data: Data) throws {
+		audioPlayer = try AVAudioPlayer(data: data)
+		super.init()
 		audioPlayer.delegate = self
 	}
 	

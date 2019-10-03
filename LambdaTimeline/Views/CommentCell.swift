@@ -18,9 +18,17 @@ class CommentCell: UITableViewCell {
 	
 	// MARK: - Properties
 	
-	private lazy var player = AudioPlayer()
+	private var player: AudioPlayer?
+	private var audioDataTask: URLSessionDataTask?
+	private var audioData: Data? {
+		didSet {
+			guard let data = audioData else { return }
+			player = try? AudioPlayer(with: data)
+		}
+	}
 	var comment: Comment? {
 		didSet {
+			downloadAudio()
 			configCell()
 		}
 	}
@@ -28,15 +36,11 @@ class CommentCell: UITableViewCell {
 	// MARK: - IBActions
 	
 	@IBAction func playBtnTapped(_ sender: Any) {
+		guard let player = player else { return }
 		if player.isPlaying {
 			player.stop()
-//			playBtn.layer.removeAllAnimations()
-//			playBtn.transform = .identity
 		} else {
 			player.play()
-//			UIView.animate(withDuration: player.duration) {
-//				self.playBtn.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-//			}
 		}
 	}
 	
@@ -55,7 +59,7 @@ class CommentCell: UITableViewCell {
 		if let audioUrl = comment.audioURL {
 			commentLbl.text = "Audio File"
 			do {
-				try player.load(url: audioUrl)
+				try player?.load(url: audioUrl)
 			} catch {
 				NSLog("Could not play audio comment")
 			}
@@ -63,5 +67,21 @@ class CommentCell: UITableViewCell {
 			playBtn.isHidden = true
 			commentLbl.text = comment.text
 		}
+	}
+	
+	private func downloadAudio() {
+		guard let audioUrl = comment?.audioURL else { return }
+		audioDataTask?.cancel()
+		audioDataTask = URLSession.shared.dataTask(with: audioUrl, completionHandler: { (data, _, error) in
+			if let error = error {
+				NSLog("Error donloading audio data: \(error)")
+				return
+			}
+			
+			DispatchQueue.main.async {
+				self.audioData = data
+			}
+		})
+		audioDataTask?.resume()
 	}
 }
