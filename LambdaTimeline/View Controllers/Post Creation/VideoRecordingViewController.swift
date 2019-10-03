@@ -16,6 +16,9 @@ class VideoRecordingViewController: UIViewController {
 	@IBOutlet private var playbackButton: UIButton!
 	@IBOutlet private var cameraPreviewView: CameraPreviewView!
 	@IBOutlet private var videoPreviewView: VideoPlayerView!
+	@IBOutlet private var titleTextField: UITextField!
+
+	var postController: PostController!
 
 	var videoHelper: VideoSessionManager?
 	private var lastRecording: URL? {
@@ -118,6 +121,23 @@ class VideoRecordingViewController: UIViewController {
 
 	@IBAction func playButtonPressed(_ sender: UIButton) {
 		videoPreviewView.playStopToggle()
+	}
+
+	@IBAction func createPostPressed(_ sender: UIBarButtonItem) {
+		guard let postTitle = titleTextField.text else { return }
+		guard let fileURL = lastRecording else { return }
+		let videoData: Data
+		do {
+			videoData = try Data(contentsOf: fileURL)
+		} catch {
+			NSLog("Error loading video data: \(error)")
+			return
+		}
+		postController.createPost(with: postTitle, ofType: .video, mediaData: videoData, ratio: nil) { _ in
+			DispatchQueue.main.async {
+				self.navigationController?.popViewController(animated: true)
+			}
+		}
 	}
 
 	// MARK: - Playback

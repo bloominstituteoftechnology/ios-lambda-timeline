@@ -210,6 +210,11 @@
                                     <constraint firstItem="KqN-IN-3ld" firstAttribute="width" secondItem="Q97-1z-aG2" secondAttribute="width" multiplier="2" id="prq-i5-yOK"/>
                                 </constraints>
                             </view>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Video Post Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s9g-0x-g1b">
+                                <rect key="frame" x="20" y="52" width="335" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -223,10 +228,13 @@
                             <constraint firstItem="3C5-TP-Off" firstAttribute="top" secondItem="pr2-9D-wD7" secondAttribute="top" id="IGO-A1-FTV"/>
                             <constraint firstItem="3du-V0-Nao" firstAttribute="trailing" secondItem="IwT-l5-aHO" secondAttribute="trailing" id="JsM-YJ-1mm"/>
                             <constraint firstItem="3du-V0-Nao" firstAttribute="leading" secondItem="IwT-l5-aHO" secondAttribute="leading" id="L3J-Xv-8nm"/>
+                            <constraint firstItem="IwT-l5-aHO" firstAttribute="trailing" secondItem="s9g-0x-g1b" secondAttribute="trailing" constant="20" id="Y5v-JO-rgl"/>
+                            <constraint firstItem="s9g-0x-g1b" firstAttribute="top" secondItem="IwT-l5-aHO" secondAttribute="top" constant="8" id="Z4s-7R-gAl"/>
                             <constraint firstAttribute="bottom" secondItem="b16-uG-xDQ" secondAttribute="bottom" id="ex0-rY-lXw"/>
                             <constraint firstAttribute="trailing" secondItem="3C5-TP-Off" secondAttribute="trailing" id="ihz-Xa-JsS"/>
                             <constraint firstItem="b16-uG-xDQ" firstAttribute="leading" secondItem="IwT-l5-aHO" secondAttribute="leading" id="k8F-eW-0Ff"/>
                             <constraint firstItem="IwT-l5-aHO" firstAttribute="trailing" secondItem="b16-uG-xDQ" secondAttribute="trailing" id="m4c-T2-BV0"/>
+                            <constraint firstItem="s9g-0x-g1b" firstAttribute="leading" secondItem="IwT-l5-aHO" secondAttribute="leading" constant="20" id="u5h-dc-gMo"/>
                             <constraint firstItem="3du-V0-Nao" firstAttribute="top" secondItem="IwT-l5-aHO" secondAttribute="top" id="uM1-dK-vWB"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="IwT-l5-aHO"/>
@@ -235,7 +243,7 @@
                     <navigationItem key="navigationItem" id="G8N-lO-auA">
                         <barButtonItem key="rightBarButtonItem" title="Post" id="IXj-BV-3Ca">
                             <connections>
-                                <action selector="createPost:" destination="1Aw-4e-BW2" id="ny6-kD-1Yz"/>
+                                <action selector="createPostPressed:" destination="GhE-94-kOw" id="aV9-ZQ-6J9"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -245,6 +253,7 @@
                         <outlet property="indicatorContainer" destination="3du-V0-Nao" id="OCT-rY-pFP"/>
                         <outlet property="playbackButton" destination="Q97-1z-aG2" id="Rnh-pI-5uj"/>
                         <outlet property="recordButton" destination="KqN-IN-3ld" id="QEO-K0-b9e"/>
+                        <outlet property="titleTextField" destination="s9g-0x-g1b" id="PtK-DT-Oud"/>
                         <outlet property="videoPreviewView" destination="l7x-fj-HSZ" id="ioZ-uG-dW9"/>
                     </connections>
                 </viewController>

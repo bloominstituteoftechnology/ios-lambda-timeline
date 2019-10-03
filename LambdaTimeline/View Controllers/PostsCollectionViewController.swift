@@ -182,6 +182,11 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 	
 	// In a storyboard-based application, you will often want to do a little preparation before navigation
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+		if let videoRecordingVC = segue.destination as? VideoRecordingViewController {
+			videoRecordingVC.postController = postController
+		}
+
 		if segue.identifier == "AddImagePost" {
 			let destinationVC = segue.destination as? ImagePostViewController
 			destinationVC?.postController = postController
