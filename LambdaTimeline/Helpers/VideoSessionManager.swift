@@ -21,6 +21,10 @@ class VideoSessionManager {
 	var cameraPosition: AVCaptureDevice.Position
 	var capturePreset: AVCaptureSession.Preset
 
+	var isRunning: Bool {
+		return captureSession.isRunning
+	}
+
 	init(cameraPosition: AVCaptureDevice.Position = .back, capturePreset: AVCaptureSession.Preset = .hd1280x720) throws {
 		self.cameraPosition = cameraPosition
 		self.capturePreset = capturePreset
@@ -30,16 +34,29 @@ class VideoSessionManager {
 	private func setupCamera() throws {
 		captureSession.beginConfiguration()
 		let camera = try getWideCamera()
-		try addCameraInput(device: camera)
+		try addCameraInput(camera: camera)
 		setPreset()
 		let mic = try getAudioDevice()
 		try addAudioDevice(device: mic)
 		captureSession.commitConfiguration()
 	}
 
+	// MARK: - Session Control
+	func startRunning() {
+		if !isRunning {
+			captureSession.startRunning()
+		}
+	}
+
+	func stopRunning() {
+		if isRunning {
+			captureSession.stopRunning()
+		}
+	}
+
 	// MARK: - Camera Setup helpers
-	private func addCameraInput(device: AVCaptureDevice) throws {
-		let cameraInput = try AVCaptureDeviceInput(device: device)
+	private func addCameraInput(camera: AVCaptureDevice) throws {
+		let cameraInput = try AVCaptureDeviceInput(device: camera)
 		guard captureSession.canAddInput(cameraInput) else { throw VideoSessionError.cannotAddInput }
 		captureSession.addInput(cameraInput)
 	}

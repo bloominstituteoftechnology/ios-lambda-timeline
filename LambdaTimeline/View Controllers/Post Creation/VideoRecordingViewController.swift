@@ -27,10 +27,21 @@ class VideoRecordingViewController: UIViewController {
 		checkCameraPermission()
 	}
 
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		videoHelper?.startRunning()
+	}
+
+	override func viewDidDisappear(_ animated: Bool) {
+		super.viewDidDisappear(animated)
+		videoHelper?.stopRunning()
+	}
+
 	private func setupCamera() {
 		do {
 			videoHelper = try VideoSessionManager()
 			cameraPreviewView.session = videoHelper?.captureSession
+			videoHelper?.startRunning()
 		} catch {
 			NSLog("Error creating camera helper: \(error)")
 		}
