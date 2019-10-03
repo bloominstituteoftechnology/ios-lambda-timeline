@@ -37,9 +37,16 @@ class VideoRecordingViewController: UIViewController {
 		videoHelper?.stopRunning()
 	}
 
+	private func updateViews() {
+		indicatorContainer.isHidden = videoHelper?.isRecording ?? false
+
+		playbackButton.isEnabled = false
+	}
+
 	private func setupCamera() {
 		do {
 			videoHelper = try VideoSessionManager()
+			videoHelper?.delegate = self
 			cameraPreviewView.session = videoHelper?.captureSession
 			videoHelper?.startRunning()
 		} catch {
@@ -85,14 +92,40 @@ class VideoRecordingViewController: UIViewController {
 	}
 
 	@IBAction func recordButtonDown(_ sender: UIButton) {
-		indicatorContainer.isHidden = true
+		videoHelper?.startRecording()
 	}
 
 	@IBAction func recordButtonUp(_ sender: UIButton) {
-		indicatorContainer.isHidden = false
+		videoHelper?.stopRecording()
 	}
 
 	@IBAction func playButtonPressed(_ sender: UIButton) {
 	}
 
+}
+
+extension VideoRecordingViewController: VideoSessionManagerDelegate {
+	func videoSessionManager(_ manager: VideoSessionManager, didStartCaptureSession running: Bool) {
+		if running {
+			NSLog("Started video capture session")
+		} else {
+			NSLog("Stopped video capture session")
+		}
+		updateViews()
+	}
+
+	func videoSessionManager(_ manager: VideoSessionManager, didStartRecordingToURL url: URL) {
+		NSLog("Started recording to \(url)")
+		DispatchQueue.main.async {
+			self.updateViews()
+		}
+	}
+
+	func videoSessionManager(_ manager: VideoSessionManager, didFinishRecordingToURL url: URL, error: Error?) {
+		NSLog("Finished recording to \(url)")
+		DispatchQueue.main.async {
+			self.updateViews()
+			// load player from url here
+		}
+	}
 }
