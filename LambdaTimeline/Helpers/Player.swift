@@ -13,29 +13,30 @@ protocol PlayerDelegate {
 }
 
 class Player: NSObject {
-    var audioPlayer: AVAudioPlayer
+    var audioPlayer: AVAudioPlayer?
     var isPlaying: Bool {
-        return audioPlayer.isPlaying
+        return audioPlayer?.isPlaying ?? false
     }
     var delegate: PlayerDelegate?
     
     override init() {
-        self.audioPlayer = AVAudioPlayer()
+        //self.audioPlayer = AVAudioPlayer()
         super.init()
     }
     
     func load(data: Data)throws {
+        //audioPlayer = nil
         audioPlayer = try AVAudioPlayer(data: data)
-        audioPlayer.delegate = self
+        audioPlayer?.delegate = self
     }
     
     private func play() {
-        audioPlayer.play()
+        audioPlayer?.play()
         notifyDelegate()
     }
     
     private func pause() {
-        audioPlayer.pause()
+        audioPlayer?.pause()
         notifyDelegate()
     }
     

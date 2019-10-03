@@ -89,8 +89,14 @@ class VideoDetailViewController: UIViewController {
     }
     @IBAction func postButtonTapped(_ sender: UIButton) {
         guard let title = titleTextField.text, let url = videoURL else { return }
-        let data = try! Data(contentsOf: url)
-        postController.createPost(with: title, ofType: .video, mediaData: data)
+        do {
+            let data = try Data(contentsOf: url)
+            postController.createPost(with: title, ofType: .video, mediaData: data)
+        } catch {
+            print("Error posting video: \(error)")
+        }
+        
+        
     }
     
 
