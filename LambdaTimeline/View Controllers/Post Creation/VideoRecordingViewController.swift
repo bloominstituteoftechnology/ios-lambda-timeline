@@ -15,9 +15,16 @@ class VideoRecordingViewController: UIViewController {
 	@IBOutlet private var recordButton: UIButton!
 	@IBOutlet private var playbackButton: UIButton!
 	@IBOutlet private var cameraPreviewView: CameraPreviewView!
+	@IBOutlet private var videoPreviewView: VideoPlayerView!
 
 	var videoHelper: VideoSessionManager?
+	private var lastRecording: URL? {
+		didSet {
+			setupPlayback()
+		}
+	}
 
+	// MARK: - Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -40,7 +47,10 @@ class VideoRecordingViewController: UIViewController {
 	private func updateViews() {
 		indicatorContainer.isHidden = videoHelper?.isRecording ?? false
 
-		playbackButton.isEnabled = false
+		playbackButton.isEnabled = lastRecording != nil
+
+		recordButton.isHidden = videoPreviewView.isPlaying
+		videoPreviewView.isHidden = !videoPreviewView.isPlaying
 	}
 
 	private func setupCamera() {
@@ -54,6 +64,7 @@ class VideoRecordingViewController: UIViewController {
 		}
 	}
 
+	// MARK: - Privacy/camera permission
 	private func checkCameraPermission() {
 		let status = AVCaptureDevice.authorizationStatus(for: .video)
 
@@ -91,6 +102,7 @@ class VideoRecordingViewController: UIViewController {
 		present(alertVC, animated: true)
 	}
 
+	// MARK: - IBActions
 	@IBAction func recordButtonDown(_ sender: UIButton) {
 		videoHelper?.startRecording()
 	}
@@ -100,6 +112,15 @@ class VideoRecordingViewController: UIViewController {
 	}
 
 	@IBAction func playButtonPressed(_ sender: UIButton) {
+		videoPreviewView.playStopToggle()
+	}
+
+	// MARK: - Playback
+	private func setupPlayback() {
+		if let lastRecording = lastRecording {
+			videoPreviewView.delegate = self
+			videoPreviewView.loadMovie(url: lastRecording)
+		}
 	}
 
 }
@@ -124,8 +145,15 @@ extension VideoRecordingViewController: VideoSessionManagerDelegate {
 	func videoSessionManager(_ manager: VideoSessionManager, didFinishRecordingToURL url: URL, error: Error?) {
 		NSLog("Finished recording to \(url)")
 		DispatchQueue.main.async {
-			self.updateViews()
 			// load player from url here
+			self.lastRecording = url
+			self.updateViews()
 		}
+	}
+}
+
+extension VideoRecordingViewController: VideoPlayerViewDelegate {
+	func videoPlayerViewStatusChanged(_ videoPlayerView: VideoPlayerView) {
+		updateViews()
 	}
 }
