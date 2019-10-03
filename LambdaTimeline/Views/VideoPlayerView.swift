@@ -19,12 +19,18 @@ class VideoPlayerView: UIView {
 
 	weak var delegate: VideoPlayerViewDelegate?
 
+	private var stopNotification: NSObjectProtocol?
+
 	override func awakeFromNib() {
 		super.awakeFromNib()
-		_ = NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: nil, queue: nil, using: { _ in
+		stopNotification = NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: nil, queue: nil, using: { _ in
 			self.stop()
 			self.notifyDelegate()
 		})
+	}
+
+	deinit {
+		stopNotification = nil
 	}
 
 	var isPlaying: Bool {
