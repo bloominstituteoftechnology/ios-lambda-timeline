@@ -36,10 +36,10 @@ class Post {
 	private static let timestampKey = "timestamp"
 	private static let idKey = "id"
 
-	init(title: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date()) {
+	init(title: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date(), mediaType: MediaType) {
 		self.mediaURL = mediaURL
 		self.ratio = ratio
-		self.mediaType = .image
+		self.mediaType = mediaType
 		self.author = author
 		self.comments = [Comment(text: title, author: author)]
 		self.timestamp = timestamp

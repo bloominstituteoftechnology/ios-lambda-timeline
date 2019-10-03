@@ -91,7 +91,12 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 			loadImage(for: cell, forItemAt: indexPath)
 			return cell
 		case .video:
-			fatalError("fix this")
+			guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoCell",
+																for: indexPath) as? VideoPostCollectionViewCell
+				else { return UICollectionViewCell() }
+			cell.post = post
+			loadVideo(for: cell, forItemAt: indexPath)
+			return cell
 		}
 	}
 	
@@ -106,7 +111,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 			guard let ratio = post.ratio else { return size }
 			size.height = size.width * ratio
 		case .video:
-			fatalError("fix this")
+			size = CGSize(width: view.frame.width, height: view.frame.width)
 		}
 		
 		return size
@@ -176,6 +181,51 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 		mediaFetchQueue.addOperation(cacheOp)
 		OperationQueue.main.addOperation(completionOp)
 		
+		operations[postID] = fetchOp
+	}
+
+	func loadVideo(for videoPostCell: VideoPostCollectionViewCell, forItemAt indexPath: IndexPath) {
+		let post = postController.posts[indexPath.row]
+
+		guard let postID = post.id else { return }
+
+		let cacheDir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
+		let mediaURL = cacheDir.appendingPathComponent(postID)
+		let cachedMediaURL = mediaURL.appendingPathExtension("mov")
+		if FileManager.default.fileExists(atPath: mediaURL.path) {
+			videoPostCell.loadVideo(with: cachedMediaURL)
+//			self.collectionView.reloadItems(at: [indexPath])
+			return
+		}
+
+		let fetchOp = FetchMediaOperation(post: post, postController: postController)
+
+		let cacheOp = BlockOperation {
+			if let data = fetchOp.mediaData {
+				do {
+					try data.write(to: mediaURL)
+					try FileManager.default.moveItem(at: mediaURL, to: cachedMediaURL)
+				} catch {
+					NSLog("Error saving video cache: \(error)")
+				}
+				DispatchQueue.main.async {
+					self.collectionView.reloadItems(at: [indexPath])
+				}
+			}
+		}
+
+		let completionOp = BlockOperation {
+			defer { self.operations.removeValue(forKey: postID) }
+			self.collectionView.reloadItems(at: [indexPath])
+		}
+
+		cacheOp.addDependency(fetchOp)
+		completionOp.addDependency(fetchOp)
+
+		mediaFetchQueue.addOperation(fetchOp)
+		mediaFetchQueue.addOperation(cacheOp)
+		OperationQueue.main.addOperation(completionOp)
+
 		operations[postID] = fetchOp
 	}
 	// MARK: - Navigation

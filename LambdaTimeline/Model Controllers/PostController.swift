@@ -29,7 +29,7 @@ class PostController {
 		store(mediaData: mediaData, at: storageRef.child(mediaType.rawValue)) { mediaURL in
 			guard let mediaURL = mediaURL else { completion(false); return }
 			
-			let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
+			let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author, mediaType: mediaType)
 			self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { error, _ in
 				if let error = error {
 					NSLog("Error posting image post: \(error)")
