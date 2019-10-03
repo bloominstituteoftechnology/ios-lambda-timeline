@@ -125,6 +125,10 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 			cell.imageView.image != nil {
 			self.performSegue(withIdentifier: "ViewImagePost", sender: nil)
 		}
+
+		if let cell = cell as? VideoPostCollectionViewCell {
+			performSegue(withIdentifier: "ViewImagePost", sender: nil)
+		}
 	}
 	
 	override func collectionView(_ collectionView: UICollectionView,
