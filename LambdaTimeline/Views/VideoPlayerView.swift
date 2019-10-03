@@ -24,17 +24,22 @@ class VideoPlayerView: UIView {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		// gets notifications from OTHER views - come up with alternative
-		stopNotification = NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: nil, queue: nil, using: { _ in
-			self.stop()
-			self.notifyDelegate()
-			if self.shouldLoop {
-				self.play()
+		stopNotification = NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: nil, queue: nil, using: { notification in
+			if let notifyingPlayerItem = notification.object as? AVPlayerItem {
+				if notifyingPlayerItem == self.player?.currentItem {
+					self.stop()
+					self.notifyDelegate()
+					if self.shouldLoop {
+						self.play()
+					}
+				}
 			}
 		})
 	}
 
 	deinit {
 		stopNotification = nil
+		print("player done")
 	}
 
 	var isPlaying: Bool {
