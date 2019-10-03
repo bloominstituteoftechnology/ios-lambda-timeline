@@ -45,7 +45,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 		}
 	}
 	
-	@IBAction func addPost(_ sender: Any) {
+	@IBAction func addPost(_ sender: UIBarButtonItem) {
 		let alert = UIAlertController(title: "New Post", message: "Which kind of post do you want to create?", preferredStyle: .actionSheet)
 		
 		let imagePostAction = UIAlertAction(title: "Image", style: .default) { _ in
@@ -60,6 +60,10 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 		alert.addAction(imagePostAction)
 		alert.addAction(videoPostAction)
 		alert.addAction(cancelAction)
+
+		if UIDevice.current.userInterfaceIdiom == .pad {
+			alert.popoverPresentationController?.barButtonItem = sender
+		}
 		
 		self.present(alert, animated: true, completion: nil)
 	}

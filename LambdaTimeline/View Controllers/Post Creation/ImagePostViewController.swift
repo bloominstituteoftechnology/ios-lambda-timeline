@@ -204,6 +204,11 @@ extension ImagePostViewController: AddFilterCellDelegate {
 			self.addFilter(named: "CIExposureAdjust")
 		}))
 		alertVC.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+
+		if UIDevice.current.userInterfaceIdiom == .pad {
+			alertVC.popoverPresentationController?.barButtonItem = postButton
+		}
+
 		present(alertVC, animated: true)
 	}
 
