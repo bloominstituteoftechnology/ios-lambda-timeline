@@ -101,6 +101,7 @@ extension AudioPlayer: AVAudioPlayerDelegate {
 	}
 	
 	func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+		stopTimer()
 		notifyDelegate()
 	}
 }
