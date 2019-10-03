@@ -126,7 +126,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 			self.performSegue(withIdentifier: "ViewImagePost", sender: nil)
 		}
 
-		if let cell = cell as? VideoPostCollectionViewCell {
+		if cell is VideoPostCollectionViewCell {
 			performSegue(withIdentifier: "ViewImagePost", sender: nil)
 		}
 	}
