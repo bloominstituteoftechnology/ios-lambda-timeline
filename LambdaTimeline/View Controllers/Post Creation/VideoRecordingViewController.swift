@@ -24,6 +24,9 @@ class VideoRecordingViewController: UIViewController {
 		}
 	}
 
+	private let playButtonImage = UIImage(systemName: "play.circle")
+	private let stopButtonImage = UIImage(systemName: "stop.circle.fill")
+
 	// MARK: - Lifecycle
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -48,6 +51,8 @@ class VideoRecordingViewController: UIViewController {
 		indicatorContainer.isHidden = videoHelper?.isRecording ?? false
 
 		playbackButton.isEnabled = lastRecording != nil
+		let bgImage = videoPreviewView.isPlaying ? stopButtonImage : playButtonImage
+		playbackButton.setBackgroundImage(bgImage, for: .normal)
 
 		recordButton.isHidden = videoPreviewView.isPlaying
 		videoPreviewView.isHidden = !videoPreviewView.isPlaying
