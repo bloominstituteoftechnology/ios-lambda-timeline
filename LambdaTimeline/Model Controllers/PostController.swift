@@ -13,7 +13,7 @@ import FirebaseStorage
 
 class PostController {
     
-    func createPost(with title: String, ofType mediaType: MediaType, mediaData: Data, ratio: CGFloat? = nil, completion: @escaping (Bool) -> Void = { _ in }) {
+	func createPost(description: String?, ofType mediaType: MediaType, mediaData: Data, ratio: CGFloat? = nil, completion: @escaping (Bool) -> Void = { _ in }) {
         
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
@@ -22,7 +22,7 @@ class PostController {
             
             guard let mediaURL = mediaURL else { completion(false); return }
             
-            let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
+            let imagePost = Post(mediaURL: mediaURL, ratio: ratio, description: description, author: author)
             
             self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
                 if let error = error {
@@ -35,12 +35,12 @@ class PostController {
         }
     }
     
-    func addComment(with text: String, to post: inout Post) {
+	func addComment(with text: String?, audioURL: URL?, to post: inout Post) {
         
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
         
-        let comment = Comment(text: text, author: author)
+		let comment = Comment(text: text, author: author, audioURL: audioURL)
         post.comments.append(comment)
         
         savePostToFirebase(post)
@@ -119,7 +119,7 @@ class PostController {
     
     var posts: [Post] = []
     let currentUser = Auth.auth().currentUser
-    let postsRef = Database.database().reference().child("posts")
+	let postsRef = Database.database().reference().child("LambdaTimeline/posts")
     
     let storageRef = Storage.storage().reference()
     
