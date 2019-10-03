@@ -63,11 +63,11 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             return cell
         case .video:
             print("video")
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPostCell", for: indexPath) as? VideoPostCollectionViewCell else { return UICollectionViewCell() }
             
             cell.post = post
             
-            loadImage(for: cell, forItemAt: indexPath)
+            loadVideo(for: cell, forItemAt: indexPath)
             
             return cell
         }
@@ -87,7 +87,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             
             size.height = size.width * ratio
         case .video:
-            print("video")
+            guard let ratio = post.ratio else { return size }
+            
+            size.height = size.width * ratio
         }
         
         return size
@@ -143,6 +145,53 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             
             if let data = fetchOp.mediaData {
                 imagePostCell.setImage(UIImage(data: data))
+                self.collectionView.reloadItems(at: [indexPath])
+            }
+        }
+        
+        cacheOp.addDependency(fetchOp)
+        completionOp.addDependency(fetchOp)
+        
+        mediaFetchQueue.addOperation(fetchOp)
+        mediaFetchQueue.addOperation(cacheOp)
+        OperationQueue.main.addOperation(completionOp)
+        
+        operations[postID] = fetchOp
+    }
+    
+    func loadVideo(for videoPostCell: VideoPostCollectionViewCell, forItemAt indexPath: IndexPath) {
+        let post = postController.posts[indexPath.row]
+        
+        guard let postID = post.id else { return }
+        
+        if let mediaData = cache.value(for: postID) {
+            videoPostCell.setVideo(mediaData)
+            self.collectionView.reloadItems(at: [indexPath])
+            return
+        }
+        
+        let fetchOp = FetchMediaOperation(post: post, postController: postController)
+        
+        let cacheOp = BlockOperation {
+            if let data = fetchOp.mediaData {
+                self.cache.cache(value: data, for: postID)
+                DispatchQueue.main.async {
+                    self.collectionView.reloadItems(at: [indexPath])
+                }
+            }
+        }
+        
+        let completionOp = BlockOperation {
+            defer { self.operations.removeValue(forKey: postID) }
+            
+            if let currentIndexPath = self.collectionView?.indexPath(for: videoPostCell),
+                currentIndexPath != indexPath {
+                print("Got video for now-reused cell")
+                return
+            }
+            
+            if let data = fetchOp.mediaData {
+                videoPostCell.setVideo(data)
                 self.collectionView.reloadItems(at: [indexPath])
             }
         }

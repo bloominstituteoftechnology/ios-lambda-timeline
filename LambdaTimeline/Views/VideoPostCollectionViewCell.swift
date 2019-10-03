@@ -50,18 +50,30 @@ class VideoPostCollectionViewCell: UICollectionViewCell {
         labelBackgroundView.clipsToBounds = true
     }
     @IBAction func playButtonTapped(_ sender: Any) {
+        print("play")
         player.seek(to: .zero)
         
         player.play()
     }
     
-    func setVideo(_ url: URL) {
+    
+    func setVideo(_ data: Data) {
+        guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+        let url = documentDirectory.appendingPathComponent("video.mov")
+        do {
+            try data.write(to: url)
+        } catch {
+            fatalError("Error writing video data to temp url")
+        }
+            
+        
         player = AVPlayer(url: url)
         let playerLayer = AVPlayerLayer(player: player)
         
         playerLayer.frame = videoPreviewView.bounds
         videoPreviewView.layer.addSublayer(playerLayer)
-        
+        print("video set")
+        player.seek(to: .zero)
         
     }
     
