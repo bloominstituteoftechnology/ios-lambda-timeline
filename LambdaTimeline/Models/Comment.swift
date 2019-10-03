@@ -33,11 +33,11 @@ class Comment: FirebaseConvertible, Equatable {
             let author = Author(dictionary: authorDictionary),
             let timestampTimeInterval = dictionary[Comment.timestampKey] as? TimeInterval else { return nil }
 		let text = dictionary[Comment.textKey] as? String
-		let audioPath = dictionary[Comment.audioURLKey] as? URL
+		let audioPath = dictionary[Comment.audioURLKey] as? String ?? ""
         
         self.text = text
         self.author = author
-		self.audioURL = audioPath
+		self.audioURL = URL(string: audioPath)
         self.timestamp = Date(timeIntervalSince1970: timestampTimeInterval)
     }
     
