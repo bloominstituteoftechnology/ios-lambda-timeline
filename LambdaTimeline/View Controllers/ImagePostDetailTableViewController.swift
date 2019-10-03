@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ImagePostDetailTableViewController: UITableViewController {
     
@@ -14,6 +15,8 @@ class ImagePostDetailTableViewController: UITableViewController {
     var post: Post!
     var postController: PostController!
     var imageData: Data?
+    var videoData: Data?
+    var player: AVPlayer!
     
     
     private var operations = [String : Operation]()
@@ -25,6 +28,7 @@ class ImagePostDetailTableViewController: UITableViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
+    @IBOutlet weak var videoPreviewView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,15 +41,47 @@ class ImagePostDetailTableViewController: UITableViewController {
     
     func updateViews() {
         
-        guard let imageData = imageData,
-            let image = UIImage(data: imageData) else { return }
+        if let imageData = imageData,
+            let image = UIImage(data: imageData) {
+            title = post?.title
+            
+            imageView.image = image
+            
+            titleLabel.text = post.title
+            authorLabel.text = post.author.displayName
+        } else if let videoData = videoData {
+            imageView.isHidden = true
+            videoPreviewView.isUserInteractionEnabled = true
+            let tap = UITapGestureRecognizer(target: self, action: #selector(playVideo))
+            videoPreviewView.addGestureRecognizer(tap)
+            setVideo(videoData)
+            titleLabel.text = post.title
+            authorLabel.text = post.author.displayName
+        }
         
-        title = post?.title
+    }
+    
+    @objc func playVideo() {
+        player.seek(to: .zero)
+        player.play()
+    }
+    func setVideo(_ data: Data) {
+        guard let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+        let url = documentDirectory.appendingPathComponent("video.mov")
+        do {
+            try data.write(to: url)
+        } catch {
+            fatalError("Error writing video data to temp url")
+        }
         
-        imageView.image = image
         
-        titleLabel.text = post.title
-        authorLabel.text = post.author.displayName
+        player = AVPlayer(url: url)
+        let playerLayer = AVPlayerLayer(player: player)
+        
+        playerLayer.frame = videoPreviewView.bounds
+        videoPreviewView.layer.addSublayer(playerLayer)
+        player.seek(to: .zero)
+        
     }
     
     // MARK: - Table view data source

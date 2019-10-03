@@ -166,6 +166,7 @@
                         <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="jaI-fq-Woc"/>
                         <segue destination="OyM-8q-Icp" kind="show" identifier="ViewImagePost" id="hhs-es-AdQ"/>
                         <segue destination="FGQ-XF-vHF" kind="show" identifier="VideoPostDetailShowSegue" id="1eX-kM-7Pz"/>
+                        <segue destination="OyM-8q-Icp" kind="show" identifier="ViewVideoPost" id="Jhh-6x-6mc"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -491,12 +492,22 @@
                                 <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="34" translatesAutoresizingMaskIntoConstraints="NO" id="du3-3a-NOA">
                                     <rect key="frame" x="8" y="2" width="359" height="95"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Q0L-w5-qUw">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="haN-aj-zZd">
                                             <rect key="frame" x="0.0" y="0.0" width="95" height="95"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Q0L-w5-qUw">
+                                                    <rect key="frame" x="0.0" y="0.0" width="95" height="95"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" secondItem="Q0L-w5-qUw" secondAttribute="height" multiplier="1:1" id="y1B-iX-x3e"/>
+                                                <constraint firstAttribute="width" secondItem="haN-aj-zZd" secondAttribute="height" multiplier="1:1" id="RvM-Dj-S3p"/>
+                                                <constraint firstItem="Q0L-w5-qUw" firstAttribute="top" secondItem="haN-aj-zZd" secondAttribute="top" id="bSw-ap-sgX"/>
+                                                <constraint firstAttribute="trailing" secondItem="Q0L-w5-qUw" secondAttribute="trailing" id="cVC-vZ-UzK"/>
+                                                <constraint firstAttribute="bottom" secondItem="Q0L-w5-qUw" secondAttribute="bottom" id="how-Lx-nrR"/>
+                                                <constraint firstItem="Q0L-w5-qUw" firstAttribute="leading" secondItem="haN-aj-zZd" secondAttribute="leading" id="tTs-Uw-S3t"/>
                                             </constraints>
-                                        </imageView>
+                                        </view>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Jed-zo-yZu">
                                             <rect key="frame" x="129" y="23" width="230" height="49"/>
                                             <subviews>
@@ -515,9 +526,6 @@
                                             </subviews>
                                         </stackView>
                                     </subviews>
-                                    <constraints>
-                                        <constraint firstItem="Q0L-w5-qUw" firstAttribute="width" relation="lessThanOrEqual" secondItem="du3-3a-NOA" secondAttribute="width" multiplier="1/2" id="PO2-SF-KKU"/>
-                                    </constraints>
                                 </stackView>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -604,8 +612,9 @@
                     <connections>
                         <outlet property="authorLabel" destination="uQC-8y-kuu" id="OBX-uv-64E"/>
                         <outlet property="imageView" destination="Q0L-w5-qUw" id="0v7-ZB-mgi"/>
-                        <outlet property="imageViewAspectRatioConstraint" destination="y1B-iX-x3e" id="wIt-kh-Tzd"/>
+                        <outlet property="imageViewAspectRatioConstraint" destination="RvM-Dj-S3p" id="Hge-7V-gZ0"/>
                         <outlet property="titleLabel" destination="jyy-BX-c2c" id="UEd-xO-ipC"/>
+                        <outlet property="videoPreviewView" destination="haN-aj-zZd" id="Gvc-GS-yAc"/>
                         <segue destination="j6K-p0-aR0" kind="presentation" identifier="AudioCommentShowSegue" modalPresentationStyle="fullScreen" id="Oe8-g0-Z7l"/>
                     </connections>
                 </tableViewController>
@@ -670,4 +679,7 @@
         <image name="Record" width="116" height="116"/>
         <image name="Stop" width="116" height="116"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Jhh-6x-6mc"/>
+    </inferredMetricsTieBreakers>
 </document>

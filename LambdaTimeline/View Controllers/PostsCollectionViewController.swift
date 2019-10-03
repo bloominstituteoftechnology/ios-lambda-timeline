@@ -103,6 +103,10 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             cell.imageView.image != nil {
             self.performSegue(withIdentifier: "ViewImagePost", sender: nil)
         }
+        if let cell = cell as? VideoPostCollectionViewCell, let count = cell.videoPreviewView.layer.sublayers?.count, count > 0 {
+            self.performSegue(withIdentifier: "ViewVideoPost", sender: nil)
+        }
+        
     }
     
     override func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
@@ -226,6 +230,16 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         } else if segue.identifier == "VideoPostDetailShowSegue" {
             let destinationVC = segue.destination as? VideoDetailViewController
             destinationVC?.postController = postController
+        } else if segue.identifier == "ViewVideoPost" {
+            
+            let destinationVC = segue.destination as? ImagePostDetailTableViewController
+            
+            guard let indexPath = collectionView.indexPathsForSelectedItems?.first,
+                let postID = postController.posts[indexPath.row].id else { return }
+            
+            destinationVC?.postController = postController
+            destinationVC?.post = postController.posts[indexPath.row]
+            destinationVC?.videoData = cache.value(for: postID)
         }
     }
     
