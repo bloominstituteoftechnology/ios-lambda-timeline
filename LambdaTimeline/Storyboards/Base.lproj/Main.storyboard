@@ -336,18 +336,40 @@
                                     <view contentMode="scaleToFill" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WSs-Vz-Gge">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
                                         <subviews>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Give your post a title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Op6-OA-6Ou">
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NEI-l5-A5S">
                                                 <rect key="frame" x="20" y="0.0" width="374" height="50"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                                            </textField>
+                                                <subviews>
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Give your post a title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Op6-OA-6Ou">
+                                                        <rect key="frame" x="0.0" y="0.0" width="247" height="50"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                    </textField>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="b3b-Kn-jBf">
+                                                        <rect key="frame" x="255" y="9.5" width="119" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GeoTag:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cLY-E6-SB6">
+                                                                <rect key="frame" x="0.0" y="0.0" width="62" height="31"/>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="FnW-Wl-a50">
+                                                                <rect key="frame" x="70" y="0.0" width="51" height="31"/>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="Op6-OA-6Ou" firstAttribute="height" secondItem="NEI-l5-A5S" secondAttribute="height" id="kaR-oJ-sns"/>
+                                                </constraints>
+                                            </stackView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="Op6-OA-6Ou" secondAttribute="trailing" constant="20" id="Jcy-bc-Qeb"/>
-                                            <constraint firstAttribute="bottom" secondItem="Op6-OA-6Ou" secondAttribute="bottom" id="LxP-YV-3wa"/>
-                                            <constraint firstItem="Op6-OA-6Ou" firstAttribute="leading" secondItem="WSs-Vz-Gge" secondAttribute="leading" constant="20" id="XWL-KP-jUc"/>
-                                            <constraint firstItem="Op6-OA-6Ou" firstAttribute="top" secondItem="WSs-Vz-Gge" secondAttribute="top" id="vcy-WL-NBl"/>
+                                            <constraint firstAttribute="bottom" secondItem="NEI-l5-A5S" secondAttribute="bottom" id="A6a-yW-qA4"/>
+                                            <constraint firstAttribute="trailing" secondItem="NEI-l5-A5S" secondAttribute="trailing" constant="20" id="ELX-bx-k79"/>
+                                            <constraint firstItem="NEI-l5-A5S" firstAttribute="leading" secondItem="WSs-Vz-Gge" secondAttribute="leading" constant="20" id="Irj-Xf-nG8"/>
+                                            <constraint firstItem="NEI-l5-A5S" firstAttribute="top" secondItem="WSs-Vz-Gge" secondAttribute="top" id="nRO-EZ-XvA"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yQ3-V3-hIf">
@@ -385,14 +407,14 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FilterCell" id="hfF-BH-JSV" customClass="FilterSettingsTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="106.5"/>
+                                        <rect key="frame" x="0.0" y="28" width="414" height="114"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hfF-BH-JSV" id="SfN-Ak-HxM">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="106.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="114"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xgZ-7e-jzu">
-                                                    <rect key="frame" x="16" y="8" width="382" height="90.5"/>
+                                                    <rect key="frame" x="16" y="8" width="382" height="98"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Csn-2o-kK8">
                                                             <rect key="frame" x="0.0" y="0.0" width="382" height="20.5"/>
@@ -401,7 +423,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="vSv-PA-EBb">
-                                                            <rect key="frame" x="0.0" y="28.5" width="382" height="62"/>
+                                                            <rect key="frame" x="0.0" y="28.5" width="382" height="69.5"/>
                                                         </stackView>
                                                     </subviews>
                                                 </stackView>
@@ -419,7 +441,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddCell" id="2B3-vn-bmD" customClass="AddFilterTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="134.5" width="414" height="46.5"/>
+                                        <rect key="frame" x="0.0" y="142" width="414" height="46.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2B3-vn-bmD" id="jfr-kR-CL2">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="46.5"/>
@@ -470,6 +492,8 @@
                     <connections>
                         <outlet property="chooseImageButton" destination="VxD-cu-jHT" id="KVs-no-MbU"/>
                         <outlet property="filterTableView" destination="vHu-jt-AZU" id="GTW-HY-pZc"/>
+                        <outlet property="geoTagContainer" destination="b3b-Kn-jBf" id="Pfb-7w-32D"/>
+                        <outlet property="geoTagSwitch" destination="FnW-Wl-a50" id="hVg-uB-Kmg"/>
                         <outlet property="imageView" destination="4eK-5F-H5h" id="e7m-c5-Xhz"/>
                         <outlet property="postButton" destination="hsH-Uv-tug" id="ZBn-KE-cpU"/>
                         <outlet property="titleTextField" destination="Op6-OA-6Ou" id="JEe-cj-4mv"/>

@@ -21,6 +21,9 @@ class ImagePostViewController: ShiftableViewController {
 	@IBOutlet private weak var chooseImageButton: UIButton!
 	@IBOutlet private weak var postButton: UIBarButtonItem!
 	@IBOutlet private var filterTableView: UITableView!
+	@IBOutlet private var geoTagContainer: UIStackView!
+	@IBOutlet private var geoTagSwitch: UISwitch!
+
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -55,6 +58,8 @@ class ImagePostViewController: ShiftableViewController {
 		
 		imageView.image = image
 		chooseImageButton.setTitle("", for: [])
+
+		geoTagContainer.isHidden = (postController.locationManager.lastLocation == nil) ? true : false
 	}
 	
 	private func presentImagePickerController() {
@@ -77,8 +82,11 @@ class ImagePostViewController: ShiftableViewController {
 			presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
 			return
 		}
-		
-		postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio, latitude: nil, longitude: nil) { success in
+
+		let lat: Double? = geoTagSwitch.isOn ? postController.locationManager.lastLocation?.latitude : nil
+		let long: Double? = geoTagSwitch.isOn ? postController.locationManager.lastLocation?.longitude : nil
+
+		postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio, latitude: lat, longitude: long) { success in
 			guard success else {
 				DispatchQueue.main.async {
 					self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
