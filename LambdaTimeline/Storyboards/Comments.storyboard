@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="V9z-BJ-jL2">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Comment Container View Controller-->
+        <scene sceneID="C6x-3d-s5L">
+            <objects>
+                <viewController id="V9z-BJ-jL2" customClass="CommentContainerViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0uw-R5-3AX">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h7u-1Y-GJh" userLabel="background container">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yum-NA-NRd">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="319"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="cvq-4b-LuS" appends="YES" id="QL4-ck-1i5"/>
+                                        </connections>
+                                    </view>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bQQ-Ry-Z15">
+                                        <rect key="frame" x="0.0" y="269" width="414" height="627"/>
+                                        <connections>
+                                            <segue destination="Yji-ZV-JvO" kind="embed" id="M7S-Eg-8Of"/>
+                                        </connections>
+                                    </containerView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="bQQ-Ry-Z15" secondAttribute="trailing" id="HC7-6j-UoM"/>
+                                    <constraint firstAttribute="bottom" secondItem="bQQ-Ry-Z15" secondAttribute="bottom" id="aDv-tR-21q"/>
+                                    <constraint firstItem="Yum-NA-NRd" firstAttribute="leading" secondItem="h7u-1Y-GJh" secondAttribute="leading" id="jPm-w4-3NE"/>
+                                    <constraint firstItem="bQQ-Ry-Z15" firstAttribute="height" secondItem="h7u-1Y-GJh" secondAttribute="height" multiplier="0.7" id="pM3-Jq-R1z"/>
+                                    <constraint firstItem="bQQ-Ry-Z15" firstAttribute="leading" secondItem="h7u-1Y-GJh" secondAttribute="leading" id="pWZ-dI-hqX"/>
+                                    <constraint firstAttribute="trailing" secondItem="Yum-NA-NRd" secondAttribute="trailing" id="qzF-0B-8EJ"/>
+                                    <constraint firstItem="Yum-NA-NRd" firstAttribute="top" secondItem="h7u-1Y-GJh" secondAttribute="top" id="rGJ-1P-Jxw"/>
+                                    <constraint firstItem="bQQ-Ry-Z15" firstAttribute="top" secondItem="Yum-NA-NRd" secondAttribute="bottom" constant="-50" id="rGP-5v-1i3"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="h7u-1Y-GJh" firstAttribute="leading" secondItem="0uw-R5-3AX" secondAttribute="leading" id="0Mz-zE-A3E"/>
+                            <constraint firstAttribute="trailing" secondItem="h7u-1Y-GJh" secondAttribute="trailing" id="ABM-DB-Nml"/>
+                            <constraint firstItem="h7u-1Y-GJh" firstAttribute="top" secondItem="0uw-R5-3AX" secondAttribute="top" id="Buh-Ze-PHK"/>
+                            <constraint firstAttribute="bottom" secondItem="h7u-1Y-GJh" secondAttribute="bottom" id="H2V-WT-6wE"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="R2s-NB-gq9"/>
+                    </view>
+                    <connections>
+                        <outlet property="backgroundView" destination="Yum-NA-NRd" id="dvH-LS-IzP"/>
+                        <outlet property="pageViewContainer" destination="bQQ-Ry-Z15" id="LzS-37-7m2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Nem-eC-rZN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="cvq-4b-LuS">
+                    <connections>
+                        <action selector="backgroundViewTapped:" destination="V9z-BJ-jL2" id="zWA-7X-KTe"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="-794" y="74"/>
+        </scene>
+        <!--Add a Comment-->
+        <scene sceneID="h4b-kz-l8G">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="fAV-Ig-LTq" customClass="CommentPageViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" title="Add a Comment" id="jmy-PE-0WK">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="e9k-Ey-iPk">
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="fAV-Ig-LTq" id="DBo-Ay-b8Q"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Submit" id="6ha-JO-XOz">
+                            <connections>
+                                <action selector="submitButtonPressed:" destination="fAV-Ig-LTq" id="lMk-nX-elf"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </pageViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qmf-IF-Qaz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1071.0144927536232" y="73.995535714285708"/>
+        </scene>
+        <!--Prose Comment-->
+        <scene sceneID="In0-sE-0rW">
+            <objects>
+                <viewController storyboardIdentifier="ProseCommentViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Hrg-cF-UCA" customClass="ProseCommentViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1tz-BB-eYT">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="vOX-PV-dXi">
+                                <rect key="frame" x="20" y="108" width="374" height="220"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="bE5-4H-VU1">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="220"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="220" id="d6P-ZP-vK7"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="zn7-ZP-ifx" firstAttribute="trailing" secondItem="vOX-PV-dXi" secondAttribute="trailing" constant="20" id="biE-ms-DfS"/>
+                            <constraint firstItem="vOX-PV-dXi" firstAttribute="top" secondItem="zn7-ZP-ifx" secondAttribute="top" constant="20" id="jC3-tx-zKg"/>
+                            <constraint firstItem="vOX-PV-dXi" firstAttribute="leading" secondItem="1tz-BB-eYT" secondAttribute="leading" constant="20" id="z9d-Wz-0RO"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="zn7-ZP-ifx"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Prose Comment" id="K4u-n2-dHG"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="commentTextView" destination="bE5-4H-VU1" id="QEj-L0-P5Y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JXQ-cs-tCt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2147.826086956522" y="-321.42857142857139"/>
+        </scene>
+        <!--Sing a Comment-->
+        <scene sceneID="YWe-Ud-3WT">
+            <objects>
+                <viewController storyboardIdentifier="SingingCommentViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Dbt-kj-54n" customClass="SingingCommentViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UjZ-uI-Xd4">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="QTn-5m-uan">
+                                <rect key="frame" x="20" y="108" width="374" height="120"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9mA-Wv-Afb">
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="20"/>
+                                        <subviews>
+                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="1rz-E9-Nu7">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="20"/>
+                                            </activityIndicatorView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="1rz-E9-Nu7" secondAttribute="bottom" id="GJj-85-eOd"/>
+                                            <constraint firstItem="1rz-E9-Nu7" firstAttribute="top" secondItem="9mA-Wv-Afb" secondAttribute="top" id="gbf-Cn-E0q"/>
+                                            <constraint firstItem="1rz-E9-Nu7" firstAttribute="leading" secondItem="9mA-Wv-Afb" secondAttribute="leading" id="haS-Lx-nv2"/>
+                                            <constraint firstAttribute="trailing" secondItem="1rz-E9-Nu7" secondAttribute="trailing" id="saE-fE-POQ"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZYn-h4-c7u">
+                                        <rect key="frame" x="0.0" y="40" width="374" height="30"/>
+                                        <state key="normal" title="Record"/>
+                                        <connections>
+                                            <action selector="recordButtonPressed:" destination="Dbt-kj-54n" eventType="touchUpInside" id="sUE-X0-CpR"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8z2-rL-rhH">
+                                        <rect key="frame" x="0.0" y="90" width="374" height="30"/>
+                                        <state key="normal" title="Preview"/>
+                                        <connections>
+                                            <action selector="previewButtonPressed:" destination="Dbt-kj-54n" eventType="touchUpInside" id="ZPF-dg-UNA"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="QTn-5m-uan" firstAttribute="leading" secondItem="b6E-eY-kJg" secondAttribute="leading" constant="20" id="HHF-dX-vvV"/>
+                            <constraint firstAttribute="trailing" secondItem="QTn-5m-uan" secondAttribute="trailing" constant="20" id="Pxd-2c-cbp"/>
+                            <constraint firstItem="QTn-5m-uan" firstAttribute="top" secondItem="b6E-eY-kJg" secondAttribute="top" constant="20" id="vxh-v2-70o"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="b6E-eY-kJg"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Sing a Comment" id="hIg-CF-Thf"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="1rz-E9-Nu7" id="H2s-Kr-sRa"/>
+                        <outlet property="previewButton" destination="8z2-rL-rhH" id="ikH-XZ-GL5"/>
+                        <outlet property="recordButton" destination="ZYn-h4-c7u" id="gKY-VP-Kti"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0H1-sv-Xb6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2149.275362318841" y="414.50892857142856"/>
+        </scene>
+        <!--Comment Nav Controller-->
+        <scene sceneID="BEP-LE-Mus">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Yji-ZV-JvO" customClass="CommentNavController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="UDq-Rg-bcB">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="fAV-Ig-LTq" kind="relationship" relationship="rootViewController" id="tT5-Ce-PNO"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xrn-03-BY9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="163.768115942029" y="73.995535714285708"/>
+        </scene>
+    </scenes>
+</document>
