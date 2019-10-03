@@ -18,6 +18,7 @@ class Player: NSObject {
         return audioPlayer.isPlaying
     }
     var delegate: PlayerDelegate?
+    
     override init() {
         self.audioPlayer = AVAudioPlayer()
         super.init()

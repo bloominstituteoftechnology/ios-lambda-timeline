@@ -152,9 +152,11 @@ class ImagePostDetailTableViewController: UITableViewController {
             }
             
             if let data = fetchOp.mediaData {
-                audioCell.setupAudio(data: data)
-                print("done audio fetch: \(data)")
-                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                DispatchQueue.main.async {
+                    print("done audio fetch: \(data)")
+                    audioCell.setupAudio(data: data)
+                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                }
             }
         }
         

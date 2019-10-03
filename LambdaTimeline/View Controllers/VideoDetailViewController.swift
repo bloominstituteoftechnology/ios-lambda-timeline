@@ -17,6 +17,8 @@ class VideoDetailViewController: UIViewController {
     @IBOutlet weak var videoPreviewView: UIView!
     
     private var player: AVPlayer!
+    var postController: PostController!
+    var videoURL: URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,6 +88,9 @@ class VideoDetailViewController: UIViewController {
         player.play()
     }
     @IBAction func postButtonTapped(_ sender: UIButton) {
+        guard let title = titleTextField.text, let url = videoURL else { return }
+        let data = try! Data(contentsOf: url)
+        postController.createPost(with: title, ofType: .video, mediaData: data)
     }
     
 
@@ -93,6 +98,7 @@ class VideoDetailViewController: UIViewController {
 extension VideoDetailViewController: CameraViewControllerDelegate {
     func passURLToVideoDetailVC(url: URL) {
         playMovie(url: url)
+        self.videoURL = url
     }
 }
 extension VideoDetailViewController: UITextFieldDelegate {

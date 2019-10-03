@@ -39,8 +39,6 @@ class AudioCommentTableViewCell: UITableViewCell {
         
     }
     
-    
-    
     private func updateViews() {
         let title = player.isPlaying ? "Pause" : "Play"
         playButton.setTitle(title, for: .normal)

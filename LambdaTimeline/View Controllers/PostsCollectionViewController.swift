@@ -61,6 +61,15 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
+        case .video:
+            print("video")
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
+            
+            cell.post = post
+            
+            loadImage(for: cell, forItemAt: indexPath)
+            
+            return cell
         }
     }
     
@@ -77,6 +86,8 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             guard let ratio = post.ratio else { return size }
             
             size.height = size.width * ratio
+        case .video:
+            print("video")
         }
         
         return size
@@ -163,6 +174,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             destinationVC?.postController = postController
             destinationVC?.post = postController.posts[indexPath.row]
             destinationVC?.imageData = cache.value(for: postID)
+        } else if segue.identifier == "VideoPostDetailShowSegue" {
+            let destinationVC = segue.destination as? VideoDetailViewController
+            destinationVC?.postController = postController
         }
     }
     
