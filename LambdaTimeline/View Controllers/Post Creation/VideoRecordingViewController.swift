@@ -133,7 +133,7 @@ class VideoRecordingViewController: UIViewController {
 			NSLog("Error loading video data: \(error)")
 			return
 		}
-		postController.createPost(with: postTitle, ofType: .video, mediaData: videoData, ratio: nil) { _ in
+		postController.createPost(with: postTitle, ofType: .video, mediaData: videoData, ratio: nil, latitude: nil, longitude: nil) { _ in
 			DispatchQueue.main.async {
 				self.navigationController?.popViewController(animated: true)
 			}

@@ -24,6 +24,9 @@ class Post {
 	var id: String?
 	var ratio: CGFloat?
 
+	let latitude: Double?
+	let longitude: Double?
+
 	var title: String? {
 		return comments.first?.text
 	}
@@ -35,14 +38,25 @@ class Post {
 	private static let commentsKey = "comments"
 	private static let timestampKey = "timestamp"
 	private static let idKey = "id"
+	private static let latitudeKey = "latitude"
+	private static let longitudeKey = "longitude"
 
-	init(title: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date(), mediaType: MediaType) {
+	init(title: String,
+		 mediaURL: URL,
+		 ratio: CGFloat? = nil,
+		 author: Author,
+		 timestamp: Date = Date(),
+		 mediaType: MediaType,
+		 latitude: Double? = nil,
+		 longitude: Double? = nil) {
 		self.mediaURL = mediaURL
 		self.ratio = ratio
 		self.mediaType = mediaType
 		self.author = author
 		self.comments = [Comment(text: title, author: author)]
 		self.timestamp = timestamp
+		self.latitude = latitude
+		self.longitude = longitude
 	}
 	
 	init?(dictionary: [String: Any], id: String) {
@@ -62,6 +76,8 @@ class Post {
 		self.timestamp = Date(timeIntervalSince1970: timestampTimeInterval)
 		self.comments = captionDictionaries.compactMap({ Comment(dictionary: $0) })
 		self.id = id
+		self.latitude = dictionary[Post.latitudeKey] as? Double
+		self.longitude = dictionary[Post.longitudeKey] as? Double
 	}
 	
 	var dictionaryRepresentation: [String: Any] {
@@ -69,7 +85,9 @@ class Post {
 				Post.mediaTypeKey: mediaType.rawValue,
 				Post.commentsKey: comments.map({ $0.dictionaryRepresentation }),
 				Post.authorKey: author.dictionaryRepresentation,
-				Post.timestampKey: timestamp.timeIntervalSince1970]
+				Post.timestampKey: timestamp.timeIntervalSince1970,
+				Post.latitudeKey: latitude as Any,
+				Post.longitudeKey: longitude as Any]
 		
 		guard let ratio = self.ratio else { return dict }
 		

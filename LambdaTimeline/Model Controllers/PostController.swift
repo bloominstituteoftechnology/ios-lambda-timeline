@@ -22,6 +22,8 @@ class PostController {
 					ofType mediaType: MediaType,
 					mediaData: Data,
 					ratio: CGFloat? = nil,
+					latitude: Double?,
+					longitude: Double?,
 					completion: @escaping (Bool) -> Void = { _ in }) {
 		guard let currentUser = Auth.auth().currentUser,
 			let author = Author(user: currentUser) else { return }
@@ -29,7 +31,8 @@ class PostController {
 		store(mediaData: mediaData, at: storageRef.child(mediaType.rawValue)) { mediaURL in
 			guard let mediaURL = mediaURL else { completion(false); return }
 			
-			let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author, mediaType: mediaType)
+			let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio,
+								 author: author, mediaType: mediaType, latitude: latitude, longitude: longitude)
 			self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { error, _ in
 				if let error = error {
 					NSLog("Error posting image post: \(error)")
