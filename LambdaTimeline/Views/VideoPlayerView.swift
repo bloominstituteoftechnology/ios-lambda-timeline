@@ -14,8 +14,8 @@ protocol VideoPlayerViewDelegate: AnyObject {
 }
 
 class VideoPlayerView: UIView {
-	private var player: AVPlayer?
-	private var playerLayer: AVPlayerLayer?
+	private weak var player: AVPlayer?
+	private weak var playerLayer: AVPlayerLayer?
 
 	weak var delegate: VideoPlayerViewDelegate?
 
@@ -24,7 +24,11 @@ class VideoPlayerView: UIView {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		// gets notifications from OTHER views - come up with alternative
-		stopNotification = NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: nil, queue: nil, using: { notification in
+		stopNotification = NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
+																  object: nil,
+																  queue: nil,
+																  using: { [weak self] notification in
+			guard let self = self else { return }
 			if let notifyingPlayerItem = notification.object as? AVPlayerItem {
 				if notifyingPlayerItem == self.player?.currentItem {
 					self.stop()
@@ -56,7 +60,8 @@ class VideoPlayerView: UIView {
 		playerLayer?.removeFromSuperlayer()
 		playerLayer = nil
 
-		player = AVPlayer(url: url)
+		let newPlayer = AVPlayer(url: url)
+		player = newPlayer
 		let newPlayerLayer = AVPlayerLayer(player: player)
 		newPlayerLayer.videoGravity = .resizeAspectFill
 		playerLayer = newPlayerLayer

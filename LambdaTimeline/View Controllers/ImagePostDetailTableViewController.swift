@@ -25,7 +25,7 @@ class ImagePostDetailTableViewController: UITableViewController {
 		super.viewDidLoad()
 		updateViews()
 	}
-	
+
 	func updateViews() {
 		guard let post = post else { return }
 		imageView.isHidden = true
