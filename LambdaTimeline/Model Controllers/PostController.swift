@@ -12,6 +12,10 @@ import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
 
+protocol PostControllerAccessor: AnyObject {
+	var postController: PostController! { get set }
+}
+
 class PostController {
 	var posts: [Post] = []
 	var geoPosts: [AnnotationPost] {

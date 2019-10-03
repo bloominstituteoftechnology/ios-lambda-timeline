@@ -44,7 +44,7 @@ class SignInViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDele
 			
 			DispatchQueue.main.async {
 				let storyboard = UIStoryboard(name: "Main", bundle: nil)
-				let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")
+				let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "BaseTabViewController")
 				self.present(postsNavigationController, animated: true, completion: nil)
 			}
 		}

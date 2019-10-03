@@ -10,8 +10,9 @@ import UIKit
 import FirebaseAuth
 import FirebaseUI
 
-class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-	private let postController = PostController()
+class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout, PostControllerAccessor {
+	
+	var postController: PostController!
 	private var operations = [String: Operation]()
 	private let mediaFetchQueue = OperationQueue()
 	private let cache = Cache<String, Data>()
@@ -22,7 +23,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
-		postController.observePosts { _ in
+		postController?.observePosts { _ in
 			DispatchQueue.main.async {
 				self.collectionView.reloadData()
 			}
