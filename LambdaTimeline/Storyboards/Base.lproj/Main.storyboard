@@ -144,7 +144,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3C5-TP-Off" userLabel="camera view">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3C5-TP-Off" userLabel="camera view" customClass="CameraPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" systemColor="systemBrownColor" red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
@@ -242,6 +242,7 @@
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="cameraPreviewView" destination="3C5-TP-Off" id="2bv-rM-IRM"/>
                         <outlet property="indicatorContainer" destination="3du-V0-Nao" id="OCT-rY-pFP"/>
                         <outlet property="playbackButton" destination="Q97-1z-aG2" id="Rnh-pI-5uj"/>
                         <outlet property="recordButton" destination="KqN-IN-3ld" id="QEO-K0-b9e"/>
@@ -314,14 +315,14 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="FilterCell" id="hfF-BH-JSV" customClass="FilterSettingsTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="103.5"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="104"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hfF-BH-JSV" id="SfN-Ak-HxM">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="103.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="104"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="xgZ-7e-jzu">
-                                                    <rect key="frame" x="16" y="8" width="343" height="87.5"/>
+                                                    <rect key="frame" x="16" y="8" width="343" height="88"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Filter Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Csn-2o-kK8">
                                                             <rect key="frame" x="0.0" y="0.0" width="343" height="20.5"/>
@@ -330,7 +331,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="vSv-PA-EBb">
-                                                            <rect key="frame" x="0.0" y="28.5" width="343" height="59"/>
+                                                            <rect key="frame" x="0.0" y="28.5" width="343" height="59.5"/>
                                                         </stackView>
                                                     </subviews>
                                                 </stackView>
@@ -348,7 +349,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="AddCell" id="2B3-vn-bmD" customClass="AddFilterTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="131.5" width="375" height="46.5"/>
+                                        <rect key="frame" x="0.0" y="132" width="375" height="46.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2B3-vn-bmD" id="jfr-kR-CL2">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="46.5"/>
