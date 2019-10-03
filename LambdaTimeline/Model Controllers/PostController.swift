@@ -5,7 +5,7 @@
 //  Created by Spencer Curtis on 10/11/18.
 //  Copyright © 2018 Lambda School. All rights reserved.
 //
-//swiftlint:disable multiple_closures_with_trailing_closure
+//swiftlint:disable multiple_closures_with_trailing_closure function_default_parameter_at_end
 
 import Foundation
 import FirebaseAuth
@@ -14,9 +14,19 @@ import FirebaseStorage
 
 class PostController {
 	var posts: [Post] = []
+	var geoPosts: [AnnotationPost] {
+		posts.compactMap { AnnotationPost(post: $0) }
+	}
 	let currentUser = Auth.auth().currentUser
 	let postsRef = Database.database().reference().child("LambdaTimeline").child("posts")
 	let storageRef = Storage.storage().reference().child("LambdaTimeline")
+
+	let locationManager: LocationRequester = {
+		let location = LocationRequester()
+		location.requestAuth()
+		location.startTrackingLocation()
+		return location
+	}()
 
 	func createPost(with title: String,
 					ofType mediaType: MediaType,
@@ -31,8 +41,7 @@ class PostController {
 		store(mediaData: mediaData, at: storageRef.child(mediaType.rawValue)) { mediaURL in
 			guard let mediaURL = mediaURL else { completion(false); return }
 			
-			let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio,
-								 author: author, mediaType: mediaType, latitude: latitude, longitude: longitude)
+			let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author, mediaType: mediaType, latitude: latitude, longitude: longitude)
 			self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { error, _ in
 				if let error = error {
 					NSLog("Error posting image post: \(error)")
