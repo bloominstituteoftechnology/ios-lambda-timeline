@@ -17,8 +17,9 @@ class GeoTagViewController: UIViewController, PostControllerAccessor {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-		postController.observePosts { (error) in
+		postController.observePosts { error in
 			DispatchQueue.main.async {
+				self.mapView.removeAnnotations(self.mapView.annotations)
 				self.mapView.addAnnotations(self.postController.geoPosts)
 			}
 		}
