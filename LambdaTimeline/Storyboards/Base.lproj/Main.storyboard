@@ -271,11 +271,42 @@
                                     <constraint firstItem="KqN-IN-3ld" firstAttribute="width" secondItem="Q97-1z-aG2" secondAttribute="width" multiplier="2" id="prq-i5-yOK"/>
                                 </constraints>
                             </view>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Video Post Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s9g-0x-g1b">
-                                <rect key="frame" x="20" y="96" width="374" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6fv-Ua-8aL" userLabel="title container">
+                                <rect key="frame" x="0.0" y="88" width="414" height="47"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="a9a-bb-Ywi">
+                                        <rect key="frame" x="20" y="8" width="374" height="31"/>
+                                        <subviews>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Video Post Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s9g-0x-g1b">
+                                                <rect key="frame" x="0.0" y="0.0" width="247" height="31"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ByP-5V-Azy">
+                                                <rect key="frame" x="255" y="0.0" width="119" height="31"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GeoTag:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="igO-ae-uJi">
+                                                        <rect key="frame" x="0.0" y="0.0" width="62" height="31"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Tze-qM-t6y">
+                                                        <rect key="frame" x="70" y="0.0" width="51" height="31"/>
+                                                    </switch>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.31" alpha="0.31" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="a9a-bb-Ywi" firstAttribute="leading" secondItem="6fv-Ua-8aL" secondAttribute="leading" constant="20" id="2sT-ip-fbW"/>
+                                    <constraint firstItem="a9a-bb-Ywi" firstAttribute="top" secondItem="6fv-Ua-8aL" secondAttribute="top" constant="8" id="CUT-iG-SrU"/>
+                                    <constraint firstAttribute="trailing" secondItem="a9a-bb-Ywi" secondAttribute="trailing" constant="20" id="X9q-m2-p8V"/>
+                                    <constraint firstAttribute="bottom" secondItem="a9a-bb-Ywi" secondAttribute="bottom" constant="8" id="jEP-HD-aAg"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -283,19 +314,19 @@
                             <constraint firstItem="l7x-fj-HSZ" firstAttribute="leading" secondItem="pr2-9D-wD7" secondAttribute="leading" id="1IH-LD-vX5"/>
                             <constraint firstItem="3du-V0-Nao" firstAttribute="bottom" secondItem="IwT-l5-aHO" secondAttribute="bottom" id="88F-0K-a2c"/>
                             <constraint firstAttribute="bottom" secondItem="l7x-fj-HSZ" secondAttribute="bottom" id="9VT-mU-tka"/>
+                            <constraint firstItem="6fv-Ua-8aL" firstAttribute="top" secondItem="IwT-l5-aHO" secondAttribute="top" id="9qA-Rp-htr"/>
                             <constraint firstItem="l7x-fj-HSZ" firstAttribute="top" secondItem="pr2-9D-wD7" secondAttribute="top" id="CcP-6W-qb4"/>
                             <constraint firstItem="3C5-TP-Off" firstAttribute="leading" secondItem="pr2-9D-wD7" secondAttribute="leading" id="DKG-1d-C6n"/>
                             <constraint firstAttribute="bottom" secondItem="3C5-TP-Off" secondAttribute="bottom" id="DvH-zu-e8e"/>
                             <constraint firstItem="3C5-TP-Off" firstAttribute="top" secondItem="pr2-9D-wD7" secondAttribute="top" id="IGO-A1-FTV"/>
                             <constraint firstItem="3du-V0-Nao" firstAttribute="trailing" secondItem="IwT-l5-aHO" secondAttribute="trailing" id="JsM-YJ-1mm"/>
                             <constraint firstItem="3du-V0-Nao" firstAttribute="leading" secondItem="IwT-l5-aHO" secondAttribute="leading" id="L3J-Xv-8nm"/>
-                            <constraint firstItem="IwT-l5-aHO" firstAttribute="trailing" secondItem="s9g-0x-g1b" secondAttribute="trailing" constant="20" id="Y5v-JO-rgl"/>
-                            <constraint firstItem="s9g-0x-g1b" firstAttribute="top" secondItem="IwT-l5-aHO" secondAttribute="top" constant="8" id="Z4s-7R-gAl"/>
+                            <constraint firstItem="IwT-l5-aHO" firstAttribute="trailing" secondItem="6fv-Ua-8aL" secondAttribute="trailing" id="aVn-oZ-yxa"/>
+                            <constraint firstItem="6fv-Ua-8aL" firstAttribute="leading" secondItem="IwT-l5-aHO" secondAttribute="leading" id="b6y-1q-rFE"/>
                             <constraint firstAttribute="bottom" secondItem="b16-uG-xDQ" secondAttribute="bottom" id="ex0-rY-lXw"/>
                             <constraint firstAttribute="trailing" secondItem="3C5-TP-Off" secondAttribute="trailing" id="ihz-Xa-JsS"/>
                             <constraint firstItem="b16-uG-xDQ" firstAttribute="leading" secondItem="IwT-l5-aHO" secondAttribute="leading" id="k8F-eW-0Ff"/>
                             <constraint firstItem="IwT-l5-aHO" firstAttribute="trailing" secondItem="b16-uG-xDQ" secondAttribute="trailing" id="m4c-T2-BV0"/>
-                            <constraint firstItem="s9g-0x-g1b" firstAttribute="leading" secondItem="IwT-l5-aHO" secondAttribute="leading" constant="20" id="u5h-dc-gMo"/>
                             <constraint firstItem="3du-V0-Nao" firstAttribute="top" secondItem="IwT-l5-aHO" secondAttribute="top" id="uM1-dK-vWB"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="IwT-l5-aHO"/>
@@ -311,6 +342,8 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="cameraPreviewView" destination="3C5-TP-Off" id="2bv-rM-IRM"/>
+                        <outlet property="geoTagContainer" destination="ByP-5V-Azy" id="ocP-ZE-hgz"/>
+                        <outlet property="geoTagSwitch" destination="Tze-qM-t6y" id="wNH-C9-cb4"/>
                         <outlet property="indicatorContainer" destination="3du-V0-Nao" id="OCT-rY-pFP"/>
                         <outlet property="playbackButton" destination="Q97-1z-aG2" id="Rnh-pI-5uj"/>
                         <outlet property="recordButton" destination="KqN-IN-3ld" id="QEO-K0-b9e"/>

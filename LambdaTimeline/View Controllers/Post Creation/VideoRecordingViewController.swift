@@ -17,6 +17,8 @@ class VideoRecordingViewController: UIViewController {
 	@IBOutlet private var cameraPreviewView: CameraPreviewView!
 	@IBOutlet private var videoPreviewView: VideoPlayerView!
 	@IBOutlet private var titleTextField: UITextField!
+	@IBOutlet private var geoTagContainer: UIStackView!
+	@IBOutlet private var geoTagSwitch: UISwitch!
 
 	var postController: PostController!
 
@@ -51,6 +53,7 @@ class VideoRecordingViewController: UIViewController {
 	}
 
 	private func updateViews() {
+		geoTagContainer.isHidden = (postController.locationManager.lastLocation == nil) ? true : false
 		indicatorContainer.isHidden = videoHelper?.isRecording ?? false
 
 		playbackButton.isEnabled = lastRecording != nil
@@ -133,7 +136,11 @@ class VideoRecordingViewController: UIViewController {
 			NSLog("Error loading video data: \(error)")
 			return
 		}
-		postController.createPost(with: postTitle, ofType: .video, mediaData: videoData, ratio: nil, latitude: nil, longitude: nil) { _ in
+
+		let lat: Double? = geoTagSwitch.isOn ? postController.locationManager.lastLocation?.latitude : nil
+		let long: Double? = geoTagSwitch.isOn ? postController.locationManager.lastLocation?.longitude : nil
+
+		postController.createPost(with: postTitle, ofType: .video, mediaData: videoData, ratio: nil, latitude: lat, longitude: long) { _ in
 			DispatchQueue.main.async {
 				self.navigationController?.popViewController(animated: true)
 			}
