@@ -23,9 +23,13 @@ class VideoPlayerView: UIView {
 
 	override func awakeFromNib() {
 		super.awakeFromNib()
+		// gets notifications from OTHER views - come up with alternative
 		stopNotification = NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: nil, queue: nil, using: { _ in
 			self.stop()
 			self.notifyDelegate()
+			if self.shouldLoop {
+				self.play()
+			}
 		})
 	}
 
@@ -36,6 +40,11 @@ class VideoPlayerView: UIView {
 	var isPlaying: Bool {
 		guard let player = player else { return false }
 		return player.rate != 0 && player.error == nil
+	}
+	var shouldLoop: Bool = false
+	var volume: Float {
+		get { player?.volume ?? 0 }
+		set { player?.volume = newValue }
 	}
 
 	func loadMovie(url: URL) {
@@ -86,5 +95,10 @@ class VideoPlayerView: UIView {
 
 	private func notifyDelegate() {
 		delegate?.videoPlayerViewStatusChanged(self)
+	}
+
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		playerLayer?.frame = bounds
 	}
 }

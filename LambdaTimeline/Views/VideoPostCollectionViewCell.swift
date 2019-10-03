@@ -24,6 +24,8 @@ class VideoPostCollectionViewCell: UICollectionViewCell {
 
 		titleLabel.text = ""
 		authorLabel.text = ""
+		videoPlayerView.shouldLoop = false
+		videoPlayerView.stop()
 		videoPlayerView.isHidden = true
 	}
 
@@ -37,6 +39,9 @@ class VideoPostCollectionViewCell: UICollectionViewCell {
 	func loadVideo(with url: URL) {
 		videoPlayerView.loadMovie(url: url)
 		videoPlayerView.isHidden = false
+		videoPlayerView.shouldLoop = true
+		videoPlayerView.play()
+		videoPlayerView.volume = 0
 	}
 
 	func setupLabelBackgroundView() {

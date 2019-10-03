@@ -193,10 +193,10 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 
 		guard let postID = post.id else { return }
 
-		let cacheDir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
-		let mediaURL = cacheDir.appendingPathComponent(postID)
-		let cachedMediaURL = mediaURL.appendingPathExtension("mov")
-		if FileManager.default.fileExists(atPath: mediaURL.path) {
+		let cachedMediaURL = getCachedVideo(for: post)!
+		let mediaURL = cachedMediaURL.deletingPathExtension()
+
+		if FileManager.default.fileExists(atPath: cachedMediaURL.path) {
 			videoPostCell.loadVideo(with: cachedMediaURL)
 //			self.collectionView.reloadItems(at: [indexPath])
 			return
@@ -232,6 +232,13 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 
 		operations[postID] = fetchOp
 	}
+
+	private func getCachedVideo(for post: Post) -> URL? {
+		guard let cacheDir = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first, let postID = post.id else { return nil }
+		let mediaURL = cacheDir.appendingPathComponent(postID)
+		let cachedMediaURL = mediaURL.appendingPathExtension("mov")
+		return cachedMediaURL
+	}
 	// MARK: - Navigation
 	
 	// In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -251,10 +258,12 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 			
 			guard let indexPath = collectionView.indexPathsForSelectedItems?.first,
 				let postID = postController.posts[indexPath.row].id else { return }
-			
+
+			let post = postController.posts[indexPath.row]
 			destinationVC?.postController = postController
-			destinationVC?.post = postController.posts[indexPath.row]
+			destinationVC?.post = post
 			destinationVC?.imageData = cache.value(for: postID)
+			destinationVC?.videoURL = getCachedVideo(for: post)
 		}
 	}
 }
