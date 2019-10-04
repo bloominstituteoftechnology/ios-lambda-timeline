@@ -11,6 +11,7 @@ import Photos
 
 class ImagePostViewController: ShiftableViewController {
     var postController: PostController!
+    let locationHelper = LocationHelper()
     var post: Post?
     var imageData: Data?
     
@@ -44,6 +45,7 @@ class ImagePostViewController: ShiftableViewController {
         
         updateViews()
         updateSlider()
+        locationHelper.setupLocationManager()
         
         toolBoxView.isHidden = true
     }
@@ -203,6 +205,44 @@ class ImagePostViewController: ShiftableViewController {
         updateSlider()
     }
     
+    func presentGeoTagAlert(title: String, imageData: Data) {
+        let alertController = UIAlertController(title: "Geotag your post?", message: nil, preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { (_) in
+            let latitude = self.locationHelper.latitude
+            let longitude = self.locationHelper.longitude
+            self.postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: self.imageView.image?.ratio, latitude: latitude, longitude: longitude) { (success) in
+                guard success else {
+                    DispatchQueue.main.async {
+                        self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
+                    }
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+        }
+        let noAction = UIAlertAction(title: "No", style: .default) { (_) in
+            //let latitude = self.locationHelper.latitude
+            //let longitude = self.locationHelper.longitude
+            self.postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: self.imageView.image?.ratio, latitude: nil, longitude: nil) { (success) in
+                guard success else {
+                    DispatchQueue.main.async {
+                        self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
+                    }
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+        }
+        alertController.addAction(yesAction)
+        alertController.addAction(noAction)
+    }
+    
     
     private func presentImagePickerController() {
         
@@ -229,19 +269,7 @@ class ImagePostViewController: ShiftableViewController {
             presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
             return
         }
-        
-        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
-            guard success else {
-                DispatchQueue.main.async {
-                    self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
-                }
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self.navigationController?.popViewController(animated: true)
-            }
-        }
+        presentGeoTagAlert(title: title, imageData: imageData)
     }
     
     @IBAction func chooseImage(_ sender: Any) {

@@ -8,6 +8,7 @@
 
 import Foundation
 import FirebaseAuth
+import MapKit
 
 enum MediaType: String {
     case image
@@ -16,13 +17,15 @@ enum MediaType: String {
 
 class Post {
     
-    init(title: String, mediaType: MediaType, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date()) {
+    init(title: String, mediaType: MediaType, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date(), latitude: Double?, longitude: Double?) {
         self.mediaURL = mediaURL
         self.ratio = ratio
         self.mediaType = mediaType
         self.author = author
         self.comments = [Comment(text: title, author: author)]
         self.timestamp = timestamp
+        self.latitude = latitude
+        self.longitude = longitude
     }
     
     init?(dictionary: [String : Any], id: String) {
@@ -38,6 +41,8 @@ class Post {
         self.mediaURL = mediaURL
         self.mediaType = mediaType
         self.ratio = dictionary[Post.ratioKey] as? CGFloat
+        self.latitude = dictionary[Post.latitudeKey] as? Double
+        self.longitude = dictionary[Post.longitudeKey] as? Double
         self.author = author
         self.timestamp = Date(timeIntervalSince1970: timestampTimeInterval)
         self.comments = captionDictionaries.compactMap({ Comment(dictionary: $0) })
@@ -65,6 +70,8 @@ class Post {
     var comments: [Comment]
     var id: String?
     var ratio: CGFloat?
+    let latitude: Double?
+    let longitude: Double?
     
     var title: String? {
         return comments.first?.text
@@ -77,4 +84,8 @@ class Post {
     static private let commentsKey = "comments"
     static private let timestampKey = "timestamp"
     static private let idKey = "id"
+    static private let latitudeKey = "latitude"
+    static private let longitudeKey = "longitude"
 }
+
+
