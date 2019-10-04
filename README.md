@@ -1,51 +1,50 @@
-# Lambda Timeline
+# Lambda Timeline 
 
 ## Introduction
 
 The goal of this project is to take an existing project called LambdaTimeline and add features to it throughout this sprint. 
 
-To begin with, you will take the base project which has basic functionality to create posts with images from the user's photo library, and also add comments to posts.
-
-For today, you will implement the ability to add filters to images you post.
+Today you will be adding geotagging to posts.
 
 ## Instructions
 
-Please fork and clone this repository, and work from the base project in the repo.
+Create a new branch in the repository called `postGeotags` and work off of it from where you left off yesterday.
 
-### Part 1 - Firebase Setup
+You're welcome to fulfill these instructions however you want. If you'd like suggestions on how to implement something, open the disclosure triangle and there are some suggestions for you. Of course, you can also ask the PMs and instructors for help as well.
 
-Though you have a base project, you will need to modify it. To begin, run `pod install` after navigating to the repo in terminal. Work out of the generated `.xcworkspace`
+1. Add a `geotag: CLLocationCoordinate2D?` property as well. The user should have the choice to geotag posts or not.
 
-1. Create a new Firebase project (or use an existing one).
-2. Change the project's bundle identifier to your own bundle identifier (e.g. `com.JohnSmith.LambdaTimeline`)
-3. In the "Project Overview" in your Firebase project, you will need to add your app as we are using the Firebase SDK in our Xcode project. You will need to add the "GoogleService-Info.plist" file that will be given to you when you add the app.
-4. Please refer to this page: https://firebase.google.com/docs/auth/ios/firebaseui and follow the steps under the “Set up sign-in methods”. You will only need to do the two steps under the Google section. The starter project will have that URL type already. You just need to put the right URL scheme in. You can find the URL Type in your project file in the “Info” tab at the top.
-5. In the Firebase project's database, change the rules to:
-``` JSON
-{
-  "rules": {
-    ".read": "auth != null",
-    ".write": "auth != null"
-  }
-}
-```
-This will allow only users of the app who are authenticated to access the database. (Authentication is already taken care of in the starter project)
+2. You will need to make an `MKAnnotation` that represents a `Post`. The annotation's title should be the post's title and the subtitle should be the name of the post's author. You have at least two options on how to do this:
+    a. Change the `Post` object to adopt and conform to the `MKAnnotation` protocol. 
+    b. Create a separate object called `PostAnnotation` or something similar that conforms to `MKAnnotation`. The `PostAnnotation` could get its values from a `Post` that is passed into an initializer.
 
-6. In the left pane of your Firebase project under "Develop", click the Storage item. Click the "Get Started" button and it will pull up a modal window about security rules. Simply click "Got it". It will set Storage's rules to allow access to any authenticated user, which works great for our uses.
+Either way you decide to do this has its pros and cons, so choose whatever makes the most sense to you.
 
-Firebase Storage is essentially a Google Drive for data in your Firebase. It makes sense to use Storage in this application as we will be storing images, audio, and video data. If you're curious as to how Database and Storage interact, feel free to read Firebase's Storage documentation and look at the code in the base project. Particularly in the `Post`, `Media` and `PostController` objects. (Don't feel like you have to, however)
+3. Update the `dictionaryRepresentation` and both initializers to account for the property (or properties). 
+    - **Note:** Firebase will not store a `CLLocationCoordinate2D`, so you must break it up into a key-value pair for both the latitude and longitude in the `dictionaryRepresentation`.
+4. Update the `PostController` to account for creating posts with and without geotags.
+5. Create a helper class that will take care of requesting location usage authorization from the user, as well as getting their current location in order to geotag a post that is being created. This can be done through using `CLLocationManager` and `CLLocationManagerDelegate`.
+    - **Note:** For the base requirements of this project, every post that should be geotagged will just use the user's current location.
+6. Update the UI for creating **image and video** posts to allow the user to choose whether to geotag their posts or not.
+7. In the Main.storyboard, embed the navigation controller in a tab bar controller. Add a new view controller scene with a map view on it. There are a few things that you will have to change now that the tab bar is essentially the first view controller to be displayed once the user is authenticated.
+    <details><summary>Hints</summary>
+    <p>
 
-At this point, run the app on your simulator or physical device in order to make sure that you've set up your Firebase Project correctly. If set up correctly, you should be able to create posts, comment on them, and have them get sent to Firebase. You should also be able to re-run the app and have the posts and comments get fetched correctly. If this does not work, the likely scenario is that you've not set up your Firebase project correctly. If you can't figure out what's wrong, please reach out to your PM or Spencer.
+      - As the map view controller is going to need access to the same instance of `PostController` as the rest of the app uses, consider creating a subclass of `UITabBarController` and initializing a `PostController` there instead of the `PostsCollectionViewController`. That way, the tab bar controller can pass references to it to both the `PostsCollectionViewController` and the new map view controller.
+      - In the `AppDelegate` the way the navigation controller holding the `PostsCollectionViewController` becomes the initial view controller if the user is authenticated is by initializing it from the storyboard with a Storyboard ID. You will need to give the tab bar controller a storyboard ID and use it instead of the navigation controller's that is currently used. If you are unfamiliar with how this works, [this Stack Overflow question](https://stackoverflow.com/questions/13867565/what-is-a-storyboard-id-and-how-can-i-use-this) gives a straight answer.
 
-### Part 2 - ~~#NoFilter~~ #Filters
+    </p>
+    </details>
 
-Now that your project is working correctly, you will implement the ability to add filters to the image(s) the user selects from their photo. 
-
-1. You must add at least 5 filters. [This page](https://developer.apple.com/library/archive/documentation/GraphicsImaging/Reference/CoreImageFilterReference/#//apple_ref/doc/filter/ci/CIFalseColor) lists the filters that you can use. Note that some simply take in an `inputImage` parameter, while others have more parameters such as the `CIMotionBlur`, `CIColorControls`, etc. Use at least two or three of filters with a bit more complexity than just the `inputImage`.
-2. Add whatever UI elements you want to the `ImagePostViewController` in order for them to add filters to their image after they've selected one. For the filters that require other parameters, add UI to allow the user to adjust the filter such as a slider for brightness, blur amount, etc.
-3. Ensure that the controls to add your filters, adjust them, etc. are only available to the user at the apropriate time. For example, you shouldn't let the user add a filter if they haven't selected an image yet. And it doesn't make sense to show the adjustment UI if they selected a filter that has no adjustment.
+7. The map view controller should take the posts from the post controller that have geotags, and place annotations on the map view for each of them.
 
 ## Go Further
 
-- Clean up the UI of the app, either with the UI you added to support filters. You're welcome to touch up the UI overall if you wish as well.
-- Allow for undoing and redoing of filter effects.
+- Add the ability for the user to select a place to geotag the post at. This can be done a number of ways:
+    - Use a map view and let them drop a pin (annotation) on it. You can then get the coordinate from the pin.
+    - Use `MKLocalSearch` to let the user search for a location.
+
+You are encouraged to implement both methods if you feel up to it.
+
+- Customize the annotations that are shown on the map view controller to also show the media (image or video) associated with it. **Note:** if you chose to create a `PostAnnotation` object, you may need to modify it so you can have more information than just the post's title and author.
+- Add the ability to go directly to the detail view controller of a post (the one with the post's comments) from the annotation.

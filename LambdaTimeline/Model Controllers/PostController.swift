@@ -13,16 +13,16 @@ import FirebaseStorage
 
 class PostController {
     
-    func createPost(with title: String, ofType mediaType: MediaType, mediaData: Data, ratio: CGFloat? = nil, completion: @escaping (Bool) -> Void = { _ in }) {
+    func createPost(with title: String, ofType mediaType: MediaType, mediaData: Data, ratio: CGFloat? = nil, latitude: Double?, longitude: Double?, completion: @escaping (Bool) -> Void = { _ in }) {
         
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
         
-        store(mediaData: mediaData, mediaType: mediaType) { (mediaURL) in
+        store(mediaData: mediaData, mediaType: mediaType.rawValue) { (mediaURL) in
             
             guard let mediaURL = mediaURL else { completion(false); return }
             
-            let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
+            let imagePost = Post(title: title, mediaType: mediaType, mediaURL: mediaURL, ratio: ratio, author: author, latitude: latitude, longitude: longitude)
             
             self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
                 if let error = error {
@@ -44,6 +44,27 @@ class PostController {
         post.comments.append(comment)
         
         savePostToFirebase(post)
+    }
+    
+    func addAudioComment(with audioData: Data, to post: Post, completion: @escaping (Post) -> Void) {
+        
+        guard let currentUser = Auth.auth().currentUser,
+            let author = Author(user: currentUser) else { return }
+        var audioURL: String?
+        
+        
+        self.store(mediaData: audioData, mediaType: "audio") { (url) in
+            guard let url = url else {
+                print("no url return when creating audio comment")
+                return
+            }
+            audioURL = url.absoluteString
+            let comment = Comment(audioURL: audioURL, author: author)
+            post.comments.append(comment)
+                
+            self.savePostToFirebase(post)
+            completion(post)
+        }
     }
 
     func observePosts(completion: @escaping (Error?) -> Void) {
@@ -79,11 +100,11 @@ class PostController {
         ref.setValue(post.dictionaryRepresentation)
     }
 
-    private func store(mediaData: Data, mediaType: MediaType, completion: @escaping (URL?) -> Void) {
+    private func store(mediaData: Data, mediaType: String, completion: @escaping (URL?) -> Void) {
         
         let mediaID = UUID().uuidString
         
-        let mediaRef = storageRef.child(mediaType.rawValue).child(mediaID)
+        let mediaRef = storageRef.child(mediaType).child(mediaID)
         
         let uploadTask = mediaRef.putData(mediaData, metadata: nil) { (metadata, error) in
             if let error = error {

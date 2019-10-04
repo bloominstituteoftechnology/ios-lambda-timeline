@@ -29,10 +29,14 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         let imagePostAction = UIAlertAction(title: "Image", style: .default) { (_) in
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
+        let videoPostAction = UIAlertAction(title: "Video", style: .default) { (_) in
+            self.performSegue(withIdentifier: "VideoPostDetailShowSegue", sender: nil)
+        }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(imagePostAction)
+        alert.addAction(videoPostAction)
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true, completion: nil)
@@ -57,6 +61,15 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
+        case .video:
+            print("video")
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPostCell", for: indexPath) as? VideoPostCollectionViewCell else { return UICollectionViewCell() }
+            
+            cell.post = post
+            
+            loadVideo(for: cell, forItemAt: indexPath)
+            
+            return cell
         }
     }
     
@@ -73,6 +86,10 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             guard let ratio = post.ratio else { return size }
             
             size.height = size.width * ratio
+        case .video:
+            guard let ratio = post.ratio else { return size }
+            
+            size.height = size.width * ratio
         }
         
         return size
@@ -86,6 +103,10 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             cell.imageView.image != nil {
             self.performSegue(withIdentifier: "ViewImagePost", sender: nil)
         }
+        if let cell = cell as? VideoPostCollectionViewCell, let count = cell.videoPreviewView.layer.sublayers?.count, count > 0 {
+            self.performSegue(withIdentifier: "ViewVideoPost", sender: nil)
+        }
+        
     }
     
     override func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
@@ -141,6 +162,53 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         
         operations[postID] = fetchOp
     }
+    
+    func loadVideo(for videoPostCell: VideoPostCollectionViewCell, forItemAt indexPath: IndexPath) {
+        let post = postController.posts[indexPath.row]
+        
+        guard let postID = post.id else { return }
+        
+        if let mediaData = cache.value(for: postID) {
+            videoPostCell.setVideo(mediaData)
+            self.collectionView.reloadItems(at: [indexPath])
+            return
+        }
+        
+        let fetchOp = FetchMediaOperation(post: post, postController: postController)
+        
+        let cacheOp = BlockOperation {
+            if let data = fetchOp.mediaData {
+                self.cache.cache(value: data, for: postID)
+                DispatchQueue.main.async {
+                    self.collectionView.reloadItems(at: [indexPath])
+                }
+            }
+        }
+        
+        let completionOp = BlockOperation {
+            defer { self.operations.removeValue(forKey: postID) }
+            
+            if let currentIndexPath = self.collectionView?.indexPath(for: videoPostCell),
+                currentIndexPath != indexPath {
+                print("Got video for now-reused cell")
+                return
+            }
+            
+            if let data = fetchOp.mediaData {
+                videoPostCell.setVideo(data)
+                self.collectionView.reloadItems(at: [indexPath])
+            }
+        }
+        
+        cacheOp.addDependency(fetchOp)
+        completionOp.addDependency(fetchOp)
+        
+        mediaFetchQueue.addOperation(fetchOp)
+        mediaFetchQueue.addOperation(cacheOp)
+        OperationQueue.main.addOperation(completionOp)
+        
+        operations[postID] = fetchOp
+    }
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -159,10 +227,23 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             destinationVC?.postController = postController
             destinationVC?.post = postController.posts[indexPath.row]
             destinationVC?.imageData = cache.value(for: postID)
+        } else if segue.identifier == "VideoPostDetailShowSegue" {
+            let destinationVC = segue.destination as? VideoDetailViewController
+            destinationVC?.postController = postController
+        } else if segue.identifier == "ViewVideoPost" {
+            
+            let destinationVC = segue.destination as? ImagePostDetailTableViewController
+            
+            guard let indexPath = collectionView.indexPathsForSelectedItems?.first,
+                let postID = postController.posts[indexPath.row].id else { return }
+            
+            destinationVC?.postController = postController
+            destinationVC?.post = postController.posts[indexPath.row]
+            destinationVC?.videoData = cache.value(for: postID)
         }
     }
     
-    private let postController = PostController()
+    var postController: PostController!
     private var operations = [String : Operation]()
     private let mediaFetchQueue = OperationQueue()
     private let cache = Cache<String, Data>()
