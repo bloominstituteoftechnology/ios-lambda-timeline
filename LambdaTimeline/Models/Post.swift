@@ -54,7 +54,9 @@ class Post {
                 Post.mediaTypeKey: mediaType.rawValue,
                 Post.commentsKey: comments.map({ $0.dictionaryRepresentation }),
                 Post.authorKey: author.dictionaryRepresentation,
-                Post.timestampKey: timestamp.timeIntervalSince1970]
+                Post.timestampKey: timestamp.timeIntervalSince1970,
+                Post.latitudeKey: latitude,
+                Post.longitudeKey: longitude]
         
         guard let ratio = self.ratio else { return dict }
         

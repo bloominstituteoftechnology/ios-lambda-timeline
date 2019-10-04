@@ -19,10 +19,12 @@ class VideoDetailViewController: UIViewController {
     private var player: AVPlayer!
     var postController: PostController!
     var videoURL: URL?
+    let locationHelper = LocationHelper()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         titleTextField.delegate = self
+        locationHelper.setupLocationManager()
 
         requestCameraPermission()
     }
@@ -91,12 +93,52 @@ class VideoDetailViewController: UIViewController {
         guard let title = titleTextField.text, let url = videoURL else { return }
         do {
             let data = try Data(contentsOf: url)
-            postController.createPost(with: title, ofType: .video, mediaData: data)
+            presentGeoTagAlert(title: title, data: data)
         } catch {
             print("Error posting video: \(error)")
         }
         
         
+    }
+    
+    func presentGeoTagAlert(title: String, data: Data) {
+        let alertController = UIAlertController(title: "Geotag your post?", message: nil, preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { (_) in
+            let latitude = self.locationHelper.latitude
+            let longitude = self.locationHelper.longitude
+            print(latitude, longitude)
+            self.postController.createPost(with: title, ofType: .video, mediaData: data, latitude: latitude, longitude: longitude) { (success) in
+                guard success else {
+                    DispatchQueue.main.async {
+                        self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
+                    }
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+        }
+        let noAction = UIAlertAction(title: "No", style: .default) { (_) in
+            //let latitude = self.locationHelper.latitude
+            //let longitude = self.locationHelper.longitude
+            self.postController.createPost(with: title, ofType: .video, mediaData: data, latitude: nil, longitude: nil) { (success) in
+                guard success else {
+                    DispatchQueue.main.async {
+                        self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
+                    }
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+        }
+        alertController.addAction(yesAction)
+        alertController.addAction(noAction)
+        present(alertController, animated: true)
     }
     
 

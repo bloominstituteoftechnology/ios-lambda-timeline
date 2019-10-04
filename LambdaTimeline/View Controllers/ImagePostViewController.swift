@@ -210,6 +210,7 @@ class ImagePostViewController: ShiftableViewController {
         let yesAction = UIAlertAction(title: "Yes", style: .default) { (_) in
             let latitude = self.locationHelper.latitude
             let longitude = self.locationHelper.longitude
+            print(latitude, longitude)
             self.postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: self.imageView.image?.ratio, latitude: latitude, longitude: longitude) { (success) in
                 guard success else {
                     DispatchQueue.main.async {
@@ -241,6 +242,7 @@ class ImagePostViewController: ShiftableViewController {
         }
         alertController.addAction(yesAction)
         alertController.addAction(noAction)
+        present(alertController, animated: true)
     }
     
     
