@@ -13,6 +13,12 @@ class PostAnnotation: NSObject, MKAnnotation {
         CLLocationCoordinate2D(latitude: post.latitude!, longitude: post.longitude!)
     }
     
+    var title: String? {
+        post.title
+    }
+    var subtitle: String? {
+        post.author.displayName
+    }
     let post: Post
     
     init(post: Post) {

@@ -7,16 +7,35 @@
 //
 
 import UIKit
+import MapKit
+
 
 class MapViewController: UIViewController {
 
+    @IBOutlet weak var mapView: MKMapView!
     var postController: PostController!
     override func viewDidLoad() {
         super.viewDidLoad()
         postController.observePosts { (_) in
-            DispatchQueue.main.async {
-                
+           
+        }
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        var postAnnotations: [PostAnnotation] = []
+        for post in self.postController.posts {
+            if post.latitude != nil && post.longitude != nil {
+                postAnnotations.append(PostAnnotation(post: post))
             }
+        }
+        DispatchQueue.main.async {
+            
+            if let firstPostAnnotation = postAnnotations.first {
+                let span = MKCoordinateSpan(latitudeDelta: 2, longitudeDelta: 2)
+                let region = MKCoordinateRegion(center: firstPostAnnotation.coordinate, span: span)
+                self.mapView.setRegion(region, animated: true)
+            }
+            self.mapView.addAnnotations(postAnnotations)
         }
     }
     
