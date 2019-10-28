@@ -8,14 +8,50 @@
 
 import UIKit
 import Photos
+import CoreImage
 
 class ImagePostViewController: ShiftableViewController {
+    
+    var postController: PostController!
+    var post: Post?
+    var imageData: Data?
+    private let context = CIContext(options: nil)
+    private let filterColorControls = CIFilter(name: "CIColorControls")!
+    private let filterSharpness = CIFilter(name: "CISharpenLuminance")!
+    private let filterDot = CIFilter(name: "CIDotScreen")!
+    
+    var originalImage: UIImage? {
+        didSet {
+            guard let image = originalImage else { return }
+            
+            var scaledSize = imageView.bounds.size
+            let scale = UIScreen.main.scale
+            scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+            scaledImage = image.imageByScaling(toSize: scaledSize)
+        }
+    }
+    
+    var scaledImage: UIImage? {
+        didSet {
+            updateImage()
+        }
+    }
+    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var chooseImageButton: UIButton!
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var postButton: UIBarButtonItem!
+    @IBOutlet weak var brightnessSlider: UISlider!
+    @IBOutlet weak var saturationSlider: UISlider!
+    @IBOutlet weak var contrastSlider: UISlider!
+    @IBOutlet weak var sharpnessSlider: UISlider!
+    @IBOutlet weak var dotEffectSlider: UISlider!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setImageViewHeight(with: 1.0)
-        
         updateViews()
     }
     
@@ -34,6 +70,12 @@ class ImagePostViewController: ShiftableViewController {
         imageView.image = image
         
         chooseImageButton.setTitle("", for: [])
+    }
+    
+    private func updateImage() {
+        if let image = scaledImage {
+            imageView.image = filterImage(image)
+        }
     }
     
     private func presentImagePickerController() {
@@ -112,15 +154,30 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
-    var postController: PostController!
-    var post: Post?
-    var imageData: Data?
-    
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var chooseImageButton: UIButton!
-    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var postButton: UIBarButtonItem!
+    private func filterImage(_ image: UIImage) -> UIImage? {
+        guard let cgImage = originalImage?.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        filterColorControls.setValue(ciImage, forKey: "inputImage")
+        filterColorControls.setValue(saturationSlider.value, forKey: "inputSaturation")
+        filterColorControls.setValue(brightnessSlider.value, forKey: "inputBrightness")
+        filterColorControls.setValue(contrastSlider.value, forKey: "inputContrast")
+        
+        filterSharpness.setValue(ciImage, forKey: "inputImage")
+        filterSharpness.setValue(sharpnessSlider.value, forKey: "inputSharpness")
+        
+        filterDot.setValue(ciImage, forKey: "inputImage")
+        filterDot.setValue(CIVector(cgPoint: CGPoint(x: cgImage.width/2, y: cgImage.height/2)), forKey: "inputCenter")
+        filterDot.setValue(0.0, forKey: "inputAngle")
+        filterDot.setValue(cgImage.width, forKey: "inputWidth")
+        filterDot.setValue(dotEffectSlider.value, forKey: "inputSharpness")
+        
+        
+        guard let outputCIImage = filterColorControls.outputImage,
+            let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: CGPoint.zero, size: image.size)) else { return nil }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
