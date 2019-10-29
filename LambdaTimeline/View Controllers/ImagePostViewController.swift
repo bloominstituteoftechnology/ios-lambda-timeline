@@ -18,6 +18,7 @@ class ImagePostViewController: ShiftableViewController {
     private let context = CIContext(options: nil)
     private let photoEffectInstantFilter = CIFilter(name: "CIPhotoEffectInstant")!
     private let photoEffectNoirFilter = CIFilter(name: "CIPhotoEffectNoir")!
+    private let vibranceFilter = CIFilter(name: "CIVibrance")!
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
@@ -26,6 +27,7 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var postButton: UIBarButtonItem!
     @IBOutlet weak var instantFilterSwitch: UISwitch!
     @IBOutlet weak var noirFilterSwitch: UISwitch!
+    @IBOutlet weak var vibranceSlider: UISlider!
     
     var image: UIImage?
     
@@ -135,6 +137,13 @@ class ImagePostViewController: ShiftableViewController {
         }
     }
     
+    @IBAction func vibranceFilter(_ sender: UISlider) {
+        if let image = imageView.image {
+             imageView.image = vibranceFilterImage(image)
+        }
+    }
+    
+    
     private func photoEffectInstantFilterImage(_ image: UIImage) -> UIImage? {
         guard let cgImage = image.cgImage else { return nil }
         let ciImage = CIImage(cgImage: cgImage)
@@ -149,6 +158,16 @@ class ImagePostViewController: ShiftableViewController {
         let ciImage = CIImage(cgImage: cgImage)
         photoEffectNoirFilter.setValue(ciImage, forKey: "inputImage")
         guard let outputCIImage = photoEffectNoirFilter.outputImage else { return nil }
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: CGPoint.zero, size: image.size)) else { return nil }
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    private func vibranceFilterImage(_ image: UIImage) -> UIImage? {
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+        vibranceFilter.setValue(ciImage, forKey: "inputImage")
+        vibranceFilter.setValue(vibranceSlider.value, forKey: "inputAmount")
+        guard let outputCIImage = vibranceFilter.outputImage else { return nil }
         guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: CGPoint.zero, size: image.size)) else { return nil }
         return UIImage(cgImage: outputCGImage)
     }
