@@ -9,18 +9,14 @@
 import AVFoundation
 
 protocol RecorderDelegate {
-    func recorderDidChangeState(recorder: Recorder)
-    func recorderDidSaveFile(recorder: Recorder)
+    func recorderDidChangeState(_ recorder: Recorder)
+    func recorderDidFinishSavingFile(_ recorder: Recorder, url: URL)
 }
 
 class Recorder: NSObject {
     
-    var audioRecorder: AVAudioRecorder?
+    private var audioRecorder: AVAudioRecorder?
     var delegate: RecorderDelegate?
-    
-    var url: URL? {
-        audioRecorder?.url
-    }
     
     var isRecording: Bool {
         audioRecorder?.isRecording ?? false
@@ -36,6 +32,7 @@ class Recorder: NSObject {
         
         // <date>.caf
         let fileURL = documentsDirectory.appendingPathComponent(fileName).appendingPathExtension("caf")
+        print("Filename: \(fileURL.path)")
         
         // 44.1 kHz
         let audioFormat = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
@@ -49,12 +46,12 @@ class Recorder: NSObject {
         }
         
         audioRecorder?.record()
-        delegate?.recorderDidChangeState(recorder: self)
+        notifyDelegate()
     }
     
     func stop() {
         audioRecorder?.stop()
-        delegate?.recorderDidChangeState(recorder: self)
+        notifyDelegate()
     }
     
     func toggleRecording() {
@@ -63,6 +60,10 @@ class Recorder: NSObject {
         } else {
             record()
         }
+    }
+    
+    func notifyDelegate() {
+        delegate?.recorderDidChangeState(self)
     }
 }
 
@@ -74,6 +75,6 @@ extension Recorder: AVAudioRecorderDelegate {
     }
     
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        delegate?.recorderDidSaveFile(recorder: self)
+        delegate?.recorderDidFinishSavingFile(self, url: recorder.url)
     }
 }

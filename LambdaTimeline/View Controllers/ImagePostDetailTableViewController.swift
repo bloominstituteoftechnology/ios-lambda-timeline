@@ -57,13 +57,10 @@ class ImagePostDetailTableViewController: UITableViewController {
         })
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
         alert.addAction(addTextCommentAction)
         alert.addAction(addAudioCommentAction)
         alert.addAction(cancelAction)
-        
         present(alert, animated: true, completion: nil)
-        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -73,10 +70,8 @@ class ImagePostDetailTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
         let comment = post?.comments[indexPath.row + 1]
-        
         cell.textLabel?.text = comment?.text
         cell.detailTextLabel?.text = comment?.author.displayName
-        
         return cell
     }
     

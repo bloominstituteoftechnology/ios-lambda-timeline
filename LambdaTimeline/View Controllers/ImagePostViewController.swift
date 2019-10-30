@@ -30,7 +30,6 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var vibranceSlider: UISlider!
     
     var image: UIImage?
-    
     var originalImage: UIImage?
 
     override func viewDidLoad() {
@@ -38,8 +37,6 @@ class ImagePostViewController: ShiftableViewController {
         setImageViewHeight(with: 1.0)
         originalImage = imageView.image
         updateViews()
-        
-
     }
     
     func updateViews() {
@@ -112,7 +109,6 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
-    
     @IBAction func instantFilter(_ sender: UISwitch) {
         if instantFilterSwitch.isOn == true {
             if let image = imageView.image {
@@ -142,7 +138,6 @@ class ImagePostViewController: ShiftableViewController {
              imageView.image = vibranceFilterImage(image)
         }
     }
-    
     
     private func photoEffectInstantFilterImage(_ image: UIImage) -> UIImage? {
         guard let cgImage = image.cgImage else { return nil }
@@ -174,7 +169,6 @@ class ImagePostViewController: ShiftableViewController {
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         chooseImageButton.setTitle("", for: [])
         picker.dismiss(animated: true, completion: nil)
