@@ -288,7 +288,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXa-A2-VJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1968.8" y="-195.6521739130435"/>
+            <point key="canvasLocation" x="2041" y="-219"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gdW-Je-ais">
@@ -440,11 +440,107 @@
                         <outlet property="imageView" destination="Q0L-w5-qUw" id="0v7-ZB-mgi"/>
                         <outlet property="imageViewAspectRatioConstraint" destination="y1B-iX-x3e" id="wIt-kh-Tzd"/>
                         <outlet property="titleLabel" destination="jyy-BX-c2c" id="UEd-xO-ipC"/>
+                        <segue destination="bnK-Wa-9Yt" kind="presentation" identifier="ShowAudioRecorderSegue" id="Cd2-Gr-KU9"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdL-Y3-4ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1968.8" y="472.71364317841085"/>
+            <point key="canvasLocation" x="2041" y="471"/>
+        </scene>
+        <!--Audio Recorder View Controller-->
+        <scene sceneID="cNb-M6-mIc">
+            <objects>
+                <viewController id="bnK-Wa-9Yt" customClass="AudioRecorderViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="j0w-TB-GoC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NTh-YN-yUI">
+                                <rect key="frame" x="0.0" y="603" width="375" height="44"/>
+                                <items>
+                                    <barButtonItem systemItem="cancel" id="qht-Q7-qGb"/>
+                                    <barButtonItem systemItem="flexibleSpace" id="Zdd-Lf-1Tl"/>
+                                    <barButtonItem systemItem="save" id="U7q-3y-kFV">
+                                        <connections>
+                                            <action selector="saveTapped:" destination="bnK-Wa-9Yt" id="EJZ-dA-li2"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="AV5-5U-xeR">
+                                <rect key="frame" x="16" y="293.5" width="343" height="60"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="204" translatesAutoresizingMaskIntoConstraints="NO" id="ZR0-sM-biv">
+                                        <rect key="frame" x="51.5" y="0.0" width="240" height="22"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h2J-GK-69S">
+                                                <rect key="frame" x="0.0" y="0.0" width="15" height="22"/>
+                                                <state key="normal" image="play.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="playPauseTapped:" destination="bnK-Wa-9Yt" eventType="touchUpInside" id="uGq-lt-H6u"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Du-l9-4bE">
+                                                <rect key="frame" x="219" y="0.0" width="21" height="22"/>
+                                                <state key="normal" image="recordingtape" catalog="system"/>
+                                                <connections>
+                                                    <action selector="recordStopTapped:" destination="bnK-Wa-9Yt" eventType="touchUpInside" id="H8j-fl-Jtk"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="fLb-Z1-7v5">
+                                        <rect key="frame" x="0.0" y="30" width="343" height="30"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8rL-Pq-myf">
+                                                <rect key="frame" x="0.0" y="0.0" width="36" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="76g-fD-TGT">
+                                                <rect key="frame" x="38" y="0.0" width="267" height="31"/>
+                                            </slider>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TBg-QW-jGE">
+                                                <rect key="frame" x="307" y="0.0" width="36" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="AV5-5U-xeR" firstAttribute="leading" secondItem="waM-Jg-Hkn" secondAttribute="leading" constant="16" id="143-uD-xl6"/>
+                            <constraint firstItem="NTh-YN-yUI" firstAttribute="trailing" secondItem="waM-Jg-Hkn" secondAttribute="trailing" id="SF2-cn-Fi3"/>
+                            <constraint firstItem="NTh-YN-yUI" firstAttribute="leading" secondItem="waM-Jg-Hkn" secondAttribute="leading" id="ZLo-jD-7lr"/>
+                            <constraint firstAttribute="trailing" secondItem="AV5-5U-xeR" secondAttribute="trailing" constant="16" id="aQm-Yl-M7e"/>
+                            <constraint firstItem="NTh-YN-yUI" firstAttribute="bottom" secondItem="waM-Jg-Hkn" secondAttribute="bottom" id="vRd-a8-PcR"/>
+                            <constraint firstItem="AV5-5U-xeR" firstAttribute="centerY" secondItem="j0w-TB-GoC" secondAttribute="centerY" id="yzJ-a3-Jir"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="waM-Jg-Hkn"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="hoL-ZY-ZJv"/>
+                    <connections>
+                        <outlet property="cancelBarButtonItem" destination="qht-Q7-qGb" id="uxp-Yg-D4P"/>
+                        <outlet property="currentTimeLabel" destination="8rL-Pq-myf" id="IMo-ic-2Rd"/>
+                        <outlet property="durationLabel" destination="TBg-QW-jGE" id="4Sw-uY-6a9"/>
+                        <outlet property="playButton" destination="h2J-GK-69S" id="BX9-fa-fac"/>
+                        <outlet property="recordButton" destination="8Du-l9-4bE" id="Bg3-wu-vlT"/>
+                        <outlet property="saveBarButtonItem" destination="U7q-3y-kFV" id="u3k-k7-kAY"/>
+                        <outlet property="timeSlider" destination="76g-fD-TGT" id="Hfz-Tv-JYW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bYe-kS-ezJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2859" y="470"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="play.fill" catalog="system" width="58" height="64"/>
+        <image name="recordingtape" catalog="system" width="64" height="30"/>
+    </resources>
 </document>
