@@ -426,9 +426,56 @@
                     <view key="view" contentMode="scaleToFill" id="x8V-XO-4iv">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="h8y-e3-HBq">
+                                <rect key="frame" x="4" y="278.5" width="367" height="90"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2s-UI-pdT">
+                                        <rect key="frame" x="0.0" y="0.0" width="367" height="30"/>
+                                        <state key="normal" title="Record Audio Comment"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ya-zZ-3mO">
+                                        <rect key="frame" x="0.0" y="30" width="367" height="30"/>
+                                        <state key="normal" title="Play"/>
+                                        <state key="selected" title="Pause"/>
+                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="74d-7c-Frb">
+                                        <rect key="frame" x="0.0" y="60" width="367" height="30"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sdc-sc-l9b">
+                                                <rect key="frame" x="0.0" y="0.0" width="36" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="kJX-Zs-933">
+                                                <rect key="frame" x="42" y="0.0" width="283" height="31"/>
+                                            </slider>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ivQ-gn-oi7">
+                                                <rect key="frame" x="331" y="0.0" width="36" height="30"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="h8y-e3-HBq" firstAttribute="centerY" secondItem="x8V-XO-4iv" secondAttribute="centerY" id="UaQ-jg-bTK"/>
+                            <constraint firstItem="h8y-e3-HBq" firstAttribute="centerX" secondItem="x8V-XO-4iv" secondAttribute="centerX" id="af3-66-mRE"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="AAi-YC-qyW"/>
                     </view>
+                    <connections>
+                        <outlet property="durationSlider" destination="kJX-Zs-933" id="QDB-OH-bLF"/>
+                        <outlet property="playButton" destination="2ya-zZ-3mO" id="VY1-WV-HAj"/>
+                        <outlet property="recordButton" destination="P2s-UI-pdT" id="V3m-D8-XfI"/>
+                        <outlet property="timeLabel" destination="Sdc-sc-l9b" id="TKT-h3-LCw"/>
+                        <outlet property="timeRemainingLabel" destination="ivQ-gn-oi7" id="LEv-Oj-Sba"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dxe-9O-MWe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
