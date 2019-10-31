@@ -32,7 +32,7 @@ class Player: NSObject {
     }
     
     
-    init(url: URL = Bundle.main.url(forResource: "piano", withExtension: "mp3")!) {
+    init(url: URL) {
         self.url = url
         
         do {

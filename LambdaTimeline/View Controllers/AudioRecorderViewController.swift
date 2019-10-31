@@ -57,10 +57,12 @@ class AudioRecorderViewController: UIViewController {
     
     @IBAction func playPauseTapped(_ sender: UIButton) {
         player?.playPause()
+        updateViews()
     }
     
     @IBAction func recordStopTapped(_ sender: UIButton) {
         recorder.toggleRecording()
+        updateViews()
     }
     
     /*
