@@ -11,12 +11,33 @@ import Photos
 
 class ImagePostViewController: ShiftableViewController {
     
+    // MARK: - IBOutlets & Properties
+    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var chooseImageButton: UIButton!
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    var postController: PostController!
+    var post: Post?
+    var imageData: Data?
+    
+    // MARK: - View LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setImageViewHeight(with: 1.0)
-        
         updateViews()
+        NotificationCenter.default.addObserver(self, selector: #selector(updateWithFilteredImage(from:)), name: .doneApplyingFilters, object: nil)
+    }
+    
+    // MARK: - IBActions & Methods
+    
+    @objc func updateWithFilteredImage(from notification: NSNotification) {
+        guard let image = notification.userInfo?["image"] as? UIImage else { return }
+        imageView.image = image
+        
     }
     
     func updateViews() {
@@ -112,16 +133,16 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
-    var postController: PostController!
-    var post: Post?
-    var imageData: Data?
-    
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var chooseImageButton: UIButton!
-    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var postButton: UIBarButtonItem!
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "addFilterSegue" {
+            guard let filterVC = segue.destination as? AddFiltersViewController else { return }
+            let image = imageView.image
+            filterVC.image = image
+        }
+    }
 }
+
+// MARK: - Extensions
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -134,8 +155,6 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
         imageView.image = image
-        
-        setImageViewHeight(with: image.ratio)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
