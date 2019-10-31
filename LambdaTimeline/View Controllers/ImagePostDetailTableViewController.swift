@@ -68,11 +68,34 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+        
         let comment = post?.comments[indexPath.row + 1]
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author.displayName
-        return cell
+        
+//        switch comment?.type {
+//        case .text:
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+//            cell.textLabel?.text = comment?.text
+//            cell.detailTextLabel?.text = comment?.author.displayName
+//            return cell
+//        case .audio:
+//            guard let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCommentCell", for: indexPath) as? AudioCommentTableViewCell else { return UITableViewCell() }
+//            cell.authorLabel.text = comment?.author.displayName
+//        default:
+//            return UITableViewCell()
+//        }
+        
+        if comment?.type == .text {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+            cell.textLabel?.text = comment?.text
+            cell.detailTextLabel?.text = comment?.author.displayName
+            return cell
+        } else if comment?.type == .audio {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCommentCell", for: indexPath) as? AudioCommentTableViewCell else { return UITableViewCell() }
+            cell.authorLabel.text = comment?.author.displayName
+            return cell
+        } else {
+            return UITableViewCell()
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
