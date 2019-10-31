@@ -31,9 +31,58 @@ class ImagePostViewController: ShiftableViewController {
         
         setImageViewHeight(with: image.ratio)
         
-        imageView.image = image
+        imageView.image = originalImage
         
         chooseImageButton.setTitle("", for: [])
+    }
+    
+    func updateImage() {
+        if let originalImage = originalImage {
+            imageView.image = image(byFiltering: originalImage)
+        }
+    }
+    
+    private func image(byFiltering image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage else { return image }
+        let ciImage = CIImage(cgImage: cgImage)
+        exposureFilter.setValue(ciImage, forKey: "inputImage")
+        exposureFilter.setValue(exposureSlider.value, forKey: "inputEV")
+        guard let exposureCIImage = exposureFilter.outputImage else { return image }
+        sepiaFilter.setValue(exposureCIImage, forKey: "inputImage")
+        sepiaFilter.setValue(sepiaSlider.value, forKey: "inputIntensity")
+        guard let sepiaCIImage = sepiaFilter.outputImage else { return image }
+        vibranceFilter.setValue(sepiaCIImage, forKey: "inputImage")
+        vibranceFilter.setValue(vibranceSlider.value, forKey: "inputAmount")
+        guard let vibranceCIImage = vibranceFilter.outputImage else { return image }
+        sharpenFilter.setValue(vibranceCIImage, forKey: "inputImage")
+        sharpenFilter.setValue(sharpenSlider.value, forKey: "inputSharpness")
+        guard let sharpenCIImage = sharpenFilter.outputImage else { return image }
+        vignetteFilter.setValue(sharpenCIImage, forKey: "inputImage")
+        vignetteFilter.setValue(vignetteSlider.value, forKey: "inputRadius")
+        vignetteFilter.setValue(vignetteSlider.value, forKey: "inputIntensity")
+        guard let vignetteCIImage = vignetteFilter.outputImage else { return image }
+        guard let outputCGImage = context.createCGImage(vignetteCIImage, from: vignetteCIImage.extent) else { return image }
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    @IBAction func exposureValueChanged(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func sepiaValueChanged(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func vibranceValueChanged(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func sharpenValueChanged(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func vignetteValueChanged(_ sender: Any) {
+        updateImage()
     }
     
     private func presentImagePickerController() {
@@ -115,12 +164,31 @@ class ImagePostViewController: ShiftableViewController {
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    var originalImage: UIImage? {
+        didSet {
+            updateImage()
+        }
+    }
+    
+    let exposureFilter = CIFilter(name: "CIExposureAdjust")!
+    let sepiaFilter = CIFilter(name: "CISepiaTone")!
+    let vibranceFilter = CIFilter(name: "CIVibrance")!
+    let sharpenFilter = CIFilter(name: "CISharpenLuminance")!
+    let vignetteFilter = CIFilter(name: "CIVignette")!
+    let context = CIContext(options: nil)
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    @IBOutlet weak var exposureSlider: UISlider!
+    @IBOutlet weak var sepiaSlider: UISlider!
+    @IBOutlet weak var vibranceSlider: UISlider!
+    @IBOutlet weak var sharpenSlider: UISlider!
+    @IBOutlet weak var vignetteSlider: UISlider!
+    
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -133,7 +201,7 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
-        imageView.image = image
+        originalImage = image
         
         setImageViewHeight(with: image.ratio)
     }
