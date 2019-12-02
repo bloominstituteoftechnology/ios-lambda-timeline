@@ -156,6 +156,24 @@ class ImagePostViewController: ShiftableViewController {
             }
         }
         
+        effect: if effectSegmentedControl.selectedSegmentIndex > 0 {
+            let effectFilter: CIFilter
+            
+            switch effectSegmentedControl.selectedSegmentIndex {
+            case 2:
+                effectFilter = monoFilter
+            case 3:
+                effectFilter = noirFilter
+            default:
+                break effect
+            }
+            
+            effectFilter.setValue(ciImage, forKey: "inputImage")
+            if let outputCIImage = effectFilter.outputImage {
+                ciImage = outputCIImage
+            }
+        }
+        
         let bounds = CGRect(origin: CGPoint.zero, size: image.size)
         guard let outputCGImage = context.createCGImage(ciImage, from: bounds) else { return image }
         
