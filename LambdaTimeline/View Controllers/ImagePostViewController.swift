@@ -160,6 +160,8 @@ class ImagePostViewController: ShiftableViewController {
             let effectFilter: CIFilter
             
             switch effectSegmentedControl.selectedSegmentIndex {
+            case 1:
+                effectFilter = sepiaFilter
             case 2:
                 effectFilter = monoFilter
             case 3:
