@@ -33,6 +33,8 @@ class ImagePostViewController: ShiftableViewController {
         
         imageView.image = image
         
+        originalImage = image
+        
         chooseImageButton.setTitle("", for: [])
     }
     
@@ -105,6 +107,18 @@ class ImagePostViewController: ShiftableViewController {
         presentImagePickerController()
     }
     
+    @IBAction func effectChanged(_ sender: UISegmentedControl) {
+        updateFilters()
+    }
+    
+    @IBAction func colorModeChanged(_ sender: UISegmentedControl) {
+        updateFilters()
+    }
+    
+    @IBAction func colorChanged(_ sender: UISlider) {
+        updateFilters()
+    }
+    
     func setImageViewHeight(with aspectRatio: CGFloat) {
         
         imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
@@ -112,15 +126,50 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
+    func updateFilters() {
+        guard let originalImage = originalImage else { return }
+        
+        let filteredImage = filterImage(originalImage)
+        imageView.image = filteredImage
+    }
+    
+    func filterImage(_ image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage else { return image }
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        colorControlsFilter.setValue(ciImage, forKey: "inputImage")
+        colorControlsFilter.setValue(colorSlider.value, forKey: "inputSaturation")
+        
+        guard let outputCIImage = colorControlsFilter.outputImage else { return image }
+        
+        let bounds = CGRect(origin: CGPoint.zero, size: image.size)
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: bounds) else { return image }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+    
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    
+    private var originalImage: UIImage?
+    
+    private let context = CIContext(options: nil)
+    private let colorControlsFilter = CIFilter(name: "CIColorControls")!
+    private let vibranceFilter = CIFilter(name: "CIVibrance")!
+    private let monoFilter = CIFilter(name: "CIPhotoEffectMono")!
+    private let noirFilter = CIFilter(name: "CIPhotoEffectNoir")!
+    private let sepiaFilter = CIFilter(name: "CISepiaTone")!
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    @IBOutlet weak var effectSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var colorSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var colorSlider: UISlider!
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -134,6 +183,8 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
         imageView.image = image
+        
+        originalImage = image
         
         setImageViewHeight(with: image.ratio)
     }

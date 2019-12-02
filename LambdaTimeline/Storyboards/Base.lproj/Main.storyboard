@@ -153,20 +153,23 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="dsS-pM-vaq">
                                                 <rect key="frame" x="0.0" y="449" width="375" height="31"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Effect:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Os5-BO-cjm">
-                                                        <rect key="frame" x="0.0" y="0.0" width="50" height="31"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Age photo:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Os5-BO-cjm">
+                                                        <rect key="frame" x="0.0" y="0.0" width="84" height="31"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="adK-rK-Y5g">
-                                                        <rect key="frame" x="58" y="0.0" width="317" height="32"/>
+                                                        <rect key="frame" x="92" y="0.0" width="283" height="32"/>
                                                         <segments>
                                                             <segment title="None"/>
                                                             <segment title="Sepia"/>
                                                             <segment title="B&amp;W"/>
                                                             <segment title="Noir"/>
                                                         </segments>
+                                                        <connections>
+                                                            <action selector="effectChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="Jk7-Jr-Bcf"/>
+                                                        </connections>
                                                     </segmentedControl>
                                                 </subviews>
                                             </stackView>
@@ -185,10 +188,31 @@
                                                             <segment title="Saturation"/>
                                                             <segment title="Vibrance"/>
                                                         </segments>
+                                                        <connections>
+                                                            <action selector="colorModeChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="zeK-Xa-4vy"/>
+                                                        </connections>
                                                     </segmentedControl>
-                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="f1v-VF-sUm">
-                                                        <rect key="frame" x="-2" y="67.5" width="379" height="31"/>
-                                                    </slider>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="elC-Q6-s4J">
+                                                        <rect key="frame" x="0.0" y="67.5" width="375" height="30"/>
+                                                        <subviews>
+                                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="f1v-VF-sUm">
+                                                                <rect key="frame" x="18" y="0.0" width="339" height="31"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="30" id="jAV-F3-iuC"/>
+                                                                </constraints>
+                                                                <connections>
+                                                                    <action selector="colorChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="3Bg-aW-saI"/>
+                                                                </connections>
+                                                            </slider>
+                                                        </subviews>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                        <constraints>
+                                                            <constraint firstItem="f1v-VF-sUm" firstAttribute="leading" secondItem="elC-Q6-s4J" secondAttribute="leading" constant="20" id="YGp-Fo-Cpo"/>
+                                                            <constraint firstAttribute="trailing" secondItem="f1v-VF-sUm" secondAttribute="trailing" constant="20" id="m6W-WT-Z49"/>
+                                                            <constraint firstAttribute="height" secondItem="f1v-VF-sUm" secondAttribute="height" id="zm1-VD-WoQ"/>
+                                                            <constraint firstItem="f1v-VF-sUm" firstAttribute="centerY" secondItem="elC-Q6-s4J" secondAttribute="centerY" id="zuP-fc-1Ij"/>
+                                                        </constraints>
+                                                    </view>
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RT2-bX-8xj">
@@ -230,6 +254,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="chooseImageButton" destination="VxD-cu-jHT" id="KVs-no-MbU"/>
+                        <outlet property="colorSegmentedControl" destination="BAh-BO-Ybx" id="mJM-Ov-LPs"/>
+                        <outlet property="colorSlider" destination="f1v-VF-sUm" id="7QV-B0-JcS"/>
+                        <outlet property="effectSegmentedControl" destination="adK-rK-Y5g" id="L1b-Gq-yKy"/>
                         <outlet property="imageHeightConstraint" destination="MHD-wr-Gq9" id="HyG-8g-Ck1"/>
                         <outlet property="imageView" destination="4eK-5F-H5h" id="e7m-c5-Xhz"/>
                         <outlet property="postButton" destination="hsH-Uv-tug" id="ZBn-KE-cpU"/>
