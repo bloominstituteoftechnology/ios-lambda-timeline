@@ -136,15 +136,28 @@ class ImagePostViewController: ShiftableViewController {
     func filterImage(_ image: UIImage) -> UIImage {
         guard let cgImage = image.cgImage else { return image }
         
-        let ciImage = CIImage(cgImage: cgImage)
+        var ciImage = CIImage(cgImage: cgImage)
         
-        colorControlsFilter.setValue(ciImage, forKey: "inputImage")
-        colorControlsFilter.setValue(colorSlider.value, forKey: "inputSaturation")
-        
-        guard let outputCIImage = colorControlsFilter.outputImage else { return image }
+        if colorSegmentedControl.selectedSegmentIndex == 0 {
+            colorControlsFilter.setValue(ciImage, forKey: "inputImage")
+            // Saturation is from 0 to 2, which is what the slider is set to
+            colorControlsFilter.setValue(colorSlider.value, forKey: "inputSaturation")
+            
+            if let outputCIImage = colorControlsFilter.outputImage {
+                ciImage = outputCIImage
+            }
+        } else {
+            vibranceFilter.setValue(ciImage, forKey: "inputImage")
+            // Vibrance is from -1 to 1, so subtract 1 from the slider value
+            vibranceFilter.setValue(colorSlider.value - 1, forKey: "inputAmount")
+            
+            if let outputCIImage = vibranceFilter.outputImage {
+                ciImage = outputCIImage
+            }
+        }
         
         let bounds = CGRect(origin: CGPoint.zero, size: image.size)
-        guard let outputCGImage = context.createCGImage(outputCIImage, from: bounds) else { return image }
+        guard let outputCGImage = context.createCGImage(ciImage, from: bounds) else { return image }
         
         return UIImage(cgImage: outputCGImage)
     }
