@@ -43,6 +43,11 @@ class ImagePostViewController: ShiftableViewController {
             // set min max for hue slider
             hueSlider.minimumValue = -3.14
             hueSlider.maximumValue = 3.14
+            hueSlider.value = 0
+            
+            // reset zoom blur value
+            zoomBlurValueSlider.value = 0
+            
         }
     }
     
@@ -65,6 +70,9 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var xValueSlider: UISlider!
     @IBOutlet weak var yValueSlider: UISlider!
     @IBOutlet weak var zoomBlurValueSlider: UISlider!
+    
+    // Comic Effect Property
+    @IBOutlet weak var comicEffectSwitch: UISwitch!
     
     
     override func viewDidLoad() {
@@ -113,8 +121,18 @@ class ImagePostViewController: ShiftableViewController {
         let center = CIVector(x: CGFloat(xValueSlider!.value), y: CGFloat(yValueSlider!.value))
         let zoomBlurImage = hueFilter.outputImage!.applyingFilter("CIZoomBlur", parameters: ["inputCenter" : center, "inputAmount": zoomBlurValueSlider.value])
         
+        // Comic Effect
+        var comicImage: CIImage
+        if comicEffectSwitch.isOn {
+            comicImage = zoomBlurImage.applyingFilter("CIComicEffect")
+        } else {
+            comicImage = zoomBlurImage
+        }
+        
+        
+        
         let bounds = CGRect(origin: CGPoint.zero, size: image.size)
-        guard let outputCGImage = context.createCGImage(zoomBlurImage, from: bounds) else { return image }
+        guard let outputCGImage = context.createCGImage(comicImage, from: bounds) else { return image }
         
         return UIImage(cgImage: outputCGImage)
     }
@@ -140,7 +158,7 @@ class ImagePostViewController: ShiftableViewController {
         
         view.endEditing(true)
         
-        guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
+        guard let originalImage = originalImage, let imageData = filterImage(originalImage).jpegData(compressionQuality: 0.1),
             let title = titleTextField.text, title != "" else {
             presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
             return
@@ -221,6 +239,9 @@ class ImagePostViewController: ShiftableViewController {
     @IBAction func zoomBlurAmountValueChanged(_ sender: Any) {
         updateFilters()
         zoomBlurValueLabel.text = String(format: "%.2f", zoomBlurValueSlider.value)
+    }
+    @IBAction func comicEffectValueChanged(_ sender: Any) {
+        updateFilters()
     }
     
 }

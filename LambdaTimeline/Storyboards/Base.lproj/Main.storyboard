@@ -168,7 +168,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-3.1400001049041748" maxValue="3.1400001049041748" translatesAutoresizingMaskIntoConstraints="NO" id="nlf-jN-HZC">
-                                                        <rect key="frame" x="80" y="32" width="289" height="30"/>
+                                                        <rect key="frame" x="87" y="32" width="282" height="30"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <connections>
                                                             <action selector="hueValueChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="E1w-ba-ujT"/>
@@ -223,6 +223,20 @@
                                                             <action selector="zoomBlurAmountValueChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="NZk-pF-vve"/>
                                                         </connections>
                                                     </slider>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Comic Effect" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fWH-pa-uYx">
+                                                        <rect key="frame" x="8" y="196" width="99" height="21"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="cJE-3C-dMr">
+                                                        <rect key="frame" x="115" y="191" width="49" height="31"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <connections>
+                                                            <action selector="comicEffectValueChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="pbV-b0-nET"/>
+                                                        </connections>
+                                                    </switch>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
@@ -262,6 +276,7 @@
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
                         <outlet property="chooseImageButton" destination="VxD-cu-jHT" id="KVs-no-MbU"/>
+                        <outlet property="comicEffectSwitch" destination="cJE-3C-dMr" id="4PJ-Ym-t7n"/>
                         <outlet property="hueSlider" destination="nlf-jN-HZC" id="XiJ-AP-Aqb"/>
                         <outlet property="hueValueLabel" destination="89l-wB-lyC" id="7To-9R-Q6c"/>
                         <outlet property="imageHeightConstraint" destination="MHD-wr-Gq9" id="HyG-8g-Ck1"/>
@@ -278,7 +293,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXa-A2-VJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1969" y="-195"/>
+            <point key="canvasLocation" x="1968.8" y="-195.6521739130435"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gdW-Je-ais">
