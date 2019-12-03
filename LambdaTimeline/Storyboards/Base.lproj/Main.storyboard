@@ -115,7 +115,7 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="656"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="PkI-rS-ua9">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="775"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="925"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yQ3-V3-hIf">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
@@ -151,7 +151,7 @@
                                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                             </textField>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UjP-I9-tYb">
-                                                <rect key="frame" x="0.0" y="425" width="375" height="350"/>
+                                                <rect key="frame" x="0.0" y="425" width="375" height="500"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hue" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zrW-3b-vNN">
                                                         <rect key="frame" x="8" y="8" width="32" height="21"/>
@@ -270,7 +270,6 @@
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <connections>
                                                             <action selector="holeDistortionXChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="kBn-KN-c6s"/>
-                                                            <action selector="zoomBlurXValueChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="5bf-Fs-wVR"/>
                                                         </connections>
                                                     </slider>
                                                     <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="P93-9y-6zk">
@@ -278,7 +277,6 @@
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <connections>
                                                             <action selector="holeDistortionYChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="Rk4-bD-r7e"/>
-                                                            <action selector="zoomBlurXValueChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="udJ-24-ewk"/>
                                                         </connections>
                                                     </slider>
                                                     <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Vbb-Xz-0uc">
@@ -286,13 +284,61 @@
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <connections>
                                                             <action selector="holeDistortionValueChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="QxG-Mw-sh7"/>
-                                                            <action selector="zoomBlurXValueChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="2kP-Sp-IdR"/>
+                                                        </connections>
+                                                    </slider>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Op Tile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jZ6-Wm-3K5">
+                                                        <rect key="frame" x="8" y="341" width="55" height="21"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Angle: 000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="sOA-cy-IMR">
+                                                        <rect key="frame" x="14" y="370" width="87" height="21"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Width: 000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="2Oh-6K-tBh">
+                                                        <rect key="frame" x="14" y="399" width="87" height="21"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="FXO-UB-3m8">
+                                                        <rect key="frame" x="107" y="366" width="262" height="30"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <connections>
+                                                            <action selector="opTileAngleChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="qIe-vV-nj8"/>
+                                                        </connections>
+                                                    </slider>
+                                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Fe9-HH-Pwh">
+                                                        <rect key="frame" x="107" y="395" width="262" height="30"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <connections>
+                                                            <action selector="opTileWidthChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="dvb-4c-uV1"/>
+                                                        </connections>
+                                                    </slider>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Scale: 000" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ate-uE-Nbb">
+                                                        <rect key="frame" x="14" y="428" width="87" height="21"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Hp6-LI-jaB">
+                                                        <rect key="frame" x="107" y="424" width="262" height="30"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <connections>
+                                                            <action selector="opTileScaleChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="llK-ZD-PnC"/>
                                                         </connections>
                                                     </slider>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="350" id="6GK-JT-eDY"/>
+                                                    <constraint firstAttribute="height" constant="500" id="6GK-JT-eDY"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -340,6 +386,12 @@
                         <outlet property="hueValueLabel" destination="89l-wB-lyC" id="7To-9R-Q6c"/>
                         <outlet property="imageHeightConstraint" destination="MHD-wr-Gq9" id="HyG-8g-Ck1"/>
                         <outlet property="imageView" destination="4eK-5F-H5h" id="e7m-c5-Xhz"/>
+                        <outlet property="opTileAngleLabel" destination="sOA-cy-IMR" id="8xa-Na-lur"/>
+                        <outlet property="opTileAngleSlider" destination="FXO-UB-3m8" id="qua-me-EpW"/>
+                        <outlet property="opTileSacleLabel" destination="ate-uE-Nbb" id="Fmq-kf-WKR"/>
+                        <outlet property="opTileScaleSlider" destination="Hp6-LI-jaB" id="GVH-yX-Q9j"/>
+                        <outlet property="opTileWidthLabel" destination="2Oh-6K-tBh" id="Gqx-zB-40G"/>
+                        <outlet property="opTileWidthSlider" destination="Fe9-HH-Pwh" id="unW-Xy-8Uq"/>
                         <outlet property="postButton" destination="hsH-Uv-tug" id="ZBn-KE-cpU"/>
                         <outlet property="titleTextField" destination="Op6-OA-6Ou" id="JEe-cj-4mv"/>
                         <outlet property="zoomBlurValueLabel" destination="WCw-ms-ieo" id="xHp-Or-PgF"/>
@@ -352,7 +404,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXa-A2-VJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1968.8" y="-195.6521739130435"/>
+            <point key="canvasLocation" x="1968.8" y="-196.10194902548727"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gdW-Je-ais">

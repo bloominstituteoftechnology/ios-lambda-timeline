@@ -19,6 +19,7 @@ class ImagePostViewController: ShiftableViewController {
     
     private var xFactor: Float = 1
     private var yFactor: Float = 1
+    private var scaleFactor: Float = 1
     
     private var originalImage: UIImage? {
         didSet {
@@ -39,6 +40,7 @@ class ImagePostViewController: ShiftableViewController {
             // set origin factor
             xFactor = Float(originalImage.size.width / scaledImage.size.width)
             yFactor = Float(originalImage.size.height / scaledImage.size.height)
+            scaleFactor = Float((originalImage.size.width * originalImage.size.height) / (scaledImage.size.width * scaledImage.size.height))
             
             // set min max for zoom blur slider
             zoomBlurXValueSlider.minimumValue = 0
@@ -69,6 +71,21 @@ class ImagePostViewController: ShiftableViewController {
             holeDistortionValueSlider.value = 0.1
             holeDistortionValueSlider.minimumValue = 0.01
             holeDistortionValueSlider.maximumValue = 1000
+            
+            // set min max for Op Tile
+            opTileCenter = CIVector(x: CGFloat(scaledImage.size.width/2), y: CGFloat(scaledImage.size.height/2))
+            
+            opTileAngleSlider.minimumValue = -3.14
+            opTileAngleSlider.maximumValue = 3.14
+            opTileAngleSlider.value = 0
+            
+            opTileScaleSlider.minimumValue = 0.1
+            opTileScaleSlider.maximumValue = 10
+            opTileScaleSlider.value = 1
+            
+            opTileWidthSlider.minimumValue = 1
+            opTileWidthSlider.maximumValue = 1000
+            opTileWidthSlider.value = 65
         }
     }
     
@@ -96,7 +113,7 @@ class ImagePostViewController: ShiftableViewController {
     // Comic Effect Property
     @IBOutlet weak var comicEffectSwitch: UISwitch!
     
-    // CIHoleDistortion
+    // Hole Distortion Properties
     @IBOutlet weak var holeDistortionXLabel: UILabel!
     @IBOutlet weak var holeDistortionYLabel: UILabel!
     @IBOutlet weak var holeDistortionValueLabel: UILabel!
@@ -104,6 +121,14 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var holeDistortionYSlider: UISlider!
     @IBOutlet weak var holeDistortionValueSlider: UISlider!
     
+    // Op Tile Properties
+    @IBOutlet weak var opTileAngleLabel: UILabel!
+    @IBOutlet weak var opTileWidthLabel: UILabel!
+    @IBOutlet weak var opTileSacleLabel: UILabel!
+    @IBOutlet weak var opTileAngleSlider: UISlider!
+    @IBOutlet weak var opTileWidthSlider: UISlider!
+    @IBOutlet weak var opTileScaleSlider: UISlider!
+    private var opTileCenter: CIVector?
     
     
     override func viewDidLoad() {
@@ -144,7 +169,7 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     private func filterImage(_ image: UIImage) -> UIImage {
-        guard let cgImage = image.cgImage else { return image }
+        guard let cgImage = image.cgImage, let opTileCenter = opTileCenter else { return image }
         
         let ciImage = CIImage(cgImage: cgImage)
         
@@ -168,9 +193,11 @@ class ImagePostViewController: ShiftableViewController {
         let holeDistortionCenter = CIVector(x: CGFloat(holeDistortionXSlider!.value), y: CGFloat(holeDistortionYSlider!.value))
         let holeDistortionImage = comicImage.applyingFilter("CIHoleDistortion", parameters: ["inputCenter" : holeDistortionCenter, "inputRadius" : holeDistortionValueSlider.value])
         
+        // Op Tile
+        let opTileImage = holeDistortionImage.applyingFilter("CIOpTile", parameters: ["inputCenter" : opTileCenter, "inputScale" : opTileScaleSlider.value, "inputAngle" : opTileAngleSlider.value, "inputWidth" : opTileWidthSlider.value])
         
         let bounds = CGRect(origin: CGPoint.zero, size: image.size)
-        guard let outputCGImage = context.createCGImage(holeDistortionImage, from: bounds) else { return image }
+        guard let outputCGImage = context.createCGImage(opTileImage, from: bounds) else { return image }
         
         return UIImage(cgImage: outputCGImage)
     }
@@ -202,6 +229,12 @@ class ImagePostViewController: ShiftableViewController {
         
         holeDistortionXSlider.value *= xFactor
         holeDistortionYSlider.value *= yFactor
+        
+        if let originalImage = originalImage {
+            self.opTileCenter = CIVector(x: CGFloat(originalImage.size.width/2), y: CGFloat(originalImage.size.height/2))
+            //opTileScaleSlider.value *= scaleFactor
+            opTileWidthSlider.value *= scaleFactor
+        }
         
         guard let originalImage = originalImage, let imageData = filterImage(originalImage).jpegData(compressionQuality: 0.1),
             let title = titleTextField.text, title != "" else {
@@ -299,6 +332,18 @@ class ImagePostViewController: ShiftableViewController {
     @IBAction func holeDistortionValueChanged(_ sender: Any) {
         updateFilters()
         holeDistortionValueLabel.text = String(format: "%.2f", holeDistortionValueSlider.value)
+    }
+    @IBAction func opTileAngleChanged(_ sender: Any) {
+        updateFilters()
+        opTileAngleLabel.text = "Angle: " + String(format: "%.2f", opTileAngleSlider.value)
+    }
+    @IBAction func opTileWidthChanged(_ sender: Any) {
+        updateFilters()
+        opTileWidthLabel.text = "Width: " + String(format: "%.2f", opTileWidthSlider.value)
+    }
+    @IBAction func opTileScaleChanged(_ sender: Any) {
+        updateFilters()
+        opTileSacleLabel.text = "Scale: " + String(format: "%.2f", opTileScaleSlider.value)
     }
     
 }
