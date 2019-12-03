@@ -120,13 +120,8 @@ class ImagePostDetailTableViewController: UITableViewController {
             let audioURL = comment.audioURL,
             let cell = tableView.cellForRow(at: indexPath) {
             
-            if let audioPlayer = audioPlayer {
-                audioPlayer.stop()
-            }
-            
-            if let audioPlayerIndexPath = audioPlayerIndexPath {
-                resetCell(at: audioPlayerIndexPath)
-            }
+            audioPlayer?.stop()
+            resetPlayingCell()
             
             do {
                 let audioPlayer = try AVAudioPlayer(contentsOf: audioURL)
@@ -145,8 +140,9 @@ class ImagePostDetailTableViewController: UITableViewController {
     
     //MARK: Private
     
-    private func resetCell(at indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) {
+    private func resetPlayingCell() {
+        if let indexPath = audioPlayerIndexPath,
+            let cell = tableView.cellForRow(at: indexPath) {
             cell.detailTextLabel?.text = "▶️"
         }
     }
@@ -189,8 +185,6 @@ extension ImagePostDetailTableViewController: AVAudioPlayerDelegate {
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        if let indexPath = audioPlayerIndexPath{
-            resetCell(at: indexPath)
-        }
+        resetPlayingCell()
     }
 }
