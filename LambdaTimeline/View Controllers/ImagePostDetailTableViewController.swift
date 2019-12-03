@@ -31,7 +31,30 @@ class ImagePostDetailTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     @IBAction func createComment(_ sender: Any) {
+        let alert = UIAlertController(title: "Add a comment", message: nil, preferredStyle: .actionSheet)
         
+        let textAction = UIAlertAction(title: "Text", style: .default) { _ in
+            DispatchQueue.main.async {
+                self.showTextCommentAlert()
+            }
+        }
+        
+        let audioAction = UIAlertAction(title: "Audio", style: .default) { _ in
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "OpenRecorder", sender: self)
+            }
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(cancelAction)
+        alert.addAction(textAction)
+        alert.addAction(audioAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    private func showTextCommentAlert() {
         let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
         
         var commentTextField: UITextField?
