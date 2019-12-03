@@ -9,6 +9,10 @@
 import UIKit
 import AVFoundation
 
+protocol AudioRecorderDelegate {
+    func saveRecording(_ recordURL: URL)
+}
+
 class AudioRecorderViewController: UIViewController {
     
     //MARK: Outlets
@@ -18,6 +22,7 @@ class AudioRecorderViewController: UIViewController {
     
     //MARK: Properties
     
+    var delegate: AudioRecorderDelegate?
     var audioPlayer: AVAudioPlayer?
     var audioRecorder: AVAudioRecorder?
     var recordURL: URL?
@@ -36,7 +41,26 @@ class AudioRecorderViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        deletePreviousRecording()
+    }
+    
     //MARK: Actions
+    
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func save(_ sender: UIBarButtonItem) {
+        if let recordURL = recordURL {
+            delegate?.saveRecording(recordURL)
+        }
+        
+        // Clear the recordURL so the file won't be erased in viewDidDisappear
+        recordURL = nil
+        dismiss(animated: true, completion: nil)
+    }
     
     @IBAction func playTapped(_ sender: UIButton) {
         playStop()
@@ -74,10 +98,9 @@ class AudioRecorderViewController: UIViewController {
         }
     }
     
-    private func record() {
+    private func deletePreviousRecording() {
         let fileManager = FileManager.default
         
-        // Delete the previous recording so they don't pile up in the file system
         do {
             if let recordURL = recordURL {
                 try fileManager.removeItem(at: recordURL)
@@ -85,6 +108,13 @@ class AudioRecorderViewController: UIViewController {
         } catch {
             NSLog("Error deleting previous recording: \(error)")
         }
+    }
+    
+    private func record() {
+        let fileManager = FileManager.default
+        
+        // Delete the previous recording so they don't pile up in the file system
+        deletePreviousRecording()
         
         // Path to save in the Documents directory
         let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!

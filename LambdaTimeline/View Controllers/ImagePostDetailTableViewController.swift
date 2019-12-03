@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ImagePostDetailTableViewController: UITableViewController {
     
@@ -88,24 +89,70 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
-        
         let comment = post?.comments[indexPath.row + 1]
         
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author.displayName
+        let isTextComment: Bool = comment?.text != nil
+        
+        let cellIdentifier: String
+        if isTextComment {
+            cellIdentifier = "CommentCell"
+        } else {
+            cellIdentifier = "AudioCommentCell"
+        }
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        
+        if isTextComment {
+            cell.textLabel?.text = comment?.text
+            cell.detailTextLabel?.text = comment?.author.displayName
+        } else {
+            cell.textLabel?.text = comment?.author.displayName
+            cell.detailTextLabel?.text = "▶️"
+        }
         
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        
+        
+        if let comment = post?.comments[indexPath.row + 1],
+            let audioURL = comment.audioURL,
+            let cell = tableView.cellForRow(at: indexPath) {
+            cell.detailTextLabel?.text = "⏸"
+            
+            audioPlayer = try? AVAudioPlayer(contentsOf: audioURL)
+            audioPlayer?.play()
+        }
+    }
+    
+    //MARK: Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "OpenRecorder",
+            let navController = segue.destination as? UINavigationController,
+            let audioRecorderVC = navController.viewControllers.first as? AudioRecorderViewController {
+            audioRecorderVC.delegate = self
+        }
     }
     
     var post: Post!
     var postController: PostController!
     var imageData: Data?
     
-    
+    var audioPlayer: AVAudioPlayer?
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
+}
+
+extension ImagePostDetailTableViewController: AudioRecorderDelegate {
+    func saveRecording(_ recordURL: URL) {
+        postController.addComment(with: recordURL, to: &post)
+        tableView.reloadData()
+    }
 }

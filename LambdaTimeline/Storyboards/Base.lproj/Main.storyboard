@@ -399,6 +399,30 @@
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AudioCommentCell" textLabel="3Hr-ov-ZGz" detailTextLabel="24V-UH-6fo" style="IBUITableViewCellStyleValue1" id="oSd-uH-bC1">
+                                <rect key="frame" x="0.0" y="188.5" width="375" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oSd-uH-bC1" id="Wu8-ur-tm0" customClass="AudioCommentTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3Hr-ov-ZGz">
+                                            <rect key="frame" x="16" y="12" width="33.5" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="24V-UH-6fo">
+                                            <rect key="frame" x="315" y="12" width="44" height="20.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="OyM-8q-Icp" id="hEW-Hv-MJ8"/>
@@ -417,14 +441,14 @@
                         <outlet property="imageView" destination="Q0L-w5-qUw" id="0v7-ZB-mgi"/>
                         <outlet property="imageViewAspectRatioConstraint" destination="y1B-iX-x3e" id="wIt-kh-Tzd"/>
                         <outlet property="titleLabel" destination="jyy-BX-c2c" id="UEd-xO-ipC"/>
-                        <segue destination="pNK-wP-bUE" kind="presentation" identifier="OpenRecorder" id="v1I-WQ-WeC"/>
+                        <segue destination="JVD-6o-JRd" kind="presentation" identifier="OpenRecorder" id="v1I-WQ-WeC"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdL-Y3-4ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1968.8" y="472.71364317841085"/>
         </scene>
-        <!--Audio Recorder View Controller-->
+        <!--Record a Comment-->
         <scene sceneID="2Wz-Tf-zDE">
             <objects>
                 <viewController id="pNK-wP-bUE" customClass="AudioRecorderViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
@@ -459,6 +483,18 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="9Yo-MS-G5c"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Record a Comment" id="luO-XZ-CTE">
+                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="cancel" id="4EF-4h-EPW">
+                            <connections>
+                                <action selector="cancel:" destination="pNK-wP-bUE" id="beP-E3-Pku"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="save" id="Hy8-cY-Iqd">
+                            <connections>
+                                <action selector="save:" destination="pNK-wP-bUE" id="233-JV-7O3"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="playButton" destination="XSk-2C-h6g" id="rRw-iS-qvb"/>
                         <outlet property="recordButton" destination="NM4-c5-SSm" id="qrp-Th-DIL"/>
@@ -466,7 +502,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JkG-dT-8Zf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2762" y="473"/>
+            <point key="canvasLocation" x="3700" y="472.71364317841085"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="am3-Jo-EbK">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JVD-6o-JRd" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LmW-0q-yVo">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="pNK-wP-bUE" kind="relationship" relationship="rootViewController" id="X0S-Yn-872"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lca-th-p4Y" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2760.8000000000002" y="472.71364317841085"/>
         </scene>
     </scenes>
 </document>
