@@ -116,15 +116,38 @@ class ImagePostDetailTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        
-        
         if let comment = post?.comments[indexPath.row + 1],
             let audioURL = comment.audioURL,
             let cell = tableView.cellForRow(at: indexPath) {
-            cell.detailTextLabel?.text = "⏸"
             
-            audioPlayer = try? AVAudioPlayer(contentsOf: audioURL)
-            audioPlayer?.play()
+            if let audioPlayer = audioPlayer {
+                audioPlayer.stop()
+            }
+            
+            if let audioPlayerIndexPath = audioPlayerIndexPath {
+                resetCell(at: audioPlayerIndexPath)
+            }
+            
+            do {
+                let audioPlayer = try AVAudioPlayer(contentsOf: audioURL)
+                audioPlayer.play()
+                audioPlayer.delegate = self
+                
+                self.audioPlayer = audioPlayer
+                audioPlayerIndexPath = indexPath
+                
+                cell.detailTextLabel?.text = "⏸"
+            } catch {
+                NSLog("Error getting audio player: \(error)")
+            }
+        }
+    }
+    
+    //MARK: Private
+    
+    private func resetCell(at indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) {
+            cell.detailTextLabel?.text = "▶️"
         }
     }
     
@@ -143,6 +166,7 @@ class ImagePostDetailTableViewController: UITableViewController {
     var imageData: Data?
     
     var audioPlayer: AVAudioPlayer?
+    var audioPlayerIndexPath: IndexPath?
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
@@ -154,5 +178,19 @@ extension ImagePostDetailTableViewController: AudioRecorderDelegate {
     func saveRecording(_ recordURL: URL) {
         postController.addComment(with: recordURL, to: &post)
         tableView.reloadData()
+    }
+}
+
+extension ImagePostDetailTableViewController: AVAudioPlayerDelegate {
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        if let error = error {
+            NSLog("Record error: \(error)")
+        }
+    }
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        if let indexPath = audioPlayerIndexPath{
+            resetCell(at: indexPath)
+        }
     }
 }
