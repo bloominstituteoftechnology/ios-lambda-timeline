@@ -16,10 +16,15 @@ enum Filters: String {
 class ImagePostViewController: ShiftableViewController {
     
     private let context = CIContext(options: nil)
+    
+    private var xFactor: Float = 1
+    private var yFactor: Float = 1
+    
     private var originalImage: UIImage? {
         didSet {
             guard let originalImage = originalImage else { return }
             
+            filterView.isHidden = false
             var scaledSize = imageView.bounds.size
             
             // 1x 2x 3x (400 points * 3x = 1200 pixels)
@@ -31,23 +36,39 @@ class ImagePostViewController: ShiftableViewController {
             
             guard let scaledImage = scaledImage else { return }
             
-            // set min max for zoom blur slider
-            xValueSlider.minimumValue = 0
-            xValueSlider.maximumValue = Float(scaledImage.size.width)
-            xValueSlider.value = xValueSlider.maximumValue / 2
+            // set origin factor
+            xFactor = Float(originalImage.size.width / scaledImage.size.width)
+            yFactor = Float(originalImage.size.height / scaledImage.size.height)
             
-            yValueSlider.minimumValue = 0
-            yValueSlider.maximumValue = Float(scaledImage.size.height)
-            yValueSlider.value = yValueSlider.maximumValue / 2
+            // set min max for zoom blur slider
+            zoomBlurXValueSlider.minimumValue = 0
+            zoomBlurXValueSlider.maximumValue = Float(scaledImage.size.width)
+            zoomBlurXValueSlider.value = zoomBlurXValueSlider.maximumValue / 2
+            
+            zoomBlurYValueSlider.minimumValue = 0
+            zoomBlurYValueSlider.maximumValue = Float(scaledImage.size.height)
+            zoomBlurYValueSlider.value = zoomBlurYValueSlider.maximumValue / 2
+            
+            // reset zoom blur value
+            zoomBlurValueSlider.value = 0
             
             // set min max for hue slider
             hueSlider.minimumValue = -3.14
             hueSlider.maximumValue = 3.14
             hueSlider.value = 0
             
-            // reset zoom blur value
-            zoomBlurValueSlider.value = 0
+            // set min max for hole distortion
+            holeDistortionXSlider.minimumValue = 0
+            holeDistortionXSlider.maximumValue = Float(scaledImage.size.width)
+            holeDistortionXSlider.value = holeDistortionXSlider.maximumValue / 2
             
+            holeDistortionYSlider.minimumValue = 0
+            holeDistortionYSlider.maximumValue = Float(scaledImage.size.height)
+            holeDistortionYSlider.value = holeDistortionYSlider.maximumValue / 2
+            
+            holeDistortionValueSlider.value = 0.1
+            holeDistortionValueSlider.minimumValue = 0.01
+            holeDistortionValueSlider.maximumValue = 1000
         }
     }
     
@@ -56,6 +77,7 @@ class ImagePostViewController: ShiftableViewController {
             updateFilters()
         }
     }
+    @IBOutlet weak var filterView: UIView!
     
     // Hue Properties
     @IBOutlet weak var hueValueLabel: UILabel!
@@ -64,15 +86,24 @@ class ImagePostViewController: ShiftableViewController {
     private let hueFilter = CIFilter(name: Filters.CIHueAdjust.rawValue)!
     
     // Zoom Blur Properties
-    @IBOutlet weak var xValueLabel: UILabel!
-    @IBOutlet weak var yValueLabel: UILabel!
+    @IBOutlet weak var zoomBlurXValueLabel: UILabel!
+    @IBOutlet weak var zoomBlurYValueLabel: UILabel!
     @IBOutlet weak var zoomBlurValueLabel: UILabel!
-    @IBOutlet weak var xValueSlider: UISlider!
-    @IBOutlet weak var yValueSlider: UISlider!
+    @IBOutlet weak var zoomBlurXValueSlider: UISlider!
+    @IBOutlet weak var zoomBlurYValueSlider: UISlider!
     @IBOutlet weak var zoomBlurValueSlider: UISlider!
     
     // Comic Effect Property
     @IBOutlet weak var comicEffectSwitch: UISwitch!
+    
+    // CIHoleDistortion
+    @IBOutlet weak var holeDistortionXLabel: UILabel!
+    @IBOutlet weak var holeDistortionYLabel: UILabel!
+    @IBOutlet weak var holeDistortionValueLabel: UILabel!
+    @IBOutlet weak var holeDistortionXSlider: UISlider!
+    @IBOutlet weak var holeDistortionYSlider: UISlider!
+    @IBOutlet weak var holeDistortionValueSlider: UISlider!
+    
     
     
     override func viewDidLoad() {
@@ -81,6 +112,10 @@ class ImagePostViewController: ShiftableViewController {
         setImageViewHeight(with: 1.0)
         
         updateViews()
+        
+        if originalImage == nil {
+            filterView.isHidden = true
+        }
     }
     
     func updateViews() {
@@ -118,8 +153,8 @@ class ImagePostViewController: ShiftableViewController {
         hueFilter.setValue(hueSlider.value, forKey: "inputAngle")
         
         // Zoom Blur
-        let center = CIVector(x: CGFloat(xValueSlider!.value), y: CGFloat(yValueSlider!.value))
-        let zoomBlurImage = hueFilter.outputImage!.applyingFilter("CIZoomBlur", parameters: ["inputCenter" : center, "inputAmount": zoomBlurValueSlider.value])
+        let zoomBlurCenter = CIVector(x: CGFloat(zoomBlurXValueSlider!.value), y: CGFloat(zoomBlurYValueSlider!.value))
+        let zoomBlurImage = hueFilter.outputImage!.applyingFilter("CIZoomBlur", parameters: ["inputCenter" : zoomBlurCenter, "inputAmount": zoomBlurValueSlider.value])
         
         // Comic Effect
         var comicImage: CIImage
@@ -129,16 +164,19 @@ class ImagePostViewController: ShiftableViewController {
             comicImage = zoomBlurImage
         }
         
+        // Hole Distortion
+        let holeDistortionCenter = CIVector(x: CGFloat(holeDistortionXSlider!.value), y: CGFloat(holeDistortionYSlider!.value))
+        let holeDistortionImage = comicImage.applyingFilter("CIHoleDistortion", parameters: ["inputCenter" : holeDistortionCenter, "inputRadius" : holeDistortionValueSlider.value])
         
         
         let bounds = CGRect(origin: CGPoint.zero, size: image.size)
-        guard let outputCGImage = context.createCGImage(comicImage, from: bounds) else { return image }
+        guard let outputCGImage = context.createCGImage(holeDistortionImage, from: bounds) else { return image }
         
         return UIImage(cgImage: outputCGImage)
     }
     
-    
     private func presentImagePickerController() {
+    
         
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
             presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
@@ -157,6 +195,13 @@ class ImagePostViewController: ShiftableViewController {
     @IBAction func createPost(_ sender: Any) {
         
         view.endEditing(true)
+        
+        // apply origin factors
+        zoomBlurXValueSlider.value *= xFactor
+        zoomBlurYValueSlider.value *= yFactor
+        
+        holeDistortionXSlider.value *= xFactor
+        holeDistortionYSlider.value *= yFactor
         
         guard let originalImage = originalImage, let imageData = filterImage(originalImage).jpegData(compressionQuality: 0.1),
             let title = titleTextField.text, title != "" else {
@@ -230,11 +275,11 @@ class ImagePostViewController: ShiftableViewController {
     }
     @IBAction func zoomBlurXValueChanged(_ sender: Any) {
         updateFilters()
-        xValueLabel.text = "x: \(xValueSlider.value)"
+        zoomBlurXValueLabel.text = "x: " + String(format: "%.2f", zoomBlurXValueSlider.value)
     }
     @IBAction func zoomBlurYValueChanged(_ sender: Any) {
         updateFilters()
-        yValueLabel.text = "y: \(yValueSlider.value)"
+        zoomBlurYValueLabel.text = "y: " + String(format: "%.2f", zoomBlurYValueSlider.value)
     }
     @IBAction func zoomBlurAmountValueChanged(_ sender: Any) {
         updateFilters()
@@ -242,6 +287,18 @@ class ImagePostViewController: ShiftableViewController {
     }
     @IBAction func comicEffectValueChanged(_ sender: Any) {
         updateFilters()
+    }
+    @IBAction func holeDistortionXChanged(_ sender: Any) {
+        updateFilters()
+        holeDistortionXLabel.text = "x: " + String(format: "%.2f", holeDistortionXSlider.value)
+    }
+    @IBAction func holeDistortionYChanged(_ sender: Any) {
+        updateFilters()
+        holeDistortionYLabel.text = "y: " + String(format: "%.2f", holeDistortionYSlider.value)
+    }
+    @IBAction func holeDistortionValueChanged(_ sender: Any) {
+        updateFilters()
+        holeDistortionValueLabel.text = String(format: "%.2f", holeDistortionValueSlider.value)
     }
     
 }
