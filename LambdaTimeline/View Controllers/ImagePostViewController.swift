@@ -24,6 +24,11 @@ class ImagePostViewController: ShiftableViewController {
         guard let imageData = imageData,
             let image = UIImage(data: imageData) else {
                 title = "New Post"
+                
+                colorSlider.isEnabled = false
+                colorSegmentedControl.isEnabled = false
+                effectSegmentedControl.isEnabled = false
+                
                 return
         }
         
@@ -218,6 +223,14 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         imageView.image = image
         
         originalImage = image
+        
+        colorSlider.isEnabled = true
+        colorSegmentedControl.isEnabled = true
+        effectSegmentedControl.isEnabled = true
+        
+        effectSegmentedControl.selectedSegmentIndex = 0
+        colorSlider.value = 1
+        
         
         setImageViewHeight(with: image.ratio)
     }
