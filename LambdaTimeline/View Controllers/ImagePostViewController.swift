@@ -9,7 +9,63 @@
 import UIKit
 import Photos
 
+enum Filters: String {
+    case CIHueAdjust
+}
+
 class ImagePostViewController: ShiftableViewController {
+    
+    private let context = CIContext(options: nil)
+    private var originalImage: UIImage? {
+        didSet {
+            guard let originalImage = originalImage else { return }
+            
+            var scaledSize = imageView.bounds.size
+            
+            // 1x 2x 3x (400 points * 3x = 1200 pixels)
+            let scale = UIScreen.main.scale
+            
+            scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+            
+            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+            
+            guard let scaledImage = scaledImage else { return }
+            
+            // set min max for zoom blur slider
+            xValueSlider.minimumValue = 0
+            xValueSlider.maximumValue = Float(scaledImage.size.width)
+            xValueSlider.value = xValueSlider.maximumValue / 2
+            
+            yValueSlider.minimumValue = 0
+            yValueSlider.maximumValue = Float(scaledImage.size.height)
+            yValueSlider.value = yValueSlider.maximumValue / 2
+            
+            // set min max for hue slider
+            hueSlider.minimumValue = -3.14
+            hueSlider.maximumValue = 3.14
+        }
+    }
+    
+    private var scaledImage: UIImage? {
+        didSet {
+            updateFilters()
+        }
+    }
+    
+    // Hue Properties
+    @IBOutlet weak var hueValueLabel: UILabel!
+    @IBOutlet weak var hueSlider: UISlider!
+    
+    private let hueFilter = CIFilter(name: Filters.CIHueAdjust.rawValue)!
+    
+    // Zoom Blur Properties
+    @IBOutlet weak var xValueLabel: UILabel!
+    @IBOutlet weak var yValueLabel: UILabel!
+    @IBOutlet weak var zoomBlurValueLabel: UILabel!
+    @IBOutlet weak var xValueSlider: UISlider!
+    @IBOutlet weak var yValueSlider: UISlider!
+    @IBOutlet weak var zoomBlurValueSlider: UISlider!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +91,34 @@ class ImagePostViewController: ShiftableViewController {
         
         chooseImageButton.setTitle("", for: [])
     }
+    
+    private func updateFilters() {
+        if let scaledImage = scaledImage {
+            imageView.image = filterImage(scaledImage)
+        } else {
+            imageView.image = nil
+        }
+    }
+    
+    private func filterImage(_ image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage else { return image }
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        // Hue
+        hueFilter.setValue(ciImage, forKey: "inputImage")
+        hueFilter.setValue(hueSlider.value, forKey: "inputAngle")
+        
+        // Zoom Blur
+        let center = CIVector(x: CGFloat(xValueSlider!.value), y: CGFloat(yValueSlider!.value))
+        let zoomBlurImage = hueFilter.outputImage!.applyingFilter("CIZoomBlur", parameters: ["inputCenter" : center, "inputAmount": zoomBlurValueSlider.value])
+        
+        let bounds = CGRect(origin: CGPoint.zero, size: image.size)
+        guard let outputCGImage = context.createCGImage(zoomBlurImage, from: bounds) else { return image }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+    
     
     private func presentImagePickerController() {
         
@@ -121,6 +205,24 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    @IBAction func hueValueChanged(_ sender: UISlider) {
+        updateFilters()
+        hueValueLabel.text = String(format: "%.2f", hueSlider.value)
+    }
+    @IBAction func zoomBlurXValueChanged(_ sender: Any) {
+        updateFilters()
+        xValueLabel.text = "x: \(xValueSlider.value)"
+    }
+    @IBAction func zoomBlurYValueChanged(_ sender: Any) {
+        updateFilters()
+        yValueLabel.text = "y: \(yValueSlider.value)"
+    }
+    @IBAction func zoomBlurAmountValueChanged(_ sender: Any) {
+        updateFilters()
+        zoomBlurValueLabel.text = String(format: "%.2f", zoomBlurValueSlider.value)
+    }
+    
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -133,7 +235,7 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
-        imageView.image = image
+        originalImage = image
         
         setImageViewHeight(with: image.ratio)
     }
