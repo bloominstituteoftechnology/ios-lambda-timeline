@@ -9,10 +9,6 @@
 import UIKit
 import AVFoundation
 
-protocol VideoRecorderDelegate {
-    func saveRecording(_ recordURL: URL)
-}
-
 class CameraViewController: UIViewController {
     
     //MARK: Outlets
@@ -24,7 +20,7 @@ class CameraViewController: UIViewController {
     
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
-    var delegate: VideoRecorderDelegate?
+    var postController: PostController!
     var player: AVPlayer!
     var recordURL: URL?
 
@@ -169,8 +165,8 @@ class CameraViewController: UIViewController {
         let postVideoAction = UIAlertAction(title: "Post Video", style: .default) { _ in
             guard let titleText = titleTextField?.text,
                 !titleText.isEmpty else { return }
-            
-            self.delegate?.saveRecording(recordURL)
+
+            // create post
             
             DispatchQueue.main.async {
                 // TODO: clear recordURL so it isn't deleted when the view disappears
