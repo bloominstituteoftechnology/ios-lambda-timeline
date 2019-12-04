@@ -64,6 +64,12 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
+        case .video:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
+            
+            cell.post = post
+            
+            return cell
         default:
             return UICollectionViewCell()
         }

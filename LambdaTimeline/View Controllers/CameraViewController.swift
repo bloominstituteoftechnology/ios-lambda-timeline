@@ -166,11 +166,21 @@ class CameraViewController: UIViewController {
             guard let titleText = titleTextField?.text,
                 !titleText.isEmpty else { return }
 
-            // create post
-            
-            DispatchQueue.main.async {
-                // TODO: clear recordURL so it isn't deleted when the view disappears
-                self.navigationController?.popViewController(animated: true)
+            do {
+                let videoData = try FileHandle(forUpdating: recordURL).readDataToEndOfFile()
+                
+                self.postController.createPost(with: titleText, ofType: .video, mediaData: videoData) { success in
+                    guard success else {
+                        NSLog("Error creating post from video at URL: \(recordURL)")
+                        return
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                }
+            } catch {
+                NSLog("Could not get video data: \(error)")
             }
         }
         
