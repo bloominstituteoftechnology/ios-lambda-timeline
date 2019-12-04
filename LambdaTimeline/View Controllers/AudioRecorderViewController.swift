@@ -53,13 +53,13 @@ class AudioRecorderViewController: UIViewController {
     }
     
     @IBAction func save(_ sender: UIBarButtonItem) {
-        if let recordURL = recordURL {
-            delegate?.saveRecording(recordURL)
-        }
+        guard let recordURL = recordURL else { return }
+        delegate?.saveRecording(recordURL)
         
         // Clear the recordURL so the file won't be erased in viewDidDisappear
-        recordURL = nil
+        self.recordURL = nil
         dismiss(animated: true, completion: nil)
+        
     }
     
     @IBAction func playTapped(_ sender: UIButton) {
@@ -104,6 +104,7 @@ class AudioRecorderViewController: UIViewController {
         do {
             if let recordURL = recordURL {
                 try fileManager.removeItem(at: recordURL)
+                self.recordURL = nil
             }
         } catch {
             NSLog("Error deleting previous recording: \(error)")
