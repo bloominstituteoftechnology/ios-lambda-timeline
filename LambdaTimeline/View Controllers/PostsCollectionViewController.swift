@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseUI
+import AVKit
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -53,8 +54,6 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let post = postController.posts[indexPath.row]
-        print(post.comments.first?.text)
-        print(post.mediaType)
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
         
@@ -99,6 +98,12 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         if let cell = cell as? ImagePostCollectionViewCell,
             cell.imageView.image != nil {
             self.performSegue(withIdentifier: "ViewImagePost", sender: nil)
+        }
+        
+        let post = postController.posts[indexPath.row]
+        if post.mediaType == .video {
+            print(post.mediaURL)
+            presentVideo(forPost: post)
         }
     }
     
@@ -155,6 +160,18 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         
         operations[postID] = fetchOp
     }
+    
+    func presentVideo(forPost post: Post) {
+        let player = AVPlayer(url: post.mediaURL)
+        
+        let controller = AVPlayerViewController()
+        controller.player = player
+        
+        present(controller, animated: true) {
+            player.play()
+        }
+    }
+    
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
