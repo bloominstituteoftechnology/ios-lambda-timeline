@@ -121,9 +121,6 @@ class ImagePostDetailTableViewController: UITableViewController {
             let audioURL = postController.getDocumentsURLFromURL(firebaseURL),
             let cell = tableView.cellForRow(at: indexPath) {
             
-            //print(audioURL)
-            //print(postController.getIDFromURL(audioURL))
-            
             audioPlayer?.stop()
             resetPlayingCell()
             
