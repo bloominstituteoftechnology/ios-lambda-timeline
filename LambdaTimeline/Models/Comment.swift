@@ -43,9 +43,9 @@ class Comment: FirebaseConvertible, Equatable {
         if let text = dictionary[Comment.textKey] as? String {
             self.text = text
             self.audioURL = nil
-        } else if let audioURL = dictionary[Comment.audioURLKey] as? URL {
+        } else if let audioURL = dictionary[Comment.audioURLKey] as? String {
             self.text = nil
-            self.audioURL = audioURL
+            self.audioURL = URL(string: audioURL)!
         } else {
             return nil
         }
@@ -61,7 +61,7 @@ class Comment: FirebaseConvertible, Equatable {
         if let text = text {
             dictionary[Comment.textKey] = text
         } else if let audioURL = audioURL {
-            dictionary[Comment.audioURLKey] = audioURL
+            dictionary[Comment.audioURLKey] = audioURL.absoluteString
         }
         
         return dictionary

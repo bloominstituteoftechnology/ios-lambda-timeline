@@ -69,7 +69,7 @@ class ImagePostDetailTableViewController: UITableViewController {
             
             guard let commentText = commentTextField?.text else { return }
             
-            self.postController.addComment(with: commentText, to: &self.post!)
+            self.postController.addComment(with: commentText, to: self.post!)
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -117,8 +117,12 @@ class ImagePostDetailTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         
         if let comment = post?.comments[indexPath.row + 1],
-            let audioURL = comment.audioURL,
+            let firebaseURL = comment.audioURL,
+            let audioURL = postController.getDocumentsURLFromURL(firebaseURL),
             let cell = tableView.cellForRow(at: indexPath) {
+            
+            //print(audioURL)
+            //print(postController.getIDFromURL(audioURL))
             
             audioPlayer?.stop()
             resetPlayingCell()
@@ -172,8 +176,9 @@ class ImagePostDetailTableViewController: UITableViewController {
 
 extension ImagePostDetailTableViewController: AudioRecorderDelegate {
     func saveRecording(_ recordURL: URL) {
-        postController.addComment(with: recordURL, to: &post)
-        tableView.reloadData()
+        postController.addComment(with: recordURL, to: post) {
+            self.tableView.reloadData()
+        }
     }
 }
 

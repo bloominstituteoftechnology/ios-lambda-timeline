@@ -35,7 +35,7 @@ class PostController {
         }
     }
     
-    func addComment(with text: String, to post: inout Post) {
+    func addComment(with text: String, to post: Post) {
         
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
@@ -46,14 +46,58 @@ class PostController {
         savePostToFirebase(post)
     }
     
-    func addComment(with url: URL, to post: inout Post) {
+    func addComment(with url: URL, to post: Post, completion: @escaping () -> Void) {
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
         
-        let comment = Comment(audioURL: url, author: author)
-        post.comments.append(comment)
         
-        //savePostToFirebase(post)
+        let soundData = try! FileHandle(forUpdating: url).readDataToEndOfFile()
+        
+        store(mediaData: soundData, mediaType: .audio) { mediaURL in
+            guard let mediaURL = mediaURL,
+                let newFileLocation = self.getDocumentsURLFromURL(mediaURL) else { return }
+            
+            do {
+                try FileManager.default.moveItem(at: url, to: newFileLocation)
+            } catch {
+                NSLog("Error moving audio file: \(error)")
+            }
+            
+            let comment = Comment(audioURL: mediaURL, author: author)
+            post.comments.append(comment)
+            self.savePostToFirebase(post)
+            completion()
+        }
+        
+    }
+    
+    func getIDFromURL(_ url: URL) -> String? {
+        let urlString = url.absoluteString
+        print(urlString)
+        
+        let range = NSRange(location: 0, length: urlString.utf16.count)
+        do {
+            let regex = try NSRegularExpression(pattern: "(?<=(audio%2F))[A-Z0-9-]*(?=(.alt))")
+            if let match = regex.firstMatch(in: urlString, options: [], range: range) {
+                let id = urlString[Range(match.range, in: urlString)!]
+                return "\(id)"
+            }
+        } catch {
+            NSLog("Error getting ID from URL: \(error)")
+        }
+        
+        return nil
+    }
+    
+    func getDocumentsURLFromURL(_ url: URL) -> URL? {
+        guard let id = getIDFromURL(url) else { return nil }
+        
+        let fileManager = FileManager.default
+        let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        let newFileLocation = documentsDirectory.appendingPathComponent(id)
+        
+        return newFileLocation
     }
 
     func observePosts(completion: @escaping (Error?) -> Void) {
