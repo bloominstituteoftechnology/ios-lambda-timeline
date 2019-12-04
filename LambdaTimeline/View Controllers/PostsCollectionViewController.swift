@@ -53,26 +53,23 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let post = postController.posts[indexPath.row]
+        print(post.comments.first?.text)
+        print(post.mediaType)
+        
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
+        
+        cell.post = post
         
         switch post.mediaType {
-            
         case .image:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
-            
-            cell.post = post
-            
             loadImage(for: cell, forItemAt: indexPath)
-            
-            return cell
         case .video:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
-            
-            cell.post = post
-            
-            return cell
+            break
         default:
-            return UICollectionViewCell()
+            break
         }
+        
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
