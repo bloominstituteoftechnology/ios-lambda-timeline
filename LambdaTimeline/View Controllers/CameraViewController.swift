@@ -170,9 +170,10 @@ class CameraViewController: UIViewController {
             guard let titleText = titleTextField?.text,
                 !titleText.isEmpty else { return }
             
-            // post video
+            self.delegate?.saveRecording(recordURL)
             
             DispatchQueue.main.async {
+                // TODO: clear recordURL so it isn't deleted when the view disappears
                 self.navigationController?.popViewController(animated: true)
             }
         }

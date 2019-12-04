@@ -170,6 +170,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             destinationVC?.postController = postController
             destinationVC?.post = postController.posts[indexPath.row]
             destinationVC?.imageData = cache.value(for: postID)
+        } else if segue.identifier == "AddVideoPost" {
+            let destinationVC = segue.destination as? CameraViewController
+            destinationVC?.delegate = self
         }
     }
     
@@ -177,4 +180,10 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     private var operations = [String : Operation]()
     private let mediaFetchQueue = OperationQueue()
     private let cache = Cache<String, Data>()
+}
+
+extension PostsCollectionViewController: VideoRecorderDelegate {
+    func saveRecording(_ recordURL: URL) {
+        //<#code#>
+    }
 }
