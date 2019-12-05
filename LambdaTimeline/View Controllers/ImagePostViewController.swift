@@ -208,6 +208,7 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var effectSegmentedControl: UISegmentedControl!
     @IBOutlet weak var colorSegmentedControl: UISegmentedControl!
     @IBOutlet weak var colorSlider: UISlider!
+    @IBOutlet weak var geotagSwitch: UISwitch!
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
