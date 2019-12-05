@@ -21,8 +21,12 @@ class PostController {
         store(mediaData: mediaData, mediaType: mediaType) { (mediaURL) in
             
             guard let mediaURL = mediaURL else { completion(false); return }
+            //
+//            if
+            //
+            let imagePost = Post(title: title, mediaType: mediaType, mediaURL: mediaURL, author: author)
             
-            let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
+//            let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
             
             self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
                 if let error = error {
@@ -35,16 +39,29 @@ class PostController {
         }
     }
     
-    func addComment(with text: String, to post: inout Post) {
+    func addTextComment(with text: String, to post: inout Post) { // This func had been called only once
         
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
         
-        let comment = Comment(text: text, author: author)
+        let comment = Comment(text: text, audioURL: nil, author: author)
+//        let comment = Comment(text: text, author: author)
         post.comments.append(comment)
         
         savePostToFirebase(post)
     }
+    
+    func addAudioComment(with audioURL: URL, to post: inout Post) { // This func had been called only once
+            
+            guard let currentUser = Auth.auth().currentUser,
+                let author = Author(user: currentUser) else { return }
+            
+            let comment = Comment(text: nil, audioURL: audioURL, author: author)
+            post.comments.append(comment)
+            
+            savePostToFirebase(post)
+        }
+    
 
     func observePosts(completion: @escaping (Error?) -> Void) {
         
