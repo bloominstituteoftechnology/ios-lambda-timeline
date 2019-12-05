@@ -20,14 +20,25 @@ class MapViewController: UIViewController {
 
         mapView.delegate = self
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "PostView")
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         loadPosts()
     }
     
     private func loadPosts() {
         let postAnnotations = postController.posts.compactMap({ PostAnnotation(post: $0) })
         
-        mapView.addAnnotations(postAnnotations)
+        for postAnnotation in postAnnotations {
+            if !mapView.annotations.contains(where: { $0.coordinate.latitude == postAnnotation.coordinate.latitude
+                && $0.coordinate.longitude == postAnnotation.coordinate.longitude
+                && $0.title == postAnnotation.title
+                && $0.subtitle == postAnnotation.subtitle }) {
+                mapView.addAnnotation(postAnnotation)
+            }
+        }
+        
+        print(mapView.annotations.count)
     }
 
 }
