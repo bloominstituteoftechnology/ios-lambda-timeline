@@ -7,15 +7,29 @@
 //
 
 import UIKit
+import MapKit
 
 class MapViewController: UIViewController {
+    
+    @IBOutlet weak var mapView: MKMapView!
     
     var postController: PostController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        mapView.delegate = self
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "PostView")
+        
+        loadPosts()
+    }
+    
+    private func loadPosts() {
+        let postAnnotations = postController.posts.compactMap({ PostAnnotation(post: $0) })
+        
+        mapView.addAnnotations(postAnnotations)
     }
 
 }
+
+extension MapViewController: MKMapViewDelegate {}

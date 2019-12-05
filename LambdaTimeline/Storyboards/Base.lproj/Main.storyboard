@@ -415,7 +415,7 @@
         <!--Map-->
         <scene sceneID="vTz-fo-BtK">
             <objects>
-                <viewController id="veh-K2-Aqn" sceneMemberID="viewController">
+                <viewController id="veh-K2-Aqn" customClass="MapViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="xcE-Tz-Ymz">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -434,6 +434,9 @@
                         <viewLayoutGuide key="safeArea" id="4lS-uh-rtW"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="map" catalog="system" id="SCz-hU-mSq"/>
+                    <connections>
+                        <outlet property="mapView" destination="bEY-ij-5hP" id="ol5-tB-AHb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Ma-vF-yNV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
