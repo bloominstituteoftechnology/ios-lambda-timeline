@@ -18,13 +18,14 @@ enum MediaType: String {
 
 class Post {
     
-    init(title: String, mediaURL: URL, ratio: CGFloat? = nil, mediaType: MediaType, author: Author, timestamp: Date = Date()) {
+    init(title: String, mediaURL: URL, ratio: CGFloat? = nil, mediaType: MediaType, author: Author, timestamp: Date = Date(), geotag: CLLocationCoordinate2D? = nil) {
         self.mediaURL = mediaURL
         self.ratio = ratio
         self.mediaType = mediaType
         self.author = author
         self.comments = [Comment(text: title, author: author)]
         self.timestamp = timestamp
+        self.geotag = geotag
     }
     
     init?(dictionary: [String : Any], id: String) {
