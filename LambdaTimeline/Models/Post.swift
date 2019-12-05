@@ -8,6 +8,7 @@
 
 import Foundation
 import FirebaseAuth
+import CoreLocation
 
 enum MediaType: String {
     case image
@@ -43,6 +44,10 @@ class Post {
         self.timestamp = Date(timeIntervalSince1970: timestampTimeInterval)
         self.comments = captionDictionaries.compactMap({ Comment(dictionary: $0) })
         self.id = id
+        
+        if let latitude = dictionary[Post.latitudeKey] as? Double, let longitude = dictionary[Post.longitudeKey] as? Double {
+            self.geotag = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        }
     }
     
     var dictionaryRepresentation: [String : Any] {
@@ -52,9 +57,14 @@ class Post {
                 Post.authorKey: author.dictionaryRepresentation,
                 Post.timestampKey: timestamp.timeIntervalSince1970]
         
-        guard let ratio = self.ratio else { return dict }
+        if let ratio = self.ratio {
+            dict[Post.ratioKey] = ratio
+        }
         
-        dict[Post.ratioKey] = ratio
+        if let geotag = self.geotag {
+            dict[Post.latitudeKey] = geotag.latitude as Double
+            dict[Post.longitudeKey] = geotag.longitude as Double
+        }
         
         return dict
     }
@@ -66,6 +76,7 @@ class Post {
     var comments: [Comment]
     var id: String?
     var ratio: CGFloat?
+    var geotag: CLLocationCoordinate2D?
     
     var title: String? {
         return comments.first?.text
@@ -78,4 +89,6 @@ class Post {
     static private let commentsKey = "comments"
     static private let timestampKey = "timestamp"
     static private let idKey = "id"
+    static private let latitudeKey = "latitude"
+    static private let longitudeKey = "longitude"
 }
