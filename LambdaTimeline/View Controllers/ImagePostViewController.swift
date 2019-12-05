@@ -16,6 +16,8 @@ class ImagePostViewController: ShiftableViewController {
         
         setImageViewHeight(with: 1.0)
         
+        locationController.delegate = self
+        
         updateViews()
     }
     
@@ -60,8 +62,16 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     @IBAction func createPost(_ sender: Any) {
-        
+        if geotagSwitch.isOn {
+            locationController.requestLocation()
+        } else {
+            savePost()
+        }
+    }
+    
+    private func savePost(locations: [CLLocation] = []) {
         view.endEditing(true)
+        
         
         guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
             let title = titleTextField.text, title != "" else {
@@ -69,7 +79,9 @@ class ImagePostViewController: ShiftableViewController {
             return
         }
         
-        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
+        let geotag = locations.first?.coordinate
+        
+        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio, at: geotag) { (success) in
             guard success else {
                 DispatchQueue.main.async {
                     self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
@@ -190,6 +202,7 @@ class ImagePostViewController: ShiftableViewController {
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    var locationController = LocationController()
     
     private var originalImage: UIImage?
     
@@ -238,5 +251,11 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ImagePostViewController: LocationControllerDelegate {
+    func update(locations: [CLLocation]) {
+        savePost(locations: locations)
     }
 }
