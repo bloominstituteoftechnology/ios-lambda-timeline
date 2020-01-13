@@ -9,6 +9,14 @@
 import UIKit
 import Photos
 
+enum ImageFilterOption {
+    case vibrance
+    case posterize
+    case bloom
+    case colorInvert
+    case comicEffect
+}
+
 class ImagePostViewController: ShiftableViewController {
     
     override func viewDidLoad() {
@@ -104,6 +112,138 @@ class ImagePostViewController: ShiftableViewController {
         }
         presentImagePickerController()
     }
+
+    @IBAction func vibranceChanged(_ sender: UISlider) {
+        updateImage(.vibrance)
+    }
+
+    @IBAction func posterizeChanged(_ sender: UISlider) {
+        updateImage(.posterize)
+    }
+
+    @IBAction func bloomRadiusChanged(_ sender: UISlider) {
+        updateImage(.bloom)
+    }
+
+    @IBAction func bloomIntensityChanged(_ sender: UISlider) {
+        updateImage(.bloom)
+    }
+
+    @IBAction func comicEffectSwitched(_ sender: UISwitch) {
+        updateImage(.comicEffect)
+    }
+
+    @IBAction func colorInvertSwitched(_ sender: UISwitch) {
+        updateImage(.colorInvert)
+    }
+
+    private func updateImage(_ filterOption: ImageFilterOption) {
+        guard let imageData = imageData,
+            let image = UIImage(data: imageData) else { return }
+
+        switch filterOption {
+        case .vibrance:
+            imageView.image = vibranceImage(image)
+        case .posterize:
+            imageView.image = posterizeImage(image)
+        case .bloom:
+            imageView.image = bloomImage(image)
+        case .colorInvert:
+            imageView.image = colorInvertImage(image)
+        case .comicEffect:
+            imageView.image = comicEffectImage(image)
+        }
+    }
+
+    // MARK: - Image filter option functions
+    private func vibranceImage(_ image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage,
+            let vibranceFilter = vibranceFilter else { return image }
+
+        let ciImage = CIImage(cgImage: cgImage)
+
+        vibranceFilter.setValue(ciImage, forKey: "inputImage")
+        vibranceFilter.setValue(vibranceSlider.value, forKey: kCIInputAmountKey)
+
+        guard let outputCIImage = vibranceFilter.outputImage else { return image }
+
+        guard let outputCGImage = context.createCGImage(outputCIImage,
+                                                        from: CGRect(origin: CGPoint.zero, size: image.size))
+            else { return image }
+
+        return UIImage(cgImage: outputCGImage)
+    }
+
+    private func posterizeImage(_ image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage,
+            let posterizeFilter = posterizeFilter else { return image }
+
+        let ciImage = CIImage(cgImage: cgImage)
+
+        posterizeFilter.setValue(ciImage, forKey: "inputImage")
+        posterizeFilter.setValue(posterizeSlider.value, forKey: "inputLevels")
+
+        guard let outputCIImage = posterizeFilter.outputImage else { return image }
+
+        guard let outputCGImage = context.createCGImage(outputCIImage,
+                                                        from: CGRect(origin: CGPoint.zero, size: image.size))
+            else { return image }
+
+        return UIImage(cgImage: outputCGImage)
+    }
+
+    private func bloomImage(_ image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage,
+            let bloomFilter = bloomFilter else { return image }
+
+        let ciImage = CIImage(cgImage: cgImage)
+
+        bloomFilter.setValue(ciImage, forKey: "inputImage")
+        bloomFilter.setValue(bloomRadiusSlider.value, forKey: kCIInputRadiusKey)
+        bloomFilter.setValue(bloomIntensitySlider.value, forKey: kCIInputIntensityKey)
+
+        guard let outputCIImage = bloomFilter.outputImage else { return image }
+
+        guard let outputCGImage = context.createCGImage(outputCIImage,
+                                                        from: CGRect(origin: CGPoint.zero, size: image.size))
+            else { return image }
+
+        return UIImage(cgImage: outputCGImage)
+    }
+
+    private func colorInvertImage(_ image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage,
+            let colorInvertFilter = colorInvertFilter else { return image }
+
+        let ciImage = CIImage(cgImage: cgImage)
+
+        colorInvertFilter.setValue(ciImage, forKey: "inputImage")
+
+        guard let outputCIImage = colorInvertFilter.outputImage else { return image }
+
+        guard let outputCGImage = context.createCGImage(outputCIImage,
+                                                        from: CGRect(origin: CGPoint.zero, size: image.size))
+            else { return image }
+
+        return UIImage(cgImage: outputCGImage)
+    }
+
+    private func comicEffectImage(_ image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage,
+            let comicEffectFilter = comicEffectFilter else { return image }
+
+        let ciImage = CIImage(cgImage: cgImage)
+
+        comicEffectFilter.setValue(ciImage, forKey: "inputImage")
+
+        guard let outputCIImage = comicEffectFilter.outputImage else { return image }
+
+        guard let outputCGImage = context.createCGImage(outputCIImage,
+                                                        from: CGRect(origin: CGPoint.zero, size: image.size))
+            else { return image }
+
+        return UIImage(cgImage: outputCGImage)
+    }
     
     func setImageViewHeight(with aspectRatio: CGFloat) {
         
@@ -115,14 +255,21 @@ class ImagePostViewController: ShiftableViewController {
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+
+    private var vibranceFilter = CIFilter(name: "CIVibrance")
+    private var colorInvertFilter = CIFilter(name: "CIColorInvert")
+    private var comicEffectFilter = CIFilter(name: "CIComicEffect")
+    private var bloomFilter = CIFilter(name: "CIBloom")
+    private var posterizeFilter = CIFilter(name: "CIColorPosterize")
+    private var context = CIContext(options: nil)
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
-    @IBOutlet weak var cosmicEffectSwitch: UISwitch!
-    @IBOutlet weak var invertColorSwitch: UISwitch!
+    @IBOutlet weak var comicEffectSwitch: UISwitch!
+    @IBOutlet weak var colorInvertSwitch: UISwitch!
     @IBOutlet weak var bloomRadiusSlider: UISlider!
     @IBOutlet weak var bloomIntensitySlider: UISlider!
     @IBOutlet weak var posterizeSlider: UISlider!

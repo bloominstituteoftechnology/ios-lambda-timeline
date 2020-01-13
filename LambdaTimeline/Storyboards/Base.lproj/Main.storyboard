@@ -170,6 +170,9 @@
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="250" id="k8G-hr-Q7t"/>
                                                         </constraints>
+                                                        <connections>
+                                                            <action selector="posterizeChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="Ba3-3p-t33"/>
+                                                        </connections>
                                                     </slider>
                                                 </subviews>
                                             </stackView>
@@ -187,6 +190,9 @@
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="250" id="YPW-IO-bAk"/>
                                                         </constraints>
+                                                        <connections>
+                                                            <action selector="vibranceChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="niY-iH-BPT"/>
+                                                        </connections>
                                                     </slider>
                                                 </subviews>
                                             </stackView>
@@ -223,6 +229,9 @@
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="250" id="K12-eK-0Uq"/>
                                                         </constraints>
+                                                        <connections>
+                                                            <action selector="bloomRadiusChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="y7H-bb-IfO"/>
+                                                        </connections>
                                                     </slider>
                                                 </subviews>
                                             </stackView>
@@ -240,6 +249,9 @@
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="250" id="3c2-ZT-OP9"/>
                                                         </constraints>
+                                                        <connections>
+                                                            <action selector="bloomIntensityChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="JXB-Bd-kFC"/>
+                                                        </connections>
                                                     </slider>
                                                 </subviews>
                                             </stackView>
@@ -251,7 +263,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="34" translatesAutoresizingMaskIntoConstraints="NO" id="F7U-GY-Utk" userLabel="Color Invert Stack">
                                                 <rect key="frame" x="0.0" y="0.0" width="368" height="31"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cover Invert" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ah5-Ql-W9n">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color Invert" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ah5-Ql-W9n">
                                                         <rect key="frame" x="0.0" y="0.0" width="285" height="31"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
@@ -259,6 +271,9 @@
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="YJO-0F-Yyj">
                                                         <rect key="frame" x="319" y="0.0" width="51" height="31"/>
+                                                        <connections>
+                                                            <action selector="colorInvertSwitched:" destination="1Aw-4e-BW2" eventType="valueChanged" id="eZ5-JY-Sci"/>
+                                                        </connections>
                                                     </switch>
                                                 </subviews>
                                             </stackView>
@@ -273,6 +288,9 @@
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="h5h-Fm-7dO">
                                                         <rect key="frame" x="319" y="0.0" width="51" height="31"/>
+                                                        <connections>
+                                                            <action selector="comicEffectSwitched:" destination="1Aw-4e-BW2" eventType="valueChanged" id="8Qv-8R-hKG"/>
+                                                        </connections>
                                                     </switch>
                                                 </subviews>
                                             </stackView>
@@ -319,10 +337,10 @@
                         <outlet property="bloomIntensitySlider" destination="Yeu-v4-6dg" id="cpC-C2-sll"/>
                         <outlet property="bloomRadiusSlider" destination="6R3-P7-GCT" id="MyX-4k-Hv3"/>
                         <outlet property="chooseImageButton" destination="VxD-cu-jHT" id="KVs-no-MbU"/>
-                        <outlet property="cosmicEffectSwitch" destination="h5h-Fm-7dO" id="BwY-qD-42u"/>
+                        <outlet property="colorInvertSwitch" destination="YJO-0F-Yyj" id="Xfh-el-fuU"/>
+                        <outlet property="comicEffectSwitch" destination="h5h-Fm-7dO" id="4aY-qu-lwe"/>
                         <outlet property="imageHeightConstraint" destination="MHD-wr-Gq9" id="HyG-8g-Ck1"/>
                         <outlet property="imageView" destination="4eK-5F-H5h" id="e7m-c5-Xhz"/>
-                        <outlet property="invertColorSwitch" destination="YJO-0F-Yyj" id="wh1-4w-5n2"/>
                         <outlet property="postButton" destination="hsH-Uv-tug" id="ZBn-KE-cpU"/>
                         <outlet property="posterizeSlider" destination="Tzs-YV-DFJ" id="6tX-hI-5GO"/>
                         <outlet property="titleTextField" destination="Op6-OA-6Ou" id="JEe-cj-4mv"/>
