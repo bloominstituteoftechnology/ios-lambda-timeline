@@ -189,6 +189,55 @@ class ImagePostViewController: ShiftableViewController {
 
     // MARK: - Helper Methods
 
+    private func filterImage(_ image: UIImage?) -> UIImage? {
+        guard
+            anyFiltersEnabled,
+            let startingImage = image,
+            let cgImage = startingImage.cgImage
+            else { return image }
+        var ciImage = CIImage(cgImage: cgImage)
+
+        for (filterType, ciFilter) in ciFilters {
+            guard
+                let filter = ciFilter,
+                let filterIsEnabled = filterTypesEnabled[filterType],
+                filterIsEnabled
+                else { continue }
+
+            switch filterType {
+            case .motionBlur:
+                filter.setValuesForKeys([
+                    kCIInputImageKey: ciImage,
+                    kCIInputRadiusKey: motionBlurRadiusSlider.value,
+                    kCIInputAngleKey: motionBlurAngleSlider.value
+                ])
+            case .edges:
+                filter.setValuesForKeys([
+                    kCIInputImageKey: ciImage,
+                    kCIInputIntensityKey: edgesIntensitySlider.value
+                ])
+            case .posterize:
+                filter.setValuesForKeys([
+                    kCIInputImageKey: ciImage,
+                    "inputLevels": posterizeLevelsSlider.value
+                ])
+            default:
+                filter.setValue(ciImage, forKey: kCIInputImageKey)
+            }
+
+            guard let filterOutput = filter.outputImage else { continue }
+            ciImage = filterOutput
+        }
+
+        guard let outputCGImage = context.createCGImage(
+            ciImage,
+            from: CGRect(origin: CGPoint.zero,
+                         size: startingImage.size))
+            else { return startingImage }
+
+        return UIImage(cgImage: outputCGImage)
+    }
+
     private func scaleImage(_ image: UIImage?) -> UIImage? {
         // Height and width
         var scaledSize = imageView.bounds.size
