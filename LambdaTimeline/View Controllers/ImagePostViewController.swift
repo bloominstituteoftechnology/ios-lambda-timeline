@@ -37,6 +37,22 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet private weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet private weak var postButton: UIBarButtonItem!
 
+    // MARK: - Filter Views
+
+    @IBOutlet private weak var motionBlurButton: UIButton!
+    @IBOutlet private weak var edgesButton: UIButton!
+    @IBOutlet private weak var posterizeButton: UIButton!
+    @IBOutlet private weak var vintageButton: UIButton!
+    @IBOutlet private weak var invertButton: UIButton!
+
+    @IBOutlet private weak var motionBlurStack: UIStackView!
+    @IBOutlet private weak var edgesStack: UIStackView!
+    @IBOutlet private weak var posterizeStack: UIStackView!
+
+    @IBOutlet private weak var motionBlurRadiusSlider: UISlider!
+    @IBOutlet private weak var motionBlurAngleSlider: UISlider!
+    @IBOutlet private weak var edgesIntensitySlider: UISlider!
+    @IBOutlet private weak var posterizeLevelsSlider: UISlider!
 
     // MARK: - View Lifecycle
 
