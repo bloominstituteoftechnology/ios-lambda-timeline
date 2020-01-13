@@ -15,11 +15,15 @@ class ImagePostViewController: ShiftableViewController {
     var post: Post?
     var imageData: Data?
 
+    var touchSpot: CGPoint?
+
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+
+    // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +34,6 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     func updateViews() {
-        
         guard let imageData = imageData,
             let image = UIImage(data: imageData) else {
                 title = "New Post"
@@ -45,25 +48,10 @@ class ImagePostViewController: ShiftableViewController {
         
         chooseImageButton.setTitle("", for: [])
     }
-    
-    private func presentImagePickerController() {
-        
-        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
-            presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
-            return
-        }
-        
-        let imagePicker = UIImagePickerController()
-        
-        imagePicker.delegate = self
-        
-        imagePicker.sourceType = .photoLibrary
 
-        present(imagePicker, animated: true, completion: nil)
-    }
+    // MARK: - Actions
     
     @IBAction func createPost(_ sender: Any) {
-        
         view.endEditing(true)
         
         guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
@@ -87,7 +75,6 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     @IBAction func chooseImage(_ sender: Any) {
-        
         let authorizationStatus = PHPhotoLibrary.authorizationStatus()
         
         switch authorizationStatus {
@@ -114,17 +101,34 @@ class ImagePostViewController: ShiftableViewController {
         }
         presentImagePickerController()
     }
+
+    // MARK: - Helper Methods
     
     func setImageViewHeight(with aspectRatio: CGFloat) {
-        
         imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
         
         view.layoutSubviews()
     }
+
+    private func presentImagePickerController() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
+            return
+        }
+
+        let imagePicker = UIImagePickerController()
+
+        imagePicker.delegate = self
+
+        imagePicker.sourceType = .photoLibrary
+
+        present(imagePicker, animated: true, completion: nil)
+    }
 }
 
+// MARK: - Image Picker Delegate
+
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 
         chooseImageButton.setTitle("", for: [])
