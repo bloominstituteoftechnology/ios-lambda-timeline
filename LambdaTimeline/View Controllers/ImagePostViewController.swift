@@ -157,6 +157,30 @@ class ImagePostViewController: ShiftableViewController {
         presentImagePickerController()
     }
 
+    @IBAction private func filterButtonTapped(_ sender: UIButton) {
+        guard
+            let filterType = typesForButton[sender]
+            else { return }
+
+        if let filterIsEnabled = filterTypesEnabled[filterType], filterIsEnabled {
+            filterTypesEnabled[filterType] = false
+        } else {
+            filterTypesEnabled[filterType] = true
+        }
+
+        sender.setTitleColor(filterTypesEnabled[filterType]! ? .systemRed : .systemBlue,
+                             for: .normal)
+
+        switch filterType {
+        case .motionBlur:
+            motionBlurStack.isHidden.toggle()
+        case .edges:
+            edgesStack.isHidden.toggle()
+        case .posterize:
+            posterizeStack.isHidden.toggle()
+        default: break
+        }
+    }
     // MARK: - Helper Methods
     
     func setImageViewHeight(with aspectRatio: CGFloat) {
