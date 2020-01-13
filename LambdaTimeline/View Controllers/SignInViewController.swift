@@ -11,7 +11,6 @@ import Firebase
 import GoogleSignIn
 
 class SignInViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +60,6 @@ class SignInViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDele
         button.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(button)
-        
         
         let buttonCenterXConstraint = button.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         let buttonCenterYConstraint = button.centerYAnchor.constraint(equalTo: view.centerYAnchor)

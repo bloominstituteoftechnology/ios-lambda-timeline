@@ -10,11 +10,11 @@ import Foundation
 import FirebaseAuth
 
 class Comment: FirebaseConvertible, Equatable {
-    
+
     static private let textKey = "text"
     static private let author = "author"
     static private let timestampKey = "timestamp"
-    
+
     let text: String
     let author: Author
     let timestamp: Date
