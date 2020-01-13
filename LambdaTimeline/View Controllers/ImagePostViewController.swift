@@ -54,6 +54,30 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet private weak var edgesIntensitySlider: UISlider!
     @IBOutlet private weak var posterizeLevelsSlider: UISlider!
 
+    private var filterTypesEnabled: [FilterType: Bool] = [
+        .motionBlur: false,
+        .edges: false,
+        .posterize: false,
+        .vintage: false,
+        .invert: false
+    ]
+    private var anyFiltersEnabled: Bool { filterTypesEnabled.values.contains(true) }
+
+    private lazy var typesForButton: [UIButton: FilterType] = [
+        motionBlurButton: .motionBlur,
+        edgesButton: .edges,
+        posterizeButton: .posterize,
+        vintageButton: .vintage,
+        invertButton: .invert
+    ]
+
+    private var ciFilters: [FilterType: CIFilter?] = [
+        .motionBlur: CIFilter(name: "CIMotionBlur"),
+        .edges: CIFilter(name: "CIEdges"),
+        .posterize: CIFilter(name: "CIColorPosterize"),
+        .vintage: CIFilter(name: "CIPhotoEffectTransfer"),
+        .invert: CIFilter(name: "CIColorInvert")
+    ]
     // MARK: - View Lifecycle
 
     override func viewDidLoad() {
