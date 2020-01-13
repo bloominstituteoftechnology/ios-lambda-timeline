@@ -78,13 +78,14 @@ class ImagePostViewController: ShiftableViewController {
         .vintage: CIFilter(name: "CIPhotoEffectTransfer"),
         .invert: CIFilter(name: "CIColorInvert")
     ]
+
     // MARK: - View Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setImageViewHeight(with: 1.0)
-        
+        setImageViewHeight(forAspectRatio: 1.0)
+
         updateViews()
     }
     
@@ -97,7 +98,7 @@ class ImagePostViewController: ShiftableViewController {
         
         title = post?.title
         
-        setImageViewHeight(with: image.ratio)
+        setImageViewHeight(forAspectRatio: image.ratio)
         
         imageView.image = image
         
@@ -181,9 +182,27 @@ class ImagePostViewController: ShiftableViewController {
         default: break
         }
     }
+
+    @IBAction private func filterSliderChanged(_ sender: UISlider) {
+        filterPreviewImage()
+    }
+
     // MARK: - Helper Methods
+
+    private func scaleImage(_ image: UIImage?) -> UIImage? {
+        // Height and width
+        var scaledSize = imageView.bounds.size
+        // 1x, 2x, or 3x
+        let scale = UIScreen.main.scale
+        scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+        return image?.imageByScaling(toSize: scaledSize)
+    }
+
+    private func filterPreviewImage() {
+        imageView.image = filterImage(scaledImage)
+    }
     
-    func setImageViewHeight(with aspectRatio: CGFloat) {
+    private func setImageViewHeight(forAspectRatio aspectRatio: CGFloat) {
         imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
         
         view.layoutSubviews()
@@ -218,7 +237,7 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         
         imageView.image = image
         
-        setImageViewHeight(with: image.ratio)
+        setImageViewHeight(forAspectRatio: image.ratio)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
