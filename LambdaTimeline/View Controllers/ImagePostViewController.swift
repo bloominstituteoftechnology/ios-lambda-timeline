@@ -31,12 +31,12 @@ class ImagePostViewController: ShiftableViewController {
         didSet { filterPreviewImage() }
     }
 
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var titleTextField: UITextField!
+    @IBOutlet private weak var chooseImageButton: UIButton!
+    @IBOutlet private weak var imageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var postButton: UIBarButtonItem!
 
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var chooseImageButton: UIButton!
-    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var postButton: UIBarButtonItem!
 
     // MARK: - View Lifecycle
 
