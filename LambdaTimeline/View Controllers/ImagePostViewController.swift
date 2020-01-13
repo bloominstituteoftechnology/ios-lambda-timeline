@@ -121,6 +121,12 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    @IBOutlet weak var cosmicEffectSwitch: UISwitch!
+    @IBOutlet weak var invertColorSwitch: UISwitch!
+    @IBOutlet weak var bloomRadiusSlider: UISlider!
+    @IBOutlet weak var bloomIntensitySlider: UISlider!
+    @IBOutlet weak var posterizeSlider: UISlider!
+    @IBOutlet weak var vibranceSlider: UISlider!
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
