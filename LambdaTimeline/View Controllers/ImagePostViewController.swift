@@ -18,11 +18,19 @@ class ImagePostViewController: ShiftableViewController {
         case vintage = "Vintage"
         case invert = "Invert Colors"
     }
+
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    var context = CIContext(options: nil)
 
-    var touchSpot: CGPoint?
+    var originalImage: UIImage? {
+        didSet { scaledImage = scaleImage(originalImage) }
+    }
+    var scaledImage: UIImage? {
+        didSet { filterPreviewImage() }
+    }
+
 
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
