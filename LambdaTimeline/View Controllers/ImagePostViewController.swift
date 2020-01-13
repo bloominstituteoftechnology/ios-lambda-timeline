@@ -11,6 +11,13 @@ import Photos
 
 class ImagePostViewController: ShiftableViewController {
 
+    enum FilterType: String, CaseIterable {
+        case motionBlur = "Motion Blur"
+        case edges = "Edges"
+        case posterize = "Posterize"
+        case vintage = "Vintage"
+        case invert = "Invert Colors"
+    }
     var postController: PostController!
     var post: Post?
     var imageData: Data?
