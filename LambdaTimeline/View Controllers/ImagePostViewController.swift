@@ -120,8 +120,8 @@ class ImagePostViewController: ShiftableViewController {
         
         filter.setValue(ciImage, forKey: kCIInputImageKey)
         filter.setValue(brightnessSlider.value, forKey: kCIInputBrightnessKey)
-//        filter.setValue(contrastSlider.value, forKey: kCIInputContrastKey)
-//        filter.setValue(saturationSlider.value, forKey: kCIInputSaturationKey)
+        filter.setValue(contrastSlider.value, forKey: kCIInputContrastKey)
+        filter.setValue(saturationSlider.value, forKey: kCIInputSaturationKey)
         
         guard let outputCIImage = filter.outputImage else { return image }
         
