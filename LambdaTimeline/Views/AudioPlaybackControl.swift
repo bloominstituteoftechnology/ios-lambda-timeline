@@ -51,6 +51,41 @@ class AudioPlaybackControl: UIControl {
         setUpSubViews()
     }
 
+    // MARK: - UI Actions
+    @objc
+    private func playPauseButtonTapped(_ sender: UIButton) {
+    }
+
+    // MARK: - Playback API
+
+    func loadAudio(from url: URL) {
+    }
+
+    func loadAudio() {
+    }
+
+    func togglePlayback() {
+    }
+
+    func play() {
+    }
+
+    func pause() {
+    }
+
+    // MARK: - Helper Methods
+
+    private func updateViews() {
+    }
+
+    private func startUIUpdateTimer() {
+    }
+
+    private func killUIUpdateTimer() {
+    }
+    @objc
+    private func updateUITimer(_ timer: Timer) {
+    }
     private func setUpSubViews() {
         playPauseButton = UIButton(type: .system)
         playPauseButton.setTitle("Play", for: .normal)
