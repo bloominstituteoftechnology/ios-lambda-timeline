@@ -52,40 +52,79 @@ class AudioPlaybackControl: UIControl {
     }
 
     // MARK: - UI Actions
+
     @objc
     private func playPauseButtonTapped(_ sender: UIButton) {
+        togglePlayback()
     }
 
     // MARK: - Playback API
 
     func loadAudio(from url: URL) {
+        audioFileURL = url
+        loadAudio()
     }
 
     func loadAudio() {
+        guard let url = audioFileURL else {
+            print("no file at audioFileURL!")
+            return
+        }
+
+        do { audioPlayer = try AVAudioPlayer(contentsOf: url) } catch {
+            print("error loading audio player: \(error)")
+        }
+        updateViews()
     }
 
     func togglePlayback() {
+        isPlaying ? pause() : play()
     }
 
     func play() {
+        audioPlayer?.play()
+        updateViews()
+        startUIUpdateTimer()
     }
 
     func pause() {
+        audioPlayer?.pause()
+        updateViews()
+        killUIUpdateTimer()
     }
 
     // MARK: - Helper Methods
 
     private func updateViews() {
+        playPauseButton.setTitle(isPlaying ? "Pause" : "Play", for: .normal)
+        timestampLabel.text = timeFormatter.string(from: elapsedTime)
+        timeRemainingLabel.text = timeFormatter.string(from: timeRemaining)
+        if !isPlaying {
+            timeSlider.maximumValue = Float(totalDuration)
+        }
+        timeSlider.value = Float(elapsedTime)
     }
 
     private func startUIUpdateTimer() {
+        killUIUpdateTimer()
+        uiUpdateTimer = Timer.scheduledTimer(
+            timeInterval: 0.03,
+            target: self,
+            selector: #selector(updateUITimer(_:)),
+            userInfo: nil,
+            repeats: true)
     }
 
     private func killUIUpdateTimer() {
+        uiUpdateTimer?.invalidate()
+        uiUpdateTimer = nil
     }
+
     @objc
     private func updateUITimer(_ timer: Timer) {
+        updateViews()
     }
+
     private func setUpSubViews() {
         playPauseButton = UIButton(type: .system)
         playPauseButton.setTitle("Play", for: .normal)
