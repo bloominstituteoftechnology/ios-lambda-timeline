@@ -60,7 +60,7 @@ class AudioPlayerControl: UIControl {
 
     // MARK: - Playback API
 
-    func loadAudio(from url: URL) {
+    func loadAudio(from url: URL?) {
         audioFileURL = url
         loadAudio()
     }
@@ -68,6 +68,7 @@ class AudioPlayerControl: UIControl {
     func loadAudio() {
         guard let url = audioFileURL else {
             print("no file at audioFileURL!")
+            audioPlayer = nil
             return
         }
 
