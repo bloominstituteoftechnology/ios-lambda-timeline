@@ -52,4 +52,48 @@ class AudioPlaybackControl: UIControl {
     }
 
     private func setUpSubViews() {
+        playPauseButton = UIButton(type: .system)
+        playPauseButton.setTitle("Play", for: .normal)
+        playPauseButton.addTarget(
+            self,
+            action: #selector(playPauseButtonTapped(_:)),
+            for: .touchUpInside)
+
+        timestampLabel.text = timeFormatter.string(from: 0)
+        timeRemainingLabel.text = timeFormatter.string(from: 0)
+
+        let sliderHHuggingPriority = timeSlider
+            .contentHuggingPriority(for: .horizontal) - 2
+        timeSlider.setContentHuggingPriority(
+            sliderHHuggingPriority, for: .horizontal)
+
+        sliderStack = UIStackView(arrangedSubviews: [
+            timestampLabel,
+            timeSlider,
+            timeRemainingLabel])
+        sliderStack.axis = .horizontal
+        sliderStack.alignment = .fill
+        sliderStack.distribution = .fill
+        sliderStack.spacing = 4
+
+        verticalStack = UIStackView(arrangedSubviews: [
+            playPauseButton,
+            sliderStack])
+        verticalStack.axis = .vertical
+        verticalStack.alignment = .center
+        verticalStack.distribution = .fill
+
+        self.addSubview(verticalStack)
+        verticalStack.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            sliderStack.leadingAnchor.constraint(
+                equalTo: verticalStack.leadingAnchor,
+                constant: 4),
+            sliderStack.trailingAnchor.constraint(
+                equalTo: verticalStack.trailingAnchor,
+                constant: 4),
+            verticalStack.leadingAnchor.constraint(equalTo: leadingAnchor),
+            verticalStack.trailingAnchor.constraint(equalTo: trailingAnchor),
+            verticalStack.topAnchor.constraint(equalTo: topAnchor),
+            verticalStack.bottomAnchor.constraint(equalTo: bottomAnchor)])
     }
