@@ -32,11 +32,22 @@ class ImagePostDetailTableViewController: UITableViewController {
     
     @IBAction func createComment(_ sender: Any) {
         
-        displayCommentAlert()
+        displayCommentTypeAlert()
         
     }
     
-    private func displayCommentAlert() {
+    private func displayCommentTypeAlert() {
+        let alert = UIAlertController(title: "Text or audio?", message: nil, preferredStyle: .actionSheet)
+        
+        let textAction = UIAlertAction(title: "Text", style: .default) { (_) in
+            self.displayTextCommentAlert()
+        }
+        alert.addAction(textAction)
+        
+        present(alert, animated: true)
+    }
+    
+    private func displayTextCommentAlert() {
         let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
         
         var commentTextField: UITextField?
