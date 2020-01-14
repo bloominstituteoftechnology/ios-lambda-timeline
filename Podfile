@@ -5,6 +5,9 @@ target 'LambdaTimeline' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
 
+# add pods for desired Firebase products
+# https://firebase.google.com/docs/ios/setup#available-pods
+
   # Pods for LambdaTimeline
 pod 'Firebase/Core'
 pod 'Firebase/Database'

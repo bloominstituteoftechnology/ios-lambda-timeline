@@ -13,6 +13,16 @@ import FirebaseStorage
 
 class PostController {
     
+    // MARK: - Properties
+    
+    var posts: [Post] = []
+    let currentUser = Auth.auth().currentUser
+    let postsRef = Database.database().reference().child("posts")
+    
+    let storageRef = Storage.storage().reference()
+    
+    // MARK: - <#Section#>
+    
     func createPost(with title: String, ofType mediaType: MediaType, mediaData: Data, ratio: CGFloat? = nil, completion: @escaping (Bool) -> Void = { _ in }) {
         
         guard let currentUser = Auth.auth().currentUser,
@@ -117,11 +127,7 @@ class PostController {
         uploadTask.resume()
     }
     
-    var posts: [Post] = []
-    let currentUser = Auth.auth().currentUser
-    let postsRef = Database.database().reference().child("posts")
     
-    let storageRef = Storage.storage().reference()
     
     
 }

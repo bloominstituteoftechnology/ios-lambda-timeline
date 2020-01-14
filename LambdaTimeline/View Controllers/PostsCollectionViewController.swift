@@ -12,6 +12,15 @@ import FirebaseUI
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    // MARK: - Properties
+    
+    private let postController = PostController()
+    private var operations = [String : Operation]()
+    private let mediaFetchQueue = OperationQueue()
+    private let cache = Cache<String, Data>()
+    
+    // MARK: - Lifecycle Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,6 +30,8 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             }
         }
     }
+    
+    // MARK: - Actions
     
     @IBAction func addPost(_ sender: Any) {
         
@@ -162,8 +173,5 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         }
     }
     
-    private let postController = PostController()
-    private var operations = [String : Operation]()
-    private let mediaFetchQueue = OperationQueue()
-    private let cache = Cache<String, Data>()
+    
 }
