@@ -33,7 +33,7 @@ class ImagePostDetailTableViewController: UITableViewController {
     @IBAction func createComment(_ sender: Any) {
         
         let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
-        
+
         var commentTextField: UITextField?
         
         alert.addTextField { (textField) in
@@ -51,10 +51,16 @@ class ImagePostDetailTableViewController: UITableViewController {
                 self.tableView.reloadData()
             }
         }
+
+        let addAudioCommentAction = UIAlertAction(title: "Add Audio", style: .default) { (_) in
+
+            self.performSegue(withIdentifier: "AudioCommentSegue", sender: self)
+        }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(addCommentAction)
+        alert.addAction(addAudioCommentAction)
         alert.addAction(cancelAction)
         
         present(alert, animated: true, completion: nil)
