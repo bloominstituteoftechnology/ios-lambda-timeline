@@ -137,21 +137,33 @@ class ImagePostViewController: ShiftableViewController {
         updateImage(.colorInvert)
     }
 
+    private func scaleImage(_ image: UIImage) -> UIImage {
+
+        var scaledSize = imageView.bounds.size
+        // 1x, 2x, or 3x
+        let scale = UIScreen.main.scale
+        scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+        // returning scaled image
+        return image.imageByScaling(toSize: scaledSize) ?? UIImage()
+    }
+
     private func updateImage(_ filterOption: ImageFilterOption) {
-        guard let imageData = imageData,
-            let image = UIImage(data: imageData) else { return }
+//        guard let imageData = imageData,
+//            let image = UIImage(data: imageData) else { return }
+        guard let image = imageView.image else { return }
+        let scaledImage = scaleImage(image)
 
         switch filterOption {
         case .vibrance:
-            imageView.image = vibranceImage(image)
+            imageView.image = vibranceImage(scaledImage)
         case .posterize:
-            imageView.image = posterizeImage(image)
+            imageView.image = posterizeImage(scaledImage)
         case .bloom:
-            imageView.image = bloomImage(image)
+            imageView.image = bloomImage(scaledImage)
         case .colorInvert:
-            imageView.image = colorInvertImage(image)
+            imageView.image = colorInvertImage(scaledImage)
         case .comicEffect:
-            imageView.image = comicEffectImage(image)
+            imageView.image = comicEffectImage(scaledImage)
         }
     }
 
