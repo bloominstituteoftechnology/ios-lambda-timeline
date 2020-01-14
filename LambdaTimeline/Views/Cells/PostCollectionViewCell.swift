@@ -16,9 +16,9 @@ class PostCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    weak var titleLabel: UILabel!
-    weak var authorLabel: UILabel!
-    weak var labelBackgroundView: UIView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var labelBackgroundView: UIView!
 
     override func layoutSubviews() {
         super.layoutSubviews()

@@ -9,16 +9,11 @@
 import UIKit
 
 class ImagePostCollectionViewCell: PostCollectionViewCell {
-
     @IBOutlet weak var imageView: UIImageView!
 
     override func prepareForReuse() {
         super.prepareForReuse()
         imageView.image = nil
-    }
-
-    override func updateViews() {
-        super.updateViews()
     }
     
     func setImage(_ image: UIImage?) {
