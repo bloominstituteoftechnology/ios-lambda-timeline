@@ -12,4 +12,8 @@ import AVFoundation
 class AudioPostViewController: ShiftableViewController {
     var postController: PostController!
     var post: Post?
+
+    @IBAction createPost(_ sender: Any) {
+        
+    }
 }

@@ -62,6 +62,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
+        case .audio:
+            // TODO: do audio
+            return UICollectionViewCell()
         }
     }
     
@@ -72,12 +75,12 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         let post = postController.posts[indexPath.row]
         
         switch post.mediaType {
-            
         case .image:
-            
             guard let ratio = post.ratio else { return size }
-            
             size.height = size.width * ratio
+        case .audio:
+            // TODO: do audio
+            break
         }
         
         return size

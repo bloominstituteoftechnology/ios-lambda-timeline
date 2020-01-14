@@ -1,5 +1,5 @@
 //
-//  AudioControl.swift
+//  AudioPlayerControl.swift
 //  LambdaTimeline
 //
 //  Created by Jon Bash on 2020-01-14.
@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 
 @IBDesignable
-class AudioPlaybackControl: UIControl {
+class AudioPlayerControl: UIControl {
 
     // MARK: - UI Elements
 
@@ -176,7 +176,7 @@ class AudioPlaybackControl: UIControl {
 
 // MARK: - AVAudioPlayerDelegate
 
-extension AudioPlaybackControl: AVAudioPlayerDelegate {
+extension AudioPlayerControl: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         updateViews()
     }
