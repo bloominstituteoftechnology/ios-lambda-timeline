@@ -27,8 +27,10 @@ struct Author: FirebaseConvertible, Equatable {
     }
     
     init?(dictionary: [String: Any]) {
-        guard let uid = dictionary[Author.uidKey] as? String,
-            let displayName = dictionary[Author.displayNameKey] as? String else { return nil }
+        guard
+            let uid = dictionary[Author.uidKey] as? String,
+            let displayName = dictionary[Author.displayNameKey] as? String
+            else { return nil }
         
         self.uid = uid
         self.displayName = displayName

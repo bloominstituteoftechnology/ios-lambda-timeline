@@ -18,7 +18,10 @@ class FetchMediaOperation: ConcurrentOperation {
 
     private var dataTask: URLSessionDataTask?
 
-    init(post: Post, postController: PostController, session: URLSession = URLSession.shared) {
+    init(post: Post,
+         postController: PostController,
+         session: URLSession = URLSession.shared
+    ) {
         self.post = post
         self.postController = postController
         self.session = session

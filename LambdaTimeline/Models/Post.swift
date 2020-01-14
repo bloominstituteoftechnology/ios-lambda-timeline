@@ -11,16 +11,18 @@ import FirebaseAuth
 
 enum MediaType: String {
     case image
+    case audio
 }
 
 class Post {
 
     var dictionaryRepresentation: [String : Any] {
-        var dict: [String: Any] = [Post.mediaKey: mediaURL.absoluteString,
-                Post.mediaTypeKey: mediaType.rawValue,
-                Post.commentsKey: comments.map({ $0.dictionaryRepresentation }),
-                Post.authorKey: author.dictionaryRepresentation,
-                Post.timestampKey: timestamp.timeIntervalSince1970]
+        var dict: [String: Any] = [
+            Post.mediaKey: mediaURL.absoluteString,
+            Post.mediaTypeKey: mediaType.rawValue,
+            Post.commentsKey: comments.map({ $0.dictionaryRepresentation }),
+            Post.authorKey: author.dictionaryRepresentation,
+            Post.timestampKey: timestamp.timeIntervalSince1970]
 
         guard let ratio = self.ratio else { return dict }
 
@@ -59,14 +61,16 @@ class Post {
     }
     
     init?(dictionary: [String : Any], id: String) {
-        guard let mediaURLString = dictionary[Post.mediaKey] as? String,
+        guard
+            let mediaURLString = dictionary[Post.mediaKey] as? String,
             let mediaURL = URL(string: mediaURLString),
             let mediaTypeString = dictionary[Post.mediaTypeKey] as? String,
             let mediaType = MediaType(rawValue: mediaTypeString),
             let authorDictionary = dictionary[Post.authorKey] as? [String: Any],
             let author = Author(dictionary: authorDictionary),
             let timestampTimeInterval = dictionary[Post.timestampKey] as? TimeInterval,
-            let captionDictionaries = dictionary[Post.commentsKey] as? [[String: Any]] else { return nil }
+            let captionDictionaries = dictionary[Post.commentsKey] as? [[String: Any]]
+            else { return nil }
         
         self.mediaURL = mediaURL
         self.mediaType = mediaType
