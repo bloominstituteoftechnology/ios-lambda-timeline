@@ -9,6 +9,17 @@
 import UIKit
 
 class ImagePostCollectionViewCell: UICollectionViewCell {
+
+    var post: Post? {
+        didSet {
+            updateViews()
+        }
+    }
+
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var labelBackgroundView: UIView!
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -39,16 +50,4 @@ class ImagePostCollectionViewCell: UICollectionViewCell {
     func setImage(_ image: UIImage?) {
         imageView.image = image
     }
-
-    var post: Post? {
-        didSet {
-            updateViews()
-        }
-    }
-
-@IBOutlet weak var imageView: UIImageView!
-@IBOutlet weak var titleLabel: UILabel!
-@IBOutlet weak var authorLabel: UILabel!
-@IBOutlet weak var labelBackgroundView: UIView!
-
 }

@@ -9,7 +9,15 @@
 import Foundation
 
 class FetchMediaOperation: ConcurrentOperation {
-    
+
+    let post: Post
+    let postController: PostController
+    var mediaData: Data?
+
+    private let session: URLSession
+
+    private var dataTask: URLSessionDataTask?
+
     init(post: Post, postController: PostController, session: URLSession = URLSession.shared) {
         self.post = post
         self.postController = postController
@@ -45,15 +53,4 @@ class FetchMediaOperation: ConcurrentOperation {
         dataTask?.cancel()
         super.cancel()
     }
-    
-    // MARK: Properties
-    
-    let post: Post
-    let postController: PostController
-    var mediaData: Data?
-    
-    private let session: URLSession
-    
-    private var dataTask: URLSessionDataTask?
-    
 }

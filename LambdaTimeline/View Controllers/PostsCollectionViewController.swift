@@ -11,7 +11,12 @@ import FirebaseAuth
 import FirebaseUI
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    
+
+    private let postController = PostController()
+    private var operations = [String : Operation]()
+    private let mediaFetchQueue = OperationQueue()
+    private let cache = Cache<String, Data>()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -161,9 +166,4 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             destinationVC?.imageData = cache.value(for: postID)
         }
     }
-    
-    private let postController = PostController()
-    private var operations = [String : Operation]()
-    private let mediaFetchQueue = OperationQueue()
-    private let cache = Cache<String, Data>()
 }

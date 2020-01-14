@@ -10,7 +10,18 @@ import Foundation
 import FirebaseAuth
 
 struct Author: FirebaseConvertible, Equatable {
-    
+
+    let uid: String
+    let displayName: String?
+
+    private static let uidKey = "uid"
+    private static let displayNameKey = "displayName"
+
+    var dictionaryRepresentation: [String: Any] {
+        return [Author.uidKey: uid,
+                Author.displayNameKey: displayName ?? "No display name"]
+    }
+
     init?(user: User) {
         self.init(dictionary: user.dictionaryRepresentation)
     }
@@ -21,16 +32,5 @@ struct Author: FirebaseConvertible, Equatable {
         
         self.uid = uid
         self.displayName = displayName
-    }
-    
-    let uid: String
-    let displayName: String?
-    
-    private static let uidKey = "uid"
-    private static let displayNameKey = "displayName"
-    
-    var dictionaryRepresentation: [String: Any] {
-        return [Author.uidKey: uid,
-                Author.displayNameKey: displayName ?? "No display name"]
     }
 }

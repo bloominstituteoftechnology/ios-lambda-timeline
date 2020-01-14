@@ -11,7 +11,6 @@ import Firebase
 import GoogleSignIn
 
 class SignInViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +43,13 @@ class SignInViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDele
             
             DispatchQueue.main.async {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")
+                let postsNavigationController: UIViewController
+                if #available(iOS 13.0, *) {
+                    postsNavigationController = storyboard.instantiateViewController(identifier:  "PostsNavigationController")
+                } else {
+                    postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")
+                }
+                postsNavigationController.modalPresentationStyle = .fullScreen
                 self.present(postsNavigationController, animated: true, completion: nil)
             }
         }
@@ -61,7 +66,6 @@ class SignInViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDele
         button.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(button)
-        
         
         let buttonCenterXConstraint = button.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         let buttonCenterYConstraint = button.centerYAnchor.constraint(equalTo: view.centerYAnchor)
