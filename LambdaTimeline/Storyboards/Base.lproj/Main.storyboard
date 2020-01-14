@@ -77,10 +77,10 @@
                                 </collectionViewCellContentView>
                                 <size key="customSize" width="375" height="375"/>
                                 <connections>
-                                    <outlet property="authorLabel" destination="zag-e4-p07" id="cid-TM-VAw"/>
+                                    <outlet property="authorLabel" destination="zag-e4-p07" id="Ppb-6N-mBX"/>
                                     <outlet property="imageView" destination="cGr-Ya-osY" id="FWp-BM-0Cr"/>
-                                    <outlet property="labelBackgroundView" destination="5zZ-2z-oK0" id="XjC-Of-Yj5"/>
-                                    <outlet property="titleLabel" destination="tHt-lC-hYm" id="uRt-J9-5cc"/>
+                                    <outlet property="labelBackgroundView" destination="5zZ-2z-oK0" id="VZQ-EI-T3R"/>
+                                    <outlet property="titleLabel" destination="tHt-lC-hYm" id="Woo-mg-qmm"/>
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="AudioPostCell" id="U7U-4P-9mt" customClass="AudioPostCollectionViewCell" customModule="LambdaTimeline" customModuleProvider="target">
@@ -138,6 +138,12 @@
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <size key="customSize" width="375" height="130"/>
+                                <connections>
+                                    <outlet property="audioPlayerControl" destination="ZLB-a9-f9h" id="jMZ-IM-FbT"/>
+                                    <outlet property="authorLabel" destination="TbL-Kr-SQp" id="edq-E9-80w"/>
+                                    <outlet property="labelBackgroundView" destination="gbH-jf-odE" id="Zrb-DH-rWQ"/>
+                                    <outlet property="titleLabel" destination="uZl-QW-7te" id="6mh-fd-aMP"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -155,7 +161,7 @@
                     <connections>
                         <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="jaI-fq-Woc"/>
                         <segue destination="OyM-8q-Icp" kind="show" identifier="ViewImagePost" id="hhs-es-AdQ"/>
-                        <segue destination="fcX-D0-P41" kind="show" id="DvX-SK-dpJ"/>
+                        <segue destination="fcX-D0-P41" kind="show" identifier="AddAudioPost" id="DvX-SK-dpJ"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -466,13 +472,13 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Jed-zo-yZu">
                                             <rect key="frame" x="129" y="23.333333333333332" width="230" height="48.666666666666671"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jyy-BX-c2c">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jyy-BX-c2c">
                                                     <rect key="frame" x="0.0" y="0.0" width="230" height="20.333333333333332"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uQC-8y-kuu">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uQC-8y-kuu">
                                                     <rect key="frame" x="0.0" y="28.333333333333336" width="230" height="20.333333333333336"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
