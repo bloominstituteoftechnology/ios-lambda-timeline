@@ -110,7 +110,7 @@ class ImagePostViewController: ShiftableViewController {
     @IBAction func createPost(_ sender: Any) {
         view.endEditing(true)
 
-        guard let filteredImage = filterImage(originalImage),
+        guard let filteredImage = filterImage(scaledImage),
             let imageData = filteredImage.jpegData(compressionQuality: 0.1),
             let title = titleTextField.text, title != ""
             else {
