@@ -25,7 +25,6 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     func updateViews() {
-        
         guard let imageData = imageData,
             let image = UIImage(data: imageData) else { return }
         
@@ -73,14 +72,27 @@ class ImagePostDetailTableViewController: UITableViewController {
         return (post?.comments.count ?? 0) - 1
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
-        
+    override func tableView(
+        _ tableView: UITableView,
+        cellForRowAt indexPath: IndexPath
+    ) -> UITableViewCell {
         let comment = post?.comments[indexPath.row + 1]
-        
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author.displayName
-        
-        return cell
+
+        if let commentText = comment?.text {
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: "TextCommentCell",
+                for: indexPath)
+            cell.textLabel?.text = commentText
+            cell.detailTextLabel?.text = comment?.author.displayName
+            return cell
+        } else if let commentAudioURL = comment?.audioURL,
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: "AudioCommentCell",
+                for: indexPath)
+                as? AudioCommentTableViewCell {
+            cell.authorLabel.text = comment?.author.displayName
+            cell.audioPlayerControl.loadAudio(from: commentAudioURL)
+            return cell
+        } else { return UITableViewCell() }
     }
 }
