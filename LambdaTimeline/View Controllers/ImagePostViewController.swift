@@ -148,7 +148,6 @@ class ImagePostViewController: ShiftableViewController {
         case .authorized:
             presentImagePickerController()
         case .notDetermined:
-            
             PHPhotoLibrary.requestAuthorization { (status) in
                 
                 guard status == .authorized else {
@@ -160,12 +159,11 @@ class ImagePostViewController: ShiftableViewController {
                     self.presentImagePickerController()
                 }
             }
-            
         case .denied:
             self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
         case .restricted:
             self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
-            
+        @unknown default: break
         }
         presentImagePickerController()
     }
@@ -255,7 +253,8 @@ class ImagePostViewController: ShiftableViewController {
         var scaledSize = imageView.bounds.size
         // 1x, 2x, or 3x
         let scale = UIScreen.main.scale
-        scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+        scaledSize = CGSize(width: scaledSize.width * scale,
+                            height: scaledSize.height * scale)
         return image?.imageByScaling(toSize: scaledSize)
     }
 
@@ -271,7 +270,9 @@ class ImagePostViewController: ShiftableViewController {
 
     private func presentImagePickerController() {
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
-            presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
+            presentInformationalAlertController(
+                title: "Error",
+                message: "The photo library is unavailable")
             return
         }
 
@@ -286,14 +287,17 @@ class ImagePostViewController: ShiftableViewController {
 // MARK: - Image Picker Delegate
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-
+    func imagePickerController(
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
+    ) {
         chooseImageButton.setTitle("", for: [])
         
         picker.dismiss(animated: true, completion: nil)
         
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        
+        guard let image = info[UIImagePickerController.InfoKey.originalImage]
+            as? UIImage
+            else { return }
         originalImage = image
         
         setImageViewHeight(forAspectRatio: image.ratio)
