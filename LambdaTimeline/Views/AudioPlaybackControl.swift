@@ -38,3 +38,18 @@ class AudioPlaybackControl: UIControl {
 
     private var audioPlayer: AVAudioPlayer?
     private var uiUpdateTimer: Timer?
+
+    // MARK: - Init
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setUpSubViews()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setUpSubViews()
+    }
+
+    private func setUpSubViews() {
+    }
