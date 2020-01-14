@@ -33,31 +33,6 @@ class AudioRecorderControl: UIControl {
     private var audioRecorder: AVAudioRecorder?
     private var uiUpdateTimer: Timer?
 
-    private func setUpSubViews() {
-        recordButton.setTitle("Record", for: .normal)
-        recordButton.addTarget(
-            self,
-            action: #selector(recordButtonPressed(_:)),
-            for: .touchUpInside)
-
-        stackView = UIStackView(arrangedSubviews: [
-            recordButton,
-            timestampLabel])
-        stackView.axis = .vertical
-        stackView.alignment = .center
-        stackView.distribution = .fill
-
-        self.addSubview(stackView)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            stackView.topAnchor.constraint(equalTo: topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: bottomAnchor)])
-
-        updateViews()
-    }
-
     // MARK: - Init
 
     override init(frame: CGRect) {
@@ -146,5 +121,45 @@ class AudioRecorderControl: UIControl {
     @objc
     private func updateUITimer(_ timer: Timer) {
         updateViews()
+    }
+
+    private func setUpSubViews() {
+        recordButton.setTitle("Record", for: .normal)
+        recordButton.addTarget(
+            self,
+            action: #selector(recordButtonPressed(_:)),
+            for: .touchUpInside)
+
+        stackView = UIStackView(arrangedSubviews: [
+            recordButton,
+            timestampLabel])
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .fill
+
+        self.addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            stackView.topAnchor.constraint(equalTo: topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor)])
+
+        updateViews()
+    }
+}
+
+// MARK: - AVAudioRecorderDelegate
+
+extension AudioRecorderControl: AVAudioRecorderDelegate {
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        print("finished recording")
+        updateViews()
+    }
+
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+        if let error = error {
+            print("error with audio recorder: \(error)")
+        }
     }
 }
