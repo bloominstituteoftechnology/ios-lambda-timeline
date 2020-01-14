@@ -22,7 +22,7 @@ class ImagePostViewController: ShiftableViewController {
     func updateViews() {
         
         guard let imageData = imageData,
-            let image = UIImage(data: imageData) else {
+            let image = UIImage(data: imageData) else { print("no data set")
                 title = "New Post"
                 return
         }
@@ -34,6 +34,7 @@ class ImagePostViewController: ShiftableViewController {
         imageView.image = image
         
         chooseImageButton.setTitle("", for: [])
+        print("data set")
     }
     
     private func presentImagePickerController() {
@@ -112,15 +113,78 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
+    private func filterImage(_ image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage else { return image }
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(brightnessSlider.value, forKey: kCIInputBrightnessKey)
+        filter.setValue(contrastSlider.value, forKey: kCIInputContrastKey)
+        filter.setValue(saturationSlider.value, forKey: kCIInputSaturationKey)
+        
+        guard let outputCIImage = filter.outputImage else { return image }
+        
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: CGPoint.zero, size: image.size)) else { return image }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    private func updateImage() {
+        if let scaledImage = scaledImage {
+            imageView.image = filterImage(scaledImage)
+        } else {
+            imageView.image = nil
+        }
+    }
+    @IBAction func brightnessChanged(_ sender: UISlider) {
+        updateImage()
+    }
+    @IBAction func contrastChanged(_ sender: UISlider) {
+        updateImage()
+    }
+    @IBAction func saturationChanged(_ sender: UISlider) {
+        updateImage()
+    }
+    
+    private var filter = CIFilter(name: "CIColorControls")!
+    private var context = CIContext(options: nil)
+
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    var originalImage: UIImage? {
+        didSet {
+            guard let originalImage = originalImage else { return }
+
+            // Height and width
+            var scaledSize = imageView.bounds.size
+
+            // 1x, 2x, or 3x
+            let scale = UIScreen.main.scale
+
+            scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+            print("size: \(scaledSize)")
+            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+        }
+    }
+
+    var scaledImage: UIImage? {
+        didSet {
+            updateImage()
+        }
+    }
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    @IBOutlet weak var brightnessSlider: UISlider!
+    @IBOutlet weak var contrastSlider: UISlider!
+    @IBOutlet weak var saturationSlider: UISlider!
+    
+    
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -134,6 +198,7 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
         imageView.image = image
+        originalImage = image
         
         setImageViewHeight(with: image.ratio)
     }

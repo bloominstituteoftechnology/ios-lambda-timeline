@@ -45,6 +45,19 @@ class PostController {
         
         savePostToFirebase(post)
     }
+    
+    func addRecording(with url: URL, to post: Post) {
+        guard let currentUser = Auth.auth().currentUser,
+            let author = Author(user: currentUser) else { return }
+        
+        store(mediaData: url.dataRepresentation, mediaType: .audio) { (audioURL) in
+            
+            let comment = Comment(author: author, audioURL: url)
+            post.comments.append(comment)
+            
+            self.savePostToFirebase(post)
+        }
+    }
 
     func observePosts(completion: @escaping (Error?) -> Void) {
         
