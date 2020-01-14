@@ -41,7 +41,74 @@ class AudioRecorderControl: UIControl {
         setUpSubViews()
     }
 
+    // MARK: - UI Actions
+
+    @objc
+    private func recordButtonPressed(_ sender: Any) {
+        toggleRecord()
+    }
+
+    // MARK: - Recording API
+
+    func toggleRecord() {
+
+    }
+
+    func record() {
+        guard
+            let docs = FileManager.default
+                .urls(for: .documentDirectory, in: .userDomainMask)
+                .first,
+            let format = AVAudioFormat(standardFormatWithSampleRate: 44_100,
+                                       channels: 1)
+            else {
+                print("Cannot record; missing docs folder!")
+        }
+        let name = ISO8601DateFormatter.string(
+            from: Date(),
+            timeZone: .autoupdatingCurrent,
+            formatOptions: [.withInternetDateTime])
+        let file = docs.appendingPathComponent(name).appendingPathExtension("caf")
+        audioFileURL = file
+        print("recording to file: \(file)")
+
+
+        do {
+            audioRecorder = try AVAudioRecorder(url: file, format: format)
+        } catch {
+            print("error setting up audio recorder: \(error)")
+        }
+//        audioRecorder?.delegate = self
+        audioRecorder?.record()
+        updateViews()
+        startUIUpdateTimer()
+    }
+
+    func stop() {
+        audioRecorder?.stop()
+        audioRecorder = nil
+        updateViews()
+        killUIUpdateTimer()
+    }
+
     // MARK: - Helper Methods
+
+    private func updateViews() {
+
+    }
+
+    private func startUIUpdateTimer() {
+
+    }
+
+    private func killUIUpdateTimer() {
+
+    }
+
+    @objc
+    private func updateUITimer(_ timer: Timer) {
+        updateViews()
+    }
 
     private func setUpSubViews() {
 
