@@ -153,8 +153,8 @@
                                             </textField>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0cm-vY-UMp" userLabel="Settings 1 Stack View">
-                                        <rect key="frame" x="23" y="437" width="368" height="107"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0cm-vY-UMp" userLabel="Filter Options Stack View">
+                                        <rect key="frame" x="23" y="437" width="368" height="174.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="aPS-Ue-svO" userLabel="Posterize Stack">
                                                 <rect key="frame" x="0.0" y="0.0" width="368" height="30"/>
@@ -196,24 +196,55 @@
                                                     </slider>
                                                 </subviews>
                                             </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="rD2-KB-jVy" userLabel="Bloom Switch Stack">
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="34" translatesAutoresizingMaskIntoConstraints="NO" id="F7U-GY-Utk" userLabel="Color Invert Stack">
                                                 <rect key="frame" x="0.0" y="76" width="368" height="31"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bloom:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R9k-fv-cOu">
-                                                        <rect key="frame" x="0.0" y="0.0" width="295" height="31"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color Invert" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ah5-Ql-W9n">
+                                                        <rect key="frame" x="0.0" y="0.0" width="285" height="31"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="fnA-Ca-UYY">
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="YJO-0F-Yyj">
                                                         <rect key="frame" x="319" y="0.0" width="51" height="31"/>
+                                                        <connections>
+                                                            <action selector="colorInvertSwitched:" destination="1Aw-4e-BW2" eventType="valueChanged" id="eZ5-JY-Sci"/>
+                                                        </connections>
                                                     </switch>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="34" translatesAutoresizingMaskIntoConstraints="NO" id="F6O-F4-vbO" userLabel="Cosmic Effect Stack">
+                                                <rect key="frame" x="0.0" y="115" width="368" height="31"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comic Effect" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i3N-m2-ZqA">
+                                                        <rect key="frame" x="0.0" y="0.0" width="285" height="31"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="h5h-Fm-7dO">
+                                                        <rect key="frame" x="319" y="0.0" width="51" height="31"/>
+                                                        <connections>
+                                                            <action selector="comicEffectSwitched:" destination="1Aw-4e-BW2" eventType="valueChanged" id="8Qv-8R-hKG"/>
+                                                        </connections>
+                                                    </switch>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="rD2-KB-jVy" userLabel="Bloom Switch Stack">
+                                                <rect key="frame" x="0.0" y="154" width="368" height="20.5"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bloom:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R9k-fv-cOu">
+                                                        <rect key="frame" x="0.0" y="0.0" width="368" height="20.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
                                                 </subviews>
                                             </stackView>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="iBC-qS-ocY" userLabel="Bloom Adjuster Stack">
-                                        <rect key="frame" x="40" y="552" width="351" height="68"/>
+                                        <rect key="frame" x="40" y="619.5" width="351" height="68"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Xxc-0I-E1l" userLabel="Radius Stack">
                                                 <rect key="frame" x="0.0" y="0.0" width="351" height="30"/>
@@ -257,59 +288,17 @@
                                             </stackView>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="fPh-hO-udx" userLabel="Effcts Stack View">
-                                        <rect key="frame" x="23" y="628" width="368" height="70"/>
-                                        <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="34" translatesAutoresizingMaskIntoConstraints="NO" id="F7U-GY-Utk" userLabel="Color Invert Stack">
-                                                <rect key="frame" x="0.0" y="0.0" width="368" height="31"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color Invert" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ah5-Ql-W9n">
-                                                        <rect key="frame" x="0.0" y="0.0" width="285" height="31"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="YJO-0F-Yyj">
-                                                        <rect key="frame" x="319" y="0.0" width="51" height="31"/>
-                                                        <connections>
-                                                            <action selector="colorInvertSwitched:" destination="1Aw-4e-BW2" eventType="valueChanged" id="eZ5-JY-Sci"/>
-                                                        </connections>
-                                                    </switch>
-                                                </subviews>
-                                            </stackView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="34" translatesAutoresizingMaskIntoConstraints="NO" id="F6O-F4-vbO" userLabel="Cosmic Effect Stack">
-                                                <rect key="frame" x="0.0" y="39" width="368" height="31"/>
-                                                <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comic Effect" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i3N-m2-ZqA">
-                                                        <rect key="frame" x="0.0" y="0.0" width="285" height="31"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="h5h-Fm-7dO">
-                                                        <rect key="frame" x="319" y="0.0" width="51" height="31"/>
-                                                        <connections>
-                                                            <action selector="comicEffectSwitched:" destination="1Aw-4e-BW2" eventType="valueChanged" id="8Qv-8R-hKG"/>
-                                                        </connections>
-                                                    </switch>
-                                                </subviews>
-                                            </stackView>
-                                        </subviews>
-                                    </stackView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstItem="fPh-hO-udx" firstAttribute="leading" secondItem="0cm-vY-UMp" secondAttribute="leading" id="1KB-Gx-1sr"/>
                                     <constraint firstAttribute="trailing" secondItem="PkI-rS-ua9" secondAttribute="trailing" id="1cC-FG-cAC"/>
                                     <constraint firstItem="PkI-rS-ua9" firstAttribute="top" secondItem="9qd-If-ddw" secondAttribute="top" id="3tV-sW-NF1"/>
                                     <constraint firstItem="iBC-qS-ocY" firstAttribute="trailing" secondItem="0cm-vY-UMp" secondAttribute="trailing" id="FNj-CD-nuK"/>
-                                    <constraint firstItem="fPh-hO-udx" firstAttribute="trailing" secondItem="0cm-vY-UMp" secondAttribute="trailing" id="QEc-Wt-zW0"/>
                                     <constraint firstAttribute="trailingMargin" secondItem="0cm-vY-UMp" secondAttribute="trailing" constant="15" id="RBt-WU-6pp"/>
                                     <constraint firstItem="iBC-qS-ocY" firstAttribute="top" secondItem="0cm-vY-UMp" secondAttribute="bottom" constant="8" symbolic="YES" id="afK-fa-5O4"/>
                                     <constraint firstItem="PkI-rS-ua9" firstAttribute="leading" secondItem="9qd-If-ddw" secondAttribute="leading" id="bPK-xN-eaO"/>
                                     <constraint firstItem="iBC-qS-ocY" firstAttribute="leading" secondItem="9qd-If-ddw" secondAttribute="leading" constant="40" id="bf1-nY-DUe"/>
                                     <constraint firstAttribute="bottom" secondItem="PkI-rS-ua9" secondAttribute="bottom" id="cfV-7c-ubK"/>
                                     <constraint firstItem="PkI-rS-ua9" firstAttribute="width" secondItem="9qd-If-ddw" secondAttribute="width" id="dWh-6N-mO7"/>
-                                    <constraint firstItem="fPh-hO-udx" firstAttribute="top" secondItem="iBC-qS-ocY" secondAttribute="bottom" constant="8" symbolic="YES" id="fNv-CA-i8A"/>
                                     <constraint firstAttribute="height" priority="250" constant="603" id="qMm-7B-8rp"/>
                                     <constraint firstItem="0cm-vY-UMp" firstAttribute="leading" secondItem="9qd-If-ddw" secondAttribute="leadingMargin" constant="15" id="xkL-g3-68B"/>
                                     <constraint firstItem="0cm-vY-UMp" firstAttribute="top" secondItem="PkI-rS-ua9" secondAttribute="bottom" constant="20" id="yjO-AT-TUg"/>
@@ -336,9 +325,11 @@
                     <connections>
                         <outlet property="bloomIntensitySlider" destination="Yeu-v4-6dg" id="cpC-C2-sll"/>
                         <outlet property="bloomRadiusSlider" destination="6R3-P7-GCT" id="MyX-4k-Hv3"/>
+                        <outlet property="bloomSliderStack" destination="iBC-qS-ocY" id="EkR-nU-uwj"/>
                         <outlet property="chooseImageButton" destination="VxD-cu-jHT" id="KVs-no-MbU"/>
                         <outlet property="colorInvertSwitch" destination="YJO-0F-Yyj" id="Xfh-el-fuU"/>
                         <outlet property="comicEffectSwitch" destination="h5h-Fm-7dO" id="4aY-qu-lwe"/>
+                        <outlet property="filterOptionsStack" destination="0cm-vY-UMp" id="W49-6p-crI"/>
                         <outlet property="imageHeightConstraint" destination="MHD-wr-Gq9" id="HyG-8g-Ck1"/>
                         <outlet property="imageView" destination="4eK-5F-H5h" id="e7m-c5-Xhz"/>
                         <outlet property="postButton" destination="hsH-Uv-tug" id="ZBn-KE-cpU"/>

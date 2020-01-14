@@ -32,6 +32,7 @@ class ImagePostViewController: ShiftableViewController {
         guard let imageData = imageData,
             let image = UIImage(data: imageData) else {
                 title = "New Post"
+                isFilterOptionsHidden(true)
                 return
         }
         
@@ -148,8 +149,6 @@ class ImagePostViewController: ShiftableViewController {
     }
 
     private func updateImage(_ filterOption: ImageFilterOption) {
-//        guard let imageData = imageData,
-//            let image = UIImage(data: imageData) else { return }
         guard let image = imageView.image else { return }
         let scaledImage = scaleImage(image)
 
@@ -256,6 +255,11 @@ class ImagePostViewController: ShiftableViewController {
 
         return UIImage(cgImage: outputCGImage)
     }
+
+    private func isFilterOptionsHidden(_ isHidden: Bool) {
+        filterOptionsStack.isHidden = isHidden
+        bloomSliderStack.isHidden = isHidden
+    }
     
     func setImageViewHeight(with aspectRatio: CGFloat) {
         
@@ -286,6 +290,8 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var bloomIntensitySlider: UISlider!
     @IBOutlet weak var posterizeSlider: UISlider!
     @IBOutlet weak var vibranceSlider: UISlider!
+    @IBOutlet weak var filterOptionsStack: UIStackView!
+    @IBOutlet weak var bloomSliderStack: UIStackView!
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -299,6 +305,8 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
         imageView.image = image
+
+        isFilterOptionsHidden(false)
         
         setImageViewHeight(with: image.ratio)
     }
