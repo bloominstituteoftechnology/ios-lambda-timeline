@@ -9,6 +9,14 @@
 import UIKit
 import Photos
 
+enum ImageFilterOption {
+    case vibrance
+    case posterize
+    case bloom
+    case colorInvert
+    case comicEffect
+}
+
 class ImagePostViewController: ShiftableViewController {
     
     override func viewDidLoad() {
@@ -24,6 +32,7 @@ class ImagePostViewController: ShiftableViewController {
         guard let imageData = imageData,
             let image = UIImage(data: imageData) else {
                 title = "New Post"
+                isFilterOptionsHidden(true)
                 return
         }
         
@@ -104,6 +113,153 @@ class ImagePostViewController: ShiftableViewController {
         }
         presentImagePickerController()
     }
+
+    @IBAction func vibranceChanged(_ sender: UISlider) {
+        updateImage(.vibrance)
+    }
+
+    @IBAction func posterizeChanged(_ sender: UISlider) {
+        updateImage(.posterize)
+    }
+
+    @IBAction func bloomRadiusChanged(_ sender: UISlider) {
+        updateImage(.bloom)
+    }
+
+    @IBAction func bloomIntensityChanged(_ sender: UISlider) {
+        updateImage(.bloom)
+    }
+
+    @IBAction func comicEffectSwitched(_ sender: UISwitch) {
+        updateImage(.comicEffect)
+    }
+
+    @IBAction func colorInvertSwitched(_ sender: UISwitch) {
+        updateImage(.colorInvert)
+    }
+
+    private func scaleImage(_ image: UIImage) -> UIImage {
+
+        var scaledSize = imageView.bounds.size
+        // 1x, 2x, or 3x
+        let scale = UIScreen.main.scale
+        scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+        // returning scaled image
+        return image.imageByScaling(toSize: scaledSize) ?? UIImage()
+    }
+
+    private func updateImage(_ filterOption: ImageFilterOption) {
+        guard let image = imageView.image else { return }
+        let scaledImage = scaleImage(image)
+
+        switch filterOption {
+        case .vibrance:
+            imageView.image = vibranceImage(scaledImage)
+        case .posterize:
+            imageView.image = posterizeImage(scaledImage)
+        case .bloom:
+            imageView.image = bloomImage(scaledImage)
+        case .colorInvert:
+            imageView.image = colorInvertImage(scaledImage)
+        case .comicEffect:
+            imageView.image = comicEffectImage(scaledImage)
+        }
+    }
+
+    // MARK: - Image filter option functions
+    private func vibranceImage(_ image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage,
+            let vibranceFilter = vibranceFilter else { return image }
+
+        let ciImage = CIImage(cgImage: cgImage)
+
+        vibranceFilter.setValue(ciImage, forKey: "inputImage")
+        vibranceFilter.setValue(vibranceSlider.value, forKey: kCIInputAmountKey)
+
+        guard let outputCIImage = vibranceFilter.outputImage else { return image }
+
+        guard let outputCGImage = context.createCGImage(outputCIImage,
+                                                        from: CGRect(origin: CGPoint.zero, size: image.size))
+            else { return image }
+
+        return UIImage(cgImage: outputCGImage)
+    }
+
+    private func posterizeImage(_ image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage,
+            let posterizeFilter = posterizeFilter else { return image }
+
+        let ciImage = CIImage(cgImage: cgImage)
+
+        posterizeFilter.setValue(ciImage, forKey: "inputImage")
+        posterizeFilter.setValue(posterizeSlider.value, forKey: "inputLevels")
+
+        guard let outputCIImage = posterizeFilter.outputImage else { return image }
+
+        guard let outputCGImage = context.createCGImage(outputCIImage,
+                                                        from: CGRect(origin: CGPoint.zero, size: image.size))
+            else { return image }
+
+        return UIImage(cgImage: outputCGImage)
+    }
+
+    private func bloomImage(_ image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage,
+            let bloomFilter = bloomFilter else { return image }
+
+        let ciImage = CIImage(cgImage: cgImage)
+
+        bloomFilter.setValue(ciImage, forKey: "inputImage")
+        bloomFilter.setValue(bloomRadiusSlider.value, forKey: kCIInputRadiusKey)
+        bloomFilter.setValue(bloomIntensitySlider.value, forKey: kCIInputIntensityKey)
+
+        guard let outputCIImage = bloomFilter.outputImage else { return image }
+
+        guard let outputCGImage = context.createCGImage(outputCIImage,
+                                                        from: CGRect(origin: CGPoint.zero, size: image.size))
+            else { return image }
+
+        return UIImage(cgImage: outputCGImage)
+    }
+
+    private func colorInvertImage(_ image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage,
+            let colorInvertFilter = colorInvertFilter else { return image }
+
+        let ciImage = CIImage(cgImage: cgImage)
+
+        colorInvertFilter.setValue(ciImage, forKey: "inputImage")
+
+        guard let outputCIImage = colorInvertFilter.outputImage else { return image }
+
+        guard let outputCGImage = context.createCGImage(outputCIImage,
+                                                        from: CGRect(origin: CGPoint.zero, size: image.size))
+            else { return image }
+
+        return UIImage(cgImage: outputCGImage)
+    }
+
+    private func comicEffectImage(_ image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage,
+            let comicEffectFilter = comicEffectFilter else { return image }
+
+        let ciImage = CIImage(cgImage: cgImage)
+
+        comicEffectFilter.setValue(ciImage, forKey: "inputImage")
+
+        guard let outputCIImage = comicEffectFilter.outputImage else { return image }
+
+        guard let outputCGImage = context.createCGImage(outputCIImage,
+                                                        from: CGRect(origin: CGPoint.zero, size: image.size))
+            else { return image }
+
+        return UIImage(cgImage: outputCGImage)
+    }
+
+    private func isFilterOptionsHidden(_ isHidden: Bool) {
+        filterOptionsStack.isHidden = isHidden
+        bloomSliderStack.isHidden = isHidden
+    }
     
     func setImageViewHeight(with aspectRatio: CGFloat) {
         
@@ -115,12 +271,27 @@ class ImagePostViewController: ShiftableViewController {
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+
+    private var vibranceFilter = CIFilter(name: "CIVibrance")
+    private var colorInvertFilter = CIFilter(name: "CIColorInvert")
+    private var comicEffectFilter = CIFilter(name: "CIComicEffect")
+    private var bloomFilter = CIFilter(name: "CIBloom")
+    private var posterizeFilter = CIFilter(name: "CIColorPosterize")
+    private var context = CIContext(options: nil)
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    @IBOutlet weak var comicEffectSwitch: UISwitch!
+    @IBOutlet weak var colorInvertSwitch: UISwitch!
+    @IBOutlet weak var bloomRadiusSlider: UISlider!
+    @IBOutlet weak var bloomIntensitySlider: UISlider!
+    @IBOutlet weak var posterizeSlider: UISlider!
+    @IBOutlet weak var vibranceSlider: UISlider!
+    @IBOutlet weak var filterOptionsStack: UIStackView!
+    @IBOutlet weak var bloomSliderStack: UIStackView!
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -134,6 +305,8 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
         imageView.image = image
+
+        isFilterOptionsHidden(false)
         
         setImageViewHeight(with: image.ratio)
     }
