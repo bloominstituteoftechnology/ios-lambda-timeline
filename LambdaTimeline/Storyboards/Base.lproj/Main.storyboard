@@ -508,16 +508,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="rNd-fs-Of1">
-                                <rect key="frame" x="25.5" y="376" width="363" height="90"/>
+                                <rect key="frame" x="25.5" y="361" width="363" height="120"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aB2-0c-jhd">
                                         <rect key="frame" x="0.0" y="0.0" width="363" height="30"/>
                                         <state key="normal" title="Record"/>
+                                        <connections>
+                                            <action selector="recordButtonPressed:" destination="eQV-X4-fdD" eventType="touchUpInside" id="1Bv-Zo-8vm"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DxQ-q6-yHx">
                                         <rect key="frame" x="0.0" y="30" width="363" height="30"/>
                                         <state key="normal" title="Play"/>
                                         <state key="selected" title="Pause"/>
+                                        <connections>
+                                            <action selector="playButtonPressed:" destination="eQV-X4-fdD" eventType="touchUpInside" id="2kA-Lc-d1u"/>
+                                        </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8zg-2y-W08">
                                         <rect key="frame" x="0.0" y="60" width="363" height="30"/>
@@ -528,7 +534,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="VGO-tR-C7g">
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="VGO-tR-C7g">
                                                 <rect key="frame" x="42" y="0.0" width="279" height="31"/>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tjK-5z-Zgb">
@@ -539,13 +545,19 @@
                                             </label>
                                         </subviews>
                                     </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gOu-NZ-xbo">
+                                        <rect key="frame" x="0.0" y="90" width="363" height="30"/>
+                                        <state key="normal" title="Save Audio Comment"/>
+                                    </button>
                                 </subviews>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="rNd-fs-Of1" firstAttribute="centerX" secondItem="COs-Y3-hZM" secondAttribute="centerX" id="0su-N7-QSw"/>
+                            <constraint firstItem="rNd-fs-Of1" firstAttribute="leading" secondItem="nWY-ag-CJp" secondAttribute="leading" constant="25.5" id="e5N-Hk-Esw"/>
                             <constraint firstItem="rNd-fs-Of1" firstAttribute="centerY" secondItem="COs-Y3-hZM" secondAttribute="centerY" id="oxc-Pr-Vt9"/>
+                            <constraint firstItem="nWY-ag-CJp" firstAttribute="trailing" secondItem="rNd-fs-Of1" secondAttribute="trailing" constant="25.5" id="wIH-zN-14g"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nWY-ag-CJp"/>
                     </view>
@@ -559,7 +571,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="95R-Gc-4VG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2794" y="472"/>
+            <point key="canvasLocation" x="2792.753623188406" y="471.42857142857139"/>
         </scene>
     </scenes>
 </document>
