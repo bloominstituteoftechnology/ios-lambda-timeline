@@ -19,21 +19,34 @@ class PostController {
 
     let storageRef = Storage.storage().reference()
     
-    func createPost(with title: String, ofType mediaType: MediaType, mediaData: Data, ratio: CGFloat? = nil, completion: @escaping (Bool) -> Void = { _ in }) {
+    func createPost(
+        with title: String,
+        ofType mediaType: MediaType,
+        mediaData: Data,
+        ratio: CGFloat? = nil,
+        completion: @escaping (Bool) -> Void = { _ in }
+    ) {
+        guard
+            let currentUser = Auth.auth().currentUser,
+            let author = Author(user: currentUser)
+            else { return }
         
-        guard let currentUser = Auth.auth().currentUser,
-            let author = Author(user: currentUser) else { return }
-        
-        store(mediaData: mediaData, mediaType: mediaType) { (mediaURL) in
-            
-            guard let mediaURL = mediaURL else { completion(false); return }
+        store(mediaData: mediaData, mediaType: mediaType) { mediaURL in
+            guard let mediaURL = mediaURL else {
+                completion(false)
+                return
+            }
             
             let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
             
-            self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
+            self.postsRef.childByAutoId()
+                .setValue(imagePost.dictionaryRepresentation)
+                { error, ref in
+
                 if let error = error {
                     NSLog("Error posting image post: \(error)")
                     completion(false)
+                    return
                 }
         
                 completion(true)
@@ -42,7 +55,6 @@ class PostController {
     }
     
     func addComment(with text: String, to post: inout Post) {
-        
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
         
@@ -53,17 +65,15 @@ class PostController {
     }
 
     func observePosts(completion: @escaping (Error?) -> Void) {
-        
-        postsRef.observe(.value, with: { (snapshot) in
-            
-            guard let postDictionaries = snapshot.value as? [String: [String: Any]] else { return }
+        postsRef.observe(.value, with: { snapshot in
+            guard let postDictionaries = snapshot.value as? [String: [String: Any]]
+                else { return }
             
             var posts: [Post] = []
             
             for (key, value) in postDictionaries {
-                
-                guard let post = Post(dictionary: value, id: key) else { continue }
-                
+                guard let post = Post(dictionary: value, id: key)
+                    else { continue }
                 posts.append(post)
             }
             
@@ -71,27 +81,27 @@ class PostController {
             
             completion(nil)
             
-        }) { (error) in
+        }) { error in
             NSLog("Error fetching posts: \(error)")
         }
     }
     
     func savePostToFirebase(_ post: Post, completion: (Error?) -> Void = { _ in }) {
-        
         guard let postID = post.id else { return }
         
         let ref = postsRef.child(postID)
-        
         ref.setValue(post.dictionaryRepresentation)
     }
 
-    private func store(mediaData: Data, mediaType: MediaType, completion: @escaping (URL?) -> Void) {
-        
+    private func store(
+        mediaData: Data,
+        mediaType: MediaType,
+        completion: @escaping (URL?) -> Void
+    ) {
         let mediaID = UUID().uuidString
-        
         let mediaRef = storageRef.child(mediaType.rawValue).child(mediaID)
         
-        let uploadTask = mediaRef.putData(mediaData, metadata: nil) { (metadata, error) in
+        let uploadTask = mediaRef.putData(mediaData, metadata: nil) { metadata, error in
             if let error = error {
                 NSLog("Error storing media data: \(error)")
                 completion(nil)
@@ -105,7 +115,6 @@ class PostController {
             }
             
             mediaRef.downloadURL(completion: { (url, error) in
-                
                 if let error = error {
                     NSLog("Error getting download url of media: \(error)")
                 }
