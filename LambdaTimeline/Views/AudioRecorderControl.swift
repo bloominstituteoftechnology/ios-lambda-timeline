@@ -14,10 +14,14 @@ class AudioRecorderControl: UIControl {
 
     // MARK: - UI Elements
 
-    private var recordButton = UIButton()
+    private var recordButton = UIButton(type: .system)
     private var timestampLabel = UILabel()
 
     private var stackView: UIStackView!
+
+    private var timeFormatter: DateComponentsFormatter {
+        DateComponentsFormatter.audioTimeFormatter
+    }
 
     // MARK: - Audio Properties
 
@@ -28,6 +32,31 @@ class AudioRecorderControl: UIControl {
 
     private var audioRecorder: AVAudioRecorder?
     private var uiUpdateTimer: Timer?
+
+    private func setUpSubViews() {
+        recordButton.setTitle("Record", for: .normal)
+        recordButton.addTarget(
+            self,
+            action: #selector(recordButtonPressed(_:)),
+            for: .touchUpInside)
+
+        stackView = UIStackView(arrangedSubviews: [
+            recordButton,
+            timestampLabel])
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .fill
+
+        self.addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            stackView.topAnchor.constraint(equalTo: topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: bottomAnchor)])
+
+        updateViews()
+    }
 
     // MARK: - Init
 
@@ -51,7 +80,7 @@ class AudioRecorderControl: UIControl {
     // MARK: - Recording API
 
     func toggleRecord() {
-
+        isRecording ? stop() : record()
     }
 
     func record() {
@@ -63,6 +92,7 @@ class AudioRecorderControl: UIControl {
                                        channels: 1)
             else {
                 print("Cannot record; missing docs folder!")
+                return
         }
         let name = ISO8601DateFormatter.string(
             from: Date(),
@@ -94,23 +124,27 @@ class AudioRecorderControl: UIControl {
     // MARK: - Helper Methods
 
     private func updateViews() {
-
+        recordButton.setTitle(isRecording ? "Stop" : "Record", for: .normal)
+        timestampLabel.text = timeFormatter.string(from: elapsedTime)
     }
 
     private func startUIUpdateTimer() {
-
+        killUIUpdateTimer()
+        uiUpdateTimer = Timer.scheduledTimer(
+            timeInterval: 0.03,
+            target: self,
+            selector: #selector(updateUITimer(_:)),
+            userInfo: nil,
+            repeats: true)
     }
 
     private func killUIUpdateTimer() {
-
+        uiUpdateTimer?.invalidate()
+        uiUpdateTimer = nil
     }
 
     @objc
     private func updateUITimer(_ timer: Timer) {
         updateViews()
-    }
-
-    private func setUpSubViews() {
-
     }
 }
