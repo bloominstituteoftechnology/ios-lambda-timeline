@@ -149,7 +149,7 @@ class AudioPlaybackControl: UIControl {
         sliderStack.axis = .horizontal
         sliderStack.alignment = .fill
         sliderStack.distribution = .fill
-        sliderStack.spacing = 4
+        sliderStack.spacing = 8
 
         verticalStack = UIStackView(arrangedSubviews: [
             playPauseButton,
@@ -166,7 +166,7 @@ class AudioPlaybackControl: UIControl {
                 constant: 4),
             sliderStack.trailingAnchor.constraint(
                 equalTo: verticalStack.trailingAnchor,
-                constant: 4),
+                constant: -4),
             verticalStack.leadingAnchor.constraint(equalTo: leadingAnchor),
             verticalStack.trailingAnchor.constraint(equalTo: trailingAnchor),
             verticalStack.topAnchor.constraint(equalTo: topAnchor),
