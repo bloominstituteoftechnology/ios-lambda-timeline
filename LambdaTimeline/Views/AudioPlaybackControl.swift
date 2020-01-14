@@ -74,6 +74,7 @@ class AudioPlaybackControl: UIControl {
         do { audioPlayer = try AVAudioPlayer(contentsOf: url) } catch {
             print("error loading audio player: \(error)")
         }
+        audioPlayer?.delegate = self
         updateViews()
     }
 
@@ -171,3 +172,18 @@ class AudioPlaybackControl: UIControl {
             verticalStack.topAnchor.constraint(equalTo: topAnchor),
             verticalStack.bottomAnchor.constraint(equalTo: bottomAnchor)])
     }
+}
+
+// MARK: - AVAudioPlayerDelegate
+
+extension AudioPlaybackControl: AVAudioPlayerDelegate {
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        updateViews()
+    }
+
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        if let error = error {
+            print("Audio player decode error: \(error)")
+        }
+    }
+}
