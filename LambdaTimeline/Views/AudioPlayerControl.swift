@@ -14,7 +14,7 @@ class AudioPlayerControl: UIControl {
 
     // MARK: - UI Elements
 
-    private(set) var playPauseButton = UIButton()
+    private(set) var playPauseButton = UIButton(type: .system)
     private(set) var timeSlider = UISlider()
 
     private var timestampLabel = UILabel()
@@ -24,7 +24,7 @@ class AudioPlayerControl: UIControl {
     private var sliderStack: UIStackView!
 
     private var timeFormatter: DateComponentsFormatter {
-        DateComponentsFormatter.audioPlayerTimeFormatter
+        DateComponentsFormatter.audioTimeFormatter
     }
 
     // MARK: - Audio Properties
@@ -127,15 +127,11 @@ class AudioPlayerControl: UIControl {
     }
 
     private func setUpSubViews() {
-        playPauseButton = UIButton(type: .system)
         playPauseButton.setTitle("Play", for: .normal)
         playPauseButton.addTarget(
             self,
             action: #selector(playPauseButtonTapped(_:)),
             for: .touchUpInside)
-
-        timestampLabel.text = timeFormatter.string(from: 0)
-        timeRemainingLabel.text = timeFormatter.string(from: 0)
 
         let sliderHHuggingPriority = timeSlider
             .contentHuggingPriority(for: .horizontal) - 2
@@ -171,6 +167,8 @@ class AudioPlayerControl: UIControl {
             verticalStack.trailingAnchor.constraint(equalTo: trailingAnchor),
             verticalStack.topAnchor.constraint(equalTo: topAnchor),
             verticalStack.bottomAnchor.constraint(equalTo: bottomAnchor)])
+
+        updateViews()
     }
 }
 

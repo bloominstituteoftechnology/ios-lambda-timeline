@@ -9,7 +9,7 @@
 import Foundation
 
 extension DateComponentsFormatter {
-    static let audioPlayerTimeFormatter: DateComponentsFormatter = {
+    static let audioTimeFormatter: DateComponentsFormatter = {
         let formatting = DateComponentsFormatter()
         formatting.unitsStyle = .positional // 00:00  mm:ss
         // NOTE: DateComponentFormatter is good for minutes/hours/seconds
