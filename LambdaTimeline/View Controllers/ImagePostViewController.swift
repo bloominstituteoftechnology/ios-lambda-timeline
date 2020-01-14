@@ -22,7 +22,6 @@ class ImagePostViewController: ShiftableViewController {
     var postController: PostController!
     var post: Post?
     var imageData: Data?
-    var context = CIContext(options: nil)
 
     var originalImage: UIImage? {
         didSet { scaledImage = scaleImage(originalImage) }
@@ -30,6 +29,7 @@ class ImagePostViewController: ShiftableViewController {
     var scaledImage: UIImage? {
         didSet { filterPreviewImage() }
     }
+    var context = CIContext(options: nil)
 
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var titleTextField: UITextField!
@@ -145,8 +145,9 @@ class ImagePostViewController: ShiftableViewController {
                     self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
                     return
                 }
-                
-                self.presentImagePickerController()
+                DispatchQueue.main.async {
+                    self.presentImagePickerController()
+                }
             }
             
         case .denied:
@@ -163,24 +164,24 @@ class ImagePostViewController: ShiftableViewController {
             let filterType = typesForButton[sender]
             else { return }
 
-        if let filterIsEnabled = filterTypesEnabled[filterType], filterIsEnabled {
-            filterTypesEnabled[filterType] = false
-        } else {
-            filterTypesEnabled[filterType] = true
-        }
+        var filterIsEnabled = filterTypesEnabled[filterType] ?? false
+        filterIsEnabled.toggle()
+        filterTypesEnabled[filterType] = filterIsEnabled
 
-        sender.setTitleColor(filterTypesEnabled[filterType]! ? .systemRed : .systemBlue,
+        sender.setTitleColor(filterIsEnabled ? .systemRed : .systemBlue,
                              for: .normal)
 
         switch filterType {
         case .motionBlur:
-            motionBlurStack.isHidden.toggle()
+            motionBlurStack.isHidden = !filterIsEnabled
         case .edges:
-            edgesStack.isHidden.toggle()
+            edgesStack.isHidden = !filterIsEnabled
         case .posterize:
-            posterizeStack.isHidden.toggle()
+            posterizeStack.isHidden = !filterIsEnabled
         default: break
         }
+
+        filterPreviewImage()
     }
 
     @IBAction private func filterSliderChanged(_ sender: UISlider) {
@@ -192,7 +193,7 @@ class ImagePostViewController: ShiftableViewController {
     private func filterImage(_ image: UIImage?) -> UIImage? {
         guard
             anyFiltersEnabled,
-            let startingImage = image,
+            let startingImage = image, // this isn't working...
             let cgImage = startingImage.cgImage
             else { return image }
         var ciImage = CIImage(cgImage: cgImage)
@@ -264,12 +265,10 @@ class ImagePostViewController: ShiftableViewController {
         }
 
         let imagePicker = UIImagePickerController()
-
         imagePicker.delegate = self
-
         imagePicker.sourceType = .photoLibrary
 
-        present(imagePicker, animated: true, completion: nil)
+        self.present(imagePicker, animated: true, completion: nil)
     }
 }
 
@@ -284,7 +283,7 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
-        imageView.image = image
+        originalImage = image
         
         setImageViewHeight(forAspectRatio: image.ratio)
     }
