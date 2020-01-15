@@ -386,7 +386,7 @@ or better filters.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xA4-1f-Wlf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-450.39999999999998" y="107.49625187406298"/>
+            <point key="canvasLocation" x="-528" y="108"/>
         </scene>
         <!--Posts on Posts on Posts-->
         <scene sceneID="9zi-Aq-zJI">
@@ -465,6 +465,31 @@ or better filters.</string>
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="toAudioVC" id="2KG-hB-wIL">
+                                <rect key="frame" x="0.0" y="188.66666793823242" width="414" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2KG-hB-wIL" id="ZTu-LP-xkP">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="808-gF-77t">
+                                            <rect key="frame" x="335" y="7" width="46" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Button"/>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qwn-7c-WxO">
+                                            <rect key="frame" x="20" y="16" width="42" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="jMM-Nc-Ngr" kind="show" identifier="toAudioVC" id="d3R-KL-gbw"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="OyM-8q-Icp" id="hEW-Hv-MJ8"/>
@@ -490,27 +515,31 @@ or better filters.</string>
             </objects>
             <point key="canvasLocation" x="1968.8" y="472.71364317841085"/>
         </scene>
-        <!--View Controller-->
+        <!--Audio Recorder Controller-->
         <scene sceneID="RK7-a6-BVC">
             <objects>
-                <viewController id="jMM-Nc-Ngr" sceneMemberID="viewController">
+                <viewController id="jMM-Nc-Ngr" customClass="AudioRecorderController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="C9y-0i-XmN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="41p-gP-iaH">
-                                <rect key="frame" x="178.33333333333334" y="423" width="57.333333333333343" height="52"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="29" translatesAutoresizingMaskIntoConstraints="NO" id="mjA-fR-dJR">
+                                <rect key="frame" x="179" y="481" width="57.666666666666657" height="73"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FsL-ck-e6v">
-                                        <rect key="frame" x="0.0" y="0.0" width="57.333333333333336" height="22"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="57.666666666666664" height="22"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Play" image="play.rectangle" catalog="system">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="playButtonPressed:" destination="jMM-Nc-Ngr" eventType="touchUpInside" id="DjF-2y-mv7"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hV9-Kl-W51">
-                                        <rect key="frame" x="0.0" y="30" width="57.333333333333336" height="22"/>
-                                        <state key="normal" title="Post" image="post-it-with-a-heart-2">
+                                        <rect key="frame" x="0.0" y="51" width="57.666666666666664" height="22"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Post" image="paperplane" catalog="system">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                     </button>
@@ -535,6 +564,9 @@ or better filters.</string>
                                                 <state key="normal" image="music.mic" catalog="system">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="recordButtonPressed:" destination="jMM-Nc-Ngr" eventType="touchUpInside" id="N8I-TD-qT1"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -558,29 +590,63 @@ or better filters.</string>
                                     </stackView>
                                 </subviews>
                             </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="lbw-mc-TiJ">
+                                <rect key="frame" x="8" y="433" width="398" height="30"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hd1-EC-1wh">
+                                        <rect key="frame" x="0.0" y="0.0" width="35.666666666666664" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="9Zg-w5-oMe">
+                                        <rect key="frame" x="41.666666666666657" y="0.0" width="314.66666666666674" height="31"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="thumbTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </slider>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qoU-1H-yRR">
+                                        <rect key="frame" x="362.33333333333331" y="0.0" width="35.666666666666686" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="41p-gP-iaH" firstAttribute="centerX" secondItem="C9y-0i-XmN" secondAttribute="centerX" id="09v-EP-pbC"/>
+                            <constraint firstItem="lbw-mc-TiJ" firstAttribute="centerX" secondItem="C9y-0i-XmN" secondAttribute="centerX" id="5f6-3X-Gw1"/>
                             <constraint firstItem="JsK-S6-qde" firstAttribute="centerX" secondItem="C9y-0i-XmN" secondAttribute="centerX" id="5py-98-Wzq"/>
-                            <constraint firstItem="V86-qp-q3B" firstAttribute="bottom" secondItem="41p-gP-iaH" secondAttribute="bottom" constant="387" id="8Rv-4E-3eh"/>
-                            <constraint firstItem="41p-gP-iaH" firstAttribute="leading" secondItem="V86-qp-q3B" secondAttribute="leading" constant="178.33333333333337" id="evi-N4-ku8"/>
-                            <constraint firstItem="41p-gP-iaH" firstAttribute="top" secondItem="JsK-S6-qde" secondAttribute="bottom" constant="23.666666666666686" id="wPg-7x-NI8"/>
+                            <constraint firstItem="mjA-fR-dJR" firstAttribute="top" secondItem="lbw-mc-TiJ" secondAttribute="bottom" constant="18" id="9wS-vO-6oO"/>
+                            <constraint firstItem="V86-qp-q3B" firstAttribute="bottom" secondItem="mjA-fR-dJR" secondAttribute="bottom" constant="308" id="BWx-4e-nFb"/>
+                            <constraint firstItem="mjA-fR-dJR" firstAttribute="leading" secondItem="V86-qp-q3B" secondAttribute="leading" constant="179" id="Myy-aw-K1Q"/>
+                            <constraint firstItem="lbw-mc-TiJ" firstAttribute="centerY" secondItem="C9y-0i-XmN" secondAttribute="centerY" id="SxQ-u5-ADK"/>
+                            <constraint firstItem="V86-qp-q3B" firstAttribute="trailing" secondItem="mjA-fR-dJR" secondAttribute="trailing" constant="177.33000000000001" id="Yek-NB-gOD"/>
+                            <constraint firstItem="lbw-mc-TiJ" firstAttribute="leading" secondItem="V86-qp-q3B" secondAttribute="leading" constant="8" id="fXb-hA-RdD"/>
+                            <constraint firstItem="lbw-mc-TiJ" firstAttribute="top" secondItem="JsK-S6-qde" secondAttribute="bottom" constant="33.666666666666686" id="uiz-WA-RwF"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="V86-qp-q3B"/>
                     </view>
+                    <navigationItem key="navigationItem" id="hHn-iB-LF2"/>
+                    <connections>
+                        <outlet property="postButton" destination="hV9-Kl-W51" id="uRl-iG-NQY"/>
+                        <outlet property="recordButton" destination="xs5-iF-6Vh" id="blm-gW-F0P"/>
+                        <outlet property="timeLabel" destination="qoU-1H-yRR" id="Qdv-By-Niy"/>
+                        <outlet property="timeRemainingLabel" destination="Hd1-EC-1wh" id="wMY-qe-5Yd"/>
+                        <outlet property="timeSlider" destination="9Zg-w5-oMe" id="ZgO-Oo-Yzr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Hq-kc-RQP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2663.768115942029" y="471.42857142857139"/>
+            <point key="canvasLocation" x="2662.3188405797105" y="471.42857142857139"/>
         </scene>
     </scenes>
     <resources>
         <image name="captions.bubble" catalog="system" width="64" height="54"/>
         <image name="music.mic" catalog="system" width="64" height="58"/>
+        <image name="paperplane" catalog="system" width="64" height="60"/>
         <image name="play.rectangle" catalog="system" width="64" height="46"/>
         <image name="post-it-with-a-heart" width="512" height="512"/>
-        <image name="post-it-with-a-heart-2" width="16" height="16"/>
         <image name="post-it-with-a-heart75" width="75" height="75"/>
         <image name="xmark.rectangle" catalog="system" width="64" height="46"/>
     </resources>
