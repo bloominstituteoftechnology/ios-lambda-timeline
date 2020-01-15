@@ -7,8 +7,16 @@
 //
 
 import UIKit
+import AVFoundation
+
+protocol ImagePostDetailTableViewCellDelegate {
+    func playAudioButtonWasTapped(data: Data)
+}
 
 class ImagePostDetailTableViewCell: UITableViewCell {
+
+    private var audioData: Data?
+    var delegate: ImagePostDetailTableViewCellDelegate?
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
@@ -18,6 +26,10 @@ class ImagePostDetailTableViewCell: UITableViewCell {
         didSet {
             updateViews()
         }
+    }
+
+    func setAudioData(data: Data?) {
+        audioData = data
     }
 
     private func updateViews() {
@@ -36,7 +48,15 @@ class ImagePostDetailTableViewCell: UITableViewCell {
         }
     }
 
-    @IBAction func audioPlayButtonTapped(_ sender: UIButton) {
-        
+    private func playAudioData() {
+        if let audioData = audioData {
+            delegate?.playAudioButtonWasTapped(data: audioData)
+        }
     }
+
+    @IBAction func audioPlayButtonTapped(_ sender: UIButton) {
+        playAudioData()
+    }
+
+
 }

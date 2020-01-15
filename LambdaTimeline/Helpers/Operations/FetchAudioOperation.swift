@@ -10,9 +10,9 @@ import Foundation
 
 class FetchAudioOperation: ConcurrentOperation {
 
-    init(comment: Comment, postController: PostController, session: URLSession = URLSession.shared) {
+    init(comment: Comment, post: Post, session: URLSession = URLSession.shared) {
         self.comment = comment
-        self.postController = postController
+        self.post = post
         self.session = session
         super.init()
     }
@@ -49,7 +49,7 @@ class FetchAudioOperation: ConcurrentOperation {
     // MARK: Properties
 
     let comment: Comment
-    let postController: PostController
+    let post: Post
     var mediaData: Data?
 
     private let session: URLSession
