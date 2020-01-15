@@ -123,13 +123,13 @@ class PostDetailViewController: UITableViewController {
             cell.textLabel?.text = commentText
             cell.detailTextLabel?.text = comment?.author.displayName
             return cell
-        } else if let commentAudioURL = comment?.audioURL,
+        } else if let comment = comment,
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: "AudioCommentCell",
                 for: indexPath)
                 as? AudioCommentTableViewCell {
-            cell.authorLabel.text = comment?.author.displayName
-            cell.audioPlayerControl.loadAudio(from: commentAudioURL)
+            cell.authorLabel.text = comment.author.displayName
+            loadCommentAudio(for: comment, in: cell, at: indexPath)
             return cell
         } else {
             return UITableViewCell()
@@ -149,9 +149,14 @@ class PostDetailViewController: UITableViewController {
             return
         }
 
-        guard let fetchOp = FetchCommentMediaOperation(comment: comment) else {
-            print("could not make fetch op")
-            return
+        guard
+            let audioURL = comment.audioURL,
+            let fetchOp = FetchCommentMediaOperation(
+                mediaURL: audioURL,
+                postController: postController)
+            else {
+                print("could not make fetch op")
+                return
         }
         let cacheOp = BlockOperation { [weak self] in
             if let data = fetchOp.mediaData {
@@ -204,9 +209,11 @@ class PostDetailViewController: UITableViewController {
 
 extension PostDetailViewController: AudioCommentViewControllerDelegate {
     func didSuccessfullyLeaveAudioComment() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.navigationController?.popToViewController(self, animated: true)
+        DispatchQueue.main.async { //[weak self] in
+//            guard let postDetailVC = self else { return }
+            self.navigationController?
+                .popToViewController(self, animated: true)
+            self.tableView.reloadData()
         }
     }
 }
