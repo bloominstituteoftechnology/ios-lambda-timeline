@@ -152,11 +152,11 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         guard let postID = post.id else { return }
         
         if let mediaData = cache.value(for: postID) {
-            setMediaData(mediaData, for: postCell, at: indexPath)
+            setMediaData(mediaData, for: postCell)
             return
         }
         
-        let fetchOp = FetchPostMediaOperation(post: post)
+        let fetchOp = FetchPostMediaOperation(post: post, postController: postController)
         
         let cacheOp = BlockOperation { [weak self] in
             if let data = fetchOp.mediaData {
@@ -172,12 +172,12 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             
             if let currentIndexPath = self?.collectionView?.indexPath(for: postCell),
                 currentIndexPath != indexPath {
-                print("Got image for now-reused cell")
+                print("Got data for now-reused cell")
                 return
             }
             
             if let data = fetchOp.mediaData {
-                self?.setMediaData(data, for: postCell, at: indexPath)
+                self?.setMediaData(data, for: postCell)
             }
         }
         
@@ -193,8 +193,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 
     private func setMediaData(
         _ mediaData: Data,
-        for postCell: PostCollectionViewCell,
-        at indexPath: IndexPath
+        for postCell: PostCollectionViewCell
     ) {
         if let imageCell = postCell as? ImagePostCollectionViewCell,
             let image = UIImage(data: mediaData) {
@@ -209,24 +208,22 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let postDetailVC = segue.destination as? PostDetailViewController {
+            guard
+                let indexPath = collectionView.indexPathsForSelectedItems?.first,
+                let postID = postController.posts[indexPath.row].id
+                else { return }
+
+            postDetailVC.postController = postController
+            postDetailVC.post = postController.posts[indexPath.row]
+            postDetailVC.mediaData = cache.value(for: postID)
+        }
         if segue.identifier == "AddImagePost" {
             let destinationVC = segue.destination as? ImagePostViewController
             destinationVC?.postController = postController
         } else if segue.identifier == "AddAudioPost" {
             let destinationVC = segue.destination as? AudioPostViewController
             destinationVC?.postController = postController
-        } else if segue.identifier == "ViewImagePost" {
-            guard
-                let indexPath = collectionView.indexPathsForSelectedItems?.first,
-                let postID = postController.posts[indexPath.row].id
-                else { return }
-            let destinationVC = segue.destination as? ImagePostDetailTableViewController
-            
-            destinationVC?.postController = postController
-            destinationVC?.post = postController.posts[indexPath.row]
-            destinationVC?.imageData = cache.value(for: postID)
-        } else if segue.identifier == "ViewAudioPost" {
-            // TODO: AudioPostDetailTVC
         }
     }
 }
