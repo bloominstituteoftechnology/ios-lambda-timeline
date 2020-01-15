@@ -225,7 +225,7 @@
                         <outlet property="recordButton" destination="jQS-TV-vco" id="tei-cB-J1g"/>
                         <outlet property="titleTextField" destination="aX5-G1-LFM" id="eIs-52-rAU"/>
                         <outlet property="videoView" destination="vvO-al-HE7" id="Mtw-mk-SFs"/>
-                        <segue destination="l2y-cW-icc" kind="show" identifier="RecordVideoSegue" id="4Mo-Dm-Wdu"/>
+                        <segue destination="l2y-cW-icc" kind="presentation" identifier="RecordVideoSegue" modalPresentationStyle="fullScreen" id="4Mo-Dm-Wdu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OZt-IQ-1tt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -239,14 +239,26 @@
                     <view key="view" contentMode="scaleToFill" id="nYs-yJ-E6t">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nLT-aj-aSe" userLabel="Camera View">
+                                <rect key="frame" x="0.0" y="20" width="375" height="772"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="nLT-aj-aSe" secondAttribute="bottom" constant="20" symbolic="YES" id="G1A-dR-wPg"/>
+                            <constraint firstItem="nLT-aj-aSe" firstAttribute="leading" secondItem="D7v-f3-7nE" secondAttribute="leading" id="NXx-55-mHC"/>
+                            <constraint firstItem="nLT-aj-aSe" firstAttribute="trailing" secondItem="D7v-f3-7nE" secondAttribute="trailing" id="PCw-nu-fxg"/>
+                            <constraint firstItem="nLT-aj-aSe" firstAttribute="top" secondItem="nYs-yJ-E6t" secondAttribute="top" constant="20" symbolic="YES" id="vIH-v4-WhS"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="D7v-f3-7nE"/>
                     </view>
                     <navigationItem key="navigationItem" id="iFD-RV-Bqj"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bGP-7q-ctw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3540" y="91"/>
+            <point key="canvasLocation" x="3540" y="90.886699507389167"/>
         </scene>
         <!--Title-->
         <scene sceneID="fmQ-ag-cOY">

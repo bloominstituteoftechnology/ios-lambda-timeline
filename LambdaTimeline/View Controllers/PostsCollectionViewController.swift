@@ -80,6 +80,11 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
                 withReuseIdentifier: "AudioPostCell",
                 for: indexPath)
                 as? PostCollectionViewCell
+        case .video:
+            cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: "VideoPostCell",
+                for: indexPath)
+                as? PostCollectionViewCell
         }
         guard let postCell = cell else { return PostCollectionViewCell() }
 
@@ -101,7 +106,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         let post = postController.posts[indexPath.row]
 
         switch post.mediaType {
-        case .image(let ratio):
+        case .image(let ratio), .video(let ratio):
             guard let ratio = ratio else { return size }
             size.height = size.width * ratio
         case .audio:
