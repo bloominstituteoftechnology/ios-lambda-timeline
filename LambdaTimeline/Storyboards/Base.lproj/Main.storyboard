@@ -17,24 +17,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="pQ6-vI-bgY">
-                            <size key="itemSize" width="375" height="375"/>
+                            <size key="itemSize" width="375" height="150"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ImagePostCell" id="D2w-EO-7kG" customClass="ImagePostCollectionViewCell" customModule="LambdaTimeline" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" translatesAutoresizingMaskIntoConstraints="NO" id="cGr-Ya-osY">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                                         </imageView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5zZ-2z-oK0">
-                                            <rect key="frame" x="8" y="329.33333333333331" width="47" height="37.666666666666686"/>
+                                            <rect key="frame" x="8" y="104.33333333333333" width="47" height="37.666666666666671"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="NmJ-un-Lff">
                                                     <rect key="frame" x="8" y="4.0000000000000018" width="31" height="29.666666666666671"/>
@@ -46,7 +46,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="zag-e4-p07">
-                                                            <rect key="frame" x="0.0" y="16.333333333333371" width="31" height="13.333333333333336"/>
+                                                            <rect key="frame" x="0.0" y="16.333333333333343" width="31" height="13.333333333333336"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -82,14 +82,14 @@
                                 </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="AudioPostCell" id="U7U-4P-9mt" customClass="AudioPostCollectionViewCell" customModule="LambdaTimeline" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="385" width="375" height="375"/>
+                                <rect key="frame" x="0.0" y="160" width="375" height="150"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZLB-a9-f9h" customClass="AudioPlayerControl" customModule="LambdaTimeline" customModuleProvider="target">
-                                            <rect key="frame" x="8" y="45.666666666666657" width="359" height="321.33333333333337"/>
+                                            <rect key="frame" x="8" y="45.666666666666664" width="359" height="96.333333333333343"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="76" id="13K-pq-Mcq"/>
@@ -159,6 +159,7 @@
                         <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="jaI-fq-Woc"/>
                         <segue destination="OyM-8q-Icp" kind="show" identifier="ViewImagePost" id="hhs-es-AdQ"/>
                         <segue destination="fcX-D0-P41" kind="show" identifier="AddAudioPost" id="DvX-SK-dpJ"/>
+                        <segue destination="SQD-4R-yjI" kind="show" identifier="ViewAudioPost" id="d8g-no-JeO"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -450,7 +451,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXa-A2-VJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2719" y="338"/>
+            <point key="canvasLocation" x="2934" y="-176"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gdW-Je-ais">
@@ -531,13 +532,13 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Jed-zo-yZu">
                                             <rect key="frame" x="129" y="23.333333333333332" width="230" height="48.666666666666671"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jyy-BX-c2c">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jyy-BX-c2c">
                                                     <rect key="frame" x="0.0" y="0.0" width="230" height="20.333333333333332"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uQC-8y-kuu">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uQC-8y-kuu">
                                                     <rect key="frame" x="0.0" y="28.333333333333336" width="230" height="20.333333333333336"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -629,20 +630,234 @@
                     <navigationItem key="navigationItem" title="Title" id="ZF5-WY-6Y2">
                         <barButtonItem key="rightBarButtonItem" title="Comment" id="xrT-JD-ey3">
                             <connections>
-                                <action selector="createComment:" destination="OyM-8q-Icp" id="2IY-cQ-DLq"/>
+                                <action selector="commentButtonTapped:" destination="OyM-8q-Icp" id="9NN-Wo-A0h"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="authorLabel" destination="uQC-8y-kuu" id="OBX-uv-64E"/>
+                        <outlet property="authorLabel" destination="uQC-8y-kuu" id="Fg5-MY-AU7"/>
                         <outlet property="imageView" destination="Q0L-w5-qUw" id="0v7-ZB-mgi"/>
                         <outlet property="imageViewAspectRatioConstraint" destination="y1B-iX-x3e" id="wIt-kh-Tzd"/>
-                        <outlet property="titleLabel" destination="jyy-BX-c2c" id="UEd-xO-ipC"/>
+                        <outlet property="titleLabel" destination="jyy-BX-c2c" id="Xkg-V5-pk4"/>
+                        <segue destination="oJV-Hc-DkR" kind="show" identifier="MakeAudioComment" id="2og-lh-3YE"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdL-Y3-4ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2008.8" y="699.7536945812808"/>
+            <point key="canvasLocation" x="1446" y="856"/>
+        </scene>
+        <!--New Comment-->
+        <scene sceneID="3Z0-qU-7qX">
+            <objects>
+                <viewController id="oJV-Hc-DkR" customClass="AudioCommentViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="etw-7U-9Z1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="pem-af-CcK">
+                                <rect key="frame" x="16" y="241" width="343" height="330"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="qUS-TS-QbE" customClass="AudioRecorderControl" customModule="LambdaTimeline" customModuleProvider="target">
+                                        <rect key="frame" x="4" y="0.0" width="335" height="70"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="70" id="J2v-6w-3Lh"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="kiE-2h-p2W" customClass="AudioPlayerControl" customModule="LambdaTimeline" customModuleProvider="target">
+                                        <rect key="frame" x="4" y="90" width="335" height="120"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="120" id="g2Y-O3-C8r"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D0x-Km-uw4">
+                                        <rect key="frame" x="131" y="230" width="81" height="50"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="WRj-j7-ih7"/>
+                                        </constraints>
+                                        <state key="normal" title="Re-Record?"/>
+                                        <connections>
+                                            <action selector="reRecordButtonTapped:" destination="fcX-D0-P41" eventType="touchUpInside" id="KmN-B2-aMd"/>
+                                            <action selector="reRecordButtonTapped:" destination="oJV-Hc-DkR" eventType="touchUpInside" id="pQv-Ej-Drt"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HW6-Ha-kLp" userLabel="Submit Button">
+                                        <rect key="frame" x="111.66666666666669" y="300" width="120" height="30"/>
+                                        <state key="normal" title="Submit Comment"/>
+                                        <connections>
+                                            <action selector="submitButtonTapped:" destination="oJV-Hc-DkR" eventType="touchUpInside" id="BVM-Rx-Mvk"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="kiE-2h-p2W" secondAttribute="trailing" constant="4" id="1kh-9a-wba"/>
+                                    <constraint firstAttribute="trailing" secondItem="qUS-TS-QbE" secondAttribute="trailing" constant="4" id="Q6G-bC-1gX"/>
+                                    <constraint firstItem="kiE-2h-p2W" firstAttribute="leading" secondItem="pem-af-CcK" secondAttribute="leading" constant="4" id="ZvI-wF-QGq"/>
+                                    <constraint firstItem="qUS-TS-QbE" firstAttribute="leading" secondItem="pem-af-CcK" secondAttribute="leading" constant="4" id="kbd-FK-a3R"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="pem-af-CcK" firstAttribute="centerY" secondItem="etw-7U-9Z1" secondAttribute="centerY" id="5Ga-Cb-9dh"/>
+                            <constraint firstItem="k4O-qK-WPZ" firstAttribute="trailing" secondItem="pem-af-CcK" secondAttribute="trailing" constant="16" id="mqT-Bx-fu0"/>
+                            <constraint firstItem="pem-af-CcK" firstAttribute="leading" secondItem="k4O-qK-WPZ" secondAttribute="leading" constant="16" id="yTT-QY-dcX"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="k4O-qK-WPZ"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="New Comment" id="aiB-IO-Mi8"/>
+                    <connections>
+                        <outlet property="playerControl" destination="kiE-2h-p2W" id="agR-x3-GH9"/>
+                        <outlet property="reRecordButton" destination="D0x-Km-uw4" id="o1r-PN-byY"/>
+                        <outlet property="recorderControl" destination="qUS-TS-QbE" id="H8b-kB-fe7"/>
+                        <outlet property="submitButton" destination="HW6-Ha-kLp" id="EGu-3t-EzK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="G6E-By-3uo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1775" y="1552"/>
+        </scene>
+        <!--Audio Post Detail View Controller-->
+        <scene sceneID="aYk-e3-IeK">
+            <objects>
+                <tableViewController id="SQD-4R-yjI" customClass="AudioPostDetailViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="q7z-LJ-2A2">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <view key="tableHeaderView" contentMode="scaleToFill" id="FMY-P1-9J8">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="105"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="ecR-8c-ycw">
+                                    <rect key="frame" x="8" y="2" width="359" height="95"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" distribution="equalCentering" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="1vM-4z-KxK">
+                                            <rect key="frame" x="0.0" y="0.0" width="359" height="22"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bDT-af-Fj3">
+                                                    <rect key="frame" x="0.0" y="0.0" width="33.333333333333336" height="22"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zac-dJ-rYk">
+                                                    <rect key="frame" x="307.33333333333331" y="0.0" width="51.666666666666686" height="22"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="22" id="r8T-5K-6bc"/>
+                                            </constraints>
+                                        </stackView>
+                                        <view contentMode="scaleToFill" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="vTk-0D-ckD" customClass="AudioPlayerControl" customModule="LambdaTimeline" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="25" width="359" height="70"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="70" id="Zrk-Pz-Sd5"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="ecR-8c-ycw" firstAttribute="top" secondItem="FMY-P1-9J8" secondAttribute="top" constant="2" id="DMb-Kz-SGR"/>
+                                <constraint firstAttribute="bottom" secondItem="ecR-8c-ycw" secondAttribute="bottom" constant="8" id="EbN-27-co3"/>
+                                <constraint firstAttribute="trailing" secondItem="ecR-8c-ycw" secondAttribute="trailing" constant="8" id="ZDU-Wt-l7e"/>
+                                <constraint firstItem="ecR-8c-ycw" firstAttribute="leading" secondItem="FMY-P1-9J8" secondAttribute="leading" constant="8" id="ypa-r2-8Pk"/>
+                            </constraints>
+                        </view>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TextCommentCell" textLabel="bl1-HL-Ul0" detailTextLabel="48Y-b1-xbo" style="IBUITableViewCellStyleSubtitle" id="6x6-SS-SRH">
+                                <rect key="frame" x="0.0" y="133" width="375" height="55.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6x6-SS-SRH" id="lb5-21-vnM">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="55.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bl1-HL-Ul0">
+                                            <rect key="frame" x="16.000000000000004" y="8.9999999999999982" width="33.333333333333336" height="20.333333333333332"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="48Y-b1-xbo">
+                                            <rect key="frame" x="15.999999999999996" y="31.333333333333332" width="32.666666666666664" height="14.333333333333334"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AudioCommentCell" rowHeight="100" id="Qwp-bN-ZzF" customClass="AudioCommentTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="188.66666793823242" width="375" height="100"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Qwp-bN-ZzF" id="XZK-QE-zq0">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eBG-oc-JV7" customClass="AudioPlayerControl" customModule="LambdaTimeline" customModuleProvider="target">
+                                            <rect key="frame" x="8" y="4" width="359" height="65"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="65" id="0vN-Q0-yo8"/>
+                                            </constraints>
+                                        </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kfp-fW-sRL">
+                                            <rect key="frame" x="16" y="73" width="335" height="16"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Kfp-fW-sRL" firstAttribute="leading" secondItem="XZK-QE-zq0" secondAttribute="leadingMargin" id="4GP-cA-HXe"/>
+                                        <constraint firstItem="eBG-oc-JV7" firstAttribute="leading" secondItem="XZK-QE-zq0" secondAttribute="leading" constant="8" id="ArB-9z-cyN"/>
+                                        <constraint firstItem="Kfp-fW-sRL" firstAttribute="bottom" secondItem="XZK-QE-zq0" secondAttribute="bottomMargin" id="CrB-6q-cjh"/>
+                                        <constraint firstAttribute="trailing" secondItem="eBG-oc-JV7" secondAttribute="trailing" constant="8" id="W5x-nV-M9y"/>
+                                        <constraint firstItem="Kfp-fW-sRL" firstAttribute="top" secondItem="eBG-oc-JV7" secondAttribute="bottom" constant="4" id="hte-Cz-hHT"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Kfp-fW-sRL" secondAttribute="trailing" constant="8" id="oGY-7b-1qi"/>
+                                        <constraint firstItem="eBG-oc-JV7" firstAttribute="top" secondItem="XZK-QE-zq0" secondAttribute="top" constant="4" id="p4k-34-Ehs"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="audioPlayerControl" destination="eBG-oc-JV7" id="04N-A4-p8n"/>
+                                    <outlet property="authorLabel" destination="Kfp-fW-sRL" id="UqM-2Z-Jkc"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="SQD-4R-yjI" id="g1n-V8-iqr"/>
+                            <outlet property="delegate" destination="SQD-4R-yjI" id="zzs-0O-6WX"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="IGR-EA-1Vr">
+                        <barButtonItem key="rightBarButtonItem" title="Comment" id="Y4K-98-EQR">
+                            <connections>
+                                <action selector="commentButtonTapped:" destination="SQD-4R-yjI" id="RrH-yG-BjM"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="audioPlayerControl" destination="vTk-0D-ckD" id="llu-GD-gdv"/>
+                        <outlet property="authorLabel" destination="Zac-dJ-rYk" id="qYf-X9-0mJ"/>
+                        <outlet property="titleLabel" destination="bDT-af-Fj3" id="cbu-0p-zpN"/>
+                        <segue destination="oJV-Hc-DkR" kind="show" identifier="MakeAudioComment" id="f7b-Pj-OK6"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QwD-QP-Dc1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2132" y="856"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="2og-lh-3YE"/>
+    </inferredMetricsTieBreakers>
 </document>
