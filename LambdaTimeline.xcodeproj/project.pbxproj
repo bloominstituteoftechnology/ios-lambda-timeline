@@ -24,7 +24,7 @@
 		46CFE6FB21714E6100E7FF73 /* Author.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46CFE6FA21714E6100E7FF73 /* Author.swift */; };
 		46CFE6FD217154F500E7FF73 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46CFE6FC217154F500E7FF73 /* Networking.swift */; };
 		46CFE6FF2171556D00E7FF73 /* ConcurrentOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46CFE6FE2171556D00E7FF73 /* ConcurrentOperation.swift */; };
-		46CFE7012171559500E7FF73 /* FetchMediaOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46CFE7002171559500E7FF73 /* FetchMediaOperation.swift */; };
+		46CFE7012171559500E7FF73 /* FetchPostMediaOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46CFE7002171559500E7FF73 /* FetchPostMediaOperation.swift */; };
 		46CFE7032171572600E7FF73 /* ImagePostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46CFE7022171572600E7FF73 /* ImagePostCollectionViewCell.swift */; };
 		46D571F32172D43B00E7FF73 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D571F22172D43B00E7FF73 /* Cache.swift */; };
 		46D571F52173CF3E00E7FF73 /* UIImage+Ratio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D571F42173CF3E00E7FF73 /* UIImage+Ratio.swift */; };
@@ -38,6 +38,7 @@
 		9913BD3823CE78F700500354 /* AudioPlayerControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9913BD3723CE78F700500354 /* AudioPlayerControl.swift */; };
 		9913BD3A23CE796300500354 /* AudioRecorderControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9913BD3923CE796300500354 /* AudioRecorderControl.swift */; };
 		9913BD3E23CE883400500354 /* AudioCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9913BD3D23CE883400500354 /* AudioCommentTableViewCell.swift */; };
+		9913BD4023CEA48800500354 /* FetchCommentMediaOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9913BD3F23CEA48800500354 /* FetchCommentMediaOperation.swift */; };
 		E453457955DF907FCBD117F1 /* Pods_LambdaTimeline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */; };
 /* End PBXBuildFile section */
 
@@ -62,7 +63,7 @@
 		46CFE6FA21714E6100E7FF73 /* Author.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Author.swift; sourceTree = "<group>"; };
 		46CFE6FC217154F500E7FF73 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		46CFE6FE2171556D00E7FF73 /* ConcurrentOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcurrentOperation.swift; sourceTree = "<group>"; };
-		46CFE7002171559500E7FF73 /* FetchMediaOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchMediaOperation.swift; sourceTree = "<group>"; };
+		46CFE7002171559500E7FF73 /* FetchPostMediaOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPostMediaOperation.swift; sourceTree = "<group>"; };
 		46CFE7022171572600E7FF73 /* ImagePostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePostCollectionViewCell.swift; sourceTree = "<group>"; };
 		46D571F22172D43B00E7FF73 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		46D571F42173CF3E00E7FF73 /* UIImage+Ratio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ratio.swift"; sourceTree = "<group>"; };
@@ -77,6 +78,7 @@
 		9913BD3723CE78F700500354 /* AudioPlayerControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayerControl.swift; sourceTree = "<group>"; };
 		9913BD3923CE796300500354 /* AudioRecorderControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderControl.swift; sourceTree = "<group>"; };
 		9913BD3D23CE883400500354 /* AudioCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCommentTableViewCell.swift; sourceTree = "<group>"; };
+		9913BD3F23CEA48800500354 /* FetchCommentMediaOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchCommentMediaOperation.swift; sourceTree = "<group>"; };
 		AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LambdaTimeline.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -194,7 +196,8 @@
 		46CFE7052171573200E7FF73 /* Operations */ = {
 			isa = PBXGroup;
 			children = (
-				46CFE7002171559500E7FF73 /* FetchMediaOperation.swift */,
+				46CFE7002171559500E7FF73 /* FetchPostMediaOperation.swift */,
+				9913BD3F23CEA48800500354 /* FetchCommentMediaOperation.swift */,
 				46CFE6FE2171556D00E7FF73 /* ConcurrentOperation.swift */,
 			);
 			path = Operations;
@@ -403,6 +406,7 @@
 				46CFE6F92170862C00E7FF73 /* ShiftableViewController.swift in Sources */,
 				4646377C216FDE4B00E7FF73 /* AppDelegate.swift in Sources */,
 				46CFE6FD217154F500E7FF73 /* Networking.swift in Sources */,
+				9913BD4023CEA48800500354 /* FetchCommentMediaOperation.swift in Sources */,
 				46CFE6F521707D0000E7FF73 /* ImagePostViewController.swift in Sources */,
 				9913BD2723CE5AE000500354 /* AudioPostViewController.swift in Sources */,
 				9913BD3E23CE883400500354 /* AudioCommentTableViewCell.swift in Sources */,
@@ -411,7 +415,7 @@
 				46463790216FFD1B00E7FF73 /* Post.swift in Sources */,
 				46CFE6F32170757F00E7FF73 /* User+DictionaryRepresentation.swift in Sources */,
 				46D571F32172D43B00E7FF73 /* Cache.swift in Sources */,
-				46CFE7012171559500E7FF73 /* FetchMediaOperation.swift in Sources */,
+				46CFE7012171559500E7FF73 /* FetchPostMediaOperation.swift in Sources */,
 				9913BD2923CE5C0A00500354 /* AudioPostCollectionViewCell.swift in Sources */,
 				9913BD3823CE78F700500354 /* AudioPlayerControl.swift in Sources */,
 				9913BD2F23CE64C300500354 /* DateComponentsFormatter+Constant.swift in Sources */,
