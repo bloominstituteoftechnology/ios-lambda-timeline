@@ -14,6 +14,10 @@ class ImagePostDetailTableViewController: UITableViewController {
     var postController: PostController!
     var imageData: Data?
 
+    private var operations = [String: Operation]()
+    private let mediaFetchQueue = OperationQueue()
+    private let cache = Cache<String, Data>()
+
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
@@ -50,10 +54,9 @@ class ImagePostDetailTableViewController: UITableViewController {
         }
         
         let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
-            
             guard let commentText = commentTextField?.text else { return }
             
-            self.postController.addComment(with: commentText, to: &self.post!)
+            self.postController.addComment(withText: commentText, to: &self.post)
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -68,7 +71,10 @@ class ImagePostDetailTableViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(
+        _ tableView: UITableView,
+        numberOfRowsInSection section: Int
+    ) -> Int {
         return (post?.comments.count ?? 0) - 1
     }
     
@@ -77,7 +83,6 @@ class ImagePostDetailTableViewController: UITableViewController {
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
         let comment = post?.comments[indexPath.row + 1]
-
         if let commentText = comment?.text {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: "TextCommentCell",
@@ -94,5 +99,15 @@ class ImagePostDetailTableViewController: UITableViewController {
             cell.audioPlayerControl.loadAudio(from: commentAudioURL)
             return cell
         } else { return UITableViewCell() }
+    }
+
+    // MARK: - Fetching
+
+    func loadAudioData(
+        forComment comment: Comment,
+        withCell audioCommentCell: AudioCommentTableViewCell,
+        at indexPath: IndexPath
+    ) {
+        
     }
 }
