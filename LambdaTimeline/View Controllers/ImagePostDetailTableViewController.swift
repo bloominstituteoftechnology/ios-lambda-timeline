@@ -41,7 +41,7 @@ class ImagePostDetailTableViewController: UITableViewController {
             commentTextField = textField
         }
         
-        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
+        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { _ in
             
             guard let commentText = commentTextField?.text else { return }
             
@@ -52,9 +52,14 @@ class ImagePostDetailTableViewController: UITableViewController {
             }
         }
         
+        let addAudioCommentAction = UIAlertAction(title: "Add Audio Clip", style: .default) { _ in
+            self.performSegue(withIdentifier: "ShowAudioRecorderSegue", sender: self)
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(addCommentAction)
+        alert.addAction(addAudioCommentAction)
         alert.addAction(cancelAction)
         
         present(alert, animated: true, completion: nil)
@@ -65,14 +70,21 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
-        
-        let comment = post?.comments[indexPath.row + 1]
-        
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author.displayName
-        
-        return cell
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCell", for: indexPath) as? AudioCommentTableViewCell {
+            
+            
+            return cell
+            
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+            
+            let comment = post?.comments[indexPath.row + 1]
+            
+            cell.textLabel?.text = comment?.text
+            cell.detailTextLabel?.text = comment?.author.displayName
+            
+            return cell
+        }
     }
     
     var post: Post!
