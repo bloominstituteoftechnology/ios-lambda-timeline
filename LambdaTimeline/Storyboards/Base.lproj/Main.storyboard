@@ -490,10 +490,98 @@ or better filters.</string>
             </objects>
             <point key="canvasLocation" x="1968.8" y="472.71364317841085"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="RK7-a6-BVC">
+            <objects>
+                <viewController id="jMM-Nc-Ngr" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="C9y-0i-XmN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="41p-gP-iaH">
+                                <rect key="frame" x="178.33333333333334" y="423" width="57.333333333333343" height="52"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FsL-ck-e6v">
+                                        <rect key="frame" x="0.0" y="0.0" width="57.333333333333336" height="22"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <state key="normal" title="Play" image="play.rectangle" catalog="system">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hV9-Kl-W51">
+                                        <rect key="frame" x="0.0" y="30" width="57.333333333333336" height="22"/>
+                                        <state key="normal" title="Post" image="post-it-with-a-heart-2">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="JsK-S6-qde">
+                                <rect key="frame" x="141" y="352" width="132.33333333333337" height="47.333333333333314"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="SzY-TP-Tqk">
+                                        <rect key="frame" x="0.0" y="0.0" width="57.666666666666664" height="47.333333333333336"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Record" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5vT-KH-FYt">
+                                                <rect key="frame" x="0.0" y="0.0" width="57.666666666666664" height="21.666666666666668"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xs5-iF-6Vh">
+                                                <rect key="frame" x="18.333333333333343" y="22.666666666666686" width="21" height="24.666666666666671"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" image="music.mic" catalog="system">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="UHc-ax-sNE">
+                                        <rect key="frame" x="79.666666666666657" y="0.0" width="52.666666666666657" height="47.333333333333336"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cancel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="StO-yB-F0p">
+                                                <rect key="frame" x="0.0" y="0.0" width="52.666666666666664" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wkT-2m-PRz">
+                                                <rect key="frame" x="14.333333333333345" y="25.333333333333314" width="23.666666666666671" height="22"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" image="xmark.rectangle" catalog="system">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="41p-gP-iaH" firstAttribute="centerX" secondItem="C9y-0i-XmN" secondAttribute="centerX" id="09v-EP-pbC"/>
+                            <constraint firstItem="JsK-S6-qde" firstAttribute="centerX" secondItem="C9y-0i-XmN" secondAttribute="centerX" id="5py-98-Wzq"/>
+                            <constraint firstItem="V86-qp-q3B" firstAttribute="bottom" secondItem="41p-gP-iaH" secondAttribute="bottom" constant="387" id="8Rv-4E-3eh"/>
+                            <constraint firstItem="41p-gP-iaH" firstAttribute="leading" secondItem="V86-qp-q3B" secondAttribute="leading" constant="178.33333333333337" id="evi-N4-ku8"/>
+                            <constraint firstItem="41p-gP-iaH" firstAttribute="top" secondItem="JsK-S6-qde" secondAttribute="bottom" constant="23.666666666666686" id="wPg-7x-NI8"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="V86-qp-q3B"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7Hq-kc-RQP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2663.768115942029" y="471.42857142857139"/>
+        </scene>
     </scenes>
     <resources>
         <image name="captions.bubble" catalog="system" width="64" height="54"/>
+        <image name="music.mic" catalog="system" width="64" height="58"/>
+        <image name="play.rectangle" catalog="system" width="64" height="46"/>
         <image name="post-it-with-a-heart" width="512" height="512"/>
+        <image name="post-it-with-a-heart-2" width="16" height="16"/>
         <image name="post-it-with-a-heart75" width="75" height="75"/>
+        <image name="xmark.rectangle" catalog="system" width="64" height="46"/>
     </resources>
 </document>
