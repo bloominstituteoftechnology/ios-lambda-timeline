@@ -450,29 +450,54 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" textLabel="a1p-af-m2r" detailTextLabel="KxJ-Oh-Ju8" style="IBUITableViewCellStyleSubtitle" id="gWx-Ba-4ra">
-                                <rect key="frame" x="0.0" y="133" width="414" height="55.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" id="gWx-Ba-4ra" customClass="ImagePostDetailTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="133" width="414" height="72.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gWx-Ba-4ra" id="wtQ-2t-2R8">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="55.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="72.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="a1p-af-m2r">
-                                            <rect key="frame" x="20" y="10" width="33.5" height="20.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KxJ-Oh-Ju8">
-                                            <rect key="frame" x="20" y="31.5" width="44" height="14.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bUd-d6-ffw">
+                                            <rect key="frame" x="30" y="22.5" width="30" height="27"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="30" id="AQ8-sE-89q"/>
+                                                <constraint firstAttribute="width" constant="30" id="S8U-60-NhJ"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <state key="normal" title="P" backgroundImage="play" catalog="system"/>
+                                        </button>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Az6-T1-4S4">
+                                            <rect key="frame" x="68" y="12" width="316" height="49"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uE3-Ls-2xg">
+                                                    <rect key="frame" x="0.0" y="0.0" width="316" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Nv-Wd-sAN">
+                                                    <rect key="frame" x="0.0" y="28.5" width="316" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Az6-T1-4S4" firstAttribute="leading" secondItem="bUd-d6-ffw" secondAttribute="trailing" constant="8" id="289-Pd-0Iv"/>
+                                        <constraint firstItem="bUd-d6-ffw" firstAttribute="leading" secondItem="wtQ-2t-2R8" secondAttribute="leadingMargin" constant="10" id="Odg-Vk-GOp"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Az6-T1-4S4" secondAttribute="trailing" constant="10" id="SwO-b3-saE"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="bUd-d6-ffw" secondAttribute="bottom" constant="10" id="Umb-IW-ozS"/>
+                                        <constraint firstItem="Az6-T1-4S4" firstAttribute="centerY" secondItem="bUd-d6-ffw" secondAttribute="centerY" id="awm-M4-vok"/>
+                                        <constraint firstItem="bUd-d6-ffw" firstAttribute="top" secondItem="wtQ-2t-2R8" secondAttribute="topMargin" constant="10" id="rKZ-WR-DSy"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="audioPlayButton" destination="bUd-d6-ffw" id="bj2-Om-Yk7"/>
+                                    <outlet property="authorLabel" destination="6Nv-Wd-sAN" id="dQO-Xd-Cgg"/>
+                                    <outlet property="titleLabel" destination="uE3-Ls-2xg" id="b67-ON-m2m"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -497,7 +522,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdL-Y3-4ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1968.8" y="472.71364317841085"/>
+            <point key="canvasLocation" x="1968.1159420289857" y="472.09821428571428"/>
         </scene>
         <!--Audio Comment View Controller-->
         <scene sceneID="lfY-bH-vbj">
@@ -574,4 +599,7 @@
             <point key="canvasLocation" x="2792.753623188406" y="471.42857142857139"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="play" catalog="system" width="60" height="64"/>
+    </resources>
 </document>
