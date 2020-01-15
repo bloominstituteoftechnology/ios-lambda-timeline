@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 
 protocol AudioCommentViewControllerDelegate {
-    func saveAudioCommentButtonWasTapped(_ audioURL: URL)
+    func saveAudioCommentButtonWasTapped(_ audioData: Data, _ viewController: UIViewController)
 }
 
 class AudioCommentViewController: UIViewController {
@@ -46,8 +46,13 @@ class AudioCommentViewController: UIViewController {
 
     @IBAction func saveAudioCommentButtonTapped(_ sender: UIButton) {
         guard let recordURL = recordURL else { return }
-        delegate?.saveAudioCommentButtonWasTapped(recordURL)
-        self.dismiss(animated: true, completion: nil)
+        do {
+            let audioData = try Data(contentsOf: recordURL)
+            delegate?.saveAudioCommentButtonWasTapped(audioData, self)
+            //self.dismiss(animated: true, completion: nil)
+        } catch {
+            print("Error creating audio data from url")
+        }
     }
 
     // Playback APIs

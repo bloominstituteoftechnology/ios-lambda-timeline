@@ -17,8 +17,9 @@ class PostController {
         
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
-        
-        store(mediaData: mediaData, mediaType: mediaType) { (mediaURL) in
+
+        let ref = storageRef.child(mediaType.rawValue)
+        store(mediaData: mediaData, storage: ref) { (mediaURL) in
             
             guard let mediaURL = mediaURL else { completion(false); return }
             
@@ -46,15 +47,24 @@ class PostController {
         savePostToFirebase(post)
     }
 
-    func addAudioComment(with audioURL: URL, to post: inout Post) {
+    func addAudioComment(with comment: Comment, to post: inout Post) {
+        post.comments.append(comment)
+        savePostToFirebase(post)
+    }
+
+    func createAudioComment(with mediaData: Data, completion: @escaping (Comment?) -> Void = { _ in }) {
 
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
 
-        let comment = Comment(text: nil, author: author, audioURL: audioURL)
-        post.comments.append(comment)
+        let ref = storageRef.child("audio")
+        store(mediaData: mediaData, storage: ref) { (mediaURL) in
 
-        savePostToFirebase(post)
+            guard let mediaURL = mediaURL else { completion(nil); return }
+
+            let audioComment = Comment(text: nil, author: author, audioURL: mediaURL)
+            completion(audioComment)
+        }
     }
 
     func observePosts(completion: @escaping (Error?) -> Void) {
@@ -90,11 +100,11 @@ class PostController {
         ref.setValue(post.dictionaryRepresentation)
     }
 
-    private func store(mediaData: Data, mediaType: MediaType, completion: @escaping (URL?) -> Void) {
+    private func store(mediaData: Data, storage: StorageReference, completion: @escaping (URL?) -> Void) {
         
         let mediaID = UUID().uuidString
-        
-        let mediaRef = storageRef.child(mediaType.rawValue).child(mediaID)
+
+        let mediaRef = storage.child(mediaID)
         
         let uploadTask = mediaRef.putData(mediaData, metadata: nil) { (metadata, error) in
             if let error = error {

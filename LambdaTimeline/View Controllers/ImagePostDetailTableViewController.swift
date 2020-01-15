@@ -99,10 +99,13 @@ class ImagePostDetailTableViewController: UITableViewController {
 }
 
 extension ImagePostDetailTableViewController: AudioCommentViewControllerDelegate {
-    func saveAudioCommentButtonWasTapped(_ audioURL: URL) {
-        self.postController.addAudioComment(with: audioURL, to: &self.post!)
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
+    func saveAudioCommentButtonWasTapped(_ audioData: Data, _ viewController: UIViewController) {
+        self.postController.createAudioComment(with: audioData) { (comment) in
+            if let comment = comment {
+                self.postController.addAudioComment(with: comment, to: &self.post!)
+                viewController.dismiss(animated: true, completion: nil)
+                self.tableView.reloadData()
+            }
         }
     }
 }
