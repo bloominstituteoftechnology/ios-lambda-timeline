@@ -31,6 +31,10 @@
 		46D571F82173FC2700E7FF73 /* ImagePostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */; };
 		BBE533B423CD3334005F6F23 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBE533B323CD3334005F6F23 /* GoogleService-Info.plist */; };
 		BBE533B923CD4890005F6F23 /* UIImage+Scaling.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE533B823CD4890005F6F23 /* UIImage+Scaling.swift */; };
+		BBE533BB23CE6CBF005F6F23 /* AudioCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE533BA23CE6CBF005F6F23 /* AudioCommentViewController.swift */; };
+		BBE533C123CE7606005F6F23 /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE533C023CE7606005F6F23 /* AudioController.swift */; };
+		BBE533C323CE8AF7005F6F23 /* ImagePostDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE533C223CE8AF7005F6F23 /* ImagePostDetailTableViewCell.swift */; };
+		BBE533C523CE9281005F6F23 /* FetchAudioOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE533C423CE9281005F6F23 /* FetchAudioOperation.swift */; };
 		E453457955DF907FCBD117F1 /* Pods_LambdaTimeline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +68,10 @@
 		AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LambdaTimeline.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BBE533B323CD3334005F6F23 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BBE533B823CD4890005F6F23 /* UIImage+Scaling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Scaling.swift"; sourceTree = "<group>"; };
+		BBE533BA23CE6CBF005F6F23 /* AudioCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCommentViewController.swift; sourceTree = "<group>"; };
+		BBE533C023CE7606005F6F23 /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
+		BBE533C223CE8AF7005F6F23 /* ImagePostDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePostDetailTableViewCell.swift; sourceTree = "<group>"; };
+		BBE533C423CE9281005F6F23 /* FetchAudioOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchAudioOperation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				4646379B2170091A00E7FF73 /* PostController.swift */,
+				BBE533C023CE7606005F6F23 /* AudioController.swift */,
 			);
 			path = "Model Controllers";
 			sourceTree = "<group>";
@@ -164,6 +173,7 @@
 				46A0366921700F5100E7FF73 /* PostsCollectionViewController.swift */,
 				46CFE6F421707D0000E7FF73 /* ImagePostViewController.swift */,
 				46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */,
+				BBE533BA23CE6CBF005F6F23 /* AudioCommentViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -172,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				46CFE7022171572600E7FF73 /* ImagePostCollectionViewCell.swift */,
+				BBE533C223CE8AF7005F6F23 /* ImagePostDetailTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -181,6 +192,7 @@
 			children = (
 				46CFE7002171559500E7FF73 /* FetchMediaOperation.swift */,
 				46CFE6FE2171556D00E7FF73 /* ConcurrentOperation.swift */,
+				BBE533C423CE9281005F6F23 /* FetchAudioOperation.swift */,
 			);
 			path = Operations;
 			sourceTree = "<group>";
@@ -351,6 +363,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBE533C123CE7606005F6F23 /* AudioController.swift in Sources */,
 				46A0366D2170158900E7FF73 /* SignInViewController.swift in Sources */,
 				BBE533B923CD4890005F6F23 /* UIImage+Scaling.swift in Sources */,
 				46CFE6FB21714E6100E7FF73 /* Author.swift in Sources */,
@@ -359,13 +372,16 @@
 				46CFE6FD217154F500E7FF73 /* Networking.swift in Sources */,
 				46CFE6F521707D0000E7FF73 /* ImagePostViewController.swift in Sources */,
 				46CFE6FF2171556D00E7FF73 /* ConcurrentOperation.swift in Sources */,
+				BBE533C523CE9281005F6F23 /* FetchAudioOperation.swift in Sources */,
 				46463790216FFD1B00E7FF73 /* Post.swift in Sources */,
 				46CFE6F32170757F00E7FF73 /* User+DictionaryRepresentation.swift in Sources */,
 				46D571F32172D43B00E7FF73 /* Cache.swift in Sources */,
 				46CFE7012171559500E7FF73 /* FetchMediaOperation.swift in Sources */,
 				46D571F82173FC2700E7FF73 /* ImagePostDetailTableViewController.swift in Sources */,
+				BBE533C323CE8AF7005F6F23 /* ImagePostDetailTableViewCell.swift in Sources */,
 				46CFE7032171572600E7FF73 /* ImagePostCollectionViewCell.swift in Sources */,
 				4646379C2170091A00E7FF73 /* PostController.swift in Sources */,
+				BBE533BB23CE6CBF005F6F23 /* AudioCommentViewController.swift in Sources */,
 				464637992170048900E7FF73 /* FirebaseConvertible.swift in Sources */,
 				46A0366A21700F5100E7FF73 /* PostsCollectionViewController.swift in Sources */,
 				46D571F52173CF3E00E7FF73 /* UIImage+Ratio.swift in Sources */,
@@ -519,7 +535,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = VXUQXR6S56;
 				INFOPLIST_FILE = "$(SRCROOT)/LambdaTimeline/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -540,7 +556,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = VXUQXR6S56;
 				INFOPLIST_FILE = "$(SRCROOT)/LambdaTimeline/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
