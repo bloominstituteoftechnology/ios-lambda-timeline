@@ -11,13 +11,40 @@ import Photos
 
 class ImagePostViewController: ShiftableViewController {
     
+    //MARK: - Properties
+    
+    var postController: PostController!
+    var post: Post?
+    var imageData: Data?
+    
+    //MARK: - Outlets
+    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var chooseImageButton: UIButton!
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    @IBOutlet weak var brightnessSlider: UISlider!
+    @IBOutlet weak var saturationSlider: UISlider!
+    @IBOutlet weak var contrastSlider: UISlider!
+    @IBOutlet weak var blurSlider: UISlider!
+    @IBOutlet weak var bwSwitch: UISwitch!
+    @IBOutlet weak var sepiaSwitch: UISwitch!
+    @IBOutlet weak var vividSwitch: UISwitch!
+    
+    //MARK: - Views
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setImageViewHeight(with: 1.0)
         
         updateViews()
+        
     }
+    
+    //MARK: - Methods
     
     func updateViews() {
         
@@ -54,14 +81,33 @@ class ImagePostViewController: ShiftableViewController {
         }
     }
     
+    func setImageViewHeight(with aspectRatio: CGFloat) {
+        
+        imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
+        
+        view.layoutSubviews()
+    }
+    
+    func turnOnFilters() {
+        brightnessSlider.isEnabled = true
+        saturationSlider.isEnabled = true
+        contrastSlider.isEnabled = true
+        blurSlider.isEnabled = true
+        bwSwitch.isEnabled = true
+        sepiaSwitch.isEnabled = true
+        vividSwitch.isEnabled = true
+    }
+    
+    //MARK: - Actions
+    
     @IBAction func createPost(_ sender: Any) {
         
         view.endEditing(true)
         
         guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
             let title = titleTextField.text, title != "" else {
-            presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
-            return
+                presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
+                return
         }
         
         postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
@@ -109,22 +155,6 @@ class ImagePostViewController: ShiftableViewController {
         presentImagePickerController()
     }
     
-    func setImageViewHeight(with aspectRatio: CGFloat) {
-        
-        imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
-        
-        view.layoutSubviews()
-    }
-    
-    var postController: PostController!
-    var post: Post?
-    var imageData: Data?
-    
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var chooseImageButton: UIButton!
-    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var postButton: UIBarButtonItem!
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -140,6 +170,8 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         imageView.image = image
         
         setImageViewHeight(with: image.ratio)
+        
+        turnOnFilters()
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
