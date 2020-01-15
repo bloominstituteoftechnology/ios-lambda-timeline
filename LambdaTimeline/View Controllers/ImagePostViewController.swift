@@ -12,7 +12,7 @@ import CoreImage
 
 class ImagePostViewController: ShiftableViewController {
 
-    // MARK: - Editing Properties
+    // MARK: - Outlets
 
     @IBOutlet weak var sharpnessSlider: UISlider!
     @IBOutlet weak var saturationSlider: UISlider!
@@ -37,7 +37,7 @@ class ImagePostViewController: ShiftableViewController {
 
             maxSize = CGSize(width: maxSize.width * scale, height: maxSize.height * scale)
 
-//            scaledImage = image.imageByScaling(toSize: maxSize)
+           scaledImage = image.imageByScaling(toSize: maxSize)
         }
     }
 
