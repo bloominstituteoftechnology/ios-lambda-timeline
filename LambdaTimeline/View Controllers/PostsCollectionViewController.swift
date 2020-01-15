@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 import FirebaseAuth
 import FirebaseUI
 
@@ -28,16 +29,25 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     }
     
     @IBAction func addPost(_ sender: Any) {
+        let alert = UIAlertController(
+            title: "New Post",
+            message: "Which kind of post do you want to create?",
+            preferredStyle: .actionSheet)
         
-        let alert = UIAlertController(title: "New Post", message: "Which kind of post do you want to create?", preferredStyle: .actionSheet)
-        
-        let imagePostAction = UIAlertAction(title: "Image", style: .default) { (_) in
+        let imagePostAction = UIAlertAction(title: "Image", style: .default) { _ in
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
+        let audioPostAction = UIAlertAction(title: "Audio", style: .default) { _ in
+            self.performSegue(withIdentifier: "AddAudioPost", sender: nil)
+        }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(
+            title: "Cancel",
+            style: .cancel,
+            handler: nil)
         
         alert.addAction(imagePostAction)
+        alert.addAction(audioPostAction)
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true, completion: nil)
@@ -45,98 +55,126 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     
     // MARK: UICollectionViewDataSource
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         return postController.posts.count
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         let post = postController.posts[indexPath.row]
-        
+
+        var cell: PostCollectionViewCell?
         switch post.mediaType {
-            
         case .image:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
-            
-            cell.post = post
-            
-            loadImage(for: cell, forItemAt: indexPath)
-            
-            return cell
+            cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: "ImagePostCell",
+                for: indexPath)
+                as? PostCollectionViewCell
         case .audio:
-            // TODO: do audio
-            return UICollectionViewCell()
+            cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: "AudioPostCell",
+                for: indexPath)
+                as? PostCollectionViewCell
         }
+        guard let postCell = cell else { return PostCollectionViewCell() }
+
+        postCell.post = post
+        loadPostMedia(for: postCell, at: indexPath)
+
+        return postCell
     }
+
+    // MARK: - Collection View Layout
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
         var size = CGSize(width: view.frame.width, height: view.frame.width)
         
         let post = postController.posts[indexPath.row]
-        
-        switch post.mediaType {
-        case .image:
+
+        if post.mediaType == .image {
             guard let ratio = post.ratio else { return size }
             size.height = size.width * ratio
-        case .audio:
-            // TODO: do audio
-            break
+        } else if post.mediaType == .audio {
+            size.height = 220
         }
         
         return size
     }
     
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
         let cell = collectionView.cellForItem(at: indexPath)
         
         if let cell = cell as? ImagePostCollectionViewCell,
-            cell.imageView.image != nil {
+            cell.imageView.image != nil
+        {
             self.performSegue(withIdentifier: "ViewImagePost", sender: nil)
+        } else if let cell = cell as? AudioPostCollectionViewCell,
+            cell.audioPlayerControl.audioIsLoaded
+        {
+            self.performSegue(withIdentifier: "ViewAudioPost", sender: nil)
         }
     }
     
-    override func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
-        
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didEndDisplayingSupplementaryView view: UICollectionReusableView,
+        forElementOfKind elementKind: String,
+        at indexPath: IndexPath
+    ) {
         guard let postID = postController.posts[indexPath.row].id else { return }
         operations[postID]?.cancel()
     }
+
+    // MARK: - Helper Methods
     
-    func loadImage(for imagePostCell: ImagePostCollectionViewCell, forItemAt indexPath: IndexPath) {
+    private func loadPostMedia(
+        for postCell: PostCollectionViewCell,
+        at indexPath: IndexPath
+    ) {
         let post = postController.posts[indexPath.row]
         
         guard let postID = post.id else { return }
         
-        if let mediaData = cache.value(for: postID),
-            let image = UIImage(data: mediaData) {
-            imagePostCell.setImage(image)
-            self.collectionView.reloadItems(at: [indexPath])
+        if let mediaData = cache.value(for: postID) {
+            setMediaData(mediaData, for: postCell, at: indexPath)
             return
         }
         
-        let fetchOp = FetchMediaOperation(post: post, postController: postController)
+        let fetchOp = FetchPostMediaOperation(post: post)
         
-        let cacheOp = BlockOperation {
+        let cacheOp = BlockOperation { [weak self] in
             if let data = fetchOp.mediaData {
-                self.cache.cache(value: data, for: postID)
+                self?.cache.cache(value: data, for: postID)
                 DispatchQueue.main.async {
-                    self.collectionView.reloadItems(at: [indexPath])
+                    self?.collectionView.reloadItems(at: [indexPath])
                 }
             }
         }
         
-        let completionOp = BlockOperation {
-            defer { self.operations.removeValue(forKey: postID) }
+        let completionOp = BlockOperation { [weak self] in
+            defer { self?.operations.removeValue(forKey: postID) }
             
-            if let currentIndexPath = self.collectionView?.indexPath(for: imagePostCell),
+            if let currentIndexPath = self?.collectionView?.indexPath(for: postCell),
                 currentIndexPath != indexPath {
                 print("Got image for now-reused cell")
                 return
             }
             
             if let data = fetchOp.mediaData {
-                imagePostCell.setImage(UIImage(data: data))
-                self.collectionView.reloadItems(at: [indexPath])
+                self?.setMediaData(data, for: postCell, at: indexPath)
             }
         }
         
@@ -149,6 +187,21 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         
         operations[postID] = fetchOp
     }
+
+    private func setMediaData(
+        _ mediaData: Data,
+        for postCell: PostCollectionViewCell,
+        at indexPath: IndexPath
+    ) {
+        if let imageCell = postCell as? ImagePostCollectionViewCell,
+            let image = UIImage(data: mediaData) {
+            imageCell.setImage(image)
+        } else if let audioCell = postCell as? AudioPostCollectionViewCell {
+            audioCell.audioPlayerControl.loadAudio(from: mediaData)
+        }
+//        collectionView.reloadItems(at: [indexPath])
+    }
+
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -156,17 +209,21 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         if segue.identifier == "AddImagePost" {
             let destinationVC = segue.destination as? ImagePostViewController
             destinationVC?.postController = postController
-            
+        } else if segue.identifier == "AddAudioPost" {
+            let destinationVC = segue.destination as? AudioPostViewController
+            destinationVC?.postController = postController
         } else if segue.identifier == "ViewImagePost" {
-            
+            guard
+                let indexPath = collectionView.indexPathsForSelectedItems?.first,
+                let postID = postController.posts[indexPath.row].id
+                else { return }
             let destinationVC = segue.destination as? ImagePostDetailTableViewController
-            
-            guard let indexPath = collectionView.indexPathsForSelectedItems?.first,
-                let postID = postController.posts[indexPath.row].id else { return }
             
             destinationVC?.postController = postController
             destinationVC?.post = postController.posts[indexPath.row]
             destinationVC?.imageData = cache.value(for: postID)
+        } else if segue.identifier == "ViewAudioPost" {
+            // TODO: AudioPostDetailTVC
         }
     }
 }
