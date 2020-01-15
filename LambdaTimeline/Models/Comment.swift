@@ -37,8 +37,8 @@ class Comment: FirebaseConvertible, Equatable {
         self.text = text
         self.author = author
         self.timestamp = Date(timeIntervalSince1970: timestampTimeInterval)
-        if let audioURL = dictionary[Comment.audioKey] as? URL {
-            self.audioURL = audioURL
+        if let audioText = dictionary[Comment.audioKey] as? String {
+            self.audioURL = URL(string: audioText)
         } else {
             self.audioURL = nil
         }
@@ -48,7 +48,7 @@ class Comment: FirebaseConvertible, Equatable {
         return [Comment.textKey: text ?? "",
                 Comment.author: author.dictionaryRepresentation,
                 Comment.timestampKey: timestamp.timeIntervalSince1970,
-                Comment.audioKey: audioURL ?? ""]
+                Comment.audioKey: audioURL?.absoluteString ?? ""]
     }
     
     static func ==(lhs: Comment, rhs: Comment) -> Bool {

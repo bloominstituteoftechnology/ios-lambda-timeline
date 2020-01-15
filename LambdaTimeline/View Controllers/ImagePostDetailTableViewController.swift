@@ -77,6 +77,14 @@ class ImagePostDetailTableViewController: UITableViewController {
         
         return cell
     }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AudioCommentSegue" {
+            if let audioVC = segue.destination as? AudioCommentViewController {
+                audioVC.delegate = self
+            }
+        }
+    }
     
     var post: Post!
     var postController: PostController!
@@ -88,4 +96,13 @@ class ImagePostDetailTableViewController: UITableViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
+}
+
+extension ImagePostDetailTableViewController: AudioCommentViewControllerDelegate {
+    func saveAudioCommentButtonWasTapped(_ audioURL: URL) {
+        self.postController.addAudioComment(with: audioURL, to: &self.post!)
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
 }

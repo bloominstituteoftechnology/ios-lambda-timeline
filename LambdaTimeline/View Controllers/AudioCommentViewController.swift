@@ -9,8 +9,13 @@
 import UIKit
 import AVFoundation
 
+protocol AudioCommentViewControllerDelegate {
+    func saveAudioCommentButtonWasTapped(_ audioURL: URL)
+}
+
 class AudioCommentViewController: UIViewController {
 
+    var delegate: AudioCommentViewControllerDelegate?
     //var audioController = AudioController()
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playButton: UIButton!
@@ -40,7 +45,9 @@ class AudioCommentViewController: UIViewController {
     }
 
     @IBAction func saveAudioCommentButtonTapped(_ sender: UIButton) {
-
+        guard let recordURL = recordURL else { return }
+        delegate?.saveAudioCommentButtonWasTapped(recordURL)
+        self.dismiss(animated: true, completion: nil)
     }
 
     // Playback APIs
