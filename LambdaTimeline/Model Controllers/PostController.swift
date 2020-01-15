@@ -13,7 +13,7 @@ import FirebaseStorage
 
 class PostController {
     
-    func createPost(with title: String, ofType mediaType: MediaType, mediaData: Data, ratio: CGFloat? = nil, completion: @escaping (Bool) -> Void = { _ in }) {
+    func createPost(with description: String, audioURL: URL? = nil, ofType mediaType: MediaType, mediaData: Data, ratio: CGFloat? = nil, completion: @escaping (Bool) -> Void = { _ in }) {
         
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
@@ -22,7 +22,7 @@ class PostController {
             
             guard let mediaURL = mediaURL else { completion(false); return }
             
-            let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
+            let imagePost = Post(mediaURL: mediaURL, ratio: ratio, author: author, description: description)
             
             self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
                 if let error = error {
@@ -35,15 +35,41 @@ class PostController {
         }
     }
     
-    func addComment(with text: String, to post: inout Post) {
+    func addComment(with text: String?, to post: Post, completion: @escaping () -> Void) {
         
         guard let currentUser = Auth.auth().currentUser,
-            let author = Author(user: currentUser) else { return }
-        
-        let comment = Comment(text: text, author: author)
+            let author = Author(user: currentUser) else {
+                completion()
+                return
+        }
+
+        let comment = Comment(text: text, audioURL: nil, author: author)
         post.comments.append(comment)
         
-        savePostToFirebase(post)
+        savePostToFirebase(post) { _ in
+            completion()
+        }
+    }
+
+    func addAudioComment(with data: Data, to post: Post, completion: @escaping () -> Void) {
+
+        guard let currentUser = Auth.auth().currentUser,
+            let author = Author(user: currentUser) else {
+                completion()
+                return
+        }
+
+        store(mediaData: data, mediaType: .image) { (url) in
+            let comment = Comment(text: nil, audioURL: url, author: author)
+
+//            DispatchQueue.main.async {
+//            }
+            post.comments.append(comment)
+
+            self.savePostToFirebase(post) { _ in
+                completion()
+            }
+        }
     }
 
     func observePosts(completion: @escaping (Error?) -> Void) {
@@ -55,16 +81,13 @@ class PostController {
             var posts: [Post] = []
             
             for (key, value) in postDictionaries {
-                
                 guard let post = Post(dictionary: value, id: key) else { continue }
-                
                 posts.append(post)
             }
             
             self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
-            
+
             completion(nil)
-            
         }) { (error) in
             NSLog("Error fetching posts: \(error)")
         }
@@ -75,8 +98,12 @@ class PostController {
         guard let postID = post.id else { return }
         
         let ref = postsRef.child(postID)
-        
-        ref.setValue(post.dictionaryRepresentation)
+
+        ref.setValue(post.dictionaryRepresentation) { (error, _) in
+            if let error = error {
+                NSLog("Error saving post: \(error)")
+            }
+        }
     }
 
     private func store(mediaData: Data, mediaType: MediaType, completion: @escaping (URL?) -> Void) {
