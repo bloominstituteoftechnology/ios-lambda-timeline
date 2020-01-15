@@ -10,20 +10,19 @@ import Foundation
 
 class FetchCommentMediaOperation: ConcurrentOperation {
 
-    private(set) var comment: Comment
     private(set) var mediaURL: URL
+    var postController: PostController
     var mediaData: Data?
 
     private let session: URLSession
     private var dataTask: URLSessionDataTask?
 
-    init?(comment: Comment,
-         session: URLSession = URLSession.shared
+    init?(mediaURL: URL,
+          postController: PostController,
+          session: URLSession = URLSession.shared
     ) {
-        guard case .audio(let url) = comment.content else { return nil }
-
-        self.mediaURL = url
-        self.comment = comment
+        self.mediaURL = mediaURL
+        self.postController = postController
         self.session = session
         
         super.init()
@@ -32,11 +31,15 @@ class FetchCommentMediaOperation: ConcurrentOperation {
     override func start() {
         state = .isExecuting
 
-        let task = session.dataTask(with: mediaURL) { data, response, error in
-            defer { self.state = .isFinished }
+        let task = session.dataTask(with: mediaURL) { [weak self] data, response, error in
+            defer { self?.state = .isFinished }
+            guard
+                let self = self,
+                !self.isCancelled
+                else { return }
             if self.isCancelled { return }
             if let error = error {
-                NSLog("Error fetching data for \(self.comment): \(error)")
+                NSLog("Error fetching data for \(self.mediaURL): \(error)")
                 return
             }
 
