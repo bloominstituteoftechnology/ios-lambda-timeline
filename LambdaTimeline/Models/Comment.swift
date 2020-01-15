@@ -9,9 +9,9 @@
 import Foundation
 import FirebaseAuth
 
-enum CommentType {
-    case text
-    case audio
+enum CommentContent {
+    case text(String)
+    case audio(URL)
 }
 
 class Comment: FirebaseConvertible, Equatable {
@@ -20,21 +20,28 @@ class Comment: FirebaseConvertible, Equatable {
     static private let author = "author"
     static private let timestampKey = "timestamp"
 
-    let text: String?
-    let audioData: Data?
+    var content: CommentContent
+    var text: String? {
+        if case .text(let text) = content {
+            return text
+        } else { return nil }
+    }
+    var audioURL: URL? {
+        if case .audio(let url) = content {
+            return url
+        } else { return nil }
+    }
     let author: Author
     let timestamp: Date
     
     init(text: String, author: Author, timestamp: Date = Date()) {
-        self.audioData = nil
-        self.text = text
+        self.content = .text(text)
         self.author = author
         self.timestamp = timestamp
     }
 
-    init(audioData: Data, author: Author, timestamp: Date = Date()) {
-        self.audioData = audioData
-        self.text = nil
+    init(audioURL: URL, author: Author, timestamp: Date = Date()) {
+        self.content = .audio(audioURL)
         self.author = author
         self.timestamp = timestamp
     }
@@ -47,18 +54,22 @@ class Comment: FirebaseConvertible, Equatable {
             let timestampTimeInterval = dictionary[Comment.timestampKey]
                 as? TimeInterval
             else { return nil }
-        let text = dictionary[Comment.textKey] as? String
-        let audioData = dictionary[Comment.audioKey] as? Data
-        
-        self.text = text
-        self.audioData = audioData
+
+        if let text = dictionary[Comment.textKey] as? String {
+            self.content = .text(text)
+        } else if let audioURL = dictionary[Comment.audioKey] as? URL {
+            self.content = .audio(audioURL)
+        } else {
+            return nil
+        }
+
         self.author = author
         self.timestamp = Date(timeIntervalSince1970: timestampTimeInterval)
     }
     
     var dictionaryRepresentation: [String: Any] {
         return [Comment.textKey: text as Any,
-                Comment.audioKey: audioData as Any,
+                Comment.audioKey: audioURL as Any,
                 Comment.author: author.dictionaryRepresentation,
                 Comment.timestampKey: timestamp.timeIntervalSince1970]
     }

@@ -15,7 +15,6 @@ enum MediaType: String {
 }
 
 class Post {
-
     var dictionaryRepresentation: [String : Any] {
         var dict: [String: Any] = [
             Post.mediaKey: mediaURL.absoluteString,
