@@ -161,6 +161,9 @@
                                                             <segment title="4"/>
                                                             <segment title="5"/>
                                                         </segments>
+                                                        <connections>
+                                                            <action selector="segmentedControlChange:" destination="1Aw-4e-BW2" eventType="valueChanged" id="CHd-nc-fV2"/>
+                                                        </connections>
                                                     </segmentedControl>
                                                     <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="I31-eo-2KH">
                                                         <rect key="frame" x="0.0" y="47" width="355" height="21"/>
@@ -257,14 +260,17 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="brightnessSlider" destination="gM8-HI-LKv" id="8Ou-cq-7jJ"/>
+                        <outlet property="bottomLabelSlider" destination="JNw-sr-YHN" id="tSB-7Q-k5d"/>
+                        <outlet property="bottomSlider" destination="ygi-5u-rUO" id="CPY-Gd-LsU"/>
                         <outlet property="chooseImageButton" destination="VxD-cu-jHT" id="KVs-no-MbU"/>
-                        <outlet property="contrastSlider" destination="C4U-xO-Z6G" id="IFz-Tr-sfv"/>
                         <outlet property="imageHeightConstraint" destination="rix-Q7-xlL" id="mYM-EC-PSF"/>
                         <outlet property="imageView" destination="4eK-5F-H5h" id="gJk-S8-HUZ"/>
+                        <outlet property="middleSlider" destination="C4U-xO-Z6G" id="IFz-Tr-sfv"/>
+                        <outlet property="middleSliderLabel" destination="Ceq-Mf-Gqm" id="7Be-br-nHN"/>
                         <outlet property="postButton" destination="hsH-Uv-tug" id="ZBn-KE-cpU"/>
-                        <outlet property="saturationSlider" destination="ygi-5u-rUO" id="CPY-Gd-LsU"/>
                         <outlet property="titleTextField" destination="Op6-OA-6Ou" id="JEe-cj-4mv"/>
+                        <outlet property="topSlider" destination="gM8-HI-LKv" id="8Ou-cq-7jJ"/>
+                        <outlet property="topSliderLabel" destination="ZhP-w7-Z9I" id="1CC-s8-0Wu"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXa-A2-VJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
