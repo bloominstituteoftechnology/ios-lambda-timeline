@@ -29,8 +29,8 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var saturationSlider: UISlider!
     @IBOutlet weak var contrastSlider: UISlider!
     @IBOutlet weak var blurSlider: UISlider!
-    @IBOutlet weak var bwSwitch: UISwitch!
-    @IBOutlet weak var sepiaSwitch: UISwitch!
+    @IBOutlet weak var invertSwitch: UISwitch!
+    @IBOutlet weak var noirSwitch: UISwitch!
     @IBOutlet weak var vividSwitch: UISwitch!
     
     //MARK: - Views
@@ -93,8 +93,8 @@ class ImagePostViewController: ShiftableViewController {
         saturationSlider.isEnabled = true
         contrastSlider.isEnabled = true
         blurSlider.isEnabled = true
-        bwSwitch.isEnabled = true
-        sepiaSwitch.isEnabled = true
+        invertSwitch.isEnabled = true
+        noirSwitch.isEnabled = true
         vividSwitch.isEnabled = true
     }
     

@@ -230,13 +230,13 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="80" translatesAutoresizingMaskIntoConstraints="NO" id="4LD-rM-6aj">
                                                 <rect key="frame" x="0.0" y="160" width="286" height="30"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Black &amp; White" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nfL-dv-dLC">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Invert" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nfL-dv-dLC">
                                                         <rect key="frame" x="0.0" y="0.0" width="156" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vpz-gd-WWx">
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Vpz-gd-WWx">
                                                         <rect key="frame" x="236" y="0.0" width="52" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="50" id="opZ-wM-10H"/>
@@ -248,13 +248,13 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="149" translatesAutoresizingMaskIntoConstraints="NO" id="7MX-ml-qqk">
                                                 <rect key="frame" x="0.0" y="200" width="285.5" height="31"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sepia" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LvG-a5-5H6">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Noir" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LvG-a5-5H6">
                                                         <rect key="frame" x="0.0" y="0.0" width="87.5" height="31"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Wf-e6-wHP">
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="5Wf-e6-wHP">
                                                         <rect key="frame" x="236.5" y="0.0" width="51" height="31"/>
                                                     </switch>
                                                 </subviews>
@@ -268,7 +268,7 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="whu-Nu-E9w">
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="whu-Nu-E9w">
                                                         <rect key="frame" x="236" y="0.0" width="52" height="30"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="50" id="EDj-Mr-x6m"/>
@@ -320,14 +320,14 @@
                     <connections>
                         <outlet property="blurSlider" destination="vs1-T7-XUU" id="bEK-Z9-CPw"/>
                         <outlet property="brightnessSlider" destination="jv1-qB-GnW" id="mRQ-4b-gde"/>
-                        <outlet property="bwSwitch" destination="Vpz-gd-WWx" id="k3s-QU-VQM"/>
                         <outlet property="chooseImageButton" destination="VxD-cu-jHT" id="KVs-no-MbU"/>
                         <outlet property="contrastSlider" destination="f6j-FZ-kWa" id="tuH-3S-Nb3"/>
                         <outlet property="imageHeightConstraint" destination="MHD-wr-Gq9" id="HyG-8g-Ck1"/>
                         <outlet property="imageView" destination="4eK-5F-H5h" id="e7m-c5-Xhz"/>
+                        <outlet property="invertSwitch" destination="Vpz-gd-WWx" id="k3s-QU-VQM"/>
+                        <outlet property="noirSwitch" destination="5Wf-e6-wHP" id="WX4-P1-Hrd"/>
                         <outlet property="postButton" destination="hsH-Uv-tug" id="ZBn-KE-cpU"/>
                         <outlet property="saturationSlider" destination="GZq-93-lTI" id="dzs-4w-BUg"/>
-                        <outlet property="sepiaSwitch" destination="5Wf-e6-wHP" id="WX4-P1-Hrd"/>
                         <outlet property="titleTextField" destination="Op6-OA-6Ou" id="JEe-cj-4mv"/>
                         <outlet property="vividSwitch" destination="whu-Nu-E9w" id="4J4-W2-9Jw"/>
                     </connections>

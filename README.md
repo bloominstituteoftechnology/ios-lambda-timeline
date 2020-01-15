@@ -45,6 +45,17 @@ At this point, run the app on your simulator or physical device in order to make
 Now that your project is working correctly, you will implement the ability to add filters to the image(s) the user selects from their photo. 
 
 1. You must add at least 5 filters. [This page](https://developer.apple.com/library/archive/documentation/GraphicsImaging/Reference/CoreImageFilterReference/#//apple_ref/doc/filter/ci/CIFalseColor) lists the filters that you can use. Note that some simply take in an `inputImage` parameter, while others have more parameters such as the `CIMotionBlur`, `CIColorControls`, etc. Use at least two or three of filters with a bit more complexity than just the `inputImage`.
+
+*/
+- Brightness (CIColorControls)
+- Saturation (CIColorControls)
+- Contrast (CIColorControls)
+- Blur (CIGaussianBlur)
+- Invert (CIColorInvert)
+- Noir (CIPhotoEffectNoir)
+- Vivid (CIPhotoEffectChrome)
+/*
+
 2. Add whatever UI elements you want to the `ImagePostViewController` in order for them to add filters to their image after they've selected one. For the filters that require other parameters, add UI to allow the user to adjust the filter such as a slider for brightness, blur amount, etc.
 3. Ensure that the controls to add your filters, adjust them, etc. are only available to the user at the apropriate time. For example, you shouldn't let the user add a filter if they haven't selected an image yet. And it doesn't make sense to show the adjustment UI if they selected a filter that has no adjustment.
 
