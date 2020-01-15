@@ -219,6 +219,23 @@ class ImagePostViewController: ShiftableViewController {
 		}
 	}
 
+	private func configureVignetteSegmentSliderValues() {
+		UIView.animate(withDuration: 0.3) {
+
+			self.topSliderStackView.isHidden = false
+			self.middleSliderStackView.isHidden = false
+			self.bottomSliderStackView.isHidden = true
+
+			self.topSlider.value = 0
+			self.topSlider.minimumValue = -1
+			self.topSlider.maximumValue = 1
+
+			self.middleSlider.setValue(1.0, animated: true)
+			self.middleSlider.minimumValue = 0
+			self.middleSlider.maximumValue = 2
+		}
+	}
+
 
 	
 
