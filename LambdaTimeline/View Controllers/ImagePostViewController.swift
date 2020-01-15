@@ -28,6 +28,11 @@ class ImagePostViewController: ShiftableViewController {
 	@IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
 	@IBOutlet weak var postButton: UIBarButtonItem!
 
+	@IBOutlet weak var topSliderStackView: UIStackView!
+	@IBOutlet weak var middleSliderStackView: UIStackView!
+	@IBOutlet weak var bottomSliderStackView: UIStackView!
+
+
 	var postController: PostController!
 	var post: Post?
 	var imageData: Data?
@@ -195,7 +200,22 @@ class ImagePostViewController: ShiftableViewController {
 
 	private func configureColorSegmentSliderValues() {
 		UIView.animate(withDuration: 0.3) {
-			
+			self.topSliderStackView.isHidden = false
+			self.middleSliderStackView.isHidden = false
+			self.bottomSliderStackView.isHidden = false
+
+			self.topSlider.value = 0
+			self.topSlider.minimumValue = -1
+			self.topSlider.maximumValue = 1
+
+			self.middleSlider.setValue(0, animated: true)
+			self.middleSlider.minimumValue = 0.25
+			self.middleSlider.maximumValue = 4
+
+			self.bottomSlider.value = 0
+			self.bottomSlider.minimumValue = 0.25
+			self.bottomSlider.maximumValue = 4
+
 		}
 	}
 
