@@ -75,9 +75,9 @@ class ImagePostViewController: ShiftableViewController {
     private func updateImage() {
         if let image = originalImage {
             imageView.image = filterImage(image)
-//            imageView.image = filterSharpenImage(image)
+//          imageView.image = filterSharpenImage(image)
         } else {
-            //  TODO: set to nil? clear it?
+            
         }
     }
 
@@ -98,10 +98,16 @@ class ImagePostViewController: ShiftableViewController {
         sharpnessFilter.setValue(ciImage, forKey: kCIInputImageKey)
         sharpnessFilter.setValue(sharpnessSlider.value, forKey: kCIInputSharpnessKey)
 
+//        monoFilter.setValue(ciImage, forKey: kCIInputImageKey)
 //        monoFilter.setValue(monoSwitch, forKey: kCIInputImageKey)
+//        
+//        noirFilter.setValue(ciImage, forKey: kCIInputImageKey)
 //        noirFilter.setValue(noirSwitch, forKey: kCIInputImageKey)
 
         ciImage = sharpnessFilter.outputImage ?? ciImage
+        
+//        ciImage = monoFilter.outputImage ?? ciImage
+//        ciImage = noirFilter.outputImage ?? ciImage
 
         guard let outputCGImage = context.createCGImage(ciImage, from: CGRect(origin: .zero, size: image.size)) else { return image }
 
@@ -212,17 +218,17 @@ class ImagePostViewController: ShiftableViewController {
     }
 
     @IBAction func monoSwitched(_ sender: UISwitch) {
-
+        updateImage()
     }
 
     @IBAction func noirSwitched(_ sender: UISwitch) {
-
+        updateImage()
     }
 
     
     func setImageViewHeight(with aspectRatio: CGFloat) {
         
-        imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
+ //       imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
         
         view.layoutSubviews()
     }
