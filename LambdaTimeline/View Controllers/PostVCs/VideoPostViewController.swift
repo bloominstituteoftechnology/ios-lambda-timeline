@@ -29,7 +29,7 @@ class VideoPostViewController: UIViewController {
     }
 
     func recordNewVideo() {
-
+        performSegue(withIdentifier: "RecordVideoSegue", sender: self)
     }
 
     func postVideo() {
@@ -39,6 +39,10 @@ class VideoPostViewController: UIViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
+        if segue.identifier == "RecordVideoSegue" {
+            guard let videoRecorderVC = segue.destination
+                as? VideoRecorderViewController
+                else { return }
+        }
     }
 }
