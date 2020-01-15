@@ -14,6 +14,7 @@ import FirebaseAuth
 enum MediaType {
     case image(ratio: CGFloat?)
     case audio
+    case video
 
     var rawValue: String {
         switch self {
@@ -21,8 +22,10 @@ enum MediaType {
             return "image"
         case .audio:
             return "audio"
+        case .video:
+            return "video"
         @unknown default:
-            return ""
+            return "?"
         }
     }
 
@@ -32,6 +35,8 @@ enum MediaType {
             self = .image(ratio: nil)
         case "audio":
             self = .audio
+        case "video":
+            self = .video
         default:
             return nil
         }
