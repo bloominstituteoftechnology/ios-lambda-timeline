@@ -21,7 +21,7 @@ class ImagePostViewController: ShiftableViewController {
 
     var postController: PostController!
     var post: Post?
-    var imageData: Data?
+    var mediaData: Data?
 
     var originalImage: UIImage? {
         didSet { scaledImage = scaleImage(originalImage) }
@@ -90,7 +90,7 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     func updateViews() {
-        guard let imageData = imageData,
+        guard let imageData = mediaData,
             let image = UIImage(data: imageData) else {
                 title = "New Post"
                 return
@@ -107,64 +107,12 @@ class ImagePostViewController: ShiftableViewController {
 
     // MARK: - Actions
     
-    @IBAction func createPost(_ sender: Any) {
-        view.endEditing(true)
-
-        guard let filteredImage = filterImage(scaledImage),
-            let imageData = filteredImage.jpegData(compressionQuality: 0.1),
-            let title = titleTextField.text, title != ""
-            else {
-                presentInformationalAlertController(
-                    title: "Uh-oh",
-                    message: "Make sure that you add a photo and a caption before posting.")
-                return
-        }
-
-        postController.createPost(
-            with: title,
-            ofType: .image(ratio: imageView.image?.ratio),
-            mediaData: imageData
-        ) { success in
-            guard success else {
-                DispatchQueue.main.async {
-                    self.presentInformationalAlertController(
-                        title: "Error",
-                        message: "Unable to create post. Try again.")
-                }
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self.navigationController?.popViewController(animated: true)
-            }
-        }
+    @IBAction func createPostTapped(_ sender: Any) {
+        createPost()
     }
     
-    @IBAction func chooseImage(_ sender: Any) {
-        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
-        
-        switch authorizationStatus {
-        case .authorized:
-            presentImagePickerController()
-        case .notDetermined:
-            PHPhotoLibrary.requestAuthorization { (status) in
-                
-                guard status == .authorized else {
-                    NSLog("User did not authorize access to the photo library")
-                    self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
-                    return
-                }
-                DispatchQueue.main.async {
-                    self.presentImagePickerController()
-                }
-            }
-        case .denied:
-            self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
-        case .restricted:
-            self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
-        @unknown default: break
-        }
-        presentImagePickerController()
+    @IBAction func chooseImageTapped(_ sender: Any) {
+        chooseImage()
     }
 
     @IBAction private func filterButtonTapped(_ sender: UIButton) {
@@ -194,6 +142,65 @@ class ImagePostViewController: ShiftableViewController {
 
     @IBAction private func filterSliderChanged(_ sender: UISlider) {
         filterPreviewImage()
+    }
+
+    func createPost() {
+        view.endEditing(true)
+
+        guard let filteredImage = filterImage(scaledImage),
+            let imageData = filteredImage.jpegData(compressionQuality: 0.1),
+            let title = titleTextField.text, title != ""
+            else {
+                presentInformationalAlertController(
+                    title: "Uh-oh",
+                    message: "Make sure that you add a photo and a caption before posting.")
+                return
+        }
+
+        postController.createPost(
+            with: title,
+            ofType: .image(ratio: imageView.image?.ratio),
+            mediaData: imageData
+        ) { success in
+            guard success else {
+                DispatchQueue.main.async {
+                    self.presentInformationalAlertController(
+                        title: "Error",
+                        message: "Unable to create post. Try again.")
+                }
+                return
+            }
+
+            DispatchQueue.main.async {
+                self.navigationController?.popViewController(animated: true)
+            }
+        }
+    }
+
+    func chooseImage() {
+        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
+        switch authorizationStatus {
+        case .authorized:
+            presentImagePickerController()
+        case .notDetermined:
+            PHPhotoLibrary.requestAuthorization { (status) in
+                guard status == .authorized else {
+                    NSLog("User did not authorize access to the photo library")
+                    self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
+                    return
+                }
+                DispatchQueue.main.async {
+                    self.presentImagePickerController()
+                }
+            }
+        case .denied:
+            self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
+        case .restricted:
+            self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
+        @unknown default:
+            break
+        }
+        presentImagePickerController()
     }
 
     // MARK: - Helper Methods

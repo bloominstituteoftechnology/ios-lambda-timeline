@@ -16,9 +16,7 @@ class AudioPostViewController: ShiftableViewController {
     var postController: PostController!
     var post: Post?
 
-    var audioData: Data? {
-        didSet { setUpPlayer() }
-    }
+    var mediaData: Data?
 
     // MARK: - Outlets
 
@@ -36,7 +34,7 @@ class AudioPostViewController: ShiftableViewController {
     }
 
     private func updateViews() {
-        let hasRecordedData = (audioData != nil)
+        let hasRecordedData = (mediaData != nil)
         title = post?.title ?? "New Post"
         audioRecordererControl.isHidden = hasRecordedData
         audioPlayerControl.isHidden = !hasRecordedData
@@ -56,12 +54,12 @@ class AudioPostViewController: ShiftableViewController {
     // MARK: - Methods
 
     private func clearRecordedData() {
-        audioData = nil
+        mediaData = nil
         updateViews()
     }
 
     private func setUpPlayer() {
-        if let data = audioData {
+        if let data = mediaData {
             audioPlayerControl.loadAudio(from: data)
         }
         updateViews()
@@ -103,6 +101,7 @@ extension AudioPostViewController: AudioRecorderControlDelegate {
         _ recorderControl: AudioRecorderControl,
         didFinishRecordingSucessfully didFinishRecording: Bool
     ) {
-        self.audioData = recorderControl.audioData
+        self.mediaData = recorderControl.audioData
+        setUpPlayer()
     }
 }
