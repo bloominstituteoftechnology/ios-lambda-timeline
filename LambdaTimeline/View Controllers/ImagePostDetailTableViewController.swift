@@ -71,12 +71,9 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
-        
-        let comment = post?.comments[indexPath.row + 1]
-        
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author.displayName
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as? ImagePostDetailTableViewCell else { return UITableViewCell() }
+
+        cell.comment = post?.comments[indexPath.row + 1]
         
         return cell
     }

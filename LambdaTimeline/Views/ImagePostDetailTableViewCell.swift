@@ -21,7 +21,22 @@ class ImagePostDetailTableViewCell: UITableViewCell {
     }
 
     private func updateViews() {
-        
+        guard let comment = comment else { return }
+
+        if let title = comment.text {
+            titleLabel.text = title
+        } else {
+            titleLabel.isHidden = true
+        }
+
+        authorLabel.text = comment.author.displayName
+
+        if comment.audioURL == nil {
+            audioPlayButton.isHidden = true
+        }
     }
 
+    @IBAction func audioPlayButtonTapped(_ sender: UIButton) {
+        
+    }
 }
