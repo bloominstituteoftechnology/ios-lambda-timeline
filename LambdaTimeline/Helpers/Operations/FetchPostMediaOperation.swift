@@ -1,5 +1,5 @@
 //
-//  FetchMediaOperation.swift
+//  FetchPostMediaOperation.swift
 //  LambdaTimeline
 //
 //  Created by Spencer Curtis on 10/12/18.
@@ -8,9 +8,20 @@
 
 import Foundation
 
-class FetchMediaOperation: ConcurrentOperation {
-    
-    init(post: Post, postController: PostController, session: URLSession = URLSession.shared) {
+class FetchPostMediaOperation: ConcurrentOperation {
+
+    let post: Post
+    let postController: PostController
+    var mediaData: Data?
+
+    private let session: URLSession
+
+    private var dataTask: URLSessionDataTask?
+
+    init(post: Post,
+         postController: PostController,
+         session: URLSession = URLSession.shared
+    ) {
         self.post = post
         self.postController = postController
         self.session = session
@@ -45,15 +56,4 @@ class FetchMediaOperation: ConcurrentOperation {
         dataTask?.cancel()
         super.cancel()
     }
-    
-    // MARK: Properties
-    
-    let post: Post
-    let postController: PostController
-    var mediaData: Data?
-    
-    private let session: URLSession
-    
-    private var dataTask: URLSessionDataTask?
-    
 }
