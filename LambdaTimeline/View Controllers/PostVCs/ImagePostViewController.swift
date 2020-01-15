@@ -122,9 +122,8 @@ class ImagePostViewController: ShiftableViewController {
 
         postController.createPost(
             with: title,
-            ofType: .image,
-            mediaData: imageData,
-            ratio: imageView.image?.ratio
+            ofType: .image(ratio: imageView.image?.ratio),
+            mediaData: imageData
         ) { success in
             guard success else {
                 DispatchQueue.main.async {

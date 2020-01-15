@@ -100,11 +100,14 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         
         let post = postController.posts[indexPath.row]
 
-        if post.mediaType == .image {
-            guard let ratio = post.ratio else { return size }
+        switch post.mediaType {
+        case .image(let ratio):
+            guard let ratio = ratio else { return size }
             size.height = size.width * ratio
-        } else if post.mediaType == .audio {
+        case .audio:
             size.height = 220
+        @unknown default:
+            break
         }
         
         return size

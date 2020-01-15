@@ -9,12 +9,55 @@
 import Foundation
 import FirebaseAuth
 
-enum MediaType: String {
-    case image
+// MARK: - MediaType
+
+enum MediaType {
+    case image(ratio: CGFloat?)
     case audio
+
+    var rawValue: String {
+        switch self {
+        case .image(_):
+            return "image"
+        case .audio:
+            return "audio"
+        @unknown default:
+            return ""
+        }
+    }
+
+    init?(rawValue: String) {
+        switch rawValue {
+        case "image":
+            self = .image(ratio: nil)
+        case "audio":
+            self = .audio
+        default:
+            return nil
+        }
+    }
 }
 
+
 class Post {
+
+    // MARK: - Properties
+
+    var mediaURL: URL
+    let mediaType: MediaType
+    let author: Author
+    let timestamp: Date
+    var comments: [Comment]
+    var id: String?
+
+    var ratio: CGFloat? {
+        if case .image(let ratio) = mediaType {
+            return ratio
+        } else { return nil }
+    }
+    var title: String? {
+        return comments.first?.text
+    }
     var dictionaryRepresentation: [String : Any] {
         var dict: [String: Any] = [
             Post.mediaKey: mediaURL.absoluteString,
@@ -30,17 +73,7 @@ class Post {
         return dict
     }
 
-    var mediaURL: URL
-    let mediaType: MediaType
-    let author: Author
-    let timestamp: Date
-    var comments: [Comment]
-    var id: String?
-    var ratio: CGFloat?
-
-    var title: String? {
-        return comments.first?.text
-    }
+    // MARK: - Static
 
     static private let mediaKey = "media"
     static private let ratioKey = "ratio"
@@ -49,11 +82,18 @@ class Post {
     static private let commentsKey = "comments"
     static private let timestampKey = "timestamp"
     static private let idKey = "id"
+
+    // MARK: - Init
     
-    init(title: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date()) {
+    init(
+        title: String,
+        mediaURL: URL,
+        mediaType: MediaType,
+        author: Author,
+        timestamp: Date = Date()
+    ) {
         self.mediaURL = mediaURL
-        self.ratio = ratio
-        self.mediaType = .image
+        self.mediaType = mediaType
         self.author = author
         self.comments = [Comment(text: title, author: author)]
         self.timestamp = timestamp
@@ -72,8 +112,12 @@ class Post {
             else { return nil }
         
         self.mediaURL = mediaURL
-        self.mediaType = mediaType
-        self.ratio = dictionary[Post.ratioKey] as? CGFloat
+        switch  mediaType {
+        case .image:
+            self.mediaType = .image(ratio: dictionary[Post.ratioKey] as? CGFloat)
+        default:
+            self.mediaType = mediaType
+        }
         self.author = author
         self.timestamp = Date(timeIntervalSince1970: timestampTimeInterval)
         self.comments = captionDictionaries.compactMap({ Comment(dictionary: $0) })

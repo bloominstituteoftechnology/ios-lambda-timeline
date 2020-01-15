@@ -23,7 +23,6 @@ class PostController {
         with title: String,
         ofType mediaType: MediaType,
         mediaData: Data,
-        ratio: CGFloat? = nil,
         completion: @escaping (Bool) -> Void = { _ in }
     ) {
         guard
@@ -36,11 +35,11 @@ class PostController {
                 completion(false)
                 return
             }
-            
-            let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
+
+            let post = Post(title: title, mediaURL: mediaURL, mediaType: mediaType, author: author)
             
             self.postsRef.childByAutoId()
-                .setValue(imagePost.dictionaryRepresentation)
+                .setValue(post.dictionaryRepresentation)
                 { error, ref in
 
                 if let error = error {

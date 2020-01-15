@@ -81,8 +81,7 @@ class AudioPostViewController: ShiftableViewController {
         postController.createPost(
             with: title,
             ofType: .audio,
-            mediaData: data,
-            ratio: nil
+            mediaData: data
         ) { success in
             DispatchQueue.main.async {
                 if success {
