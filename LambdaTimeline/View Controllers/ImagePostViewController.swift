@@ -10,7 +10,16 @@ import UIKit
 import Photos
 
 class ImagePostViewController: ShiftableViewController {
-    
+
+	// --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+	// MARK: - Outlets
+	@IBOutlet weak var imageView: UIImageView!
+	@IBOutlet weak var brightnessSlider: UISlider!
+	@IBOutlet weak var contrastSlider: UISlider!
+	@IBOutlet weak var saturationSlider: UISlider!
+
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -106,9 +115,9 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     func setImageViewHeight(with aspectRatio: CGFloat) {
-        
+
         imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
-        
+
         view.layoutSubviews()
     }
     
