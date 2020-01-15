@@ -29,6 +29,17 @@ class AudioRecorderControl: UIControl {
 
     var isRecording: Bool { audioRecorder?.isRecording ?? false }
     var elapsedTime: TimeInterval { audioRecorder?.currentTime ?? 0 }
+    var audioData: Data? {
+        guard
+            let url = audioFileURL,
+            let data: Data = try? Data(contentsOf: url)
+            else {
+                print("could not retrieve data from contents of url")
+                return nil
+        }
+
+        return data
+    }
 
     private var audioRecorder: AVAudioRecorder?
     private var uiUpdateTimer: Timer?
