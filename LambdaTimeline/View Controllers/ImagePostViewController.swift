@@ -44,7 +44,6 @@ class ImagePostViewController: ShiftableViewController {
         }
         
         DispatchQueue.main.async {
-            
             let imagePicker = UIImagePickerController()
             
             imagePicker.delegate = self
