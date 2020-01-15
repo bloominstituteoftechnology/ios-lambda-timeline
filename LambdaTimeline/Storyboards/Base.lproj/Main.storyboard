@@ -98,6 +98,7 @@
                     <connections>
                         <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="jaI-fq-Woc"/>
                         <segue destination="OyM-8q-Icp" kind="show" identifier="ViewImagePost" id="hhs-es-AdQ"/>
+                        <segue destination="Y4K-qT-XVa" kind="show" identifier="AddVideoPost" id="7KF-cq-6JA"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -340,7 +341,54 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXa-A2-VJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1968.1159420289857" y="-195.53571428571428"/>
+            <point key="canvasLocation" x="1968" y="-358"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="hKg-dF-BWE">
+            <objects>
+                <viewController id="Y4K-qT-XVa" customClass="CameraViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="0pT-jE-EiY">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qav-B0-Y9C" userLabel="Camera View" customClass="CameraPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HVt-id-fDp">
+                                <rect key="frame" x="157" y="702" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="5NC-ng-x4j"/>
+                                    <constraint firstAttribute="height" constant="100" id="vHh-rk-eqK"/>
+                                </constraints>
+                                <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="Record"/>
+                                <state key="selected" image="Stop"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="Y4K-qT-XVa" eventType="touchUpInside" id="bWD-2B-6Qj"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="qav-B0-Y9C" firstAttribute="leading" secondItem="aKt-8a-spM" secondAttribute="leading" id="6NF-jY-kyl"/>
+                            <constraint firstItem="aKt-8a-spM" firstAttribute="trailing" secondItem="qav-B0-Y9C" secondAttribute="trailing" id="6gi-IL-9jq"/>
+                            <constraint firstAttribute="bottom" secondItem="qav-B0-Y9C" secondAttribute="bottom" id="Q7T-uW-0Tc"/>
+                            <constraint firstItem="aKt-8a-spM" firstAttribute="bottom" secondItem="HVt-id-fDp" secondAttribute="bottom" constant="60" id="RFP-VF-e1o"/>
+                            <constraint firstItem="HVt-id-fDp" firstAttribute="centerX" secondItem="0pT-jE-EiY" secondAttribute="centerX" id="eFs-sx-tPa"/>
+                            <constraint firstItem="qav-B0-Y9C" firstAttribute="top" secondItem="0pT-jE-EiY" secondAttribute="top" id="p9F-aY-8VD"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="aKt-8a-spM"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="j2L-2H-NIE"/>
+                    <connections>
+                        <outlet property="cameraView" destination="qav-B0-Y9C" id="R5Q-z6-GfR"/>
+                        <outlet property="recordButton" destination="HVt-id-fDp" id="jyl-pp-6xh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aeP-DS-1Pb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2786" y="-358"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gdW-Je-ais">
@@ -472,7 +520,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Az6-T1-4S4">
                                             <rect key="frame" x="72" y="12" width="312" height="49"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uE3-Ls-2xg">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uE3-Ls-2xg">
                                                     <rect key="frame" x="0.0" y="0.0" width="312" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -606,6 +654,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Record" width="116" height="116"/>
+        <image name="Stop" width="116" height="116"/>
         <image name="play" catalog="system" width="60" height="64"/>
     </resources>
 </document>
