@@ -29,8 +29,7 @@ class AudioPlayerControl: UIControl {
 
     // MARK: - Audio Properties
 
-    private(set) var audioFileURL: URL?
-
+    var audioIsLoaded: Bool { audioPlayer != nil }
     var isPlaying: Bool { audioPlayer?.isPlaying ?? false }
     var elapsedTime: TimeInterval { audioPlayer?.currentTime ?? 0 }
     var totalDuration: TimeInterval { audioPlayer?.duration ?? 0 }
@@ -60,23 +59,26 @@ class AudioPlayerControl: UIControl {
 
     // MARK: - Playback API
 
-    func loadAudio(from url: URL?) {
-        audioFileURL = url
-        loadAudio()
-    }
-
-    func loadAudio() {
-        guard let url = audioFileURL else {
-            print("no file at audioFileURL!")
-            audioPlayer = nil
-            return
-        }
-
+    func loadAudio(from url: URL) {
         do { audioPlayer = try AVAudioPlayer(contentsOf: url) } catch {
-            print("error loading audio player: \(error)")
+            print("error loading audio player from url: \(error)")
+            return
         }
         audioPlayer?.delegate = self
         updateViews()
+    }
+
+    func loadAudio(from data: Data) {
+        do { audioPlayer = try AVAudioPlayer(data: data) } catch {
+            print("error loading audioplayer from data: \(error)")
+            return
+        }
+        audioPlayer?.delegate = self
+        updateViews()
+    }
+
+    func unloadAudio() {
+        audioPlayer = nil
     }
 
     func togglePlayback() {

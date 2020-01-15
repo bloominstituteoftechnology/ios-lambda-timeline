@@ -9,6 +9,14 @@
 import UIKit
 import AVFoundation
 
+// MARK: - Delegate
+
+protocol AudioRecorderControlDelegate: AnyObject {
+    func audioRecorderControl(
+        _ recorderControl: AudioRecorderControl,
+        didFinishRecordingSucessfully didFinishRecording: Bool)
+}
+
 @IBDesignable
 class AudioRecorderControl: UIControl {
 
@@ -30,19 +38,19 @@ class AudioRecorderControl: UIControl {
     var isRecording: Bool { audioRecorder?.isRecording ?? false }
     var elapsedTime: TimeInterval { audioRecorder?.currentTime ?? 0 }
     var audioData: Data? {
-        guard
-            let url = audioFileURL,
-            let data: Data = try? Data(contentsOf: url)
-            else {
-                print("could not retrieve data from contents of url")
-                return nil
+        guard let url = audioFileURL else { return nil }
+        do {
+            return try Data(contentsOf: url)
+        } catch {
+            print("error getting audio data from url: \(error)")
+            return nil
         }
-
-        return data
     }
 
     private var audioRecorder: AVAudioRecorder?
     private var uiUpdateTimer: Timer?
+
+    weak var delegate: AudioRecorderControlDelegate?
 
     // MARK: - Init
 
@@ -88,13 +96,12 @@ class AudioRecorderControl: UIControl {
         audioFileURL = file
         print("recording to file: \(file)")
 
-
         do {
             audioRecorder = try AVAudioRecorder(url: file, format: format)
         } catch {
             print("error setting up audio recorder: \(error)")
         }
-//        audioRecorder?.delegate = self
+        audioRecorder?.delegate = self
         audioRecorder?.record()
         updateViews()
         startUIUpdateTimer()
@@ -166,6 +173,7 @@ extension AudioRecorderControl: AVAudioRecorderDelegate {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         print("finished recording")
         updateViews()
+        delegate?.audioRecorderControl(self, didFinishRecordingSucessfully: flag)
     }
 
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
