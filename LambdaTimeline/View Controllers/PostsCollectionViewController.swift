@@ -68,6 +68,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
+            
+        case .audio:
+            return UICollectionViewCell() // TODO: handle this case properly
         }
     }
     
@@ -84,7 +87,14 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             guard let ratio = post.ratio else { return size }
             
             size.height = size.width * ratio
+        
+        case.audio:
+            
+            size.height = 60
+        
         }
+        
+        
         
         return size
     }
@@ -170,6 +180,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             destinationVC?.postController = postController
             destinationVC?.post = postController.posts[indexPath.row]
             destinationVC?.imageData = cache.value(for: postID)
+            destinationVC?.cache = cache
         }
     }
     

@@ -31,6 +31,9 @@
 		46D571F82173FC2700E7FF73 /* ImagePostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */; };
 		C0CF105823CBCF430065645A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0CF105723CBCF430065645A /* GoogleService-Info.plist */; };
 		C0CF105A23CE070D0065645A /* UIImage+Scaling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CF105923CE070D0065645A /* UIImage+Scaling.swift */; };
+		C0CF105C23CE64710065645A /* AudioPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CF105B23CE64710065645A /* AudioPostViewController.swift */; };
+		C0CF105E23CE7EC60065645A /* AudioCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CF105D23CE7EC60065645A /* AudioCommentTableViewCell.swift */; };
+		C0CF106023CEB5AF0065645A /* FetchAudioData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CF105F23CEB5AF0065645A /* FetchAudioData.swift */; };
 		E453457955DF907FCBD117F1 /* Pods_LambdaTimeline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +67,9 @@
 		AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LambdaTimeline.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0CF105723CBCF430065645A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C0CF105923CE070D0065645A /* UIImage+Scaling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Scaling.swift"; sourceTree = "<group>"; };
+		C0CF105B23CE64710065645A /* AudioPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPostViewController.swift; sourceTree = "<group>"; };
+		C0CF105D23CE7EC60065645A /* AudioCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCommentTableViewCell.swift; sourceTree = "<group>"; };
+		C0CF105F23CEB5AF0065645A /* FetchAudioData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchAudioData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,8 +168,9 @@
 			children = (
 				46A0366C2170158900E7FF73 /* SignInViewController.swift */,
 				46A0366921700F5100E7FF73 /* PostsCollectionViewController.swift */,
-				46CFE6F421707D0000E7FF73 /* ImagePostViewController.swift */,
 				46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */,
+				46CFE6F421707D0000E7FF73 /* ImagePostViewController.swift */,
+				C0CF105B23CE64710065645A /* AudioPostViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -172,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				46CFE7022171572600E7FF73 /* ImagePostCollectionViewCell.swift */,
+				C0CF105D23CE7EC60065645A /* AudioCommentTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -180,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				46CFE7002171559500E7FF73 /* FetchMediaOperation.swift */,
+				C0CF105F23CEB5AF0065645A /* FetchAudioData.swift */,
 				46CFE6FE2171556D00E7FF73 /* ConcurrentOperation.swift */,
 			);
 			path = Operations;
@@ -352,12 +361,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0CF106023CEB5AF0065645A /* FetchAudioData.swift in Sources */,
 				46A0366D2170158900E7FF73 /* SignInViewController.swift in Sources */,
 				C0CF105A23CE070D0065645A /* UIImage+Scaling.swift in Sources */,
 				46CFE6FB21714E6100E7FF73 /* Author.swift in Sources */,
 				46CFE6F92170862C00E7FF73 /* ShiftableViewController.swift in Sources */,
 				4646377C216FDE4B00E7FF73 /* AppDelegate.swift in Sources */,
 				46CFE6FD217154F500E7FF73 /* Networking.swift in Sources */,
+				C0CF105C23CE64710065645A /* AudioPostViewController.swift in Sources */,
 				46CFE6F521707D0000E7FF73 /* ImagePostViewController.swift in Sources */,
 				46CFE6FF2171556D00E7FF73 /* ConcurrentOperation.swift in Sources */,
 				46463790216FFD1B00E7FF73 /* Post.swift in Sources */,
@@ -365,6 +376,7 @@
 				46D571F32172D43B00E7FF73 /* Cache.swift in Sources */,
 				46CFE7012171559500E7FF73 /* FetchMediaOperation.swift in Sources */,
 				46D571F82173FC2700E7FF73 /* ImagePostDetailTableViewController.swift in Sources */,
+				C0CF105E23CE7EC60065645A /* AudioCommentTableViewCell.swift in Sources */,
 				46CFE7032171572600E7FF73 /* ImagePostCollectionViewCell.swift in Sources */,
 				4646379C2170091A00E7FF73 /* PostController.swift in Sources */,
 				464637992170048900E7FF73 /* FirebaseConvertible.swift in Sources */,

@@ -21,7 +21,7 @@ class PostController {
     
     let storageRef = Storage.storage().reference()
     
-    // MARK: - <#Section#>
+    // MARK: - Methods
     
     func createPost(with title: String, ofType mediaType: MediaType, mediaData: Data, ratio: CGFloat? = nil, completion: @escaping (Bool) -> Void = { _ in }) {
         
@@ -34,6 +34,7 @@ class PostController {
             
             let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
             
+            // just make a Comment here? like ^ and skip the below?
             self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
                 if let error = error {
                     NSLog("Error posting image post: \(error)")
@@ -45,12 +46,46 @@ class PostController {
         }
     }
     
-    func addComment(with text: String, to post: inout Post) {
+    func addComment(with text: String?, audioURL: URL? , to post: inout Post) {
         
+        if let text = text {
+            addTextComment(with: text, to: /*&*/post)
+        } else if let audioURL = audioURL {
+            addAudioComment(with: audioURL, to: post)
+        } else {
+            NSLog("Tried to create comment without audio or text.")
+        }
+    }
+    
+    func addAudioComment(with audioURL: URL, to post: Post) {
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
         
-        let comment = Comment(text: text, author: author)
+        do {
+            let data = try Data(contentsOf: audioURL)
+            store(mediaData: data, mediaType: .audio) { (audioCommentURL) in
+                
+                guard let audioCommentURL = audioCommentURL else { return }
+                let comment = Comment(text: nil, audioURL: audioCommentURL, author: author)
+                post.comments.append(comment)
+                self.savePostToFirebase(post)
+            }
+        } catch {
+            print("Error fetching data from audioURL (\(audioURL)): \(error)")
+        }
+        
+        
+//        let comment = Comment(text: nil, audioURL: audioURL, author: author)
+//        post.comments.append(comment)
+//
+//        savePostToFirebase(post)
+    }
+    
+    func addTextComment(with text: String, to post: /*inout*/ Post) {
+        guard let currentUser = Auth.auth().currentUser,
+            let author = Author(user: currentUser) else { return }
+        
+        let comment = Comment(text: text, audioURL: nil, author: author)
         post.comments.append(comment)
         
         savePostToFirebase(post)
@@ -123,11 +158,6 @@ class PostController {
                 completion(url)
             })
         }
-        
         uploadTask.resume()
     }
-    
-    
-    
-    
 }

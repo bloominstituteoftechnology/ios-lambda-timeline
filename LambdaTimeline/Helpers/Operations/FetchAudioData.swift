@@ -1,28 +1,28 @@
 //
-//  FetchMediaOperation.swift
+//  FetchAudioData.swift
 //  LambdaTimeline
 //
-//  Created by Spencer Curtis on 10/12/18.
-//  Copyright © 2018 Lambda School. All rights reserved.
+//  Created by morse on 1/14/20.
+//  Copyright © 2020 Lambda School. All rights reserved.
 //
 
 import Foundation
 
-class FetchMediaOperation: ConcurrentOperation {
+class FetchAudioData: ConcurrentOperation {
     
     // MARK: Properties
     
-    let post: Post
-    let postController: PostController
-    var mediaData: Data?
+    let comment: Comment
+//    let postController: PostController
+    var audioData: Data?
     
     private let session: URLSession
     
     private var dataTask: URLSessionDataTask?
     
-    init(post: Post, postController: PostController, session: URLSession = URLSession.shared) {
-        self.post = post
-        self.postController = postController
+    init(comment: Comment/*, postController: PostController*/, session: URLSession = URLSession.shared) {
+        self.comment = comment
+//        self.postController = postController
         self.session = session
         super.init()
     }
@@ -30,13 +30,13 @@ class FetchMediaOperation: ConcurrentOperation {
     override func start() {
         state = .isExecuting
         
-        let url = post.mediaURL
+        guard let url = comment.audioURL else { return }
         
         let task = session.dataTask(with: url) { (data, response, error) in
             defer { self.state = .isFinished }
             if self.isCancelled { return }
             if let error = error {
-                NSLog("Error fetching data for \(self.post): \(error)")
+                NSLog("Error fetching data for \(self.comment): \(error)")
                 return
             }
             
@@ -45,7 +45,7 @@ class FetchMediaOperation: ConcurrentOperation {
                 return
             }
             
-            self.mediaData = data
+            self.audioData = data
         }
         task.resume()
         dataTask = task
