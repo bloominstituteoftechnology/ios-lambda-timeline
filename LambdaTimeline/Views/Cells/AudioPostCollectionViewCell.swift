@@ -13,10 +13,6 @@ class AudioPostCollectionViewCell: PostCollectionViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        audioPlayerControl.loadAudio(from: nil)
-    }
-
-    func setAudioURL(_ url: URL?) {
-        audioPlayerControl.loadAudio(from: url)
+        audioPlayerControl.unloadAudio()
     }
 }
