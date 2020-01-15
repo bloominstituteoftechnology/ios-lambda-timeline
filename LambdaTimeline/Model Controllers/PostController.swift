@@ -65,25 +65,31 @@ class PostController {
         savePostToFirebase(post)
     }
 
-    func addComment(withAudioData audioData: Data, to post: Post) {
+    func addComment(
+        withAudioData audioData: Data,
+        to post: Post,
+        completion: @escaping (Bool) -> Void
+    ) {
         guard
             let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser)
             else { return }
 
-        self.store(mediaData: audioData,
-                   mediaType: .audio,
-                   storageReference: storageRef
-        ) { url in
+        store(mediaData: audioData,
+              mediaType: .audio,
+              storageReference: storageRef
+        ) { [weak self] url in
             guard let url = url else {
                 print("failed to create audio comment")
+                completion(false)
                 return
             }
 
             let comment = Comment(audioURL: url, author: author)
             post.comments.append(comment)
 
-            self.savePostToFirebase(post)
+            self?.savePostToFirebase(post)
+            completion(true)
         }
     }
 

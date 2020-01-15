@@ -39,6 +39,9 @@
 		9913BD3A23CE796300500354 /* AudioRecorderControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9913BD3923CE796300500354 /* AudioRecorderControl.swift */; };
 		9913BD3E23CE883400500354 /* AudioCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9913BD3D23CE883400500354 /* AudioCommentTableViewCell.swift */; };
 		9913BD4023CEA48800500354 /* FetchCommentMediaOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9913BD3F23CEA48800500354 /* FetchCommentMediaOperation.swift */; };
+		9961DF8923CFB2D60017B44B /* AudioPostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961DF8823CFB2D60017B44B /* AudioPostDetailViewController.swift */; };
+		9961DF8B23CFBCE60017B44B /* AudioCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961DF8A23CFBCE60017B44B /* AudioCommentViewController.swift */; };
+		99E8265323CF74CC00DFEBE2 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E8265223CF74CC00DFEBE2 /* PostDetailViewController.swift */; };
 		E453457955DF907FCBD117F1 /* Pods_LambdaTimeline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +82,9 @@
 		9913BD3923CE796300500354 /* AudioRecorderControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderControl.swift; sourceTree = "<group>"; };
 		9913BD3D23CE883400500354 /* AudioCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCommentTableViewCell.swift; sourceTree = "<group>"; };
 		9913BD3F23CEA48800500354 /* FetchCommentMediaOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchCommentMediaOperation.swift; sourceTree = "<group>"; };
+		9961DF8823CFB2D60017B44B /* AudioPostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPostDetailViewController.swift; sourceTree = "<group>"; };
+		9961DF8A23CFBCE60017B44B /* AudioCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCommentViewController.swift; sourceTree = "<group>"; };
+		99E8265223CF74CC00DFEBE2 /* PostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LambdaTimeline.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -177,9 +183,10 @@
 			isa = PBXGroup;
 			children = (
 				9913BD3223CE771200500354 /* PostVCs */,
+				99E8265423CF757A00DFEBE2 /* PostDetailVCs */,
 				46A0366C2170158900E7FF73 /* SignInViewController.swift */,
 				46A0366921700F5100E7FF73 /* PostsCollectionViewController.swift */,
-				46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */,
+				9961DF8A23CFBCE60017B44B /* AudioCommentViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -263,6 +270,16 @@
 				9913BD3D23CE883400500354 /* AudioCommentTableViewCell.swift */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		99E8265423CF757A00DFEBE2 /* PostDetailVCs */ = {
+			isa = PBXGroup;
+			children = (
+				46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */,
+				9961DF8823CFB2D60017B44B /* AudioPostDetailViewController.swift */,
+				99E8265223CF74CC00DFEBE2 /* PostDetailViewController.swift */,
+			);
+			path = PostDetailVCs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -400,7 +417,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9961DF8923CFB2D60017B44B /* AudioPostDetailViewController.swift in Sources */,
 				9913BD3A23CE796300500354 /* AudioRecorderControl.swift in Sources */,
+				9961DF8B23CFBCE60017B44B /* AudioCommentViewController.swift in Sources */,
 				46A0366D2170158900E7FF73 /* SignInViewController.swift in Sources */,
 				46CFE6FB21714E6100E7FF73 /* Author.swift in Sources */,
 				46CFE6F92170862C00E7FF73 /* ShiftableViewController.swift in Sources */,
@@ -412,6 +431,7 @@
 				9913BD3E23CE883400500354 /* AudioCommentTableViewCell.swift in Sources */,
 				9913BD1F23CD328200500354 /* UIImage+Scaling.swift in Sources */,
 				46CFE6FF2171556D00E7FF73 /* ConcurrentOperation.swift in Sources */,
+				99E8265323CF74CC00DFEBE2 /* PostDetailViewController.swift in Sources */,
 				46463790216FFD1B00E7FF73 /* Post.swift in Sources */,
 				46CFE6F32170757F00E7FF73 /* User+DictionaryRepresentation.swift in Sources */,
 				46D571F32172D43B00E7FF73 /* Cache.swift in Sources */,
