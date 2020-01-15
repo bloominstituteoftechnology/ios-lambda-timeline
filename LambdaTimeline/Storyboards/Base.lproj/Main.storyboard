@@ -160,11 +160,76 @@
                         <segue destination="OyM-8q-Icp" kind="show" identifier="ViewImagePost" id="hhs-es-AdQ"/>
                         <segue destination="fcX-D0-P41" kind="show" identifier="AddAudioPost" id="DvX-SK-dpJ"/>
                         <segue destination="SQD-4R-yjI" kind="show" identifier="ViewAudioPost" id="d8g-no-JeO"/>
+                        <segue destination="ms1-MD-IKZ" kind="show" identifier="AddVideoPost" id="R3b-kc-0Fm"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1176.8" y="107.88177339901478"/>
+        </scene>
+        <!--Video Post View Controller-->
+        <scene sceneID="oaN-Ot-ths">
+            <objects>
+                <viewController id="ms1-MD-IKZ" customClass="VideoPostViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oXv-F5-wgQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="vvO-al-HE7">
+                                <rect key="frame" x="16" y="96" width="343" height="345"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" priority="250" constant="343" id="0cK-ri-XLZ"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" priority="999" constant="60" id="IrH-hD-fFc"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="999" constant="60" id="tV7-eg-RKm"/>
+                                    <constraint firstAttribute="height" priority="250" constant="345" id="wNN-mq-4qf"/>
+                                </constraints>
+                            </view>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Give your post a title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aX5-G1-LFM">
+                                <rect key="frame" x="16" y="449" width="343" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jQS-TV-vco">
+                                <rect key="frame" x="141.66666666666666" y="491" width="92" height="30"/>
+                                <state key="normal" title="Record Video"/>
+                                <connections>
+                                    <action selector="recordButtonTapped:" destination="ms1-MD-IKZ" eventType="touchUpInside" id="Grl-Ty-ERu"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="vvO-al-HE7" firstAttribute="height" secondItem="E6A-qG-bHO" secondAttribute="height" multiplier="0.5" id="1b5-0X-V4Z"/>
+                            <constraint firstItem="aX5-G1-LFM" firstAttribute="leading" secondItem="E6A-qG-bHO" secondAttribute="leading" constant="16" id="EKK-cF-3Ur"/>
+                            <constraint firstItem="vvO-al-HE7" firstAttribute="top" secondItem="E6A-qG-bHO" secondAttribute="top" constant="8" id="PzC-r1-mwX"/>
+                            <constraint firstItem="jQS-TV-vco" firstAttribute="top" secondItem="aX5-G1-LFM" secondAttribute="bottom" constant="8" id="RBW-bb-bqo"/>
+                            <constraint firstItem="E6A-qG-bHO" firstAttribute="trailing" secondItem="aX5-G1-LFM" secondAttribute="trailing" constant="16" id="Rbj-G9-heq"/>
+                            <constraint firstItem="aX5-G1-LFM" firstAttribute="top" secondItem="vvO-al-HE7" secondAttribute="bottom" constant="8" id="Te4-jo-WLp"/>
+                            <constraint firstItem="vvO-al-HE7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="E6A-qG-bHO" secondAttribute="leading" constant="16" id="Zun-Oj-VNT"/>
+                            <constraint firstItem="vvO-al-HE7" firstAttribute="centerX" secondItem="oXv-F5-wgQ" secondAttribute="centerX" id="eHJ-OW-hw8"/>
+                            <constraint firstItem="E6A-qG-bHO" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="vvO-al-HE7" secondAttribute="trailing" constant="16" id="gQR-KW-wCe"/>
+                            <constraint firstItem="jQS-TV-vco" firstAttribute="centerX" secondItem="oXv-F5-wgQ" secondAttribute="centerX" id="iir-j0-Vz5"/>
+                            <constraint firstItem="E6A-qG-bHO" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="jQS-TV-vco" secondAttribute="bottom" constant="257" id="kN4-68-XTE"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="E6A-qG-bHO"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="hdP-FY-ZDC">
+                        <barButtonItem key="rightBarButtonItem" title="Post" id="gSo-R3-iS1">
+                            <connections>
+                                <action selector="postButtonTapped:" destination="ms1-MD-IKZ" id="pGC-hB-bg2"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="recordButton" destination="jQS-TV-vco" id="tei-cB-J1g"/>
+                        <outlet property="titleTextField" destination="aX5-G1-LFM" id="eIs-52-rAU"/>
+                        <outlet property="videoView" destination="vvO-al-HE7" id="Mtw-mk-SFs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OZt-IQ-1tt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3540" y="-635.46798029556658"/>
         </scene>
         <!--Title-->
         <scene sceneID="fmQ-ag-cOY">
@@ -242,7 +307,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fhi-w9-qnx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2008.8" y="-207.63546798029557"/>
+            <point key="canvasLocation" x="1982" y="-667"/>
         </scene>
         <!--Title-->
         <scene sceneID="kP9-yp-I8H">
@@ -269,7 +334,7 @@
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                                         <state key="normal" title="Choose an image..."/>
                                                         <connections>
-                                                            <action selector="chooseImage:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="Jty-Cw-vR5"/>
+                                                            <action selector="chooseImageTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="Jty-Cw-vR5"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -424,7 +489,7 @@
                     <navigationItem key="navigationItem" title="Title" id="uqG-mm-8CF">
                         <barButtonItem key="rightBarButtonItem" title="Post" id="hsH-Uv-tug">
                             <connections>
-                                <action selector="createPost:" destination="1Aw-4e-BW2" id="nFH-OK-QzK"/>
+                                <action selector="createPostTapped:" destination="1Aw-4e-BW2" id="nFH-OK-QzK"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -451,7 +516,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXa-A2-VJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2934" y="-176"/>
+            <point key="canvasLocation" x="2727" y="-667"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gdW-Je-ais">
