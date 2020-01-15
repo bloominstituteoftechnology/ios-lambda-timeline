@@ -21,6 +21,9 @@ Though you have a base project, you will need to modify it. To begin, run `pod i
 3. In the "Project Overview" in your Firebase project, you will need to add your app as we are using the Firebase SDK in our Xcode project. You will need to add the "GoogleService-Info.plist" file that will be given to you when you add the app.
 4. Please refer to this page: https://firebase.google.com/docs/auth/ios/firebaseui and follow the steps under the “Set up sign-in methods”. You will only need to do the two steps under the Google section. The starter project will have that URL type already. You just need to put the right URL scheme in. You can find the URL Type in your project file in the “Info” tab at the top.
 5. In the Firebase project's database, change the rules to:
+
+// This is reallly just supplimenting (auth != null) where it checks to make sure if the timestamp is a certain time.
+
 ``` JSON
 {
   "rules": {
