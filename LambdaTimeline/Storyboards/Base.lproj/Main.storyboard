@@ -175,7 +175,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="vvO-al-HE7">
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="vvO-al-HE7" customClass="VideoPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
                                 <rect key="frame" x="16" y="96" width="343" height="345"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -223,8 +223,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="recordButton" destination="jQS-TV-vco" id="tei-cB-J1g"/>
-                        <outlet property="titleTextField" destination="aX5-G1-LFM" id="eIs-52-rAU"/>
-                        <outlet property="videoView" destination="vvO-al-HE7" id="Mtw-mk-SFs"/>
+                        <outlet property="titleTextField" destination="aX5-G1-LFM" id="YC7-E8-5Le"/>
+                        <outlet property="videoView" destination="vvO-al-HE7" id="Yzu-Vb-35h"/>
                         <segue destination="l2y-cW-icc" kind="presentation" identifier="RecordVideoSegue" modalPresentationStyle="fullScreen" id="4Mo-Dm-Wdu"/>
                     </connections>
                 </viewController>
