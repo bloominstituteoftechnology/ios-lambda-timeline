@@ -19,3 +19,23 @@ extension DateComponentsFormatter {
         return formatting
     }()
 }
+
+extension DateFormatter {
+    static let mapAnnotationFormatter: DateFormatter = {
+        let result = DateFormatter()
+        result.dateStyle = .short
+        result.timeStyle = .short
+        return result
+    }()
+}
+
+extension NumberFormatter {
+    static let coordinateFormatter: NumberFormatter = {
+        let result = NumberFormatter()
+        result.numberStyle = .decimal
+        result.minimumIntegerDigits = 1
+        result.minimumFractionDigits = 2
+        result.maximumFractionDigits = 2
+        return result
+    }()
+}

@@ -34,7 +34,7 @@
 		9913BD2723CE5AE000500354 /* AudioPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9913BD2623CE5AE000500354 /* AudioPostViewController.swift */; };
 		9913BD2923CE5C0A00500354 /* AudioPostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9913BD2823CE5C0A00500354 /* AudioPostCollectionViewCell.swift */; };
 		9913BD2B23CE5C7D00500354 /* PostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9913BD2A23CE5C7C00500354 /* PostCollectionViewCell.swift */; };
-		9913BD2F23CE64C300500354 /* DateComponentsFormatter+Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9913BD2E23CE64C300500354 /* DateComponentsFormatter+Constant.swift */; };
+		9913BD2F23CE64C300500354 /* Formatters+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9913BD2E23CE64C300500354 /* Formatters+Constants.swift */; };
 		9913BD3823CE78F700500354 /* AudioPlayerControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9913BD3723CE78F700500354 /* AudioPlayerControl.swift */; };
 		9913BD3A23CE796300500354 /* AudioRecorderControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9913BD3923CE796300500354 /* AudioRecorderControl.swift */; };
 		9913BD3E23CE883400500354 /* AudioCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9913BD3D23CE883400500354 /* AudioCommentTableViewCell.swift */; };
@@ -55,6 +55,7 @@
 		99F5197823D10C2F00C7E271 /* GeotagHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F5197723D10C2F00C7E271 /* GeotagHelper.swift */; };
 		99F5197C23D115F100C7E271 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F5197B23D115F100C7E271 /* MapViewController.swift */; };
 		99F5197E23D1163D00C7E271 /* TimelineTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F5197D23D1163D00C7E271 /* TimelineTabBarController.swift */; };
+		99F5198223D1188F00C7E271 /* PostAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F5198123D1188F00C7E271 /* PostAnnotationView.swift */; };
 		E453457955DF907FCBD117F1 /* Pods_LambdaTimeline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */; };
 /* End PBXBuildFile section */
 
@@ -90,7 +91,7 @@
 		9913BD2623CE5AE000500354 /* AudioPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPostViewController.swift; sourceTree = "<group>"; };
 		9913BD2823CE5C0A00500354 /* AudioPostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPostCollectionViewCell.swift; sourceTree = "<group>"; };
 		9913BD2A23CE5C7C00500354 /* PostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCollectionViewCell.swift; sourceTree = "<group>"; };
-		9913BD2E23CE64C300500354 /* DateComponentsFormatter+Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateComponentsFormatter+Constant.swift"; sourceTree = "<group>"; };
+		9913BD2E23CE64C300500354 /* Formatters+Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Formatters+Constants.swift"; sourceTree = "<group>"; };
 		9913BD3723CE78F700500354 /* AudioPlayerControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayerControl.swift; sourceTree = "<group>"; };
 		9913BD3923CE796300500354 /* AudioRecorderControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderControl.swift; sourceTree = "<group>"; };
 		9913BD3D23CE883400500354 /* AudioCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCommentTableViewCell.swift; sourceTree = "<group>"; };
@@ -111,6 +112,7 @@
 		99F5197723D10C2F00C7E271 /* GeotagHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeotagHelper.swift; sourceTree = "<group>"; };
 		99F5197B23D115F100C7E271 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		99F5197D23D1163D00C7E271 /* TimelineTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineTabBarController.swift; sourceTree = "<group>"; };
+		99F5198123D1188F00C7E271 /* PostAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostAnnotationView.swift; sourceTree = "<group>"; };
 		AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LambdaTimeline.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -228,6 +230,7 @@
 			children = (
 				9913BD3C23CE839600500354 /* Cells */,
 				9913BD3B23CE838E00500354 /* Controls */,
+				99F5198123D1188F00C7E271 /* PostAnnotationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -263,7 +266,7 @@
 				46D571F42173CF3E00E7FF73 /* UIImage+Ratio.swift */,
 				46CFE6F621707FA600E7FF73 /* UIViewController+InformationalAlert.swift */,
 				9913BD1E23CD328200500354 /* UIImage+Scaling.swift */,
-				9913BD2E23CE64C300500354 /* DateComponentsFormatter+Constant.swift */,
+				9913BD2E23CE64C300500354 /* Formatters+Constants.swift */,
 				99F5196123CFFDB100C7E271 /* URL+Convenience.swift */,
 			);
 			path = Extensions;
@@ -485,7 +488,7 @@
 				9961DF8D23CFD50D0017B44B /* VideoPostViewController.swift in Sources */,
 				9961DF9123CFDA850017B44B /* VideoRecorderViewController.swift in Sources */,
 				9913BD3823CE78F700500354 /* AudioPlayerControl.swift in Sources */,
-				9913BD2F23CE64C300500354 /* DateComponentsFormatter+Constant.swift in Sources */,
+				9913BD2F23CE64C300500354 /* Formatters+Constants.swift in Sources */,
 				99F5196023CFFC5300C7E271 /* VideoPostDetailViewController.swift in Sources */,
 				99F5196823D0BD0A00C7E271 /* AVManager.swift in Sources */,
 				99F5197623D106E700C7E271 /* PostAnnotation.swift in Sources */,
@@ -494,6 +497,7 @@
 				9913BD2B23CE5C7D00500354 /* PostCollectionViewCell.swift in Sources */,
 				46D571F82173FC2700E7FF73 /* ImagePostDetailTableViewController.swift in Sources */,
 				46CFE7032171572600E7FF73 /* ImagePostCollectionViewCell.swift in Sources */,
+				99F5198223D1188F00C7E271 /* PostAnnotationView.swift in Sources */,
 				4646379C2170091A00E7FF73 /* PostController.swift in Sources */,
 				464637992170048900E7FF73 /* FirebaseConvertible.swift in Sources */,
 				46A0366A21700F5100E7FF73 /* PostsCollectionViewController.swift in Sources */,
