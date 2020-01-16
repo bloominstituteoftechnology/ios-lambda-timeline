@@ -15,6 +15,8 @@ class CameraViewController: UIViewController {
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     var player: AVPlayer?
+    var videoURL: URL?
+    var postController: PostController!
 
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
@@ -59,6 +61,37 @@ class CameraViewController: UIViewController {
         toggleRecording()
     }
 
+    @IBAction func createPost(_ sender: UIBarButtonItem) {
+
+        view.endEditing(true)
+
+        guard let videoURL = videoURL,
+            let title = titleTextField.text, title != "" else {
+                presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a video recording and a caption before posting.")
+                return
+        }
+
+        do {
+            let videoData = try Data(contentsOf: videoURL)
+
+            postController.createPost(with: title, ofType: .video, mediaData: videoData, ratio: nil) { (success) in
+                guard success else {
+                    DispatchQueue.main.async {
+                        self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
+                    }
+                    return
+                }
+
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+        } catch {
+            print("Can't convert videoURL to data")
+        }
+    }
+
+
     // Methods
 
     func playRecording() {
@@ -78,7 +111,8 @@ class CameraViewController: UIViewController {
             fileOutput.stopRecording()
         } else {
             // start
-            fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
+            videoURL = newRecordingURL()
+            fileOutput.startRecording(to: videoURL!, recordingDelegate: self)
         }
     }
 
@@ -154,6 +188,7 @@ class CameraViewController: UIViewController {
 
     func playMovie(url: URL) {
         player = AVPlayer(url: url)
+        
         //player?.actionAtItemEnd = .none
         let playerLayer = AVPlayerLayer(player: player)
 

@@ -176,6 +176,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             destinationVC?.imageData = cache.value(for: postID)
         } else if segue.identifier == "AddVideoPost" {
             let destinationVC = segue.destination as? CameraViewController
+            destinationVC?.postController = postController
         }
     }
     

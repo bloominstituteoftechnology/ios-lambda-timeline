@@ -370,6 +370,7 @@
                             </button>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Give your post a title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XN1-Hc-bah">
                                 <rect key="frame" x="0.0" y="660" width="414" height="34"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                             </textField>
@@ -389,7 +390,11 @@
                         <viewLayoutGuide key="safeArea" id="aKt-8a-spM"/>
                     </view>
                     <navigationItem key="navigationItem" id="j2L-2H-NIE">
-                        <barButtonItem key="rightBarButtonItem" title="Post" id="Qtd-qh-9O3"/>
+                        <barButtonItem key="rightBarButtonItem" title="Post" id="Qtd-qh-9O3">
+                            <connections>
+                                <action selector="createPost:" destination="Y4K-qT-XVa" id="04z-yn-utO"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="cameraView" destination="qav-B0-Y9C" id="R5Q-z6-GfR"/>
