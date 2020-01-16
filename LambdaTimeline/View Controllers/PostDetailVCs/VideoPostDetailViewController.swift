@@ -16,7 +16,6 @@ class VideoPostDetailViewController: PostDetailViewController {
     override func updateViews() {
         super.updateViews()
         guard let data = mediaData else { return }
-        
+        try? videoPreviewView.loadVideo(data: data)
     }
-    
 }

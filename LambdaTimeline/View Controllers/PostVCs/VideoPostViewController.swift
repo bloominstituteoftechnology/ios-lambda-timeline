@@ -120,8 +120,8 @@ extension VideoPostViewController: VideoRecorderDelegate {
         guard success else { return }
         localVideoURL = videoURL
         DispatchQueue.main.async { [weak self] in
-//            self.navigationController?.popToViewController(self, animated: true)
-            self?.videoView.setUpVideoAndPlay(url: videoURL)
+            self?.videoView.loadVideo(url: videoURL)
+            self?.videoView.play()
         }
     }
 }
