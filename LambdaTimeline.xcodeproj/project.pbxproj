@@ -29,6 +29,9 @@
 		46D571F32172D43B00E7FF73 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D571F22172D43B00E7FF73 /* Cache.swift */; };
 		46D571F52173CF3E00E7FF73 /* UIImage+Ratio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D571F42173CF3E00E7FF73 /* UIImage+Ratio.swift */; };
 		46D571F82173FC2700E7FF73 /* ImagePostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */; };
+		BB25745323CFD73200B31F8B /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB25745223CFD73200B31F8B /* CameraViewController.swift */; };
+		BB25745523CFD7A700B31F8B /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB25745423CFD7A700B31F8B /* CameraPreviewView.swift */; };
+		BB25745723CFFE0E00B31F8B /* VideoPostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB25745623CFFE0E00B31F8B /* VideoPostCollectionViewCell.swift */; };
 		BBE533B423CD3334005F6F23 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBE533B323CD3334005F6F23 /* GoogleService-Info.plist */; };
 		BBE533B923CD4890005F6F23 /* UIImage+Scaling.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE533B823CD4890005F6F23 /* UIImage+Scaling.swift */; };
 		BBE533BB23CE6CBF005F6F23 /* AudioCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE533BA23CE6CBF005F6F23 /* AudioCommentViewController.swift */; };
@@ -66,6 +69,9 @@
 		46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePostDetailTableViewController.swift; sourceTree = "<group>"; };
 		5D2CCD6C68779B0A70AC37FA /* Pods-LambdaTimeline.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LambdaTimeline.release.xcconfig"; path = "Pods/Target Support Files/Pods-LambdaTimeline/Pods-LambdaTimeline.release.xcconfig"; sourceTree = "<group>"; };
 		AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LambdaTimeline.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB25745223CFD73200B31F8B /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		BB25745423CFD7A700B31F8B /* CameraPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
+		BB25745623CFFE0E00B31F8B /* VideoPostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPostCollectionViewCell.swift; sourceTree = "<group>"; };
 		BBE533B323CD3334005F6F23 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BBE533B823CD4890005F6F23 /* UIImage+Scaling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Scaling.swift"; sourceTree = "<group>"; };
 		BBE533BA23CE6CBF005F6F23 /* AudioCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCommentViewController.swift; sourceTree = "<group>"; };
@@ -174,6 +180,7 @@
 				46CFE6F421707D0000E7FF73 /* ImagePostViewController.swift */,
 				46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */,
 				BBE533BA23CE6CBF005F6F23 /* AudioCommentViewController.swift */,
+				BB25745223CFD73200B31F8B /* CameraViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -182,7 +189,9 @@
 			isa = PBXGroup;
 			children = (
 				46CFE7022171572600E7FF73 /* ImagePostCollectionViewCell.swift */,
+				BB25745623CFFE0E00B31F8B /* VideoPostCollectionViewCell.swift */,
 				BBE533C223CE8AF7005F6F23 /* ImagePostDetailTableViewCell.swift */,
+				BB25745423CFD7A700B31F8B /* CameraPreviewView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -368,17 +377,20 @@
 				BBE533B923CD4890005F6F23 /* UIImage+Scaling.swift in Sources */,
 				46CFE6FB21714E6100E7FF73 /* Author.swift in Sources */,
 				46CFE6F92170862C00E7FF73 /* ShiftableViewController.swift in Sources */,
+				BB25745723CFFE0E00B31F8B /* VideoPostCollectionViewCell.swift in Sources */,
 				4646377C216FDE4B00E7FF73 /* AppDelegate.swift in Sources */,
 				46CFE6FD217154F500E7FF73 /* Networking.swift in Sources */,
 				46CFE6F521707D0000E7FF73 /* ImagePostViewController.swift in Sources */,
 				46CFE6FF2171556D00E7FF73 /* ConcurrentOperation.swift in Sources */,
 				BBE533C523CE9281005F6F23 /* FetchAudioOperation.swift in Sources */,
+				BB25745523CFD7A700B31F8B /* CameraPreviewView.swift in Sources */,
 				46463790216FFD1B00E7FF73 /* Post.swift in Sources */,
 				46CFE6F32170757F00E7FF73 /* User+DictionaryRepresentation.swift in Sources */,
 				46D571F32172D43B00E7FF73 /* Cache.swift in Sources */,
 				46CFE7012171559500E7FF73 /* FetchMediaOperation.swift in Sources */,
 				46D571F82173FC2700E7FF73 /* ImagePostDetailTableViewController.swift in Sources */,
 				BBE533C323CE8AF7005F6F23 /* ImagePostDetailTableViewCell.swift in Sources */,
+				BB25745323CFD73200B31F8B /* CameraViewController.swift in Sources */,
 				46CFE7032171572600E7FF73 /* ImagePostCollectionViewCell.swift in Sources */,
 				4646379C2170091A00E7FF73 /* PostController.swift in Sources */,
 				BBE533BB23CE6CBF005F6F23 /* AudioCommentViewController.swift in Sources */,
