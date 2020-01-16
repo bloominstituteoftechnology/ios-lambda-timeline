@@ -18,13 +18,18 @@ class CameraViewController: UIViewController {
 
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
+    @IBOutlet var postBarButton: UIBarButtonItem!
+    @IBOutlet var titleTextField: UITextField!
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Resize camera preview to fill the entire screen
-        cameraView.videoPlayerView.videoGravity = .resizeAspectFill
+        cameraView.videoPlayerView.videoGravity = .resize
+
+        navigationItem.rightBarButtonItem = nil
+        titleTextField.isHidden = true
 
         setupCamera()
 
@@ -149,14 +154,11 @@ class CameraViewController: UIViewController {
 
     func playMovie(url: URL) {
         player = AVPlayer(url: url)
+        //player?.actionAtItemEnd = .none
         let playerLayer = AVPlayerLayer(player: player)
-        var topRect = view.bounds
 
-        topRect.size.height = topRect.height / 4
-        topRect.size.width = topRect.width / 4
-        topRect.origin.y = view.layoutMargins.top
-
-        playerLayer.frame = topRect
+        playerLayer.frame = cameraView.frame
+        playerLayer.videoGravity = .resize
         view.layer.addSublayer(playerLayer)
         player?.play()
     }
@@ -169,7 +171,8 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         }
         print("Video: \(outputFileURL.path)")
         updateViews()
-
+        navigationItem.rightBarButtonItem = postBarButton
+        titleTextField.isHidden = false
         playMovie(url: outputFileURL)
     }
 

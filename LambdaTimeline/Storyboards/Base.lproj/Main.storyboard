@@ -352,7 +352,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qav-B0-Y9C" userLabel="Camera View" customClass="CameraPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="572"/>
                                 <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HVt-id-fDp">
@@ -368,27 +368,39 @@
                                     <action selector="recordButtonPressed:" destination="Y4K-qT-XVa" eventType="touchUpInside" id="bWD-2B-6Qj"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Give your post a title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XN1-Hc-bah">
+                                <rect key="frame" x="0.0" y="660" width="414" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="qav-B0-Y9C" firstAttribute="leading" secondItem="aKt-8a-spM" secondAttribute="leading" id="6NF-jY-kyl"/>
                             <constraint firstItem="aKt-8a-spM" firstAttribute="trailing" secondItem="qav-B0-Y9C" secondAttribute="trailing" id="6gi-IL-9jq"/>
-                            <constraint firstAttribute="bottom" secondItem="qav-B0-Y9C" secondAttribute="bottom" id="Q7T-uW-0Tc"/>
+                            <constraint firstItem="HVt-id-fDp" firstAttribute="top" secondItem="XN1-Hc-bah" secondAttribute="bottom" constant="8" symbolic="YES" id="PnW-WP-5F9"/>
                             <constraint firstItem="aKt-8a-spM" firstAttribute="bottom" secondItem="HVt-id-fDp" secondAttribute="bottom" constant="60" id="RFP-VF-e1o"/>
+                            <constraint firstItem="XN1-Hc-bah" firstAttribute="leading" secondItem="aKt-8a-spM" secondAttribute="leading" id="SeT-tv-1hL"/>
+                            <constraint firstItem="XN1-Hc-bah" firstAttribute="top" secondItem="qav-B0-Y9C" secondAttribute="bottom" id="cQd-ST-Foj"/>
                             <constraint firstItem="HVt-id-fDp" firstAttribute="centerX" secondItem="0pT-jE-EiY" secondAttribute="centerX" id="eFs-sx-tPa"/>
-                            <constraint firstItem="qav-B0-Y9C" firstAttribute="top" secondItem="0pT-jE-EiY" secondAttribute="top" id="p9F-aY-8VD"/>
+                            <constraint firstItem="XN1-Hc-bah" firstAttribute="trailing" secondItem="aKt-8a-spM" secondAttribute="trailing" id="o9R-4Y-pxt"/>
+                            <constraint firstItem="qav-B0-Y9C" firstAttribute="top" secondItem="aKt-8a-spM" secondAttribute="top" id="xK0-DX-kTK"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="aKt-8a-spM"/>
                     </view>
-                    <navigationItem key="navigationItem" id="j2L-2H-NIE"/>
+                    <navigationItem key="navigationItem" id="j2L-2H-NIE">
+                        <barButtonItem key="rightBarButtonItem" title="Post" id="Qtd-qh-9O3"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="cameraView" destination="qav-B0-Y9C" id="R5Q-z6-GfR"/>
+                        <outlet property="postBarButton" destination="Qtd-qh-9O3" id="Nl9-Eg-PjA"/>
                         <outlet property="recordButton" destination="HVt-id-fDp" id="jyl-pp-6xh"/>
+                        <outlet property="titleTextField" destination="XN1-Hc-bah" id="m8R-2v-G3n"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aeP-DS-1Pb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2786" y="-358"/>
+            <point key="canvasLocation" x="2785.507246376812" y="-358.25892857142856"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gdW-Je-ais">
@@ -520,7 +532,7 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Az6-T1-4S4">
                                             <rect key="frame" x="72" y="12" width="312" height="49"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uE3-Ls-2xg">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uE3-Ls-2xg">
                                                     <rect key="frame" x="0.0" y="0.0" width="312" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
