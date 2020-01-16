@@ -120,7 +120,6 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         
         guard let postID = post.id else { return }
 
-
         if let mediaData = cache.value(for: postID) {
             if post.mediaType == .image {
                 if let cell = imagePostCell as? ImagePostCollectionViewCell,
@@ -129,8 +128,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
                 }
             } else if post.mediaType == .video {
                 if let cell = imagePostCell as? VideoPostCollectionViewCell {
-                    let videoURL = URL(dataRepresentation: mediaData, relativeTo: post.mediaURL)
-                    cell.setView(videoURL)
+                    cell.loadVideo(data: mediaData)
                 }
             }
 
@@ -167,8 +165,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
                     }
                 } else if post.mediaType == .video {
                     if let cell = imagePostCell as? VideoPostCollectionViewCell {
-                        let videoURL = URL(dataRepresentation: data, relativeTo: post.mediaURL)
-                        cell.setView(videoURL)
+                        cell.loadVideo(data: data)
                     }
                 }
                 self.collectionView.reloadItems(at: [indexPath])

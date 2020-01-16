@@ -18,12 +18,23 @@ class VideoPostCollectionViewCell: UICollectionViewCell {
 
     var player: AVPlayer?
 
-    func setView(_ videoURL: URL?) {
-        guard let videoURL = videoURL else { return }
-        player = AVPlayer(url: videoURL)
+    func loadVideo(data: Data) {
+        // local
+        let url: URL = newLocalVideoURL()
+        do {
+            try data.write(to: url)
+            setUpPlayerAndView(with: AVPlayerItem(url: url))
+        } catch {
+            print("Error writing to local file")
+        }
+    }
+
+    private func setUpPlayerAndView(with playerItem: AVPlayerItem) {
+        player = AVPlayer(playerItem: playerItem)
         let playerLayer = AVPlayerLayer(player: player)
+
         playerLayer.frame = videoView.frame
-        playerLayer.videoGravity = .resize
+        playerLayer.videoGravity = .resizeAspect
         videoView.layer.addSublayer(playerLayer)
     }
 
@@ -44,6 +55,7 @@ class VideoPostCollectionViewCell: UICollectionViewCell {
         super.layoutSubviews()
         setupLabelBackgroundView()
     }
+
     override func prepareForReuse() {
         super.prepareForReuse()
 
@@ -57,5 +69,16 @@ class VideoPostCollectionViewCell: UICollectionViewCell {
         //        labelBackgroundView.layer.borderColor = UIColor.white.cgColor
         //        labelBackgroundView.layer.borderWidth = 0.5
         labelBackgroundView.clipsToBounds = true
+    }
+
+    private func newLocalVideoURL() -> URL {
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime]
+
+        let name = formatter.string(from: Date())
+        let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
+        return fileURL
     }
 }

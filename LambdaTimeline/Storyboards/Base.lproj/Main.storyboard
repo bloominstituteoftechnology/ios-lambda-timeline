@@ -90,9 +90,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AJy-Ca-q8V">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
-                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vwm-dC-ggZ">
+                                            <rect key="frame" x="8" y="8" width="359" height="359"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SjZ-Se-8UZ" userLabel="Label Background View">
                                             <rect key="frame" x="8" y="329" width="47" height="38"/>
@@ -126,19 +126,19 @@
                                         </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="AJy-Ca-q8V" secondAttribute="trailing" id="01V-4V-9mW"/>
-                                        <constraint firstAttribute="bottom" secondItem="AJy-Ca-q8V" secondAttribute="bottom" id="BcY-Ra-Ht8"/>
                                         <constraint firstItem="SjZ-Se-8UZ" firstAttribute="leading" secondItem="Vs7-hy-tN8" secondAttribute="leadingMargin" id="Bun-Ew-2eT"/>
-                                        <constraint firstItem="AJy-Ca-q8V" firstAttribute="top" secondItem="Vs7-hy-tN8" secondAttribute="top" id="hB8-Ec-gRt"/>
+                                        <constraint firstItem="Vwm-dC-ggZ" firstAttribute="top" secondItem="Vs7-hy-tN8" secondAttribute="topMargin" id="OII-M8-5Rn"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Vwm-dC-ggZ" secondAttribute="bottom" id="QCE-Oq-epm"/>
+                                        <constraint firstItem="Vwm-dC-ggZ" firstAttribute="leading" secondItem="Vs7-hy-tN8" secondAttribute="leadingMargin" id="g4S-dX-sEE"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="SjZ-Se-8UZ" secondAttribute="bottom" id="hvU-WD-7rN"/>
-                                        <constraint firstItem="AJy-Ca-q8V" firstAttribute="leading" secondItem="Vs7-hy-tN8" secondAttribute="leading" id="yoD-lI-RVN"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Vwm-dC-ggZ" secondAttribute="trailing" id="zkh-zi-EuA"/>
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <connections>
                                     <outlet property="authorLabel" destination="Epd-69-E6K" id="ALq-ME-wIq"/>
                                     <outlet property="labelBackgroundView" destination="SjZ-Se-8UZ" id="xxG-PT-WiJ"/>
                                     <outlet property="titleLabel" destination="gmE-hE-Jgn" id="Gud-jJ-9rk"/>
-                                    <outlet property="videoView" destination="AJy-Ca-q8V" id="rol-NL-Ug2"/>
+                                    <outlet property="videoView" destination="Vwm-dC-ggZ" id="AJP-l3-47h"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -412,7 +412,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qav-B0-Y9C" userLabel="Camera View" customClass="CameraPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="88" width="414" height="572"/>
-                                <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HVt-id-fDp">
                                 <rect key="frame" x="157" y="702" width="100" height="100"/>
