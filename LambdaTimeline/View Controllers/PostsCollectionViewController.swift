@@ -5,7 +5,7 @@
 //  Created by Spencer Curtis on 10/11/18.
 //  Copyright © 2018 Lambda School. All rights reserved.
 //
-
+//ugh
 import UIKit
 import FirebaseAuth
 import FirebaseUI
