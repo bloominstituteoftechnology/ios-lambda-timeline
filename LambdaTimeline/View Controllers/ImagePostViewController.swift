@@ -20,6 +20,12 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
     
+    @IBOutlet weak var brightnessLabel: UILabel!
+    @IBOutlet weak var contrastLabel: UILabel!
+    @IBOutlet weak var saturationLabel: UILabel!
+    @IBOutlet weak var blurLabel: UILabel!
+    @IBOutlet weak var zoomLabel: UILabel!
+    
     @IBOutlet weak var brightnessSlider: UISlider!
     @IBOutlet weak var contrastSlider: UISlider!
     @IBOutlet weak var saturationSlider: UISlider!
@@ -94,6 +100,18 @@ class ImagePostViewController: ShiftableViewController {
         guard let imageData = imageData,
             let image = UIImage(data: imageData) else {
                 title = "New Post"
+                
+                brightnessLabel.isHidden = true
+                contrastLabel.isHidden = true
+                saturationLabel.isHidden = true
+                blurLabel.isHidden = true
+                zoomLabel.isHidden = true
+                
+                brightnessSlider.isHidden = true
+                contrastSlider.isHidden = true
+                saturationSlider.isHidden = true
+                blurSlider.isHidden = true
+                zoomSlider.isHidden = true
                 return
         }
         
@@ -217,6 +235,18 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         picker.dismiss(animated: true, completion: nil)
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+        
+        brightnessLabel.isHidden = false
+        contrastLabel.isHidden = false
+        saturationLabel.isHidden = false
+        blurLabel.isHidden = false
+        zoomLabel.isHidden = false
+        
+        brightnessSlider.isHidden = false
+        contrastSlider.isHidden = false
+        saturationSlider.isHidden = false
+        blurSlider.isHidden = false
+        zoomSlider.isHidden = false
         
         imageView.image = image
         originalImage = image
