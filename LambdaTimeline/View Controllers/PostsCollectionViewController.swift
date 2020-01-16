@@ -13,13 +13,17 @@ import FirebaseUI
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
-    private let postController = PostController()
+    private var postController: PostController!
     private var operations = [String : Operation]()
     private let mediaFetchQueue = OperationQueue()
     private let cache = Cache<String, Data>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        if let tabBarController = self.tabBarController as? TimelineTabBarController {
+            self.postController = tabBarController.postController
+        }
         
         postController.observePosts { (_) in
             DispatchQueue.main.async {

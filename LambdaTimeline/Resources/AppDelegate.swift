@@ -26,8 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if Auth.auth().currentUser != nil {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")
-            window?.rootViewController = postsNavigationController
+            let mainTabBarController = storyboard
+                .instantiateViewController(withIdentifier: "MainTabBarController")
+            window?.rootViewController = mainTabBarController
             window?.makeKeyAndVisible()
         }
         
