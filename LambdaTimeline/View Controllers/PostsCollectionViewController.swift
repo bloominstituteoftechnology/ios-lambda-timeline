@@ -29,10 +29,15 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         let imagePostAction = UIAlertAction(title: "Image", style: .default) { (_) in
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
+
+        let videoPostAction = UIAlertAction(title: "Video", style: .default) { (_) in
+            self.performSegue(withIdentifier: "AddVideoPost", sender: nil)
+        }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(imagePostAction)
+        alert.addAction(videoPostAction)
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true, completion: nil)
@@ -57,7 +62,16 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
+        case.video:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPostCell", for: indexPath) as? VideoPostCollectionViewCell else { return UICollectionViewCell() }
+
+            cell.post = post
+
+            loadImage(for: cell, forItemAt: indexPath)
+
+            return cell
         }
+
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -73,6 +87,13 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             guard let ratio = post.ratio else { return size }
             
             size.height = size.width * ratio
+
+        case .video:
+
+            guard let ratio = post.ratio else { return size }
+
+            size.height = size.width * ratio
+
         }
         
         return size
@@ -94,18 +115,28 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         operations[postID]?.cancel()
     }
     
-    func loadImage(for imagePostCell: ImagePostCollectionViewCell, forItemAt indexPath: IndexPath) {
+    func loadImage(for imagePostCell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         let post = postController.posts[indexPath.row]
         
         guard let postID = post.id else { return }
-        
-        if let mediaData = cache.value(for: postID),
-            let image = UIImage(data: mediaData) {
-            imagePostCell.setImage(image)
+
+        if let mediaData = cache.value(for: postID) {
+            if post.mediaType == .image {
+                if let cell = imagePostCell as? ImagePostCollectionViewCell,
+                    let image = UIImage(data: mediaData) {
+                    cell.setImage(image)
+                }
+            } else if post.mediaType == .video {
+                if let cell = imagePostCell as? VideoPostCollectionViewCell {
+                    cell.loadVideo(data: mediaData)
+                }
+            }
+
+
             self.collectionView.reloadItems(at: [indexPath])
             return
         }
-        
+
         let fetchOp = FetchMediaOperation(post: post, postController: postController)
         
         let cacheOp = BlockOperation {
@@ -127,7 +158,16 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             }
             
             if let data = fetchOp.mediaData {
-                imagePostCell.setImage(UIImage(data: data))
+                if post.mediaType == .image {
+                    if let cell = imagePostCell as? ImagePostCollectionViewCell,
+                        let image = UIImage(data: data) {
+                        cell.setImage(image)
+                    }
+                } else if post.mediaType == .video {
+                    if let cell = imagePostCell as? VideoPostCollectionViewCell {
+                        cell.loadVideo(data: data)
+                    }
+                }
                 self.collectionView.reloadItems(at: [indexPath])
             }
         }
@@ -159,6 +199,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             destinationVC?.postController = postController
             destinationVC?.post = postController.posts[indexPath.row]
             destinationVC?.imageData = cache.value(for: postID)
+        } else if segue.identifier == "AddVideoPost" {
+            let destinationVC = segue.destination as? CameraViewController
+            destinationVC?.postController = postController
         }
     }
     

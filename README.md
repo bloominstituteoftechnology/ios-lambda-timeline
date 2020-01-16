@@ -48,3 +48,4 @@ You are encouraged to implement both methods if you feel up to it.
 
 - Customize the annotations that are shown on the map view controller to also show the media (image or video) associated with it. **Note:** if you chose to create a `PostAnnotation` object, you may need to modify it so you can have more information than just the post's title and author.
 - Add the ability to go directly to the detail view controller of a post (the one with the post's comments) from the annotation.
+
