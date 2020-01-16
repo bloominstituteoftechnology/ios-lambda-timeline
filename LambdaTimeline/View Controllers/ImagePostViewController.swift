@@ -11,6 +11,15 @@ import Photos
 
 class ImagePostViewController: ShiftableViewController {
 
+	enum FilterType: String {
+		case ColorControl = "CIColorControls"
+		case Vignette = "CIVignette"
+		case MotionBlur = "CIMotionBlur"
+		case SharpenLuminance = "CISharpenLuminance"
+		case ColorInvert = "CIColorInvert"
+
+	}
+
 	// --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
 	// MARK: - Outlets
 	
@@ -37,7 +46,12 @@ class ImagePostViewController: ShiftableViewController {
 	var post: Post?
 	var imageData: Data?
 
-	private var filter = CIFilter(name: "CIColorControls")!
+	private var filter = CIFilter(name: FilterType.ColorControl.rawValue)
+	private var filterColorControl = CIFilter(name: FilterType.ColorControl.rawValue)!
+	private var filterVignette = CIFilter(name: FilterType.Vignette.rawValue)!
+	private var filterMotionBlur = CIFilter(name: FilterType.MotionBlur.rawValue)!
+	private var filterSharpen = CIFilter(name: FilterType.SharpenLuminance.rawValue)!
+	private var filterInvertColor = CIFilter(name: FilterType.ColorInvert.rawValue)!
 	private var context = CIContext(options: nil)
 
 	var originalImage: UIImage? {
@@ -64,11 +78,11 @@ class ImagePostViewController: ShiftableViewController {
 		let ciImage = CIImage(cgImage: cgImage)
 
 		// Sets up the filter
-		filter.setValue(ciImage, forKey: kCIInputImageKey)
+		filter?.setValue(ciImage, forKey: kCIInputImageKey)
 
 		setFilter()
 
-		guard let outputCIImage = filter.outputImage else { return image }
+		guard let outputCIImage = filter?.outputImage else { return image }
 
 		guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: CGPoint.zero, size: image.size)) else { return image }
 
@@ -76,25 +90,46 @@ class ImagePostViewController: ShiftableViewController {
 	}
 
 	private func setFilter() {
-		switch filter.name {
-		case "CIVignette": setVignette()
 
+		let segment = UISegmentedControl()
+
+		switch  segment.selectedSegmentIndex {
+		case 0: setColorControls()
+		case 1: setVignette()
+		case 2: setSharpenDetail()
+		case 3: setMotionBlur()
 		default:
-			setColorControls()
+			setColorInvert()
 		}
 	}
 
 	private func setColorControls() {
 
-		filter.setValue(topSlider.value, forKey: kCIInputBrightnessKey)
-		filter.setValue(middleSlider.value, forKey: kCIInputContrastKey)
-		filter.setValue(bottomSlider.value, forKey: kCIInputSaturationKey)
+		filterColorControl.setValue(topSlider.value, forKey: kCIInputBrightnessKey)
+		filterColorControl.setValue(middleSlider.value, forKey: kCIInputContrastKey)
+		filterColorControl.setValue(bottomSlider.value, forKey: kCIInputSaturationKey)
 	}
 
 	private func setVignette() {
 
-		filter.setValue(topSlider.value, forKey: kCIInputIntensityKey)
-		filter.setValue(middleSlider.value, forKey: kCIInputRadiusKey)
+		filterVignette.setValue(topSlider.value, forKey: kCIInputIntensityKey)
+		filterVignette.setValue(middleSlider.value, forKey: kCIInputRadiusKey)
+	}
+
+	private func setMotionBlur() {
+
+		filterMotionBlur.setValue(topSlider.value, forKey: kCIInputRadiusKey)
+		filterMotionBlur.setValue(middleSlider.value, forKey: kCIInputAngleKey)
+	}
+
+	private func setSharpenDetail() {
+		filterSharpen.setValue(topSlider.value, forKey: kCIInputRadiusKey)
+		filterSharpen.setValue(middleSlider.value, forKey: kCIInputSharpnessKey)
+	}
+
+	private func setColorInvert() {
+
+		filterInvertColor.setValue(CIImage.self, forKey: kCIInputImageKey)
 	}
 
 
@@ -182,7 +217,9 @@ class ImagePostViewController: ShiftableViewController {
         case .restricted:
             self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
 
-        }
+		@unknown default:
+			fatalError()
+		}
 		presentImagePickerController()
     }
 
@@ -190,14 +227,18 @@ class ImagePostViewController: ShiftableViewController {
 
 	@IBAction func segmentedControlChange(_ sender: UISegmentedControl) {
 		switch sender.selectedSegmentIndex {
-		case 0: filter = CIFilter(name: "CIColorControls")!
-
+		case 0: filter = CIFilter(name: FilterType.ColorControl.rawValue)!
+		case 1: filter = CIFilter(name: FilterType.Vignette.rawValue)!
+		case 2: filter = CIFilter(name: FilterType.MotionBlur.rawValue)!
+		case 3: filter = CIFilter(name: FilterType.SharpenLuminance.rawValue)!
 		default:
-			<#code#>
+			filter = CIFilter(name: FilterType.ColorInvert.rawValue)!
 		}
 
 	}
 
+	// --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
+	// Setup filter sliders
 	private func configureColorSegmentSliderValues() {
 		UIView.animate(withDuration: 0.3) {
 			self.topSliderStackView.isHidden = false
