@@ -141,14 +141,31 @@ class ImagePostViewController: ShiftableViewController {
         blurFilter.inputImage = colorControlsFilter.outputImage?.clampedToExtent()
         blurFilter.radius = blurSlider.value
         
-        invertFilter.inputImage = blurFilter.outputImage?.clampedToExtent()
+        if invertSwitch.isOn {
+            colorControlsFilter.inputImage = nil
+            noirFilter.inputImage = nil
+            vividFilter.inputImage = nil
+            blurFilter.inputImage = inputImage
+            invertFilter.inputImage = blurFilter.outputImage?.clampedToExtent()
+        }
         
-        noirFilter.inputImage = invertFilter.outputImage?.clampedToExtent()
+        if noirSwitch.isOn {
+            colorControlsFilter.inputImage = nil
+            invertFilter.inputImage = nil
+            vividFilter.inputImage = nil
+            blurFilter.inputImage = inputImage
+            noirFilter.inputImage = blurFilter.outputImage?.clampedToExtent()
+        }
         
-        vividFilter.inputImage = noirFilter.outputImage?.clampedToExtent()
+        if vividSwitch.isOn {
+            colorControlsFilter.inputImage = nil
+            invertFilter.inputImage = nil
+            noirFilter.inputImage = nil
+            blurFilter.inputImage = inputImage
+            vividFilter.inputImage = blurFilter.outputImage?.clampedToExtent()
+        }
         
-        
-        guard let outputImage = vividFilter.outputImage else { return UIImage(ciImage: inputImage) }
+        guard let outputImage = blurFilter.outputImage else { return UIImage(ciImage: inputImage) }
         
         guard let renderedImage = context.createCGImage(outputImage, from: inputImage.extent) else { return UIImage(ciImage: inputImage) }
         
