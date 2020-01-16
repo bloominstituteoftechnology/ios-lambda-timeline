@@ -9,6 +9,8 @@
 import UIKit
 
 class AudioPostCollectionViewCell: PostCollectionViewCell {
+    override var avManageable: AVManageable? { audioPlayerControl }
+
     @IBOutlet private(set) var audioPlayerControl: AudioPlayerControl!
 
     override func prepareForReuse() {

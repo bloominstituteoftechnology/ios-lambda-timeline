@@ -6,10 +6,9 @@
 //  Copyright © 2020 Lambda School. All rights reserved.
 //
 
-import UIKit
-import AVFoundation
-
 class VideoPostDetailViewController: PostDetailViewController {
+
+    override var avManageable: AVManageable? { videoPreviewView }
 
     @IBOutlet var videoPreviewView: VideoPreviewView!
 

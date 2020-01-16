@@ -38,6 +38,8 @@ class AudioPlayerControl: UIControl {
     private var audioPlayer: AVAudioPlayer?
     private var uiUpdateTimer: Timer?
 
+    weak var delegate: AVManageableDelegate?
+
     // MARK: - Init
 
     override init(frame: CGRect) {
@@ -86,9 +88,11 @@ class AudioPlayerControl: UIControl {
     }
 
     func play() {
-        audioPlayer?.play()
-        updateViews()
-        startUIUpdateTimer()
+        if delegate?.avManageableWillPlay(self) ?? false {
+            audioPlayer?.play()
+            updateViews()
+            startUIUpdateTimer()
+        }
     }
 
     func pause() {
@@ -188,3 +192,7 @@ extension AudioPlayerControl: AVAudioPlayerDelegate {
         }
     }
 }
+
+// MARK: - AVManageable
+
+extension AudioPlayerControl: AVManageable {}

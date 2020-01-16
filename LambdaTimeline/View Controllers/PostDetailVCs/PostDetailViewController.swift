@@ -15,6 +15,8 @@ class PostDetailViewController: UITableViewController {
 
     var postController: PostController!
 
+    var avManageable: AVManageable? { nil }
+
     private var operations = [String: Operation]()
     private let mediaFetchQueue = OperationQueue()
     private let cache = Cache<String, Data>()
@@ -25,6 +27,9 @@ class PostDetailViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
+        if let manageable = avManageable {
+            AVManager.shared.add(manageable)
+        }
     }
 
     func updateViews() {
@@ -99,6 +104,7 @@ class PostDetailViewController: UITableViewController {
     }
 
     private func createAudioComment() {
+        AVManager.shared.pauseAll()
         performSegue(withIdentifier: "MakeAudioComment", sender: nil)
     }
 
@@ -129,6 +135,7 @@ class PostDetailViewController: UITableViewController {
                 for: indexPath)
                 as? AudioCommentTableViewCell {
             cell.authorLabel.text = comment.author.displayName
+            AVManager.shared.add(cell.audioPlayerControl)
             loadCommentAudio(for: comment, in: cell, at: indexPath)
             return cell
         } else {

@@ -6,9 +6,9 @@
 //  Copyright © 2020 Lambda School. All rights reserved.
 //
 
-import Foundation
-
 class AudioPostDetailViewController: PostDetailViewController {
+
+    override var avManageable: AVManageable? { audioPlayerControl }
     
     @IBOutlet weak var audioPlayerControl: AudioPlayerControl!
 

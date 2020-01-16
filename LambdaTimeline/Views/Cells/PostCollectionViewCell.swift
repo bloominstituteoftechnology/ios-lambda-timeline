@@ -16,6 +16,8 @@ class PostCollectionViewCell: UICollectionViewCell {
         }
     }
 
+    var avManageable: AVManageable? { nil }
+
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var labelBackgroundView: UIView!

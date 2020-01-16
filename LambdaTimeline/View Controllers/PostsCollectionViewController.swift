@@ -57,7 +57,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         self.present(alert, animated: true, completion: nil)
     }
     
-    // MARK: UICollectionViewDataSource
+    // MARK: - CollectionView DataSource
     
     override func collectionView(
         _ collectionView: UICollectionView,
@@ -78,27 +78,62 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "ImagePostCell",
                 for: indexPath)
-                as? PostCollectionViewCell
+                as? ImagePostCollectionViewCell
         case .audio:
             cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "AudioPostCell",
                 for: indexPath)
-                as? PostCollectionViewCell
+                as? AudioPostCollectionViewCell
         case .video:
             cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "VideoPostCell",
                 for: indexPath)
-                as? PostCollectionViewCell
+                as? VideoPostCollectionViewCell
         }
         guard let postCell = cell else { return PostCollectionViewCell() }
 
+        if let manageable = postCell.avManageable {
+            AVManager.shared.add(manageable)
+        }
         postCell.post = post
         loadPostMedia(for: postCell, at: indexPath)
 
         return postCell
     }
 
-    // MARK: - Collection View Layout
+    // MARK: - CollectionView Delegate
+
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        let cell = collectionView.cellForItem(at: indexPath)
+
+        if let cell = cell as? ImagePostCollectionViewCell,
+            cell.imageView.image != nil {
+            self.performSegue(withIdentifier: "ViewImagePost", sender: nil)
+        } else if let cell = cell as? AudioPostCollectionViewCell,
+            cell.audioPlayerControl.audioIsLoaded {
+            self.performSegue(withIdentifier: "ViewAudioPost", sender: nil)
+        } else if let cell = cell as? VideoPostCollectionViewCell,
+            cell.videoPreviewView.videoIsLoaded {
+            self.performSegue(withIdentifier: "ViewVideoPost", sender: nil)
+        }
+    }
+
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        didEndDisplayingSupplementaryView view: UICollectionReusableView,
+        forElementOfKind elementKind: String,
+        at indexPath: IndexPath
+    ) {
+        guard let postID = postController.posts[indexPath.row].id else { return }
+        operations[postID]?.cancel()
+        let cell = collectionView.cellForItem(at: indexPath) as? PostCollectionViewCell
+        cell?.avManageable?.pause()
+    }
+
+    // MARK: - CollectionView Layout
     
     func collectionView(
         _ collectionView: UICollectionView,
@@ -119,34 +154,6 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         }
         
         return size
-    }
-    
-    override func collectionView(
-        _ collectionView: UICollectionView,
-        didSelectItemAt indexPath: IndexPath
-    ) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        
-        if let cell = cell as? ImagePostCollectionViewCell,
-            cell.imageView.image != nil {
-            self.performSegue(withIdentifier: "ViewImagePost", sender: nil)
-        } else if let cell = cell as? AudioPostCollectionViewCell,
-            cell.audioPlayerControl.audioIsLoaded {
-            self.performSegue(withIdentifier: "ViewAudioPost", sender: nil)
-        } else if let cell = cell as? VideoPostCollectionViewCell,
-            cell.videoPreviewView.videoIsLoaded {
-            self.performSegue(withIdentifier: "ViewVideoPost", sender: nil)
-        }
-    }
-    
-    override func collectionView(
-        _ collectionView: UICollectionView,
-        didEndDisplayingSupplementaryView view: UICollectionReusableView,
-        forElementOfKind elementKind: String,
-        at indexPath: IndexPath
-    ) {
-        guard let postID = postController.posts[indexPath.row].id else { return }
-        operations[postID]?.cancel()
     }
 
     // MARK: - Helper Methods
@@ -222,6 +229,8 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        AVManager.shared.pauseAll()
+        
         if let postDetailVC = segue.destination as? PostDetailViewController {
             guard
                 let indexPath = collectionView.indexPathsForSelectedItems?.first,

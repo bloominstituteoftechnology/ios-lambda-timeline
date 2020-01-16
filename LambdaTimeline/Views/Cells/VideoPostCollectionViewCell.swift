@@ -10,6 +10,8 @@ import UIKit
 
 class VideoPostCollectionViewCell: PostCollectionViewCell {
 
+    override var avManageable: AVManageable? { videoPreviewView }
+
     @IBOutlet var videoPreviewView: VideoPreviewView!
 
     override func prepareForReuse() {
