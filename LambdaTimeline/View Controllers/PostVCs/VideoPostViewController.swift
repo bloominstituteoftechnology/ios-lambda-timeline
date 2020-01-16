@@ -83,7 +83,9 @@ class VideoPostViewController: UIViewController {
         }
     }
 
-    func checkCameraPermissions(_ wasSuccessFul: @escaping (Bool) -> Void) {
+    // MARK: - Private
+
+    private func checkCameraPermissions(_ wasSuccessFul: @escaping (Bool) -> Void) {
         let status = AVCaptureDevice.authorizationStatus(for: .video)
 
         switch status {

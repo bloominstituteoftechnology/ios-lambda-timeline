@@ -49,6 +49,8 @@
 		99F5196023CFFC5300C7E271 /* VideoPostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F5195F23CFFC5300C7E271 /* VideoPostDetailViewController.swift */; };
 		99F5196223CFFDB100C7E271 /* URL+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F5196123CFFDB100C7E271 /* URL+Convenience.swift */; };
 		99F5196423D0097100C7E271 /* VideoPostCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F5196323D0097100C7E271 /* VideoPostCollectionViewCell.swift */; };
+		99F5196623D0BCDE00C7E271 /* AVManageable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F5196523D0BCDE00C7E271 /* AVManageable.swift */; };
+		99F5196823D0BD0A00C7E271 /* AVManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F5196723D0BD0A00C7E271 /* AVManager.swift */; };
 		E453457955DF907FCBD117F1 /* Pods_LambdaTimeline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */; };
 /* End PBXBuildFile section */
 
@@ -99,6 +101,8 @@
 		99F5195F23CFFC5300C7E271 /* VideoPostDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPostDetailViewController.swift; sourceTree = "<group>"; };
 		99F5196123CFFDB100C7E271 /* URL+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Convenience.swift"; sourceTree = "<group>"; };
 		99F5196323D0097100C7E271 /* VideoPostCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPostCollectionViewCell.swift; sourceTree = "<group>"; };
+		99F5196523D0BCDE00C7E271 /* AVManageable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVManageable.swift; sourceTree = "<group>"; };
+		99F5196723D0BD0A00C7E271 /* AVManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVManager.swift; sourceTree = "<group>"; };
 		AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LambdaTimeline.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -161,6 +165,7 @@
 				4646378F216FFD1B00E7FF73 /* Post.swift */,
 				46CFE6FA21714E6100E7FF73 /* Author.swift */,
 				46463791216FFDD900E7FF73 /* Comment.swift */,
+				99F5196523D0BCDE00C7E271 /* AVManageable.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -189,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				4646379B2170091A00E7FF73 /* PostController.swift */,
+				99F5196723D0BD0A00C7E271 /* AVManager.swift */,
 			);
 			path = "Model Controllers";
 			sourceTree = "<group>";
@@ -209,8 +215,6 @@
 		46CFE7042171572900E7FF73 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				99F5195B23CFDBE800C7E271 /* CameraPreviewView.swift */,
-				99F5195D23CFE50600C7E271 /* VideoPreviewView.swift */,
 				9913BD3C23CE839600500354 /* Cells */,
 				9913BD3B23CE838E00500354 /* Controls */,
 			);
@@ -275,7 +279,9 @@
 			isa = PBXGroup;
 			children = (
 				9913BD3723CE78F700500354 /* AudioPlayerControl.swift */,
+				99F5195D23CFE50600C7E271 /* VideoPreviewView.swift */,
 				9913BD3923CE796300500354 /* AudioRecorderControl.swift */,
+				99F5195B23CFDBE800C7E271 /* CameraPreviewView.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -448,6 +454,7 @@
 				46CFE6FD217154F500E7FF73 /* Networking.swift in Sources */,
 				9913BD4023CEA48800500354 /* FetchCommentMediaOperation.swift in Sources */,
 				46CFE6F521707D0000E7FF73 /* ImagePostViewController.swift in Sources */,
+				99F5196623D0BCDE00C7E271 /* AVManageable.swift in Sources */,
 				9913BD2723CE5AE000500354 /* AudioPostViewController.swift in Sources */,
 				9913BD3E23CE883400500354 /* AudioCommentTableViewCell.swift in Sources */,
 				9913BD1F23CD328200500354 /* UIImage+Scaling.swift in Sources */,
@@ -465,6 +472,7 @@
 				9913BD3823CE78F700500354 /* AudioPlayerControl.swift in Sources */,
 				9913BD2F23CE64C300500354 /* DateComponentsFormatter+Constant.swift in Sources */,
 				99F5196023CFFC5300C7E271 /* VideoPostDetailViewController.swift in Sources */,
+				99F5196823D0BD0A00C7E271 /* AVManager.swift in Sources */,
 				99F5195C23CFDC9200C7E271 /* CameraPreviewView.swift in Sources */,
 				99F5196423D0097100C7E271 /* VideoPostCollectionViewCell.swift in Sources */,
 				9913BD2B23CE5C7D00500354 /* PostCollectionViewCell.swift in Sources */,
@@ -625,6 +633,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 22X3GA956P;
 				INFOPLIST_FILE = "$(SRCROOT)/LambdaTimeline/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -644,6 +653,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 22X3GA956P;
 				INFOPLIST_FILE = "$(SRCROOT)/LambdaTimeline/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

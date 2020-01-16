@@ -24,6 +24,8 @@ class VideoPreviewView: UIView {
         return layer as! AVCaptureVideoPreviewLayer
     }
 
+    weak var delegate: AVManageableDelegate?
+
     private var session: AVCaptureSession? {
         get { return videoPlayerViewLayer.session }
         set { videoPlayerViewLayer.session = newValue }
@@ -68,8 +70,10 @@ class VideoPreviewView: UIView {
 
     func play() {
         guard let player = player else { return }
-        player.play()
-        isPlaying = true
+        if delegate?.avManageableWillPlay(self) ?? false {
+            player.play()
+            isPlaying = true
+        }
     }
 
     func pause() {
@@ -112,3 +116,7 @@ class VideoPreviewView: UIView {
         layer.addSublayer(newLayer)
     }
 }
+
+// MARK: - AVManageable
+
+extension VideoPreviewView: AVManageable {}
