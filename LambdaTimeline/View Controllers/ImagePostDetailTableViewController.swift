@@ -31,38 +31,55 @@ class ImagePostDetailTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     @IBAction func createComment(_ sender: Any) {
+        displayCommentTypeAlert()
+    }
+    
+    private func displayCommentTypeAlert() {
+        let alert = UIAlertController(title: "Text or Audio?", message: nil, preferredStyle: .actionSheet)
         
-        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
+        let textAction = UIAlertAction(title: "Text", style: .default) { (_) in
+            self.displayTextCommentAlert()
+        }
+        alert.addAction(textAction)
+        
+        let audioAction = UIAlertAction(title: "Text", style: .default) { (_) in
+            self.displayAudioCommentAlert()
+        }
+        alert.addAction(audioAction)
+        
+        present(alert, animated: true)
+    }
+    
+    private func displayTextCommentAlert() {
+        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below", preferredStyle: .alert)
         
         var commentTextField: UITextField?
         
         alert.addTextField { (textField) in
-            textField.placeholder = "Comment:"
+            textField.placeholder = "Comment: "
             commentTextField = textField
         }
         
         let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
-            
             guard let commentText = commentTextField?.text else { return }
             
-            self.postController.addComment(with: commentText, to: &self.post!)
+            self.postController.addComment(with: commentText, audioURL: nil, to: &self.post!)
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
         
-        let addVoiceComment = UIAlertAction(title: "Voice Comment", style: .default) { (_) in
-            self.performSegue(withIdentifier: "toAudioVC", sender: self)
-        }
-        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        alert.addAction(addVoiceComment)
         alert.addAction(addCommentAction)
         alert.addAction(cancelAction)
         
         present(alert, animated: true, completion: nil)
+    }
+    
+    private func displayAudioCommentAlert() {
+        self.performSegue(withIdentifier: "AudioCommentShowSegue", sender: self)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -91,3 +108,35 @@ class ImagePostDetailTableViewController: UITableViewController {
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
 }
+
+//let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
+//
+//var commentTextField: UITextField?
+//
+//alert.addTextField { (textField) in
+//    textField.placeholder = "Comment:"
+//    commentTextField = textField
+//}
+//
+//let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
+//
+//    guard let commentText = commentTextField?.text else { return }
+//
+//    self.postController.addComment(with: commentText, to: &self.post!)
+//
+//    DispatchQueue.main.async {
+//        self.tableView.reloadData()
+//    }
+//}
+//
+//let addVoiceComment = UIAlertAction(title: "Voice Comment", style: .default) { (_) in
+//    self.performSegue(withIdentifier: "toAudioVC", sender: self)
+//}
+//
+//let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//
+//alert.addAction(addVoiceComment)
+//alert.addAction(addCommentAction)
+//alert.addAction(cancelAction)
+//
+//present(alert, animated: true, completion: nil)

@@ -39,7 +39,7 @@ class AudioCommentTableViewCell: UITableViewCell {
     }
     
     func loadAudio() {
-        let possibleSongURL = comment.audioURL
+        let audioURL = comment?.audioURL
         
         guard let data = data else { return }
         
