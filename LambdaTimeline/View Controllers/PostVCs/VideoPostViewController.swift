@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class VideoPostViewController: UIViewController {
 
@@ -15,16 +16,6 @@ class VideoPostViewController: UIViewController {
     @IBOutlet weak var videoView: VideoPreviewView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var recordButton: UIButton!
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        updateViews()
-    }
-
-    func updateViews() {
-        
-    }
     
     // MARK: - Actions
 
@@ -39,11 +30,34 @@ class VideoPostViewController: UIViewController {
     }
 
     func recordNewVideo() {
-        performSegue(withIdentifier: "RecordVideoSegue", sender: self)
+        checkCameraPermissions { [weak self] wasSuccessful in
+            if wasSuccessful {
+                self?.performSegue(withIdentifier: "RecordVideoSegue", sender: self)
+            } else {
+                self?.presentInformationalAlertController(
+                    title: "No permissions.",
+                    message: "Please make sure you allow us to use your camera in your device settings.")
+            }
+        }
     }
 
     func postVideo() {
 
+    }
+
+    func checkCameraPermissions(_ wasSuccessFul: @escaping (Bool) -> Void) {
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+
+        switch status {
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { permissionGranted in
+                DispatchQueue.main.async { wasSuccessFul(permissionGranted) }
+            }
+        case .authorized:
+            wasSuccessFul(true)
+        default:
+            wasSuccessFul(false)
+        }
     }
 
     // MARK: - Navigation
@@ -61,12 +75,15 @@ class VideoPostViewController: UIViewController {
 // MARK: - VideoRecorder Delegate
 
 extension VideoPostViewController: VideoRecorderDelegate {
-    func videoRecorderVC(
-        _ videoRecorderVC: VideoRecorderViewController,
+    func videoRecorder(
         didFinishRecordingSucessfully success: Bool,
         toURL videoURL: URL
     ) {
         guard success else { return }
-        videoView.setUpVideoAndPlay(url: videoURL)
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.navigationController?.popToViewController(self, animated: true)
+            self.videoView.setUpVideoAndPlay(url: videoURL)
+        }
     }
 }

@@ -12,8 +12,7 @@ import AVFoundation
 // MARK: - Delegate
 
 protocol VideoRecorderDelegate: AnyObject {
-    func videoRecorderVC(
-        _ videoRecorderVC: VideoRecorderViewController,
+    func videoRecorder(
         didFinishRecordingSucessfully success: Bool,
         toURL videoURL: URL
     )
@@ -67,8 +66,6 @@ class VideoRecorderViewController: UIViewController {
         cameraView.videoPlayerView.videoGravity = .resizeAspectFill
 
         setUpCamera()
-
-
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -111,7 +108,6 @@ class VideoRecorderViewController: UIViewController {
         captureSession.beginConfiguration()
 
         // make changes to the devices connected
-
         //  - video input
         guard
             let cameraInput = try? AVCaptureDeviceInput(device: camera),
@@ -123,6 +119,7 @@ class VideoRecorderViewController: UIViewController {
         if captureSession.canSetSessionPreset(sessionPreset) {
             captureSession.sessionPreset = sessionPreset
         }
+
         // - audio input
         let mic = bestAudio
         guard
@@ -180,12 +177,17 @@ extension VideoRecorderViewController: AVCaptureFileOutputRecordingDelegate {
     ) {
         if let error = error {
             print("Error with video recording: \(error)")
+            delegate?.videoRecorder(
+                didFinishRecordingSucessfully: false,
+                toURL: outputFileURL)
             return
         }
         print("finished recording video: \(outputFileURL.path)")
-        delegate?.videoRecorderVC(
-            self,
-            didFinishRecordingSucessfully: true,
-            toURL: outputFileURL)
+        let thisDelegate = delegate // avoid `self`
+        self.dismiss(animated: true) {
+            thisDelegate?.videoRecorder(
+                didFinishRecordingSucessfully: true,
+                toURL: outputFileURL)
+        }
     }
 }
