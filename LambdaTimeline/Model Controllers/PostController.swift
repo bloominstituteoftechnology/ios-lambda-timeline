@@ -10,6 +10,7 @@ import Foundation
 import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
+import MapKit
 
 class PostController {
 
@@ -23,6 +24,7 @@ class PostController {
         with title: String,
         ofType mediaType: MediaType,
         mediaData: Data,
+        geotag: CLLocationCoordinate2D? = nil,
         completion: @escaping (Bool) -> Void = { _ in }
     ) {
         guard
@@ -36,7 +38,12 @@ class PostController {
                 return
             }
 
-            let post = Post(title: title, mediaURL: mediaURL, mediaType: mediaType, author: author)
+            let post = Post(
+                title: title,
+                mediaURL: mediaURL,
+                mediaType: mediaType,
+                author: author,
+                geotag: geotag)
             
             self.postsRef.childByAutoId()
                 .setValue(post.dictionaryRepresentation)
