@@ -63,7 +63,13 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             
             return cell
         case.video:
-            return UICollectionViewCell()
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPostCell", for: indexPath) as? VideoPostCollectionViewCell else { return UICollectionViewCell() }
+
+            cell.post = post
+
+            loadImage(for: cell, forItemAt: indexPath)
+
+            return cell
         }
 
     }
@@ -109,18 +115,30 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         operations[postID]?.cancel()
     }
     
-    func loadImage(for imagePostCell: ImagePostCollectionViewCell, forItemAt indexPath: IndexPath) {
+    func loadImage(for imagePostCell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         let post = postController.posts[indexPath.row]
         
         guard let postID = post.id else { return }
-        
-        if let mediaData = cache.value(for: postID),
-            let image = UIImage(data: mediaData) {
-            imagePostCell.setImage(image)
+
+
+        if let mediaData = cache.value(for: postID) {
+            if post.mediaType == .image {
+                if let cell = imagePostCell as? ImagePostCollectionViewCell,
+                    let image = UIImage(data: mediaData) {
+                    cell.setImage(image)
+                }
+            } else if post.mediaType == .video {
+                if let cell = imagePostCell as? VideoPostCollectionViewCell {
+                    let videoURL = URL(dataRepresentation: mediaData, relativeTo: post.mediaURL)
+                    cell.setView(videoURL)
+                }
+            }
+
+
             self.collectionView.reloadItems(at: [indexPath])
             return
         }
-        
+
         let fetchOp = FetchMediaOperation(post: post, postController: postController)
         
         let cacheOp = BlockOperation {
@@ -142,7 +160,17 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             }
             
             if let data = fetchOp.mediaData {
-                imagePostCell.setImage(UIImage(data: data))
+                if post.mediaType == .image {
+                    if let cell = imagePostCell as? ImagePostCollectionViewCell,
+                        let image = UIImage(data: data) {
+                        cell.setImage(image)
+                    }
+                } else if post.mediaType == .video {
+                    if let cell = imagePostCell as? VideoPostCollectionViewCell {
+                        let videoURL = URL(dataRepresentation: data, relativeTo: post.mediaURL)
+                        cell.setView(videoURL)
+                    }
+                }
                 self.collectionView.reloadItems(at: [indexPath])
             }
         }
