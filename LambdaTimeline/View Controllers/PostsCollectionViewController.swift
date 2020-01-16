@@ -111,15 +111,15 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
 
         switch post.mediaType {
         case .image(let ratio), .video(let ratio):
-            guard let ratio = ratio else { return size }
-            size.height = size.width * ratio
+            if let ratio = ratio {
+                size.height = size.width * ratio
+            }
         default:
             size.height = 220
         }
         
         return size
     }
-    
     
     override func collectionView(
         _ collectionView: UICollectionView,
@@ -128,13 +128,14 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         let cell = collectionView.cellForItem(at: indexPath)
         
         if let cell = cell as? ImagePostCollectionViewCell,
-            cell.imageView.image != nil
-        {
+            cell.imageView.image != nil {
             self.performSegue(withIdentifier: "ViewImagePost", sender: nil)
         } else if let cell = cell as? AudioPostCollectionViewCell,
-            cell.audioPlayerControl.audioIsLoaded
-        {
+            cell.audioPlayerControl.audioIsLoaded {
             self.performSegue(withIdentifier: "ViewAudioPost", sender: nil)
+        } else if let cell = cell as? VideoPostCollectionViewCell,
+            cell.videoPreviewView.videoIsLoaded {
+            self.performSegue(withIdentifier: "ViewVideoPost", sender: nil)
         }
     }
     
@@ -207,6 +208,12 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             imageCell.setImage(image)
         } else if let audioCell = postCell as? AudioPostCollectionViewCell {
             audioCell.audioPlayerControl.loadAudio(from: mediaData)
+        } else if let videoCell = postCell as? VideoPostCollectionViewCell {
+            do {
+                try videoCell.videoPreviewView.loadVideo(data: mediaData)
+            } catch {
+                print("Error setting up video collection view cell: \(error)")
+            }
         }
 //        collectionView.reloadItems(at: [indexPath])
     }
@@ -230,6 +237,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             destinationVC?.postController = postController
         } else if segue.identifier == "AddAudioPost" {
             let destinationVC = segue.destination as? AudioPostViewController
+            destinationVC?.postController = postController
+        } else if segue.identifier == "AddVideoPost" {
+            let destinationVC = segue.destination as? VideoPostViewController
             destinationVC?.postController = postController
         }
     }
