@@ -145,24 +145,33 @@ class ImagePostViewController: ShiftableViewController {
             colorControlsFilter.inputImage = nil
             noirFilter.inputImage = nil
             vividFilter.inputImage = nil
-            blurFilter.inputImage = inputImage
-            invertFilter.inputImage = blurFilter.outputImage?.clampedToExtent()
+            blurFilter.inputImage = nil
+            invertFilter.inputImage = inputImage
+            let invertedImage = (invertFilter.outputImage)!
+            guard let renderedImage = context.createCGImage(invertedImage, from: inputImage.extent) else { return UIImage(ciImage: inputImage)}
+            return UIImage(cgImage: renderedImage)
         }
         
         if noirSwitch.isOn {
             colorControlsFilter.inputImage = nil
             invertFilter.inputImage = nil
             vividFilter.inputImage = nil
-            blurFilter.inputImage = inputImage
-            noirFilter.inputImage = blurFilter.outputImage?.clampedToExtent()
+            blurFilter.inputImage = nil
+            noirFilter.inputImage = inputImage
+            let noirImage = (noirFilter.outputImage)!
+            guard let renderedImage = context.createCGImage(noirImage, from: inputImage.extent) else { return UIImage(ciImage: inputImage)}
+            return UIImage(cgImage: renderedImage)
         }
         
         if vividSwitch.isOn {
             colorControlsFilter.inputImage = nil
-            invertFilter.inputImage = nil
             noirFilter.inputImage = nil
-            blurFilter.inputImage = inputImage
-            vividFilter.inputImage = blurFilter.outputImage?.clampedToExtent()
+            invertFilter.inputImage = nil
+            blurFilter.inputImage = nil
+            vividFilter.inputImage = inputImage
+            let vividImage = (vividFilter.outputImage)!
+            guard let renderedImage = context.createCGImage(vividImage, from: inputImage.extent) else { return UIImage(ciImage: inputImage)}
+            return UIImage(cgImage: renderedImage)
         }
         
         guard let outputImage = blurFilter.outputImage else { return UIImage(ciImage: inputImage) }
