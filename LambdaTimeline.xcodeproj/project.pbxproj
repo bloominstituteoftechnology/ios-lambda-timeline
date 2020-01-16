@@ -3,10 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1CB4F0C723CE6F32004476FF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1CB4F0C623CE6F32004476FF /* GoogleService-Info.plist */; };
+		1CB4F0C923D0351F004476FF /* UIImage+Scaling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB4F0C823D0351F004476FF /* UIImage+Scaling.swift */; };
+		1CB4F0CB23D05062004476FF /* AudioPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB4F0CA23D05062004476FF /* AudioPostViewController.swift */; };
+		1CB4F0CD23D0508C004476FF /* AudioCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CB4F0CC23D0508C004476FF /* AudioCommentTableViewCell.swift */; };
 		4646377C216FDE4B00E7FF73 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4646377B216FDE4B00E7FF73 /* AppDelegate.swift */; };
 		46463781216FDE4B00E7FF73 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4646377F216FDE4B00E7FF73 /* Main.storyboard */; };
 		46463783216FDE4C00E7FF73 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46463782216FDE4C00E7FF73 /* Assets.xcassets */; };
@@ -33,6 +37,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1CB4F0C623CE6F32004476FF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1CB4F0C823D0351F004476FF /* UIImage+Scaling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Scaling.swift"; sourceTree = "<group>"; };
+		1CB4F0CA23D05062004476FF /* AudioPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPostViewController.swift; sourceTree = "<group>"; };
+		1CB4F0CC23D0508C004476FF /* AudioCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCommentTableViewCell.swift; sourceTree = "<group>"; };
 		33A2B89DE9E21538434BD640 /* Pods-LambdaTimeline.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LambdaTimeline.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LambdaTimeline/Pods-LambdaTimeline.debug.xcconfig"; sourceTree = "<group>"; };
 		46463778216FDE4B00E7FF73 /* LambdaTimeline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LambdaTimeline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4646377B216FDE4B00E7FF73 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -104,6 +112,7 @@
 		4646377A216FDE4B00E7FF73 /* LambdaTimeline */ = {
 			isa = PBXGroup;
 			children = (
+				1CB4F0C623CE6F32004476FF /* GoogleService-Info.plist */,
 				46CFE7042171572900E7FF73 /* Views */,
 				46A0366B21700F6100E7FF73 /* View Controllers */,
 				4646379A2170090900E7FF73 /* Model Controllers */,
@@ -159,6 +168,7 @@
 				46A0366921700F5100E7FF73 /* PostsCollectionViewController.swift */,
 				46CFE6F421707D0000E7FF73 /* ImagePostViewController.swift */,
 				46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */,
+				1CB4F0CA23D05062004476FF /* AudioPostViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -167,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				46CFE7022171572600E7FF73 /* ImagePostCollectionViewCell.swift */,
+				1CB4F0CC23D0508C004476FF /* AudioCommentTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -199,6 +210,7 @@
 				46CFE6F22170757F00E7FF73 /* User+DictionaryRepresentation.swift */,
 				46D571F42173CF3E00E7FF73 /* UIImage+Ratio.swift */,
 				46CFE6F621707FA600E7FF73 /* UIViewController+InformationalAlert.swift */,
+				1CB4F0C823D0351F004476FF /* UIImage+Scaling.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -275,6 +287,7 @@
 				46463786216FDE4C00E7FF73 /* LaunchScreen.storyboard in Resources */,
 				46463783216FDE4C00E7FF73 /* Assets.xcassets in Resources */,
 				46463781216FDE4B00E7FF73 /* Main.storyboard in Resources */,
+				1CB4F0C723CE6F32004476FF /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,10 +358,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				46A0366D2170158900E7FF73 /* SignInViewController.swift in Sources */,
+				1CB4F0C923D0351F004476FF /* UIImage+Scaling.swift in Sources */,
 				46CFE6FB21714E6100E7FF73 /* Author.swift in Sources */,
 				46CFE6F92170862C00E7FF73 /* ShiftableViewController.swift in Sources */,
 				4646377C216FDE4B00E7FF73 /* AppDelegate.swift in Sources */,
 				46CFE6FD217154F500E7FF73 /* Networking.swift in Sources */,
+				1CB4F0CB23D05062004476FF /* AudioPostViewController.swift in Sources */,
 				46CFE6F521707D0000E7FF73 /* ImagePostViewController.swift in Sources */,
 				46CFE6FF2171556D00E7FF73 /* ConcurrentOperation.swift in Sources */,
 				46463790216FFD1B00E7FF73 /* Post.swift in Sources */,
@@ -356,6 +371,7 @@
 				46D571F32172D43B00E7FF73 /* Cache.swift in Sources */,
 				46CFE7012171559500E7FF73 /* FetchMediaOperation.swift in Sources */,
 				46D571F82173FC2700E7FF73 /* ImagePostDetailTableViewController.swift in Sources */,
+				1CB4F0CD23D0508C004476FF /* AudioCommentTableViewCell.swift in Sources */,
 				46CFE7032171572600E7FF73 /* ImagePostCollectionViewCell.swift in Sources */,
 				4646379C2170091A00E7FF73 /* PostController.swift in Sources */,
 				464637992170048900E7FF73 /* FirebaseConvertible.swift in Sources */,
@@ -510,12 +526,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = X77B7DPNM6;
 				INFOPLIST_FILE = "$(SRCROOT)/LambdaTimeline/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jerryhaaser.lambdaTimeline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -528,12 +545,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = X77B7DPNM6;
 				INFOPLIST_FILE = "$(SRCROOT)/LambdaTimeline/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jerryhaaser.lambdaTimeline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";

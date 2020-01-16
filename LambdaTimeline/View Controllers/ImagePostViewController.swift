@@ -11,6 +11,55 @@ import Photos
 
 class ImagePostViewController: ShiftableViewController {
     
+    let blur = CIFilter(name: "CIDiscBlur")!
+    let hueAdjust = CIFilter(name: "CIHueAdjust")
+    let filter = CIFilter(name: "CILineOverlay")
+    let context = CIContext(options: nil)
+    
+    var postController: PostController!
+    var post: Post?
+    var imageData: Data?
+    
+    var scaledImage: UIImage? {
+        didSet {
+            updateImageView()
+        }
+    }
+    
+    var originalImage: UIImage? {
+        didSet {
+            guard let originalImage = originalImage else { return }
+            let originalSizeOfImage = imageView.bounds.size
+            let deviceScreenSize = UIScreen.main.scale
+            
+            let scaledSize = CGSize(width: originalSizeOfImage.width * deviceScreenSize, height: originalSizeOfImage.height * deviceScreenSize)
+            
+            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+        }
+    }
+    
+    var originalImage2: UIImage? {
+        didSet {
+            updateImage2View()
+        }
+    }
+    
+    @IBOutlet weak var blueLabel: UILabel!
+    @IBOutlet weak var blurSlider: UISlider!
+    @IBOutlet weak var hueAdjustLabel: UILabel!
+    @IBOutlet weak var hueAdjustSlider: UISlider!
+    @IBOutlet weak var noiseLevelLabel: UILabel!
+    @IBOutlet weak var noiseLevelSlider: UISlider!
+    @IBOutlet weak var sharpnessLabel: UILabel!
+    @IBOutlet weak var sharpnessSlider: UISlider!
+    @IBOutlet weak var edgeIntensityLabel: UILabel!
+    @IBOutlet weak var edgeIntensitySlider: UISlider!
+    @IBOutlet weak var thresholdLabel: UILabel!
+    @IBOutlet weak var thresholdSlider: UISlider!
+    @IBOutlet weak var contrastLabel: UILabel!
+    @IBOutlet weak var contrastSlider: UISlider!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -18,6 +67,29 @@ class ImagePostViewController: ShiftableViewController {
         
         updateViews()
     }
+    
+    @IBAction func blurSliderAction(_ sender: UISlider) {
+        updateImageView()
+    }
+    @IBAction func hueAdjustSliderAction(_ sender: UISlider) {
+        updateImageView()
+    }
+    @IBAction func noiseLevelSliderAction(_ sender: UISlider) {
+        updateImage2View()
+    }
+    @IBAction func sharpnessSliderAction(_ sender: UISlider) {
+        updateImage2View()
+    }
+    @IBAction func edgeIntensitySliderAction(_ sender: UISlider) {
+        updateImage2View()
+    }
+    @IBAction func thresholdSliderAction(_ sender: UISlider) {
+        updateImage2View()
+    }
+    @IBAction func contrastSliderAction(_ sender: UISlider) {
+        updateImage2View()
+    }
+    
     
     func updateViews() {
         
@@ -34,6 +106,53 @@ class ImagePostViewController: ShiftableViewController {
         imageView.image = image
         
         chooseImageButton.setTitle("", for: [])
+    }
+    
+    func updateImageView() {
+        if let scaledImage = scaledImage {
+            imageView.image = image2(byFiltering: scaledImage)
+        }
+    }
+    
+    func updateImage2View() {
+        if let originalImage = originalImage2 {
+            imageView.image = image2(byFiltering: originalImage)
+        }
+    }
+    
+    private func image(byFiltering image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage else { return image }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        blur.setValue(ciImage, forKey: "inputImage")
+        blur.setValue(blurSlider.value, forKey: "inputRadius")
+        
+        guard let blurOutputCIImage = blur.outputImage else { return image }
+        
+        hueAdjust?.setValue(blurOutputCIImage, forKey: "inputImage")
+        hueAdjust?.setValue(hueAdjustSlider.value, forKey: "inputAngle")
+        
+        guard let outputCIImage = hueAdjust?.outputImage else { return image }
+        
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    private func image2(byFiltering image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage else { return image }
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        filter?.setValue(ciImage, forKey: "inputImage")
+        filter?.setValue(noiseLevelSlider.value, forKey: "inputNRNoiseLevel")
+        filter?.setValue(sharpnessSlider.value, forKey: "inputNRSharpness")
+        filter?.setValue(edgeIntensitySlider.value, forKey: "inputThreshold")
+        filter?.setValue(contrastSlider.value, forKey: "inputContrast")
+        
+        guard let outputCIImage = filter?.outputImage else { return image }
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: outputCIImage.extent) else { return image }
+        
+        return UIImage(cgImage: outputCGImage)
     }
     
     private func presentImagePickerController() {
@@ -112,10 +231,6 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
-    var postController: PostController!
-    var post: Post?
-    var imageData: Data?
-    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
@@ -123,17 +238,37 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var postButton: UIBarButtonItem!
 }
 
+//extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+//
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//
+//        chooseImageButton.setTitle("", for: [])
+//
+//        picker.dismiss(animated: true, completion: nil)
+//
+//        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
+//
+//        imageView.image = image
+//
+//        setImageViewHeight(with: image.ratio)
+//    }
+//
+//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+//        picker.dismiss(animated: true, completion: nil)
+//    }
+//}
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-
+        
         chooseImageButton.setTitle("", for: [])
         
         picker.dismiss(animated: true, completion: nil)
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
-        imageView.image = image
+//        imageView.image = image
+        originalImage2 = image
         
         setImageViewHeight(with: image.ratio)
     }
