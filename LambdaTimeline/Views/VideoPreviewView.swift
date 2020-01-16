@@ -72,7 +72,20 @@ class VideoPreviewView: UIView {
     }
 
     func setUpVideoAndPlay(url: URL) {
-        let item = AVPlayerItem(url: url)
+        setUpPlayer(with: AVPlayerItem(url: url))
+
+        play()
+    }
+
+    func setUpVideoAndPlay(data: Data) throws {
+        let url: URL = .newLocalVideoURL()
+        try data.write(to: url)
+        setUpPlayer(with: AVPlayerItem(url: url))
+
+        play()
+    }
+
+    private func setUpPlayer(with item: AVPlayerItem) {
         let newPlayer = AVQueuePlayer(playerItem: item)
         let newLayer = AVPlayerLayer(player: newPlayer)
         // TODO: customize rectangle bounds?
@@ -83,7 +96,5 @@ class VideoPreviewView: UIView {
         player = newPlayer
 
         layer.addSublayer(newLayer)
-
-        play()
     }
 }
