@@ -12,23 +12,28 @@ import AVFoundation
 class VideoPreviewView: UIView {
 
     private(set) var isPlaying: Bool = false
+    var videoIsLoaded: Bool {
+        player != nil && looper != nil && playerLayer != nil
+    }
 
     private var player: AVQueuePlayer?
     private var looper: AVPlayerLooper?
     private var playerLayer: AVPlayerLayer?
 
+    private var videoPlayerViewLayer: AVCaptureVideoPreviewLayer {
+        return layer as! AVCaptureVideoPreviewLayer
+    }
+
+    private var session: AVCaptureSession? {
+        get { return videoPlayerViewLayer.session }
+        set { videoPlayerViewLayer.session = newValue }
+    }
+
     override class var layerClass: AnyClass {
         return AVCaptureVideoPreviewLayer.self
     }
 
-    var videoPlayerViewLayer: AVCaptureVideoPreviewLayer {
-        return layer as! AVCaptureVideoPreviewLayer
-    }
-
-    var session: AVCaptureSession? {
-        get { return videoPlayerViewLayer.session }
-        set { videoPlayerViewLayer.session = newValue }
-    }
+    // MARK: - Init/Setup
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -55,6 +60,8 @@ class VideoPreviewView: UIView {
         }
     }
 
+    // MARK: - API
+
     func togglePlaying() {
         isPlaying ? pause() : play()
     }
@@ -71,19 +78,26 @@ class VideoPreviewView: UIView {
         isPlaying = false
     }
 
-    func setUpVideoAndPlay(url: URL) {
+    func loadVideo(url: URL) {
         setUpPlayer(with: AVPlayerItem(url: url))
-
-        play()
     }
 
-    func setUpVideoAndPlay(data: Data) throws {
+    func loadVideo(data: Data) throws {
         let url: URL = .newLocalVideoURL()
         try data.write(to: url)
         setUpPlayer(with: AVPlayerItem(url: url))
-
-        play()
     }
+
+    func unloadVideo() {
+        pause()
+        looper?.disableLooping()
+        looper = nil
+        player = nil
+        playerLayer?.removeFromSuperlayer()
+        playerLayer = nil
+    }
+
+    // MARK: - Helpers
 
     private func setUpPlayer(with item: AVPlayerItem) {
         let newPlayer = AVQueuePlayer(playerItem: item)
