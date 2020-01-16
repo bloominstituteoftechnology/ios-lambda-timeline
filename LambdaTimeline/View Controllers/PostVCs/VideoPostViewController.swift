@@ -11,7 +11,11 @@ import AVFoundation
 
 class VideoPostViewController: UIViewController {
 
-    var mediaData: Data?
+    var localVideoURL: URL?
+    var videoData: Data?
+
+    var post: Post?
+    var postController: PostController!
 
     @IBOutlet weak var videoView: VideoPreviewView!
     @IBOutlet weak var titleTextField: UITextField!
@@ -42,7 +46,41 @@ class VideoPostViewController: UIViewController {
     }
 
     func postVideo() {
+        view.endEditing(true)
 
+        guard
+            let url = localVideoURL,
+            let title = titleTextField.text, !title.isEmpty
+            else {
+                presentInformationalAlertController(
+                    title: "Uh-oh",
+                    message: "Make sure that you add a photo and a caption before posting.")
+                return
+        }
+        do {
+            let data = try Data(contentsOf: url)
+
+            postController.createPost(
+                with: title,
+                ofType: .video(ratio: nil),
+                mediaData: data)
+            { [weak self] success in
+                DispatchQueue.main.async { [weak self] in
+                    guard success else {
+                        self?.presentInformationalAlertController(
+                            title: "Error",
+                            message: "Unable to create post. Please try again.)")
+                        return
+                    }
+                    self?.navigationController?.popViewController(animated: true)
+                }
+            }
+        } catch {
+            NSLog("\(error)")
+            presentInformationalAlertController(
+                title: "Error",
+                message: "Unable to create post. Please try again. (Error: \(error)))")
+        }
     }
 
     func checkCameraPermissions(_ wasSuccessFul: @escaping (Bool) -> Void) {
@@ -80,10 +118,10 @@ extension VideoPostViewController: VideoRecorderDelegate {
         toURL videoURL: URL
     ) {
         guard success else { return }
+        localVideoURL = videoURL
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.navigationController?.popToViewController(self, animated: true)
-            self.videoView.setUpVideoAndPlay(url: videoURL)
+//            self.navigationController?.popToViewController(self, animated: true)
+            self?.videoView.setUpVideoAndPlay(url: videoURL)
         }
     }
 }
