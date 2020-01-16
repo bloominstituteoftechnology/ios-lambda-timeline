@@ -92,7 +92,7 @@ class VideoRecorderViewController: UIViewController {
             fileOutput.stopRecording()
         } else {
             fileOutput.startRecording(
-                to: newRecordingURL(),
+                to: .newLocalVideoURL(),
                 recordingDelegate: self)
         }
     }
@@ -138,23 +138,6 @@ class VideoRecorderViewController: UIViewController {
 
         captureSession.commitConfiguration()
         cameraView.session = captureSession
-    }
-
-    /// Creates a new file URL in the documents directory
-    private func newRecordingURL() -> URL {
-        let documentsDirectory = FileManager.default.urls(
-            for: .documentDirectory,
-            in: .userDomainMask)
-            .first!
-
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime]
-
-        let name = formatter.string(from: Date())
-        let fileURL = documentsDirectory
-            .appendingPathComponent(name)
-            .appendingPathExtension("mov")
-        return fileURL
     }
 }
 
