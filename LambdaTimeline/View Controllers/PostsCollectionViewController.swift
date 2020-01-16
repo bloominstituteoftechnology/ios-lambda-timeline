@@ -40,6 +40,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         let audioPostAction = UIAlertAction(title: "Audio", style: .default) { _ in
             self.performSegue(withIdentifier: "AddAudioPost", sender: nil)
         }
+        let videoPostAction = UIAlertAction(title: "Video", style: .default) { _ in
+            self.performSegue(withIdentifier: "AddVideoPost", sender: nil)
+        }
         
         let cancelAction = UIAlertAction(
             title: "Cancel",
@@ -48,6 +51,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         
         alert.addAction(imagePostAction)
         alert.addAction(audioPostAction)
+        alert.addAction(videoPostAction)
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true, completion: nil)
@@ -109,10 +113,8 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         case .image(let ratio), .video(let ratio):
             guard let ratio = ratio else { return size }
             size.height = size.width * ratio
-        case .audio:
+        default:
             size.height = 220
-        @unknown default:
-            break
         }
         
         return size
