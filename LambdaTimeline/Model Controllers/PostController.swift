@@ -13,7 +13,7 @@ import FirebaseStorage
 
 class PostController {
     
-    func createPost(with description: String, audioURL: URL? = nil, ofType mediaType: MediaType, mediaData: Data, ratio: CGFloat? = nil, completion: @escaping (Bool) -> Void = { _ in }) {
+    func createPost(with audioURL: URL? = nil, ofType mediaType: MediaType, mediaData: Data, ratio: CGFloat? = nil, completion: @escaping (Bool) -> Void = { _ in }) {
         
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
@@ -22,7 +22,7 @@ class PostController {
             
             guard let mediaURL = mediaURL else { completion(false); return }
             
-            let imagePost = Post(mediaURL: mediaURL, ratio: ratio, author: author, description: description)
+            let imagePost = Post(mediaURL: mediaURL, ratio: ratio, author: author)
             
             self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
                 if let error = error {

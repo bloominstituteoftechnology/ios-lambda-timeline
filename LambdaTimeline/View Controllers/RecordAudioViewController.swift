@@ -47,7 +47,6 @@ class RecordAudioViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.modalPresentationStyle = .overCurrentContext
-        setupFontForTimeLabels()
         updateSlider()
         player.delegate = self
         recorder.delegate = self
