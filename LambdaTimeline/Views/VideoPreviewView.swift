@@ -11,16 +11,24 @@ import AVFoundation
 
 class VideoPreviewView: UIView {
 
-    var isPlaying: Bool = false {
-        willSet (willPlay) {
-            guard willPlay != isPlaying else { return }
-            willPlay ? play() : pause()
-        }
-    }
+    private(set) var isPlaying: Bool = false
 
     private var player: AVQueuePlayer?
     private var looper: AVPlayerLooper?
     private var playerLayer: AVPlayerLayer?
+
+    override class var layerClass: AnyClass {
+        return AVCaptureVideoPreviewLayer.self
+    }
+
+    var videoPlayerViewLayer: AVCaptureVideoPreviewLayer {
+        return layer as! AVCaptureVideoPreviewLayer
+    }
+
+    var session: AVCaptureSession? {
+        get { return videoPlayerViewLayer.session }
+        set { videoPlayerViewLayer.session = newValue }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -65,14 +73,16 @@ class VideoPreviewView: UIView {
 
     func setUpVideoAndPlay(url: URL) {
         let item = AVPlayerItem(url: url)
-        let player = AVQueuePlayer(playerItem: item)
+        let newPlayer = AVQueuePlayer(playerItem: item)
+        let newLayer = AVPlayerLayer(player: newPlayer)
+        // TODO: customize rectangle bounds?
+        newLayer.frame = bounds
 
-        looper = AVPlayerLooper(player: player, templateItem: item)
-        playerLayer = AVPlayerLayer(player: player)
-        self.player = player
+        looper = AVPlayerLooper(player: newPlayer, templateItem: item)
+        playerLayer = newLayer
+        player = newPlayer
 
-        // TODO: customize rectangle bounds
-        playerLayer?.frame = frame
+        layer.addSublayer(newLayer)
 
         play()
     }
