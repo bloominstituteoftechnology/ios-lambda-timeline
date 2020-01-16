@@ -209,10 +209,7 @@ class PostDetailViewController: UITableViewController {
 
 extension PostDetailViewController: AudioCommentViewControllerDelegate {
     func didSuccessfullyLeaveAudioComment() {
-        DispatchQueue.main.async { //[weak self] in
-//            guard let postDetailVC = self else { return }
-            self.navigationController?
-                .popToViewController(self, animated: true)
+        DispatchQueue.main.async {
             self.tableView.reloadData()
         }
     }
