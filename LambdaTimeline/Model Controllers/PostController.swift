@@ -35,16 +35,58 @@ class PostController {
         }
     }
     
-    func addComment(with text: String, to post: inout Post) {
+    func addComment(with text: String?, audioURL: URL?, to post: inout Post) {
         
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
         
-        let comment = Comment(text: text, author: author)
+        if let text = text {
+            addTextComment(with: text, to: /*&*/post)
+        } else if let audioURL = audioURL {
+            addAudioComment(with: audioURL, to: post)
+        } else {
+            NSLog("Unable to create commnet without audio or text")
+        }
+        
+//        let comment = Comment(text: text, author: author)
+//        post.comments.append(comment)
+        
+        savePostToFirebase(post)
+    }
+    
+    func addTextComment(with text: String, to post: /*inout*/ Post) {
+        guard let currentUser = Auth.auth().currentUser,
+            let author = Author(user: currentUser) else { return }
+        
+        let comment = Comment(text: text, audioURL: nil, author: author)
         post.comments.append(comment)
         
         savePostToFirebase(post)
     }
+    
+    func addAudioComment(with audioURL: URL, to post: Post) {
+            guard let currentUser = Auth.auth().currentUser,
+                let author = Author(user: currentUser) else { return }
+            
+            do {
+                let data = try Data(contentsOf: audioURL)
+                store(mediaData: data, mediaType: .audio) { (audioCommentURL) in
+                    
+                    guard let audioCommentURL = audioCommentURL else { return }
+                    let comment = Comment(text: nil, audioURL: audioCommentURL, author: author)
+                    post.comments.append(comment)
+                    self.savePostToFirebase(post)
+                }
+            } catch {
+                print("Error fetching data from audioURL (\(audioURL)): \(error)")
+            }
+            
+            
+    //        let comment = Comment(text: nil, audioURL: audioURL, author: author)
+    //        post.comments.append(comment)
+    //
+    //        savePostToFirebase(post)
+        }
 
     func observePosts(completion: @escaping (Error?) -> Void) {
         
