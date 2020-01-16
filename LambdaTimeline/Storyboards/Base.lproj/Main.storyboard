@@ -232,29 +232,53 @@
             </objects>
             <point key="canvasLocation" x="3540" y="-635.46798029556658"/>
         </scene>
-        <!--View Controller-->
+        <!--Video Recorder View Controller-->
         <scene sceneID="oNA-c3-R9a">
             <objects>
-                <viewController id="l2y-cW-icc" sceneMemberID="viewController">
+                <viewController id="l2y-cW-icc" customClass="VideoRecorderViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nYs-yJ-E6t">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nLT-aj-aSe" userLabel="Camera View">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nLT-aj-aSe" userLabel="Camera View" customClass="CameraPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="20" width="375" height="772"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z6d-XR-6uI">
+                                <rect key="frame" x="137.66666666666666" y="638" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="YOG-vf-JCb"/>
+                                    <constraint firstAttribute="width" secondItem="Z6d-XR-6uI" secondAttribute="height" multiplier="1:1" id="zPo-AZ-cip"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="tintColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="0.7953345070422535" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="largecircle.fill.circle" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="90"/>
+                                </state>
+                                <state key="selected" image="stop.circle" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="90"/>
+                                </state>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="l2y-cW-icc" eventType="touchUpInside" id="RsI-Jt-NWx"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="nLT-aj-aSe" secondAttribute="bottom" constant="20" symbolic="YES" id="G1A-dR-wPg"/>
+                            <constraint firstItem="nLT-aj-aSe" firstAttribute="top" secondItem="nYs-yJ-E6t" secondAttribute="top" constant="20" symbolic="YES" id="7Ki-IT-TaD"/>
+                            <constraint firstAttribute="bottom" secondItem="nLT-aj-aSe" secondAttribute="bottom" constant="20" symbolic="YES" id="AhA-1V-fdy"/>
                             <constraint firstItem="nLT-aj-aSe" firstAttribute="leading" secondItem="D7v-f3-7nE" secondAttribute="leading" id="NXx-55-mHC"/>
                             <constraint firstItem="nLT-aj-aSe" firstAttribute="trailing" secondItem="D7v-f3-7nE" secondAttribute="trailing" id="PCw-nu-fxg"/>
-                            <constraint firstItem="nLT-aj-aSe" firstAttribute="top" secondItem="nYs-yJ-E6t" secondAttribute="top" constant="20" symbolic="YES" id="vIH-v4-WhS"/>
+                            <constraint firstItem="D7v-f3-7nE" firstAttribute="bottom" secondItem="Z6d-XR-6uI" secondAttribute="bottom" constant="40" id="e7R-nj-YEl"/>
+                            <constraint firstItem="Z6d-XR-6uI" firstAttribute="centerX" secondItem="nYs-yJ-E6t" secondAttribute="centerX" id="rhm-nD-JyG"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="D7v-f3-7nE"/>
                     </view>
                     <navigationItem key="navigationItem" id="iFD-RV-Bqj"/>
+                    <connections>
+                        <outlet property="cameraView" destination="nLT-aj-aSe" id="fYG-lu-gYR"/>
+                        <outlet property="recordButton" destination="Z6d-XR-6uI" id="GEN-qo-SRV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bGP-7q-ctw" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -626,13 +650,13 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Jed-zo-yZu">
                                             <rect key="frame" x="129" y="23.333333333333332" width="230" height="48.666666666666671"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jyy-BX-c2c">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jyy-BX-c2c">
                                                     <rect key="frame" x="0.0" y="0.0" width="230" height="20.333333333333332"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uQC-8y-kuu">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Author" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uQC-8y-kuu">
                                                     <rect key="frame" x="0.0" y="28.333333333333336" width="230" height="20.333333333333336"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -951,6 +975,10 @@
             <point key="canvasLocation" x="2132" y="856"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="largecircle.fill.circle" catalog="system" width="64" height="60"/>
+        <image name="stop.circle" catalog="system" width="64" height="60"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="2og-lh-3YE"/>
     </inferredMetricsTieBreakers>

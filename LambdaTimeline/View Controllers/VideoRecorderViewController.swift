@@ -9,11 +9,26 @@
 import UIKit
 import AVFoundation
 
+// MARK: - Delegate
+
+protocol VideoRecorderViewControllerDelegate: AnyObject {
+    func videoRecorderVC(
+        _ videoRecorderVC: VideoRecorderViewController,
+        didFinishRecordingSucessfully success: Bool,
+        toURL videoURL: URL
+    )
+}
+
 class VideoRecorderViewController: UIViewController {
+
+    // MARK: - Properties
+
     private lazy var captureSession = AVCaptureSession()
     private lazy var fileOutput = AVCaptureMovieFileOutput()
     private var player: AVPlayer?
     private var playerLayer: AVPlayerLayer?
+
+    weak var delegate: VideoRecorderViewControllerDelegate?
 
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
@@ -202,9 +217,12 @@ extension VideoRecorderViewController: AVCaptureFileOutputRecordingDelegate {
     ) {
         if let error = error {
             print("Error with video recording: \(error)")
+            return
         }
         print("finished recording video: \(outputFileURL.path)")
-        updateViews()
-        playMovie(url: outputFileURL)
+        delegate?.videoRecorderVC(
+            self,
+            didFinishRecordingSucessfully: true,
+            toURL: outputFileURL)
     }
 }
