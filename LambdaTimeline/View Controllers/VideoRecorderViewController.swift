@@ -11,7 +11,7 @@ import AVFoundation
 
 // MARK: - Delegate
 
-protocol VideoRecorderViewControllerDelegate: AnyObject {
+protocol VideoRecorderDelegate: AnyObject {
     func videoRecorderVC(
         _ videoRecorderVC: VideoRecorderViewController,
         didFinishRecordingSucessfully success: Bool,
@@ -25,10 +25,8 @@ class VideoRecorderViewController: UIViewController {
 
     private lazy var captureSession = AVCaptureSession()
     private lazy var fileOutput = AVCaptureMovieFileOutput()
-    private var player: AVPlayer?
-    private var playerLayer: AVPlayerLayer?
 
-    weak var delegate: VideoRecorderViewControllerDelegate?
+    weak var delegate: VideoRecorderDelegate?
 
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
@@ -70,11 +68,7 @@ class VideoRecorderViewController: UIViewController {
 
         setUpCamera()
 
-        // add tap gesture to replay video (repeat loop?)
-        let tapGesture = UITapGestureRecognizer(
-            target: self,
-            action: #selector(viewTapped(_:)))
-        view.addGestureRecognizer(tapGesture)
+
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -88,14 +82,6 @@ class VideoRecorderViewController: UIViewController {
     }
 
     // MARK: - Actions
-
-    @objc
-    private func viewTapped(_ tapGesture: UITapGestureRecognizer) {
-        if tapGesture.state == .ended {
-            print("tap")
-            playMovie()
-        }
-    }
 
     @IBAction
     private func recordButtonPressed(_ sender: Any) {
@@ -112,29 +98,6 @@ class VideoRecorderViewController: UIViewController {
                 to: newRecordingURL(),
                 recordingDelegate: self)
         }
-    }
-
-    func playMovie(url: URL) {
-        player = AVPlayer(url: url)
-
-        playerLayer = AVPlayerLayer(player: player)
-
-        // TODO: customize rectangle bounds
-        playerLayer?.frame = view.bounds
-        var topRect = view.bounds
-        topRect.size.height /= 4
-        topRect.size.width /= 4
-        topRect.origin.y = view.layoutMargins.top
-        playerLayer?.frame = topRect
-
-        view.layer.addSublayer(playerLayer!)
-        player?.play()
-        // TODO: add delegate and repeat video at end
-    }
-
-    func playMovie() {
-        player?.seek(to: .zero)
-        player?.play()
     }
 
     private func updateViews() {
