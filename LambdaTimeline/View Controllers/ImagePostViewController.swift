@@ -8,7 +8,10 @@
 
 import UIKit
 import Photos
+import CoreImage
+import CoreImage.CIFilterBuiltins
 
+@available(iOS 13.0, *)
 class ImagePostViewController: ShiftableViewController {
     
     //MARK: - Properties
@@ -16,6 +19,36 @@ class ImagePostViewController: ShiftableViewController {
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    
+    var originalImage: UIImage? {
+        didSet {
+            guard let originalImage = originalImage else { return }
+            
+            var scaledSize = imageView.bounds.size
+            let scale = CGFloat(0.5)
+            
+            scaledSize = CGSize(width: scaledSize.width*scale,
+                                height: scaledSize.height*scale)
+            
+            let scaledUIImage = originalImage.imageByScaling(toSize: scaledSize)
+            guard let scaledCGImage = scaledUIImage?.cgImage else { return }
+            
+            scaledImage = CIImage(cgImage: scaledCGImage)
+        }
+    }
+    
+    var scaledImage: CIImage? {
+        didSet {
+            updateImage()
+        }
+    }
+    
+    private let context = CIContext()
+    private let colorControlsFilter = CIFilter.colorControls()
+    private let blurFilter = CIFilter.gaussianBlur()
+    private let invertFilter = CIFilter.colorInvert()
+    private let noirFilter = CIFilter.photoEffectNoir()
+    private let vividFilter = CIFilter.photoEffectChrome()
     
     //MARK: - Outlets
     
@@ -98,6 +131,37 @@ class ImagePostViewController: ShiftableViewController {
         vividSwitch.isEnabled = true
     }
     
+    private func image(byFiltering inputImage: CIImage) -> UIImage {
+        colorControlsFilter.inputImage = inputImage
+        colorControlsFilter.brightness = brightnessSlider.value
+        colorControlsFilter.saturation = saturationSlider.value
+        colorControlsFilter.contrast = contrastSlider.value
+        
+        blurFilter.inputImage = colorControlsFilter.outputImage?.clampedToExtent()
+        blurFilter.radius = blurSlider.value
+        
+        invertFilter.inputImage = blurFilter.outputImage?.clampedToExtent()
+        
+        noirFilter.inputImage = invertFilter.outputImage?.clampedToExtent()
+        
+        vividFilter.inputImage = noirFilter.outputImage?.clampedToExtent()
+        
+        
+        guard let outputImage = vividFilter.outputImage else { return UIImage(ciImage: inputImage) }
+        
+        guard let renderedImage = context.createCGImage(outputImage, from: inputImage.extent) else { return UIImage(ciImage: inputImage) }
+        
+        return UIImage(cgImage: renderedImage)
+    }
+    
+    private func updateImage() {
+        if let scaledImage = scaledImage {
+            imageView.image = image(byFiltering: scaledImage)
+        } else {
+            imageView.image = nil
+        }
+    }
+    
     //MARK: - Actions
     
     @IBAction func createPost(_ sender: Any) {
@@ -155,8 +219,36 @@ class ImagePostViewController: ShiftableViewController {
         presentImagePickerController()
     }
     
+    @IBAction func brightnessChanged(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func saturationChanged(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func contrastChanged(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func blurChanged(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func invertChanged(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func noirChanged(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func vividChanged(_ sender: Any) {
+        updateImage()
+    }
 }
 
+@available(iOS 13.0, *)
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -170,6 +262,8 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         imageView.image = image
         
         setImageViewHeight(with: image.ratio)
+        
+        originalImage = imageView.image
         
         turnOnFilters()
     }

@@ -164,12 +164,15 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <slider opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="jv1-qB-GnW">
+                                                    <slider opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="jv1-qB-GnW">
                                                         <rect key="frame" x="186.5" y="0.0" width="149" height="31"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="nlT-tr-A2e"/>
                                                             <constraint firstAttribute="width" constant="145" id="wRp-Xf-Rqh"/>
                                                         </constraints>
+                                                        <connections>
+                                                            <action selector="brightnessChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="JYO-86-waT"/>
+                                                        </connections>
                                                     </slider>
                                                 </subviews>
                                             </stackView>
@@ -182,12 +185,15 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <slider opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="GZq-93-lTI">
+                                                    <slider opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="GZq-93-lTI">
                                                         <rect key="frame" x="186.5" y="0.0" width="149" height="31"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="145" id="KoR-rY-OCH"/>
                                                             <constraint firstAttribute="height" constant="30" id="lxT-3s-DrP"/>
                                                         </constraints>
+                                                        <connections>
+                                                            <action selector="saturationChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="dex-lD-CZk"/>
+                                                        </connections>
                                                     </slider>
                                                 </subviews>
                                             </stackView>
@@ -200,12 +206,15 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <slider opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="f6j-FZ-kWa">
+                                                    <slider opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.25" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="f6j-FZ-kWa">
                                                         <rect key="frame" x="186.5" y="0.0" width="149" height="31"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="30" id="nmT-p2-V8E"/>
                                                             <constraint firstAttribute="width" constant="145" id="thF-eW-bD8"/>
                                                         </constraints>
+                                                        <connections>
+                                                            <action selector="contrastChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="Xx7-MJ-GwP"/>
+                                                        </connections>
                                                     </slider>
                                                 </subviews>
                                             </stackView>
@@ -218,12 +227,15 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <slider opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="vs1-T7-XUU">
+                                                    <slider opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="vs1-T7-XUU">
                                                         <rect key="frame" x="186.5" y="0.0" width="149" height="31"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="145" id="7rv-I0-r6E"/>
                                                             <constraint firstAttribute="height" constant="30" id="s2V-RP-Oc7"/>
                                                         </constraints>
+                                                        <connections>
+                                                            <action selector="blurChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="eYf-hS-a7h"/>
+                                                        </connections>
                                                     </slider>
                                                 </subviews>
                                             </stackView>
@@ -242,6 +254,9 @@
                                                             <constraint firstAttribute="width" constant="50" id="opZ-wM-10H"/>
                                                             <constraint firstAttribute="height" constant="30" id="zEV-lB-cIG"/>
                                                         </constraints>
+                                                        <connections>
+                                                            <action selector="invertChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="ZhY-UB-Mgs"/>
+                                                        </connections>
                                                     </switch>
                                                 </subviews>
                                             </stackView>
@@ -256,6 +271,9 @@
                                                     </label>
                                                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="5Wf-e6-wHP">
                                                         <rect key="frame" x="236.5" y="0.0" width="51" height="31"/>
+                                                        <connections>
+                                                            <action selector="noirChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="ivv-pl-6TO"/>
+                                                        </connections>
                                                     </switch>
                                                 </subviews>
                                             </stackView>
@@ -274,6 +292,9 @@
                                                             <constraint firstAttribute="width" constant="50" id="EDj-Mr-x6m"/>
                                                             <constraint firstAttribute="height" constant="30" id="Mo3-ks-PFs"/>
                                                         </constraints>
+                                                        <connections>
+                                                            <action selector="vividChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="lta-Sk-2ZO"/>
+                                                        </connections>
                                                     </switch>
                                                 </subviews>
                                             </stackView>
