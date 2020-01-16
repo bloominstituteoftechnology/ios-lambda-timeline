@@ -8,6 +8,7 @@
 
 import Foundation
 import FirebaseAuth
+import MapKit
 
 // MARK: - MediaType
 
@@ -18,14 +19,12 @@ enum MediaType {
 
     var rawValue: String {
         switch self {
-        case .image(_):
+        case .image:
             return "image"
         case .audio:
             return "audio"
         case .video:
             return "video"
-        @unknown default:
-            return "?"
         }
     }
 
@@ -54,6 +53,8 @@ class Post {
     let timestamp: Date
     var comments: [Comment]
     var id: String?
+    var geotag: CLLocationCoordinate2D?
+    var mapAnnotation: PostAnnotation? { PostAnnotation(post: self) }
 
     var ratio: CGFloat? {
         if case .image(let ratio) = mediaType {
@@ -71,7 +72,9 @@ class Post {
             Post.mediaTypeKey: mediaType.rawValue,
             Post.commentsKey: comments.map({ $0.dictionaryRepresentation }),
             Post.authorKey: author.dictionaryRepresentation,
-            Post.timestampKey: timestamp.timeIntervalSince1970]
+            Post.timestampKey: timestamp.timeIntervalSince1970,
+            Post.geotagKey: [Post.latitudeKey: geotag?.latitude,
+                             Post.longitudeKey: geotag?.longitude]]
 
         guard let ratio = self.ratio else { return dict }
 
@@ -89,6 +92,9 @@ class Post {
     static private let commentsKey = "comments"
     static private let timestampKey = "timestamp"
     static private let idKey = "id"
+    static private let geotagKey = "geotag"
+    static private let latitudeKey = "latitude"
+    static private let longitudeKey = "longitude"
 
     // MARK: - Init
     
@@ -97,13 +103,15 @@ class Post {
         mediaURL: URL,
         mediaType: MediaType,
         author: Author,
-        timestamp: Date = Date()
+        timestamp: Date = Date(),
+        geotag: CLLocationCoordinate2D? = nil
     ) {
         self.mediaURL = mediaURL
         self.mediaType = mediaType
         self.author = author
         self.comments = [Comment(text: title, author: author)]
         self.timestamp = timestamp
+        self.geotag = geotag
     }
     
     init?(dictionary: [String : Any], id: String) {
@@ -117,6 +125,7 @@ class Post {
             let timestampTimeInterval = dictionary[Post.timestampKey] as? TimeInterval,
             let captionDictionaries = dictionary[Post.commentsKey] as? [[String: Any]]
             else { return nil }
+        let geotagRep = dictionary[Post.geotagKey] as? [String: Double]
         
         self.mediaURL = mediaURL
         switch  mediaType {
@@ -129,5 +138,9 @@ class Post {
         self.timestamp = Date(timeIntervalSince1970: timestampTimeInterval)
         self.comments = captionDictionaries.compactMap({ Comment(dictionary: $0) })
         self.id = id
+        if let lat = geotagRep?[Post.latitudeKey],
+            let long = geotagRep?[Post.longitudeKey] {
+            self.geotag = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        }
     }
 }
