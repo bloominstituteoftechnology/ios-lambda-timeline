@@ -9,21 +9,15 @@
 import UIKit
 import AVFoundation
 
-class AudioPostViewController: ShiftableViewController {
+class AudioPostViewController: PostViewController {
 
-    // MARK: - Properties
-
-    var postController: PostController!
-    var post: Post?
-
-    var mediaData: Data?
+    override var mediaData: Data? { audioRecordererControl.audioData }
 
     // MARK: - Outlets
 
     @IBOutlet var audioRecordererControl: AudioRecorderControl!
     @IBOutlet var audioPlayerControl: AudioPlayerControl!
     @IBOutlet var reRecordButton: UIButton!
-    @IBOutlet var titleTextField: UITextField!
 
     // MARK: - View Lifecycle / Update
 
@@ -47,14 +41,9 @@ class AudioPostViewController: ShiftableViewController {
         clearRecordedData()
     }
 
-    @IBAction func createPostButtonTapped(_ sender: Any) {
-        createPost()
-    }
-
     // MARK: - Methods
 
     private func clearRecordedData() {
-        mediaData = nil
         updateViews()
     }
 
@@ -65,31 +54,13 @@ class AudioPostViewController: ShiftableViewController {
         updateViews()
     }
 
-    private func createPost() {
-        view.endEditing(true)
-        guard
-            let data = audioRecordererControl.audioData,
-            let title = titleTextField.text, title != ""
-            else {
-                presentInformationalAlertController(
-                    title: "Uh-oh",
-                    message: "Make sure that you add a photo and a caption before posting.")
-                return
-        }
-        postController.createPost(
-            with: title,
-            ofType: .audio,
-            mediaData: data
-        ) { success in
-            DispatchQueue.main.async {
-                if success {
-                    self.navigationController?.popViewController(animated: true)
-                } else {
-                    self.presentInformationalAlertController(
-                        title: "Error",
-                        message: "Unable to create post. Try again.")
-                }
-            }
+    override func createPost() {
+        if let data = audioRecordererControl.audioData {
+            createPost(ofType: .audio, with: data)
+        } else {
+            presentInformationalAlertController(
+                title: "Uh-oh",
+                message: "Make sure that you record something.")
         }
     }
 }
@@ -101,7 +72,6 @@ extension AudioPostViewController: AudioRecorderControlDelegate {
         _ recorderControl: AudioRecorderControl,
         didFinishRecordingSucessfully didFinishRecording: Bool
     ) {
-        self.mediaData = recorderControl.audioData
         setUpPlayer()
     }
 }

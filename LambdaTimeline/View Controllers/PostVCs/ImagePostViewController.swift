@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-class ImagePostViewController: ShiftableViewController {
+class ImagePostViewController: PostViewController {
 
     enum FilterType: String, CaseIterable {
         case motionBlur = "Motion Blur"
@@ -19,10 +19,6 @@ class ImagePostViewController: ShiftableViewController {
         case invert = "Invert Colors"
     }
 
-    var postController: PostController!
-    var post: Post?
-    var mediaData: Data?
-
     var originalImage: UIImage? {
         didSet { scaledImage = scaleImage(originalImage) }
     }
@@ -31,11 +27,15 @@ class ImagePostViewController: ShiftableViewController {
     }
     var context = CIContext(options: nil)
 
+    override var mediaData: Data? {
+        if let filteredImage = filterImage(scaledImage) {
+            return filteredImage.jpegData(compressionQuality: 0.1)
+        } else { return nil }
+    }
+
     @IBOutlet private weak var imageView: UIImageView!
-    @IBOutlet private weak var titleTextField: UITextField!
     @IBOutlet private weak var chooseImageButton: UIButton!
     @IBOutlet private weak var imageHeightConstraint: NSLayoutConstraint!
-    @IBOutlet private weak var postButton: UIBarButtonItem!
 
     // MARK: - Filter Views
 
@@ -107,10 +107,6 @@ class ImagePostViewController: ShiftableViewController {
 
     // MARK: - Actions
     
-    @IBAction func createPostTapped(_ sender: Any) {
-        createPost()
-    }
-    
     @IBAction func chooseImageTapped(_ sender: Any) {
         chooseImage()
     }
@@ -144,36 +140,13 @@ class ImagePostViewController: ShiftableViewController {
         filterPreviewImage()
     }
 
-    func createPost() {
-        view.endEditing(true)
-
-        guard let filteredImage = filterImage(scaledImage),
-            let imageData = filteredImage.jpegData(compressionQuality: 0.1),
-            let title = titleTextField.text, title != ""
-            else {
-                presentInformationalAlertController(
-                    title: "Uh-oh",
-                    message: "Make sure that you add a photo and a caption before posting.")
-                return
-        }
-
-        postController.createPost(
-            with: title,
-            ofType: .image(ratio: imageView.image?.ratio),
-            mediaData: imageData
-        ) { success in
-            guard success else {
-                DispatchQueue.main.async {
-                    self.presentInformationalAlertController(
-                        title: "Error",
-                        message: "Unable to create post. Try again.")
-                }
-                return
-            }
-
-            DispatchQueue.main.async {
-                self.navigationController?.popViewController(animated: true)
-            }
+    override func createPost() {
+        if let data = mediaData {
+            createPost(ofType: .image(ratio: imageView.image?.ratio), with: data)
+        } else {
+            presentInformationalAlertController(
+                title: "Uh-oh",
+                message: "Make sure that you add a photo before posting.")
         }
     }
 

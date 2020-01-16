@@ -9,16 +9,17 @@
 import UIKit
 import AVFoundation
 
-class VideoPostViewController: UIViewController {
+class VideoPostViewController: PostViewController {
 
     var localVideoURL: URL?
-    var videoData: Data?
 
-    var post: Post?
-    var postController: PostController!
+    override var mediaData: Data? {
+        if let url = localVideoURL {
+            return try? Data(contentsOf: url)
+        } else { return nil }
+    }
 
     @IBOutlet weak var videoView: VideoPreviewView!
-    @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var recordButton: UIButton!
     
     // MARK: - Actions
@@ -26,11 +27,6 @@ class VideoPostViewController: UIViewController {
     @IBAction
     func recordButtonTapped(_ sender: Any) {
         recordNewVideo()
-    }
-
-    @IBAction
-    func postButtonTapped(_ sender: Any) {
-        postVideo()
     }
 
     func recordNewVideo() {
@@ -45,41 +41,13 @@ class VideoPostViewController: UIViewController {
         }
     }
 
-    func postVideo() {
-        view.endEditing(true)
-
-        guard
-            let url = localVideoURL,
-            let title = titleTextField.text, !title.isEmpty
-            else {
-                presentInformationalAlertController(
-                    title: "Uh-oh",
-                    message: "Make sure that you add a photo and a caption before posting.")
-                return
-        }
-        do {
-            let data = try Data(contentsOf: url)
-
-            postController.createPost(
-                with: title,
-                ofType: .video(ratio: nil),
-                mediaData: data)
-            { [weak self] success in
-                DispatchQueue.main.async { [weak self] in
-                    guard success else {
-                        self?.presentInformationalAlertController(
-                            title: "Error",
-                            message: "Unable to create post. Please try again.)")
-                        return
-                    }
-                    self?.navigationController?.popViewController(animated: true)
-                }
-            }
-        } catch {
-            NSLog("\(error)")
+    override func createPost() {
+        if let data = mediaData {
+            createPost(ofType: .video(ratio: nil), with: data)
+        } else {
             presentInformationalAlertController(
-                title: "Error",
-                message: "Unable to create post. Please try again. (Error: \(error)))")
+                title: "Uh-oh",
+                message: "Make sure that you record a video before posting.")
         }
     }
 
