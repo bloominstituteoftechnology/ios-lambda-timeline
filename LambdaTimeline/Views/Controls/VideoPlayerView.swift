@@ -8,31 +8,25 @@
 
 import UIKit
 import AVFoundation
+import AVKit
 
-class VideoPreviewView: UIView {
+class VideoPlayerView: UIView {
 
     private(set) var isPlaying: Bool = false
     var videoIsLoaded: Bool {
-        player != nil && looper != nil && playerLayer != nil
+        player != nil && looper != nil
     }
 
     private var player: AVQueuePlayer?
     private var looper: AVPlayerLooper?
-    private var playerLayer: AVPlayerLayer?
-
-    private var videoPlayerViewLayer: AVCaptureVideoPreviewLayer {
-        return layer as! AVCaptureVideoPreviewLayer
+    private var playerLayer: AVPlayerLayer {
+        layer as! AVPlayerLayer
     }
 
     weak var delegate: AVManageableDelegate?
 
-    private var session: AVCaptureSession? {
-        get { return videoPlayerViewLayer.session }
-        set { videoPlayerViewLayer.session = newValue }
-    }
-
     override class var layerClass: AnyClass {
-        return AVCaptureVideoPreviewLayer.self
+        AVPlayerLayer.self
     }
 
     // MARK: - Init/Setup
@@ -53,13 +47,13 @@ class VideoPreviewView: UIView {
             target: self,
             action: #selector(viewTapped(_:)))
         addGestureRecognizer(tapGesture)
+        playerLayer.bounds = frame
+        self.playerLayer.videoGravity = .resizeAspect
     }
 
-    @objc
-    func viewTapped(_ tapGesture: UITapGestureRecognizer) {
-        if tapGesture.state == .ended {
-            togglePlaying()
-        }
+    deinit {
+        self.player?.pause()
+        self.player = nil
     }
 
     // MARK: - API
@@ -97,26 +91,27 @@ class VideoPreviewView: UIView {
         looper?.disableLooping()
         looper = nil
         player = nil
-        playerLayer?.removeFromSuperlayer()
-        playerLayer = nil
     }
 
     // MARK: - Helpers
 
+    @objc
+    func viewTapped(_ tapGesture: UITapGestureRecognizer) {
+        if tapGesture.state == .ended {
+            togglePlaying()
+        }
+    }
+
     private func setUpPlayer(with item: AVPlayerItem) {
         let newPlayer = AVQueuePlayer(playerItem: item)
-        let newLayer = AVPlayerLayer(player: newPlayer)
+        playerLayer.player = newPlayer
         // TODO: customize rectangle bounds?
-        newLayer.frame = bounds
 
         looper = AVPlayerLooper(player: newPlayer, templateItem: item)
-        playerLayer = newLayer
         player = newPlayer
-
-        layer.addSublayer(newLayer)
     }
 }
 
 // MARK: - AVManageable
 
-extension VideoPreviewView: AVManageable {}
+extension VideoPlayerView: AVManageable {}
