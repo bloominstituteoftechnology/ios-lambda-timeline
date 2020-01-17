@@ -18,8 +18,9 @@ class VideoPostViewController: PostViewController {
             return try? Data(contentsOf: url)
         } else { return nil }
     }
+    override var avManageable: AVManageable? { videoView }
 
-    @IBOutlet weak var videoView: VideoPreviewView!
+    @IBOutlet weak var videoView: VideoPlayerView!
     @IBOutlet weak var recordButton: UIButton!
     
     // MARK: - Actions

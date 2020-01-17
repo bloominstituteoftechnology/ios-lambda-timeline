@@ -31,6 +31,11 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             }
         }
     }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        AVManager.shared.pauseAll()
+    }
     
     @IBAction func addPost(_ sender: Any) {
         let alert = UIAlertController(

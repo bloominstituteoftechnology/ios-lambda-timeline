@@ -13,10 +13,23 @@ class PostViewController: ShiftableViewController {
     var postController: PostController!
     var locationHelper = LocationHelper()
 
-    var mediaData: Data? { return nil }
+    var mediaData: Data? { nil }
+
+    var avManageable: AVManageable? { nil }
+
+    // MARK: - Outlets
 
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var geotagSwitch: UISwitch!
+
+    // MARK: - View Lifecycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        if let player = avManageable { AVManager.shared.add(player) }
+        titleTextField.delegate = self
+    }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -24,16 +37,23 @@ class PostViewController: ShiftableViewController {
         if locationHelper.hasLocationPermission == nil {
             locationHelper.requestLocationPermission()
         }
-        if let hasLocationPermission = locationHelper.hasLocationPermission,
-            !hasLocationPermission {
-            geotagSwitch.isEnabled = false
-            locationHelper.beginUpdatingLocation()
+        guard
+            let hasLocationPermission = locationHelper.hasLocationPermission,
+            hasLocationPermission
+            else {
+                geotagSwitch.isEnabled = false
+                return
         }
+        locationHelper.beginUpdatingLocation()
     }
 
-    deinit {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         locationHelper.stopUpdatingLocation()
+        AVManager.shared.pauseAll()
     }
+
+    // MARK: - Action
 
     @IBAction func createPostButtonTapped(_ sender: Any) {
         createPost()
@@ -69,5 +89,10 @@ class PostViewController: ShiftableViewController {
                 }
             }
         }
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
 }

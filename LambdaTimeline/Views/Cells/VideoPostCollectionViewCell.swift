@@ -12,7 +12,7 @@ class VideoPostCollectionViewCell: PostCollectionViewCell {
 
     override var avManageable: AVManageable? { videoPreviewView }
 
-    @IBOutlet var videoPreviewView: VideoPreviewView!
+    @IBOutlet var videoPreviewView: VideoPlayerView!
 
     override func prepareForReuse() {
         super.prepareForReuse()

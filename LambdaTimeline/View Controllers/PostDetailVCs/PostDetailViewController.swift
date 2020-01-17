@@ -32,6 +32,11 @@ class PostDetailViewController: UITableViewController {
         }
     }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        AVManager.shared.pauseAll()
+    }
+
     func updateViews() {
         guard isViewLoaded else { return }
         

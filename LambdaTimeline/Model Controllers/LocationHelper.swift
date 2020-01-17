@@ -14,7 +14,8 @@ class LocationHelper: NSObject {
 
     /// Returns nil if permission has not been requseted yet.
     var hasLocationPermission: Bool? {
-        switch CLLocationManager.authorizationStatus() {
+        let authorization = CLLocationManager.authorizationStatus()
+        switch authorization {
         case .notDetermined:
             return nil
         case .authorizedAlways, .authorizedWhenInUse:
@@ -25,8 +26,6 @@ class LocationHelper: NSObject {
         }
     }
 
-    // MARK: - Private
-
     private lazy var locationManager: CLLocationManager = {
         let manager = CLLocationManager()
         manager.desiredAccuracy = 30
@@ -34,6 +33,11 @@ class LocationHelper: NSObject {
         manager.activityType = .other
         return manager
     }()
+
+    override init() {
+        super.init()
+        locationManager.delegate = self
+    }
 
     deinit {
         stopUpdatingLocation()
@@ -61,13 +65,19 @@ class LocationHelper: NSObject {
 // MARK: Location Manager Delegate
 
 extension LocationHelper: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(
+        _ manager: CLLocationManager,
+        didUpdateLocations locations: [CLLocation]
+    ) {
         if let mostRecentLocation = locations.last?.coordinate {
             currentLocation = mostRecentLocation
         }
     }
 
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    func locationManager(
+        _ manager: CLLocationManager,
+        didFailWithError error: Error
+    ) {
         print("Error with location: \(error)")
     }
 }

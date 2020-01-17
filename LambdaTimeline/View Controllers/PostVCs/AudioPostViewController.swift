@@ -12,6 +12,7 @@ import AVFoundation
 class AudioPostViewController: PostViewController {
 
     override var mediaData: Data? { audioRecordererControl.audioData }
+    override var avManageable: AVManageable? { audioPlayerControl }
 
     // MARK: - Outlets
 
