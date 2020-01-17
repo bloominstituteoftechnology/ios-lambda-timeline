@@ -11,11 +11,29 @@ import UIKit
 class PostViewController: ShiftableViewController {
     var post: Post?
     var postController: PostController!
+    var locationHelper = LocationHelper()
 
     var mediaData: Data? { return nil }
 
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var geotagSwitch: UISwitch!
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if locationHelper.hasLocationPermission == nil {
+            locationHelper.requestLocationPermission()
+        }
+        if let hasLocationPermission = locationHelper.hasLocationPermission,
+            !hasLocationPermission {
+            geotagSwitch.isEnabled = false
+            locationHelper.beginUpdatingLocation()
+        }
+    }
+
+    deinit {
+        locationHelper.stopUpdatingLocation()
+    }
 
     @IBAction func createPostButtonTapped(_ sender: Any) {
         createPost()
@@ -33,10 +51,13 @@ class PostViewController: ShiftableViewController {
                     message: "Make sure that you add a photo and a caption before posting.")
                 return
         }
+        let location = geotagSwitch.isOn ? locationHelper.currentLocation : nil
+
         postController.createPost(
             with: title,
             ofType: mediaType,
-            mediaData: data
+            mediaData: data,
+            geotag: location
         ) { success in
             DispatchQueue.main.async {
                 if success {
@@ -48,10 +69,5 @@ class PostViewController: ShiftableViewController {
                 }
             }
         }
-    }
-
-    @IBAction
-    func geotagSwitchChanged(_ sender: UISwitch) {
-
     }
 }
