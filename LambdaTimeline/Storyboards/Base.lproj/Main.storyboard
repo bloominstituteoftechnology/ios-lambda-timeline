@@ -524,11 +524,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XWW-hP-zdR">
-                                <rect key="frame" x="134.5" y="617" width="145" height="145"/>
+                                <rect key="frame" x="132" y="400" width="150" height="150"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="145" id="cRZ-y8-1JW"/>
-                                    <constraint firstAttribute="width" secondItem="XWW-hP-zdR" secondAttribute="height" multiplier="1:1" id="hiQ-oL-XkV"/>
-                                    <constraint firstAttribute="height" constant="145" id="tF7-AF-r1w"/>
+                                    <constraint firstAttribute="width" constant="150" id="QJw-8H-yxe"/>
+                                    <constraint firstAttribute="height" constant="150" id="r4M-h8-6mu"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" image="RecordBlack">
@@ -539,11 +538,23 @@
                                     <action selector="toggleRecording:" destination="fQ1-nQ-78A" eventType="touchUpInside" id="vHX-dk-McO"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfZ-Pc-LYz">
+                                <rect key="frame" x="69.5" y="650" width="275" height="120"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="120" id="LlK-MY-PPM"/>
+                                    <constraint firstAttribute="width" constant="275" id="Yh9-7P-SYZ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="100"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="BfG-AK-CF1" firstAttribute="bottom" secondItem="XWW-hP-zdR" secondAttribute="bottom" constant="100" id="P1B-Gj-Sob"/>
-                            <constraint firstItem="XWW-hP-zdR" firstAttribute="centerX" secondItem="BfG-AK-CF1" secondAttribute="centerX" id="Qbg-Hr-9Pj"/>
+                            <constraint firstItem="XWW-hP-zdR" firstAttribute="centerY" secondItem="BfG-AK-CF1" secondAttribute="centerY" id="6SY-U1-I7r"/>
+                            <constraint firstItem="lfZ-Pc-LYz" firstAttribute="centerX" secondItem="BfG-AK-CF1" secondAttribute="centerX" id="GX4-6W-Ri7"/>
+                            <constraint firstItem="XWW-hP-zdR" firstAttribute="centerX" secondItem="BfG-AK-CF1" secondAttribute="centerX" id="Kua-95-Ojs"/>
+                            <constraint firstItem="lfZ-Pc-LYz" firstAttribute="top" secondItem="XWW-hP-zdR" secondAttribute="bottom" constant="100" id="bSy-us-PI7"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BfG-AK-CF1"/>
                     </view>
@@ -555,6 +566,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="playbackButton" destination="Anx-WX-eAg" id="MmM-VG-xLa"/>
                         <outlet property="recordButton" destination="XWW-hP-zdR" id="ZhP-zB-Jxf"/>
                     </connections>
                 </viewController>

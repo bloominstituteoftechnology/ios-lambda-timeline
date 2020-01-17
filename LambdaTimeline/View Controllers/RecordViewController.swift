@@ -35,6 +35,7 @@ class RecordViewController: UIViewController {
     //MARK: - Outlets
     
     @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var playbackButton: UIBarButtonItem!
     
     //MARK: - Views
     
@@ -61,12 +62,14 @@ class RecordViewController: UIViewController {
         audioRecorder?.delegate = self
         audioRecorder?.record()
         updateViews()
+        playbackButton.isEnabled = false
     }
     
     func stopRecording() {
         audioRecorder?.stop()
         audioRecorder = nil
         updateViews()
+        playbackButton.isEnabled = true
     }
     
     func play() {
