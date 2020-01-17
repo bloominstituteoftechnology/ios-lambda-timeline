@@ -14,9 +14,8 @@ class PostAnnotationView: UIView {
     }
 
     private let titleLabel = UILabel()
+    private let authorLabel = UILabel()
     private let dateLabel = UILabel()
-    private let latitudeLabel = UILabel()
-    private let longitudeLabel = UILabel()
 
     // MARK: - Init
 
@@ -31,11 +30,11 @@ class PostAnnotationView: UIView {
     }
 
     private func setUp() {
-        latitudeLabel.setContentHuggingPriority(.defaultLow+1, for: .horizontal)
+        authorLabel.setContentHuggingPriority(.defaultLow+1, for: .horizontal)
 
-        let placeDateStackView = UIStackView(arrangedSubviews: [titleLabel, dateLabel])
+        let placeDateStackView = UIStackView(arrangedSubviews: [titleLabel])
         placeDateStackView.spacing = UIStackView.spacingUseSystem
-        let latLonStackView = UIStackView(arrangedSubviews: [latitudeLabel, longitudeLabel])
+        let latLonStackView = UIStackView(arrangedSubviews: [authorLabel, dateLabel])
         latLonStackView.spacing = UIStackView.spacingUseSystem
         let mainStackView = UIStackView(arrangedSubviews: [placeDateStackView, latLonStackView])
         mainStackView.axis = .vertical
@@ -52,18 +51,12 @@ class PostAnnotationView: UIView {
     // MARK: - Private
 
     private func updateSubviews() {
-        guard
-            let post = post,
-            let geotag = post.geotag
-            else { return }
+        guard let post = post else { return }
 
         let title = post.title
         titleLabel.text = title
         dateLabel.text = DateFormatter.mapAnnotationFormatter
             .string(from: post.timestamp)
-        latitudeLabel.text = "Lat: " + NumberFormatter.coordinateFormatter
-            .string(from: geotag.latitude as NSNumber)!
-        longitudeLabel.text = "Lon: " + NumberFormatter.coordinateFormatter
-            .string(from: geotag.longitude as NSNumber)!
+        authorLabel.text = post.author.displayName
     }
 }
