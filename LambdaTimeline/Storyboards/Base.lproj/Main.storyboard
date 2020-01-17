@@ -515,10 +515,10 @@
             </objects>
             <point key="canvasLocation" x="1988" y="467"/>
         </scene>
-        <!--View Controller-->
+        <!--Record View Controller-->
         <scene sceneID="sMv-4i-9cf">
             <objects>
-                <viewController id="fQ1-nQ-78A" sceneMemberID="viewController">
+                <viewController id="fQ1-nQ-78A" customClass="RecordViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="THK-wr-8bP">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -535,6 +535,9 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <state key="selected" image="Record"/>
+                                <connections>
+                                    <action selector="toggleRecording:" destination="fQ1-nQ-78A" eventType="touchUpInside" id="vHX-dk-McO"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -545,6 +548,9 @@
                         <viewLayoutGuide key="safeArea" id="BfG-AK-CF1"/>
                     </view>
                     <navigationItem key="navigationItem" id="qfq-0d-28W"/>
+                    <connections>
+                        <outlet property="recordButton" destination="XWW-hP-zdR" id="ZhP-zB-Jxf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R5J-LB-WKd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
