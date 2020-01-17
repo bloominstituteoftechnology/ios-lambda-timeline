@@ -204,7 +204,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             destinationVC?.postController = postController
         }
     }
-    
+
     private let postController = PostController()
     private var operations = [String : Operation]()
     private let mediaFetchQueue = OperationQueue()

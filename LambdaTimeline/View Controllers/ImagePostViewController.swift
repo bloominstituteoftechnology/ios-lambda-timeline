@@ -70,19 +70,29 @@ class ImagePostViewController: ShiftableViewController {
             presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
             return
         }
-        
-        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
+
+        let completion: (Bool) -> Void = { (success) in
             guard success else {
                 DispatchQueue.main.async {
                     self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
                 }
                 return
             }
-            
+
             DispatchQueue.main.async {
                 self.navigationController?.popViewController(animated: true)
             }
         }
+
+        if locationSwitch.isOn {
+            LocationHelper.shared.getCurrentLocation { (coordinate) in
+                self.postController.createPost(with: title, ofType: .image, mediaData: imageData, geotag: coordinate, ratio: self.imageView.image?.ratio, completion: completion)
+            }
+        } else {
+            postController.createPost(with: title, ofType: .image, mediaData: imageData, geotag: nil, ratio: imageView.image?.ratio, completion: completion)
+        }
+        
+
     }
     
     @IBAction func chooseImage(_ sender: Any) {
@@ -267,7 +277,7 @@ class ImagePostViewController: ShiftableViewController {
         
         view.layoutSubviews()
     }
-    
+
     var postController: PostController!
     var post: Post?
     var imageData: Data?

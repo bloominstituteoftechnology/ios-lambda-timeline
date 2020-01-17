@@ -7,24 +7,54 @@
 //
 
 import MapKit
+import CoreLocation
 
 class LocationHelper: NSObject, CLLocationManagerDelegate {
 
-    var locationManager = CLLocationManager()
-    var coordinate: CLLocationCoordinate2D?
+    static let shared = LocationHelper()
+    
+    private let locationManager = CLLocationManager()
+    var group: DispatchGroup?
 
     override init() {
         super.init()
         locationManager.delegate = self
+
+        requestLocationAuthorization()
     }
 
-    func requestLocation() {
+    func requestLocationAuthorization() {
+
+        switch CLLocationManager.authorizationStatus() {
+        case .authorizedWhenInUse:
+            return
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        default:
+            break
+        }
+    }
+
+    func getCurrentLocation(completion: @escaping (CLLocationCoordinate2D?) -> Void) {
+        requestLocationAuthorization()
+
+        group = DispatchGroup()
+
+        group?.enter()
+
         locationManager.requestLocation()
+
+        group?.notify(queue: .main) {
+            let coordinate = self.locationManager.location?.coordinate
+
+            self.group = nil
+            completion(coordinate)
+        }
     }
 
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        coordinate = locations.first?.coordinate
+        group?.leave()
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {

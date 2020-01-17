@@ -58,9 +58,7 @@ class Post {
             let authorDictionary = dictionary[Post.authorKey] as? [String: Any],
             let author = Author(dictionary: authorDictionary),
             let timestampTimeInterval = dictionary[Post.timestampKey] as? TimeInterval,
-            let captionDictionaries = dictionary[Post.commentsKey] as? [[String: Any]],
-            let latitude = dictionary[Post.latitudeKey] as? Double,
-            let longitude = dictionary[Post.longitudeKey] as? Double
+            let captionDictionaries = dictionary[Post.commentsKey] as? [[String: Any]]
             else { return nil }
         
         self.mediaURL = mediaURL
@@ -69,8 +67,15 @@ class Post {
         self.author = author
         self.timestamp = Date(timeIntervalSince1970: timestampTimeInterval)
         self.comments = captionDictionaries.compactMap({ Comment(dictionary: $0) })
-        self.geotag = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         self.id = id
+
+        if let latitude = dictionary[Post.latitudeKey] as? Double,
+            let longitude = dictionary[Post.longitudeKey] as? Double {
+            self.geotag = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        } else {
+            self.geotag = nil
+        }
+
     }
     
     var dictionaryRepresentation: [String : Any] {
@@ -80,7 +85,7 @@ class Post {
                 Post.authorKey: author.dictionaryRepresentation,
                 Post.timestampKey: timestamp.timeIntervalSince1970,
                 Post.longitudeKey: geotag?.longitude ?? 0,
-                Post.latitudeKey: geotag?.longitude ?? 0]
+                Post.latitudeKey: geotag?.latitude ?? 0]
         
         guard let ratio = self.ratio else { return dict }
         

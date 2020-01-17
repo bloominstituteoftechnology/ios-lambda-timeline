@@ -75,7 +75,7 @@ class CameraViewController: UIViewController {
         do {
             let videoData = try Data(contentsOf: videoURL)
 
-            postController.createPost(with: title, ofType: .video, mediaData: videoData, ratio: nil) { (success) in
+            postController.createPost(with: title, ofType: .video, mediaData: videoData, geotag: nil, ratio: nil) { (success) in
                 guard success else {
                     DispatchQueue.main.async {
                         self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
