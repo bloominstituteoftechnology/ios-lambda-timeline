@@ -45,9 +45,9 @@ class RecordViewController: UIViewController {
     
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playbackButton: UIButton!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var reverseTimeLabel: UILabel!
-    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     //MARK: - Views
     
@@ -64,12 +64,14 @@ class RecordViewController: UIViewController {
     
     private func updateViews() {
         recordButton.isSelected = isRecording
+        playbackButton.isSelected = isPlaying
         
-        let elapsedTime = audioRecorder?.currentTime ?? 0
+        let elapsedRecordTime = audioRecorder?.currentTime ?? 0
+        let elapsedPlayTime = audioPlayer?.currentTime ?? 0
         let duration = audioPlayer?.duration ?? 0
-        let timeRemaining = duration - elapsedTime
+        let timeRemaining = duration - elapsedPlayTime
         
-        timeLabel.text = timeFormatter.string(from: elapsedTime)
+        timeLabel.text = timeFormatter.string(from: elapsedRecordTime)
         reverseTimeLabel.text = timeFormatter.string(from: timeRemaining)
     }
     
@@ -171,7 +173,6 @@ extension RecordViewController: AVAudioPlayerDelegate {
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         updateViews()
-        flipTimer()
     }
     
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
