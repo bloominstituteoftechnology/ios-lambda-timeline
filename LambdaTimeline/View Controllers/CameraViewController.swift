@@ -22,6 +22,7 @@ class CameraViewController: UIViewController {
     @IBOutlet var cameraView: CameraPreviewView!
     @IBOutlet var postBarButton: UIBarButtonItem!
     @IBOutlet var titleTextField: UITextField!
+    @IBOutlet weak var locationSwitch: UISwitch!
 
 
     override func viewDidLoad() {

@@ -292,6 +292,7 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var vibranceSlider: UISlider!
     @IBOutlet weak var filterOptionsStack: UIStackView!
     @IBOutlet weak var bloomSliderStack: UIStackView!
+    @IBOutlet weak var locationSwitch: UISwitch!
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
