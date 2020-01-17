@@ -547,7 +547,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BfG-AK-CF1"/>
                     </view>
-                    <navigationItem key="navigationItem" id="qfq-0d-28W"/>
+                    <navigationItem key="navigationItem" id="qfq-0d-28W">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Playback" id="Anx-WX-eAg">
+                            <connections>
+                                <action selector="togglePlayback:" destination="fQ1-nQ-78A" id="xAd-iH-JUc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="recordButton" destination="XWW-hP-zdR" id="ZhP-zB-Jxf"/>
                     </connections>

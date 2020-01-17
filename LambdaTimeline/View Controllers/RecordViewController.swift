@@ -12,10 +12,24 @@ import AVFoundation
 class RecordViewController: UIViewController {
     
     //MARK: - Properties
+    
     var audioRecorder: AVAudioRecorder?
     var recordingURL: URL?
     var isRecording: Bool {
         audioRecorder?.isRecording ?? false
+    }
+    
+    var audioPlayer: AVAudioPlayer? {
+        didSet {
+            guard let audioPlayer = audioPlayer else { return }
+            
+            audioPlayer.delegate = self
+            audioPlayer.isMeteringEnabled = true
+            updateViews()
+        }
+    }
+    var isPlaying: Bool {
+        audioPlayer?.isPlaying ?? false
     }
     
     //MARK: - Outlets
@@ -55,10 +69,29 @@ class RecordViewController: UIViewController {
         updateViews()
     }
     
+    func play() {
+        audioPlayer?.play()
+        updateViews()
+        // Start timer
+    }
+    
+    func pause() {
+        audioPlayer?.pause()
+        updateViews()
+        // Cancel Timer
+    }
+    
     //MARK: - Actions
     
     @IBAction func toggleRecording(_ sender: Any) {
-        
+        if isRecording {
+            stopRecording()
+        } else {
+            startRecording()
+        }
+    }
+    
+    @IBAction func togglePlayback(_ sender: Any) {
     }
     
     // MARK: - Navigation
@@ -68,11 +101,25 @@ class RecordViewController: UIViewController {
 
 }
 
+extension RecordViewController: AVAudioPlayerDelegate {
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        updateViews()
+        // Cancel Timer
+    }
+    
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        if let error = error {
+            print("Audio Player Error: \(error)")
+        }
+    }
+}
+
 extension RecordViewController: AVAudioRecorderDelegate {
     
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         if let recordngURL = recordingURL {
-            // audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL)
+            audioPlayer = try? AVAudioPlayer(contentsOf: recordngURL)
             self.recordingURL = nil
             updateViews()
         }
