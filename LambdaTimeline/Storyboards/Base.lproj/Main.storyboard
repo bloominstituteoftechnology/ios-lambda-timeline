@@ -523,6 +523,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfZ-Pc-LYz">
+                                <rect key="frame" x="107.5" y="635" width="199" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="LlK-MY-PPM"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="74"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jAM-1H-ozR">
+                                <rect key="frame" x="177" y="766" width="60" height="60"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="2Q4-3X-84e"/>
+                                    <constraint firstAttribute="width" constant="60" id="Hc0-E7-RgA"/>
+                                    <constraint firstAttribute="width" secondItem="jAM-1H-ozR" secondAttribute="height" multiplier="1:1" id="Kel-Ey-Q9o"/>
+                                </constraints>
+                                <state key="normal" image="Play">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <state key="selected" image="Pause"/>
+                                <connections>
+                                    <action selector="togglePlayback:" destination="fQ1-nQ-78A" eventType="touchUpInside" id="97P-Xi-JnD"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XWW-hP-zdR">
                                 <rect key="frame" x="132" y="400" width="150" height="150"/>
                                 <constraints>
@@ -538,35 +563,29 @@
                                     <action selector="toggleRecording:" destination="fQ1-nQ-78A" eventType="touchUpInside" id="vHX-dk-McO"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfZ-Pc-LYz">
-                                <rect key="frame" x="107.5" y="650" width="199" height="100"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="LlK-MY-PPM"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="74"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="XWW-hP-zdR" firstAttribute="centerY" secondItem="BfG-AK-CF1" secondAttribute="centerY" id="6SY-U1-I7r"/>
                             <constraint firstItem="lfZ-Pc-LYz" firstAttribute="centerX" secondItem="BfG-AK-CF1" secondAttribute="centerX" id="GX4-6W-Ri7"/>
-                            <constraint firstItem="XWW-hP-zdR" firstAttribute="centerX" secondItem="BfG-AK-CF1" secondAttribute="centerX" id="Kua-95-Ojs"/>
-                            <constraint firstItem="lfZ-Pc-LYz" firstAttribute="top" secondItem="XWW-hP-zdR" secondAttribute="bottom" constant="100" id="bSy-us-PI7"/>
+                            <constraint firstItem="jAM-1H-ozR" firstAttribute="centerX" secondItem="BfG-AK-CF1" secondAttribute="centerX" id="IGo-qB-hH2"/>
+                            <constraint firstItem="XWW-hP-zdR" firstAttribute="centerY" secondItem="BfG-AK-CF1" secondAttribute="centerY" id="P5f-Mp-H0s"/>
+                            <constraint firstItem="jAM-1H-ozR" firstAttribute="top" secondItem="lfZ-Pc-LYz" secondAttribute="bottom" constant="31" id="V48-TA-ATS"/>
+                            <constraint firstItem="XWW-hP-zdR" firstAttribute="centerX" secondItem="BfG-AK-CF1" secondAttribute="centerX" id="Y1p-7E-f5I"/>
+                            <constraint firstItem="lfZ-Pc-LYz" firstAttribute="top" secondItem="XWW-hP-zdR" secondAttribute="bottom" constant="85" id="yoc-Z3-x7A"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BfG-AK-CF1"/>
                     </view>
                     <navigationItem key="navigationItem" id="qfq-0d-28W">
-                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Playback" id="Anx-WX-eAg">
+                        <barButtonItem key="rightBarButtonItem" enabled="NO" systemItem="save" id="Anx-WX-eAg">
                             <connections>
-                                <action selector="togglePlayback:" destination="fQ1-nQ-78A" id="xAd-iH-JUc"/>
+                                <action selector="saveButtonTapped:" destination="fQ1-nQ-78A" id="24d-Qi-bhh"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="playbackButton" destination="Anx-WX-eAg" id="MmM-VG-xLa"/>
+                        <outlet property="playbackButton" destination="jAM-1H-ozR" id="2wA-1Q-at5"/>
                         <outlet property="recordButton" destination="XWW-hP-zdR" id="ZhP-zB-Jxf"/>
+                        <outlet property="saveButton" destination="Anx-WX-eAg" id="tUc-06-n4h"/>
                         <outlet property="timeLabel" destination="lfZ-Pc-LYz" id="RYU-8V-NbN"/>
                     </connections>
                 </viewController>
@@ -576,6 +595,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Pause" width="123" height="119"/>
+        <image name="Play" width="123" height="117"/>
         <image name="Record" width="450" height="450"/>
         <image name="RecordBlack" width="450" height="450"/>
     </resources>

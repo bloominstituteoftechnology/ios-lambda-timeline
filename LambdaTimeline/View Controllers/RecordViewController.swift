@@ -33,7 +33,6 @@ class RecordViewController: UIViewController {
     }
     
     weak var timer: Timer?
-    
     private lazy var timeFormatter: DateComponentsFormatter = {
         let formatting = DateComponentsFormatter()
         formatting.unitsStyle = .positional
@@ -45,8 +44,9 @@ class RecordViewController: UIViewController {
     //MARK: - Outlets
     
     @IBOutlet weak var recordButton: UIButton!
-    @IBOutlet weak var playbackButton: UIBarButtonItem!
+    @IBOutlet weak var playbackButton: UIButton!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     //MARK: - Views
     
@@ -82,6 +82,7 @@ class RecordViewController: UIViewController {
         audioRecorder?.record()
         updateViews()
         playbackButton.isEnabled = false
+        saveButton.isEnabled = false
     }
     
     func stopRecording() {
@@ -89,6 +90,7 @@ class RecordViewController: UIViewController {
         audioRecorder = nil
         updateViews()
         playbackButton.isEnabled = true
+        saveButton.isEnabled = true
     }
     
     func play() {
@@ -127,6 +129,9 @@ class RecordViewController: UIViewController {
     }
     
     @IBAction func togglePlayback(_ sender: Any) {
+    }
+    
+    @IBAction func saveButtonTapped(_ sender: Any) {
     }
 }
 
