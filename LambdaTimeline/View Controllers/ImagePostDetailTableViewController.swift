@@ -32,11 +32,13 @@ class ImagePostDetailTableViewController: UITableViewController {
     
     @IBAction func createComment(_ sender: Any) {
         
-        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
+        // Text Comment Alert
+        
+        let textCommentAlert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
         
         var commentTextField: UITextField?
         
-        alert.addTextField { (textField) in
+        textCommentAlert.addTextField { (textField) in
             textField.placeholder = "Comment:"
             commentTextField = textField
         }
@@ -54,10 +56,24 @@ class ImagePostDetailTableViewController: UITableViewController {
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        alert.addAction(addCommentAction)
-        alert.addAction(cancelAction)
+        textCommentAlert.addAction(addCommentAction)
+        textCommentAlert.addAction(cancelAction)
         
-        present(alert, animated: true, completion: nil)
+        
+        // Comment Alert
+        
+        let commentAlert = UIAlertController(title: "Would you like to write or record a comment?", message: "", preferredStyle: .alert)
+        
+        commentAlert.addAction(UIAlertAction(title: "Write", style: .default, handler: { (_) in
+            self.present(textCommentAlert, animated: true, completion: nil)
+        }))
+        
+        commentAlert.addAction(UIAlertAction(title: "Record", style: .default, handler: { (_) in
+            self.performSegue(withIdentifier: "recordSegue", sender: self)
+        }))
+        
+        present(commentAlert, animated: true, completion: nil)
+        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -374,7 +374,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GFJ-OO-MVi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="277.60000000000002" y="108.39580209895054"/>
+            <point key="canvasLocation" x="139" y="108"/>
         </scene>
         <!--Sign In View Controller-->
         <scene sceneID="O74-ZV-TrY">
@@ -411,7 +411,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xA4-1f-Wlf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-450.39999999999998" y="107.49625187406298"/>
+            <point key="canvasLocation" x="-890" y="108"/>
         </scene>
         <!--Title-->
         <scene sceneID="9zi-Aq-zJI">
@@ -508,11 +508,49 @@
                         <outlet property="imageView" destination="Q0L-w5-qUw" id="0v7-ZB-mgi"/>
                         <outlet property="imageViewAspectRatioConstraint" destination="y1B-iX-x3e" id="wIt-kh-Tzd"/>
                         <outlet property="titleLabel" destination="jyy-BX-c2c" id="UEd-xO-ipC"/>
+                        <segue destination="fQ1-nQ-78A" kind="show" identifier="recordSegue" id="Aem-Sa-re6"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdL-Y3-4ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1988" y="467"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="sMv-4i-9cf">
+            <objects>
+                <viewController id="fQ1-nQ-78A" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="THK-wr-8bP">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XWW-hP-zdR">
+                                <rect key="frame" x="134.5" y="617" width="145" height="145"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="145" id="cRZ-y8-1JW"/>
+                                    <constraint firstAttribute="width" secondItem="XWW-hP-zdR" secondAttribute="height" multiplier="1:1" id="hiQ-oL-XkV"/>
+                                    <constraint firstAttribute="height" constant="145" id="tF7-AF-r1w"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" image="Record">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="BfG-AK-CF1" firstAttribute="bottom" secondItem="XWW-hP-zdR" secondAttribute="bottom" constant="100" id="P1B-Gj-Sob"/>
+                            <constraint firstItem="XWW-hP-zdR" firstAttribute="centerX" secondItem="BfG-AK-CF1" secondAttribute="centerX" id="Qbg-Hr-9Pj"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="BfG-AK-CF1"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="qfq-0d-28W"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="R5J-LB-WKd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2937.68115942029" y="466.74107142857139"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="Record" width="450" height="450"/>
+    </resources>
 </document>
