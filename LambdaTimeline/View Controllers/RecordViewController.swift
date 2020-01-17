@@ -46,6 +46,7 @@ class RecordViewController: UIViewController {
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playbackButton: UIButton!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var reverseTimeLabel: UILabel!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
     //MARK: - Views
@@ -54,6 +55,7 @@ class RecordViewController: UIViewController {
         super.viewDidLoad()
         
         timeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeLabel.font.pointSize, weight: .regular)
+        reverseTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: reverseTimeLabel.font.pointSize, weight: .regular)
         
         updateViews()
     }
@@ -63,9 +65,12 @@ class RecordViewController: UIViewController {
     private func updateViews() {
         recordButton.isSelected = isRecording
         
-        let elapsedTime = audioPlayer?.currentTime ?? 0
+        let elapsedTime = audioRecorder?.currentTime ?? 0
+        let duration = audioPlayer?.duration ?? 0
+        let timeRemaining = duration - elapsedTime
         
         timeLabel.text = timeFormatter.string(from: elapsedTime)
+        reverseTimeLabel.text = timeFormatter.string(from: timeRemaining)
     }
     
     func startRecording() {
@@ -83,6 +88,8 @@ class RecordViewController: UIViewController {
         updateViews()
         playbackButton.isEnabled = false
         saveButton.isEnabled = false
+        cleanSlate()
+        startTimer()
     }
     
     func stopRecording() {
@@ -91,6 +98,8 @@ class RecordViewController: UIViewController {
         updateViews()
         playbackButton.isEnabled = true
         saveButton.isEnabled = true
+        cancelTimer()
+        flipTimer()
     }
     
     func play() {
@@ -118,6 +127,24 @@ class RecordViewController: UIViewController {
         })
     }
     
+    func flipTimer() {
+        if timeLabel.alpha == 1 {
+            reverseTimeLabel.alpha = 1
+            timeLabel.alpha = 0
+        } else {
+            reverseTimeLabel.alpha = 0
+            timeLabel.alpha = 1
+        }
+    }
+    
+    func cleanSlate() {
+        timeLabel.alpha = 1
+        reverseTimeLabel.alpha = 0
+        timeLabel.text = "00:00"
+    }
+    
+    
+    
     //MARK: - Actions
     
     @IBAction func toggleRecording(_ sender: Any) {
@@ -129,6 +156,11 @@ class RecordViewController: UIViewController {
     }
     
     @IBAction func togglePlayback(_ sender: Any) {
+        if isPlaying {
+            pause()
+        } else {
+            play()
+        }
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
@@ -139,7 +171,7 @@ extension RecordViewController: AVAudioPlayerDelegate {
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         updateViews()
-        cancelTimer()
+        flipTimer()
     }
     
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
@@ -156,6 +188,7 @@ extension RecordViewController: AVAudioRecorderDelegate {
             audioPlayer = try? AVAudioPlayer(contentsOf: recordngURL)
             self.recordingURL = nil
             updateViews()
+            cancelTimer()
         }
     }
     

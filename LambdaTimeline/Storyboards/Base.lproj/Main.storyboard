@@ -523,15 +523,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfZ-Pc-LYz">
-                                <rect key="frame" x="107.5" y="635" width="199" height="100"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XWW-hP-zdR">
+                                <rect key="frame" x="132" y="400" width="150" height="150"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="LlK-MY-PPM"/>
+                                    <constraint firstAttribute="width" constant="150" id="QJw-8H-yxe"/>
+                                    <constraint firstAttribute="height" constant="150" id="r4M-h8-6mu"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="74"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" image="RecordBlack">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <state key="selected" image="Record"/>
+                                <connections>
+                                    <action selector="toggleRecording:" destination="fQ1-nQ-78A" eventType="touchUpInside" id="vHX-dk-McO"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jAM-1H-ozR">
                                 <rect key="frame" x="177" y="766" width="60" height="60"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -548,26 +554,31 @@
                                     <action selector="togglePlayback:" destination="fQ1-nQ-78A" eventType="touchUpInside" id="97P-Xi-JnD"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XWW-hP-zdR">
-                                <rect key="frame" x="132" y="400" width="150" height="150"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lfZ-Pc-LYz">
+                                <rect key="frame" x="107.5" y="635" width="199" height="100"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="QJw-8H-yxe"/>
-                                    <constraint firstAttribute="height" constant="150" id="r4M-h8-6mu"/>
+                                    <constraint firstAttribute="height" constant="100" id="LlK-MY-PPM"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" image="RecordBlack">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <state key="selected" image="Record"/>
-                                <connections>
-                                    <action selector="toggleRecording:" destination="fQ1-nQ-78A" eventType="touchUpInside" id="vHX-dk-McO"/>
-                                </connections>
-                            </button>
+                                <fontDescription key="fontDescription" type="system" pointSize="74"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zaT-8P-gCb">
+                                <rect key="frame" x="107.5" y="635" width="199" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="cdt-oi-rgS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="74"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="lfZ-Pc-LYz" firstAttribute="centerX" secondItem="BfG-AK-CF1" secondAttribute="centerX" id="GX4-6W-Ri7"/>
                             <constraint firstItem="jAM-1H-ozR" firstAttribute="centerX" secondItem="BfG-AK-CF1" secondAttribute="centerX" id="IGo-qB-hH2"/>
+                            <constraint firstItem="zaT-8P-gCb" firstAttribute="centerX" secondItem="BfG-AK-CF1" secondAttribute="centerX" id="KdS-bF-ghW"/>
+                            <constraint firstItem="zaT-8P-gCb" firstAttribute="top" secondItem="XWW-hP-zdR" secondAttribute="bottom" constant="85" id="KrH-NT-vCJ"/>
                             <constraint firstItem="XWW-hP-zdR" firstAttribute="centerY" secondItem="BfG-AK-CF1" secondAttribute="centerY" id="P5f-Mp-H0s"/>
                             <constraint firstItem="jAM-1H-ozR" firstAttribute="top" secondItem="lfZ-Pc-LYz" secondAttribute="bottom" constant="31" id="V48-TA-ATS"/>
                             <constraint firstItem="XWW-hP-zdR" firstAttribute="centerX" secondItem="BfG-AK-CF1" secondAttribute="centerX" id="Y1p-7E-f5I"/>
@@ -585,6 +596,7 @@
                     <connections>
                         <outlet property="playbackButton" destination="jAM-1H-ozR" id="2wA-1Q-at5"/>
                         <outlet property="recordButton" destination="XWW-hP-zdR" id="ZhP-zB-Jxf"/>
+                        <outlet property="reverseTimeLabel" destination="zaT-8P-gCb" id="MFZ-3l-2lg"/>
                         <outlet property="saveButton" destination="Anx-WX-eAg" id="tUc-06-n4h"/>
                         <outlet property="timeLabel" destination="lfZ-Pc-LYz" id="RYU-8V-NbN"/>
                     </connections>
