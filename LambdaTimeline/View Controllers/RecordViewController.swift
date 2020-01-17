@@ -32,21 +32,40 @@ class RecordViewController: UIViewController {
         audioPlayer?.isPlaying ?? false
     }
     
+    weak var timer: Timer?
+    
+    private lazy var timeFormatter: DateComponentsFormatter = {
+        let formatting = DateComponentsFormatter()
+        formatting.unitsStyle = .positional
+        formatting.zeroFormattingBehavior = .pad
+        formatting.allowedUnits = [.minute, .second]
+        return formatting
+    }()
+    
     //MARK: - Outlets
     
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var playbackButton: UIBarButtonItem!
+    @IBOutlet weak var timeLabel: UILabel!
     
     //MARK: - Views
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        timeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeLabel.font.pointSize, weight: .regular)
+        
+        updateViews()
     }
     
     //MARK: - Methods
     
     private func updateViews() {
         recordButton.isSelected = isRecording
+        
+        let elapsedTime = audioPlayer?.currentTime ?? 0
+        
+        timeLabel.text = timeFormatter.string(from: elapsedTime)
     }
     
     func startRecording() {
@@ -75,13 +94,26 @@ class RecordViewController: UIViewController {
     func play() {
         audioPlayer?.play()
         updateViews()
-        // Start timer
+        startTimer()
     }
     
     func pause() {
         audioPlayer?.pause()
         updateViews()
-        // Cancel Timer
+        cancelTimer()
+    }
+    
+    func cancelTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    func startTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 0.030, repeats: true, block: { [weak self] (_) in
+            guard let self = self else { return }
+            
+            self.updateViews()
+        })
     }
     
     //MARK: - Actions
@@ -96,19 +128,13 @@ class RecordViewController: UIViewController {
     
     @IBAction func togglePlayback(_ sender: Any) {
     }
-    
-    // MARK: - Navigation
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    }
-
 }
 
 extension RecordViewController: AVAudioPlayerDelegate {
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         updateViews()
-        // Cancel Timer
+        cancelTimer()
     }
     
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
