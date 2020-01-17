@@ -22,8 +22,9 @@ class PostController {
         store(mediaData: mediaData, storage: ref) { (mediaURL) in
             
             guard let mediaURL = mediaURL else { completion(false); return }
-            
-            let imagePost = Post(title: title, mediaURL: mediaURL, mediaType: mediaType, ratio: ratio, author: author)
+
+            // TODO: Update for geolocation?
+            let imagePost = Post(title: title, mediaURL: mediaURL, mediaType: mediaType, geotag: nil, ratio: ratio, author: author)
             
             self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
                 if let error = error {
