@@ -180,7 +180,8 @@ class RecordCommentViewController: UIViewController {
 extension RecordCommentViewController: AVAudioPlayerDelegate {
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        
+        playButton.setTitle("Play", for: .normal)
+        playButton.backgroundColor = .systemBlue
     }
     
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
