@@ -15,6 +15,11 @@ class ImagePostDetailTableViewController: UITableViewController {
         updateViews()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateViews()
+    }
+    
     func updateViews() {
         
         guard let imageData = imageData,
@@ -26,36 +31,30 @@ class ImagePostDetailTableViewController: UITableViewController {
         
         titleLabel.text = post.title
         authorLabel.text = post.author.displayName
+        
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     // MARK: - Table view data source
     
     @IBAction func createComment(_ sender: Any) {
         
-        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
-        
-        var commentTextField: UITextField?
-        
-        alert.addTextField { (textField) in
-            textField.placeholder = "Comment:"
-            commentTextField = textField
-        }
-        
-        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
+        let alert = UIAlertController(title: "Add a comment", message: "Select which way you want to make a comment.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Write a Comment", style: .default, handler: { (action) in
+            let writeCommentVC = WriteCommentViewController()
+            writeCommentVC.postController = self.postController
+            writeCommentVC.post = self.post
             
-            guard let commentText = commentTextField?.text else { return }
-            
-            self.postController.addComment(with: commentText, to: &self.post!)
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
+            self.navigationController?.pushViewController(writeCommentVC, animated: true)
+        }))
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(UIAlertAction(title: "Record a Comment", style: .default, handler: { (action) in
+            
+        }))
         
-        alert.addAction(addCommentAction)
-        alert.addAction(cancelAction)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         present(alert, animated: true, completion: nil)
     }
