@@ -51,7 +51,11 @@ class ImagePostDetailTableViewController: UITableViewController {
         }))
         
         alert.addAction(UIAlertAction(title: "Record a Comment", style: .default, handler: { (action) in
+            let recordCommentVC = RecordCommentViewController()
+            recordCommentVC.postController = self.postController
+            recordCommentVC.post = self.post
             
+            self.navigationController?.pushViewController(recordCommentVC, animated: true)
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
