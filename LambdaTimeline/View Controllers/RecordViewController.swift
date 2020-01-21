@@ -24,7 +24,6 @@ class RecordViewController: UIViewController {
             guard let audioPlayer = audioPlayer else { return }
             
             audioPlayer.delegate = self
-            audioPlayer.isMeteringEnabled = true
             updateViews()
         }
     }
@@ -48,6 +47,7 @@ class RecordViewController: UIViewController {
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var reverseTimeLabel: UILabel!
+    @IBOutlet weak var nameTextField: UITextField!
     
     //MARK: - Views
     
@@ -145,6 +145,10 @@ class RecordViewController: UIViewController {
         timeLabel.text = "00:00"
     }
     
+    func save(recording: URL) {
+        //Fill this and move it to the controller.
+    }
+    
     
     
     //MARK: - Actions
@@ -166,6 +170,22 @@ class RecordViewController: UIViewController {
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let recordingURL = recordingURL else { return }
+        //Alert to show that things were saved
+        save(recording: recordingURL)
+        performSegue(withIdentifier: "saveSegue", sender: self)
+    }
+    
+    //MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "saveSegue" {
+            if let detailVC = segue.destination as? ImagePostDetailTableViewController {
+                guard let recordingURL = recordingURL, let name = nameTextField.text else { return }
+                detailVC.recordingURL = recordingURL
+                detailVC.name = name
+            }
+        }
     }
 }
 

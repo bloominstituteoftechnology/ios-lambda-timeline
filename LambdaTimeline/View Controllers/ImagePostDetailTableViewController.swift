@@ -10,6 +10,13 @@ import UIKit
 
 class ImagePostDetailTableViewController: UITableViewController {
     
+    //MARK: - Properties
+    
+    var recordingURL: URL?
+    var name: String?
+    
+    //MARK: - Views
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
@@ -81,12 +88,16 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as? CommentTableViewCell else { return UITableViewCell() }
         
         let comment = post?.comments[indexPath.row + 1]
+        if name != nil {
+            cell.nameLabel.text = name
+        } else {
+            cell.nameLabel.text = comment?.text
+        }
+        cell.recordingURL = recordingURL
         
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author.displayName
         
         return cell
     }
