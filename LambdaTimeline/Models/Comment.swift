@@ -19,7 +19,7 @@ class Comment: FirebaseConvertible, Equatable {
     let author: Author
     let timestamp: Date
     
-    init(text: String, author: Author, timestamp: Date = Date()) {
+    init(text: String, author: Author, timestamp: Date = Date(), recording: URL?) {
         self.text = text
         self.author = author
         self.timestamp = timestamp

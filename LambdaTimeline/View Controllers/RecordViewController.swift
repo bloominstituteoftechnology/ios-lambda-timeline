@@ -170,11 +170,9 @@ class RecordViewController: UIViewController {
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
-        guard let recordingURL = recordingURL else { return }
-        
         let savedAlert = UIAlertController(title: "Message Saved!", message: "", preferredStyle: .alert)
         savedAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
-            self.save(recording: recordingURL)
+            // Add save functionality.
             self.cleanSlate()
         }))
         self.present(savedAlert, animated: true, completion: nil)
