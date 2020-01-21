@@ -171,9 +171,13 @@ class RecordViewController: UIViewController {
     
     @IBAction func saveButtonTapped(_ sender: Any) {
         guard let recordingURL = recordingURL else { return }
-        //Alert to show that things were saved
-        save(recording: recordingURL)
-        performSegue(withIdentifier: "saveSegue", sender: self)
+        
+        let savedAlert = UIAlertController(title: "Message Saved!", message: "", preferredStyle: .alert)
+        savedAlert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
+            self.save(recording: recordingURL)
+            self.cleanSlate()
+        }))
+        self.present(savedAlert, animated: true, completion: nil)
     }
     
     //MARK: - Navigation
