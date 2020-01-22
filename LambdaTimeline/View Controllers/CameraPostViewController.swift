@@ -14,6 +14,9 @@ class CameraPostViewController: UIViewController {
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     var player: AVPlayer!
+    var playerView: PlaybackView!
+    var postController: PostController!
+    var outputFileURL: URL?
     
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var cameraView: CameraPreviewView!
@@ -28,8 +31,6 @@ class CameraPostViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
         view.addGestureRecognizer(tapGesture)
     }
-    
-    
     
     @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
         print("tap")
@@ -144,20 +145,40 @@ class CameraPostViewController: UIViewController {
     }
     
     func playMovie(url: URL) {
+        if playerView == nil {
+            playerView = PlaybackView()
+            
+            var topRect = self.view.bounds
+            topRect.size.height = topRect.height / 4
+            topRect.size.width = topRect.width / 4
+            topRect.origin.y = view.layoutMargins.top
+            
+            playerView.frame = topRect
+            view.addSubview(playerView)
+        }
+        
+        player?.pause()
         player = AVPlayer(url: url)
-        let playerLayer = AVPlayerLayer(player: player)
-        var topRect = self.view.bounds
-        topRect.size.height = topRect.height / 4
-        topRect.size.width = topRect.width / 4
-        topRect.origin.y = view.layoutMargins.top
-        
-        playerLayer.frame = topRect
-        self.view.layer.addSublayer(playerLayer)
-        
+        playerView.playerLayer.player = player
         player.play()
     }
 
     @IBAction func postButtonTapped(_ sender: Any) {
+        
+        if let videoData = outputFileURL?.dataRepresentation {
+            postController.createPost(with: "", ofType: .video, mediaData: videoData) { (success) in
+                guard success else {
+                    DispatchQueue.main.async {
+                        self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
+                    }
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+        }
         
     }
 
@@ -174,6 +195,7 @@ extension CameraPostViewController: AVCaptureFileOutputRecordingDelegate {
             print("Error saving video: \(error)")
         }
         print("Video: \(outputFileURL.path)")
+        self.outputFileURL = outputFileURL
         updateViews()
         
         playMovie(url: outputFileURL)

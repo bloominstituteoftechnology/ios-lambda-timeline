@@ -101,6 +101,11 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
+            
+        case .video:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPostCell", for: indexPath) as? VideoPostCollectionViewCell else { return UICollectionViewCell() }
+            
+            return cell
         }
     }
     
@@ -113,6 +118,12 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         switch post.mediaType {
             
         case .image:
+            
+            guard let ratio = post.ratio else { return size }
+            
+            size.height = size.width * ratio
+            
+        case .video:
             
             guard let ratio = post.ratio else { return size }
             
@@ -203,6 +214,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             destinationVC?.postController = postController
             destinationVC?.post = postController.posts[indexPath.row]
             destinationVC?.imageData = cache.value(for: postID)
+        } else if segue.identifier == "AddVideoPost" {
+            let destinationVC = segue.destination as? CameraPostViewController
+            destinationVC?.postController = postController
         }
     }
     
