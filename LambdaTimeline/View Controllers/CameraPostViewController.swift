@@ -18,6 +18,7 @@ class CameraPostViewController: UIViewController {
     var postController: PostController!
     var outputFileURL: URL?
     
+    @IBOutlet weak var postTitleLabel: UITextField!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var cameraView: CameraPreviewView!
     
@@ -34,6 +35,7 @@ class CameraPostViewController: UIViewController {
     
     @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
         print("tap")
+        self.view.endEditing(true)
         switch(tapGesture.state) {
         case .ended:
             playRecording()
@@ -151,7 +153,7 @@ class CameraPostViewController: UIViewController {
             var topRect = self.view.bounds
             topRect.size.height = topRect.height / 4
             topRect.size.width = topRect.width / 4
-            topRect.origin.y = view.layoutMargins.top
+            topRect.origin.y = view.layoutMargins.top + 46
             
             playerView.frame = topRect
             view.addSubview(playerView)
@@ -164,9 +166,8 @@ class CameraPostViewController: UIViewController {
     }
 
     @IBAction func postButtonTapped(_ sender: Any) {
-        
-        if let videoData = outputFileURL?.dataRepresentation {
-            postController.createPost(with: "", ofType: .video, mediaData: videoData) { (success) in
+        if let videoData = outputFileURL?.dataRepresentation, let title = postTitleLabel.text, !title.isEmpty {
+            postController.createPost(with: title, ofType: .video, mediaData: videoData) { (success) in
                 guard success else {
                     DispatchQueue.main.async {
                         self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
@@ -179,7 +180,6 @@ class CameraPostViewController: UIViewController {
                 }
             }
         }
-        
     }
 
 }
