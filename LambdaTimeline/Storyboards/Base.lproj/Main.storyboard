@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xB5-Kl-GM2">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -97,6 +96,7 @@
                     <connections>
                         <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="jaI-fq-Woc"/>
                         <segue destination="OyM-8q-Icp" kind="show" identifier="ViewImagePost" id="hhs-es-AdQ"/>
+                        <segue destination="nSZ-D9-9JY" kind="show" identifier="AddVideoPost" id="9tt-ud-hha"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -288,6 +288,59 @@
             </objects>
             <point key="canvasLocation" x="1969" y="-195"/>
         </scene>
+        <!--Camera Post View Controller-->
+        <scene sceneID="ir4-8r-57Q">
+            <objects>
+                <viewController id="nSZ-D9-9JY" customClass="CameraPostViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="a2G-PA-eQ1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JM6-eK-FkE" customClass="CameraPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OuR-80-xRj">
+                                <rect key="frame" x="137.5" y="507" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="X4J-4A-SgI"/>
+                                    <constraint firstAttribute="width" constant="100" id="dwY-me-tUg"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="Record"/>
+                                <state key="selected" image="Stop"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="nSZ-D9-9JY" eventType="touchUpInside" id="lUg-Ei-Phv"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="JM6-eK-FkE" firstAttribute="leading" secondItem="yl8-aA-JFc" secondAttribute="leading" id="1Hb-xQ-CpC"/>
+                            <constraint firstItem="JM6-eK-FkE" firstAttribute="top" secondItem="yl8-aA-JFc" secondAttribute="top" id="E6m-3i-sz5"/>
+                            <constraint firstItem="JM6-eK-FkE" firstAttribute="trailing" secondItem="yl8-aA-JFc" secondAttribute="trailing" id="PAv-RF-hPk"/>
+                            <constraint firstItem="JM6-eK-FkE" firstAttribute="bottom" secondItem="a2G-PA-eQ1" secondAttribute="bottom" id="Ynk-k5-UBH"/>
+                            <constraint firstItem="OuR-80-xRj" firstAttribute="centerX" secondItem="a2G-PA-eQ1" secondAttribute="centerX" id="sLt-2I-hSk"/>
+                            <constraint firstItem="yl8-aA-JFc" firstAttribute="bottom" secondItem="OuR-80-xRj" secondAttribute="bottom" constant="60" id="zdU-xI-hOX"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="yl8-aA-JFc"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="LOa-IN-iaT">
+                        <barButtonItem key="rightBarButtonItem" title="Post" id="8kb-Pb-4zY">
+                            <connections>
+                                <action selector="postButtonTapped:" destination="nSZ-D9-9JY" id="SXe-Om-7CM"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cameraView" destination="JM6-eK-FkE" id="kVN-Nx-2aJ"/>
+                        <outlet property="recordButton" destination="OuR-80-xRj" id="QJg-35-dG7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2Da-md-dNn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2773.5999999999999" y="-33.733133433283363"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="gdW-Je-ais">
             <objects>
@@ -445,4 +498,8 @@
             <point key="canvasLocation" x="1968.8" y="472.71364317841085"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Record" width="116" height="116"/>
+        <image name="Stop" width="116" height="116"/>
+    </resources>
 </document>
