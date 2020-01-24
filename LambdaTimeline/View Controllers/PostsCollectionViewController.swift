@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 import FirebaseAuth
 import FirebaseUI
 
@@ -22,6 +23,44 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        requestPermissionAndShowCamera()
+    }
+    
+    private func requestPermissionAndShowCamera() {
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        
+        switch status {
+        case .notDetermined:
+            requestPermission()
+        case .restricted:
+            fatalError("Video is disabled for parental controls")
+        case .denied:
+            fatalError("Tell user they need to enable Privacy for Video/Camera/Microphone")
+        case .authorized:
+            print("Granted authorization")
+        @unknown default:
+            fatalError("A new status was added that we need to handle")
+        }
+    }
+    
+    private func requestPermission() {
+        AVCaptureDevice.requestAccess(for: .video) { (granted) in
+            guard granted else {
+                fatalError("Tell user they need to enable Privacy for Video/Camera/Microphone")
+            }
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.showCamera()
+            }
+        }
+    }
+    
+    private func showCamera() {
+        performSegue(withIdentifier: "AddVideoPost", sender: self)
+    }
+    
     @IBAction func addPost(_ sender: Any) {
         
         let alert = UIAlertController(title: "New Post", message: "Which kind of post do you want to create?", preferredStyle: .actionSheet)
@@ -30,9 +69,14 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
         
+        let videoPostAction = UIAlertAction(title: "Video", style: .default) { (_) in
+            self.showCamera()
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(imagePostAction)
+        alert.addAction(videoPostAction)
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true, completion: nil)
@@ -57,6 +101,14 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
+            
+        case .video:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPostCell", for: indexPath) as? VideoPostCollectionViewCell else { return UICollectionViewCell() }
+            
+            cell.post = post
+            cell.addPlayer(for: postController.posts[indexPath.item].mediaURL)
+            
+            return cell
         }
     }
     
@@ -69,6 +121,12 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         switch post.mediaType {
             
         case .image:
+            
+            guard let ratio = post.ratio else { return size }
+            
+            size.height = size.width * ratio
+            
+        case .video:
             
             guard let ratio = post.ratio else { return size }
             
@@ -159,6 +217,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             destinationVC?.postController = postController
             destinationVC?.post = postController.posts[indexPath.row]
             destinationVC?.imageData = cache.value(for: postID)
+        } else if segue.identifier == "AddVideoPost" {
+            let destinationVC = segue.destination as? CameraPostViewController
+            destinationVC?.postController = postController
         }
     }
     
