@@ -679,11 +679,22 @@
         <!--Map-->
         <scene sceneID="sdJ-kh-qQz">
             <objects>
-                <viewController id="WMX-DN-vXb" sceneMemberID="viewController">
+                <viewController id="WMX-DN-vXb" customClass="MapViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="96Z-hE-lX8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="2cS-PB-6db">
+                                <rect key="frame" x="0.0" y="44" width="414" height="769"/>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Lrf-hG-7nT" firstAttribute="trailing" secondItem="2cS-PB-6db" secondAttribute="trailing" id="Rkx-4E-OMh"/>
+                            <constraint firstItem="2cS-PB-6db" firstAttribute="top" secondItem="Lrf-hG-7nT" secondAttribute="top" id="Wnp-Iz-o3x"/>
+                            <constraint firstItem="2cS-PB-6db" firstAttribute="leading" secondItem="Lrf-hG-7nT" secondAttribute="leading" id="gPt-ox-oiU"/>
+                            <constraint firstItem="Lrf-hG-7nT" firstAttribute="bottom" secondItem="2cS-PB-6db" secondAttribute="bottom" id="vXf-HT-e62"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Lrf-hG-7nT"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="map" catalog="system" id="ZFa-Ef-Hhz"/>
