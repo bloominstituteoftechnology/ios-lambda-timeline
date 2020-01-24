@@ -23,8 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if Auth.auth().currentUser != nil {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")
-            window?.rootViewController = postsNavigationController
+            let timelineTabController = storyboard.instantiateViewController(withIdentifier: "TimelineTabController")
+            window?.rootViewController = timelineTabController
             window?.makeKeyAndVisible()
         }
         
