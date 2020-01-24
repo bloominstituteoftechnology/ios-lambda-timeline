@@ -10,6 +10,7 @@ import UIKit
 import Photos
 import CoreImage
 import CoreImage.CIFilterBuiltins
+import MapKit
 
 @available(iOS 13.0, *)
 class ImagePostViewController: ShiftableViewController {
@@ -35,6 +36,12 @@ class ImagePostViewController: ShiftableViewController {
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    
+    fileprivate let locationManager: CLLocationManager = {
+        let locationManager = CLLocationManager()
+        locationManager.requestWhenInUseAuthorization()
+        return locationManager
+    }()
     
     var originalImage: UIImage? {
         didSet {
@@ -67,6 +74,14 @@ class ImagePostViewController: ShiftableViewController {
         setImageViewHeight(with: 1.0)
         
         updateViews()
+        
+        getCurrentLocation()
+    }
+    
+    func getCurrentLocation() {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
     }
     
     private func image(byFiltering inputImage: CIImage) -> UIImage {
@@ -151,7 +166,12 @@ class ImagePostViewController: ShiftableViewController {
             return
         }
         
-        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
+        let currentLocation = locationManager.location?.coordinate
+        let userLatitude = currentLocation?.latitude ?? 0
+        let userLongitude = currentLocation?.longitude ?? 0
+        print(userLongitude, userLatitude)
+        
+        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio, latitude: userLatitude, longitude: userLongitude) { (success) in
             guard success else {
                 DispatchQueue.main.async {
                     self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
@@ -256,5 +276,17 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ImagePostViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locationValue: CLLocationCoordinate2D = locationManager.location?.coordinate else { return }
+        
+        locationManager.stopUpdatingLocation()
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Error: \(error.localizedDescription)")
     }
 }
