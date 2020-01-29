@@ -8,8 +8,21 @@
 
 import UIKit
 import Photos
+import CoreImage
 
 class ImagePostViewController: ShiftableViewController {
+    
+    // MARK: Properties
+    var postController: PostController!
+    var post: Post?
+    var imageData: Data?
+    
+    var originalImage: UIImage?
+    
+    var geotag: CLLocationCoordinate2D? // TODO: actually try to get the geotag from a button or something
+    
+    private let context = CIContext(options: nil)
+    private var vibranceFilter = CIFilter(name: "CIVibrance")!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,9 +44,10 @@ class ImagePostViewController: ShiftableViewController {
         
         setImageViewHeight(with: image.ratio)
         
-        imageView.image = image
-        
+//        imageView.image = image
+        imageView.image = filterImage(image)
         chooseImageButton.setTitle("", for: [])
+        
     }
     
     private func presentImagePickerController() {
@@ -62,7 +76,7 @@ class ImagePostViewController: ShiftableViewController {
             return
         }
         
-        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
+        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio, geotag: geotag ?? nil) { (success) in
             guard success else {
                 DispatchQueue.main.async {
                     self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
@@ -112,15 +126,76 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
-    var postController: PostController!
-    var post: Post?
-    var imageData: Data?
-    
+    // MARK: Outlets
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    @IBOutlet weak var vibranceSlider: UISlider!
+    
+    // MARK: Sliders
+    @IBAction func vibranceChanged(_ sender: UISlider) {
+        updateViews()
+//        imageView.image = filterImage(originalImage)
+    }
+    
+    
+    
+    private func filterImage(_ image: UIImage) -> UIImage {
+
+        guard let cgImage = image.cgImage else { return image }
+
+        let ciImage = CIImage(cgImage: cgImage)
+
+        // MARK: Set the filtere values
+        // You can use this for any filter you want to use
+        vibranceFilter.setValue(ciImage, forKey: "inputImage")
+        vibranceFilter.setValue(vibranceSlider.value, forKey: "inputAmount")
+
+
+        guard let outputCIImage = vibranceFilter.outputImage else { return image }
+
+        let bounds = CGRect(origin: CGPoint.zero, size: image.size)
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: bounds) else { return image }
+
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    private func savePhoto() {
+        guard let originalImage = originalImage else {
+            return //TODO: Warn the user that there is no image to save?
+
+        }
+        
+        let processedImage = filterImage(originalImage)
+        
+        // save to photo library
+        
+        PHPhotoLibrary.requestAuthorization { (status) in
+            guard status == .authorized else {
+                return //TODO: Display to the user how to enable photos
+                // Instructions: Go to settings, photos, pick app that you are refering to...
+            }
+            
+            // Make a photo library change
+            
+            PHPhotoLibrary.shared().performChanges({
+                
+                PHAssetCreationRequest.creationRequestForAsset(from: processedImage)
+                
+            }) { (success, error) in
+                if let error = error {
+                    print("Error saving photo to library: \(error)")
+                    return
+                }
+                
+                //Display alert
+                print("Saved photo successfully")
+            }
+        }
+    }
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
