@@ -41,7 +41,7 @@ class ImagePostDetailTableViewController: UITableViewController {
             commentTextField = textField
         }
         
-        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
+        let addCommentAction = UIAlertAction(title: " Text Add Comment", style: .default) { _ in
             
             guard let commentText = commentTextField?.text else { return }
             
@@ -52,7 +52,10 @@ class ImagePostDetailTableViewController: UITableViewController {
             }
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Add Audio Comment", style: .default) { _ in
+            self.performSegue(withIdentifier: "ShowAudioCommentSegue", sender: self)
+            
+        }
         
         alert.addAction(addCommentAction)
         alert.addAction(cancelAction)
