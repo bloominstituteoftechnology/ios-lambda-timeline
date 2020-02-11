@@ -12,6 +12,8 @@ pod 'Firebase/Storage'
 pod 'Firebase/Auth'
 pod 'FirebaseUI/Google'
 pod 'FirebaseUI'
+pod 'FirebaseUI/OAuth' # Used for Sign in with Apple, Twitter, etc
+pod 'FirebaseUI/Phone'
 
 # add the Firebase pod for Google Analytics
 pod 'Firebase/Analytics'
