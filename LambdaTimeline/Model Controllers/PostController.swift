@@ -48,7 +48,7 @@ class PostController {
 
     func observePosts(completion: @escaping (Error?) -> Void) {
         
-        postsRef.observe(.value, with: { (snapshot) in
+        postsRef.observe(.value, with: { snapshot in
             
             guard let postDictionaries = snapshot.value as? [String: [String: Any]] else { return }
             
@@ -65,7 +65,7 @@ class PostController {
             
             completion(nil)
             
-        }) { (error) in
+        }) { error in
             NSLog("Error fetching posts: \(error)")
         }
     }

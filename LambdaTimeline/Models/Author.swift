@@ -30,7 +30,7 @@ struct Author: FirebaseConvertible, Equatable {
     private static let displayNameKey = "displayName"
     
     var dictionaryRepresentation: [String: Any] {
-        return [Author.uidKey: uid,
+        [Author.uidKey: uid,
                 Author.displayNameKey: displayName ?? "No display name"]
     }
 }
