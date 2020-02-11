@@ -11,9 +11,9 @@ import FirebaseAuth
 
 class Comment: FirebaseConvertible, Equatable {
     
-    static private let textKey = "text"
-    static private let author = "author"
-    static private let timestampKey = "timestamp"
+    private static let textKey = "text"
+    private static let author = "author"
+    private static let timestampKey = "timestamp"
     
     let text: String
     let author: Author
@@ -25,7 +25,7 @@ class Comment: FirebaseConvertible, Equatable {
         self.timestamp = timestamp
     }
     
-    init?(dictionary: [String : Any]) {
+    init?(dictionary: [String: Any]) {
         guard let text = dictionary[Comment.textKey] as? String,
             let authorDictionary = dictionary[Comment.author] as? [String: Any],
             let author = Author(dictionary: authorDictionary),
@@ -37,13 +37,13 @@ class Comment: FirebaseConvertible, Equatable {
     }
     
     var dictionaryRepresentation: [String: Any] {
-        return [Comment.textKey: text,
-                Comment.author: author.dictionaryRepresentation,
-                Comment.timestampKey: timestamp.timeIntervalSince1970]
+        [Comment.textKey: text,
+         Comment.author: author.dictionaryRepresentation,
+         Comment.timestampKey: timestamp.timeIntervalSince1970]
     }
     
-    static func ==(lhs: Comment, rhs: Comment) -> Bool {
-        return lhs.author == rhs.author &&
+    static func == (lhs: Comment, rhs: Comment) -> Bool {
+        lhs.author == rhs.author &&
             lhs.timestamp == rhs.timestamp
     }
 }
