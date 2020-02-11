@@ -18,8 +18,14 @@ enum HTTPMethod: String {
 
 enum Networking {
     
-    static func performRequestFor(url: URL, httpMethod: HTTPMethod, parameters: [String: String]? = nil, headers: [String: String]? = nil, body: Data? = nil, completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
-        
+    static func performRequestFor(
+        url: URL,
+        httpMethod: HTTPMethod,
+        parameters: [String: String]? = nil,
+        headers: [String: String]? = nil,
+        body: Data? = nil,
+        completion: @escaping (Data?, URLResponse?, Error?) -> Void
+    ) {
         var formattedURL: URL? = url
         
         if let parameters = parameters { formattedURL = format(url: url, with: parameters) }
@@ -41,10 +47,10 @@ enum Networking {
     }
     
     static private func format(url: URL, with queryParameters: [String: String]) -> URL? {
-        
         var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)
         
-        urlComponents?.queryItems = queryParameters.compactMap({ URLQueryItem(name: $0.key, value: $0.value) })
+        urlComponents?.queryItems = queryParameters
+            .compactMap({ URLQueryItem(name: $0.key, value: $0.value) })
         
         return urlComponents?.url ?? nil
     }
