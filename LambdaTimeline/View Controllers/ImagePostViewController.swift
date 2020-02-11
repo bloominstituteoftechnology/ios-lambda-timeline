@@ -289,9 +289,3 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         picker.dismiss(animated: true, completion: nil)
     }
 }
-
-
-
-/// CISepiaTone Filter
-/// CIPhotoEffectNoir
-/// CIGaussianBlur -
