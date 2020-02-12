@@ -28,31 +28,21 @@ class CommentCell: UITableViewCell {
     }()
     var comment: Comment? {
         didSet {
-            updateViews()
+            updateUI()
         }
     }
     
     
-    private func updateViews() {
+    private func updateUI() {
         timeElapsedLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeElapsedLabel.font.pointSize, weight: .regular)
         timeRemainingLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeRemainingLabel.font.pointSize, weight: .regular)
         
         guard let comment = comment else { return }
         if let audio = comment.audio {
             guard let audioURL = URL(string: audio) else { return }
-            print(audioURL)
-//            manager.loadAudio(with: audioURL)
+            manager.loadAudio(with: audioURL)
             manager.delegate = self
-            
-            let elapsedTime = manager.audioPlayer?.currentTime ?? 0
-            timeElapsedLabel.text = timeIntervalFormatter.string(from: elapsedTime)
-            
-            valueSlider.minimumValue = 0
-            valueSlider.maximumValue = Float(manager.audioPlayer?.duration ?? 0)
-            valueSlider.value = Float(elapsedTime)
-            
-            let timeRemaining = (manager.audioPlayer?.duration ?? 0) - elapsedTime
-            timeRemainingLabel.text = timeIntervalFormatter.string(from: timeRemaining)
+            updateViews(withComment: true)
         } else {
             timeElapsedLabel.removeFromSuperview()
             timeRemainingLabel.removeFromSuperview()
@@ -63,23 +53,37 @@ class CommentCell: UITableViewCell {
         titleLabel.text = comment.text
         authorLabel.text = comment.author.displayName
     }
+    
+    private func updateViews(withComment: Bool) {
+        if withComment {
+            let elapsedTime = manager.audioPlayer?.currentTime ?? 0
+            timeElapsedLabel.text = timeIntervalFormatter.string(from: elapsedTime)
+            
+            valueSlider.minimumValue = 0
+            valueSlider.maximumValue = Float(manager.audioPlayer?.duration ?? 0)
+            valueSlider.value = Float(elapsedTime)
+            
+            let timeRemaining = (manager.audioPlayer?.duration ?? 0) - elapsedTime
+            timeRemainingLabel.text = "-\(timeIntervalFormatter.string(from: timeRemaining) ?? "")"
+        }
+    }
 }
 
 extension CommentCell: AudioManagerDelegate {
     func didPlay() {
-        updateViews()
+        updateViews(withComment: true)
     }
     
     func didPause() {
-        updateViews()
+        updateViews(withComment: true)
     }
     
     func didFinishPlaying() {
-        updateViews()
+        updateViews(withComment: true)
     }
     
     func didUpdate() {
-        updateViews()
+        updateViews(withComment: true)
     }
     
     func isRecording() {

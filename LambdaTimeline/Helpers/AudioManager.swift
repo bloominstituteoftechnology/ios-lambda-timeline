@@ -44,7 +44,7 @@ class AudioManager: NSObject {
     
     func loadAudio(with url: URL) {
         do {
-            audioPlayer = try AVAudioPlayer(contentsOf: url)
+            audioPlayer = try AVAudioPlayer(data: Data(contentsOf: url))
             audioPlayer?.delegate = self
         } catch {
 //            NSLog("Audio playback error: \(error.localizedDescription)")
@@ -127,7 +127,7 @@ class AudioManager: NSObject {
 extension AudioManager: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         delegate?.didFinishPlaying()
-//        cancelTimer()
+        cancelTimer()
     }
     
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
