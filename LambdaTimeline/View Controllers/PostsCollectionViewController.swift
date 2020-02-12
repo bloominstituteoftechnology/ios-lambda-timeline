@@ -24,9 +24,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     
     @IBAction func addPost(_ sender: Any) {
         
-        let alert = UIAlertController(title: "New Post", message: "Which kind of post do you want to create?", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "New Post", message: nil, preferredStyle: .actionSheet)
         
-        let imagePostAction = UIAlertAction(title: "Image", style: .default) { (_) in
+        let imagePostAction = UIAlertAction(title: "OK", style: .default) { (_) in
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
         

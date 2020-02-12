@@ -649,21 +649,25 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" id="vU8-wP-ko2">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="4aY-G7-ka2"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="4aY-G7-ka2">
+                            <connections>
+                                <action selector="addVideoPostTapped:" destination="orQ-gp-btD" id="4U6-rH-2Il"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="OyM-8q-Icp" kind="show" id="n22-cW-C1H"/>
-                        <segue destination="WCR-IY-QsS" kind="show" id="Dio-7N-4PS"/>
+                        <segue destination="WCR-IY-QsS" kind="show" identifier="ShowVidoeRecoderSegue" id="Dio-7N-4PS"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N5N-Tp-k6k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2156" y="848.72563718140941"/>
         </scene>
-        <!--View Controller-->
+        <!--Recording View Controller-->
         <scene sceneID="RPz-te-D74">
             <objects>
-                <viewController id="WCR-IY-QsS" sceneMemberID="viewController">
+                <viewController id="WCR-IY-QsS" customClass="RecordingViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ibf-2g-Lbl">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -678,20 +682,41 @@
                                     </preferredSymbolConfiguration>
                                 </state>
                                 <state key="selected" image="stop.circle" catalog="system"/>
+                                <connections>
+                                    <action selector="recordButtonTapped:" destination="WCR-IY-QsS" eventType="touchUpInside" id="EiK-qJ-ChE"/>
+                                </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="as6-l3-7fA">
+                                <rect key="frame" x="40" y="576" width="295" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="w4k-yL-bL9" firstAttribute="centerX" secondItem="7pn-6n-TxX" secondAttribute="centerX" id="H4e-fP-Uxk"/>
+                            <constraint firstItem="as6-l3-7fA" firstAttribute="top" secondItem="w4k-yL-bL9" secondAttribute="bottom" constant="8" id="L2X-Kt-GnI"/>
+                            <constraint firstItem="as6-l3-7fA" firstAttribute="leading" secondItem="7pn-6n-TxX" secondAttribute="leading" constant="40" id="RBj-9a-L9a"/>
+                            <constraint firstItem="7pn-6n-TxX" firstAttribute="bottom" secondItem="as6-l3-7fA" secondAttribute="bottom" constant="8" id="hmZ-I7-bG3"/>
                             <constraint firstItem="7pn-6n-TxX" firstAttribute="bottom" secondItem="w4k-yL-bL9" secondAttribute="bottom" constant="50" id="k8d-DN-Rf1"/>
+                            <constraint firstItem="7pn-6n-TxX" firstAttribute="trailing" secondItem="as6-l3-7fA" secondAttribute="trailing" constant="40" id="kfa-DH-SMk"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7pn-6n-TxX"/>
                     </view>
-                    <navigationItem key="navigationItem" id="OjW-OW-Bxg"/>
+                    <navigationItem key="navigationItem" id="OjW-OW-Bxg">
+                        <barButtonItem key="rightBarButtonItem" title="Post" id="5DC-rf-f9Z">
+                            <connections>
+                                <action selector="postButtonTapped:" destination="WCR-IY-QsS" id="ETb-86-glw"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="TitleTextField" destination="as6-l3-7fA" id="ks4-6e-RXR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T6M-4n-vSz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2905" y="1229"/>
+            <point key="canvasLocation" x="2904.8000000000002" y="1228.3358320839582"/>
         </scene>
         <!--Video Posts-->
         <scene sceneID="7ut-Tj-XKb">

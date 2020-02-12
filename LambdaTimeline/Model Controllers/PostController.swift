@@ -31,15 +31,29 @@ class PostController {
             
             guard let mediaURL = mediaURL else { completion(false); return }
             
-            let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
-            
-            self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
-                if let error = error {
-                    NSLog("Error posting image post: \(error)")
-                    completion(false)
+            switch mediaType {
+            case .image:
+                let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
+                self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
+                        if let error = error {
+                            NSLog("Error posting image post: \(error)")
+                            completion(false)
+                        }
+                
+                        completion(true)
+                    }
+            case .video:
+                let videoPost = VideoPost(title: title, mediaURL: mediaURL, author: author)
+                self.videoPostRef.childByAutoId().setValue(videoPost.dictionaryRepresentation) { error, ref in
+                    if let error = error {
+                        NSLog("Error Posting Video: \(error)")
+                        completion(false)
+                    }
+                    completion(true)
+                    
                 }
-        
-                completion(true)
+            default:
+                break
             }
         }
     }
@@ -145,6 +159,9 @@ class PostController {
                  
              case .audio:
                 mediaRef = storageRef.child(mediaType.rawValue).child("\(mediaID).caf")
+                
+             case .video:
+                mediaRef = storageRef.child(mediaType.rawValue).child("\(mediaID).mov")
              }
         
         let uploadTask = mediaRef.putData(mediaData, metadata: nil) { (metadata, error) in

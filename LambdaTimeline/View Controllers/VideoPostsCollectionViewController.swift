@@ -24,6 +24,16 @@ class VideoPostsCollectionViewController: UICollectionViewController {
             }
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "ShowVidoeRecoderSegue":
+            guard let destinatioVC = segue.destination as? RecordingViewController else { return }
+            destinatioVC.postController = postController
+        default:
+            break
+        }
+    }
 
     // MARK: UICollectionViewDataSource
 
@@ -32,11 +42,22 @@ class VideoPostsCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPostCell", for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPostCell", for: indexPath) as? VideoPostCollectionViewCell else { return UICollectionViewCell() }
+        
         let post = postController.videoPost[indexPath.row]
         return cell
     }
     
+    @IBAction func addVideoPostTapped(_ sender: UIBarButtonItem) {
+        let alert = UIAlertController(title: "New Post", message: nil, preferredStyle: .actionSheet)
+        let videoPostAction = UIAlertAction(title: "Ok", style: .default) { (_) in
+            self.performSegue(withIdentifier: "ShowVidoeRecoderSegue", sender: nil)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        alert.addAction(videoPostAction)
+        alert.addAction(cancelAction)
+        self.present(alert,animated: true)
+    }
     
 
 }
