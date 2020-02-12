@@ -13,6 +13,15 @@ import FirebaseStorage
 
 class PostController {
     
+    
+    var posts: [Post] = []
+    var videoPost: [VideoPost] = []
+    let currentUser = Auth.auth().currentUser
+    let postsRef = Database.database().reference().child("posts")
+    let videoPostRef = Database.database().reference().child("videoPosts")
+    let storageRef = Storage.storage().reference()
+    
+    
     func createPost(with title: String, ofType mediaType: MediaType, mediaData: Data, ratio: CGFloat? = nil, completion: @escaping (Bool) -> Void = { _ in }) {
         
         guard let currentUser = Auth.auth().currentUser,
@@ -56,6 +65,37 @@ class PostController {
             self.savePostToFirebase(post)
         }
     }
+    
+    
+    func observeVideoPosts(completion: @escaping (Error?) -> Void) {
+        
+        videoPostRef.observe(.value, with: { (snapshot) in
+            
+            guard let postDictionaries = snapshot.value as? [String: [String: Any]] else { return }
+            
+            var posts: [VideoPost] = []
+            
+            for (key, value) in postDictionaries {
+                
+                guard let post = VideoPost(dictionary: value, id: key) else { continue }
+                
+                posts.append(post)
+            }
+            
+            self.videoPost = posts.sorted(by: { $0.timestamp > $1.timestamp })
+            
+            completion(nil)
+            
+        }) { (error) in
+            NSLog("Error fetching posts: \(error)")
+        }
+    }
+    
+    
+    
+    
+    
+    
 
     func observePosts(completion: @escaping (Error?) -> Void) {
         
@@ -138,12 +178,4 @@ class PostController {
         
         uploadTask.resume()
     }
-    
-    var posts: [Post] = []
-    let currentUser = Auth.auth().currentUser
-    let postsRef = Database.database().reference().child("posts")
-    
-    let storageRef = Storage.storage().reference()
-    
-    
 }
