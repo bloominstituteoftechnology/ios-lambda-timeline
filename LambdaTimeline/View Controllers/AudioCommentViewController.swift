@@ -51,6 +51,22 @@ class AudioCommentViewController: UIViewController {
 
 
 extension AudioCommentViewController: AudioManagerDelegate {
+    func didUpdate() {
+        return
+    }
+    
+    func didPlay() {
+        return
+    }
+    
+    func didPause() {
+        return
+    }
+    
+    func didFinishPlaying() {
+        return
+    }
+    
     func isRecording() {
         updateViews()
     }
