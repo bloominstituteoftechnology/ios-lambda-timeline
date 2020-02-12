@@ -17,7 +17,6 @@ class VideoPost {
     let timestamp: Date
     var comments: [Comment]
     var id: String?
-    var ratio: CGFloat?
     
     static private let mediaKey = "media"
     static private let ratioKey = "ratio"
@@ -31,9 +30,8 @@ class VideoPost {
         return comments.first?.text
     }
     
-    init(title: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date()) {
+    init(title: String, mediaURL: URL, author: Author, timestamp: Date = Date()) {
         self.mediaURL = mediaURL
-        self.ratio = ratio
         self.mediaType = .image
         self.author = author
         self.comments = [Comment(text: title, author: author)]
@@ -52,7 +50,6 @@ class VideoPost {
         
         self.mediaURL = mediaURL
         self.mediaType = mediaType
-        self.ratio = dictionary[VideoPost.ratioKey] as? CGFloat
         self.author = author
         self.timestamp = Date(timeIntervalSince1970: timestampTimeInterval)
         self.comments = captionDictionaries.compactMap({ Comment(dictionary: $0) })
@@ -60,15 +57,11 @@ class VideoPost {
     }
     
     var dictionaryRepresentation: [String : Any] {
-        var dict: [String: Any] = [VideoPost.mediaKey: mediaURL.absoluteString,
+        let dict: [String: Any] = [VideoPost.mediaKey: mediaURL.absoluteString,
                 VideoPost.mediaTypeKey: mediaType.rawValue,
                 VideoPost.commentsKey: comments.map({ $0.dictionaryRepresentation }),
                 VideoPost.authorKey: author.dictionaryRepresentation,
                 VideoPost.timestampKey: timestamp.timeIntervalSince1970]
-        
-        guard let ratio = self.ratio else { return dict }
-        
-        dict[VideoPost.ratioKey] = ratio
         
         return dict
     }
