@@ -420,10 +420,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RTo-dT-zRb">
-                                <rect key="frame" x="40" y="268.5" width="295" height="130"/>
+                                <rect key="frame" x="40" y="225.5" width="295" height="216"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fpe-mH-MQV">
-                                        <rect key="frame" x="115" y="8" width="65" height="65"/>
+                                        <rect key="frame" x="115" y="46" width="65" height="65"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="65" id="9d7-HX-Z56"/>
                                             <constraint firstAttribute="width" constant="65" id="WTj-Fq-ey9"/>
@@ -436,7 +436,7 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="NCT-VQ-yix">
-                                        <rect key="frame" x="0.0" y="82" width="295" height="48"/>
+                                        <rect key="frame" x="0.0" y="168" width="295" height="48"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cvq-Hn-8Xo">
                                                 <rect key="frame" x="0.0" y="0.0" width="147.5" height="48"/>
@@ -457,14 +457,34 @@
                                             <constraint firstAttribute="height" constant="48" id="Cpy-DT-37k"/>
                                         </constraints>
                                     </stackView>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Comment Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2My-v3-RAW">
+                                        <rect key="frame" x="20" y="119" width="255" height="41"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="41" id="wBs-Ru-hZw"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Audio Comment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MSi-zj-05r">
+                                        <rect key="frame" x="68" y="17.5" width="159" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="MSi-zj-05r" secondAttribute="trailing" constant="68" id="0AT-YS-PCT"/>
                                     <constraint firstAttribute="trailing" secondItem="NCT-VQ-yix" secondAttribute="trailing" id="GhJ-td-yd4"/>
+                                    <constraint firstItem="NCT-VQ-yix" firstAttribute="top" secondItem="2My-v3-RAW" secondAttribute="bottom" constant="8" id="OSx-rQ-6U3"/>
                                     <constraint firstItem="NCT-VQ-yix" firstAttribute="leading" secondItem="RTo-dT-zRb" secondAttribute="leading" id="Rfl-FI-vhf"/>
                                     <constraint firstAttribute="bottom" secondItem="NCT-VQ-yix" secondAttribute="bottom" id="VC8-LU-RLX"/>
-                                    <constraint firstAttribute="height" constant="130" id="aIe-wb-1UW"/>
-                                    <constraint firstItem="Fpe-mH-MQV" firstAttribute="top" secondItem="RTo-dT-zRb" secondAttribute="top" constant="8" id="iGL-z4-MCt"/>
+                                    <constraint firstItem="2My-v3-RAW" firstAttribute="top" secondItem="Fpe-mH-MQV" secondAttribute="bottom" constant="8" id="Wed-RK-36h"/>
+                                    <constraint firstItem="Fpe-mH-MQV" firstAttribute="top" secondItem="MSi-zj-05r" secondAttribute="bottom" constant="8" id="a7W-yc-f9k"/>
+                                    <constraint firstAttribute="height" constant="216" id="aIe-wb-1UW"/>
+                                    <constraint firstAttribute="trailing" secondItem="2My-v3-RAW" secondAttribute="trailing" constant="20" id="eSV-eN-tz0"/>
+                                    <constraint firstItem="MSi-zj-05r" firstAttribute="leading" secondItem="RTo-dT-zRb" secondAttribute="leading" constant="68" id="f7w-av-V2R"/>
+                                    <constraint firstItem="2My-v3-RAW" firstAttribute="leading" secondItem="RTo-dT-zRb" secondAttribute="leading" constant="20" id="wS7-V9-vjc"/>
                                     <constraint firstItem="Fpe-mH-MQV" firstAttribute="centerX" secondItem="RTo-dT-zRb" secondAttribute="centerX" id="yxM-QB-K1V"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
@@ -483,6 +503,7 @@
                         <viewLayoutGuide key="safeArea" id="E0Z-P0-i9p"/>
                     </view>
                     <connections>
+                        <outlet property="commentTextField" destination="2My-v3-RAW" id="vd2-rH-Gwu"/>
                         <outlet property="recordButton" destination="Fpe-mH-MQV" id="nwM-i3-Gag"/>
                     </connections>
                 </viewController>

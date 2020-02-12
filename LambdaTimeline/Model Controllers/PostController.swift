@@ -49,7 +49,7 @@ class PostController {
     func addComment(with text:String, and audio: Data, to post: inout Post) {
         guard let currentUser = Auth.auth().currentUser, let author = Author(user: currentUser) else { return }
         store(mediaData: audio, mediaType: .audio) { [weak post] mediaURL in
-            guard let mediaURL = mediaURL else { return }
+            guard let mediaURL = mediaURL else {  return }
             let comment = Comment(text: text, author: author, audio: mediaURL.absoluteString)
             post?.comments.append(comment)
             guard let post = post else { return }
