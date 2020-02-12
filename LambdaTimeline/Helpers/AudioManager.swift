@@ -47,7 +47,7 @@ class AudioManager: NSObject {
             audioPlayer = try AVAudioPlayer(data: Data(contentsOf: url))
             audioPlayer?.delegate = self
         } catch {
-//            NSLog("Audio playback error: \(error.localizedDescription)")
+            NSLog("Audio playback error: \(error.localizedDescription)")
         }
     }
     

@@ -28,12 +28,11 @@ class CommentCell: UITableViewCell {
     }()
     var comment: Comment? {
         didSet {
-            updateUI()
+            updateCell()
         }
     }
     
-    
-    private func updateUI() {
+    private func updateCell() {
         timeElapsedLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeElapsedLabel.font.pointSize, weight: .regular)
         timeRemainingLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeRemainingLabel.font.pointSize, weight: .regular)
         
