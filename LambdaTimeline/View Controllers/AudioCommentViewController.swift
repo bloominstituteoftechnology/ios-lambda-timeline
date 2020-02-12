@@ -12,6 +12,7 @@ import UIKit
 class AudioCommentViewController: UIViewController {
 
     @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var commentTextField: UITextField!
     
     var post: Post?
     var postController: PostController?
@@ -33,15 +34,18 @@ class AudioCommentViewController: UIViewController {
     }
     
     @IBAction func cancelButtonTapped(_ sender: UIButton) {
-        
+        dismiss(animated: true)
     }
     
     @IBAction func postButtonTapped(_ sender: UIButton) {
         guard let fileURL = fileURL,
             let commentData = try? Data(contentsOf: fileURL),
             let postController = postController,
-            var post = post else { return }
-        postController.addComment(with: "", and: commentData, to: &post)
+            var post = post,
+            let title = commentTextField.text,
+            !title.isEmpty else { return }
+        postController.addComment(with: title, and: commentData, to: &post)
+        self.dismiss(animated: true)
     }
 }
 

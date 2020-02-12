@@ -419,10 +419,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u3m-Gg-2bL">
-                                <rect key="frame" x="40" y="388" width="334" height="130"/>
+                                <rect key="frame" x="40" y="345" width="334" height="216"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="coG-KW-h1b">
-                                        <rect key="frame" x="134" y="8" width="66" height="66"/>
+                                        <rect key="frame" x="134" y="46" width="66" height="66"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="66" id="JcN-IC-AeQ"/>
                                             <constraint firstAttribute="width" secondItem="coG-KW-h1b" secondAttribute="height" multiplier="1:1" id="uq7-XI-Ciu"/>
@@ -435,8 +435,16 @@
                                             <action selector="recordButtonTapped:" destination="GVd-Qz-UIc" eventType="touchUpInside" id="rve-jt-YH8"/>
                                         </connections>
                                     </button>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Comment Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v6z-Fs-lPY">
+                                        <rect key="frame" x="20" y="120" width="294" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="Yi2-WI-bTG"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="euV-cm-61O">
-                                        <rect key="frame" x="0.0" y="82" width="334" height="48"/>
+                                        <rect key="frame" x="0.0" y="168" width="334" height="48"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qFc-pE-0cy">
                                                 <rect key="frame" x="0.0" y="0.0" width="167" height="48"/>
@@ -457,15 +465,29 @@
                                             <constraint firstAttribute="height" constant="48" id="O7T-Wz-2DS"/>
                                         </constraints>
                                     </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Audio Comment:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I9C-6h-g8Y">
+                                        <rect key="frame" x="85.5" y="8" width="163" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="6ib-QH-vjK"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
+                                    <constraint firstItem="coG-KW-h1b" firstAttribute="top" secondItem="I9C-6h-g8Y" secondAttribute="bottom" constant="8" id="3dS-7G-pIq"/>
+                                    <constraint firstItem="euV-cm-61O" firstAttribute="top" secondItem="v6z-Fs-lPY" secondAttribute="bottom" constant="8" id="3pj-Xh-ml0"/>
                                     <constraint firstAttribute="trailing" secondItem="euV-cm-61O" secondAttribute="trailing" id="Aan-AO-FSW"/>
-                                    <constraint firstItem="coG-KW-h1b" firstAttribute="top" secondItem="u3m-Gg-2bL" secondAttribute="top" constant="8" id="CPM-nA-1eu"/>
                                     <constraint firstItem="euV-cm-61O" firstAttribute="leading" secondItem="u3m-Gg-2bL" secondAttribute="leading" id="Gjb-ls-54j"/>
                                     <constraint firstItem="coG-KW-h1b" firstAttribute="centerX" secondItem="u3m-Gg-2bL" secondAttribute="centerX" id="HG8-6R-lJu"/>
                                     <constraint firstAttribute="bottom" secondItem="euV-cm-61O" secondAttribute="bottom" id="Mqm-xJ-HWS"/>
-                                    <constraint firstAttribute="height" constant="130" id="V5G-ll-BtG"/>
+                                    <constraint firstAttribute="height" constant="216" id="V5G-ll-BtG"/>
+                                    <constraint firstItem="v6z-Fs-lPY" firstAttribute="leading" secondItem="u3m-Gg-2bL" secondAttribute="leading" constant="20" id="WXf-vg-obA"/>
+                                    <constraint firstItem="v6z-Fs-lPY" firstAttribute="top" secondItem="coG-KW-h1b" secondAttribute="bottom" constant="8" id="cPG-ZZ-z1A"/>
+                                    <constraint firstItem="I9C-6h-g8Y" firstAttribute="centerX" secondItem="u3m-Gg-2bL" secondAttribute="centerX" id="pWo-cZ-fqm"/>
+                                    <constraint firstAttribute="trailing" secondItem="v6z-Fs-lPY" secondAttribute="trailing" constant="20" id="weT-f1-3gq"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
@@ -483,6 +505,7 @@
                         <viewLayoutGuide key="safeArea" id="3e7-Rd-DkT"/>
                     </view>
                     <connections>
+                        <outlet property="commentTextField" destination="v6z-Fs-lPY" id="Hp1-JX-aMy"/>
                         <outlet property="recordButton" destination="coG-KW-h1b" id="Qvi-CO-vOz"/>
                     </connections>
                 </viewController>
