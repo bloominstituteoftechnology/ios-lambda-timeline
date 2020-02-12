@@ -83,6 +83,9 @@ class PostController {
     
     func savePostToFirebase(_ post: Post, completion: (Error?) -> Void = { _ in }) {
         
+        let mediaID = UUID().uuidString
+     
+        
         guard let postID = post.id else { return }
         
         let ref = postsRef.child(postID)
@@ -94,7 +97,15 @@ class PostController {
         
         let mediaID = UUID().uuidString
         
-        let mediaRef = storageRef.child(mediaType.rawValue).child(mediaID)
+        var mediaRef: StorageReference
+             
+             switch mediaType {
+             case .image:
+                mediaRef = storageRef.child(mediaType.rawValue).child("\(mediaID).jpeg")
+                 
+             case .audio:
+                mediaRef = storageRef.child(mediaType.rawValue).child("\(mediaID).caf")
+             }
         
         let uploadTask = mediaRef.putData(mediaData, metadata: nil) { (metadata, error) in
             if let error = error {
