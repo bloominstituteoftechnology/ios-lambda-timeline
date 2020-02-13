@@ -9,7 +9,7 @@
 import Foundation
 import FirebaseAuth
 
-class VideoPost {
+class VideoPost: NSObject {
     
     var mediaURL: URL
     let mediaType: MediaType
@@ -17,6 +17,12 @@ class VideoPost {
     let timestamp: Date
     var comments: [Comment]
     var id: String?
+    var latitude: Double?
+    var longitude: Double?
+    
+    // Latitude
+    // Longitude
+    
     
     static private let mediaKey = "media"
     static private let ratioKey = "ratio"
@@ -25,17 +31,21 @@ class VideoPost {
     static private let commentsKey = "comments"
     static private let timestampKey = "timestamp"
     static private let idKey = "id"
+    static private let longKey = "longitude"
+    static private let latKey = "latitude"
     
     var title: String? {
         return comments.first?.text
     }
     
-    init(title: String, mediaURL: URL, author: Author, timestamp: Date = Date()) {
+    init(title: String, mediaURL: URL, author: Author, timestamp: Date = Date(), latitude: Double? = nil, longitude: Double? = nil) {
         self.mediaURL = mediaURL
         self.mediaType = .video
         self.author = author
         self.comments = [Comment(text: title, author: author)]
         self.timestamp = timestamp
+        self.latitude = latitude
+        self.longitude = longitude
     }
     
     init?(dictionary: [String : Any], id: String) {
@@ -46,7 +56,9 @@ class VideoPost {
             let authorDictionary = dictionary[VideoPost.authorKey] as? [String: Any],
             let author = Author(dictionary: authorDictionary),
             let timestampTimeInterval = dictionary[VideoPost.timestampKey] as? TimeInterval,
-            let captionDictionaries = dictionary[VideoPost.commentsKey] as? [[String: Any]] else { return nil }
+            let captionDictionaries = dictionary[VideoPost.commentsKey] as? [[String: Any]],
+            let latitude = dictionary[VideoPost.latKey] as? Double?,
+            let longitude = dictionary[VideoPost.longKey] as? Double? else { return nil }
         
         self.mediaURL = mediaURL
         self.mediaType = mediaType
@@ -54,6 +66,8 @@ class VideoPost {
         self.timestamp = Date(timeIntervalSince1970: timestampTimeInterval)
         self.comments = captionDictionaries.compactMap({ Comment(dictionary: $0) })
         self.id = id
+        self.latitude = latitude
+        self.longitude = longitude
     }
     
     var dictionaryRepresentation: [String : Any] {
@@ -61,7 +75,9 @@ class VideoPost {
                 VideoPost.mediaTypeKey: mediaType.rawValue,
                 VideoPost.commentsKey: comments.map({ $0.dictionaryRepresentation }),
                 VideoPost.authorKey: author.dictionaryRepresentation,
-                VideoPost.timestampKey: timestamp.timeIntervalSince1970]
+                VideoPost.timestampKey: timestamp.timeIntervalSince1970,
+                VideoPost.latKey: latitude as Any,
+                VideoPost.longKey: longitude as Any]
         
         return dict
     }
