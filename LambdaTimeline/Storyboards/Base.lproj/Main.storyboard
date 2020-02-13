@@ -668,7 +668,7 @@
         <scene sceneID="RPz-te-D74">
             <objects>
                 <viewController id="WCR-IY-QsS" customClass="RecordingViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Ibf-2g-Lbl">
+                    <view key="view" contentMode="scaleToFill" id="Ibf-2g-Lbl" customClass="CameraPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -712,6 +712,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="TitleTextField" destination="as6-l3-7fA" id="ks4-6e-RXR"/>
+                        <outlet property="cameraView" destination="Ibf-2g-Lbl" id="ikQ-gd-aPP"/>
+                        <outlet property="recordButton" destination="w4k-yL-bL9" id="Btq-mK-LM6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T6M-4n-vSz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
