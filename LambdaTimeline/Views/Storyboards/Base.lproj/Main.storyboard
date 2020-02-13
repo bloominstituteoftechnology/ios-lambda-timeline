@@ -591,9 +591,28 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hCb-ri-bsM">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hCb-ri-bsM" customClass="VideoContainerView" customModule="LambdaTimeline" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0zZ-4V-jV7">
+                                                    <rect key="frame" x="326" y="327" width="41" height="40"/>
+                                                    <color key="tintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <state key="normal" image="play.circle" catalog="system">
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                                            <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                                        </preferredSymbolConfiguration>
+                                                    </state>
+                                                    <state key="selected" image="pause.circle" catalog="system"/>
+                                                    <connections>
+                                                        <action selector="videoPlayButtonTapped:" destination="f1Y-LS-tll" eventType="touchUpInside" id="gfK-Fv-KcQ"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
                                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="0zZ-4V-jV7" secondAttribute="bottom" constant="8" id="Zbj-R8-ah5"/>
+                                                <constraint firstAttribute="trailing" secondItem="0zZ-4V-jV7" secondAttribute="trailing" constant="8" id="cZA-KB-rhE"/>
+                                            </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YUd-ZY-bH3">
                                             <rect key="frame" x="8" y="329" width="47" height="38"/>
@@ -641,6 +660,7 @@
                                     <outlet property="labelBackgroundView" destination="YUd-ZY-bH3" id="E1n-QE-CWO"/>
                                     <outlet property="titleLabel" destination="ZE2-Mb-KEZ" id="YhV-0T-fcZ"/>
                                     <outlet property="videoLayerView" destination="hCb-ri-bsM" id="prZ-hV-51w"/>
+                                    <outlet property="videoPlayButton" destination="0zZ-4V-jV7" id="1WJ-69-gYh"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -743,6 +763,8 @@
     <resources>
         <image name="camera" catalog="system" width="64" height="48"/>
         <image name="mic.circle.fill" catalog="system" width="64" height="60"/>
+        <image name="pause.circle" catalog="system" width="64" height="60"/>
+        <image name="play.circle" catalog="system" width="64" height="60"/>
         <image name="smallcircle.fill.circle" catalog="system" width="64" height="60"/>
         <image name="stop.circle" catalog="system" width="64" height="60"/>
         <image name="video" catalog="system" width="64" height="40"/>
