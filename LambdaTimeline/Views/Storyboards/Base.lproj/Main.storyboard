@@ -564,6 +564,7 @@
                     <connections>
                         <segue destination="ohA-ly-1Yj" kind="relationship" relationship="viewControllers" id="hls-Wy-48C"/>
                         <segue destination="vgG-LE-gQh" kind="relationship" relationship="viewControllers" id="tCK-3c-ngL"/>
+                        <segue destination="Tsw-H7-dud" kind="relationship" relationship="viewControllers" id="k2Q-HH-svS"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6z4-NH-52S" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -686,6 +687,36 @@
             </objects>
             <point key="canvasLocation" x="2124.6376811594205" y="776.78571428571422"/>
         </scene>
+        <!--Map-->
+        <scene sceneID="1ML-5u-aGM">
+            <objects>
+                <viewController id="Tsw-H7-dud" customClass="MapViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="if1-dA-zbk">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="696-QS-yBn">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="813"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="696-QS-yBn" firstAttribute="leading" secondItem="8u3-Dc-9ob" secondAttribute="leading" id="EfO-lg-hVV"/>
+                            <constraint firstItem="696-QS-yBn" firstAttribute="trailing" secondItem="8u3-Dc-9ob" secondAttribute="trailing" id="Z22-2W-fl3"/>
+                            <constraint firstItem="696-QS-yBn" firstAttribute="top" secondItem="if1-dA-zbk" secondAttribute="top" id="ekt-0Y-dwt"/>
+                            <constraint firstItem="696-QS-yBn" firstAttribute="bottom" secondItem="8u3-Dc-9ob" secondAttribute="bottom" id="sa4-Zv-ll3"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="8u3-Dc-9ob"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Map" image="map" catalog="system" id="2aw-l6-SLH"/>
+                    <connections>
+                        <outlet property="mapView" destination="696-QS-yBn" id="Q06-hz-lY2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="l8R-3l-Lor" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="444.92753623188412" y="1125"/>
+        </scene>
         <!--Video Posts-->
         <scene sceneID="rE6-bA-IAk">
             <objects>
@@ -763,6 +794,7 @@
     </scenes>
     <resources>
         <image name="camera" catalog="system" width="64" height="48"/>
+        <image name="map" catalog="system" width="64" height="56"/>
         <image name="mic.circle.fill" catalog="system" width="64" height="60"/>
         <image name="pause.circle" catalog="system" width="64" height="60"/>
         <image name="play.circle" catalog="system" width="64" height="60"/>

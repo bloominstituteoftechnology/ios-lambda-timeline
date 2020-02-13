@@ -44,7 +44,16 @@ class SignInViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDele
             
             DispatchQueue.main.async {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let postsTabBarController = storyboard.instantiateViewController(withIdentifier: "PostsTabBarController")
+                guard let postsTabBarController = storyboard.instantiateViewController(withIdentifier: "PostsTabBarController") as? UITabBarController else { return }
+                guard let imageNavController = postsTabBarController.viewControllers?.first as? UINavigationController, let postsCollectionVC = imageNavController.viewControllers.first as? PostsCollectionViewController else { return }
+                guard let videoNavController = postsTabBarController.viewControllers?[1] as? UINavigationController, let videoPostsCollectionVC = videoNavController.viewControllers.first as? VideoPostsCollectionViewController else { return }
+                guard let mapViewController = postsTabBarController.viewControllers?.last as? MapViewController else { return }
+                
+                let postController = PostController()
+                videoPostsCollectionVC.postController = postController
+                postsCollectionVC.postController = postController
+                mapViewController.postController = postController
+                
                 self.present(postsTabBarController, animated: true, completion: nil)
             }
         }

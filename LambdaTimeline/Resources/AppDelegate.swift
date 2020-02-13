@@ -26,9 +26,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             guard let postsTabBarController = storyboard.instantiateViewController(withIdentifier: "PostsTabBarController") as? UITabBarController else { return false }
             guard let imageNavController = postsTabBarController.viewControllers?.first as? UINavigationController, let postsCollectionVC = imageNavController.viewControllers.first as? PostsCollectionViewController else { return false }
             guard let videoNavController = postsTabBarController.viewControllers?[1] as? UINavigationController, let videoPostsCollectionVC = videoNavController.viewControllers.first as? VideoPostsCollectionViewController else { return false }
+            guard let mapViewController = postsTabBarController.viewControllers?.last as? MapViewController else { return false }
+            
             let postController = PostController()
             videoPostsCollectionVC.postController = postController
             postsCollectionVC.postController = postController
+            mapViewController.postController = postController
+            
             window?.rootViewController = postsTabBarController
             window?.makeKeyAndVisible()
         }
