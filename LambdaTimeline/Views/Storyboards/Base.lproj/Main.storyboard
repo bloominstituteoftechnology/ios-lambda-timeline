@@ -688,7 +688,7 @@
         <scene sceneID="aU3-29-K4k">
             <objects>
                 <viewController id="Iki-kB-KFt" customClass="RecordingViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="jQL-PC-7kb">
+                    <view key="view" contentMode="scaleToFill" id="jQL-PC-7kb" customClass="CameraPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -730,6 +730,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="cameraView" destination="jQL-PC-7kb" id="1nK-hE-OuZ"/>
+                        <outlet property="recordButton" destination="Lba-io-3ca" id="XrL-Ti-pQx"/>
                         <outlet property="titleTextField" destination="vee-Jb-13v" id="emb-qq-fTr"/>
                     </connections>
                 </viewController>
