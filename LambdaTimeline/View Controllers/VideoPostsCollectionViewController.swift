@@ -10,7 +10,7 @@ import UIKit
 
 class VideoPostsCollectionViewController: UICollectionViewController {
     
-    private let postController = PostController()
+    var postController: PostController!
     private var operations = [String : Operation]()
     private let mediaFetchQueue = OperationQueue()
     private let cache = Cache<String, Data>()

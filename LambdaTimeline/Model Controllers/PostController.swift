@@ -20,7 +20,7 @@ class PostController {
     let videoPostsRef = Database.database().reference().child("videoPosts")
     let storageRef = Storage.storage().reference()
     
-    func createPost(with title: String, ofType mediaType: MediaType, mediaData: Data, ratio: CGFloat? = nil, completion: @escaping (Bool) -> Void = { _ in }) {
+    func createPost(with title: String, ofType mediaType: MediaType, mediaData: Data, ratio: CGFloat? = nil, latitude: Double? = nil, longitude: Double? = nil, completion: @escaping (Bool) -> Void = { _ in }) {
         
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
@@ -31,7 +31,10 @@ class PostController {
             
             switch mediaType {
             case .image:
-                let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
+                guard let location = LocationManager.shared.getLocation() else { return }
+                let latitude = location.latitude as Double
+                let longitude = location.longitude as Double
+                let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author, latitude: latitude, longitude: longitude)
                 self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
                         if let error = error {
                             NSLog("Error posting image post: \(error)")
@@ -41,7 +44,10 @@ class PostController {
                         completion(true)
                     }
             case .video:
-                let videoPost = VideoPost(title: title, mediaURL: mediaURL, author: author)
+                guard let location = LocationManager.shared.getLocation() else { return }
+                let latitude = location.latitude as Double
+                let longitude = location.longitude as Double
+                let videoPost = VideoPost(title: title, mediaURL: mediaURL, author: author, latitude: latitude, longitude: longitude)
                 self.videoPostsRef.childByAutoId().setValue(videoPost.dictionaryRepresentation) { error, ref in
                     if let error = error {
                         NSLog("Error posting video post: \(error)")

@@ -20,10 +20,6 @@ class VideoPost: NSObject {
     var latitude: Double?
     var longitude: Double?
     
-    // Latitude
-    // Longitude
-    
-    
     static private let mediaKey = "media"
     static private let ratioKey = "ratio"
     static private let mediaTypeKey = "mediaType"
