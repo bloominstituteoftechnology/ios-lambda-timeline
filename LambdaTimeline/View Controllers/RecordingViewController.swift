@@ -118,21 +118,30 @@ class RecordingViewController: UIViewController {
     
     @IBAction func postButtonTapped(_ sender: UIBarButtonItem) {
         view.endEditing(true)
-        guard let title = TitleTextField.text, !title.isEmpty,
-        let url = fileURL,
-        let videoData = try? Data(contentsOf: url)  else { return }
-        postController.createPost(with: title, ofType: .video, mediaData: videoData) { success in
-            guard success else {
-                DispatchQueue.main.async {
-                    self.presentInformationalAlertController(title: "Error", message: "Unable to create post")
+            guard let title = TitleTextField.text,
+                !title.isEmpty,
+                let url = fileURL,
+                let videoData = try? Data(contentsOf: url) else { return }
+            
+            let postOperation = BlockOperation {
+                self.postController.createPost(with: title, ofType: .video, mediaData: videoData) { success in
+                    guard success else {
+                        DispatchQueue.main.async {
+                            self.presentInformationalAlertController(title: "Error", message: "Unable to create post")
+                        }
+                        return
+                    }
                 }
-                return
             }
-            DispatchQueue.main.async {
+            
+            let completionOperation = BlockOperation {
                 self.navigationController?.popViewController(animated: true)
             }
+            
+            completionOperation.addDependency(postOperation)
+            OperationQueue.main.addOperation(completionOperation)
+            OperationQueue.main.addOperation(postOperation)
         }
-    }
     
     
     private func bestCamera() -> AVCaptureDevice {
@@ -163,7 +172,7 @@ class RecordingViewController: UIViewController {
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withInternetDateTime]
         let name = formatter.string(from: Date())
-        let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
+        let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mp4")
         return fileURL
     }
     

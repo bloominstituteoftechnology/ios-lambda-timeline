@@ -583,16 +583,35 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VideoPostCell" id="cxK-B4-ySI" customClass="VideoPostCollectionViewCell" customModule="LambdaTimeline" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VideoPostCell" id="cxK-B4-ySI">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="375"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yqL-a7-fcp">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yqL-a7-fcp" customClass="VideoContainerView" customModule="LambdaTimeline" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="367" height="375"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VO4-0l-uME">
+                                                    <rect key="frame" x="318" y="327" width="41" height="40"/>
+                                                    <color key="tintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <state key="normal" image="play.circle" catalog="system">
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="font">
+                                                            <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                                        </preferredSymbolConfiguration>
+                                                    </state>
+                                                    <state key="selected" image="pause.circle" catalog="system"/>
+                                                    <connections>
+                                                        <action selector="vidoePlayButtonTapped:" destination="cxK-B4-ySI" eventType="touchUpInside" id="41M-wl-NhE"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="VO4-0l-uME" secondAttribute="bottom" constant="8" id="Par-g2-IZG"/>
+                                                <constraint firstAttribute="trailing" secondItem="VO4-0l-uME" secondAttribute="trailing" constant="8" id="zZA-0I-fdc"/>
+                                            </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wze-8K-ufK">
                                             <rect key="frame" x="8" y="329" width="47" height="38"/>
@@ -640,6 +659,7 @@
                                     <outlet property="authorLabel" destination="RT8-DJ-Aqe" id="2xl-6y-EV3"/>
                                     <outlet property="labelBackgroundView" destination="Wze-8K-ufK" id="Vep-Kp-4OE"/>
                                     <outlet property="titleLabel" destination="K1f-j2-g0k" id="SuD-gX-s0o"/>
+                                    <outlet property="vidoePlayButton" destination="VO4-0l-uME" id="dHO-7b-fvP"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -656,7 +676,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="OyM-8q-Icp" kind="show" id="n22-cW-C1H"/>
+                        <segue destination="OyM-8q-Icp" kind="show" identifier="ShowImagePostDetialSegue" id="n22-cW-C1H"/>
                         <segue destination="WCR-IY-QsS" kind="show" identifier="ShowVidoeRecoderSegue" id="Dio-7N-4PS"/>
                     </connections>
                 </collectionViewController>
@@ -744,6 +764,8 @@
     <resources>
         <image name="camera" catalog="system" width="64" height="48"/>
         <image name="mic.circle.fill" catalog="system" width="64" height="60"/>
+        <image name="pause.circle" catalog="system" width="64" height="60"/>
+        <image name="play.circle" catalog="system" width="64" height="60"/>
         <image name="smallcircle.fill.circle" catalog="system" width="64" height="60"/>
         <image name="stop.circle" catalog="system" width="64" height="60"/>
         <image name="video" catalog="system" width="64" height="40"/>

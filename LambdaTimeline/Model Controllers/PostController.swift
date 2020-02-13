@@ -81,6 +81,29 @@ class PostController {
     }
     
     
+    func addComment(with text:String, and audio: Data, to videoPost: inout VideoPost) {
+          guard let currentUser = Auth.auth().currentUser, let author = Author(user: currentUser) else { return }
+          store(mediaData: audio, mediaType: .audio) { [weak videoPost] mediaURL in
+              guard let mediaURL = mediaURL else {  return }
+              let comment = Comment(text: text, author: author, audio: mediaURL.absoluteString)
+              videoPost?.comments.append(comment)
+              guard let videoPost = videoPost else { return }
+              self.savePostToFirebase(videoPost)
+          }
+      }
+    
+    func addComment(with text: String, to videoPost: inout VideoPost) {
+          
+          guard let currentUser = Auth.auth().currentUser,
+              let author = Author(user: currentUser) else { return }
+          
+          let comment = Comment(text: text, author: author)
+          videoPost.comments.append(comment)
+          
+          savePostToFirebase(videoPost)
+      }
+    
+    
     func observeVideoPosts(completion: @escaping (Error?) -> Void) {
         
         videoPostRef.observe(.value, with: { (snapshot) in
@@ -137,7 +160,7 @@ class PostController {
     
     func savePostToFirebase(_ post: Post, completion: (Error?) -> Void = { _ in }) {
         
-        let mediaID = UUID().uuidString
+        
      
         
         guard let postID = post.id else { return }
@@ -146,6 +169,29 @@ class PostController {
         
         ref.setValue(post.dictionaryRepresentation)
     }
+    
+    
+    
+    
+    
+    
+    func savePostToFirebase(_ post: VideoPost, completion: (Error?) -> Void = { _ in }) {
+          
+         
+       
+          
+          guard let postID = post.id else { return }
+          
+        let ref = videoPostRef.child(postID)
+          
+          ref.setValue(post.dictionaryRepresentation)
+      }
+    
+    
+    
+    
+    
+    
 
     private func store(mediaData: Data, mediaType: MediaType, completion: @escaping (URL?) -> Void) {
         

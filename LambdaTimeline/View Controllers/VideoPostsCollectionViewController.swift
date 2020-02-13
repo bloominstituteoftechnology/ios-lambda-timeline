@@ -12,6 +12,7 @@ import UIKit
 class VideoPostsCollectionViewController: UICollectionViewController {
     
     private let postController = PostController()
+    private var videoPost: VideoPost?
     private var operations = [String : Operation]()
     private let mediaFetchQueue = OperationQueue()
     private let cache = Cache<String, Data>()
@@ -30,6 +31,10 @@ class VideoPostsCollectionViewController: UICollectionViewController {
         case "ShowVidoeRecoderSegue":
             guard let destinatioVC = segue.destination as? RecordingViewController else { return }
             destinatioVC.postController = postController
+        case "ShowImagePostDetailSegue":
+            guard let imagePostDetailVC = segue.destination as? ImagePostDetailTableViewController else { return }
+            imagePostDetailVC.postController = postController
+            imagePostDetailVC.videoPost = videoPost
         default:
             break
         }
@@ -45,7 +50,14 @@ class VideoPostsCollectionViewController: UICollectionViewController {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPostCell", for: indexPath) as? VideoPostCollectionViewCell else { return UICollectionViewCell() }
         
         let post = postController.videoPost[indexPath.row]
+        cell.videoPost = post 
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let videoPost = postController.videoPost[indexPath.item]
+        self.videoPost = videoPost
+        performSegue(withIdentifier: "ShowImagePostDetialSegue", sender: self)
     }
     
     @IBAction func addVideoPostTapped(_ sender: UIBarButtonItem) {

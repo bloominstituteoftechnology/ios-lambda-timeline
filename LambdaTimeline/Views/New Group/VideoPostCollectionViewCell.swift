@@ -6,11 +6,13 @@
 //  Copyright © 2020 Lambda School. All rights reserved.
 //
 
+import AVFoundation
 import UIKit
 
 class VideoPostCollectionViewCell: UICollectionViewCell {
     
-    
+    var player: AVQueuePlayer!
+    var videoURL: URL?
     var videoPost: VideoPost? {
         didSet {
             updateViews()
@@ -23,17 +25,28 @@ class VideoPostCollectionViewCell: UICollectionViewCell {
     }
     override func prepareForReuse() {
         super.prepareForReuse()
-        
-        
         titleLabel.text = ""
         authorLabel.text = ""
     }
     
     func updateViews() {
         guard let videoPost = videoPost else { return }
-        
+        videoURL = videoPost.mediaURL
         titleLabel.text = videoPost.title 
         authorLabel.text = videoPost.author.displayName
+    }
+    
+    private func playMovie(url: URL) {
+        player = AVQueuePlayer(url: url)
+       
+        let playerLayer = AVPlayerLayer(player: player)
+        playerLayer.frame = VideoLayerView.frame
+        
+        VideoLayerView.layer.addSublayer(playerLayer)
+        VideoLayerView.playerLayer = playerLayer
+        VideoLayerView.layer.masksToBounds = true
+        player.play()
+        
     }
     
     func setupLabelBackgroundView() {
@@ -43,8 +56,16 @@ class VideoPostCollectionViewCell: UICollectionViewCell {
     
     
     
+    @IBAction func vidoePlayButtonTapped(_ sender: UIButton) {
+        guard let videoURL = videoURL else { return }
+        playMovie(url: videoURL)
+    }
     
-    @IBOutlet weak var VideoLayerView: UIView!
+    
+    
+    
+    @IBOutlet weak var vidoePlayButton: UIButton!
+    @IBOutlet weak var VideoLayerView: VideoContainerView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var labelBackgroundView: UIView!

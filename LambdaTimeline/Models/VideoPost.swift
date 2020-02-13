@@ -34,7 +34,7 @@ class VideoPost {
     
     init(title: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date()) {
         self.mediaURL = mediaURL
-        self.mediaType = .image
+        self.mediaType = .video
         self.author = author
         self.comments = [Comment(text: title, author: author)]
         self.timestamp = timestamp
