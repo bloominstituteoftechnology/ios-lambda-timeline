@@ -10,11 +10,12 @@ import Firebase
 import UIKit
 
 class AudioCommentViewController: UIViewController {
-
+    
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var commentTextField: UITextField!
     
     var post: Post?
+    var videoPost: VideoPost?
     var postController: PostController?
     let manager = AudioManager()
     var fileURL: URL?
@@ -38,14 +39,25 @@ class AudioCommentViewController: UIViewController {
     }
     
     @IBAction func postButtonTapped(_ sender: UIButton) {
-        guard let fileURL = fileURL,
-            let commentData = try? Data(contentsOf: fileURL),
-            let postController = postController,
-            var post = post,
-            let title = commentTextField.text,
-            !title.isEmpty else { return }
-        postController.addComment(with: title, and: commentData, to: &post)
-        self.dismiss(animated: true)
+        if var post = post {
+            guard let fileURL = fileURL,
+                let commentData = try? Data(contentsOf: fileURL),
+                let postController = postController,
+                let title = commentTextField.text,
+                !title.isEmpty else { return }
+            postController.addComment(with: title, and: commentData, to: &post)
+            self.dismiss(animated: true)
+        } else if var videoPost = videoPost {
+            guard let fileURL = fileURL,
+                let commentData = try? Data(contentsOf: fileURL),
+                let postController = postController,
+                let title = commentTextField.text,
+                !title.isEmpty else { return }
+            postController.addComment(with: title, and: commentData, to: &videoPost) // Throw another error - we will come back to this
+            self.dismiss(animated: true)
+        } else {
+            return
+        }
     }
 }
 

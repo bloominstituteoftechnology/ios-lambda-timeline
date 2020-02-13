@@ -22,7 +22,6 @@ class VideoPostCollectionViewCell: UICollectionViewCell {
     // --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---
     // MARK: - Properties
     var player: AVQueuePlayer!
-    var playerLooper: AVPlayerLooper!
     var videoURL: URL?
     var videoPost: VideoPost? {
         didSet {
@@ -53,7 +52,6 @@ class VideoPostCollectionViewCell: UICollectionViewCell {
         let playerLayer = AVPlayerLayer(player: player)
         playerLayer.frame = videoLayerView.frame
         
-        playerLooper = AVPlayerLooper(player: player, templateItem: player.items().first!)
         videoLayerView.layer.addSublayer(playerLayer)
         videoLayerView.playerLayer = playerLayer
         videoLayerView.layer.masksToBounds = true

@@ -23,7 +23,7 @@ class RecordingViewController: UIViewController {
     var isRecording: Bool {
         fileOutput.isRecording
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         cameraView.videoPlayerView.videoGravity = .resizeAspectFill
@@ -120,18 +120,25 @@ class RecordingViewController: UIViewController {
             !title.isEmpty,
             let url = fileURL,
             let videoData = try? Data(contentsOf: url) else { return }
-        postController.createPost(with: title, ofType: .video, mediaData: videoData) { success in
-            guard success else {
-                DispatchQueue.main.async {
-                    self.presentInformationalAlertController(title: "Error", message: "Unable to create post")
+        
+        let postOperation = BlockOperation {
+            self.postController.createPost(with: title, ofType: .video, mediaData: videoData) { success in
+                guard success else {
+                    DispatchQueue.main.async {
+                        self.presentInformationalAlertController(title: "Error", message: "Unable to create post")
+                    }
+                    return
                 }
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self.navigationController?.popViewController(animated: true)
             }
         }
+        
+        let completionOperation = BlockOperation {
+            self.navigationController?.popViewController(animated: true)
+        }
+        
+        completionOperation.addDependency(postOperation)
+        OperationQueue.main.addOperation(completionOperation)
+        OperationQueue.main.addOperation(postOperation)
     }
     
     private func bestCamera() -> AVCaptureDevice {
@@ -161,7 +168,7 @@ class RecordingViewController: UIViewController {
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withInternetDateTime]
         let name = formatter.string(from: Date())
-        let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
+        let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mp4")
         return fileURL
     }
 }

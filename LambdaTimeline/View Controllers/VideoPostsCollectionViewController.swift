@@ -14,6 +14,7 @@ class VideoPostsCollectionViewController: UICollectionViewController {
     private var operations = [String : Operation]()
     private let mediaFetchQueue = OperationQueue()
     private let cache = Cache<String, Data>()
+    private var videoPost: VideoPost?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +30,10 @@ class VideoPostsCollectionViewController: UICollectionViewController {
         case "ShowVideoRecorderSegue":
             guard let destinationVC = segue.destination as? RecordingViewController else { return }
             destinationVC.postController = postController
+        case "ShowImagePostDetailSegue":
+            guard let imagePostDetailVC = segue.destination as? ImagePostDetailTableViewController else { return }
+            imagePostDetailVC.postController = postController
+            imagePostDetailVC.videoPost = videoPost
         default:
             break
         }
@@ -51,8 +56,14 @@ class VideoPostsCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPostCell", for: indexPath) as? VideoPostCollectionViewCell else { return UICollectionViewCell() }
-        let post = postController.videoPosts[indexPath.row]
+        let post = postController.videoPosts[indexPath.item]
         cell.videoPost = post
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let videoPost = postController.videoPosts[indexPath.item]
+        self.videoPost = videoPost
+        performSegue(withIdentifier: "ShowImagePostDetailSegue", sender: self)
     }
 }
