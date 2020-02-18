@@ -12,6 +12,12 @@ import FirebaseUI
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    private let postController = PostController()
+    
+    private var operations = [String : Operation]()
+    private let mediaFetchQueue = OperationQueue()
+    private let cache = Cache<String, Any>()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -66,14 +72,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         
         let post = postController.posts[indexPath.row]
         
-        switch post.mediaType {
-            
-        case .image:
-            
-            guard let ratio = post.ratio else { return size }
-            
-            size.height = size.width * ratio
-        }
+        guard let ratio = post.ratio else { return size }
+        
+        size.height = size.width * ratio
         
         return size
     }
@@ -99,7 +100,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         
         guard let postID = post.id else { return }
         
-        if let mediaData = cache.value(for: postID),
+        if let mediaData = cache.value(for: postID) as? Data,
             let image = UIImage(data: mediaData) {
             imagePostCell.setImage(image)
             self.collectionView.reloadItems(at: [indexPath])
@@ -158,12 +159,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             
             destinationVC?.postController = postController
             destinationVC?.post = postController.posts[indexPath.row]
-            destinationVC?.imageData = cache.value(for: postID)
+            destinationVC?.imageData = cache.value(for: postID) as? Data
         }
     }
-    
-    private let postController = PostController()
-    private var operations = [String : Operation]()
-    private let mediaFetchQueue = OperationQueue()
-    private let cache = Cache<String, Data>()
 }
