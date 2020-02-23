@@ -12,6 +12,15 @@ import FirebaseUI
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    // MARK: - Properties
+    
+    private let postController = PostController()
+    private var operations = [String : Operation]()
+    private let mediaFetchQueue = OperationQueue()
+    private let cache = Cache<String, Data>()
+    
+    // MARK: - Lifecycle Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,6 +30,8 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             }
         }
     }
+    
+    // MARK: - Actions
     
     @IBAction func addPost(_ sender: Any) {
         
@@ -57,6 +68,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
+            
+        case .audio:
+            return UICollectionViewCell() // TODO: handle this case properly
         }
     }
     
@@ -73,7 +87,14 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             guard let ratio = post.ratio else { return size }
             
             size.height = size.width * ratio
+        
+        case.audio:
+            
+            size.height = 60
+        
         }
+        
+        
         
         return size
     }
@@ -159,11 +180,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             destinationVC?.postController = postController
             destinationVC?.post = postController.posts[indexPath.row]
             destinationVC?.imageData = cache.value(for: postID)
+            destinationVC?.cache = cache
         }
     }
     
-    private let postController = PostController()
-    private var operations = [String : Operation]()
-    private let mediaFetchQueue = OperationQueue()
-    private let cache = Cache<String, Data>()
+    
 }
