@@ -81,8 +81,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let filter = CIFilter.colorControls()
-        print(filter)
-        print(filter.attributes)
+        let blurFilter = CIFilter.gaussianBlur()
+        print(blurFilter)
+        print(blurFilter.attributes)
         // Use our storyboard placeholder to start
         originalImage = imageView.image
     }
@@ -92,12 +93,13 @@ class ViewController: UIViewController {
         guard let cgImage = image.cgImage else { return nil }
         let ciImage = CIImage(cgImage: cgImage)
         let filter = CIFilter.colorControls()
+        let blurFilter = CIFilter.gaussianBlur()
         filter.inputImage = ciImage
         
         //filter.brightness = brightnessSlider.value
         //filter.contrast = contrastSlider.value
         filter.saturation = firstSlider.value
-        // ADD
+        blurFilter.radius = secondSlider.value
         // ADD
         
         guard let outputCIImage = filter.outputImage else { return nil }
