@@ -9,7 +9,19 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    // MARK: - Properties
+    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var saveButton: UIButton!
+    
+    @IBAction func addButtonTapped(_ sender: UIBarButtonItem) {
+        print("Add")
+    }
+    
+    @IBAction func saveButtonTapped(_ sender: UIButton) {
+        print("Save")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         print("Test")
