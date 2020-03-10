@@ -45,13 +45,14 @@ class ViewController: UIViewController {
         }
     }
     
-    // Allows us to render the image (like an oven for baking bread)
+    /// Allows us to render the image (like an oven for baking bread)
     private let context = CIContext(options: nil)
     
     @IBAction func firstSliderChanged(_ sender: UISlider) {
         updateImage()
     }
     
+    /// Blur Filter
     @IBAction func secondSliderChanged(_ sender: UISlider) {
         updateImage()
     }
@@ -80,29 +81,45 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let filter = CIFilter.colorControls()
-        let blurFilter = CIFilter.gaussianBlur()
-        print(blurFilter)
-        print(blurFilter.attributes)
         // Use our storyboard placeholder to start
-        originalImage = imageView.image
+        //originalImage = imageView.image
     }
     
     func filterImage(_ image: UIImage) -> UIImage? {
         // UIImage -> CGImage -> CIImage
         guard let cgImage = image.cgImage else { return nil }
         let ciImage = CIImage(cgImage: cgImage)
+        
+        /// Should these be properties
         let filter = CIFilter.colorControls()
         let blurFilter = CIFilter.gaussianBlur()
+        let sepiaFilter = CIFilter.sepiaTone()
+        let monoFilter = CIFilter.colorMonochrome()
+        let posterizeFilter = CIFilter.colorPosterize()
+        
+        /// Input
         filter.inputImage = ciImage
+        blurFilter.inputImage = ciImage
+        sepiaFilter.inputImage = ciImage
+        monoFilter.inputImage = ciImage
+        posterizeFilter.inputImage = ciImage
         
-        //filter.brightness = brightnessSlider.value
-        //filter.contrast = contrastSlider.value
+        /// Saturation
         filter.saturation = firstSlider.value
+        /// Blur
         blurFilter.radius = secondSlider.value
-        // ADD
+        /// Gamma
+        sepiaFilter.intensity = thirdSlider.value
+        /// Monochrome
+        monoFilter.intensity = fourthSlider.value
+        /// Posterize
+        posterizeFilter.levels = fifthSlider.value
         
-        guard let outputCIImage = filter.outputImage else { return nil }
+        
+        /// Output
+        guard let outputCIImage = posterizeFilter.outputImage else { return nil }
+        
+        
         // CIImage -> CGImage -> UIImage
         // Render the image (apply the filter to the image). Baking the cookies in the oven
         guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else { return nil }
