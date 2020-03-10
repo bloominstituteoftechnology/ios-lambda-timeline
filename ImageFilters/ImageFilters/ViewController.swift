@@ -90,7 +90,7 @@ class ViewController: UIViewController {
         guard let cgImage = image.cgImage else { return nil }
         let ciImage = CIImage(cgImage: cgImage)
         
-        /// Should these be properties
+        /// Should these be properties???
         let filter = CIFilter.colorControls()
         let blurFilter = CIFilter.gaussianBlur()
         let sepiaFilter = CIFilter.sepiaTone()
@@ -99,26 +99,26 @@ class ViewController: UIViewController {
         
         /// Input
         filter.inputImage = ciImage
-        blurFilter.inputImage = ciImage
-        sepiaFilter.inputImage = ciImage
-        monoFilter.inputImage = ciImage
-        posterizeFilter.inputImage = ciImage
-        
-        /// Saturation
         filter.saturation = firstSlider.value
-        /// Blur
-        blurFilter.radius = secondSlider.value
-        /// Gamma
-        sepiaFilter.intensity = thirdSlider.value
-        /// Monochrome
-        monoFilter.intensity = fourthSlider.value
-        /// Posterize
-        posterizeFilter.levels = fifthSlider.value
         
+        /// Blur
+        blurFilter.inputImage = filter.outputImage
+        blurFilter.radius = secondSlider.value
+        
+        /// Sepia
+        sepiaFilter.inputImage = blurFilter.outputImage
+        sepiaFilter.intensity = thirdSlider.value
+        
+        /// Monochrome
+        monoFilter.inputImage = sepiaFilter.outputImage
+        monoFilter.intensity = fourthSlider.value
+        
+        /// Posterize
+        posterizeFilter.inputImage = monoFilter.outputImage
+        posterizeFilter.levels = fifthSlider.value
         
         /// Output
         guard let outputCIImage = posterizeFilter.outputImage else { return nil }
-        
         
         // CIImage -> CGImage -> UIImage
         // Render the image (apply the filter to the image). Baking the cookies in the oven
