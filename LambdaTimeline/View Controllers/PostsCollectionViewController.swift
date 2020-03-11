@@ -15,6 +15,10 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let filter = CIFilter.sepiaTone()
+        print(filter)
+        print(filter.attributes)
+        
         postController.observePosts { (_) in
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
