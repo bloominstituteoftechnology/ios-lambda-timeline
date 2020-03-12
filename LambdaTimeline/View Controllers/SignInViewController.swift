@@ -10,17 +10,18 @@ import UIKit
 import Firebase
 import GoogleSignIn
 
-class SignInViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
+class SignInViewController: UIViewController {
 
+    @IBOutlet weak var bypassSignInButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let signIn = GIDSignIn.sharedInstance()
-        
-        signIn?.delegate = self
-        signIn?.uiDelegate = self
-        signIn?.signInSilently()
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance().signIn()
+//        signIn?.delegate = self
+//        signIn?.uiDelegate = self
+//        signIn?.signInSilently()
         
         setUpSignInButton()
     }
@@ -36,7 +37,7 @@ class SignInViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDele
         
         let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
         
-        Auth.auth().signInAndRetrieveData(with: credential) { (authResult, error) in
+        Auth.auth().signIn(with: credential) { (authResult, error) in
             if let error = error {
                 NSLog("Error signing in with Google: \(error)")
                 return
@@ -50,8 +51,20 @@ class SignInViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDele
         }
     }
     
+    @IBAction func bypassSegueTapped(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")
+        self.present(postsNavigationController, animated: true, completion: nil)
+    }
+    
     func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
         print("User disconnected")
+    }
+    
+    func updateViews() {
+        bypassSignInButton.layer.cornerRadius = 50
+        bypassSignInButton.layer.borderWidth = 2.0
+        bypassSignInButton.layer.backgroundColor = UIColor.systemBlue.cgColor
     }
     
     func setUpSignInButton() {
@@ -72,3 +85,35 @@ class SignInViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDele
                              buttonWidthConstraint])
     }
 }
+
+//extension SignInViewController: GIDSignInDelegate {
+//    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+//
+//        if let error = error {
+//          NSLog("Error signing in with Google: \(error)")
+//          return
+//        }
+//
+//        guard let authentication = user.authentication else { return }
+//
+//        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
+//
+//        Auth.auth().signIn(with: credential) { (authResult, error) in
+//          if let error = error {
+//            NSLog("Error signing in with Google: \(error)")
+//            return
+//          }
+//
+//          DispatchQueue.main.async {
+//            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//            let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")
+//            self.present(postsNavigationController, animated: true, completion: nil)
+//            }
+//        }
+//    }
+//
+//      func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
+//        print("User disconnected")
+//        }
+//    }
+//}

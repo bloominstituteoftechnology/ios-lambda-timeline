@@ -8,12 +8,15 @@
 
 import UIKit
 import FirebaseAuth
-import FirebaseUI
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let filter = CIFilter.sepiaTone()
+        print(filter)
+        print(filter.attributes)
         
         postController.observePosts { (_) in
             DispatchQueue.main.async {
