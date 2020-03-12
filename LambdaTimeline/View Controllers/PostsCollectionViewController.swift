@@ -8,7 +8,6 @@
 
 import UIKit
 import FirebaseAuth
-import FirebaseUI
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     

@@ -6,12 +6,10 @@ target 'LambdaTimeline' do
   use_frameworks!
 
   # Pods for LambdaTimeline
+
 pod 'PRTween'
 pod 'GoogleSignIn'
-pod 'Firebase/Core'
 pod 'Firebase/Database'
 pod 'Firebase/Storage'
 pod 'Firebase/Auth'
-pod 'FirebaseUI/Google'
-
 end

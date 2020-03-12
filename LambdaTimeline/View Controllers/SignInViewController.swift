@@ -10,17 +10,15 @@ import UIKit
 import Firebase
 import GoogleSignIn
 
-class SignInViewController: UIViewController, GIDSignInDelegate {
+class SignInViewController: UIViewController {
 
     @IBOutlet weak var bypassSignInButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let signIn = GIDSignIn.sharedInstance()
-        
         GIDSignIn.sharedInstance()?.presentingViewController = self
-        GIDSignIn.sharedInstance()?.delegate = self
+        GIDSignIn.sharedInstance().signIn()
 //        signIn?.delegate = self
 //        signIn?.uiDelegate = self
 //        signIn?.signInSilently()
@@ -39,7 +37,7 @@ class SignInViewController: UIViewController, GIDSignInDelegate {
         
         let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
         
-        Auth.auth().signInAndRetrieveData(with: credential) { (authResult, error) in
+        Auth.auth().signIn(with: credential) { (authResult, error) in
             if let error = error {
                 NSLog("Error signing in with Google: \(error)")
                 return
