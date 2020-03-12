@@ -34,8 +34,13 @@ class ImagePostDetailTableViewController: UITableViewController {
         
         let textOrVoiceAlert = UIAlertController(title: "Add a Comment", message: "Would you like to add a voice comment, or text comment?", preferredStyle: .alert)
         
+        let videoComment = UIAlertAction(title: "Video", style: .default) { (_) in
+            self.performSegue(withIdentifier: "VideoCommentSegue", sender: self)
+        }
+        
         let voiceComment = UIAlertAction(title: "Voice", style: .default) { (_) in
             self.performSegue(withIdentifier: "VoiceCommentSegue", sender: self)
+            
             
         }
         
@@ -67,8 +72,9 @@ class ImagePostDetailTableViewController: UITableViewController {
             
             self.present(alert, animated: true, completion: nil)
         }
-        textOrVoiceAlert.addAction(voiceComment)
         textOrVoiceAlert.addAction(textComment)
+        textOrVoiceAlert.addAction(voiceComment)
+        textOrVoiceAlert.addAction(videoComment)
         present(textOrVoiceAlert, animated: true, completion: nil)
     }
     

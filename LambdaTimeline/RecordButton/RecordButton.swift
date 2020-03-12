@@ -15,6 +15,8 @@ class RecordButton: UIButton {
     
     
     private weak var tweenOperation : PRTweenOperation?
+    var audioRecorder: AVAudioRecorder?
+    var recordingURL: URL?
     private var startPlayer : AVAudioPlayer?
     private var stopPlayer : AVAudioPlayer?
     private var isRecordingScale : CGFloat = 1.0 {
@@ -75,6 +77,7 @@ class RecordButton: UIButton {
         if playSounds {
             if isRecording {
                 stopPlayer?.play()
+                
             }
             else {
                 startPlayer?.play()
@@ -102,5 +105,22 @@ class RecordButton: UIButton {
             super.isHighlighted = isHighlighted
             setNeedsDisplay()
         }
+    }
+    
+    private func bestCamera() -> AVCaptureDevice {
+        
+        // Ultra wide lens (0.5)
+        if let device = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) {
+            return device
+        }
+        // Wide angle lens (available on every single iPHone 11)
+        if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
+            return device
+        }
+        
+        // if non of these exist, we'll fatalError() on the simulator
+        fatalError("No Camera on device(or you're on the simulator and that isn't supported)")
+        
+        // Potentially the hardware is missing or is broken (if the user serviced the device, dropped the phone in the pool)
     }
 }

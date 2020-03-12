@@ -14,6 +14,8 @@ class RecorderViewController: UIViewController {
     var audioRecorder: AVAudioRecorder?
     var recordingURL: URL?
     
+    var timer: Timer?
+    
     var audioPlayer: AVAudioPlayer? {
         didSet {
             guard let audioPlayer = audioPlayer else { return }
@@ -30,7 +32,7 @@ class RecorderViewController: UIViewController {
     var handleView = UIView()
     var recordButton = RecordButton()
     var timeLabel = UILabel()
-    var audioView = AudioVisualizerView()
+    var audioView = AudioVisualizer()
     
     @IBOutlet var recorderView: UIView!
     
@@ -38,7 +40,50 @@ class RecorderViewController: UIViewController {
         super.viewDidLoad()
         setupHandelView()
         setupRecordingButton()
-        // Do any additional setup after loading the view.
+        try? prepareAudioSession()
+        
+    }
+    
+    // MARK: - Timer
+    
+    deinit {
+        cancelTimer()
+    }
+    
+    func startTimer() {
+            timer?.invalidate()
+            
+            timer = Timer.scheduledTimer(withTimeInterval: 0.030, repeats: true) { [weak self] (_) in
+                guard let self = self else { return }
+                
+//                self.updateViews()
+                
+                if let audioRecorder = self.audioRecorder,
+                    self.isRecording == true {
+    
+                    audioRecorder.updateMeters()
+                    self.audioView.addValue(decibelValue: audioRecorder.averagePower(forChannel: 0))
+    
+                }
+                
+                if let audioPlayer = self.audioPlayer,
+                    self.isPlaying == true {
+                
+                    audioPlayer.updateMeters()
+                    self.audioView.addValue(decibelValue: audioPlayer.averagePower(forChannel: 0))
+                }
+            }
+        }
+        
+    func cancelTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    var isPlaying: Bool {
+        // When the audio player is nil, that means there's no resource loaded, so we can't play anything.
+        audioPlayer?.isPlaying ?? false
+        
     }
     
     fileprivate func setupHandelView() {
@@ -66,7 +111,7 @@ class RecorderViewController: UIViewController {
     
     @objc func handleRecording(_ sender: RecordButton) {
         if recordButton.isRecording {
-            audioView.isHidden = false
+            
             UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
                 self.handleView.alpha = 1
                 self.timeLabel.alpha = 1
@@ -74,7 +119,6 @@ class RecorderViewController: UIViewController {
                 self.view.frame = CGRect(x: 0, y: self.view.frame.height, width: self.view.bounds.width, height: -300)
                 self.view.layoutIfNeeded()
             }, completion: nil)
-//            self.checkPermissionAndRecord()
             self.requestPermissionOrStartRecording()
         } else {
             audioView.isHidden = true
@@ -85,7 +129,7 @@ class RecorderViewController: UIViewController {
                 self.view.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 198)
                 self.view.layoutIfNeeded()
             }, completion: nil)
-//            self.stopRecording()
+            self.stopRecording()
             
         }
     }
@@ -127,26 +171,35 @@ class RecorderViewController: UIViewController {
         let recordingURL = createNewRecordingURL()
         audioRecorder = try? AVAudioRecorder(url: recordingURL, format: format)
         audioRecorder?.record()
-        
         audioRecorder?.delegate = self
         audioRecorder?.isMeteringEnabled = true
         self.recordingURL = recordingURL
-        
+        audioView.isHidden = false
+        startTimer()
+        recordButton.isRecording = true
     }
     
     func stopRecording() {
         audioRecorder?.stop()
+        audioView.isHidden = true
+        cancelTimer()
+
     }
     
     func createNewRecordingURL() -> URL {
         let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        
         let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
         let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
         
         print("recording URL: \(file)")
         
         return file
+    }
+    
+    func prepareAudioSession() throws {
+        let session = AVAudioSession.sharedInstance()
+        try session.setCategory(.playAndRecord, options: [.defaultToSpeaker])
+        try session.setActive(true, options: [])  // can fail if on a phone call, for instance
     }
     
     /*

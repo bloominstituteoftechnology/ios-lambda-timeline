@@ -32,6 +32,10 @@
 		4C2BB9EA241814050099FAE7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C2BB9E9241814050099FAE7 /* GoogleService-Info.plist */; };
 		4C2BB9EC241814830099FAE7 /* Pods-LambdaTimeline.debug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 33A2B89DE9E21538434BD640 /* Pods-LambdaTimeline.debug.xcconfig */; };
 		4C2BB9ED241814850099FAE7 /* Pods-LambdaTimeline.release.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5D2CCD6C68779B0A70AC37FA /* Pods-LambdaTimeline.release.xcconfig */; };
+		4C5208DA24199D0200965AA8 /* AudioVisualizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5208D924199D0200965AA8 /* AudioVisualizer.swift */; };
+		4C5208DC241A077D00965AA8 /* VideoCommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5208DB241A077D00965AA8 /* VideoCommentsViewController.swift */; };
+		4C5208DE241A097400965AA8 /* VideoRecorderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5208DD241A097400965AA8 /* VideoRecorderViewController.swift */; };
+		4C5208E2241A1DF000965AA8 /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5208E1241A1DF000965AA8 /* CameraPreviewView.swift */; };
 		4CBCCFDE2418B934003287A2 /* RecorderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBCCFDD2418B934003287A2 /* RecorderViewController.swift */; };
 		4CBCCFE02418B94E003287A2 /* VoiceCommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBCCFDF2418B94E003287A2 /* VoiceCommentsViewController.swift */; };
 		4CBCCFE22418BB5C003287A2 /* UIColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBCCFE12418BB5C003287A2 /* UIColorExt.swift */; };
@@ -70,6 +74,10 @@
 		46D571F42173CF3E00E7FF73 /* UIImage+Ratio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ratio.swift"; sourceTree = "<group>"; };
 		46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePostDetailTableViewController.swift; sourceTree = "<group>"; };
 		4C2BB9E9241814050099FAE7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4C5208D924199D0200965AA8 /* AudioVisualizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioVisualizer.swift; sourceTree = "<group>"; };
+		4C5208DB241A077D00965AA8 /* VideoCommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCommentsViewController.swift; sourceTree = "<group>"; };
+		4C5208DD241A097400965AA8 /* VideoRecorderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecorderViewController.swift; sourceTree = "<group>"; };
+		4C5208E1241A1DF000965AA8 /* CameraPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
 		4CBCCFDD2418B934003287A2 /* RecorderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecorderViewController.swift; sourceTree = "<group>"; };
 		4CBCCFDF2418B94E003287A2 /* VoiceCommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceCommentsViewController.swift; sourceTree = "<group>"; };
 		4CBCCFE12418BB5C003287A2 /* UIColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExt.swift; sourceTree = "<group>"; };
@@ -184,6 +192,8 @@
 				46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */,
 				4CBCCFDD2418B934003287A2 /* RecorderViewController.swift */,
 				4CBCCFDF2418B94E003287A2 /* VoiceCommentsViewController.swift */,
+				4C5208DB241A077D00965AA8 /* VideoCommentsViewController.swift */,
+				4C5208DD241A097400965AA8 /* VideoRecorderViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -193,6 +203,8 @@
 			children = (
 				46CFE7022171572600E7FF73 /* ImagePostCollectionViewCell.swift */,
 				4CBCCFED2418C2B2003287A2 /* AudioVisualizerView.swift */,
+				4C5208D924199D0200965AA8 /* AudioVisualizer.swift */,
+				4C5208E1241A1DF000965AA8 /* CameraPreviewView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -261,8 +273,8 @@
 				46463774216FDE4B00E7FF73 /* Sources */,
 				46463775216FDE4B00E7FF73 /* Frameworks */,
 				46463776216FDE4B00E7FF73 /* Resources */,
-				931381193B5D2856F9B0CA8C /* [CP] Embed Pods Frameworks */,
-				8108F7AF1127B3F2AAFC77E1 /* [CP] Copy Pods Resources */,
+				9997879CE05CEDBE3371351C /* [CP] Embed Pods Frameworks */,
+				CE95784948377CEA207C7BCA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -347,24 +359,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8108F7AF1127B3F2AAFC77E1 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-LambdaTimeline/Pods-LambdaTimeline-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-LambdaTimeline/Pods-LambdaTimeline-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LambdaTimeline/Pods-LambdaTimeline-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		931381193B5D2856F9B0CA8C /* [CP] Embed Pods Frameworks */ = {
+		9997879CE05CEDBE3371351C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -381,6 +376,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LambdaTimeline/Pods-LambdaTimeline-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		CE95784948377CEA207C7BCA /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LambdaTimeline/Pods-LambdaTimeline-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LambdaTimeline/Pods-LambdaTimeline-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LambdaTimeline/Pods-LambdaTimeline-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -391,7 +403,9 @@
 				46A0366D2170158900E7FF73 /* SignInViewController.swift in Sources */,
 				46CFE6FB21714E6100E7FF73 /* Author.swift in Sources */,
 				46CFE6F92170862C00E7FF73 /* ShiftableViewController.swift in Sources */,
+				4C5208DC241A077D00965AA8 /* VideoCommentsViewController.swift in Sources */,
 				4646377C216FDE4B00E7FF73 /* AppDelegate.swift in Sources */,
+				4C5208DA24199D0200965AA8 /* AudioVisualizer.swift in Sources */,
 				46CFE6FD217154F500E7FF73 /* Networking.swift in Sources */,
 				46CFE6F521707D0000E7FF73 /* ImagePostViewController.swift in Sources */,
 				4CBCCFEE2418C2B2003287A2 /* AudioVisualizerView.swift in Sources */,
@@ -402,6 +416,8 @@
 				4CBCCFDE2418B934003287A2 /* RecorderViewController.swift in Sources */,
 				46CFE6F32170757F00E7FF73 /* User+DictionaryRepresentation.swift in Sources */,
 				46D571F32172D43B00E7FF73 /* Cache.swift in Sources */,
+				4C5208DE241A097400965AA8 /* VideoRecorderViewController.swift in Sources */,
+				4C5208E2241A1DF000965AA8 /* CameraPreviewView.swift in Sources */,
 				46CFE7012171559500E7FF73 /* FetchMediaOperation.swift in Sources */,
 				46D571F82173FC2700E7FF73 /* ImagePostDetailTableViewController.swift in Sources */,
 				46CFE7032171572600E7FF73 /* ImagePostCollectionViewCell.swift in Sources */,
@@ -562,7 +578,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = V5X7HQSSM6;
 				INFOPLIST_FILE = "$(SRCROOT)/LambdaTimeline/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -583,7 +599,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = V5X7HQSSM6;
 				INFOPLIST_FILE = "$(SRCROOT)/LambdaTimeline/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
