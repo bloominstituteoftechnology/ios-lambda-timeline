@@ -175,10 +175,39 @@ class ImagePostViewController: ShiftableViewController {
         return UIImage(cgImage: outputCGImage)
     }
     
-    private func filterComicEffect() {
+    private func filterComicEffect(_ image: UIImage) -> UIImage? {
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+        let filter = CIFilter.comicEffect()
         
+        filter.inputImage = ciImage
+        guard let outputCIImage = filter.outputImage else { return nil }
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size) ) else { return nil }
+              
+              return UIImage(cgImage: outputCGImage)
     }
-    
+    private func filterSpotColor(_ image: UIImage) -> UIImage? {
+        guard let cgImage = image.cgImage else { return nil }
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        let filter = CIFilter.spotColor()
+        
+         filter.inputImage = ciImage
+        filter.centerColor1 = .red
+        filter.contrast1 = .leastNonzeroMagnitude
+        filter.centerColor2 = .yellow
+        filter.contrast2 = .leastNonzeroMagnitude
+        filter.centerColor3 = .cyan
+        filter.contrast3 = .infinity
+        filter.closeness1 = .infinity
+        filter.closeness2 = .leastNonzeroMagnitude
+        filter.closeness3 = .leastNonzeroMagnitude
+        filter.setValue(ciImage, forKey: kCICategoryStylize)
+        guard let outputCIImage = filter.outputImage else { return nil }
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size) ) else { return nil }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
 
     func updateImage() {
         if let scaledImage = scaledImage {
@@ -206,15 +235,29 @@ class ImagePostViewController: ShiftableViewController {
         ac.addAction(UIAlertAction(title: FilterType.CISpotColor.rawValue, style: .default, handler: { (action) in
             // two
               self.pickFilterButton.setTitle(FilterType.CISpotColor.rawValue, for: .normal)
+            
+            if let scaledImage = self.scaledImage {
+                self.imageView.image = self.filterSpotColor(scaledImage)
+            } else {
+                self.imageView.image = nil
+            }
+            
         }))
         ac.addAction(UIAlertAction(title: FilterType.CIComicEffect.rawValue, style: .default, handler: { (action) in
             //three
              self.pickFilterButton.setTitle(FilterType.CIComicEffect.rawValue, for: .normal)
+//            guard let scaled = self.scaledImage else { return }
+//            self.imageView.image = self.filterComicEffect(scaled)
         }))
         ac.addAction(UIAlertAction(title: FilterType.CIPerspectiveTile.rawValue, style: .default, handler: { (action) in
             //four
-             self.pickFilterButton.setTitle(FilterType.CIPerspectiveTile.rawValue, for: .normal)
-            self.imageView.image = self.filterPerspective(self.scaledImage!)
+            self.pickFilterButton.setTitle(FilterType.CIPerspectiveTile.rawValue, for: .normal)
+            
+            if let scaledImage = self.scaledImage {
+                self.imageView.image = self.filterPerspective(scaledImage)
+            } else {
+                self.imageView.image = nil
+            }
         }))
         
         ac.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
