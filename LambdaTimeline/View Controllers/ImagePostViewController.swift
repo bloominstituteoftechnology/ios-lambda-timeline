@@ -17,11 +17,15 @@ class ImagePostViewController: ShiftableViewController {
      var post: Post?
      var imageData: Data?
      
-     @IBOutlet weak var imageView: UIImageView!
-     @IBOutlet weak var titleTextField: UITextField!
-     @IBOutlet weak var chooseImageButton: UIButton!
-     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
-     @IBOutlet weak var postButton: UIBarButtonItem!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleTextField: UITextField! {
+        didSet {
+            titleTextField.becomeFirstResponder()
+        }
+    }
+    @IBOutlet weak var chooseImageButton: UIButton!
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var postButton: UIBarButtonItem!
     
     //MARK:- View Life Cycle
     
@@ -32,6 +36,23 @@ class ImagePostViewController: ShiftableViewController {
         
         updateViews()
     }
+    
+    
+    
+    @IBAction func titleTextFieldDidChanged(_ sender: UITextField) {
+        navigationItem.title = sender.text
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        navigationItem.title = textField.text
+    }
+    
+    @IBAction func pickFilerTapped(_ sender: UIButton) {
+        print("Hello")
+    }
+    
+    
+    
     
     func updateViews() {
         

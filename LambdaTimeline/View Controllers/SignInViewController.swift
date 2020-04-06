@@ -7,11 +7,25 @@
 //
 
 import UIKit
-import Firebase 
+import Firebase
 import GoogleSignIn
+import FirebaseAuth
+
 
 class SignInViewController: UIViewController {
-
+    
+    //MARK:- Properties
+    
+    private let signInWithGoogleButton : GIDSignInButton = {
+        let button = GIDSignInButton()
+        button.colorScheme = .dark
+        button.style  = .wide
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+      //MARK:- View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         GIDSignIn.sharedInstance()?.presentingViewController = self
@@ -56,18 +70,15 @@ extension SignInViewController: GIDSignInDelegate {
         print("User disconnected")
     }
     
-    func setUpSignInButton() {
+  
+    private func setUpSignInButton() {
         
-        let button = GIDSignInButton()
-        
-        button.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(button)
+        view.addSubview(signInWithGoogleButton)
         
         
-        let buttonCenterXConstraint = button.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-        let buttonCenterYConstraint = button.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        let buttonWidthConstraint = button.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5)
+        let buttonCenterXConstraint = signInWithGoogleButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        let buttonCenterYConstraint = signInWithGoogleButton.centerYAnchor.constraint(equalTo: view.centerYAnchor,constant: 300)
+        let buttonWidthConstraint = signInWithGoogleButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5)
         
         view.addConstraints([buttonCenterXConstraint,
                              buttonCenterYConstraint,

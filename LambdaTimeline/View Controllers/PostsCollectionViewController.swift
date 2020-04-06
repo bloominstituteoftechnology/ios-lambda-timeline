@@ -22,6 +22,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "Lambda Timeline"
         
         postController.observePosts { (_) in
             DispatchQueue.main.async {
@@ -32,6 +33,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
    //MARK:- Actions
     
     @IBAction func signout(_ sender: Any) {
+        
         let firebaseAuth = Auth.auth()
         do {
           try firebaseAuth.signOut()
@@ -49,7 +51,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
         
         alert.addAction(imagePostAction)
         alert.addAction(cancelAction)
