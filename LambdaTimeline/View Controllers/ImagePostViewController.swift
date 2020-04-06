@@ -6,21 +6,43 @@
 //  Copyright © 2018 Lambda School. All rights reserved.
 //
 
+import CoreImage
+import CoreImage.CIFilterBuiltins
 import UIKit
 import Photos
 
+enum FilterType {
+    case blackAndWhite
+    case blur
+    case negative
+    case sepia
+    case sharpen
+}
+
 class ImagePostViewController: ShiftableViewController {
     
+    // MARK: - IBOutlets
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var chooseImageButton: UIButton!
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    // MARK: - Properties
+    var postController: PostController!
+    var post: Post?
+    var imageData: Data?
+    var context = CIContext(options: nil)
+    var filterType: FilterType!
+    
+    // MARK: - View LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setImageViewHeight(with: 1.0)
-        
         updateViews()
     }
     
     func updateViews() {
-        
         guard let imageData = imageData,
             let image = UIImage(data: imageData) else {
                 title = "New Post"
@@ -28,11 +50,8 @@ class ImagePostViewController: ShiftableViewController {
         }
         
         title = post?.title
-        
         setImageViewHeight(with: image.ratio)
-        
         imageView.image = image
-        
         chooseImageButton.setTitle("", for: [])
     }
     
@@ -114,15 +133,8 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
-    var postController: PostController!
-    var post: Post?
-    var imageData: Data?
+
     
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var chooseImageButton: UIButton!
-    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var postButton: UIBarButtonItem!
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
