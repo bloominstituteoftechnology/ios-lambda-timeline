@@ -8,8 +8,27 @@
 
 import UIKit
 import Photos
+import CoreImage
+import CoreImage.CIFilterBuiltins
 
+@available(iOS 13.0, *)
 class ImagePostViewController: ShiftableViewController {
+    
+    var postController: PostController!
+    var post: Post?
+    var imageData: Data?
+    
+    private let context = CIContext(options: nil)
+    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var chooseImageButton: UIButton!
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    @IBOutlet weak var brightnessSlider: UISlider!
+    @IBOutlet weak var contrastSlider: UISlider!
+    @IBOutlet weak var saturationSlider: UISlider!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,9 +50,41 @@ class ImagePostViewController: ShiftableViewController {
         
         setImageViewHeight(with: image.ratio)
         
-        imageView.image = image
+        imageView.image = filterImage(image)
         
         chooseImageButton.setTitle("", for: [])
+    }
+    
+    func filterImage(_ image: UIImage) -> UIImage? {
+        
+        // UIImage -> CGImage (CoreGrephics) -> CIImage (CoreImage)
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        // Filter
+        let filter = CIFilter.colorControls()
+        filter.inputImage = ciImage
+        filter.brightness = brightnessSlider.value
+        filter.contrast = contrastSlider.value
+        filter.saturation = saturationSlider.value
+        
+        let filter3 = CIFilter.colorBlendMode()
+        if filter3.inputImage != nil {
+            filter3.inputImage = ciImage
+        } else {
+            filter3.backgroundImage = ciImage
+        }
+        
+        
+        
+        guard let outputCIImage = filter.outputImage else { return nil }
+        
+        // Render the image
+        guard let outputCGImage = context.createCGImage(outputCIImage,
+                                                        from: CGRect(origin: .zero, size: image.size)) else { return nil }
+        
+        // CIImage -> CGImage -> UIImage
+        return UIImage(cgImage: outputCGImage)
     }
     
     private func presentImagePickerController() {
@@ -114,17 +165,21 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
-    var postController: PostController!
-    var post: Post?
-    var imageData: Data?
+    @IBAction func brightnessChanged(_ sender: UISlider) {
+        updateViews()
+    }
     
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var chooseImageButton: UIButton!
-    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var postButton: UIBarButtonItem!
+    @IBAction func contrastChanged(_ sender: Any) {
+        updateViews()
+    }
+    
+    @IBAction func saturationChanged(_ sender: Any) {
+        updateViews()
+    }
+    
 }
 
+@available(iOS 13.0, *)
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
