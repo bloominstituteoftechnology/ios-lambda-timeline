@@ -85,6 +85,8 @@ class ImagePostDetailTableViewController: UITableViewController {
         
         guard let cgImage = image.cgImage else { return nil }
         
+        motionBlurFilter(colorControlFilter(cgImage))
+        
         let ciImage = CIImage(cgImage: cgImage)
         let motionBlurFilter = CIFilter.motionBlur()
         let kaleidoscopeFilter = CIFilter.kaleidoscope()
@@ -94,21 +96,43 @@ class ImagePostDetailTableViewController: UITableViewController {
         return nil
     }
     
-    private func colorControlFilter(_ image: UIImage) -> UIImage? {
-        guard let cgImage = image.cgImage else { return nil }
+    private func colorControlFilter(_ image: CIImage) -> CIImage {
         
-        let ciImage = CIImage(cgImage: cgImage)
         let colorControlsFilter = CIFilter.colorControls()
-        colorControlsFilter.inputImage = ciImage
+        colorControlsFilter.inputImage = convertToCIImage(image)
         colorControlsFilter.brightness = brightnessSlider.value
+        colorControlsFilter.contrast = contrastSlider.value
+        colorControlsFilter.saturation = saturationSlider.value
         
+        guard let outputCIImage = colorControlsFilter.outputImage else { return nil }
+        
+//        guard let outputImage = context.createCGImage(outputCIImage,
+//                                                      from: CGRect(origin: .zero,
+//                                                                   size: image.size)) else {
+//                                                                    return nil
+//        }
+        return outputCIImage
     }
+    
+    private func motionBlurFilter(_ image: CIImage) -> CIImage {
+        let motionBlurFilter = CIFilter.motionBlur()
+        motionBlurFilter.inputImage = convertToCIImage(image)
+        motionBlurFilter.angle = blurAngleSlider.value
+        motionBlurFilter.radius = blurRadiusSlider.value
+        
+        guard let outputCIImage = motionBlurFilter.outputImage else { return nil }
+        return outputCIImage
+    }
+    
+    
     
     // MARK: - Properties
     
     var post: Post!
     var postController: PostController!
     var imageData: Data?
+    
+    private var context = CIContext(options: nil)
     
     // MARK: - Outlets
     
@@ -120,6 +144,8 @@ class ImagePostDetailTableViewController: UITableViewController {
     @IBOutlet weak var brightnessSlider: UISlider!
     @IBOutlet weak var contrastSlider: UISlider!
     @IBOutlet weak var saturationSlider: UISlider!
+    @IBOutlet weak var blurAngleSlider: UISlider!
+    @IBOutlet weak var blurRadiusSlider: UISlider!
     
     // MARK: Slider events
     
@@ -134,4 +160,12 @@ class ImagePostDetailTableViewController: UITableViewController {
     @IBAction func saturationChanged(_ sender: Any) {
         updateViews()
     }
+
+    @IBAction func blurAngleChanged(_ sender: Any) {
+           updateViews()
+       }
+    
+    @IBAction func blurRadiusChanged(_ sender: Any) {
+           updateViews()
+       }
 }
