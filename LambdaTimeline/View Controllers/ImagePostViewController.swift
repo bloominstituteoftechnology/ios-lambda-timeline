@@ -20,12 +20,13 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     func updateViews() {
-        
-        guard let imageData = imageData,
-            let image = UIImage(data: imageData) else {
-                title = "New Post"
-                return
-        }
+ 
+        if let scaledImage = scaledImage {
+                imageView.image = filterImage(scaledImage)
+            } else {
+                imageView.image = nil
+            title = "New Post"
+            }
         
         title = post?.title
         
@@ -118,11 +119,121 @@ class ImagePostViewController: ShiftableViewController {
     var post: Post?
     var imageData: Data?
     
+    private var context = CIContext(options: nil)
+    
+    private var originalImage: UIImage? {
+        didSet {
+            guard let originalImage = UIImage(data: imageData) else { return }
+            
+            var scaledSize = imageView.bounds.size
+            let scale = UIScreen.main.scale
+            scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+        }
+    }
+    
+    private var scaledImage: UIImage? {
+        didSet {
+            updateViews()
+        }
+    }
+    
+    // MARK: - Outlets
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    // Filter Outlets
+    @IBOutlet weak var brightnessSlider: UISlider!
+    @IBOutlet weak var contrastSlider: UISlider!
+    @IBOutlet weak var saturationSlider: UISlider!
+    @IBOutlet weak var blurAngleSlider: UISlider!
+    @IBOutlet weak var blurRadiusSlider: UISlider!
+    @IBOutlet weak var kaleidoscopeAngleSlider: UISlider!
+    @IBOutlet weak var kaleidoscopeCountSlider: UISlider!
+    
+    // MARK: Slider events
+    
+    @IBAction func brightnessChanged(_ sender: UISlider) {
+        updateViews()
+    }
+    
+    @IBAction func contrastChanged(_ sender: Any) {
+        updateViews()
+    }
+    
+    @IBAction func saturationChanged(_ sender: Any) {
+        updateViews()
+    }
+
+    @IBAction func blurAngleChanged(_ sender: Any) {
+           updateViews()
+       }
+    
+    @IBAction func blurRadiusChanged(_ sender: Any) {
+           updateViews()
+       }
+    
+    @IBAction func kaleidoscopeAngleChanged(_ sender: Any) {
+        updateViews()
+    }
+    
+    @IBAction func kaleidoscopeCountChanged(_ sender: Any) {
+        updateViews()
+    }
+    
+    // MARK: - Private Methods
+    
+    private func filterImage(_ image: UIImage) -> UIImage? {
+        guard let cgImage = image.cgImage else { return nil }
+
+        let filterCIImage = kaleidoscopeFilter(motionBlurFilter(colorControlFilter(cgImage)))
+        
+        guard let outputImage = context.createCGImage(filterCIImage,
+                                                      from: CGRect(origin: .zero,
+                                                                   size: image.size)) else {
+                                                                    return nil
+        }
+        return UIImage(cgImage: outputImage)
+    }
+    
+    private func colorControlFilter(_ image: CIImage) -> CIImage {
+        
+        let colorControlsFilter = CIFilter.colorControls()
+        colorControlsFilter.inputImage = convertToCIImage(image)
+        colorControlsFilter.brightness = brightnessSlider.value
+        colorControlsFilter.contrast = contrastSlider.value
+        colorControlsFilter.saturation = saturationSlider.value
+        
+        guard let outputCIImage = colorControlsFilter.outputImage else { return nil }
+        return outputCIImage
+    }
+    
+    private func motionBlurFilter(_ image: CIImage) -> CIImage {
+        let motionBlurFilter = CIFilter.motionBlur()
+        motionBlurFilter.inputImage = convertToCIImage(image)
+        motionBlurFilter.angle = blurAngleSlider.value
+        motionBlurFilter.radius = blurRadiusSlider.value
+        
+        guard let outputCIImage = motionBlurFilter.outputImage else { return nil }
+        return outputCIImage
+    }
+    
+    private func kaleidoscopeFilter(_ image: CIImage) -> CIImage {
+        guard let originalImage = originalImage else { return CIImage() }
+        
+        let kaleidoscopeFilter = CIFilter.kaleidoscope()
+        kaleidoscopeFilter.inputImage = image
+        kaleidoscopeFilter.center = CGPoint(x: originalImage.size.width / 2,
+                                            y: originalImage.size.height / 2)
+        kaleidoscopeFilter.angle = kaleidoscopeAngleSlider.value
+        kaleidoscopeFilter.count = kaleidoscopeCountSlider.value
+        
+        guard let outputCIImage = kaleidoscopeFilter.outputImage else { return nil }
+        return outputCIImage
+    }
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
