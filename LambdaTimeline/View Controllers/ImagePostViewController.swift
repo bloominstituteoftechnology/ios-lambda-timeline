@@ -158,6 +158,11 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     // MARK: - IBActions
+    
+    @IBAction func sliderChanged(_ sender: UISlider) {
+        updateImage()
+    }
+    
     @IBAction func createPost(_ sender: Any) {
         
         view.endEditing(true)
