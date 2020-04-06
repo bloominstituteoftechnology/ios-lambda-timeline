@@ -28,6 +28,7 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
     @IBOutlet weak var slider: UISlider!
+    @IBOutlet weak var valueLabel: UILabel!
     
     // MARK: - Properties
     var postController: PostController!
@@ -141,21 +142,17 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     private func presentImagePickerController() {
-        
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
             presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
             return
         }
-        
         let imagePicker = UIImagePickerController()
-        
         imagePicker.delegate = self
-        
         imagePicker.sourceType = .photoLibrary
-        
         present(imagePicker, animated: true, completion: nil)
     }
     
+    // MARK: - IBActions
     @IBAction func createPost(_ sender: Any) {
         
         view.endEditing(true)
@@ -211,10 +208,48 @@ class ImagePostViewController: ShiftableViewController {
         presentImagePickerController()
     }
     
+    @IBAction func blurTapped(_ sender: UIButton) {
+        originalImage = imageView.image
+        slider.minimumValue = 0
+        slider.maximumValue = 100
+        slider.value = 0
+        filterType = .blur
+    }
+    
+    @IBAction func invertTapped(_ sender: UIButton) {
+        originalImage = imageView.image
+        valueLabel.removeFromSuperview()
+        slider.removeFromSuperview()
+        filterType = .negative
+        updateImage()
+    }
+    
+    @IBAction func blackAndWhiteTapped(_ sender: UIButton) {
+        originalImage = imageView.image
+        valueLabel.removeFromSuperview()
+        slider.removeFromSuperview()
+        filterType = .blackAndWhite
+        updateImage()
+    }
+    
+    @IBAction func sharpenTapped(_ sender: UIButton) {
+        originalImage = imageView.image
+        slider.minimumValue = 0
+        slider.maximumValue = 2
+        slider.value = 0.4
+        filterType = .sharpen
+    }
+    
+    @IBAction func sepiaTapped(_ sender: UIButton) {
+        originalImage = imageView.image
+        slider.minimumValue = 0
+        slider.maximumValue = 1
+        slider.value = 0
+        filterType = .sepia
+    }
+    
     func setImageViewHeight(with aspectRatio: CGFloat) {
-        
         imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
-        
         view.layoutSubviews()
     }
 }

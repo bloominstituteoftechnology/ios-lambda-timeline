@@ -161,21 +161,33 @@
                                         <rect key="frame" x="42" y="461" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Blur"/>
+                                        <connections>
+                                            <action selector="blurTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="77R-77-YBv"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sga-5y-mw3">
                                         <rect key="frame" x="112" y="461" width="40" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Invert"/>
+                                        <connections>
+                                            <action selector="invertTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="Bey-pm-FHG"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mua-PR-fkB">
                                         <rect key="frame" x="262" y="461" width="58" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Sharpen"/>
+                                        <connections>
+                                            <action selector="sharpenTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="oa8-am-ImB"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ILa-Az-bCO">
                                         <rect key="frame" x="343" y="461" width="39" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="Sepia"/>
+                                        <connections>
+                                            <action selector="sepiaTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="sQV-5y-yoK"/>
+                                        </connections>
                                     </button>
                                     <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="a8o-RO-qZK">
                                         <rect key="frame" x="6" y="533" width="402" height="30"/>
@@ -192,6 +204,9 @@
                                         <rect key="frame" x="192" y="461" width="30" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <state key="normal" title="B/W"/>
+                                        <connections>
+                                            <action selector="blackAndWhiteTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="OzK-FJ-EgD"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -228,6 +243,7 @@
                         <outlet property="postButton" destination="hsH-Uv-tug" id="ZBn-KE-cpU"/>
                         <outlet property="slider" destination="a8o-RO-qZK" id="bbF-cw-RCp"/>
                         <outlet property="titleTextField" destination="Op6-OA-6Ou" id="JEe-cj-4mv"/>
+                        <outlet property="valueLabel" destination="Yab-kA-gcI" id="kI0-D0-dZc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXa-A2-VJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
