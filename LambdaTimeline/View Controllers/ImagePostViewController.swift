@@ -11,6 +11,20 @@ import Photos
 
 class ImagePostViewController: ShiftableViewController {
     
+    //MARK:- Properties
+    
+    var postController: PostController!
+     var post: Post?
+     var imageData: Data?
+     
+     @IBOutlet weak var imageView: UIImageView!
+     @IBOutlet weak var titleTextField: UITextField!
+     @IBOutlet weak var chooseImageButton: UIButton!
+     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+     @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    //MARK:- View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,14 +56,16 @@ class ImagePostViewController: ShiftableViewController {
             presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
             return
         }
-        
-        let imagePicker = UIImagePickerController()
-        
-        imagePicker.delegate = self
-        
-        imagePicker.sourceType = .photoLibrary
-
-        present(imagePicker, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            let imagePicker = UIImagePickerController()
+                
+                imagePicker.delegate = self
+                
+                imagePicker.sourceType = .photoLibrary
+            self.present(imagePicker, animated: true, completion: nil)
+              
+        }
+     
     }
     
     @IBAction func createPost(_ sender: Any) {
@@ -114,15 +130,7 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
-    var postController: PostController!
-    var post: Post?
-    var imageData: Data?
-    
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var chooseImageButton: UIButton!
-    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var postButton: UIBarButtonItem!
+ 
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

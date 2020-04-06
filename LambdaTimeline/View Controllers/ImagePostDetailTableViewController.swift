@@ -10,6 +10,8 @@ import UIKit
 
 class ImagePostDetailTableViewController: UITableViewController {
     
+    //MARK:- View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
