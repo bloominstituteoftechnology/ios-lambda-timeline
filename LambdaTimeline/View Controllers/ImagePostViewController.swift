@@ -149,9 +149,7 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var brightnessSlider: UISlider!
     @IBOutlet weak var contrastSlider: UISlider!
     @IBOutlet weak var saturationSlider: UISlider!
-    @IBOutlet weak var blurAngleSlider: UISlider!
     @IBOutlet weak var blurRadiusSlider: UISlider!
-    @IBOutlet weak var kaleidoscopeAngleSlider: UISlider!
     @IBOutlet weak var kaleidoscopeCountSlider: UISlider!
     
     // MARK: Slider events
@@ -167,18 +165,10 @@ class ImagePostViewController: ShiftableViewController {
     @IBAction func saturationChanged(_ sender: Any) {
         updateViews()
     }
-
-    @IBAction func blurAngleChanged(_ sender: Any) {
-           updateViews()
-       }
     
     @IBAction func blurRadiusChanged(_ sender: Any) {
            updateViews()
        }
-    
-    @IBAction func kaleidoscopeAngleChanged(_ sender: Any) {
-        updateViews()
-    }
     
     @IBAction func kaleidoscopeCountChanged(_ sender: Any) {
         updateViews()
@@ -214,7 +204,7 @@ class ImagePostViewController: ShiftableViewController {
     private func motionBlurFilter(_ image: CIImage) -> CIImage {
         let motionBlurFilter = CIFilter.motionBlur()
         motionBlurFilter.inputImage = convertToCIImage(image)
-        motionBlurFilter.angle = blurAngleSlider.value
+        motionBlurFilter.angle = 0.00
         motionBlurFilter.radius = blurRadiusSlider.value
         
         guard let outputCIImage = motionBlurFilter.outputImage else { return nil }
@@ -228,7 +218,7 @@ class ImagePostViewController: ShiftableViewController {
         kaleidoscopeFilter.inputImage = image
         kaleidoscopeFilter.center = CGPoint(x: originalImage.size.width / 2,
                                             y: originalImage.size.height / 2)
-        kaleidoscopeFilter.angle = kaleidoscopeAngleSlider.value
+        kaleidoscopeFilter.angle = 0.00
         kaleidoscopeFilter.count = kaleidoscopeCountSlider.value
         
         guard let outputCIImage = kaleidoscopeFilter.outputImage else { return nil }
