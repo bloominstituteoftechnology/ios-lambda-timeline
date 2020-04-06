@@ -40,6 +40,11 @@ class ImagePostViewController: ShiftableViewController {
     private var originalImage: UIImage? {
         didSet {
             // TODO: - Original Image -> Scaled Image
+            guard let originalImage = originalImage else { return }
+            var scaledSize = imageView.bounds.size
+            let scale = UIScreen.main.scale
+            scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
         }
     }
     
