@@ -88,17 +88,16 @@ class ImagePostDetailTableViewController: UITableViewController {
     // MARK: - Private Methods
     
     private func filterImage(_ image: UIImage) -> UIImage? {
-        
         guard let cgImage = image.cgImage else { return nil }
-        
 
-        let filterCIImage = motionBlurFilter(colorControlFilter(cgImage))
-      
-        let kaleidoscopeFilter = CIFilter.kaleidoscope()
+        let filterCIImage = kaleidoscopeFilter(motionBlurFilter(colorControlFilter(cgImage)))
         
-        
-        
-        return UIImage(cgImage: filterCIImage)
+        guard let outputImage = context.createCGImage(filterCIImage,
+                                                      from: CGRect(origin: .zero,
+                                                                   size: image.size)) else {
+                                                                    return nil
+        }
+        return UIImage(cgImage: outputImage)
     }
     
     private func colorControlFilter(_ image: CIImage) -> CIImage {
@@ -110,12 +109,6 @@ class ImagePostDetailTableViewController: UITableViewController {
         colorControlsFilter.saturation = saturationSlider.value
         
         guard let outputCIImage = colorControlsFilter.outputImage else { return nil }
-        
-//        guard let outputImage = context.createCGImage(outputCIImage,
-//                                                      from: CGRect(origin: .zero,
-//                                                                   size: image.size)) else {
-//                                                                    return nil
-//        }
         return outputCIImage
     }
     
@@ -144,9 +137,6 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     
-    
-    
-    
     // MARK: - Properties
     
     var post: Post!
@@ -161,9 +151,7 @@ class ImagePostDetailTableViewController: UITableViewController {
             
             var scaledSize = imageView.bounds.size
             let scale = UIScreen.main.scale
-           
             scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
-            
             scaledImage = originalImage.imageByScaling(toSize: scaledSize)
         }
     }
@@ -210,4 +198,12 @@ class ImagePostDetailTableViewController: UITableViewController {
     @IBAction func blurRadiusChanged(_ sender: Any) {
            updateViews()
        }
+    
+    @IBAction func kaleidoscopeAngleChanged(_ sender: Any) {
+        updateViews()
+    }
+    
+    @IBAction func kaleidoscopeCountChanged(_ sender: Any) {
+        updateViews()
+    }
 }
