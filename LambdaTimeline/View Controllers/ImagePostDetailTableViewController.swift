@@ -16,17 +16,23 @@ class ImagePostDetailTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateViews()
+        originalImage = imageView.image
+//        updateViews()
     }
     
     func updateViews() {
         
-        guard let imageData = imageData,
-            let image = UIImage(data: imageData) else { return }
+//        guard let imageData = imageData,
+//            let image = UIImage(data: imageData) else { return }
         
         title = post?.title
         
-        imageView.image = image
+        
+        if let scaledImage = scaledImage {
+            imageView.image = filterImage(scaledImage)
+        } else {
+            imageView.image = nil
+        }
         
         titleLabel.text = post.title
         authorLabel.text = post.author.displayName
@@ -85,15 +91,14 @@ class ImagePostDetailTableViewController: UITableViewController {
         
         guard let cgImage = image.cgImage else { return nil }
         
-        motionBlurFilter(colorControlFilter(cgImage))
-        
-        let ciImage = CIImage(cgImage: cgImage)
-        let motionBlurFilter = CIFilter.motionBlur()
+
+        let filterCIImage = motionBlurFilter(colorControlFilter(cgImage))
+      
         let kaleidoscopeFilter = CIFilter.kaleidoscope()
         
         
         
-        return nil
+        return UIImage(cgImage: filterCIImage)
     }
     
     private func colorControlFilter(_ image: CIImage) -> CIImage {
@@ -124,6 +129,22 @@ class ImagePostDetailTableViewController: UITableViewController {
         return outputCIImage
     }
     
+    private func kaleidoscopeFilter(_ image: CIImage) -> CIImage {
+        guard let originalImage = originalImage else { return CIImage() }
+        
+        let kaleidoscopeFilter = CIFilter.kaleidoscope()
+        kaleidoscopeFilter.inputImage = image
+        kaleidoscopeFilter.center = CGPoint(x: originalImage.size.width / 2,
+                                            y: originalImage.size.height / 2)
+        kaleidoscopeFilter.angle = kaleidoscopeAngleSlider.value
+        kaleidoscopeFilter.count = kaleidoscopeCountSlider.value
+        
+        guard let outputCIImage = kaleidoscopeFilter.outputImage else { return nil }
+        return outputCIImage
+    }
+    
+    
+    
     
     
     // MARK: - Properties
@@ -133,6 +154,25 @@ class ImagePostDetailTableViewController: UITableViewController {
     var imageData: Data?
     
     private var context = CIContext(options: nil)
+    
+    private var originalImage: UIImage? {
+        didSet {
+            guard let originalImage = UIImage(data: imageData) else { return }
+            
+            var scaledSize = imageView.bounds.size
+            let scale = UIScreen.main.scale
+           
+            scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+            
+            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+        }
+    }
+    
+    private var scaledImage: UIImage? {
+        didSet {
+            updateViews()
+        }
+    }
     
     // MARK: - Outlets
     
@@ -146,6 +186,8 @@ class ImagePostDetailTableViewController: UITableViewController {
     @IBOutlet weak var saturationSlider: UISlider!
     @IBOutlet weak var blurAngleSlider: UISlider!
     @IBOutlet weak var blurRadiusSlider: UISlider!
+    @IBOutlet weak var kaleidoscopeAngleSlider: UISlider!
+    @IBOutlet weak var kaleidoscopeCountSlider: UISlider!
     
     // MARK: Slider events
     
