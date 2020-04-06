@@ -13,9 +13,9 @@ import CoreImage.CIFilterBuiltins
 
 enum FilterType : String  {
     case CIPerspectiveTile
-    case CIComicEffect
+    case CIColorInvert
     case CISixfoldReflectedTile
-    case CISpotColor
+    case CIComicEffect
     case CIColorMatrix
 }
 
@@ -105,7 +105,16 @@ class ImagePostViewController: ShiftableViewController {
         self.constrastLabel.isHidden = false
         self.constrastSlider.isHidden = false
     }
-    
+    private func hideUI()  {
+        self.brightnessLabel.isHidden = true
+        self.brightnessSlider.isHidden = true
+        
+        self.saturationLabel.isHidden = true
+        self.saturationSlider.isHidden = true
+        
+        self.constrastLabel.isHidden = true
+        self.constrastSlider.isHidden = true
+    }
     
     @IBAction func brightnessChanged(_ sender: UISlider) {
         updateImage()
@@ -175,35 +184,29 @@ class ImagePostViewController: ShiftableViewController {
         return UIImage(cgImage: outputCGImage)
     }
     
-    private func filterComicEffect(_ image: UIImage) -> UIImage? {
+    private func filterColorInvert(_ image: UIImage) -> UIImage? {
         guard let cgImage = image.cgImage else { return nil }
         let ciImage = CIImage(cgImage: cgImage)
-        let filter = CIFilter.comicEffect()
+        let filter = CIFilter.colorInvert()
+        
         
         filter.inputImage = ciImage
+        
         guard let outputCIImage = filter.outputImage else { return nil }
         guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size) ) else { return nil }
               
               return UIImage(cgImage: outputCGImage)
     }
-    private func filterSpotColor(_ image: UIImage) -> UIImage? {
+    private func filterComicImage(_ image: UIImage) -> UIImage? {
         guard let cgImage = image.cgImage else { return nil }
         
         let ciImage = CIImage(cgImage: cgImage)
-        let filter = CIFilter.spotColor()
-        
-         filter.inputImage = ciImage
-        filter.centerColor1 = .red
-        filter.contrast1 = .leastNonzeroMagnitude
-        filter.centerColor2 = .yellow
-        filter.contrast2 = .leastNonzeroMagnitude
-        filter.centerColor3 = .cyan
-        filter.contrast3 = .infinity
-        filter.closeness1 = .infinity
-        filter.closeness2 = .leastNonzeroMagnitude
-        filter.closeness3 = .leastNonzeroMagnitude
-        filter.setValue(ciImage, forKey: kCICategoryStylize)
+        let filter = CIFilter.comicEffect()
+         
+           filter.setValue(ciImage, forKey: kCIInputImageKey)
+      
         guard let outputCIImage = filter.outputImage else { return nil }
+        
         guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size) ) else { return nil }
         
         return UIImage(cgImage: outputCGImage)
@@ -217,9 +220,7 @@ class ImagePostViewController: ShiftableViewController {
         }
     }
     
-    
   
-    
     private func showFilerOptions() {
         let ac = UIAlertController(title: "Pick a filter to image", message: nil, preferredStyle: .actionSheet)
         ac.addAction(UIAlertAction(title: "Color Change", style: .default, handler: { (action) in
@@ -230,29 +231,33 @@ class ImagePostViewController: ShiftableViewController {
         ac.addAction(UIAlertAction(title: FilterType.CIColorMatrix.rawValue, style: .default, handler: { (action) in
             self.pickFilterButton.setTitle(FilterType.CIColorMatrix.rawValue, for: .normal)
            // one
+            self.hideUI()
             self.imageView.image =  self.filterColorMatrix(self.scaledImage!)
         }))
-        ac.addAction(UIAlertAction(title: FilterType.CISpotColor.rawValue, style: .default, handler: { (action) in
+        ac.addAction(UIAlertAction(title: FilterType.CIComicEffect.rawValue, style: .default, handler: { (action) in
             // two
-              self.pickFilterButton.setTitle(FilterType.CISpotColor.rawValue, for: .normal)
+            print("Applying SpotColor")
+              self.pickFilterButton.setTitle(FilterType.CIComicEffect.rawValue, for: .normal)
             
             if let scaledImage = self.scaledImage {
-                self.imageView.image = self.filterSpotColor(scaledImage)
+                self.imageView.image = self.filterComicImage(scaledImage)
             } else {
                 self.imageView.image = nil
             }
             
         }))
-        ac.addAction(UIAlertAction(title: FilterType.CIComicEffect.rawValue, style: .default, handler: { (action) in
+        ac.addAction(UIAlertAction(title: FilterType.CIColorInvert.rawValue, style: .default, handler: { (action) in
             //three
-             self.pickFilterButton.setTitle(FilterType.CIComicEffect.rawValue, for: .normal)
-//            guard let scaled = self.scaledImage else { return }
-//            self.imageView.image = self.filterComicEffect(scaled)
+             self.pickFilterButton.setTitle(FilterType.CIColorInvert.rawValue, for: .normal)
+            print("Applying Comic Effect")
+            guard let scaled = self.scaledImage else { return }
+            self.hideUI()
+            self.imageView.image =  self.filterColorInvert(scaled)
         }))
         ac.addAction(UIAlertAction(title: FilterType.CIPerspectiveTile.rawValue, style: .default, handler: { (action) in
             //four
             self.pickFilterButton.setTitle(FilterType.CIPerspectiveTile.rawValue, for: .normal)
-            
+            self.hideUI()
             if let scaledImage = self.scaledImage {
                 self.imageView.image = self.filterPerspective(scaledImage)
             } else {
