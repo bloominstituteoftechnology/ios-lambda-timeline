@@ -7,8 +7,12 @@
 //
 
 import UIKit
+import CoreImage
+import CoreImage.CIFilterBuiltins
 
 class ImagePostDetailTableViewController: UITableViewController {
+    
+    // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,14 +79,59 @@ class ImagePostDetailTableViewController: UITableViewController {
         return cell
     }
     
+    // MARK: - Private Methods
+    
+    private func filterImage(_ image: UIImage) -> UIImage? {
+        
+        guard let cgImage = image.cgImage else { return nil }
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        let motionBlurFilter = CIFilter.motionBlur()
+        let kaleidoscopeFilter = CIFilter.kaleidoscope()
+        
+        
+        
+        return nil
+    }
+    
+    private func colorControlFilter(_ image: UIImage) -> UIImage? {
+        guard let cgImage = image.cgImage else { return nil }
+        
+        let ciImage = CIImage(cgImage: cgImage)
+        let colorControlsFilter = CIFilter.colorControls()
+        colorControlsFilter.inputImage = ciImage
+        colorControlsFilter.brightness = brightnessSlider.value
+        
+    }
+    
+    // MARK: - Properties
+    
     var post: Post!
     var postController: PostController!
     var imageData: Data?
     
-    
+    // MARK: - Outlets
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
+    // Filter Outlets
+    @IBOutlet weak var brightnessSlider: UISlider!
+    @IBOutlet weak var contrastSlider: UISlider!
+    @IBOutlet weak var saturationSlider: UISlider!
+    
+    // MARK: Slider events
+    
+    @IBAction func brightnessChanged(_ sender: UISlider) {
+        updateViews()
+    }
+    
+    @IBAction func contrastChanged(_ sender: Any) {
+        updateViews()
+    }
+    
+    @IBAction func saturationChanged(_ sender: Any) {
+        updateViews()
+    }
 }
