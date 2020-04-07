@@ -12,16 +12,42 @@ import GoogleSignIn
 import FirebaseAuth
 import AuthenticationServices
 import CryptoKit
+import FBSDKCoreKit
+import FBSDKLoginKit
 
-class SignInViewController: UIViewController {
+
+class SignInViewController: UIViewController, LoginButtonDelegate {
+    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        if let error = error {
+            print(error)
+            return
+        }
+       let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
+        Auth.auth().signIn(with: credential) { (user, error) in
+            // ...
+            if let error = error {
+                print(error)
+                return
+            }
+            // if success
+            DispatchQueue.main.async {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")
+                postsNavigationController.modalPresentationStyle = .fullScreen
+                self.present(postsNavigationController, animated: true, completion: nil)
+            }
+        }
+    }
+
+    
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+           dismiss(animated: true, completion: nil)
+    }
+    
     
     //MARK:- Properties
     // Unhashed nonce.
     fileprivate var currentNonce: String?
-
-   
-
-  
     
     private func randomNonceString(length: Int = 32) -> String {
         precondition(length > 0)
@@ -100,6 +126,14 @@ class SignInViewController: UIViewController {
         
     }
     
+    private let facebookButton : FBLoginButton = {
+       let button = FBLoginButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.tooltipColorStyle = .neutralGray
+        button.tooltipBehavior = .automatic
+        
+        return button
+    }()
     
       //MARK:- View Life Cycle
     
@@ -107,7 +141,8 @@ class SignInViewController: UIViewController {
         super.viewDidLoad()
         GIDSignIn.sharedInstance()?.presentingViewController = self
         GIDSignIn.sharedInstance()?.delegate = self
-        
+      
+            facebookButton.delegate = self
         setUpSignInButton()
     }
     
@@ -133,7 +168,7 @@ extension SignInViewController: GIDSignInDelegate {
                 print("Error signing in with Google: \(error)")
                 return
             }
-            
+            //success
             DispatchQueue.main.async {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")
@@ -152,6 +187,7 @@ extension SignInViewController: GIDSignInDelegate {
         
         view.addSubview(signInWithGoogleButton)
         view.addSubview(signInWithAppleButton)
+        view.addSubview(facebookButton)
         
         let buttonCenterXConstraint = signInWithGoogleButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         let buttonCenterYConstraint = signInWithGoogleButton.centerYAnchor.constraint(equalTo: view.centerYAnchor,constant: 300)
@@ -164,7 +200,10 @@ extension SignInViewController: GIDSignInDelegate {
         NSLayoutConstraint.activate([
           
             signInWithAppleButton.bottomAnchor.constraint(equalTo: signInWithGoogleButton.topAnchor,constant: -20),
-            signInWithAppleButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+            signInWithAppleButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            facebookButton.bottomAnchor.constraint(equalTo: signInWithAppleButton.topAnchor,constant: -20),
+            facebookButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
     }
 }
@@ -173,7 +212,7 @@ extension SignInViewController: ASAuthorizationControllerDelegate {
   func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
       
       if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
-          
+        
           // Save authorised user ID for future reference
           UserDefaults.standard.set(appleIDCredential.user, forKey: "appleAuthorizedUserIdKey")
           

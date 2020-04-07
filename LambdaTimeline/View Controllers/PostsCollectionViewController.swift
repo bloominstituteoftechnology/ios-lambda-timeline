@@ -39,6 +39,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         let firebaseAuth = Auth.auth()
         do {
           try firebaseAuth.signOut()
+             dismiss(animated: true, completion: nil)
         } catch let signOutError as NSError {
           print ("Error signing out: %@", signOutError)
         }
