@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import CoreImage
+import CoreImage.CIFilterBuiltins
+
 
 class ImagePostDetailTableViewController: UITableViewController {
     

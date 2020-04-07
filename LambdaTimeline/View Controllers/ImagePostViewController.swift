@@ -7,18 +7,39 @@
 //
 
 import UIKit
+import CoreImage
+import CoreImage.CIFilterBuiltins
 import Photos
 
+@available(iOS 13.0, *)
 class ImagePostViewController: ShiftableViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setImageViewHeight(with: 1.0)
-        
-        updateViews()
+    private var originalImage: UIImage?
+    private var context = CIContext(options: nil)
+    private var vibranceFilter = CIFilter.vibrance()
+    
+    private var scaledImage: UIImage? {
+        didSet {
+            updateViews()
+        }
     }
     
+    // MARK: IBOutlets
+    
+    @IBOutlet weak var brightnessSlider: UISlider!
+    @IBOutlet weak var contrastSlider: UISlider!
+    @IBOutlet weak var saturationSlider: UISlider!
+    @IBOutlet weak var blurRadiusSlider: UISlider!
+    @IBOutlet weak var vibranceSlider: UISlider!
+    
+    override func viewDidLoad() {
+         super.viewDidLoad()
+            
+        setImageViewHeight(with: 1.0)
+            
+           updateViews()
+    }
+     
     func updateViews() {
         
         guard let imageData = imageData,
@@ -52,6 +73,55 @@ class ImagePostViewController: ShiftableViewController {
         present(imagePicker, animated: true, completion: nil)
     }
     
+        // MARK: Slider events
+        
+        @IBAction func brightnessChanged(_ sender: UISlider) {
+            updateViews()
+        }
+        
+        @IBAction func contrastChanged(_ sender: Any) {
+            updateViews()
+        }
+        
+        @IBAction func saturationChanged(_ sender: Any) {
+            updateViews()
+        }
+    
+        @IBAction func blurRadiusChanged(_ sender: Any) {
+            guard let image = originalImage else { return }
+              imageView.image = blurImage(image)
+            
+           updateViews()
+        }
+    
+        @IBAction func vibranceChanged(_ sender: Any) {
+        updateViews()
+        }
+    
+    // MARK: - Private Methods
+    
+    private func filterImage(_ image: UIImage) -> UIImage? {
+            
+            guard let cgImage = image.cgImage else { return nil }
+            
+            let ciImage = CIImage(cgImage: cgImage)
+            
+            let filter = CIFilter.colorControls()
+            
+            filter.inputImage = ciImage
+            filter.brightness = brightnessSlider.value
+            filter.contrast = contrastSlider.value
+            filter.saturation = saturationSlider.value
+            
+            guard let outputCIImage = filter.outputImage else { return nil }
+            
+            guard let outputCGImage = context.createCGImage(outputCIImage,
+                                                            from: CGRect(origin: .zero, size: image.size)) else {
+                                                                return nil
+            }
+            return UIImage(cgImage: outputCGImage)
+        }
+
     @IBAction func createPost(_ sender: Any) {
         
         view.endEditing(true)
@@ -114,9 +184,24 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
-    var postController: PostController!
-    var post: Post?
-    var imageData: Data?
+    func blurImage(_ image: UIImage) -> UIImage? {
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        let filter = CIFilter.gaussianBlur()
+        
+        filter.inputImage = ciImage
+        filter.radius = blurRadiusSlider.value
+
+        guard let outputCIImage = filter.outputImage else { return nil }
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else { return nil }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+     var postController: PostController!
+     var post: Post?
+     var imageData: Data?
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
@@ -125,6 +210,7 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var postButton: UIBarButtonItem!
 }
 
+@available(iOS 13.0, *)
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
