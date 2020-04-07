@@ -39,7 +39,7 @@ class RecordViewController: UIViewController {
     // MARK: - IBOutlets
     @IBOutlet weak var record: UIButton!
     @IBOutlet weak var playButton: UIButton!
-    @IBOutlet weak var saveButtonTapped: UIBarButtonItem!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var remainingTimeLabel: UILabel!
@@ -63,11 +63,30 @@ class RecordViewController: UIViewController {
     }
     
     func startRecording() {
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
+        let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
+        recordingURL = file
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
         
+        audioRecorder = try? AVAudioRecorder(url: file, format: format)
+        audioRecorder?.delegate = self
+        audioRecorder?.record()
+        updateViews()
+        playButton.isEnabled = false
+        saveButton.isEnabled = false
+        cleanSlate()
+        startTimer()
     }
     
     func stopRecording() {
-        
+        audioRecorder?.stop()
+        audioRecorder = nil
+        updateViews()
+        playButton.isEnabled = true
+        saveButton.isEnabled = true
+        cancelTimer()
+        flipTimer()
     }
     
     func play() {
@@ -110,7 +129,7 @@ class RecordViewController: UIViewController {
         remainingTimeLabel.alpha = 0
         durationLabel.text = "00:00"
     }
-
+    
 }
 
 // MARK: - Extensions
