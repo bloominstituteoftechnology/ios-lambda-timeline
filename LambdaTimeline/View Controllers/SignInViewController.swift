@@ -15,14 +15,13 @@ import CryptoKit
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-
-class SignInViewController: UIViewController, LoginButtonDelegate {
+extension SignInViewController: LoginButtonDelegate {
     func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
         if let error = error {
             print(error)
             return
         }
-       let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
+        let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
         Auth.auth().signIn(with: credential) { (user, error) in
             // ...
             if let error = error {
@@ -38,11 +37,21 @@ class SignInViewController: UIViewController, LoginButtonDelegate {
             }
         }
     }
-
+    
     
     func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
-           dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
+}
+class SignInViewController: UIViewController {
+    
+    
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+   
     
     
     //MARK:- Properties
@@ -195,7 +204,10 @@ extension SignInViewController: GIDSignInDelegate {
         
         view.addConstraints([buttonCenterXConstraint,
                              buttonCenterYConstraint,
-                             buttonWidthConstraint])
+                             buttonWidthConstraint,
+                             
+        
+        ])
         
         NSLayoutConstraint.activate([
           

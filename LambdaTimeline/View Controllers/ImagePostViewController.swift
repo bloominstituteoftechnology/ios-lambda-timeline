@@ -11,7 +11,7 @@ import Photos
 import CoreImage
 import CoreImage.CIFilterBuiltins
 
-enum FilterType : String  {
+private enum FilterType : String  {
     case CIPerspectiveTile
     case CIColorInvert
     case CISixfoldReflectedTile
@@ -43,80 +43,42 @@ class ImagePostViewController: ShiftableViewController {
            }
        }
        
-    var postController: PostController!
+     var postController: PostController!
      var post: Post?
      var imageData: Data?
      private var context = CIContext(options: nil)
     
+    // MARK:- IBOutlets
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleTextField: UITextField! {
-        didSet {
-            titleTextField.becomeFirstResponder()
-        }
-    }
-    
+    @IBOutlet weak var titleTextField: UITextField! {    didSet {    titleTextField.becomeFirstResponder()  }  }
     
     @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
     
-    @IBOutlet weak var brightnessLabel: UILabel! {
-        didSet {    brightnessLabel.isHidden = true }
-         
-    }
-    @IBOutlet weak var brightnessSlider: UISlider! {
-        didSet {   brightnessSlider.isHidden = true   }
-    }
-    
-    
-    @IBOutlet weak var saturationLabel: UILabel! {
-        didSet {     saturationLabel.isHidden = true   }
-     
-    }
-    @IBOutlet weak var saturationSlider: UISlider! {
-        didSet {  saturationSlider.isHidden = true    }
-   
-    }
-
-    @IBOutlet weak var constrastLabel: UILabel! {
-        didSet {    constrastLabel.isHidden = true }
-     
-    }
-    @IBOutlet weak var constrastSlider: UISlider! {
-        didSet {  constrastSlider.isHidden = true   }
-    }
-    
-    
-    @IBOutlet weak var pickFilterButton: UIButton! {
-        didSet {
-            pickFilterButton.isEnabled = false
-        }
-    }
-    
+    @IBOutlet weak var brightnessLabel: UILabel! {    didSet {    brightnessLabel.isHidden = true }  }
+    @IBOutlet weak var brightnessSlider: UISlider! {    didSet {   brightnessSlider.isHidden = true } }
+    @IBOutlet weak var saturationLabel: UILabel! {  didSet {  saturationLabel.isHidden = true } }
+    @IBOutlet weak var saturationSlider: UISlider! {   didSet {  saturationSlider.isHidden = true } }
+    @IBOutlet weak var constrastLabel: UILabel! {   didSet {    constrastLabel.isHidden = true } }
+    @IBOutlet weak var constrastSlider: UISlider! {  didSet {  constrastSlider.isHidden = true }  }
+    @IBOutlet weak var pickFilterButton: UIButton! { didSet  { pickFilterButton.isEnabled = false } }
+               
+      
     @IBAction func pickFilerTapped(_ sender: UIButton) {
         showFilerOptions()
       }
     
-    private func unhideUI()  {
-        self.brightnessLabel.isHidden = false
-        self.brightnessSlider.isHidden = false
+    private func hideUI(hide: Bool)  {
+        self.brightnessLabel.isHidden = hide
+        self.brightnessSlider.isHidden = hide
         
-        self.saturationLabel.isHidden = false
-        self.saturationSlider.isHidden = false
+        self.saturationLabel.isHidden = hide
+        self.saturationSlider.isHidden = hide
         
-        self.constrastLabel.isHidden = false
-        self.constrastSlider.isHidden = false
-    }
-    private func hideUI()  {
-        self.brightnessLabel.isHidden = true
-        self.brightnessSlider.isHidden = true
-        
-        self.saturationLabel.isHidden = true
-        self.saturationSlider.isHidden = true
-        
-        self.constrastLabel.isHidden = true
-        self.constrastSlider.isHidden = true
+        self.constrastLabel.isHidden = hide
+        self.constrastSlider.isHidden = hide
     }
     
     @IBAction func brightnessChanged(_ sender: UISlider) {
@@ -149,7 +111,6 @@ class ImagePostViewController: ShiftableViewController {
         
         return UIImage(cgImage: outputCGImage)
     }
-    
     private func filterColorMatrix(_ image: UIImage) -> UIImage? {
         guard let cgImage = image.cgImage else { return nil }
         
@@ -168,7 +129,6 @@ class ImagePostViewController: ShiftableViewController {
         
         return UIImage(cgImage: outputCGImage)
     }
-    
     private func filterPerspective(_ image: UIImage) -> UIImage? {
         guard let cgImage = image.cgImage else { return nil }
         
@@ -177,16 +137,15 @@ class ImagePostViewController: ShiftableViewController {
         
         filter.inputImage = ciImage
         filter.topLeft = CGPoint(x: 200, y: 320)
-        filter.topRight = CGPoint(x: 2, y: 2)
-        filter.bottomLeft = CGPoint(x: 0, y: 269)
-        filter.bottomRight = CGPoint(x: 569, y: 4)
+        filter.topRight = CGPoint(x: 22, y: 21)
+        filter.bottomLeft = CGPoint(x: 230, y: 269)
+        filter.bottomRight = CGPoint(x: 569, y: 234)
         
         guard let outputCIImage = filter.outputImage else { return nil }
         guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size) ) else { return nil }
         
         return UIImage(cgImage: outputCGImage)
     }
-    
     private func filterColorInvert(_ image: UIImage) -> UIImage? {
         guard let cgImage = image.cgImage else { return nil }
         let ciImage = CIImage(cgImage: cgImage)
@@ -226,20 +185,20 @@ class ImagePostViewController: ShiftableViewController {
   
     private func showFilerOptions() {
         let ac = UIAlertController(title: "Pick a filter to image", message: nil, preferredStyle: .actionSheet)
-        ac.addAction(UIAlertAction(title: "Color Change", style: .default, handler: { (action) in
-            self.pickFilterButton.setTitle("Color Change", for: .normal)
-            self.unhideUI()
+        ac.addAction(UIAlertAction(title: "ColorChange", style: .default, handler: { (action) in
+            self.pickFilterButton.setTitle("ColorChange", for: .normal)
+            self.hideUI(hide: false)
             // zero
         }))
         ac.addAction(UIAlertAction(title: FilterType.CIColorMatrix.rawValue, style: .default, handler: { (action) in
             self.pickFilterButton.setTitle(FilterType.CIColorMatrix.rawValue, for: .normal)
            // one
-            self.hideUI()
+            self.hideUI(hide: true)
             self.imageView.image =  self.filterColorMatrix(self.scaledImage!)
         }))
         ac.addAction(UIAlertAction(title: FilterType.CIComicEffect.rawValue, style: .default, handler: { (action) in
             // two
-            print("Applying SpotColor")
+          
               self.pickFilterButton.setTitle(FilterType.CIComicEffect.rawValue, for: .normal)
             
             if let scaledImage = self.scaledImage {
@@ -252,15 +211,15 @@ class ImagePostViewController: ShiftableViewController {
         ac.addAction(UIAlertAction(title: FilterType.CIColorInvert.rawValue, style: .default, handler: { (action) in
             //three
              self.pickFilterButton.setTitle(FilterType.CIColorInvert.rawValue, for: .normal)
-            print("Applying Comic Effect")
+         
             guard let scaled = self.scaledImage else { return }
-            self.hideUI()
+            self.hideUI(hide: true)
             self.imageView.image =  self.filterColorInvert(scaled)
         }))
         ac.addAction(UIAlertAction(title: FilterType.CIPerspectiveTile.rawValue, style: .default, handler: { (action) in
             //four
             self.pickFilterButton.setTitle(FilterType.CIPerspectiveTile.rawValue, for: .normal)
-            self.hideUI()
+            self.hideUI(hide: true)
             if let scaledImage = self.scaledImage {
                 self.imageView.image = self.filterPerspective(scaledImage)
             } else {
@@ -269,28 +228,42 @@ class ImagePostViewController: ShiftableViewController {
         }))
         
         ac.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
-      if let popoverController = ac.popoverPresentationController {
-          popoverController.sourceView = self.view
-          popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-          popoverController.permittedArrowDirections = []
         
+        if let popoverController = ac.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+            
         }
         present(ac, animated: true)
       
         
     }
     
-    //MARK:- View Life Cycle
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-     
+    private func showErrorAlert() {
+        let ac = UIAlertController(title: "You don't have any filter", message: nil, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+        present(ac, animated: true, completion: nil )
     }
+    @IBAction func removeFIlter(_ sender: UIButton) {
+
+        if imageView.image == nil || imageView.image == scaledImage {
+          showErrorAlert()
+           
+        } else {
+             imageView.image = scaledImage
+        }
+       
+    }
+    
+    
+    //MARK:- View Life Cycle
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-          self.hideKeyboardWhenTappedAround() 
+        self.hideKeyboardWhenTappedAround()
+        
         originalImage = imageView.image
         setImageViewHeight(with: 1.0)
         
@@ -309,7 +282,7 @@ class ImagePostViewController: ShiftableViewController {
     
   
 
-    func updateViews() {
+   private func updateViews() {
         
         guard let imageData = imageData,
             let image = UIImage(data: imageData) else {
