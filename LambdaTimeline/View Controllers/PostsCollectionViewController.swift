@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseUI
+import AuthenticationServices
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -31,6 +32,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         }
     }
    //MARK:- Actions
+  
     
     @IBAction func signout(_ sender: Any) {
         
@@ -43,7 +45,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func addPost(_ sender: Any) {
+    @IBAction func addPost(_ sender: UIBarButtonItem) {
         
         let alert = UIAlertController(title: "New Post", message: "Which kind of post do you want to create?", preferredStyle: .actionSheet)
         
@@ -52,7 +54,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
-        
+        alert.popoverPresentationController?.barButtonItem = sender 
         alert.addAction(imagePostAction)
         alert.addAction(cancelAction)
         
@@ -80,6 +82,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             return cell
         }
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         

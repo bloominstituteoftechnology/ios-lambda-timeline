@@ -54,6 +54,9 @@ class ImagePostViewController: ShiftableViewController {
             titleTextField.becomeFirstResponder()
         }
     }
+    
+    
+    @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
@@ -266,7 +269,12 @@ class ImagePostViewController: ShiftableViewController {
         }))
         
         ac.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+      if let popoverController = ac.popoverPresentationController {
+          popoverController.sourceView = self.view
+          popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+          popoverController.permittedArrowDirections = []
         
+        }
         present(ac, animated: true)
       
         
