@@ -12,7 +12,7 @@ import AVFoundation
 class RecordViewController: UIViewController {
     
     // MARK: - Variables
-    weak var time: Timer?
+    weak var timer: Timer?
     var audioRecorder: AVAudioRecorder?
     var recordingURL: URL?
     var isRecording: Bool {
@@ -54,19 +54,66 @@ class RecordViewController: UIViewController {
     private func updateViews() {
         record.isSelected = isRecording
         playButton.isSelected = isPlaying
-        
         let elapsedRecordTime = audioRecorder?.currentTime ?? 0
         let elapsedPlayTime = audioPlayer?.currentTime ?? 0
         let duration = audioPlayer?.duration ?? 0
         let timeRemaining = duration - elapsedPlayTime
-        
         durationLabel.text = timeFormatter.string(from: elapsedRecordTime)
         remainingTimeLabel.text = timeFormatter.string(from: timeRemaining)
+    }
+    
+    func startRecording() {
         
     }
     
+    func stopRecording() {
+        
+    }
+    
+    func play() {
+        audioPlayer?.play()
+        updateViews()
+        startTimer()
+    }
+    
+    func pause() {
+        audioPlayer?.pause()
+        updateViews()
+        cancelTimer()
+    }
+    
+    func cancelTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    func startTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 0.030, repeats: true, block: { [weak self] (_) in
+            guard let self = self else { return }
+            
+            self.updateViews()
+        })
+    }
+    
+    func flipTimer() {
+        if durationLabel.alpha == 1 {
+            remainingTimeLabel.alpha = 1
+            durationLabel.alpha = 0
+        } else {
+            remainingTimeLabel.alpha = 0
+            durationLabel.alpha = 1
+        }
+    }
+    
+    func cleanSlate() {
+        durationLabel.alpha = 1
+        remainingTimeLabel.alpha = 0
+        durationLabel.text = "00:00"
+    }
+
 }
 
+// MARK: - Extensions
 extension RecordViewController: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         updateViews()
