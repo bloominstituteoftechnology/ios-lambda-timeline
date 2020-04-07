@@ -14,15 +14,32 @@ import Photos
 @available(iOS 13.0, *)
 class ImagePostViewController: ShiftableViewController {
     
-    private var originalImage: UIImage?
-    private var context = CIContext(options: nil)
-    private var vibranceFilter = CIFilter.vibrance()
-    
-    private var scaledImage: UIImage? {
-        didSet {
-            updateViews()
-        }
-    }
+     override func viewDidLoad() {
+          super.viewDidLoad()
+          setImageViewHeight(with: 1.0)
+          
+          updateViews()
+      }
+      
+      private var originalImage: UIImage? {
+          didSet {
+              guard let originalImage = UIImage(data: imageData!) else { return }
+              
+              var scaledSize = imageView.bounds.size
+              let scale = UIScreen.main.scale
+              scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+              scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+          }
+      }
+      
+      private var scaledImage: UIImage? {
+          didSet {
+              updateViews()
+          }
+      }
+      
+      private var context = CIContext(options: nil)
+      private var vibranceFilter = CIFilter.vibrance()
     
     // MARK: IBOutlets
     
@@ -32,30 +49,23 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var blurRadiusSlider: UISlider!
     @IBOutlet weak var vibranceSlider: UISlider!
     
-    override func viewDidLoad() {
-         super.viewDidLoad()
-            
-        setImageViewHeight(with: 1.0)
-            
-           updateViews()
-    }
-     
     func updateViews() {
-        
-        guard let imageData = imageData,
-            let image = UIImage(data: imageData) else {
-                title = "New Post"
-                return
-        }
-        
-        title = post?.title
-        
-        setImageViewHeight(with: image.ratio)
-        
-        imageView.image = image
-        
-        chooseImageButton.setTitle("", for: [])
-    }
+          
+          guard let imageData = imageData,
+              let image = UIImage(data: imageData) else {
+                  title = "New Post"
+
+                  return
+          }
+          
+          title = post?.title
+          
+          setImageViewHeight(with: image.ratio)
+          
+          imageView.image = image
+          
+          chooseImageButton.setTitle("", for: [])
+      }
     
     private func presentImagePickerController() {
         
@@ -88,9 +98,6 @@ class ImagePostViewController: ShiftableViewController {
         }
     
         @IBAction func blurRadiusChanged(_ sender: Any) {
-            guard let image = originalImage else { return }
-              imageView.image = blurImage(image)
-            
            updateViews()
         }
     
@@ -182,6 +189,18 @@ class ImagePostViewController: ShiftableViewController {
         imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
         
         view.layoutSubviews()
+    }
+    
+    private func colorControlFilter(_ image: CGImage) -> CIImage? {
+        let ciImage = CIImage(cgImage: image)
+        let colorControlsFilter = CIFilter.colorControls()
+        colorControlsFilter.inputImage = ciImage
+        colorControlsFilter.brightness = brightnessSlider.value
+        colorControlsFilter.contrast = contrastSlider.value
+        colorControlsFilter.saturation = saturationSlider.value
+        
+        guard let outputCIImage = colorControlsFilter.outputImage else { return nil }
+        return outputCIImage
     }
     
     func blurImage(_ image: UIImage) -> UIImage? {
