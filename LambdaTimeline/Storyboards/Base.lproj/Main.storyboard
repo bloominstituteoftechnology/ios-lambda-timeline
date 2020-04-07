@@ -431,7 +431,7 @@
                                 <state key="normal" title="Button" image="Play"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qS8-Or-AoT">
-                                <rect key="frame" x="152" y="476" width="110" height="48"/>
+                                <rect key="frame" x="32" y="484" width="110" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <nil key="textColor"/>
@@ -443,6 +443,13 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BDA-u7-KSJ">
+                                <rect key="frame" x="264" y="484" width="110" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="ydU-pv-e4U"/>
@@ -450,6 +457,14 @@
                     <navigationItem key="navigationItem" id="ibL-fn-BEm">
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="7V1-FB-vkd"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="durationLabel" destination="qS8-Or-AoT" id="PYs-Hq-3Wd"/>
+                        <outlet property="playButton" destination="CbL-DF-jZg" id="553-i2-hqE"/>
+                        <outlet property="record" destination="Y3y-Hg-ikf" id="RuY-km-WIN"/>
+                        <outlet property="remainingTimeLabel" destination="BDA-u7-KSJ" id="O8g-8O-vaw"/>
+                        <outlet property="saveButtonTapped" destination="7V1-FB-vkd" id="gEk-d7-kCZ"/>
+                        <outlet property="titleTextField" destination="fNc-xZ-Mcd" id="bGt-K1-TXU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lXr-ss-5tt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
