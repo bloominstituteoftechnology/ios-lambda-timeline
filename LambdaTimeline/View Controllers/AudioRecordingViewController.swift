@@ -44,15 +44,9 @@ class AudioRecordingViewController: UIViewController
         
         setUpNavigationItem()
     }
-    private func layoutStackView() {
-        NSLayoutConstraint.activate([
-        horizontalStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -50),
-        horizontalStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-        horizontalStackView.widthAnchor.constraint(equalToConstant: 300),
-        horizontalStackView.heightAnchor.constraint(equalToConstant: 40)
-        ])
-      
-    }
+  
+    //MARK:- Properties
+    
     private let musicView: UIImageView = {
         let image = UIImage(systemName: "music.note")?.withTintColor(.black)
        let view = UIImageView(image: image )
@@ -75,7 +69,6 @@ class AudioRecordingViewController: UIViewController
         return button
     }()
   
-    
     private let browseFileButton : UIButton = {
        let button = UIButton()
         button.setImage(UIImage(systemName: "folder.fill"), for: .normal)
@@ -112,10 +105,8 @@ class AudioRecordingViewController: UIViewController
     // Record
     var audioRecorder: AVAudioRecorder?
     var recordingURL: URL?
-    var isRecording: Bool {
-        audioRecorder?.isRecording ?? false
-    }
-    
+    var isRecording: Bool { return audioRecorder?.isRecording ?? false  }
+        
     private let pickerController : MPMediaPickerController = {
            let pc = MPMediaPickerController(mediaTypes: .anyAudio)
            pc.allowsPickingMultipleItems = true
@@ -154,7 +145,6 @@ class AudioRecordingViewController: UIViewController
                     }
                     
                     print("Recording permission has been granted!")
-    //                 NOTE: Invite the user to tap record again, since we just interrupted them, and they may not have been ready to record
                 }
             case .denied:
                 print("Microphone access has been blocked.")
@@ -192,35 +182,24 @@ class AudioRecordingViewController: UIViewController
      
     }
     private lazy var timeIntervalFormatter: DateComponentsFormatter = {
-          // NOTE: DateComponentFormatter is good for minutes/hours/seconds
-          // DateComponentsFormatter is not good for milliseconds, use DateFormatter instead)
-          
+
           let formatting = DateComponentsFormatter()
-          formatting.unitsStyle = .positional // 00:00  mm:ss
+          formatting.unitsStyle = .positional
           formatting.zeroFormattingBehavior = .pad
           formatting.allowedUnits = [.minute, .second]
           return formatting
       }()
    //MARK:- Objc Methods:
     
-      @objc func handlePlay() {
-            print("play")
-            audioPlayer?.play()
-  
-        }
-    //Timer
-    var timer: Timer?
-    var count: TimeInterval = 0
-    func updateTimeLabel() {
-        timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (_) in
-            self.count += 1
-            self.timeLabel.text = self.timeIntervalFormatter.string(from: self.count)
-        })
+    @objc func handlePlay() {
+        print("play")
+        audioPlayer?.play()
+        
     }
+    //Timer
     
     @objc private func handleRecord() {
-       
+        
         if isRecording {
             recordButton.backgroundColor = .red
             recordButton.isSelected = false
@@ -234,26 +213,33 @@ class AudioRecordingViewController: UIViewController
             updateTimeLabel()
             print("recording")
         }
-       
+        
         
     }
-  @objc func handleDone() {
-    dismiss(animated: true, completion: nil)
+    @objc func handleDone() {
+        dismiss(animated: true, completion: nil)
         print("Pick music success")
     }
     
     @objc func handleCancel() {
         dismiss(animated: true, completion: nil)
     }
-           
     
     @objc private func handleBrowse() {
         print("browsing...")
-       
-       present(pickerController, animated: true, completion: nil)
+        present(pickerController, animated: true, completion: nil)
         
     }
     
+    var timer: Timer?
+       var count: TimeInterval = 0
+       func updateTimeLabel() {
+           timer?.invalidate()
+           timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (_) in
+               self.count += 1
+               self.timeLabel.text = self.timeIntervalFormatter.string(from: self.count)
+           })
+       }
     
     private func setUpNavigationItem() {
       
@@ -262,6 +248,8 @@ class AudioRecordingViewController: UIViewController
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Pick", style: .done, target: self, action: #selector(handleDone))
         view.backgroundColor = .white
     }
+    
+    //MARK:- Constraints
     
     private func setUpConstraintsForMusicViewandTimeLabel() {
         NSLayoutConstraint.activate([
@@ -272,16 +260,20 @@ class AudioRecordingViewController: UIViewController
                  
                  timeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                  timeLabel.topAnchor.constraint(equalTo: musicView.bottomAnchor,constant: 40),
-                
-            
              ])
-        
-        
+      
     }
-    
-    
-  
-  
+
+    private func layoutStackView() {
+         NSLayoutConstraint.activate([
+         horizontalStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -50),
+         horizontalStackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+         horizontalStackView.widthAnchor.constraint(equalToConstant: 300),
+         horizontalStackView.heightAnchor.constraint(equalToConstant: 40)
+         ])
+       
+     }
+ 
 }
 //MARK:- Extension
 extension NSNotification.Name {
@@ -295,13 +287,12 @@ extension AudioRecordingViewController: AVAudioRecorderDelegate {
             audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL)
             let userInfo : [String:Any] = ["musicURL": recordingURL]
             NotificationCenter.default.post(name: .music, object: self, userInfo: userInfo)
-            
-          
-            
+    
       }
       func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
           if let error = error {
-              print("Audio Recorder Error: \(error)")
+            print("Audio Recorder Error: \(error.localizedDescription)")
+            return
           }
       }
 }
@@ -313,12 +304,12 @@ extension AudioRecordingViewController: MPMediaPickerControllerDelegate {
     func mediaPicker(mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
         //run any code you want once the user has picked their chosen audio
    
-       let musicPlayer = MPMusicPlayerController.systemMusicPlayer
-         musicPlayer.setQueue(with: mediaItemCollection)
+        let musicPlayer = MPMusicPlayerController.systemMusicPlayer
+        musicPlayer.setQueue(with: mediaItemCollection)
         musicPlayer.play()
-         mediaPicker.dismiss(animated: true)
-       
-         musicPlayer.play()
+        mediaPicker.dismiss(animated: true)
+        
+        musicPlayer.play()
     }
 }
 
