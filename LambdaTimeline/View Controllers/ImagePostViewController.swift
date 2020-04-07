@@ -280,6 +280,7 @@ class ImagePostViewController: ShiftableViewController {
         navigationItem.title = textField.text
     }
     
+   
   
 
    private func updateViews() {
@@ -382,6 +383,9 @@ class ImagePostViewController: ShiftableViewController {
  
 }
 
+
+
+
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -389,6 +393,7 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         chooseImageButton.setTitle("", for: [])
         pickFilterButton.isEnabled = true
         titleTextField.becomeFirstResponder()
+        
         picker.dismiss(animated: true, completion: nil)
     
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
