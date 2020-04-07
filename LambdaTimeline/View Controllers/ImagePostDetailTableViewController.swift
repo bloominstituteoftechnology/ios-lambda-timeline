@@ -16,7 +16,7 @@ class ImagePostDetailTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        originalImage = imageView.image
+//        originalImage = imageView.image
         updateViews()
     }
     

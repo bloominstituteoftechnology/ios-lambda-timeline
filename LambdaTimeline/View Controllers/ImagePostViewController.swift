@@ -13,9 +13,7 @@ class ImagePostViewController: ShiftableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setImageViewHeight(with: 1.0)
-        
         updateViews()
     }
     
@@ -23,16 +21,13 @@ class ImagePostViewController: ShiftableViewController {
  
         if let scaledImage = scaledImage {
                 imageView.image = filterImage(scaledImage)
+            setImageViewHeight(with: scaledImage.ratio)
             } else {
                 imageView.image = nil
             title = "New Post"
             }
         
         title = post?.title
-        
-        setImageViewHeight(with: image.ratio)
-        
-        imageView.image = image
         
         chooseImageButton.setTitle("", for: [])
     }
@@ -123,7 +118,8 @@ class ImagePostViewController: ShiftableViewController {
     
     private var originalImage: UIImage? {
         didSet {
-            guard let originalImage = UIImage(data: imageData) else { return }
+            guard let imageData = imageData,
+                let originalImage = UIImage(data: imageData) else { return }
             
             var scaledSize = imageView.bounds.size
             let scale = UIScreen.main.scale
@@ -179,7 +175,7 @@ class ImagePostViewController: ShiftableViewController {
     private func filterImage(_ image: UIImage) -> UIImage? {
         guard let cgImage = image.cgImage else { return nil }
 
-        let filterCIImage = kaleidoscopeFilter(motionBlurFilter(colorControlFilter(cgImage)))
+        let filterCIImage = kaleidoscopeFilter(motionBlurFilter(colorControlFilter(cgImage)!)!)!
         
         guard let outputImage = context.createCGImage(filterCIImage,
                                                       from: CGRect(origin: .zero,
@@ -189,10 +185,10 @@ class ImagePostViewController: ShiftableViewController {
         return UIImage(cgImage: outputImage)
     }
     
-    private func colorControlFilter(_ image: CIImage) -> CIImage {
-        
+    private func colorControlFilter(_ image: CGImage) -> CIImage? {
+        let ciImage = CIImage(cgImage: image)
         let colorControlsFilter = CIFilter.colorControls()
-        colorControlsFilter.inputImage = convertToCIImage(image)
+        colorControlsFilter.inputImage = ciImage
         colorControlsFilter.brightness = brightnessSlider.value
         colorControlsFilter.contrast = contrastSlider.value
         colorControlsFilter.saturation = saturationSlider.value
@@ -201,9 +197,10 @@ class ImagePostViewController: ShiftableViewController {
         return outputCIImage
     }
     
-    private func motionBlurFilter(_ image: CIImage) -> CIImage {
+    private func motionBlurFilter(_ image: CIImage) -> CIImage? {
+//        let ciImage = CIImage(cgImage: image)
         let motionBlurFilter = CIFilter.motionBlur()
-        motionBlurFilter.inputImage = convertToCIImage(image)
+        motionBlurFilter.inputImage = image
         motionBlurFilter.angle = 0.00
         motionBlurFilter.radius = blurRadiusSlider.value
         
@@ -211,15 +208,16 @@ class ImagePostViewController: ShiftableViewController {
         return outputCIImage
     }
     
-    private func kaleidoscopeFilter(_ image: CIImage) -> CIImage {
-        guard let originalImage = originalImage else { return CIImage() }
+    private func kaleidoscopeFilter(_ image: CIImage) -> CIImage? {
+        guard let originalImage = originalImage else { return nil }
+//        let ciImage = CIImage(cgImage: image)
         
         let kaleidoscopeFilter = CIFilter.kaleidoscope()
         kaleidoscopeFilter.inputImage = image
         kaleidoscopeFilter.center = CGPoint(x: originalImage.size.width / 2,
                                             y: originalImage.size.height / 2)
         kaleidoscopeFilter.angle = 0.00
-        kaleidoscopeFilter.count = kaleidoscopeCountSlider.value
+        kaleidoscopeFilter.count = Int(kaleidoscopeCountSlider.value)
         
         guard let outputCIImage = kaleidoscopeFilter.outputImage else { return nil }
         return outputCIImage
@@ -243,5 +241,35 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+
+extension UIImage {
+    
+    /// Resize the image to a max dimension from size parameter
+    func imageByScaling(toSize size: CGSize) -> UIImage? {
+        guard size.width > 0 && size.height > 0 else { return nil }
+        
+        let originalAspectRatio = self.size.width/self.size.height
+        var correctedSize = size
+        
+        if correctedSize.width > correctedSize.width*originalAspectRatio {
+            correctedSize.width = correctedSize.width*originalAspectRatio
+        } else {
+            correctedSize.height = correctedSize.height/originalAspectRatio
+        }
+        
+        return UIGraphicsImageRenderer(size: correctedSize, format: imageRendererFormat).image { context in
+            draw(in: CGRect(origin: .zero, size: correctedSize))
+        }
+    }
+    
+    /// Renders the image if the pixel data was rotated due to orientation of camera
+    var flattened: UIImage {
+        if imageOrientation == .up { return self }
+        return UIGraphicsImageRenderer(size: size, format: imageRendererFormat).image { context in
+            draw(at: .zero)
+        }
     }
 }
