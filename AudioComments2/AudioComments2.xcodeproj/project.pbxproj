@@ -16,6 +16,8 @@
 		726EE71D243D137B00DCA12E /* AudioCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726EE71A243D137B00DCA12E /* AudioCommentViewController.swift */; };
 		726EE71E243D137B00DCA12E /* AudioCommentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726EE71B243D137B00DCA12E /* AudioCommentTableViewController.swift */; };
 		726EE720243D139A00DCA12E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 726EE71F243D139A00DCA12E /* Main.storyboard */; };
+		726EE722243D163400DCA12E /* AudioComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726EE721243D163400DCA12E /* AudioComment.swift */; };
+		726EE726243D16C200DCA12E /* AudioCommentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726EE725243D16C200DCA12E /* AudioCommentController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		726EE71A243D137B00DCA12E /* AudioCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioCommentViewController.swift; sourceTree = "<group>"; };
 		726EE71B243D137B00DCA12E /* AudioCommentTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioCommentTableViewController.swift; sourceTree = "<group>"; };
 		726EE71F243D139A00DCA12E /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		726EE721243D163400DCA12E /* AudioComment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioComment.swift; sourceTree = "<group>"; };
+		726EE725243D16C200DCA12E /* AudioCommentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCommentController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +66,8 @@
 		726EE700243D132200DCA12E /* AudioComments2 */ = {
 			isa = PBXGroup;
 			children = (
+				726EE724243D164800DCA12E /* Model Controllet */,
+				726EE723243D163A00DCA12E /* Model */,
 				726EE717243D137B00DCA12E /* ViewControllers */,
 				726EE701243D132200DCA12E /* AppDelegate.swift */,
 				726EE703243D132200DCA12E /* SceneDelegate.swift */,
@@ -90,6 +96,22 @@
 				726EE719243D137B00DCA12E /* AudioTableViewCell.swift */,
 			);
 			path = "Custom Cells";
+			sourceTree = "<group>";
+		};
+		726EE723243D163A00DCA12E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				726EE721243D163400DCA12E /* AudioComment.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		726EE724243D164800DCA12E /* Model Controllet */ = {
+			isa = PBXGroup;
+			children = (
+				726EE725243D16C200DCA12E /* AudioCommentController.swift */,
+			);
+			path = "Model Controllet";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,11 +185,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				726EE726243D16C200DCA12E /* AudioCommentController.swift in Sources */,
 				726EE71E243D137B00DCA12E /* AudioCommentTableViewController.swift in Sources */,
 				726EE71C243D137B00DCA12E /* AudioTableViewCell.swift in Sources */,
 				726EE71D243D137B00DCA12E /* AudioCommentViewController.swift in Sources */,
 				726EE706243D132200DCA12E /* ViewController.swift in Sources */,
 				726EE702243D132200DCA12E /* AppDelegate.swift in Sources */,
+				726EE722243D163400DCA12E /* AudioComment.swift in Sources */,
 				726EE704243D132200DCA12E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
