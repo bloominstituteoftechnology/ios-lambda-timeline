@@ -10,6 +10,8 @@ import UIKit
 
 class AudioCommentTableViewController: UITableViewController {
 
+    let audioCommentController = AudioCommentController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,8 +38,10 @@ class AudioCommentTableViewController: UITableViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "AddAudioCommentSegue" {
+            guard let destinationVC = segue.destination as? AudioCommentViewController else { return }
+            destinationVC.audioCommentController = audioCommentController
+        }
     }
     
 

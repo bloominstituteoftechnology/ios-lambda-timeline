@@ -9,16 +9,17 @@
 import UIKit
 import AVFoundation
 
-class AudioCommentViewController: ViewController {
+class AudioCommentViewController: ViewController, AVAudioRecorderDelegate {
     
     // MARK: -Properties
     
-    let audioCommentController = AudioCommentController()
+    var audioCommentController: AudioCommentController?
     var isRecording: Bool {
-        guard let audioRecorder = audioCommentController.audioRecorder else { return false}
+        guard let audioCommentController = audioCommentController,
+            let audioRecorder = audioCommentController.audioRecorder else { return false}
         return audioRecorder.isRecording
     }
-
+    
     // MARK: -Outlets
     
     @IBOutlet weak var authorTextField: UITextField!
@@ -28,10 +29,32 @@ class AudioCommentViewController: ViewController {
     // MARK: -Actions
     
     @IBAction func recordTapped(_ sender: UIButton) {
+        guard let audioCommentController = audioCommentController else { return }
+        if isRecording {
+            audioCommentController.stopRecording()
+            updateViews()
+        } else {
+            audioCommentController.requestPermissionOrStartRecording()
+            updateViews()
+        }
     }
     @IBAction func cancelTapped(_ sender: UIButton) {
     }
     
-   
-
+    //MARK: -View Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        guard let audioCommentController = audioCommentController,
+            let audioRecorder = audioCommentController.audioRecorder else { return }
+        audioRecorder.delegate = self
+    }
+    
+    private func updateViews() {
+        recordButton.isSelected = isRecording
+    }
+    
+    //MARK: - Private Methods
+    
+    
 }

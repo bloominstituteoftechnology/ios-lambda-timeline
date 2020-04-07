@@ -47,15 +47,15 @@ class AudioCommentController {
         case .denied:
             print("Microphone access has been blocked.")
             
-            let alertController = UIAlertController(title: "Microphone Access Denied", message: "Please allow this app to access your Microphone.", preferredStyle: .alert)
-            
-            alertController.addAction(UIAlertAction(title: "Open Settings", style: .default) { (_) in
-                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-            })
-            
-            alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-            
-            present(alertController, animated: true, completion: nil)
+//            let alertController = UIAlertController(title: "Microphone Access Denied", message: "Please allow this app to access your Microphone.", preferredStyle: .alert)
+//
+//            alertController.addAction(UIAlertAction(title: "Open Settings", style: .default) { (_) in
+//                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+//            })
+//
+//            alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+//
+//            present(alertController, animated: true, completion: nil)
         case .granted:
             startRecording()
         @unknown default:
@@ -69,7 +69,6 @@ class AudioCommentController {
         // 44.1 KHz = FM radio quality
         let audioFormat = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
         audioRecorder = try? AVAudioRecorder(url: recordingURL, format: audioFormat) // FIXME: error logic
-        audioRecorder?.delegate = self
         audioRecorder?.record()
         
         self.recordingURL = recordingURL
