@@ -30,13 +30,15 @@ class AudioRecordingViewController: UIViewController
         view.addSubview(playButton)
         view.addSubview(browseFileButton)
         view.addSubview(recordButton)
+           view.addSubview(timeLabel)
         view.addSubview(horizontalStackView)
+     
         
         horizontalStackView.addArrangedSubview(playButton)
         horizontalStackView.addArrangedSubview(browseFileButton)
         horizontalStackView.addArrangedSubview(recordButton)
         
-        setUpConstraintForMusicView()
+        setUpConstraintsForMusicViewandTimeLabel()
         layoutStackView()
         
         
@@ -83,6 +85,14 @@ class AudioRecordingViewController: UIViewController
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(handleBrowse), for: .touchUpInside)
         return button
+    }()
+    
+    private let timeLabel: UILabel = {
+       let lb = UILabel()
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        lb.text = "00:00"
+        lb.font = UIFont.boldSystemFont(ofSize: 40)
+        return lb
     }()
     
     private let recordButton: UIButton = {
@@ -181,14 +191,33 @@ class AudioRecordingViewController: UIViewController
         audioRecorder?.record()
      
     }
+    private lazy var timeIntervalFormatter: DateComponentsFormatter = {
+          // NOTE: DateComponentFormatter is good for minutes/hours/seconds
+          // DateComponentsFormatter is not good for milliseconds, use DateFormatter instead)
+          
+          let formatting = DateComponentsFormatter()
+          formatting.unitsStyle = .positional // 00:00  mm:ss
+          formatting.zeroFormattingBehavior = .pad
+          formatting.allowedUnits = [.minute, .second]
+          return formatting
+      }()
    //MARK:- Objc Methods:
     
       @objc func handlePlay() {
             print("play")
             audioPlayer?.play()
-    //       try? audioPlayer = AVAudioPlayer(contentsOf: songURL!)
-    //        audioPlayer?.play()
+  
         }
+    //Timer
+    var timer: Timer?
+    var count: TimeInterval = 0
+    func updateTimeLabel() {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (_) in
+            self.count += 1
+            self.timeLabel.text = self.timeIntervalFormatter.string(from: self.count)
+        })
+    }
     
     @objc private func handleRecord() {
        
@@ -196,12 +225,14 @@ class AudioRecordingViewController: UIViewController
             recordButton.backgroundColor = .red
             recordButton.isSelected = false
             audioRecorder?.stop()
+            timer?.invalidate()
             print("stop")
         } else {
             recordButton.backgroundColor = .green
             recordButton.isSelected = true
-                    startRecording()
-                   print("recording")
+            startRecording()
+            updateTimeLabel()
+            print("recording")
         }
        
         
@@ -232,14 +263,22 @@ class AudioRecordingViewController: UIViewController
         view.backgroundColor = .white
     }
     
-    private func setUpConstraintForMusicView() {
+    private func setUpConstraintsForMusicViewandTimeLabel() {
         NSLayoutConstraint.activate([
                  musicView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                  musicView.centerYAnchor.constraint(equalTo: view.centerYAnchor,constant: -100),
                  musicView.widthAnchor.constraint(equalToConstant: 200),
-                 musicView.heightAnchor.constraint(equalToConstant: 200)
+                 musicView.heightAnchor.constraint(equalToConstant: 200),
+                 
+                 timeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                 timeLabel.topAnchor.constraint(equalTo: musicView.bottomAnchor,constant: 40),
+                
+            
              ])
+        
+        
     }
+    
     
   
   

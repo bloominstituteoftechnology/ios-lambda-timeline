@@ -63,8 +63,6 @@ class ImagePostCollectionViewCell: UICollectionViewCell {
 
     func setupLabelBackgroundView() {
         labelBackgroundView.layer.cornerRadius = 8
-//        labelBackgroundView.layer.borderColor = UIColor.white.cgColor
-//        labelBackgroundView.layer.borderWidth = 0.5
         labelBackgroundView.clipsToBounds = true
     }
     
