@@ -10,9 +10,7 @@ import UIKit
 import AVFoundation
 import MediaPlayer
 
-protocol AudiRecordingViewControllerDelegate: AnyObject {
-    func didReceiveAudioURL(audioURL: URL)
-}
+
 
 class AudioRecordingViewController: UIViewController
 {
@@ -21,7 +19,7 @@ class AudioRecordingViewController: UIViewController
     var songURL: URL?
     var audioPlayer: AVAudioPlayer? {    didSet {   audioPlayer?.isMeteringEnabled = true   }    }
      
-    weak var delegate: AudiRecordingViewControllerDelegate?
+  
     
 //MARK:- View Life Cycle
     
@@ -44,8 +42,6 @@ class AudioRecordingViewController: UIViewController
         
         setUpNavigationItem()
     }
-    
-    
     private func layoutStackView() {
         NSLayoutConstraint.activate([
         horizontalStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -50),
@@ -55,8 +51,6 @@ class AudioRecordingViewController: UIViewController
         ])
       
     }
-    
-    
     private let musicView: UIImageView = {
         let image = UIImage(systemName: "music.note")?.withTintColor(.black)
        let view = UIImageView(image: image )
@@ -68,7 +62,6 @@ class AudioRecordingViewController: UIViewController
         view.layer.borderWidth = 5
         return view
     }()
-    
     private let playButton: UIButton = {
        let button = UIButton()
         button.setImage(UIImage(systemName: "play.fill"), for: .normal)
@@ -80,7 +73,6 @@ class AudioRecordingViewController: UIViewController
         return button
     }()
   
-    
     
     private let browseFileButton : UIButton = {
        let button = UIButton()
@@ -215,6 +207,7 @@ class AudioRecordingViewController: UIViewController
         
     }
   @objc func handleDone() {
+    dismiss(animated: true, completion: nil)
         print("Pick music success")
     }
     
@@ -252,15 +245,19 @@ class AudioRecordingViewController: UIViewController
   
 }
 //MARK:- Extension
-
+extension NSNotification.Name {
+    static let music = NSNotification.Name("Music")
+}
 extension AudioRecordingViewController: AVAudioRecorderDelegate {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
 
           // set up the player the recording
           if let recordingURL = recordingURL {
-            delegate?.didReceiveAudioURL(audioURL: recordingURL)
-              audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL) //FIXME: do/catch
-          }
+            audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL)
+            let userInfo : [String:Any] = ["musicURL": recordingURL]
+            NotificationCenter.default.post(name: .music, object: self, userInfo: userInfo)
+            
+          
             
       }
       func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
@@ -268,6 +265,7 @@ extension AudioRecordingViewController: AVAudioRecorderDelegate {
               print("Audio Recorder Error: \(error)")
           }
       }
+}
 }
 extension AudioRecordingViewController: MPMediaPickerControllerDelegate {
     func mediaPickerDidCancel(mediaPicker: MPMediaPickerController) {
@@ -284,3 +282,4 @@ extension AudioRecordingViewController: MPMediaPickerControllerDelegate {
          musicPlayer.play()
     }
 }
+

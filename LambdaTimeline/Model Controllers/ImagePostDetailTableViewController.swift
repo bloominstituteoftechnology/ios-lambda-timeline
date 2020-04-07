@@ -9,7 +9,7 @@
 import UIKit
 
 class ImagePostDetailTableViewController: UITableViewController {
-    
+ 
     //MARK:- Properties
     
     
@@ -24,9 +24,20 @@ class ImagePostDetailTableViewController: UITableViewController {
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
     //MARK:- View Life Cycle
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+       
+    }
+    @objc func updateComment(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,let audioURL = userInfo["musicURL"] as? URL  else { return }
+        navigationItem.title = try? String(contentsOf: audioURL)
+        print("SADASDAEE!")
+        print(audioURL)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+     NotificationCenter.default.addObserver(self, selector: #selector(updateComment), name: .music, object: nil)
         updateViews()
     }
     
@@ -45,6 +56,7 @@ class ImagePostDetailTableViewController: UITableViewController {
     
     private let audioController: UINavigationController = {
            let audioRecordingViewController = AudioRecordingViewController()
+        
        let vc = UINavigationController(rootViewController: audioRecordingViewController)
         vc.modalPresentationStyle = .fullScreen
         return vc
