@@ -16,6 +16,8 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 
 extension SignInViewController: LoginButtonDelegate {
+
+    
     func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
         if let error = error {
             print(error)
@@ -42,6 +44,8 @@ extension SignInViewController: LoginButtonDelegate {
     func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
         dismiss(animated: true, completion: nil)
     }
+    
+    
 }
 class SignInViewController: UIViewController {
     

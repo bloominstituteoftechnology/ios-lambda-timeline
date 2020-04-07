@@ -39,7 +39,7 @@ class ImagePostViewController: ShiftableViewController {
     
     private var scaledImage: UIImage? {
            didSet {
-            updateImage()
+            updateEffectsForColorChangeFilter()
            }
        }
        
@@ -82,17 +82,17 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     @IBAction func brightnessChanged(_ sender: UISlider) {
-        updateImage()
+        updateEffectsForColorChangeFilter()
     }
     
     
     @IBAction func saturationChanged(_ sender: UISlider) {
-        updateImage()
+        updateEffectsForColorChangeFilter()
     }
     
     
     @IBAction func contrastChanged(_ sender: UISlider) {
-      updateImage()
+      updateEffectsForColorChangeFilter()
     }
     
     private func filterColorControl(_ image: UIImage) -> UIImage? {
@@ -174,7 +174,7 @@ class ImagePostViewController: ShiftableViewController {
         return UIImage(cgImage: outputCGImage)
     }
 
-    func updateImage() {
+    func updateEffectsForColorChangeFilter() {
         if let scaledImage = scaledImage {
             imageView.image = filterColorControl(scaledImage)
         } else {
@@ -388,7 +388,7 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
 
         chooseImageButton.setTitle("", for: [])
         pickFilterButton.isEnabled = true
-        
+        titleTextField.becomeFirstResponder()
         picker.dismiss(animated: true, completion: nil)
     
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
