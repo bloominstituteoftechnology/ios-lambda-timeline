@@ -8,19 +8,26 @@
 
 import UIKit
 import AVFoundation
+import MediaPlayer
 
-
-
+protocol AudiRecordingViewControllerDelegate: AnyObject {
+    func didReceiveAudioURL(audioURL: URL)
+}
 
 class AudioRecordingViewController: UIViewController
-    
 {
-
+    //MARK:- Properties
+    
+    var songURL: URL?
+    var audioPlayer: AVAudioPlayer? {    didSet {   audioPlayer?.isMeteringEnabled = true   }    }
+     
+    weak var delegate: AudiRecordingViewControllerDelegate?
+    
 //MARK:- View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+         pickerController.delegate = self
         view.addSubview(musicView)
         view.addSubview(playButton)
         view.addSubview(browseFileButton)
@@ -37,6 +44,7 @@ class AudioRecordingViewController: UIViewController
         
         setUpNavigationItem()
     }
+    
     
     private func layoutStackView() {
         NSLayoutConstraint.activate([
@@ -71,9 +79,7 @@ class AudioRecordingViewController: UIViewController
         button.addTarget(self, action: #selector(handlePlay), for: .touchUpInside)
         return button
     }()
-    @objc func handlePlay() {
-        print("play")
-    }
+  
     
     
     private let browseFileButton : UIButton = {
@@ -90,6 +96,7 @@ class AudioRecordingViewController: UIViewController
     private let recordButton: UIButton = {
        let button =  UIButton()
         button.setImage(UIImage(systemName: "mic.fill"), for: .normal)
+        button.setImage(UIImage(systemName: "waveform"), for: .selected)
         button.backgroundColor = .red
         button.tintColor = .white
         button.layer.cornerRadius = 12
@@ -99,27 +106,133 @@ class AudioRecordingViewController: UIViewController
         
         return button
     }()
-    @objc func handleRecord() {
-        print("recording")
+    
+    // Record
+    var audioRecorder: AVAudioRecorder?
+    var recordingURL: URL?
+    var isRecording: Bool {
+        audioRecorder?.isRecording ?? false
     }
     
-    @objc func handleBrowse() {
+    private let pickerController : MPMediaPickerController = {
+           let pc = MPMediaPickerController(mediaTypes: .anyAudio)
+           pc.allowsPickingMultipleItems = true
+           pc.prompt = NSLocalizedString("Choose audio file", comment: "Pick an audio file for comment")
+           return pc
+       }()
+     
+     private let horizontalStackView: UIStackView = {
+        let stackView = UIStackView()
+         stackView.alignment = .fill
+         stackView.distribution = .fillEqually
+         stackView.axis = .horizontal
+         stackView.translatesAutoresizingMaskIntoConstraints = false
+         stackView.spacing = 10
+         return stackView
+     }()
+    
+    private func createNewRecordingURL() -> URL {
+           let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+           
+           let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
+           let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
+           
+           print("recording URL: \(file)")
+           
+           return file
+       }
+    
+     private func requestPermissionOrStartRecording() {
+            switch AVAudioSession.sharedInstance().recordPermission {
+            case .undetermined:
+                AVAudioSession.sharedInstance().requestRecordPermission { granted in
+                    guard granted == true else {
+                        print("We need microphone access")
+                        return
+                    }
+                    
+                    print("Recording permission has been granted!")
+    //                 NOTE: Invite the user to tap record again, since we just interrupted them, and they may not have been ready to record
+                }
+            case .denied:
+                print("Microphone access has been blocked.")
+                
+                let alertController = UIAlertController(title: "Microphone Access Denied", message: "Please allow this app to access your Microphone.", preferredStyle: .alert)
+                
+                alertController.addAction(UIAlertAction(title: "Open Settings", style: .default) { (_) in
+                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                })
+                
+                alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                
+                present(alertController, animated: true, completion: nil)
+            case .granted:
+                startRecording()
+            @unknown default:
+                break
+            }
+        }
+   private func startRecording() {
+       let recordingURL = createNewRecordingURL()
+
+        let audioFormat = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
+        
+        self.recordingURL = recordingURL
+        do {
+              audioRecorder = try AVAudioRecorder(url: recordingURL, format: audioFormat)
+        } catch let err as NSError {
+            print(err.localizedDescription)
+            return
+        }
+      
+        audioRecorder?.delegate = self
+        audioRecorder?.record()
+     
+    }
+   //MARK:- Objc Methods:
+    
+      @objc func handlePlay() {
+            print("play")
+            audioPlayer?.play()
+    //       try? audioPlayer = AVAudioPlayer(contentsOf: songURL!)
+    //        audioPlayer?.play()
+        }
+    
+    @objc private func handleRecord() {
+       
+        if isRecording {
+            recordButton.backgroundColor = .red
+            recordButton.isSelected = false
+            audioRecorder?.stop()
+            print("stop")
+        } else {
+            recordButton.backgroundColor = .green
+            recordButton.isSelected = true
+                    startRecording()
+                   print("recording")
+        }
+       
+        
+    }
+  @objc func handleDone() {
+        print("Pick music success")
+    }
+    
+    @objc func handleCancel() {
+        dismiss(animated: true, completion: nil)
+    }
+           
+    
+    @objc private func handleBrowse() {
         print("browsing...")
+       
+       present(pickerController, animated: true, completion: nil)
+        
     }
     
-    private let horizontalStackView: UIStackView = {
-       let stackView = UIStackView()
-        stackView.alignment = .fill
-        stackView.distribution = .fillEqually
-        stackView.axis = .horizontal
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.spacing = 10
-        return stackView
-    }()
     
     private func setUpNavigationItem() {
       
-     
         navigationItem.title = "Audio Comment"
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(handleCancel))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Pick", style: .done, target: self, action: #selector(handleDone))
@@ -135,13 +248,39 @@ class AudioRecordingViewController: UIViewController
              ])
     }
     
-    @objc func handleDone() {
-        print("Pick music success")
-    }
-    
-    @objc func handleCancel() {
-        dismiss(animated: true, completion: nil)
-    }
-    
+  
+  
+}
+//MARK:- Extension
 
+extension AudioRecordingViewController: AVAudioRecorderDelegate {
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+
+          // set up the player the recording
+          if let recordingURL = recordingURL {
+            delegate?.didReceiveAudioURL(audioURL: recordingURL)
+              audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL) //FIXME: do/catch
+          }
+            
+      }
+      func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+          if let error = error {
+              print("Audio Recorder Error: \(error)")
+          }
+      }
+}
+extension AudioRecordingViewController: MPMediaPickerControllerDelegate {
+    func mediaPickerDidCancel(mediaPicker: MPMediaPickerController) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    func mediaPicker(mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
+        //run any code you want once the user has picked their chosen audio
+   
+       let musicPlayer = MPMusicPlayerController.systemMusicPlayer
+         musicPlayer.setQueue(with: mediaItemCollection)
+        musicPlayer.play()
+         mediaPicker.dismiss(animated: true)
+       
+         musicPlayer.play()
+    }
 }
