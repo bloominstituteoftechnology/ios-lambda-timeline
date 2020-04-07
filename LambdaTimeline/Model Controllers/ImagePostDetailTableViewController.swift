@@ -44,35 +44,51 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     // MARK: - Table view data source
+    private func showCommentActionSheet() {
+        let ac = UIAlertController(title: "Add comment to picture", message: nil, preferredStyle: .actionSheet)
+        ac.addAction(UIAlertAction(title: "Add text comment", style: .default, handler: { [weak self] (action) in
+            guard let self = self else { return }
+            self.handleTextComment()
+        }))
+        ac.addAction(UIAlertAction(title: "Add audio comment", style: .default, handler: { [weak self] (action) in
+            guard let self = self else { return }
+            let audioRecordingViewController = AudioRecordingViewController()
+            audioRecordingViewController.modalPresentationStyle = .fullScreen
+            self.present(audioRecordingViewController, animated: true, completion: nil)
+        }))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+        present(ac, animated: true, completion: nil)
+    }
+    
+    private func handleTextComment() {
+                let ac = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
+        
+                var commentTextField: UITextField?
+        
+                ac.addTextField { (textField) in
+                    textField.placeholder = "Comment:"
+                    commentTextField = textField
+                }
+        
+                let addCommentAction = UIAlertAction(title: "Submit", style: .default) { (_) in
+        
+                    guard let commentText = commentTextField?.text else { return }
+        
+                    self.postController.addComment(with: commentText, to: &self.post!)
+        
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
+        ac.addAction(addCommentAction)
+        ac.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+        present(ac, animated: true, completion: nil)
+    }
     
     @IBAction func createComment(_ sender: Any) {
-        
-        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
-        
-        var commentTextField: UITextField?
-        
-        alert.addTextField { (textField) in
-            textField.placeholder = "Comment:"
-            commentTextField = textField
-        }
-        
-        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
-            
-            guard let commentText = commentTextField?.text else { return }
-            
-            self.postController.addComment(with: commentText, to: &self.post!)
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(addCommentAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true, completion: nil)
+        showCommentActionSheet()
+
+
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -89,6 +105,13 @@ class ImagePostDetailTableViewController: UITableViewController {
         
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    
+    
     
    
 }
