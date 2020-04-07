@@ -424,11 +424,17 @@
                                 <state key="normal" image="Record">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
+                                <connections>
+                                    <action selector="recordButtonTapped:" destination="X0U-N0-ucz" eventType="touchUpInside" id="Yde-iB-PAF"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CbL-DF-jZg">
                                 <rect key="frame" x="145" y="266" width="124" height="117"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button" image="Play"/>
+                                <connections>
+                                    <action selector="playButtonTapped:" destination="X0U-N0-ucz" eventType="touchUpInside" id="CiR-qY-Wao"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qS8-Or-AoT">
                                 <rect key="frame" x="32" y="484" width="110" height="48"/>
@@ -455,7 +461,11 @@
                         <viewLayoutGuide key="safeArea" id="ydU-pv-e4U"/>
                     </view>
                     <navigationItem key="navigationItem" id="ibL-fn-BEm">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="7V1-FB-vkd"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="7V1-FB-vkd">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="X0U-N0-ucz" id="pZU-FY-QFM"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="durationLabel" destination="qS8-Or-AoT" id="PYs-Hq-3Wd"/>

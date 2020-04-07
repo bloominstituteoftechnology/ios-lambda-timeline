@@ -44,7 +44,34 @@ class RecordViewController: UIViewController {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var remainingTimeLabel: UILabel!
     
+    // MARK: - IBAction
     
+    @IBAction func recordButtonTapped(_ sender: UIButton) {
+        if isRecording {
+            stopRecording()
+        } else {
+            startRecording()
+        }
+    }
+    
+    @IBAction func playButtonTapped(_ sender: UIButton) {
+        if isPlaying {
+            pause()
+        } else {
+            play()
+        }
+    }
+    
+    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+        let ac = UIAlertController(title: "Recording saved", message: "", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
+            self.cleanSlate()
+        }))
+        self.present(ac, animated: true, completion: nil)
+    }
+    
+    
+    // MARK: - View LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
@@ -129,7 +156,6 @@ class RecordViewController: UIViewController {
         remainingTimeLabel.alpha = 0
         durationLabel.text = "00:00"
     }
-    
 }
 
 // MARK: - Extensions
