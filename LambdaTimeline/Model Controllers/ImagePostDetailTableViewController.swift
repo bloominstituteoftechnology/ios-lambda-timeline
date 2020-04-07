@@ -12,28 +12,20 @@ class ImagePostDetailTableViewController: UITableViewController {
  
     //MARK:- Properties
     
-    
     var post: Post!
     var postController: PostController!
     var imageData: Data?
     
     
+    //MARK:- Outlets
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
+    
     //MARK:- View Life Cycle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-       
-    }
-    @objc func updateComment(_ notification: Notification) {
-        guard let userInfo = notification.userInfo,let audioURL = userInfo["musicURL"] as? URL  else { return }
-        navigationItem.title = try? String(contentsOf: audioURL)
-        print("SADASDAEE!")
-        print(audioURL)
-    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,15 +33,19 @@ class ImagePostDetailTableViewController: UITableViewController {
         updateViews()
     }
     
+    @objc func updateComment(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,let audioURL = userInfo["musicURL"] as? URL  else { return }
+        navigationItem.title = try? String(contentsOf: audioURL)
+        print("SUCCESS Sending URL Through NotificationCenter!")
+        print(audioURL)
+    }
     func updateViews() {
         
-        guard let imageData = imageData,
-            let image = UIImage(data: imageData) else { return }
-        
+        guard let imageData = imageData,   let image = UIImage(data: imageData) else { return }
+     
         title = post?.title
-        
+
         imageView.image = image
-        
         titleLabel.text = post.title
         authorLabel.text = post.author.displayName
     }
@@ -104,14 +100,10 @@ class ImagePostDetailTableViewController: UITableViewController {
     
     @IBAction func createComment(_ sender: Any) {
         showCommentActionSheet()
-
-
     }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (post?.comments.count ?? 0) - 1
     }
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
         
@@ -126,9 +118,5 @@ class ImagePostDetailTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
     }
-    
-    
-    
-    
-   
+
 }

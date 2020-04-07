@@ -208,11 +208,8 @@ extension SignInViewController: GIDSignInDelegate {
         
         view.addConstraints([buttonCenterXConstraint,
                              buttonCenterYConstraint,
-                             buttonWidthConstraint,
+                             buttonWidthConstraint  ])
                              
-        
-        ])
-        
         NSLayoutConstraint.activate([
           
             signInWithAppleButton.bottomAnchor.constraint(equalTo: signInWithGoogleButton.topAnchor,constant: -20),

@@ -285,6 +285,7 @@ extension AudioRecordingViewController: AVAudioRecorderDelegate {
           // set up the player the recording
           if let recordingURL = recordingURL {
             audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL)
+            
             let userInfo : [String:Any] = ["musicURL": recordingURL]
             NotificationCenter.default.post(name: .music, object: self, userInfo: userInfo)
     
