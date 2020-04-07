@@ -43,6 +43,13 @@ class ImagePostDetailTableViewController: UITableViewController {
         authorLabel.text = post.author.displayName
     }
     
+    private let audioController: UINavigationController = {
+           let audioRecordingViewController = AudioRecordingViewController()
+       let vc = UINavigationController(rootViewController: audioRecordingViewController)
+        vc.modalPresentationStyle = .fullScreen
+        return vc
+    }()
+    
     // MARK: - Table view data source
     private func showCommentActionSheet() {
         let ac = UIAlertController(title: "Add comment to picture", message: nil, preferredStyle: .actionSheet)
@@ -52,9 +59,7 @@ class ImagePostDetailTableViewController: UITableViewController {
         }))
         ac.addAction(UIAlertAction(title: "Add audio comment", style: .default, handler: { [weak self] (action) in
             guard let self = self else { return }
-            let audioRecordingViewController = AudioRecordingViewController()
-            audioRecordingViewController.modalPresentationStyle = .fullScreen
-            self.present(audioRecordingViewController, animated: true, completion: nil)
+            self.present(self.audioController, animated: true, completion: nil)
         }))
         ac.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
         present(ac, animated: true, completion: nil)
