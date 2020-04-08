@@ -10,18 +10,20 @@ import UIKit
 import AVFoundation
 
 class ViewController: UIViewController {
+//
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        requestPermissionAndShowCamera()
+//    }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         requestPermissionAndShowCamera()
     }
     
     private func requestPermissionAndShowCamera() {
         let status = AVCaptureDevice.authorizationStatus(for: .video)
-        
         switch status {
-            
             case .notDetermined:
                 requestPermission()
             case .restricted:
@@ -47,7 +49,7 @@ class ViewController: UIViewController {
     }
     
     private func showCamera() {
-        performSegue(withIdentifier: "ShowCamera", sender: self)
+        performSegue(withIdentifier: "ShowCameraSegue", sender: self)
     }
 }
 
