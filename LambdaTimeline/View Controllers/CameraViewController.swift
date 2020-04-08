@@ -17,7 +17,7 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var cameraPreview: CameraPreviewView!
     @IBOutlet weak var recordButton: UIButton!
     
-    //MARK: View Lifecycle
+    //MARK: View Lifecyclegit p
     override func viewDidLoad() {
         super.viewDidLoad()
 
