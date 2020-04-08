@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import CoreImage
+import CoreImage.CIFilterBuiltins
+
 
 class ImagePostDetailTableViewController: UITableViewController {
     
@@ -32,30 +35,13 @@ class ImagePostDetailTableViewController: UITableViewController {
     
     @IBAction func createComment(_ sender: Any) {
         
-        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Add a comment", message: "Choose type of the comment:", preferredStyle: .alert)
         
-        var commentTextField: UITextField?
+        alert.addAction(UIAlertAction(title: "Text Comment", style: .cancel, handler: nil))
         
-        alert.addTextField { (textField) in
-            textField.placeholder = "Comment:"
-            commentTextField = textField
-        }
-        
-        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
-            
-            guard let commentText = commentTextField?.text else { return }
-            
-            self.postController.addComment(with: commentText, to: &self.post!)
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(addCommentAction)
-        alert.addAction(cancelAction)
+        alert.addAction(UIAlertAction(title: "Audio Comment", style: .default, handler: { (action) in
+            self.performSegue(withIdentifier: "showAudio", sender: self)
+        }))
         
         present(alert, animated: true, completion: nil)
     }
