@@ -11,9 +11,10 @@ import AVFoundation
 
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        requestPermissionAndShowCamera()
     }
     
     private func requestPermissionAndShowCamera() {
@@ -21,13 +22,13 @@ class ViewController: UIViewController {
         
         switch status {
             
-            case .notDetermined: // 1st run and the user hasn't been asked to give permission
+            case .notDetermined:
                 requestPermission()
-            case .restricted: // Parental controls limit access to video
+            case .restricted:
                 fatalError("Your don't have permission to use the camera, talk to your parent about enabling")
-            case .denied: // 2nd+ run, the user didn't trust us, or they said no by accident (show how to enable)
+            case .denied:
                 fatalError("Show them a link to settings to get access to video")
-            case .authorized: // 2nd+ run, they've given permission to use the camera
+            case .authorized:
                 showCamera()
             @unknown default:
                 fatalError("Didn't handle a new state for AVCaptureDevice authorization")
