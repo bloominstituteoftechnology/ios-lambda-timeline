@@ -76,22 +76,25 @@ class VideoRecordingViewController: UIViewController {
         view.backgroundColor = #colorLiteral(red: 0.6909318566, green: 0.7678380609, blue: 0.870224297, alpha: 1)
         return view
     }()
+    
+    //MARK:- Private:-
+    
     private func addSwipeGestureToView() {
         let directions: [UISwipeGestureRecognizer.Direction] = [.right, .left, .up, .down]
         for direction in directions {
-            let gesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(sender:)))
+            let gesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(sender:)))
             gesture.direction = direction
             view.addGestureRecognizer(gesture)
         }
     }
     
-   private func swipeCameraPosition() {
+    private func swipeCameraPosition() {
         //Change camera source
         //Indicate that some changes will be made to the session
         captureSession.beginConfiguration()
         //Remove existing input
         guard let currentCameraInput: AVCaptureInput = captureSession.inputs.first else {  return   }
-           
+        
         //Get new input
         var newVideoInput: AVCaptureDeviceInput!
         var audioInput: AVCaptureDeviceInput!
@@ -103,7 +106,7 @@ class VideoRecordingViewController: UIViewController {
         //Add input to session
         do {
             newVideoInput = try AVCaptureDeviceInput(device: newCamera)
-              let microphone = BestDevice.bestAudio()
+            let microphone = BestDevice.bestAudio()
             audioInput = try AVCaptureDeviceInput(device: microphone)
         } catch let err as NSError {
             print(err.localizedDescription)
@@ -118,15 +121,78 @@ class VideoRecordingViewController: UIViewController {
             captureSession.addInput(newVideoInput)
             captureSession.addInput(audioInput)
         }
-
+        
         captureSession.commitConfiguration()
     }
-
-    @objc func handleSwipe(sender: UISwipeGestureRecognizer) {
-        print(sender.direction)
-        swipeCameraPosition()
+    
+    private func setUpCaptureSession() {
+        
+        captureSession.beginConfiguration()
+        let camera = BestDevice.bestCamera(position: .back)
+        
+        guard let captureInput = try? AVCaptureDeviceInput(device: camera),
+            captureSession.canAddInput(captureInput) else { fatalError("Can't create the input from the camera  ") }
+        
+        captureSession.addInput(captureInput)
+        
+        if captureSession.canSetSessionPreset(.hd1920x1080) {
+            captureSession.sessionPreset = .hd1920x1080
+            
+        }
+        
+        let microphone = BestDevice.bestAudio()
+        guard let audioInput = try? AVCaptureDeviceInput(device: microphone),
+            captureSession.canAddInput(audioInput) else { fatalError("Can't create microphone input") }
+        captureSession.addInput(audioInput)
+        // Video
+        
+        // Recording to disk
+        guard captureSession.canAddOutput(fileOutput) else {
+            fatalError("Cannot record to disk")
+        }
+        captureSession.addOutput(fileOutput)
+        
+        captureSession.commitConfiguration()
+        
+        // Live preview
+        cameraPreviewView.session = captureSession
     }
     
+    private func playMovie(url: URL) {
+        
+        player = AVPlayer(url: url)
+        let playerLayer = AVPlayerLayer(player: player)
+        
+        var topRect = view.bounds
+        topRect.size.height = topRect.size.height / 4
+        topRect.size.width = topRect.size.width / 4
+        topRect.origin.y = view.layoutMargins.top
+        
+        playerLayer.frame = topRect
+        view.layer.addSublayer(playerLayer)
+        
+        player.play()
+    }
+       
+       private func newRecordingURL() -> URL {
+           let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+           let formatter = ISO8601DateFormatter()
+           formatter.formatOptions = [.withInternetDateTime]
+           let name = formatter.string(from: Date())
+           let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
+           return fileURL
+       }
+       
+       private func updateViews() {
+             videoRecordButton.isSelected = fileOutput.isRecording
+         }
+       
+       private func replayMovie() {
+           guard let player  = player else  { return }
+           
+           player.seek(to: .zero)
+           player.play()
+       }
     //MARK:- View Life Cycle
   
     override func viewDidLoad() {
@@ -159,7 +225,7 @@ class VideoRecordingViewController: UIViewController {
      }
     
     
-    //MARK:- Privates
+    //MARK:- UI WORKS
     
     private func setUpConstraintsForViews() {
         
@@ -184,6 +250,7 @@ class VideoRecordingViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(handleBack))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Post", style: .done, target: self, action: #selector(handleDone))
     }
+  //MARK:- Objc Functions
     
     @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
     
@@ -194,42 +261,12 @@ class VideoRecordingViewController: UIViewController {
                break
            }
           }
- 
-    private func setUpCaptureSession() {
-      
-          captureSession.beginConfiguration()
-        let camera = BestDevice.bestCamera(position: .back)
-          
-          guard let captureInput = try? AVCaptureDeviceInput(device: camera),
-              captureSession.canAddInput(captureInput) else { fatalError("Can't create the input from the camera  ") }
-          
-          captureSession.addInput(captureInput)
-          
-          if captureSession.canSetSessionPreset(.hd1920x1080) {
-              captureSession.sessionPreset = .hd1920x1080
-              
-          }
-        
-        let microphone = BestDevice.bestAudio()
-          guard let audioInput = try? AVCaptureDeviceInput(device: microphone),
-              captureSession.canAddInput(audioInput) else { fatalError("Can't create microphone input") }
-              captureSession.addInput(audioInput)
-          // Video
-          
-          // Recording to disk
-          guard captureSession.canAddOutput(fileOutput) else {
-              fatalError("Cannot record to disk")
-          }
-          captureSession.addOutput(fileOutput)
-
-          captureSession.commitConfiguration()
-          
-           // Live preview
-          cameraPreviewView.session = captureSession
+    
+    @objc func handleSwipeGesture(sender: UISwipeGestureRecognizer) {
+          print(sender.direction)
+          swipeCameraPosition()
       }
-    
-    //MARK:- Objc functions
-    
+ 
     @objc func handleDone() {
         print("Post video to Sever ...")
     }
@@ -237,43 +274,7 @@ class VideoRecordingViewController: UIViewController {
     @objc func handleBack() {
         dismiss(animated: true, completion: nil)
     }
-    
-   private func playMovie(url: URL) {
-    
-          player = AVPlayer(url: url)
-          let playerLayer = AVPlayerLayer(player: player)
-          
-          var topRect = view.bounds
-          topRect.size.height = topRect.size.height / 4
-          topRect.size.width = topRect.size.width / 4
-          topRect.origin.y = view.layoutMargins.top
-          
-          playerLayer.frame = topRect
-          view.layer.addSublayer(playerLayer)
-          
-          player.play()
-      }
-    
-    private func newRecordingURL() -> URL {
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime]
-        let name = formatter.string(from: Date())
-        let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
-        return fileURL
-    }
-    
-    private func updateViews() {
-          videoRecordButton.isSelected = fileOutput.isRecording
-      }
-    
-    private func replayMovie() {
-        guard let player  = player else  { return }
-        
-        player.seek(to: .zero)
-        player.play()
-    }
-    
+ 
 }
 extension VideoRecordingViewController: AVCaptureFileOutputRecordingDelegate {
     
