@@ -101,16 +101,15 @@ class CameraViewController: UIViewController {
         fatalError("No cameras on the device (or you're running this on a Simulator which isn't supported)")
     }
     
-      private func newRecordingURL() -> URL {
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-
-        let formatter = ISO8601DateFormatter()
-        formatter.formatOptions = [.withInternetDateTime]
-
-        let name = formatter.string(from: Date())
-        let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
-        return fileURL
-    }
+      private func newRecordingURL() {
+          let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+          let formatter = ISO8601DateFormatter()
+          formatter.formatOptions = [.withInternetDateTime]
+          let name = formatter.string(from: Date())
+          let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
+          
+          recordURL = fileURL
+      }
     
     private func deletePreviousRecording() {
         let fileManager = FileManager.default
