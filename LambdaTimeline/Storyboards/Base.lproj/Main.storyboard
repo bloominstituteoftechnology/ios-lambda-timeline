@@ -92,11 +92,18 @@
                                 <action selector="signout:" destination="hPa-Td-5A3" id="Kmt-q7-uhM"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="cyx-zg-Fv9">
-                            <connections>
-                                <action selector="addPost:" destination="hPa-Td-5A3" id="7DV-9r-fSz"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="cyx-zg-Fv9">
+                                <connections>
+                                    <action selector="addPost:" destination="hPa-Td-5A3" id="7DV-9r-fSz"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" image="video.fill" catalog="system" id="o3I-Mo-Id1">
+                                <connections>
+                                    <segue destination="MBN-9c-oqb" kind="show" id="Qml-DF-DVF"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="jaI-fq-Woc"/>
@@ -106,6 +113,37 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1216.8" y="108.39580209895054"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="eWw-5q-zH3">
+            <objects>
+                <viewController id="MBN-9c-oqb" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="TSq-Ol-xPJ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dwb-V9-XDM">
+                                <rect key="frame" x="150" y="670" width="114" height="114"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Record"/>
+                            </button>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EUx-NX-PEW">
+                                <rect key="frame" x="20" y="802" width="374" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="0UF-Go-haV"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="UV4-Av-zaS">
+                        <barButtonItem key="rightBarButtonItem" title="Post" id="ZuF-OY-wMS"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nKG-bJ-n4v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1989.8550724637682" y="-542.41071428571422"/>
         </scene>
         <!--Title-->
         <scene sceneID="kP9-yp-I8H">
@@ -250,7 +288,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXa-A2-VJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1968.1159420289857" y="-195.53571428571428"/>
+            <point key="canvasLocation" x="1990" y="108"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gdW-Je-ais">
@@ -407,7 +445,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdL-Y3-4ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1968.8" y="472.71364317841085"/>
+            <point key="canvasLocation" x="1990" y="808"/>
         </scene>
         <!--Record View Controller-->
         <scene sceneID="W9r-5g-PcC">
@@ -478,11 +516,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lXr-ss-5tt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2660.8695652173915" y="471.42857142857139"/>
+            <point key="canvasLocation" x="2809" y="808"/>
         </scene>
     </scenes>
     <resources>
         <image name="Play" width="123" height="117"/>
         <image name="Record" width="450" height="450"/>
+        <image name="video.fill" catalog="system" width="128" height="82"/>
     </resources>
 </document>
