@@ -31,6 +31,8 @@
 		46D571F82173FC2700E7FF73 /* ImagePostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */; };
 		B610927D243BB11900B5B706 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B610927C243BB11900B5B706 /* GoogleService-Info.plist */; };
 		B610927F243BCD1200B5B706 /* UIImage+Scaling.swift in Sources */ = {isa = PBXBuildFile; fileRef = B610927E243BCD1200B5B706 /* UIImage+Scaling.swift */; };
+		B61D5DBD243E686E00343E63 /* VideoRecordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61D5DBC243E686E00343E63 /* VideoRecordingViewController.swift */; };
+		B61D5DBF243E74F400343E63 /* PermissionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B61D5DBE243E74F400343E63 /* PermissionHelper.swift */; };
 		B63DA83F243D0EDC00801722 /* AudioRecordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63DA83E243D0EDC00801722 /* AudioRecordingViewController.swift */; };
 		B65CCF29243D70CA002175C6 /* FetchAudioOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65CCF28243D70CA002175C6 /* FetchAudioOperation.swift */; };
 		B6C1E883243D5CF00014C34E /* AudioCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6C1E881243D5CF00014C34E /* AudioCommentCell.swift */; };
@@ -69,6 +71,8 @@
 		B610927C243BB11900B5B706 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B610927E243BCD1200B5B706 /* UIImage+Scaling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Scaling.swift"; sourceTree = "<group>"; };
 		B6109280243C104B00B5B706 /* LambdaTimeline.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LambdaTimeline.entitlements; sourceTree = "<group>"; };
+		B61D5DBC243E686E00343E63 /* VideoRecordingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecordingViewController.swift; sourceTree = "<group>"; };
+		B61D5DBE243E74F400343E63 /* PermissionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionHelper.swift; sourceTree = "<group>"; };
 		B63DA83E243D0EDC00801722 /* AudioRecordingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecordingViewController.swift; sourceTree = "<group>"; };
 		B65CCF28243D70CA002175C6 /* FetchAudioOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchAudioOperation.swift; sourceTree = "<group>"; };
 		B6C1E881243D5CF00014C34E /* AudioCommentCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCommentCell.swift; sourceTree = "<group>"; };
@@ -176,6 +180,7 @@
 				46A0366921700F5100E7FF73 /* PostsCollectionViewController.swift */,
 				46CFE6F421707D0000E7FF73 /* ImagePostViewController.swift */,
 				B63DA83E243D0EDC00801722 /* AudioRecordingViewController.swift */,
+				B61D5DBC243E686E00343E63 /* VideoRecordingViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -203,6 +208,7 @@
 		46CFE7062171573F00E7FF73 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				B61D5DBE243E74F400343E63 /* PermissionHelper.swift */,
 				46CFE7052171573200E7FF73 /* Operations */,
 				46D571F62173D6D200E7FF73 /* Extensions */,
 				46D571F22172D43B00E7FF73 /* Cache.swift */,
@@ -367,12 +373,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B61D5DBD243E686E00343E63 /* VideoRecordingViewController.swift in Sources */,
 				B65CCF29243D70CA002175C6 /* FetchAudioOperation.swift in Sources */,
 				46A0366D2170158900E7FF73 /* SignInViewController.swift in Sources */,
 				B610927F243BCD1200B5B706 /* UIImage+Scaling.swift in Sources */,
 				46CFE6FB21714E6100E7FF73 /* Author.swift in Sources */,
 				46CFE6F92170862C00E7FF73 /* ShiftableViewController.swift in Sources */,
 				4646377C216FDE4B00E7FF73 /* AppDelegate.swift in Sources */,
+				B61D5DBF243E74F400343E63 /* PermissionHelper.swift in Sources */,
 				46CFE6FD217154F500E7FF73 /* Networking.swift in Sources */,
 				46CFE6F521707D0000E7FF73 /* ImagePostViewController.swift in Sources */,
 				46CFE6FF2171556D00E7FF73 /* ConcurrentOperation.swift in Sources */,
@@ -540,7 +548,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4939K9623X;
 				INFOPLIST_FILE = "$(SRCROOT)/LambdaTimeline/Resources/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -548,7 +556,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nick.LambdaTimeline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -561,7 +569,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4939K9623X;
 				INFOPLIST_FILE = "$(SRCROOT)/LambdaTimeline/Resources/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -569,7 +577,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.Nick.LambdaTimeline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

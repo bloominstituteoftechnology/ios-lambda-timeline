@@ -46,6 +46,13 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         dismiss(animated: true, completion: nil)
     }
     
+     let videoRecordingViewController : UINavigationController = {
+        let vc = VideoRecordingViewController()
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
+        return nav
+    }()
+    
     @IBAction func addPost(_ sender: UIBarButtonItem) {
         
         let alert = UIAlertController(title: "New Post", message: "Which kind of post do you want to create?", preferredStyle: .actionSheet)
@@ -53,10 +60,15 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         let imagePostAction = UIAlertAction(title: "Image", style: .default) { (_) in
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
+        let videoPostAction = UIAlertAction(title: "Video", style: .default) { (_) in
+         
+            self.requestPermissionAndShowCamera()
+        }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
-        alert.popoverPresentationController?.barButtonItem = sender 
+        
         alert.addAction(imagePostAction)
+        alert.addAction(videoPostAction)
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true, completion: nil)

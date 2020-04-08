@@ -24,14 +24,9 @@ class ImagePostViewController: ShiftableViewController {
     //MARK:- Properties
     private var originalImage: UIImage? {
           didSet {
-             // resize a scaledImage anytime this property is set, so that the UI can update
-              // faster with a "live preview"
               guard let originalImage = originalImage else { return }
               var scaledSize = imageView.bounds.size
-              let scale = UIScreen.main.scale // 1x (no iPhones) 2x 3x
-              //how many pixels can we fit on the screen?
-              
-         
+              let scale = UIScreen.main.scale
               scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
               scaledImage = originalImage.imageByScaling(toSize: scaledSize)
           }
@@ -229,12 +224,6 @@ class ImagePostViewController: ShiftableViewController {
         
         ac.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
         
-        if let popoverController = ac.popoverPresentationController {
-            popoverController.sourceView = self.view
-            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
-            popoverController.permittedArrowDirections = []
-            
-        }
         present(ac, animated: true)
     
     }
@@ -277,7 +266,7 @@ class ImagePostViewController: ShiftableViewController {
    private func updateViews() {
         
         guard let imageData = imageData,  let image = UIImage(data: imageData) else {
-                title = "New Post"
+                title = "New Image Post"
                 return
         }
         
