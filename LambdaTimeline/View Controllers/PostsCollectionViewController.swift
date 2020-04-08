@@ -39,7 +39,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         let firebaseAuth = Auth.auth()
         do {
           try firebaseAuth.signOut()
-             dismiss(animated: true, completion: nil)
+           
         } catch let signOutError as NSError {
           print ("Error signing out: %@", signOutError)
         }
@@ -81,9 +81,10 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
+            case .audio:
+            // configure audio cell
         }
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
@@ -96,13 +97,13 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         case .image:
             
             guard let ratio = post.ratio else { return size }
-            
             size.height = size.width * ratio
+            case .audio:
+            // configure audio cell
         }
         
         return size
     }
-    
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)

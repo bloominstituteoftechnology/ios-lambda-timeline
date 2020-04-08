@@ -30,7 +30,7 @@ class AudioRecordingViewController: UIViewController
         view.addSubview(playButton)
         view.addSubview(browseFileButton)
         view.addSubview(recordButton)
-           view.addSubview(timeLabel)
+        view.addSubview(timeLabel)
         view.addSubview(horizontalStackView)
      
         
@@ -196,8 +196,7 @@ class AudioRecordingViewController: UIViewController
         audioPlayer?.play()
         
     }
-    //Timer
-    
+  
     @objc private func handleRecord() {
         
         if isRecording {
@@ -230,7 +229,7 @@ class AudioRecordingViewController: UIViewController
         present(pickerController, animated: true, completion: nil)
         
     }
-    
+      //Timer
     var timer: Timer?
        var count: TimeInterval = 0
        func updateTimeLabel() {
@@ -282,10 +281,14 @@ extension NSNotification.Name {
 extension AudioRecordingViewController: AVAudioRecorderDelegate {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
 
-          // set up the player the recording
           if let recordingURL = recordingURL {
-            audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL)
-            
+            do {
+                 audioPlayer = try AVAudioPlayer(contentsOf: recordingURL)
+            } catch let error as NSError {
+                print(error.localizedDescription)
+                return
+            }
+           
             let userInfo : [String:Any] = ["musicURL": recordingURL]
             NotificationCenter.default.post(name: .music, object: self, userInfo: userInfo)
     
@@ -303,7 +306,6 @@ extension AudioRecordingViewController: MPMediaPickerControllerDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     func mediaPicker(mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
-        //run any code you want once the user has picked their chosen audio
    
         let musicPlayer = MPMusicPlayerController.systemMusicPlayer
         musicPlayer.setQueue(with: mediaItemCollection)

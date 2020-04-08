@@ -50,17 +50,17 @@ class ImagePostViewController: ShiftableViewController {
     
     // MARK:- IBOutlets
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleTextField: UITextField! {    didSet {    titleTextField.becomeFirstResponder()  }  }
+    @IBOutlet weak var titleTextField: UITextField! {  didSet {  titleTextField.becomeFirstResponder() } }
     
     @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
     
-    @IBOutlet weak var brightnessLabel: UILabel! {    didSet {    brightnessLabel.isHidden = true }  }
-    @IBOutlet weak var brightnessSlider: UISlider! {    didSet {   brightnessSlider.isHidden = true } }
+    @IBOutlet weak var brightnessLabel: UILabel! {  didSet {    brightnessLabel.isHidden = true } }
+    @IBOutlet weak var brightnessSlider: UISlider! { didSet {   brightnessSlider.isHidden = true } }
     @IBOutlet weak var saturationLabel: UILabel! {  didSet {  saturationLabel.isHidden = true } }
-    @IBOutlet weak var saturationSlider: UISlider! {   didSet {  saturationSlider.isHidden = true } }
+    @IBOutlet weak var saturationSlider: UISlider! { didSet {  saturationSlider.isHidden = true } }
     @IBOutlet weak var constrastLabel: UILabel! {   didSet {    constrastLabel.isHidden = true } }
     @IBOutlet weak var constrastSlider: UISlider! {  didSet {  constrastSlider.isHidden = true }  }
     @IBOutlet weak var pickFilterButton: UIButton! { didSet  { pickFilterButton.isEnabled = false } }
@@ -236,8 +236,7 @@ class ImagePostViewController: ShiftableViewController {
             
         }
         present(ac, animated: true)
-      
-        
+    
     }
     
     private func showErrorAlert() {
@@ -249,16 +248,13 @@ class ImagePostViewController: ShiftableViewController {
 
         if imageView.image == nil || imageView.image == scaledImage {
           showErrorAlert()
-           
         } else {
              imageView.image = scaledImage
         }
        
     }
     
-    
     //MARK:- View Life Cycle
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -269,9 +265,7 @@ class ImagePostViewController: ShiftableViewController {
         
         updateViews()
     }
-    
-    
-    
+
     @IBAction func titleTextFieldDidChanged(_ sender: UITextField) {
         navigationItem.title = sender.text
     }
@@ -279,14 +273,10 @@ class ImagePostViewController: ShiftableViewController {
     func textFieldDidEndEditing(_ textField: UITextField) {
         navigationItem.title = textField.text
     }
-    
-   
-  
 
    private func updateViews() {
         
-        guard let imageData = imageData,
-            let image = UIImage(data: imageData) else {
+        guard let imageData = imageData,  let image = UIImage(data: imageData) else {
                 title = "New Post"
                 return
         }
@@ -315,9 +305,7 @@ class ImagePostViewController: ShiftableViewController {
             self.present(imagePicker, animated: true, completion: nil)
               
         }
-     
     }
-    
     @IBAction func createPost(_ sender: Any) {
         
         view.endEditing(true)
@@ -379,12 +367,8 @@ class ImagePostViewController: ShiftableViewController {
         
         view.layoutSubviews()
     }
-    
- 
+  
 }
-
-
-
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
