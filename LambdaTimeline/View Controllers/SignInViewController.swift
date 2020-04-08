@@ -10,9 +10,6 @@ import UIKit
 import Firebase
 import GoogleSignIn
 
-//created branch just see if its working
-
-
 class SignInViewController: UIViewController {
 
     override func viewDidLoad() {

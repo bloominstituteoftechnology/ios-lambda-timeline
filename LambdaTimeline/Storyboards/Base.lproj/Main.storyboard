@@ -578,6 +578,9 @@
                                 <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" image="Record-1"/>
                                 <state key="selected" image="Stop-1"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="Jnd-tp-AEx" eventType="touchUpInside" id="44J-O5-dqn"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -592,7 +595,11 @@
                         <viewLayoutGuide key="safeArea" id="X7p-1l-7k3"/>
                     </view>
                     <navigationItem key="navigationItem" id="QAv-BH-r75">
-                        <barButtonItem key="rightBarButtonItem" title="Next" id="lS2-gO-A7S"/>
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="lS2-gO-A7S">
+                            <connections>
+                                <action selector="nextButtonTapped:" destination="Jnd-tp-AEx" id="xF9-Wo-aNw"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="cameraView" destination="NtK-f2-PsD" id="9YK-pZ-Kjv"/>
