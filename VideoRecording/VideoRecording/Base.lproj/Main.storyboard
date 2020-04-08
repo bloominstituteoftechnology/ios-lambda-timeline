@@ -41,47 +41,50 @@
                                     <constraint firstAttribute="width" secondItem="vLq-59-PO2" secondAttribute="height" multiplier="1:1" id="MwF-ee-w3x"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ClO-w9-Nvk">
-                                <rect key="frame" x="192" y="498" width="30" height="57"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="47"/>
-                                <state key="normal" image="video" catalog="system"/>
-                                <state key="selected" image="video.fill" catalog="system"/>
-                                <connections>
-                                    <action selector="cameraTapped:" destination="zfk-2e-CzN" eventType="touchUpInside" id="7dL-dY-8LS"/>
-                                </connections>
-                            </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="210" translatesAutoresizingMaskIntoConstraints="NO" id="mdk-Gu-mG8">
-                                <rect key="frame" x="81.5" y="595" width="251" height="60"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="anh-Rw-Zwc">
+                                <rect key="frame" x="81.5" y="685" width="251" height="157"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Rw-f6-0nB">
-                                        <rect key="frame" x="0.0" y="0.0" width="24" height="60"/>
-                                        <state key="normal" image="camera.rotate" catalog="system"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ClO-w9-Nvk">
+                                        <rect key="frame" x="110.5" y="0.0" width="30" height="57"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="47"/>
+                                        <state key="normal" image="video" catalog="system"/>
+                                        <state key="selected" image="video.fill" catalog="system"/>
                                         <connections>
-                                            <action selector="flipTapped:" destination="zfk-2e-CzN" eventType="touchUpInside" id="qnW-H0-eC5"/>
+                                            <action selector="cameraTapped:" destination="zfk-2e-CzN" eventType="touchUpInside" id="7dL-dY-8LS"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PUa-7i-gJQ">
-                                        <rect key="frame" x="234" y="0.0" width="17" height="60"/>
-                                        <state key="normal" image="bolt" catalog="system"/>
-                                        <state key="selected" image="bolt.fill" catalog="system"/>
-                                        <connections>
-                                            <action selector="lightTapped:" destination="zfk-2e-CzN" eventType="touchUpInside" id="lCx-Vf-4un"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="210" translatesAutoresizingMaskIntoConstraints="NO" id="mdk-Gu-mG8">
+                                        <rect key="frame" x="0.0" y="97" width="251" height="60"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Rw-f6-0nB">
+                                                <rect key="frame" x="0.0" y="0.0" width="24" height="60"/>
+                                                <state key="normal" image="camera.rotate" catalog="system"/>
+                                                <connections>
+                                                    <action selector="flipTapped:" destination="zfk-2e-CzN" eventType="touchUpInside" id="qnW-H0-eC5"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PUa-7i-gJQ">
+                                                <rect key="frame" x="234" y="0.0" width="17" height="60"/>
+                                                <state key="normal" image="bolt" catalog="system"/>
+                                                <state key="selected" image="bolt.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="lightTapped:" destination="zfk-2e-CzN" eventType="touchUpInside" id="lCx-Vf-4un"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="ieb-e0-vD8"/>
+                                        </constraints>
+                                    </stackView>
                                 </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="ieb-e0-vD8"/>
-                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="mdk-Gu-mG8" firstAttribute="centerX" secondItem="HXS-EN-ZkN" secondAttribute="centerX" id="4fr-Xs-ad4"/>
-                            <constraint firstItem="ClO-w9-Nvk" firstAttribute="centerX" secondItem="HXS-EN-ZkN" secondAttribute="centerX" id="DDZ-UV-3N4"/>
-                            <constraint firstItem="mdk-Gu-mG8" firstAttribute="top" secondItem="ClO-w9-Nvk" secondAttribute="bottom" constant="40" id="FUK-qs-rNN"/>
                             <constraint firstItem="GVe-OL-Xh1" firstAttribute="trailing" secondItem="vLq-59-PO2" secondAttribute="trailing" id="GCe-bH-BTm"/>
-                            <constraint firstItem="ClO-w9-Nvk" firstAttribute="top" secondItem="vLq-59-PO2" secondAttribute="bottom" constant="40" id="HEj-lC-7Mt"/>
+                            <constraint firstItem="GVe-OL-Xh1" firstAttribute="bottom" secondItem="anh-Rw-Zwc" secondAttribute="bottom" constant="20" id="MzP-KS-CvC"/>
                             <constraint firstItem="vLq-59-PO2" firstAttribute="top" secondItem="GVe-OL-Xh1" secondAttribute="top" id="NN6-xJ-hfq"/>
+                            <constraint firstItem="anh-Rw-Zwc" firstAttribute="centerX" secondItem="HXS-EN-ZkN" secondAttribute="centerX" id="sY5-n9-GE4"/>
                             <constraint firstItem="vLq-59-PO2" firstAttribute="leading" secondItem="GVe-OL-Xh1" secondAttribute="leading" id="tlI-Z4-xtd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="GVe-OL-Xh1"/>

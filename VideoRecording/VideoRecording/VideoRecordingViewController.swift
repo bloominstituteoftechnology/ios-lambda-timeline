@@ -10,13 +10,14 @@ import UIKit
 import AVFoundation
 
 class VideoRecordingViewController: UIViewController {
-
+    
     // MARK: - Properties
     
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     
     private var player: AVPlayer!
+    private var cameraIsFlipped: Bool = false
     
     // MARK: - Outlets
     
@@ -30,21 +31,56 @@ class VideoRecordingViewController: UIViewController {
     
     @IBAction func cameraTapped(_ sender: UIButton) {
         if fileOutput.isRecording {
-                      fileOutput.stopRecording()  // Future: Play with pausing using another button
-                  } else {
-                      fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
-                  }
+            fileOutput.stopRecording()  // Future: Play with pausing using another button
+        } else {
+            fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
+        }
     }
     @IBAction func flipTapped(_ sender: UIButton) {
+        flipCameraButton.isSelected = !flipCameraButton.isSelected
     }
     @IBAction func lightTapped(_ sender: UIButton) {
+        
+        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [bestCamera().deviceType],
+        mediaType: .video,
+        position: .back)
+        
+        let device = deviceDiscoverySession.devices.first!
+        
+        guard device.hasTorch,
+            device.isTorchAvailable,
+            !cameraIsFlipped else { return }
+        
+        if !lightButton.isSelected {
+            lightButton.isSelected = true
+            
+            do{
+                try device.lockForConfiguration()
+                device.torchMode = .on
+                device.unlockForConfiguration()
+            } catch {
+                NSLog("\(error)")
+                print("Torch could not be used")
+            }
+        } else {
+            lightButton.isSelected = false
+            do{
+                try device.lockForConfiguration()
+                device.torchMode = .off
+                device.unlockForConfiguration()
+            } catch {
+                NSLog("\(error)")
+                print("Torch could not be used")
+            }
+            print("Torch is not available")
+        }
     }
     
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         cameraView.videoPlayerView.videoGravity = .resizeAspectFill
         
         setUpCaptureSession()
@@ -58,7 +94,7 @@ class VideoRecordingViewController: UIViewController {
         
         captureSession.startRunning()
     }
-
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
@@ -75,10 +111,10 @@ class VideoRecordingViewController: UIViewController {
         print("tap")
         
         switch tapGesture.state {
-            case .ended:
-                replayVideoRecording()
-            default:
-                break // ignore all other states
+        case .ended:
+            replayVideoRecording()
+        default:
+            break // ignore all other states
         }
     }
     
@@ -93,59 +129,58 @@ class VideoRecordingViewController: UIViewController {
         player.seek(to: .zero)
         player.play()
     }
-
+    
     private func setUpCaptureSession() {
+        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [bestCamera().deviceType],
+                                                                      mediaType: .video,
+                                                                      position: .back)
         
         captureSession.beginConfiguration()
         
-        // Add inputs
-        let camera = bestCamera()
-        
-        // Video
-        guard let captureInput = try? AVCaptureDeviceInput(device: camera),
+//        let camera = bestCamera()
+        guard let captureInput = try? AVCaptureDeviceInput(device: deviceDiscoverySession.devices.first!),
             captureSession.canAddInput(captureInput) else {
                 fatalError("Can't create the input form the camera")
         }
         captureSession.addInput(captureInput)
         
-        if captureSession.canSetSessionPreset(.hd1920x1080) { // FUTURE: Play with 4k
+        if captureSession.canSetSessionPreset(.hd1920x1080) {
             captureSession.sessionPreset = .hd1920x1080
         }
         
-        // Audio
         let microphone = bestAudio()
         guard let audioInput = try? AVCaptureDeviceInput(device: microphone),
             captureSession.canAddInput(audioInput) else {
                 fatalError("Can't create microphone input")
         }
         captureSession.addInput(audioInput)
-        
-        // Add outputs
-        
-        // Recording to disk
         guard captureSession.canAddOutput(fileOutput) else {
             fatalError("Cannot record to disk")
         }
         captureSession.addOutput(fileOutput)
-        
         captureSession.commitConfiguration()
         
-        // Live preview
         cameraView.session = captureSession
     }
-
+    
     private func bestCamera() -> AVCaptureDevice {
-        // All iPhones have a wide angle camera (front + back)
-        if let ultraWideCamera = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) {
-            return ultraWideCamera
+        
+        if !flipCameraButton.isSelected{
+            if let ultraWideCamera = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) {
+                return ultraWideCamera
+            }
+            if let wideCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
+                return wideCamera
+            }
         }
         
-        if let wideCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
-            return wideCamera
+        if flipCameraButton.isSelected {
+             if let frontFacingCamera = AVCaptureDevice.default(.builtInWideAngleCamera,
+                                                            for: .video,
+                                                            position: .front) {
+                return frontFacingCamera
+            }
         }
-        
-        // Future: Add a button to toggle front/back camera
-        
         fatalError("No cameras on the device (or you're running this on a Simulator which isn't supported)")
     }
     
@@ -155,13 +190,13 @@ class VideoRecordingViewController: UIViewController {
         }
         fatalError("No audio")
     }
-
+    
     private func newRecordingURL() -> URL {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-
+        
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withInternetDateTime]
-
+        
         let name = formatter.string(from: Date())
         let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
         return fileURL
@@ -173,12 +208,7 @@ class VideoRecordingViewController: UIViewController {
         player = AVPlayer(url: url)
         
         let playerLayer = AVPlayerLayer(player: player)
-        
-        var topRect = cameraView.bounds
-        topRect.size.height = topRect.size.height
-        topRect.size.width = topRect.size.width
-        topRect.origin.y = view.layoutMargins.top
-        playerLayer.frame = topRect
+        playerLayer.frame = cameraView.frame
         view.layer.addSublayer(playerLayer)
         
         player.play()

@@ -11,8 +11,6 @@ import AVFoundation
 
 extension VideoRecordingViewController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
-        
-        print("didFinishRecording")
         if let error = error {
             print("Video Recording Error: \(error)")
         } else {
@@ -22,9 +20,6 @@ extension VideoRecordingViewController: AVCaptureFileOutputRecordingDelegate {
     }
     
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
-        // Update UI
-        print("didStartRecording: \(fileURL)")
-        
         updateViews()
     }
 }
