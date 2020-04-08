@@ -10,6 +10,12 @@ import UIKit
 import AVFoundation
 
 class CameraViewController: UIViewController {
+    
+    //MARK: Properties
+    
+    var postController: PostController!
+    var player: AVPlayer!
+    var recordURL: URL?
 
     override func viewDidLoad() {
         super.viewDidLoad()

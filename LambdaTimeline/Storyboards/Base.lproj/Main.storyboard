@@ -103,11 +103,12 @@
                     <connections>
                         <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="jaI-fq-Woc"/>
                         <segue destination="OyM-8q-Icp" kind="show" identifier="ViewImagePost" id="hhs-es-AdQ"/>
+                        <segue destination="Jnd-tp-AEx" kind="show" identifier="AddVideoPost" id="YZg-Xh-Ykg"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1216.8" y="108.39580209895054"/>
+            <point key="canvasLocation" x="1154" y="107"/>
         </scene>
         <!--Title-->
         <scene sceneID="kP9-yp-I8H">
@@ -556,5 +557,62 @@
             </objects>
             <point key="canvasLocation" x="2868" y="472"/>
         </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="AeF-kN-bqW">
+            <objects>
+                <viewController id="Jnd-tp-AEx" customClass="CameraViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Pmc-yn-eVe">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NtK-f2-PsD" customClass="CameraPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cSJ-6W-kLx">
+                                <rect key="frame" x="157" y="702" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="PLN-mP-A80"/>
+                                    <constraint firstAttribute="width" constant="100" id="nGd-5J-DIa"/>
+                                </constraints>
+                                <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="Record"/>
+                                <state key="selected" image="Stop"/>
+                                <connections>
+                                    <action selector="recordButtonTapped:" destination="Jnd-tp-AEx" eventType="touchUpInside" id="ec2-Ek-jQa"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="NtK-f2-PsD" firstAttribute="leading" secondItem="X7p-1l-7k3" secondAttribute="leading" id="6iY-ao-wCi"/>
+                            <constraint firstItem="X7p-1l-7k3" firstAttribute="trailing" secondItem="NtK-f2-PsD" secondAttribute="trailing" id="JsX-Ok-Ddx"/>
+                            <constraint firstItem="cSJ-6W-kLx" firstAttribute="centerX" secondItem="Pmc-yn-eVe" secondAttribute="centerX" id="eV3-d0-JfY"/>
+                            <constraint firstItem="X7p-1l-7k3" firstAttribute="bottom" secondItem="NtK-f2-PsD" secondAttribute="bottom" id="h7q-of-CFq"/>
+                            <constraint firstItem="X7p-1l-7k3" firstAttribute="bottom" secondItem="cSJ-6W-kLx" secondAttribute="bottom" constant="60" id="qRG-5B-hO4"/>
+                            <constraint firstItem="NtK-f2-PsD" firstAttribute="top" secondItem="X7p-1l-7k3" secondAttribute="top" id="xwL-fH-XUB"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="X7p-1l-7k3"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="QAv-BH-r75">
+                        <barButtonItem key="rightBarButtonItem" title="Next" id="lS2-gO-A7S">
+                            <connections>
+                                <action selector="nextButtonTapped:" destination="Jnd-tp-AEx" id="nfs-BD-FfH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="cameraView" destination="NtK-f2-PsD" id="zVl-WK-Q3A"/>
+                        <outlet property="recordButton" destination="cSJ-6W-kLx" id="9Yc-NR-3CE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cfQ-Dg-etG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2867" y="-212"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="Record" width="128" height="128"/>
+        <image name="Stop" width="128" height="128"/>
+    </resources>
 </document>
