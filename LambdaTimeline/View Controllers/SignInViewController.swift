@@ -15,49 +15,10 @@ import CryptoKit
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-extension SignInViewController: LoginButtonDelegate {
-
-    
-    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
-        if let error = error {
-            print(error)
-            return
-        }
-        let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
-        Auth.auth().signIn(with: credential) { (user, error) in
-            // ...
-            if let error = error {
-                print(error)
-                return
-            }
-            // if success
-            DispatchQueue.main.async {
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")
-                postsNavigationController.modalPresentationStyle = .fullScreen
-                self.present(postsNavigationController, animated: true, completion: nil)
-            }
-        }
-    }
-    
-    
-    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    
-}
 class SignInViewController: UIViewController {
     
-    
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
-    
-   
-    
-    
+    override var preferredStatusBarStyle: UIStatusBarStyle {   return .lightContent   }
+      
     //MARK:- Properties
     // Unhashed nonce.
     fileprivate var currentNonce: String?
@@ -103,7 +64,6 @@ class SignInViewController: UIViewController {
         
         return hashString
     }
-    
     
     private let signInWithGoogleButton : GIDSignInButton = {
         let button = GIDSignInButton()
@@ -154,8 +114,8 @@ class SignInViewController: UIViewController {
         super.viewDidLoad()
         GIDSignIn.sharedInstance()?.presentingViewController = self
         GIDSignIn.sharedInstance()?.delegate = self
-      
-            facebookButton.delegate = self
+        
+        facebookButton.delegate = self
         setUpSignInButton()
     }
     
@@ -285,6 +245,32 @@ extension SignInViewController: ASAuthorizationControllerPresentationContextProv
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return view.window!
     }
-    
-    
+}
+
+extension SignInViewController: LoginButtonDelegate {
+
+    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        if let error = error {
+            print(error)
+            return
+        }
+        let credential = FacebookAuthProvider.credential(withAccessToken: AccessToken.current!.tokenString)
+        Auth.auth().signIn(with: credential) { (user, error) in
+            // ...
+            if let error = error {
+                print(error)
+                return
+            }
+            // if success
+            DispatchQueue.main.async {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")
+                postsNavigationController.modalPresentationStyle = .fullScreen
+                self.present(postsNavigationController, animated: true, completion: nil)
+            }
+        }
+    }
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+        dismiss(animated: true, completion: nil)
+    }
 }

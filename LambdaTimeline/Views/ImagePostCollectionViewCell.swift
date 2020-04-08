@@ -23,24 +23,22 @@ import UIKit
         }
     }
     override open func trackRect(forBounds bounds: CGRect) -> CGRect {
-        //set your bounds here
+       
         return CGRect(origin: bounds.origin, size: CGSize(width: bounds.width, height: trackHeight))
     }
 }
-
 class ImagePostCollectionViewCell: UICollectionViewCell {
     
-      var post: Post? {
-            didSet {
-                updateViews()
-            }
-        }
-
+      var post: Post? {  didSet {  updateViews() } }
+                    
+//MARK:- IBOutlets
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var labelBackgroundView: UIView!
     
+    //MARK:- Actions
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -69,7 +67,5 @@ class ImagePostCollectionViewCell: UICollectionViewCell {
     func setImage(_ image: UIImage?) {
         imageView.image = image
     }
-
-  
 
 }
