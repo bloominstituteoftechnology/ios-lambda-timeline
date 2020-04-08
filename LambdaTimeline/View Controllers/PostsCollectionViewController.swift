@@ -81,9 +81,11 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
+            
             case .audio:
-            // configure audio cell
+            break
         }
+       return UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -98,8 +100,10 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             
             guard let ratio = post.ratio else { return size }
             size.height = size.width * ratio
-            case .audio:
+
             // configure audio cell
+            case .audio:
+            break
         }
         
         return size

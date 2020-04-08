@@ -37,6 +37,7 @@ class ImagePostDetailTableViewController: UITableViewController {
         guard let userInfo = notification.userInfo,let audioURL = userInfo["musicURL"] as? URL  else { return }
         navigationItem.title = try? String(contentsOf: audioURL)
         print("SUCCESS Sending URL Through NotificationCenter!")
+//        postController.addAudioComment(with: audioURL.dataRepresentation, to: &post)
         print(audioURL)
     }
     func updateViews() {
@@ -84,8 +85,8 @@ class ImagePostDetailTableViewController: UITableViewController {
                 }
         
                 let addCommentAction = UIAlertAction(title: "Submit", style: .default) { (_) in
-        
                     guard let commentText = commentTextField?.text else { return }
+                    
         
                     self.postController.addComment(with: commentText, to: &self.post!)
         

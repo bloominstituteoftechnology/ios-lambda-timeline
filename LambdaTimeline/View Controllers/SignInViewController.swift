@@ -19,7 +19,6 @@ class SignInViewController: UIViewController {
     
     override var preferredStatusBarStyle: UIStatusBarStyle {   return .lightContent   }
       
-    //MARK:- Properties
     // Unhashed nonce.
     fileprivate var currentNonce: String?
     
