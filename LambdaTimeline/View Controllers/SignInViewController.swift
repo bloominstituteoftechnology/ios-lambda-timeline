@@ -10,25 +10,26 @@ import UIKit
 import Firebase
 import GoogleSignIn
 
-class SignInViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
+class SignInViewController: UIViewController {
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let signIn = GIDSignIn.sharedInstance()
-        
-        signIn?.delegate = self
-        signIn?.uiDelegate = self
-        signIn?.signInSilently()
+        GIDSignIn.sharedInstance()?.presentingViewController = self
+        GIDSignIn.sharedInstance()?.delegate = self
         
         setUpSignInButton()
     }
     
+    @IBAction func googleSignIn(_ sender: Any) {
+        GIDSignIn.sharedInstance()?.signIn()
+    }
+}
+
+extension SignInViewController: GIDSignInDelegate {
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         
         if let error = error {
-            NSLog("Error signing in with Google: \(error)")
+            print("Error signing in with Google: \(error)")
             return
         }
         
@@ -36,15 +37,16 @@ class SignInViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDele
         
         let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken, accessToken: authentication.accessToken)
         
-        Auth.auth().signInAndRetrieveData(with: credential) { (authResult, error) in
+        Auth.auth().signIn(with: credential) { (authResult, error) in
             if let error = error {
-                NSLog("Error signing in with Google: \(error)")
+                print("Error signing in with Google: \(error)")
                 return
             }
             
             DispatchQueue.main.async {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")
+                postsNavigationController.modalPresentationStyle = .fullScreen
                 self.present(postsNavigationController, animated: true, completion: nil)
             }
         }
