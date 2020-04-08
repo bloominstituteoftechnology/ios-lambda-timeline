@@ -114,10 +114,10 @@
             </objects>
             <point key="canvasLocation" x="1216.8" y="108.39580209895054"/>
         </scene>
-        <!--View Controller-->
+        <!--Recording View Controller-->
         <scene sceneID="eWw-5q-zH3">
             <objects>
-                <viewController id="MBN-9c-oqb" sceneMemberID="viewController">
+                <viewController id="MBN-9c-oqb" customClass="RecordingViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TSq-Ol-xPJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -140,6 +140,10 @@
                     <navigationItem key="navigationItem" id="UV4-Av-zaS">
                         <barButtonItem key="rightBarButtonItem" title="Post" id="ZuF-OY-wMS"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="record" destination="dwb-V9-XDM" id="lFh-CC-rQJ"/>
+                        <outlet property="recordingTextField" destination="EUx-NX-PEW" id="9fP-Md-0ln"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nKG-bJ-n4v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
