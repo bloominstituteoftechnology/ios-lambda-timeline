@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import CoreImage.CIFilterBuiltins
 
 enum BestDevice {
     static func bestCamera(position: AVCaptureDevice.Position) -> AVCaptureDevice {
@@ -30,6 +31,7 @@ enum BestDevice {
 
 class CameraPreviewView: UIView {
     override class var layerClass: AnyClass {
+        
         return AVCaptureVideoPreviewLayer.self
     }
     
@@ -60,7 +62,7 @@ class VideoRecordingViewController: UIViewController {
         }
     }
     private let videoRecordButton: UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         let largeConfiguration = UIImage.SymbolConfiguration(pointSize: 140, weight: .bold, scale: .large)
         button.addTarget(self, action: #selector(recordTapped), for: .touchUpInside)
@@ -106,6 +108,7 @@ class VideoRecordingViewController: UIViewController {
         //Add input to session
         do {
             newVideoInput = try AVCaptureDeviceInput(device: newCamera)
+            
             let microphone = BestDevice.bestAudio()
             audioInput = try AVCaptureDeviceInput(device: microphone)
         } catch let err as NSError {
@@ -162,7 +165,7 @@ class VideoRecordingViewController: UIViewController {
         
         player = AVPlayer(url: url)
         let playerLayer = AVPlayerLayer(player: player)
-        
+    
         var topRect = view.bounds
         topRect.size.height = topRect.size.height / 4
         topRect.size.width = topRect.size.width / 4

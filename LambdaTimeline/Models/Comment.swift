@@ -52,3 +52,4 @@ class Comment: FirebaseConvertible, Equatable {
             lhs.timestamp == rhs.timestamp
     }
 }
+

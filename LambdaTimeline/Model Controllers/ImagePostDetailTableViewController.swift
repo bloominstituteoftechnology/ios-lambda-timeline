@@ -25,7 +25,13 @@ class ImagePostDetailTableViewController: UITableViewController {
     @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
     
     //MARK:- View Life Cycle
-
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        let mediaType = MediaType.video
+//        postController.observeAudioComment(mediaType:mediaType) { (_) in
+//            //
+//        }
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,7 +43,7 @@ class ImagePostDetailTableViewController: UITableViewController {
         guard let userInfo = notification.userInfo,let audioURL = userInfo["musicURL"] as? URL  else { return }
         navigationItem.title = try? String(contentsOf: audioURL)
         print("SUCCESS Sending URL Through NotificationCenter!")
-//        postController.addAudioComment(with: audioURL.dataRepresentation, to: &post)
+//        postController.addAudioComment(with: audioURL.absoluteString, to: &post)
         print(audioURL)
     }
     func updateViews() {

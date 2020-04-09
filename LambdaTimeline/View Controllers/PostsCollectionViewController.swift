@@ -93,7 +93,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
-            
+
+//            case .video:
+//            break
             case .audio:
             break
         }
@@ -114,6 +116,10 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             size.height = size.width * ratio
 
             // configure audio cell
+//            case .audio:
+//            break
+//            case .video:
+//            break
             case .audio:
             break
         }
@@ -205,3 +211,4 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     }
     
 }
+

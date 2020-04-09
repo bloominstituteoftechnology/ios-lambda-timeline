@@ -34,3 +34,4 @@ struct Author: FirebaseConvertible, Equatable {
                 Author.displayNameKey: displayName ?? "No display name"]
     }
 }
+
