@@ -119,7 +119,7 @@ class VideoPostViewController: UIViewController {
     
     private func bestCamera() -> AVCaptureDevice {
         // All iPhones have a wide angle camera (front + back)
-        if let ultraWideCamera = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) {
+        if let ultraWideCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
             
             return ultraWideCamera
         }
