@@ -41,8 +41,8 @@ class GeoTagDetailView: UIView {
         guard let geoTag = geoTag else { return }
         let lat = latLonFormatter.string(from: NSNumber(value: geoTag.latitude))
         let long = latLonFormatter.string(from: NSNumber(value: geoTag.longitude))
-        latitudeLabel.text = "\(lat)"
-        longitudeLabel.text = "\(long)"
+        latitudeLabel.text = "\(String(describing: lat))"
+        longitudeLabel.text = "\(String(describing: long))"
         
     }
     
