@@ -10,6 +10,7 @@ import UIKit
 import Photos
 import CoreImage
 import CoreImage.CIFilterBuiltins
+import CoreLocation
 
 private enum FilterType : String  {
     case CIPerspectiveTile
@@ -18,10 +19,79 @@ private enum FilterType : String  {
     case CIComicEffect
     case CIColorMatrix
 }
-
+extension ImagePostViewController : CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+            case .denied:
+                geotagSwitch.setOn(false, animated: true)
+            print("we need location ")
+            default:
+              break
+        }
+    }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+       
+      guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        lat = locValue.latitude
+        long = locValue.longitude
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
+            locationManager.stopUpdatingLocation()
+    }
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
+    }
+}
 class ImagePostViewController: ShiftableViewController {
-    
+    var lat: Double = 0
+    var long: Double = 213
     //MARK:- Properties
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
+    private func checkLocationServices() {
+           if CLLocationManager.locationServicesEnabled() {
+               checkLocationAuthorization()
+               
+           } else {
+               locationManager.requestWhenInUseAuthorization()
+           }
+       }
+       
+       
+    @IBOutlet weak var geotagSwitch: UISwitch!
+    
+    private func checkLocationAuthorization() {
+         
+           switch CLLocationManager.authorizationStatus() {
+               case .authorizedWhenInUse:   locationManager.startUpdatingLocation()
+                   break
+               case .denied:   locationManager.requestWhenInUseAuthorization()
+            
+                   break
+               case .notDetermined:
+                   break
+               case .restricted:
+                   // Show an alert letting them know what's up
+                   break
+               case .authorizedAlways:
+
+                   self.locationManager.startUpdatingLocation()
+               default:
+                   break
+           }
+       }
+    
+    lazy private var locationManager : CLLocationManager = {
+             let lm = CLLocationManager()
+             lm.delegate = self
+             lm.desiredAccuracy  = kCLLocationAccuracyBest
+             lm.activityType = .fitness
+             lm.startUpdatingLocation()
+             return lm
+         }()
+    
     private var originalImage: UIImage? {
           didSet {
               guard let originalImage = originalImage else { return }
@@ -65,6 +135,11 @@ class ImagePostViewController: ShiftableViewController {
         showFilerOptions()
       }
     
+    
+    @IBAction func geoTagSwiched(_ sender: UISwitch) {
+        locationManager.requestWhenInUseAuthorization()
+    }
+    
     private func hideUI(hide: Bool)  {
         self.brightnessLabel.isHidden = hide
         self.brightnessSlider.isHidden = hide
@@ -80,11 +155,9 @@ class ImagePostViewController: ShiftableViewController {
         updateEffectsForColorChangeFilter()
     }
     
-    
     @IBAction func saturationChanged(_ sender: UISlider) {
         updateEffectsForColorChangeFilter()
     }
-    
     
     @IBAction func contrastChanged(_ sender: UISlider) {
       updateEffectsForColorChangeFilter()
@@ -305,7 +378,7 @@ class ImagePostViewController: ShiftableViewController {
             return
         }
         
-        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
+        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio,latitude: (locationManager.location?.coordinate.latitude)!,longitude: (locationManager.location?.coordinate.longitude)!) { (success) in
             guard success else {
                 DispatchQueue.main.async {
                     self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")

@@ -143,7 +143,7 @@ extension SignInViewController: GIDSignInDelegate {
             //success
             DispatchQueue.main.async {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")
+                let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "TabController")
                 postsNavigationController.modalPresentationStyle = .fullScreen
                 self.present(postsNavigationController, animated: true, completion: nil)
             }
@@ -228,7 +228,7 @@ extension SignInViewController: ASAuthorizationControllerDelegate {
                   } else {
                     DispatchQueue.main.async {
                                  let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                 let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")
+                                 let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "TabController")
                                  postsNavigationController.modalPresentationStyle = .fullScreen
                                  self.present(postsNavigationController, animated: true, completion: nil)
                              }
@@ -263,7 +263,7 @@ extension SignInViewController: LoginButtonDelegate {
             // if success
             DispatchQueue.main.async {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")
+                let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "TabController")
                 postsNavigationController.modalPresentationStyle = .fullScreen
                 self.present(postsNavigationController, animated: true, completion: nil)
             }

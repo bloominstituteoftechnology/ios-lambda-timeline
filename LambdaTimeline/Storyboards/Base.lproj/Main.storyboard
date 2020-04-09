@@ -117,7 +117,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1214.4927536231885" y="107.8125"/>
+            <point key="canvasLocation" x="2124.6376811594205" y="107.8125"/>
         </scene>
         <!--Title-->
         <scene sceneID="kP9-yp-I8H">
@@ -128,10 +128,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9qd-If-ddw">
-                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="PkI-rS-ua9">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="776"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="812"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yQ3-V3-hIf">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="375"/>
@@ -224,10 +224,27 @@
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="R1w-Yh-uDg">
-                                                <rect key="frame" x="0.0" y="699" width="414" height="77"/>
+                                                <rect key="frame" x="0.0" y="699" width="414" height="113"/>
                                                 <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ctZ-Fb-Qk7">
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="31"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Geo tag?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZNr-QH-NSS">
+                                                                <rect key="frame" x="0.0" y="0.0" width="360" height="31"/>
+                                                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="21"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="PRz-jX-7Wg">
+                                                                <rect key="frame" x="365" y="0.0" width="51" height="31"/>
+                                                                <connections>
+                                                                    <action selector="geoTagSwiched:" destination="1Aw-4e-BW2" eventType="valueChanged" id="bRQ-eX-4fK"/>
+                                                                </connections>
+                                                            </switch>
+                                                        </subviews>
+                                                    </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5YR-vb-clb">
-                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="36"/>
+                                                        <rect key="frame" x="0.0" y="36" width="414" height="36"/>
                                                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                                         <state key="normal" title="Pick a Filter">
@@ -238,7 +255,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E0h-GW-mdI">
-                                                        <rect key="frame" x="0.0" y="41" width="414" height="36"/>
+                                                        <rect key="frame" x="0.0" y="77" width="414" height="36"/>
                                                         <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                                         <state key="normal" title="Remove filter">
@@ -287,6 +304,7 @@
                         <outlet property="constrastLabel" destination="F1a-Cy-kDD" id="Jea-gC-b2t"/>
                         <outlet property="constrastSlider" destination="zdT-Sh-ABk" id="pqR-Jw-PFh"/>
                         <outlet property="filterButton" destination="5YR-vb-clb" id="ZzC-hz-4ds"/>
+                        <outlet property="geotagSwitch" destination="PRz-jX-7Wg" id="PO2-u8-e6n"/>
                         <outlet property="imageHeightConstraint" destination="MHD-wr-Gq9" id="HyG-8g-Ck1"/>
                         <outlet property="imageView" destination="4eK-5F-H5h" id="e7m-c5-Xhz"/>
                         <outlet property="pickFilterButton" destination="5YR-vb-clb" id="VIE-Ec-mxV"/>
@@ -298,12 +316,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXa-A2-VJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2503" y="-355"/>
+            <point key="canvasLocation" x="3016" y="-467"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Post-->
         <scene sceneID="gdW-Je-ais">
             <objects>
                 <navigationController storyboardIdentifier="PostsNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="ohA-ly-1Yj" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Post" image="person.crop.circle.fill" catalog="system" id="esx-uJ-NZs"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="XJY-X6-mEY">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -316,7 +335,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GFJ-OO-MVi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="277.60000000000002" y="108.39580209895054"/>
+            <point key="canvasLocation" x="1186.9565217391305" y="107.8125"/>
         </scene>
         <!--Sign In View Controller-->
         <scene sceneID="O74-ZV-TrY">
@@ -362,7 +381,51 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xA4-1f-Wlf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-450.72463768115944" y="107.14285714285714"/>
+            <point key="canvasLocation" x="-872" y="108"/>
+        </scene>
+        <!--Map-->
+        <scene sceneID="Ify-zR-uAe">
+            <objects>
+                <viewController id="PZa-kJ-ORg" customClass="MapViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="IC6-d7-P74">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="d31-5Z-ZQR">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                            </mapView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="aIq-Lg-EBk">
+                                <rect key="frame" x="20" y="88" width="374" height="32"/>
+                                <segments>
+                                    <segment title="Standard"/>
+                                    <segment title="Satellite"/>
+                                </segments>
+                                <connections>
+                                    <action selector="mapTypeSegmentControlSwitch:" destination="PZa-kJ-ORg" eventType="valueChanged" id="51f-ca-muw"/>
+                                </connections>
+                            </segmentedControl>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="d31-5Z-ZQR" firstAttribute="top" secondItem="Ikm-l9-xs6" secondAttribute="top" id="BqY-GG-Zbr"/>
+                            <constraint firstItem="Ikm-l9-xs6" firstAttribute="trailing" secondItem="d31-5Z-ZQR" secondAttribute="trailing" id="KtK-WN-ktc"/>
+                            <constraint firstItem="Ikm-l9-xs6" firstAttribute="bottom" secondItem="d31-5Z-ZQR" secondAttribute="bottom" id="Ooo-aM-UqZ"/>
+                            <constraint firstItem="aIq-Lg-EBk" firstAttribute="leading" secondItem="Ikm-l9-xs6" secondAttribute="leading" constant="20" id="QbW-Cb-nBf"/>
+                            <constraint firstItem="d31-5Z-ZQR" firstAttribute="leading" secondItem="Ikm-l9-xs6" secondAttribute="leading" id="cZI-SE-E1H"/>
+                            <constraint firstItem="Ikm-l9-xs6" firstAttribute="trailing" secondItem="aIq-Lg-EBk" secondAttribute="trailing" constant="20" id="ja3-eE-b4S"/>
+                            <constraint firstItem="aIq-Lg-EBk" firstAttribute="top" secondItem="Ikm-l9-xs6" secondAttribute="top" id="mcF-vp-glk"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Ikm-l9-xs6"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Map" id="AlJ-2d-5PX"/>
+                    <connections>
+                        <outlet property="mapTypeSegmentController" destination="aIq-Lg-EBk" id="SoT-xM-7Df"/>
+                        <outlet property="mapView" destination="d31-5Z-ZQR" id="YdP-TS-BFx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sdB-XT-mnN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1874" y="824"/>
         </scene>
         <!--Title-->
         <scene sceneID="9zi-Aq-zJI">
@@ -463,10 +526,50 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdL-Y3-4ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2503" y="460"/>
+            <point key="canvasLocation" x="3016" y="205"/>
+        </scene>
+        <!--Base Tab Bar Controller-->
+        <scene sceneID="TGL-Cj-vS8">
+            <objects>
+                <tabBarController storyboardIdentifier="TabController" automaticallyAdjustsScrollViewInsets="NO" id="Uhn-dw-oCc" customClass="BaseTabBarController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Scn-Fy-UBa">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="ohA-ly-1Yj" kind="relationship" relationship="viewControllers" id="695-ZN-Bmw"/>
+                        <segue destination="OBn-fY-ZLF" kind="relationship" relationship="viewControllers" id="66D-Cv-FyD"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MWR-rI-zw5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="276.81159420289856" y="107.8125"/>
+        </scene>
+        <!--Map-->
+        <scene sceneID="08z-xc-FX8">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="OBn-fY-ZLF" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Map" image="map" catalog="system" id="d8L-Ss-9ge"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="OlH-QY-uTL">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="PZa-kJ-ORg" kind="relationship" relationship="rootViewController" id="jpf-hC-jul"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sZz-md-6Dp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1003" y="806"/>
         </scene>
     </scenes>
     <resources>
         <image name="lambda" width="512" height="512"/>
+        <image name="map" catalog="system" width="128" height="113"/>
+        <image name="person.crop.circle.fill" catalog="system" width="128" height="121"/>
     </resources>
 </document>

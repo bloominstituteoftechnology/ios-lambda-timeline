@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         if Auth.auth().currentUser != nil {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")
+            let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "TabController") //
             window?.rootViewController = postsNavigationController
             window?.makeKeyAndVisible()
         }
