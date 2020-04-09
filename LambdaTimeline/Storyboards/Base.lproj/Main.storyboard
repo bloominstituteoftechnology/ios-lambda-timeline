@@ -103,6 +103,11 @@
                                     <segue destination="MBN-9c-oqb" kind="show" id="Qml-DF-DVF"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem image="map" catalog="system" id="Qgi-kS-g7i">
+                                <connections>
+                                    <segue destination="LAI-2l-9Tg" kind="show" id="3MH-5J-ROL"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
@@ -113,6 +118,33 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1216.8" y="108.39580209895054"/>
+        </scene>
+        <!--Map View Controller-->
+        <scene sceneID="t0m-rl-8OH">
+            <objects>
+                <viewController id="LAI-2l-9Tg" customClass="MapViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ohu-YY-sHb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="qL4-tJ-Y1b">
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="qL4-tJ-Y1b" firstAttribute="top" secondItem="1QQ-tO-gKz" secondAttribute="top" id="PDD-zS-lLS"/>
+                            <constraint firstItem="qL4-tJ-Y1b" firstAttribute="leading" secondItem="1QQ-tO-gKz" secondAttribute="leading" id="aZI-ca-gdj"/>
+                            <constraint firstItem="qL4-tJ-Y1b" firstAttribute="trailing" secondItem="1QQ-tO-gKz" secondAttribute="trailing" id="cG1-yV-HOc"/>
+                            <constraint firstAttribute="bottom" secondItem="qL4-tJ-Y1b" secondAttribute="bottom" id="hcH-r0-6yg"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="1QQ-tO-gKz"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="sej-S2-Pu6"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X2z-rB-a39" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1227.536231884058" y="-547.09821428571422"/>
         </scene>
         <!--Recording View Controller-->
         <scene sceneID="eWw-5q-zH3">
@@ -526,6 +558,7 @@
     <resources>
         <image name="Play" width="123" height="117"/>
         <image name="Record" width="450" height="450"/>
+        <image name="map" catalog="system" width="128" height="113"/>
         <image name="video.fill" catalog="system" width="128" height="82"/>
     </resources>
 </document>
