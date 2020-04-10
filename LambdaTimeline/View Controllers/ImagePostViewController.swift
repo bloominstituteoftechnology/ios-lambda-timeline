@@ -47,8 +47,9 @@ class ImagePostViewController: ShiftableViewController {
     //MARK:- Properties
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        locationManager.requestWhenInUseAuthorization()
     }
+    var postController = PostController()
     
     private func checkLocationServices() {
            if CLLocationManager.locationServicesEnabled() {
@@ -108,7 +109,7 @@ class ImagePostViewController: ShiftableViewController {
            }
        }
        
-     var postController: PostController!
+    
      var post: Post?
      var imageData: Data?
      private var context = CIContext(options: nil)
@@ -378,7 +379,7 @@ class ImagePostViewController: ShiftableViewController {
             return
         }
         
-        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio,latitude: (locationManager.location?.coordinate.latitude)!,longitude: (locationManager.location?.coordinate.longitude)!) { (success) in
+        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio,latitude: (locationManager.location?.coordinate.latitude) ?? 21312,longitude:(locationManager.location?.coordinate.longitude) ?? 2131) { (success) in
             guard success else {
                 DispatchQueue.main.async {
                     self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")

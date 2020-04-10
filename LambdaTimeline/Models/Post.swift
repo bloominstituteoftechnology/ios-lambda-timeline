@@ -75,8 +75,8 @@ class Post: NSObject, MKAnnotation {
             let longitude = dictionary[Post.longitudeKey]
             else { return nil }
         
-        self.latitude = latitude as! Double
-        self.longitude = longitude as! Double
+        self.latitude = latitude as? Double
+        self.longitude = longitude as? Double
         self.mediaURL = mediaURL
         self.mediaType = mediaType
         self.ratio = dictionary[Post.ratioKey] as? CGFloat

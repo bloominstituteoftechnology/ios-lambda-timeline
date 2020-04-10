@@ -13,7 +13,7 @@ class ImagePostDetailTableViewController: UITableViewController {
     //MARK:- Properties
     
     var post: Post!
-    var postController: PostController!
+    var postController =  PostController()
     var imageData: Data?
     
     
@@ -25,13 +25,7 @@ class ImagePostDetailTableViewController: UITableViewController {
     @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
     
     //MARK:- View Life Cycle
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        let mediaType = MediaType.video
-//        postController.observeAudioComment(mediaType:mediaType) { (_) in
-//            //
-//        }
-//    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -71,7 +71,7 @@ class PostController {
             
             self.posts = posts.sorted(by: { $0.timestamp > $1.timestamp })
             
-            completion(nil)
+            completion( nil)
             
         }) { (error) in
             NSLog("Error fetching posts: \(error)")

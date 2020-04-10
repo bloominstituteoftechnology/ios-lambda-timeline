@@ -33,12 +33,12 @@ class BaseTabBarController: UITabBarController, UITabBarControllerDelegate {
                   mapVC.postController = postController
             }
         }
-//        if let mapVC = viewController as? MapViewController {
-//           mapVC.postController = postController
-//            print(mapVC.navigationItem.title)  }
-//        else if let postCollectionVC = viewController as? PostsCollectionViewController {
-//            postCollectionVC.postController = postController
-//        }
+        if let navCon = viewController as? UINavigationController {
+            if let postVC = navCon.viewControllers.first as? PostsCollectionViewController {
+                postVC.postController = postController
+            }
+        }
+
     }
   
 }
