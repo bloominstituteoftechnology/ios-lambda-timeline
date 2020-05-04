@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Image Post View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ImagePostViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SQP-J0-qx6" userLabel="FilterCVC Container">
+                                <rect key="frame" x="0.0" y="753" width="414" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="srX-8l-odX"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="flO-Rm-vJg" kind="embed" id="epU-IA-etn"/>
+                                </connections>
+                            </containerView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XEp-QU-CEh">
+                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="9rL-r2-Jeb"/>
+                                    <barButtonItem title="Filters" id="eJo-Jj-Ejn">
+                                        <connections>
+                                            <action selector="showTools:" destination="BYZ-38-t0r" id="fDg-18-AKy"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="aZa-9Q-Bd6"/>
+                                </items>
+                            </toolbar>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Elk" translatesAutoresizingMaskIntoConstraints="NO" id="5Be-do-RYg">
+                                <rect key="frame" x="20" y="44" width="374" height="581"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="XEp-QU-CEh" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="4ZS-6e-7Oy"/>
+                            <constraint firstItem="XEp-QU-CEh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="7qC-rQ-RUa"/>
+                            <constraint firstItem="SQP-J0-qx6" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="J6n-hn-VhR"/>
+                            <constraint firstItem="XEp-QU-CEh" firstAttribute="top" secondItem="SQP-J0-qx6" secondAttribute="top" priority="750" id="Kmd-Xc-MsR"/>
+                            <constraint firstItem="SQP-J0-qx6" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="SgX-sT-BKv"/>
+                            <constraint firstItem="XEp-QU-CEh" firstAttribute="top" secondItem="SQP-J0-qx6" secondAttribute="bottom" id="sFI-nM-hqa"/>
+                            <constraint firstItem="XEp-QU-CEh" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="tTo-2q-pFs"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="filterContainerShowConstraint" destination="sFI-nM-hqa" id="pAN-aD-2dE"/>
+                        <outlet property="filterContainerView" destination="SQP-J0-qx6" id="0p0-td-zBY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="131.8840579710145" y="132.58928571428572"/>
+        </scene>
+        <!--Filter Collection View Controller-->
+        <scene sceneID="j0W-JC-Q4X">
+            <objects>
+                <collectionViewController id="flO-Rm-vJg" customClass="FilterCollectionViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="IjT-FK-0OJ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="VUf-rz-sLN">
+                            <size key="itemSize" width="60" height="60"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="20" minY="0.0" maxX="20" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ToolCell" id="qvO-Qa-eFH" customClass="FilterCell" customModule="ImageFilterEditor" customModuleProvider="target">
+                                <rect key="frame" x="20" y="0.0" width="60" height="60"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="FeA-pt-8BB">
+                                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="slider.horizontal.3" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="gbb-Qh-R4k">
+                                            <rect key="frame" x="5" y="6.5" width="50" height="46.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="gbb-Qh-R4k" secondAttribute="height" multiplier="1:1" id="ZYL-at-rp0"/>
+                                                <constraint firstAttribute="width" constant="50" id="ewa-Kg-rI3"/>
+                                            </constraints>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="gbb-Qh-R4k" firstAttribute="centerX" secondItem="FeA-pt-8BB" secondAttribute="centerX" id="8x6-Iu-Isi"/>
+                                        <constraint firstItem="gbb-Qh-R4k" firstAttribute="centerY" secondItem="FeA-pt-8BB" secondAttribute="centerY" id="kDo-6j-EKb"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="flO-Rm-vJg" id="bfL-iC-GGH"/>
+                            <outlet property="delegate" destination="flO-Rm-vJg" id="ZTt-LR-uVs"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="80M-MD-oHD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="866.66666666666674" y="291.62946428571428"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Elk" width="2832" height="4240"/>
+        <image name="slider.horizontal.3" catalog="system" width="128" height="100"/>
+    </resources>
+</document>
