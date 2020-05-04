@@ -7,6 +7,11 @@
 //
 
 import UIKit
+import CoreImage
+
+enum FilterTypes: Int {
+    case exposure
+}
 
 class ImagePostViewController: UIViewController {
 
@@ -14,8 +19,11 @@ class ImagePostViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var adjustmentSlider: UISlider!
     
     // MARK: - Properties
+    let context = CIContext(options: nil)
+    var filterType: FilterTypes = .exposure
     let effectNames: [String] = ["Exposure"]
     let effectImages: [UIImage] = [UIImage(systemName: "square.and.arrow.up")!, UIImage(systemName: "square.and.arrow.up")!, UIImage(systemName: "square.and.arrow.up")!, UIImage(systemName: "square.and.arrow.up")!, UIImage(systemName: "square.and.arrow.up")!]
     
@@ -62,21 +70,45 @@ class ImagePostViewController: UIViewController {
     
     private func updateViews() {
         if let scaledImage = scaledImage {
-            imageView.image = scaledImage
+            
+            if filterType.rawValue == 0 {
+                imageView.image = adjustExposure(scaledImage)
+            }
+            
+            
         } else {
             imageView.image = nil
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func adjustmentSliderChanged(_ sender: Any) {
+        updateViews()
     }
-    */
+    
+    private func adjustExposure(_ image: UIImage) -> UIImage? {
+        
+        // UIImage -> CGImage -> CIImage
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+                
+        // Filter
+        let filter = CIFilter(name: "CIExposureAdjust")!
+        
+        // Setting values / getting values from Core Image
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(adjustmentSlider.value, forKey: kCIInputEVKey)
+        
+        // CIImage -> CGImage -> UIImage
+        
+        guard let outputCIImage = filter.outputImage else { return nil }
+        
+        // Render the image (do image processing here). Recipe needs to be used on image now.
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else {
+            return nil
+        }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
 
 }
 
@@ -94,12 +126,13 @@ extension ImagePostViewController: UICollectionViewDelegate, UICollectionViewDat
         cell.nameLabel.text = effectNames[indexPath.item]
         cell.effectImage.image = effectImages[indexPath.item]
         
-        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         nameLabel.text = effectNames[indexPath.row]
+        filterType = FilterTypes(rawValue: indexPath.item)!
+        print(filterType)
     }
 }
 

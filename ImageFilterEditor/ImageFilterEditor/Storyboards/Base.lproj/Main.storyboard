@@ -78,8 +78,11 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bk0-4C-F6c">
                                 <rect key="frame" x="0.0" y="602" width="414" height="260"/>
                                 <subviews>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ymf-2M-Jsm">
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-10" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ymf-2M-Jsm">
                                         <rect key="frame" x="18" y="115" width="378" height="31"/>
+                                        <connections>
+                                            <action selector="adjustmentSliderChanged:" destination="423-Gq-1Q9" eventType="valueChanged" id="XeY-FH-Nkq"/>
+                                        </connections>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exposure" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PVL-If-4y4">
                                         <rect key="frame" x="20" y="8" width="374" height="21"/>
@@ -122,6 +125,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="adjustmentSlider" destination="Ymf-2M-Jsm" id="0mj-dr-pfF"/>
                         <outlet property="collectionView" destination="NfO-WK-f27" id="LLO-vQ-r7T"/>
                         <outlet property="imageView" destination="Gjk-OS-INm" id="O4t-o3-Dnv"/>
                         <outlet property="nameLabel" destination="PVL-If-4y4" id="Kow-1r-ZX8"/>
