@@ -29,6 +29,8 @@
 		46D571F32172D43B00E7FF73 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D571F22172D43B00E7FF73 /* Cache.swift */; };
 		46D571F52173CF3E00E7FF73 /* UIImage+Ratio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D571F42173CF3E00E7FF73 /* UIImage+Ratio.swift */; };
 		46D571F82173FC2700E7FF73 /* ImagePostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */; };
+		5C3F3E8F243BCECD005E443B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5C3F3E8E243BCECD005E443B /* GoogleService-Info.plist */; };
+		5C3F3E91243BF2CD005E443B /* UIImage+Scaling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3F3E90243BF2CD005E443B /* UIImage+Scaling.swift */; };
 		E453457955DF907FCBD117F1 /* Pods_LambdaTimeline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +60,8 @@
 		46D571F22172D43B00E7FF73 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		46D571F42173CF3E00E7FF73 /* UIImage+Ratio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ratio.swift"; sourceTree = "<group>"; };
 		46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePostDetailTableViewController.swift; sourceTree = "<group>"; };
+		5C3F3E8E243BCECD005E443B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5C3F3E90243BF2CD005E443B /* UIImage+Scaling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Scaling.swift"; sourceTree = "<group>"; };
 		5D2CCD6C68779B0A70AC37FA /* Pods-LambdaTimeline.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LambdaTimeline.release.xcconfig"; path = "Pods/Target Support Files/Pods-LambdaTimeline/Pods-LambdaTimeline.release.xcconfig"; sourceTree = "<group>"; };
 		AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LambdaTimeline.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -86,6 +90,7 @@
 		4646376F216FDE4B00E7FF73 = {
 			isa = PBXGroup;
 			children = (
+				5C3F3E8E243BCECD005E443B /* GoogleService-Info.plist */,
 				4646377A216FDE4B00E7FF73 /* LambdaTimeline */,
 				46463779216FDE4B00E7FF73 /* Products */,
 				2B7D7DE8669C7C706445FCCC /* Pods */,
@@ -199,6 +204,7 @@
 				46CFE6F22170757F00E7FF73 /* User+DictionaryRepresentation.swift */,
 				46D571F42173CF3E00E7FF73 /* UIImage+Ratio.swift */,
 				46CFE6F621707FA600E7FF73 /* UIViewController+InformationalAlert.swift */,
+				5C3F3E90243BF2CD005E443B /* UIImage+Scaling.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -274,6 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				46463786216FDE4C00E7FF73 /* LaunchScreen.storyboard in Resources */,
+				5C3F3E8F243BCECD005E443B /* GoogleService-Info.plist in Resources */,
 				46463783216FDE4C00E7FF73 /* Assets.xcassets in Resources */,
 				46463781216FDE4B00E7FF73 /* Main.storyboard in Resources */,
 			);
@@ -346,6 +353,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				46A0366D2170158900E7FF73 /* SignInViewController.swift in Sources */,
+				5C3F3E91243BF2CD005E443B /* UIImage+Scaling.swift in Sources */,
 				46CFE6FB21714E6100E7FF73 /* Author.swift in Sources */,
 				46CFE6F92170862C00E7FF73 /* ShiftableViewController.swift in Sources */,
 				4646377C216FDE4B00E7FF73 /* AppDelegate.swift in Sources */,
@@ -513,11 +521,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/LambdaTimeline/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.EnriqueGongora.LambdaTimeline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -532,11 +541,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "$(SRCROOT)/LambdaTimeline/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.EnriqueGongora.LambdaTimeline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
