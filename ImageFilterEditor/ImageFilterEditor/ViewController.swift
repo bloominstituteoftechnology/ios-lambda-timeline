@@ -18,10 +18,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var sliderALabel: UILabel!
     @IBOutlet weak var sliderBLabel: UILabel!
     @IBOutlet weak var sliderCLabel: UILabel!
+    @IBOutlet weak var sliderDLabel: UILabel!
     // Sliders
     @IBOutlet weak var sliderA: UISlider!
     @IBOutlet weak var sliderB: UISlider!
     @IBOutlet weak var sliderC: UISlider!
+    @IBOutlet weak var sliderD: UISlider!
     
     // MARK: - Properties
     let context = CIContext(options: nil)
