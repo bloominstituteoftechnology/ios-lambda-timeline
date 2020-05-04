@@ -83,6 +83,8 @@ class ViewController: UIViewController {
 
     // MARK: - Methods
 
+    private func setUpUI() {
+    }
 
     // MARK: - Actions
 
