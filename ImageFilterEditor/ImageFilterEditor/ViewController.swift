@@ -36,13 +36,7 @@ class ViewController: UIViewController {
         }
     }
 
-    var scaledImage: UIImage? {
-        didSet {
-            if let img = scaledImage {
-                imageView.image = img
-            }
-        }
-    }
+    var scaledImage: UIImage?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,13 +60,15 @@ class ViewController: UIViewController {
 
         // Set values
         filter.inputImage = ciImage
-        filter.center = CGPoint(x: 100, y: 150)
+        filter.center = CGPoint(x: image.size.width/2, y: image.size.height/2)
+//        filter.center = CGPoint(x: 100, y: 150)
 
         // CI -> CG -> UI
         guard let outputCIImage = filter.outputImage else { return nil }
 
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size )) else { return nil }
 
-        return nil
+        return UIImage(cgImage: outputCGImage)
     }
 
     // MARK: - Methods
@@ -82,7 +78,7 @@ class ViewController: UIViewController {
 
     @IBAction func memefyButtonTapped(_ sender: Any) {
         guard let scaledImage = scaledImage else { return }
-        memefy(scaledImage)
+        imageView.image = memefy(scaledImage)
     }
 
 }
