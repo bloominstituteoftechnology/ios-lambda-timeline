@@ -8,20 +8,58 @@
 
 import Foundation
 import FirebaseAuth
+import MapKit
 
 enum MediaType: String {
     case image
+    case audio
 }
 
-class Post {
+class Post: NSObject, MKAnnotation {
+   
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: latitude!, longitude: longitude!)
+      }
+      var mapTitle: String? {
+        return title
+      }
+      var subtitle: String? {
+        return author.displayName
+      }
     
-    init(title: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date()) {
+    var latitude: Double?
+    var longitude: Double?
+    var mediaURL: URL
+    let mediaType: MediaType
+    let author: Author
+    let timestamp: Date
+    var comments: [Comment]
+    var id: String?
+    var ratio: CGFloat?
+      
+      var title: String? {
+          return comments.first?.text
+      }
+      static private let latitudeKey = "latitude"
+      static private let longitudeKey = "longitude"
+      static private let audioKey = "audio"
+      static private let mediaKey = "media"
+      static private let ratioKey = "ratio"
+      static private let mediaTypeKey = "mediaType"
+      static private let authorKey = "author"
+      static private let commentsKey = "comments"
+      static private let timestampKey = "timestamp"
+      static private let idKey = "id"
+    
+    init(title: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date(),latitude:Double?,longitude:Double?) {
         self.mediaURL = mediaURL
         self.ratio = ratio
         self.mediaType = .image
         self.author = author
-        self.comments = [Comment(text: title, author: author)]
+        self.comments = [Comment(text: title, author: author, audioURL: nil)]
         self.timestamp = timestamp
+        self.latitude = latitude
+        self.longitude = longitude
     }
     
     init?(dictionary: [String : Any], id: String) {
@@ -32,8 +70,13 @@ class Post {
             let authorDictionary = dictionary[Post.authorKey] as? [String: Any],
             let author = Author(dictionary: authorDictionary),
             let timestampTimeInterval = dictionary[Post.timestampKey] as? TimeInterval,
-            let captionDictionaries = dictionary[Post.commentsKey] as? [[String: Any]] else { return nil }
+            let captionDictionaries = dictionary[Post.commentsKey] as? [[String: Any]],
+            let latitude = dictionary[Post.latitudeKey],
+            let longitude = dictionary[Post.longitudeKey]
+            else { return nil }
         
+        self.latitude = latitude as? Double
+        self.longitude = longitude as? Double
         self.mediaURL = mediaURL
         self.mediaType = mediaType
         self.ratio = dictionary[Post.ratioKey] as? CGFloat
@@ -44,11 +87,16 @@ class Post {
     }
     
     var dictionaryRepresentation: [String : Any] {
-        var dict: [String: Any] = [Post.mediaKey: mediaURL.absoluteString,
+        var dict: [String: Any] = [
+            Post.mediaKey: mediaURL.absoluteString,
                 Post.mediaTypeKey: mediaType.rawValue,
                 Post.commentsKey: comments.map({ $0.dictionaryRepresentation }),
                 Post.authorKey: author.dictionaryRepresentation,
-                Post.timestampKey: timestamp.timeIntervalSince1970]
+                Post.timestampKey: timestamp.timeIntervalSince1970,
+                Post.latitudeKey : latitude,
+                Post.longitudeKey: longitude
+        
+        ]
         
         guard let ratio = self.ratio else { return dict }
         
@@ -57,23 +105,5 @@ class Post {
         return dict
     }
     
-    var mediaURL: URL
-    let mediaType: MediaType
-    let author: Author
-    let timestamp: Date
-    var comments: [Comment]
-    var id: String?
-    var ratio: CGFloat?
-    
-    var title: String? {
-        return comments.first?.text
-    }
-    
-    static private let mediaKey = "media"
-    static private let ratioKey = "ratio"
-    static private let mediaTypeKey = "mediaType"
-    static private let authorKey = "author"
-    static private let commentsKey = "comments"
-    static private let timestampKey = "timestamp"
-    static private let idKey = "id"
 }
+

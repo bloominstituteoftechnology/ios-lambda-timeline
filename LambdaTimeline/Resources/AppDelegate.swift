@@ -9,12 +9,22 @@
 import UIKit
 import Firebase
 import GoogleSignIn
+import FirebaseAuth
+import FBSDKCoreKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
     
     var window: UIWindow?
     
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        let appId: String = Settings.appID!
+    
+    if url.scheme != nil && url.scheme!.hasPrefix("fb\(appId)") && url.host ==  "authorize" {
+    return ApplicationDelegate.shared.application(app, open: url, options: options)
+    }
+    return false
+    }
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         
@@ -23,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         
         if Auth.auth().currentUser != nil {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")
+            let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "TabController") //
             window?.rootViewController = postsNavigationController
             window?.makeKeyAndVisible()
         }
@@ -41,6 +51,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             }
             return
         }
+    }
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        AppEvents.activateApp()
     }
 }
 
