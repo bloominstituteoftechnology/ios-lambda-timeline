@@ -9,9 +9,14 @@
 import UIKit
 import CoreImage
 
+// TODO: Add labels to sliders
+// TODO: fit sliders in view better
+// TODO: adjust edited image not original
+
 enum FilterTypes: Int {
     case exposure
     case vibrance
+    case vignette
 }
 
 class ImagePostViewController: UIViewController {
@@ -22,10 +27,12 @@ class ImagePostViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var adjustmentSlider: UISlider!
     
+    @IBOutlet weak var secondAdjustmentSlider: UISlider!
+    
     // MARK: - Properties
     let context = CIContext(options: nil)
     var filterType: FilterTypes = .exposure
-    let effectNames: [String] = ["Exposure", "Vibrance"]
+    let effectNames: [String] = ["Exposure", "Vibrance", "Vignette"]
     let effectImages: [UIImage] = [UIImage(systemName: "square.and.arrow.up")!, UIImage(systemName: "square.and.arrow.up")!, UIImage(systemName: "square.and.arrow.up")!, UIImage(systemName: "square.and.arrow.up")!, UIImage(systemName: "square.and.arrow.up")!]
     
     var originalImage: UIImage? {
@@ -50,7 +57,9 @@ class ImagePostViewController: UIViewController {
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        let filter = CIFilter(name: "CIVibrance")! // Built-in filter from Apple
+        secondAdjustmentSlider.isHidden = true
+        
+        let filter = CIFilter(name: "CIVignetteEffect")! // Built-in filter from Apple
         print(filter)
         print(filter.attributes)
     }
@@ -58,6 +67,14 @@ class ImagePostViewController: UIViewController {
     // MARK: - IBActions
     @IBAction func selectPhotoButtonTapped(_ sender: Any) {
         presentImagePickerController()
+    }
+    
+    @IBAction func adjustmentSliderChanged(_ sender: Any) {
+        updateViews()
+    }
+    
+    @IBAction func secondAdjustmentSliderChanged(_ sender: Any) {
+        updateViews()
     }
     
     // MARK: - Private Methods
@@ -79,15 +96,13 @@ class ImagePostViewController: UIViewController {
                 imageView.image = adjustExposure(scaledImage)
             } else if filterType.rawValue == 1 {
                 imageView.image = adjustVibrance(scaledImage)
+            } else if filterType.rawValue == 2 {
+                imageView.image = adjustVignette(scaledImage)
             }
             
         } else {
             imageView.image = nil
         }
-    }
-    
-    @IBAction func adjustmentSliderChanged(_ sender: Any) {
-        updateViews()
     }
     
     private func adjustExposure(_ image: UIImage) -> UIImage? {
@@ -139,6 +154,32 @@ class ImagePostViewController: UIViewController {
         
         return UIImage(cgImage: outputCGImage)
     }
+    
+    private func adjustVignette(_ image: UIImage) -> UIImage? {
+        
+        // UIImage -> CGImage -> CIImage
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+                
+        // Filter
+        let filter = CIFilter(name: "CIVignetteEffect")!
+        
+        // Setting values / getting values from Core Image
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(adjustmentSlider.value, forKey: kCIInputIntensityKey)
+        filter.setValue(secondAdjustmentSlider.value, forKey: kCIInputRadiusKey)
+        
+        // CIImage -> CGImage -> UIImage
+        
+        guard let outputCIImage = filter.outputImage else { return nil }
+        
+        // Render the image (do image processing here). Recipe needs to be used on image now.
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else {
+            return nil
+        }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
 
 }
 
@@ -162,14 +203,33 @@ extension ImagePostViewController: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         nameLabel.text = effectNames[indexPath.row]
         filterType = FilterTypes(rawValue: indexPath.item)!
+        
+        // TODO: Add all of this to own function
+
         if indexPath.item == 0 {
+            secondAdjustmentSlider.isHidden = true
+            
             adjustmentSlider.value = 0
             adjustmentSlider.maximumValue = 10
             adjustmentSlider.minimumValue = -10
         } else if indexPath.item == 1 {
+            secondAdjustmentSlider.isHidden = true
+            
             adjustmentSlider.value = 0
             adjustmentSlider.maximumValue = 1
             adjustmentSlider.minimumValue = -1
+        } else if indexPath.item == 2 {
+            secondAdjustmentSlider.isHidden = false
+
+            // Intensity
+            adjustmentSlider.value = 0
+            adjustmentSlider.maximumValue = 1
+            adjustmentSlider.minimumValue = -1
+            
+            // Radius
+            secondAdjustmentSlider.value = 0
+            secondAdjustmentSlider.maximumValue = 2000
+            secondAdjustmentSlider.minimumValue = 0
         }
     }
 }
