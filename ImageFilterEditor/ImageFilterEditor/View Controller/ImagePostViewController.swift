@@ -11,6 +11,7 @@ import CoreImage
 
 enum FilterTypes: Int {
     case exposure
+    case vibrance
 }
 
 class ImagePostViewController: UIViewController {
@@ -24,7 +25,7 @@ class ImagePostViewController: UIViewController {
     // MARK: - Properties
     let context = CIContext(options: nil)
     var filterType: FilterTypes = .exposure
-    let effectNames: [String] = ["Exposure"]
+    let effectNames: [String] = ["Exposure", "Vibrance"]
     let effectImages: [UIImage] = [UIImage(systemName: "square.and.arrow.up")!, UIImage(systemName: "square.and.arrow.up")!, UIImage(systemName: "square.and.arrow.up")!, UIImage(systemName: "square.and.arrow.up")!, UIImage(systemName: "square.and.arrow.up")!]
     
     var originalImage: UIImage? {
@@ -49,6 +50,9 @@ class ImagePostViewController: UIViewController {
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        let filter = CIFilter(name: "CIVibrance")! // Built-in filter from Apple
+        print(filter)
+        print(filter.attributes)
     }
     
     // MARK: - IBActions
@@ -73,8 +77,9 @@ class ImagePostViewController: UIViewController {
             
             if filterType.rawValue == 0 {
                 imageView.image = adjustExposure(scaledImage)
+            } else if filterType.rawValue == 1 {
+                imageView.image = adjustVibrance(scaledImage)
             }
-            
             
         } else {
             imageView.image = nil
@@ -97,6 +102,31 @@ class ImagePostViewController: UIViewController {
         // Setting values / getting values from Core Image
         filter.setValue(ciImage, forKey: kCIInputImageKey)
         filter.setValue(adjustmentSlider.value, forKey: kCIInputEVKey)
+        
+        // CIImage -> CGImage -> UIImage
+        
+        guard let outputCIImage = filter.outputImage else { return nil }
+        
+        // Render the image (do image processing here). Recipe needs to be used on image now.
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else {
+            return nil
+        }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    private func adjustVibrance(_ image: UIImage) -> UIImage? {
+        
+        // UIImage -> CGImage -> CIImage
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+                
+        // Filter
+        let filter = CIFilter(name: "CIVibrance")!
+        
+        // Setting values / getting values from Core Image
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(adjustmentSlider.value, forKey: kCIInputAmountKey)
         
         // CIImage -> CGImage -> UIImage
         
@@ -132,7 +162,15 @@ extension ImagePostViewController: UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         nameLabel.text = effectNames[indexPath.row]
         filterType = FilterTypes(rawValue: indexPath.item)!
-        print(filterType)
+        if indexPath.item == 0 {
+            adjustmentSlider.value = 0
+            adjustmentSlider.maximumValue = 10
+            adjustmentSlider.minimumValue = -10
+        } else if indexPath.item == 1 {
+            adjustmentSlider.value = 0
+            adjustmentSlider.maximumValue = 1
+            adjustmentSlider.minimumValue = -1
+        }
     }
 }
 
