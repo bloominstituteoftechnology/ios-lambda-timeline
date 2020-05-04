@@ -87,6 +87,31 @@ class ViewController: UIViewController {
         return UIImage(cgImage: outputCGImage)
     }
 
+    func vignette(_ image: UIImage) -> UIImage? {
+        // MARK: - UIImage -> CGImage -> CIImage and back
+
+        // UIImage -> CGImage
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+
+        // filter image
+        let filter = CIFilter.vignetteEffect()
+
+        // Set values
+        filter.inputImage = ciImage
+        filter.center = CGPoint(x: CGFloat(sliderA.value), y: CGFloat(sliderB.value))
+        filter.intensity = sliderC.value
+        filter.radius = sliderD.value
+        //        filter.center = CGPoint(x: 100, y: 150)
+
+        // CI -> CG -> UI
+        guard let outputCIImage = filter.outputImage else { return nil }
+
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size )) else { return nil }
+
+        return UIImage(cgImage: outputCGImage)
+    }
+
     // MARK: - Methods
 
     private func setUpUI() {
@@ -128,6 +153,26 @@ class ViewController: UIViewController {
                 allLabels[i]?.isHidden = false
                 allSliders[i]?.isHidden = false
             }
+            sliderALabel.text = "Vignette Center X:"
+            sliderBLabel.text = "Vignette Center Y:"
+            sliderCLabel.text = "Intensity:"
+            sliderDLabel.text = "Radius"
+
+            sliderA.minimumValue = 0
+            sliderA.maximumValue = Float((scaledImage?.size.width)!)
+            sliderA.value = Float((scaledImage?.size.width)!) / 2
+
+            sliderB.minimumValue = 0
+            sliderB.maximumValue = Float((scaledImage?.size.height)!)
+            sliderB.value = Float((scaledImage?.size.height)!) / 2
+
+            sliderC.minimumValue = 0
+            sliderC.maximumValue = 1
+            sliderC.value = 1
+
+            sliderD.minimumValue = 0
+            sliderD.maximumValue = 2000
+            sliderD.value = 100
         case 2:
             for i in 0..<allLabels.count {
                 allLabels[i]?.isHidden = false
@@ -149,9 +194,20 @@ class ViewController: UIViewController {
     // MARK: - Actions
 
     @IBAction func memefyButtonTapped(_ sender: Any) {
-        guard let scaledImage = scaledImage else { return }
-        imageView.image = zoomBlur(scaledImage)
+        guard let scaledImage = scaledImage else {
+            imageView.image = nil
+            return
+        }
+        switch memePicker.selectedSegmentIndex {
+        case 0:
+            imageView.image = zoomBlur(scaledImage)
+        case 1:
+            imageView.image = vignette(scaledImage)
+        default:
+            break
+        }
     }
+
     @IBAction func segmentSectionTapped(_ sender: UISegmentedControl) {
         setUpUI()
     }
