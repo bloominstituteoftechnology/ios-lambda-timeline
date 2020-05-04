@@ -14,6 +14,8 @@ class ViewController: UIViewController {
 
     // MARK: - Outlets
     @IBOutlet weak var imageView: UIImageView!
+    // Segmented Control
+    @IBOutlet weak var memePicker: UISegmentedControl!
     // Labels
     @IBOutlet weak var sliderALabel: UILabel!
     @IBOutlet weak var sliderBLabel: UILabel!
@@ -84,6 +86,38 @@ class ViewController: UIViewController {
     // MARK: - Methods
 
     private func setUpUI() {
+        let allLabels = [sliderALabel, sliderBLabel, sliderCLabel, sliderDLabel]
+        let allSliders = [sliderA, sliderB, sliderC, sliderD]
+
+        for label in allLabels {
+            label?.isHidden = true
+        }
+
+        for slider in allSliders {
+            slider?.isHidden = true
+        }
+        switch memePicker.selectedSegmentIndex {
+        case 0:
+            for i in 0..<allLabels.count - 1 {
+                allLabels[i]?.isHidden = false
+                allSliders[i]?.isHidden = false
+            }
+        case 1, 2:
+            for i in 0..<allLabels.count {
+                allLabels[i]?.isHidden = false
+                allSliders[i]?.isHidden = false
+            }
+        case 3:
+            allLabels[0]?.isHidden = false
+            allSliders[0]?.isHidden = false
+        case 4:
+            allLabels[0]?.isHidden = false
+            allSliders[0]?.isHidden = false
+            allLabels[1]?.isHidden = false
+            allSliders[1]?.isHidden = false
+        default:
+            break
+        }
     }
 
     // MARK: - Actions
@@ -94,7 +128,7 @@ class ViewController: UIViewController {
     }
 
     // MARK: - Enum
-    enum MemeMode {
+    enum MemeMode: CaseIterable {
         case zoom
         case vignette
         case bump
