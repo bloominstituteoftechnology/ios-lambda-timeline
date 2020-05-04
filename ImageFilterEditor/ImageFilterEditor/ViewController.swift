@@ -50,6 +50,8 @@ class ViewController: UIViewController {
 
     var scaledImage: UIImage?
 
+    // MARK: - View Controller
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -58,9 +60,10 @@ class ViewController: UIViewController {
         print(filter!)
         print(filter!.attributes)
         originalImage = imageView.image
+        setUpUI()
     }
 
-    func memefy(_ image: UIImage) -> UIImage? {
+    func zoomBlur(_ image: UIImage) -> UIImage? {
         // MARK: - UIImage -> CGImage -> CIImage and back
 
         // UIImage -> CGImage
@@ -72,8 +75,9 @@ class ViewController: UIViewController {
 
         // Set values
         filter.inputImage = ciImage
-        filter.center = CGPoint(x: image.size.width/2, y: image.size.height/2)
-//        filter.center = CGPoint(x: 100, y: 150)
+        filter.center = CGPoint(x: CGFloat(sliderA.value), y: CGFloat(sliderB.value))
+        filter.amount = sliderC.value
+        //        filter.center = CGPoint(x: 100, y: 150)
 
         // CI -> CG -> UI
         guard let outputCIImage = filter.outputImage else { return nil }
@@ -102,7 +106,29 @@ class ViewController: UIViewController {
                 allLabels[i]?.isHidden = false
                 allSliders[i]?.isHidden = false
             }
-        case 1, 2:
+            sliderALabel.text = "Blur Center X:"
+            sliderBLabel.text = "Blur Center Y:"
+            sliderCLabel.text = "Blur Amount:"
+
+            sliderA.minimumValue = 0
+            sliderA.maximumValue = Float((scaledImage?.size.width)!)
+            sliderA.value = Float((scaledImage?.size.width)!) / 2
+
+            sliderB.minimumValue = 0
+            sliderB.maximumValue = Float((scaledImage?.size.height)!)
+            sliderB.value = Float((scaledImage?.size.height)!) / 2
+
+            sliderC.minimumValue = 0
+            sliderC.maximumValue = 100
+            sliderC.value = 20
+
+
+        case 1:
+            for i in 0..<allLabels.count {
+                allLabels[i]?.isHidden = false
+                allSliders[i]?.isHidden = false
+            }
+        case 2:
             for i in 0..<allLabels.count {
                 allLabels[i]?.isHidden = false
                 allSliders[i]?.isHidden = false
@@ -124,16 +150,12 @@ class ViewController: UIViewController {
 
     @IBAction func memefyButtonTapped(_ sender: Any) {
         guard let scaledImage = scaledImage else { return }
-        imageView.image = memefy(scaledImage)
+        imageView.image = zoomBlur(scaledImage)
     }
-
-    // MARK: - Enum
-    enum MemeMode: CaseIterable {
-        case zoom
-        case vignette
-        case bump
-        case blur
-        case motionBlur
+    @IBAction func segmentSectionTapped(_ sender: UISegmentedControl) {
+        setUpUI()
     }
 }
+
+// MARK: - Extensions
 
