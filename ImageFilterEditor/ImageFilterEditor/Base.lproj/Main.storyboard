@@ -98,7 +98,7 @@
         <!--Select Filter View Controller-->
         <scene sceneID="E5O-iu-whQ">
             <objects>
-                <viewController id="sGm-z6-Rdt" customClass="SelectFilterViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController definesPresentationContext="YES" id="sGm-z6-Rdt" customClass="SelectFilterViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Gx1-4o-nQb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -113,7 +113,7 @@
                                 </connections>
                             </containerView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XEp-QU-CEh">
-                                <rect key="frame" x="0.0" y="50" width="414" height="40"/>
+                                <rect key="frame" x="0.0" y="60" width="414" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Q2s-gt-ib2"/>
                                 </constraints>
@@ -144,11 +144,71 @@
                         <outlet property="filterContainerView" destination="SQP-J0-qx6" id="3W8-ii-Q8g"/>
                         <outlet property="showFilterContainerConstraint" destination="yg4-V3-0cV" id="Vdz-Nw-Rle"/>
                         <outlet property="toolbar" destination="XEp-QU-CEh" id="a43-N8-K53"/>
+                        <segue destination="Kef-Th-vMe" kind="presentation" identifier="ApplyFilterSegue" id="xJt-VY-QOd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZN1-tO-WVt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="886.95652173913049" y="456.69642857142856"/>
+        </scene>
+        <!--Apply Filter View Controller-->
+        <scene sceneID="eFm-RJ-7ox">
+            <objects>
+                <viewController modalTransitionStyle="crossDissolve" modalPresentationStyle="currentContext" id="Kef-Th-vMe" customClass="ApplyFilterViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ngc-b6-e9a">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XzV-05-Vlf" userLabel="FilterCVC Container">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="XFB-Pq-wC8"/>
+                                </constraints>
+                            </containerView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Ok-3a-lM4">
+                                <rect key="frame" x="0.0" y="60" width="414" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="gnT-ax-1ge"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem style="plain" id="CAf-Rx-A98">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8fx-s0-Uuj">
+                                            <rect key="frame" x="20" y="5" width="34" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Back"/>
+                                            <connections>
+                                                <action selector="goBack:" destination="Kef-Th-vMe" eventType="touchUpInside" id="cbs-qh-oUu"/>
+                                            </connections>
+                                        </button>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="sSa-Qg-Sna"/>
+                                    <barButtonItem style="plain" id="62E-Pg-2Mn">
+                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nuK-6S-PAi">
+                                            <rect key="frame" x="354" y="5" width="40" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" title="Apply"/>
+                                        </button>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="0Ok-3a-lM4" firstAttribute="top" secondItem="XzV-05-Vlf" secondAttribute="bottom" id="43e-RB-kl8"/>
+                            <constraint firstItem="XzV-05-Vlf" firstAttribute="trailing" secondItem="aAd-Kk-zN1" secondAttribute="trailing" id="8BC-DO-ksc"/>
+                            <constraint firstItem="0Ok-3a-lM4" firstAttribute="trailing" secondItem="aAd-Kk-zN1" secondAttribute="trailing" id="ecB-Jc-Dms"/>
+                            <constraint firstItem="0Ok-3a-lM4" firstAttribute="leading" secondItem="aAd-Kk-zN1" secondAttribute="leading" id="rJc-Bu-itK"/>
+                            <constraint firstItem="XzV-05-Vlf" firstAttribute="leading" secondItem="aAd-Kk-zN1" secondAttribute="leading" id="seX-vb-xRB"/>
+                            <constraint firstItem="aAd-Kk-zN1" firstAttribute="bottom" secondItem="0Ok-3a-lM4" secondAttribute="bottom" id="vjy-Wi-a93"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="aAd-Kk-zN1"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="tev-OB-NBK"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cCd-Ma-fGr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1770" y="457"/>
         </scene>
     </scenes>
     <resources>

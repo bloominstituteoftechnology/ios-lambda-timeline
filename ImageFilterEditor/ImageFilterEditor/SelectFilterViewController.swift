@@ -23,30 +23,39 @@ class SelectFilterViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        preferredContentSize.height = toolbar.frame.height + view.safeAreaInsets.bottom
+        updateContentSize()
     }
     
 
-    /*
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if let filterCVC = segue.destination as? FilterCollectionViewController {
+            filterCVC.delegate = self
+        }
     }
-    */
+
+    private func updateContentSize() {
+        if showFilterContainerConstraint.isActive {
+            preferredContentSize.height = toolbar.frame.height + filterContainerView.frame.height + view.safeAreaInsets.bottom
+        } else {
+            preferredContentSize.height = toolbar.frame.height + view.safeAreaInsets.bottom
+        }
+    }
 
     @IBAction func showFilters(_ sender: Any) {
         showFilterContainerConstraint.isActive.toggle()
         UIView.animate(withDuration: animationDuration) {
             self.view.layoutIfNeeded()
         }
-        
-        if showFilterContainerConstraint.isActive {
-            preferredContentSize.height = toolbar.frame.height + filterContainerView.frame.height + view.safeAreaInsets.bottom
-        } else {
-            preferredContentSize.height = toolbar.frame.height + view.safeAreaInsets.bottom
-        }
+        updateContentSize()
+    }
+}
+
+extension SelectFilterViewController: FilterSelectionDelegate {
+    func selectedFilter() {
+        performSegue(withIdentifier: "ApplyFilterSegue", sender: self)
     }
 }
