@@ -8,6 +8,15 @@
 
 import UIKit
 import Photos
+import CoreImage
+
+enum FilterType {
+    case BackWhite
+    case Soften
+    case Blur
+    case Brightening
+    case Vintage
+}
 
 class ImagePostViewController: ShiftableViewController {
     
@@ -117,12 +126,84 @@ class ImagePostViewController: ShiftableViewController {
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    var context = CIContext(options: nil)
+    var filterType: FilterType!
+//    private var original: UIImage? {
+//        didSet {
+//            guard let original = original else {return}
+//
+//            let sized = CGSize(width: imageView.bounds.size.width * UIScreen.main.scale, height: imageView.bounds.size.height * UIScreen.main.scale)
+//            scaled.sc
+//
+//        }
+//    }
+    var scaled: UIImage?
     
+    @IBOutlet weak var blurSlider: UISlider!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    @IBAction func blurChanged(_ sender: Any) {
+    }
+    @IBAction func blackAndWhiteTapped(_ sender: Any) {
+    }
+    @IBAction func vintageTapped(_ sender: Any) {
+    }
+    @IBAction func softenTapped(_ sender: Any) {
+    }
+    @IBAction func brightenTapped(_ sender: Any) {
+    }
+    
+    func filter(_ image: UIImage, for filter: FilterType) -> UIImage? {
+        switch filter {
+        case .BackWhite:
+            guard let cgImage = image.cgImage else {return nil}
+            let ciImage = CIImage(cgImage: cgImage)
+            let filter = CIFilter(name: "CIPhotoEffectTonal")!
+            filter.setValue(ciImage, forKey: "inputImage")
+            guard let outputCI = filter.outputImage else { return nil }
+            guard let outputCG = context.createCGImage(outputCI, from: CGRect(origin: .zero, size: image.size)) else {return nil}
+            return UIImage(cgImage: outputCG)
+        case .Blur:
+            guard let cgImage = image.cgImage else {return nil}
+            let ciImage = CIImage(cgImage: cgImage)
+            let filter = CIFilter(name: "CIGaussianBlur")!
+            filter.setValue(ciImage, forKey: "inputImage")
+            filter.setValue(blurSlider.value, forKey: "inputRadius")
+            guard let outputCI = filter.outputImage else { return nil }
+            guard let outputCG = context.createCGImage(outputCI, from: CGRect(origin: .zero, size: image.size)) else {return nil}
+            return UIImage(cgImage: outputCG)
+        case .Brightening:
+            guard let cgImage = image.cgImage else {return nil}
+            let ciImage = CIImage(cgImage: cgImage)
+            let filter = CIFilter(name: "CIHighlightShadowAdjust")!
+            filter.setValue(ciImage, forKey: "inputImage")
+            guard let outputCI = filter.outputImage else { return nil }
+            guard let outputCG = context.createCGImage(outputCI, from: CGRect(origin: .zero, size: image.size)) else {return nil}
+            return UIImage(cgImage: outputCG)
+        case .Soften:
+            guard let cgImage = image.cgImage else {return nil}
+            let ciImage = CIImage(cgImage: cgImage)
+            let filter = CIFilter(name: "CIBloom")!
+            filter.setValue(ciImage, forKey: "inputImage")
+            guard let outputCI = filter.outputImage else { return nil }
+            guard let outputCG = context.createCGImage(outputCI, from: CGRect(origin: .zero, size: image.size)) else {return nil}
+            return UIImage(cgImage: outputCG)
+        case .Vintage:
+            guard let cgImage = image.cgImage else {return nil}
+            let ciImage = CIImage(cgImage: cgImage)
+            let filter = CIFilter(name: "CIPhotoEffectInstant")!
+            filter.setValue(ciImage, forKey: "inputImage")
+            guard let outputCI = filter.outputImage else { return nil }
+            guard let outputCG = context.createCGImage(outputCI, from: CGRect(origin: .zero, size: image.size)) else {return nil}
+            return UIImage(cgImage: outputCG)
+        default:
+            break
+        }
+    }
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

@@ -157,14 +157,100 @@
                                             </textField>
                                         </subviews>
                                     </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Blur:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ihh-D6-jus">
+                                        <rect key="frame" x="30" y="447" width="44" height="24"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <color key="textColor" systemColor="tertiarySystemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Xn-Cg-f52">
+                                        <rect key="frame" x="30" y="493" width="154" height="36"/>
+                                        <color key="backgroundColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="154" id="haY-yb-xsi"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <state key="normal" title="Black-White">
+                                            <color key="titleColor" systemColor="tertiarySystemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="blackAndWhiteTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="djK-jo-PaZ"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gNc-Vk-ICs">
+                                        <rect key="frame" x="30" y="549" width="94" height="36"/>
+                                        <color key="backgroundColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="94" id="M3N-UJ-jsX"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <state key="normal" title="vintage">
+                                            <color key="titleColor" systemColor="tertiarySystemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="vintageTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="7Eg-AD-Q7Y"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uN6-nh-nln">
+                                        <rect key="frame" x="30" y="661" width="134" height="36"/>
+                                        <color key="backgroundColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="134" id="gcR-c9-lhY"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <state key="normal" title="Brightening">
+                                            <color key="titleColor" systemColor="tertiarySystemBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="brightenTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="nzt-1H-Ad5"/>
+                                        </connections>
+                                    </button>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="z09-Td-8s1">
+                                        <rect key="frame" x="102" y="443" width="284" height="31"/>
+                                        <connections>
+                                            <action selector="blurChanged:" destination="1Aw-4e-BW2" eventType="valueChanged" id="T2V-AO-kHs"/>
+                                        </connections>
+                                    </slider>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MDE-bM-Yau">
+                                        <rect key="frame" x="30" y="605" width="90" height="36"/>
+                                        <color key="backgroundColor" systemColor="secondaryLabelColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="bR1-yh-VJo"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <state key="normal" title="Soften">
+                                            <color key="titleColor" systemColor="tertiarySystemGroupedBackgroundColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="softenTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="AUc-5I-gWf"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="PkI-rS-ua9" secondAttribute="trailing" id="1cC-FG-cAC"/>
                                     <constraint firstItem="PkI-rS-ua9" firstAttribute="top" secondItem="9qd-If-ddw" secondAttribute="top" id="3tV-sW-NF1"/>
+                                    <constraint firstItem="ihh-D6-jus" firstAttribute="top" secondItem="PkI-rS-ua9" secondAttribute="bottom" constant="30" id="4jx-UA-SmH"/>
+                                    <constraint firstItem="z09-Td-8s1" firstAttribute="leading" secondItem="ihh-D6-jus" secondAttribute="trailing" constant="30" id="79Q-oo-lu1"/>
+                                    <constraint firstItem="MDE-bM-Yau" firstAttribute="top" secondItem="gNc-Vk-ICs" secondAttribute="bottom" constant="20" id="EDo-y2-YSb"/>
+                                    <constraint firstItem="gNc-Vk-ICs" firstAttribute="leading" secondItem="9qd-If-ddw" secondAttribute="leading" constant="30" id="ExC-Ho-gXG"/>
+                                    <constraint firstItem="uN6-nh-nln" firstAttribute="top" secondItem="MDE-bM-Yau" secondAttribute="bottom" constant="20" id="Gyb-KD-ieR"/>
+                                    <constraint firstItem="z09-Td-8s1" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ihh-D6-jus" secondAttribute="trailing" constant="8" symbolic="YES" id="LpQ-N2-bAa"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="uN6-nh-nln" secondAttribute="trailing" constant="20" symbolic="YES" id="NL6-N5-ckL"/>
+                                    <constraint firstItem="3Xn-Cg-f52" firstAttribute="top" secondItem="z09-Td-8s1" secondAttribute="bottom" constant="20" id="YvT-HI-erm"/>
+                                    <constraint firstItem="MDE-bM-Yau" firstAttribute="leading" secondItem="9qd-If-ddw" secondAttribute="leading" constant="30" id="ahd-bz-siF"/>
                                     <constraint firstItem="PkI-rS-ua9" firstAttribute="leading" secondItem="9qd-If-ddw" secondAttribute="leading" id="bPK-xN-eaO"/>
                                     <constraint firstAttribute="bottom" secondItem="PkI-rS-ua9" secondAttribute="bottom" id="cfV-7c-ubK"/>
+                                    <constraint firstItem="3Xn-Cg-f52" firstAttribute="leading" secondItem="9qd-If-ddw" secondAttribute="leading" constant="30" id="dKM-dA-D5w"/>
                                     <constraint firstItem="PkI-rS-ua9" firstAttribute="width" secondItem="9qd-If-ddw" secondAttribute="width" id="dWh-6N-mO7"/>
+                                    <constraint firstItem="gNc-Vk-ICs" firstAttribute="top" secondItem="3Xn-Cg-f52" secondAttribute="bottom" constant="20" id="e2T-V1-RDT"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gNc-Vk-ICs" secondAttribute="trailing" constant="20" symbolic="YES" id="eMB-Da-Zj9"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3Xn-Cg-f52" secondAttribute="trailing" constant="20" symbolic="YES" id="iFK-mJ-JLB"/>
+                                    <constraint firstItem="uN6-nh-nln" firstAttribute="leading" secondItem="9qd-If-ddw" secondAttribute="leading" constant="30" id="kdJ-Zi-6K9"/>
+                                    <constraint firstItem="ihh-D6-jus" firstAttribute="leading" secondItem="9qd-If-ddw" secondAttribute="leading" constant="30" id="ntH-9D-ogy"/>
                                     <constraint firstAttribute="height" priority="250" constant="603" id="qMm-7B-8rp"/>
+                                    <constraint firstAttribute="trailing" secondItem="z09-Td-8s1" secondAttribute="trailing" constant="30" id="r7f-u9-qWe"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="MDE-bM-Yau" secondAttribute="trailing" constant="20" symbolic="YES" id="tRB-dW-BLm"/>
+                                    <constraint firstItem="z09-Td-8s1" firstAttribute="top" secondItem="PkI-rS-ua9" secondAttribute="bottom" constant="26" id="wz1-NL-ulN"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
@@ -186,6 +272,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="blurSlider" destination="z09-Td-8s1" id="lL6-cv-I9u"/>
                         <outlet property="chooseImageButton" destination="VxD-cu-jHT" id="KVs-no-MbU"/>
                         <outlet property="imageHeightConstraint" destination="MHD-wr-Gq9" id="HyG-8g-Ck1"/>
                         <outlet property="imageView" destination="4eK-5F-H5h" id="e7m-c5-Xhz"/>
