@@ -27,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
             window?.rootViewController = postsNavigationController
             window?.makeKeyAndVisible()
         }
-        
         return true
     }
     
