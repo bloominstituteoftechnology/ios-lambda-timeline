@@ -12,10 +12,31 @@ class ImagePostViewController: UIViewController {
 
     // MARK: - IBOutlets
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
     
     // MARK: - Properties
-    let effectNames: [String] = ["Depth", "Mono", "Vignette", "Exposure", "Color"]
+    let effectNames: [String] = ["Exposure"]
     let effectImages: [UIImage] = [UIImage(systemName: "square.and.arrow.up")!, UIImage(systemName: "square.and.arrow.up")!, UIImage(systemName: "square.and.arrow.up")!, UIImage(systemName: "square.and.arrow.up")!, UIImage(systemName: "square.and.arrow.up")!]
+    
+    var originalImage: UIImage? {
+        didSet {
+            // resize the scaledImage and set it
+            guard let originalImage = originalImage else { return }
+            // Height and width
+            var scaledSize = imageView.bounds.size
+            let scale = UIScreen.main.scale  // 1x, 2x, or 3x
+            scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+            print("scaled size: \(scaledSize)")
+            
+            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+        }
+    }
+    var scaledImage: UIImage? {
+        didSet {
+            updateViews()
+        }
+    }
     
     // MARK: - View Lifecycle
     override func viewDidLoad() {
@@ -24,6 +45,27 @@ class ImagePostViewController: UIViewController {
     
     // MARK: - IBActions
     @IBAction func selectPhotoButtonTapped(_ sender: Any) {
+        presentImagePickerController()
+    }
+    
+    // MARK: - Private Methods
+    private func presentImagePickerController() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            print("Error: The photo library is not available")
+            return
+        }
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    private func updateViews() {
+        if let scaledImage = scaledImage {
+            imageView.image = scaledImage
+        } else {
+            imageView.image = nil
+        }
     }
     
     /*
@@ -40,7 +82,7 @@ class ImagePostViewController: UIViewController {
 
 extension ImagePostViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return effectNames.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -54,5 +96,22 @@ extension ImagePostViewController: UICollectionViewDelegate, UICollectionViewDat
         
         
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        nameLabel.text = effectNames[indexPath.row]
+    }
+}
+
+extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.originalImage] as? UIImage {
+            originalImage = image
+        }
+        
+        picker.dismiss(animated: true)
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
     }
 }

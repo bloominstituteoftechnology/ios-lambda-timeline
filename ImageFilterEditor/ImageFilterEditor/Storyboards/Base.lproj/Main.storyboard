@@ -75,15 +75,42 @@
                                     <outlet property="delegate" destination="423-Gq-1Q9" id="MKd-cy-Cgs"/>
                                 </connections>
                             </collectionView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bk0-4C-F6c">
+                                <rect key="frame" x="0.0" y="602" width="414" height="260"/>
+                                <subviews>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ymf-2M-Jsm">
+                                        <rect key="frame" x="18" y="115" width="378" height="31"/>
+                                    </slider>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exposure" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PVL-If-4y4">
+                                        <rect key="frame" x="20" y="8" width="374" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="PVL-If-4y4" firstAttribute="top" secondItem="bk0-4C-F6c" secondAttribute="top" constant="8" id="2Nn-aU-Al3"/>
+                                    <constraint firstItem="Ymf-2M-Jsm" firstAttribute="leading" secondItem="bk0-4C-F6c" secondAttribute="leading" constant="20" id="4Mw-8G-UdA"/>
+                                    <constraint firstAttribute="trailing" secondItem="PVL-If-4y4" secondAttribute="trailing" constant="20" id="Ig7-FD-e55"/>
+                                    <constraint firstItem="PVL-If-4y4" firstAttribute="leading" secondItem="bk0-4C-F6c" secondAttribute="leading" constant="20" id="UeQ-t3-LKb"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ymf-2M-Jsm" secondAttribute="trailing" constant="20" id="fdj-Y8-YwQ"/>
+                                    <constraint firstItem="Ymf-2M-Jsm" firstAttribute="centerY" secondItem="bk0-4C-F6c" secondAttribute="centerY" id="jLi-Fy-nwS"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="bk0-4C-F6c" firstAttribute="top" secondItem="NfO-WK-f27" secondAttribute="bottom" id="90F-S3-CHq"/>
                             <constraint firstItem="Gjk-OS-INm" firstAttribute="leading" secondItem="9xM-5R-JEK" secondAttribute="leading" id="C1x-tT-FkC"/>
+                            <constraint firstItem="bk0-4C-F6c" firstAttribute="trailing" secondItem="9xM-5R-JEK" secondAttribute="trailing" id="CvB-gL-aAo"/>
                             <constraint firstItem="Gjk-OS-INm" firstAttribute="top" secondItem="9xM-5R-JEK" secondAttribute="top" id="P3g-dQ-rfA"/>
                             <constraint firstItem="NfO-WK-f27" firstAttribute="trailing" secondItem="9xM-5R-JEK" secondAttribute="trailing" id="Q5y-Cr-9tZ"/>
                             <constraint firstItem="Gjk-OS-INm" firstAttribute="trailing" secondItem="9xM-5R-JEK" secondAttribute="trailing" id="Qmc-r7-BFJ"/>
                             <constraint firstItem="NfO-WK-f27" firstAttribute="top" secondItem="Gjk-OS-INm" secondAttribute="bottom" id="WYj-HP-UX9"/>
+                            <constraint firstItem="bk0-4C-F6c" firstAttribute="bottom" secondItem="9xM-5R-JEK" secondAttribute="bottom" id="ku5-Tg-gPg"/>
                             <constraint firstItem="NfO-WK-f27" firstAttribute="leading" secondItem="9xM-5R-JEK" secondAttribute="leading" id="lVv-oj-irn"/>
+                            <constraint firstItem="bk0-4C-F6c" firstAttribute="leading" secondItem="9xM-5R-JEK" secondAttribute="leading" id="tD6-3t-sHn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="9xM-5R-JEK"/>
                     </view>
@@ -96,6 +123,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="NfO-WK-f27" id="LLO-vQ-r7T"/>
+                        <outlet property="imageView" destination="Gjk-OS-INm" id="O4t-o3-Dnv"/>
+                        <outlet property="nameLabel" destination="PVL-If-4y4" id="Kow-1r-ZX8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UO4-gO-efb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
