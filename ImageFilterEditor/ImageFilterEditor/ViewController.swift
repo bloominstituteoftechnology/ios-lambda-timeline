@@ -16,6 +16,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
 
     // MARK: - Properties
+    let context = CIContext(options: nil)
+
     var originalImage: UIImage? {
         didSet {
             // resize the scaledImage and set it
@@ -34,7 +36,13 @@ class ViewController: UIViewController {
         }
     }
 
-    var scaledImage: UIImage?
+    var scaledImage: UIImage? {
+        didSet {
+            if let img = scaledImage {
+                imageView.image = img
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +51,7 @@ class ViewController: UIViewController {
         let filter = CIFilter(name: "CIZoomBlur")
         print(filter!)
         print(filter!.attributes)
+        originalImage = imageView.image
     }
 
     func memefy(_ image: UIImage) -> UIImage? {
@@ -59,6 +68,10 @@ class ViewController: UIViewController {
         filter.inputImage = ciImage
         filter.center = CGPoint(x: 100, y: 150)
 
+        // CI -> CG -> UI
+        guard let outputCIImage = filter.outputImage else { return nil }
+
+
         return nil
     }
 
@@ -68,7 +81,8 @@ class ViewController: UIViewController {
     // MARK: - Actions
 
     @IBAction func memefyButtonTapped(_ sender: Any) {
-        memefy(<#T##image: UIImage##UIImage#>)
+        guard let scaledImage = scaledImage else { return }
+        memefy(scaledImage)
     }
 
 }
