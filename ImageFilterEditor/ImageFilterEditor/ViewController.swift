@@ -14,7 +14,15 @@ class ViewController: UIViewController {
 
     // MARK: - Outlets
     @IBOutlet weak var imageView: UIImageView!
-
+    // Labels
+    @IBOutlet weak var sliderALabel: UILabel!
+    @IBOutlet weak var sliderBLabel: UILabel!
+    @IBOutlet weak var sliderCLabel: UILabel!
+    // Sliders
+    @IBOutlet weak var sliderA: UISlider!
+    @IBOutlet weak var sliderB: UISlider!
+    @IBOutlet weak var sliderC: UISlider!
+    
     // MARK: - Properties
     let context = CIContext(options: nil)
 

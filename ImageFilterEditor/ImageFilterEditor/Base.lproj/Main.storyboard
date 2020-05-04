@@ -22,37 +22,37 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="3aZ-bJ-fby">
-                                <rect key="frame" x="46" y="498" width="322" height="258.5"/>
+                                <rect key="frame" x="44" y="498" width="326" height="258.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Silder A:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GBi-ux-md7">
-                                        <rect key="frame" x="0.0" y="0.0" width="322" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="326" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="-0.5" maxValue="4.5" translatesAutoresizingMaskIntoConstraints="NO" id="SWH-on-PVF">
-                                        <rect key="frame" x="-2" y="31.5" width="326" height="31"/>
+                                        <rect key="frame" x="-2" y="31.5" width="330" height="31"/>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Silder B:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aex-Xf-HZY">
-                                        <rect key="frame" x="0.0" y="72.5" width="322" height="20.5"/>
+                                        <rect key="frame" x="0.0" y="72.5" width="326" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="-0.5" maxValue="4.5" translatesAutoresizingMaskIntoConstraints="NO" id="KDa-bE-Jgl">
-                                        <rect key="frame" x="-2" y="104" width="326" height="31"/>
+                                        <rect key="frame" x="-2" y="104" width="330" height="31"/>
                                     </slider>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Silder B:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STS-ey-GPC">
-                                        <rect key="frame" x="0.0" y="145" width="322" height="20.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Silder C:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STS-ey-GPC">
+                                        <rect key="frame" x="0.0" y="145" width="326" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="-0.5" maxValue="4.5" translatesAutoresizingMaskIntoConstraints="NO" id="HiU-Od-9vq">
-                                        <rect key="frame" x="-2" y="176.5" width="326" height="31"/>
+                                        <rect key="frame" x="-2" y="176.5" width="330" height="31"/>
                                     </slider>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r0H-Dj-xOm">
-                                        <rect key="frame" x="0.0" y="217.5" width="322" height="41"/>
+                                        <rect key="frame" x="0.0" y="217.5" width="326" height="41"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <state key="normal" title="Memefy"/>
                                         <connections>
@@ -75,6 +75,12 @@
                     <navigationItem key="navigationItem" id="qZZ-2r-Yhr"/>
                     <connections>
                         <outlet property="imageView" destination="9ll-z6-Q23" id="cGf-7g-lof"/>
+                        <outlet property="sliderA" destination="SWH-on-PVF" id="Y08-Pe-23a"/>
+                        <outlet property="sliderALabel" destination="GBi-ux-md7" id="6o2-un-ZaD"/>
+                        <outlet property="sliderB" destination="KDa-bE-Jgl" id="ZeT-Oq-LFG"/>
+                        <outlet property="sliderBLabel" destination="Aex-Xf-HZY" id="8b9-yn-acQ"/>
+                        <outlet property="sliderC" destination="HiU-Od-9vq" id="sca-K7-Kyg"/>
+                        <outlet property="sliderCLabel" destination="STS-ey-GPC" id="8Ae-5f-Eo4"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
