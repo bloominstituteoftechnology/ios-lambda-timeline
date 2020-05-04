@@ -18,6 +18,7 @@ enum FilterTypes: Int {
     case vibrance
     case vignette
     case sepia
+    case motionBlur
 }
 
 class ImagePostViewController: UIViewController {
@@ -33,8 +34,8 @@ class ImagePostViewController: UIViewController {
     // MARK: - Properties
     let context = CIContext(options: nil)
     var filterType: FilterTypes = .exposure
-    let effectNames: [String] = ["Exposure", "Vibrance", "Vignette", "Sepia Tone"]
-    let effectImages: [UIImage] = [UIImage(systemName: "square.and.arrow.up")!, UIImage(systemName: "square.and.arrow.up")!, UIImage(systemName: "square.and.arrow.up")!, UIImage(systemName: "square.and.arrow.up")!, UIImage(systemName: "square.and.arrow.up")!]
+    let effectNames: [String] = ["Exposure", "Vibrance", "Vignette", "Sepia Tone", "Motion Blur"]
+    let effectImages: [UIImage] = [UIImage(systemName: "sun.max")!, UIImage(systemName: "sunrise")!, UIImage(systemName: "smallcircle.circle")!, UIImage(systemName: "eyedropper.halffull")!, UIImage(systemName: "slider.horizontal.3")!]
     
     var originalImage: UIImage? {
         didSet {
@@ -60,7 +61,7 @@ class ImagePostViewController: UIViewController {
         super.viewDidLoad()
         secondAdjustmentSlider.isHidden = true
         
-        let filter = CIFilter(name: "CISepiaTone")! // Built-in filter from Apple
+        let filter = CIFilter(name: "CIMotionBlur")! // Built-in filter from Apple
         print(filter)
         print(filter.attributes)
     }
@@ -101,6 +102,8 @@ class ImagePostViewController: UIViewController {
                 imageView.image = adjustVignette(scaledImage)
             } else if filterType.rawValue == 3 {
                 imageView.image = adjustSepia(scaledImage)
+            } else if filterType.rawValue == 4 {
+                imageView.image = adjustMotionBlur(scaledImage)
             }
             
         } else {
@@ -208,6 +211,32 @@ class ImagePostViewController: UIViewController {
         
         return UIImage(cgImage: outputCGImage)
     }
+    
+    private func adjustMotionBlur(_ image: UIImage) -> UIImage? {
+        
+        // UIImage -> CGImage -> CIImage
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+                
+        // Filter
+        let filter = CIFilter(name: "CIMotionBlur")!
+        
+        // Setting values / getting values from Core Image
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(adjustmentSlider.value, forKey: kCIInputRadiusKey)
+        filter.setValue(secondAdjustmentSlider.value, forKey: kCIInputAngleKey)
+        
+        // CIImage -> CGImage -> UIImage
+        
+        guard let outputCIImage = filter.outputImage else { return nil }
+        
+        // Render the image (do image processing here). Recipe needs to be used on image now.
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else {
+            return nil
+        }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
 
 }
 
@@ -264,6 +293,18 @@ extension ImagePostViewController: UICollectionViewDelegate, UICollectionViewDat
             adjustmentSlider.value = 0
             adjustmentSlider.maximumValue = 1
             adjustmentSlider.minimumValue = 0
+        } else if indexPath.item == 4 {
+            secondAdjustmentSlider.isHidden = false
+
+            // Radius
+            adjustmentSlider.value = 0
+            adjustmentSlider.maximumValue = 100
+            adjustmentSlider.minimumValue = 0
+            
+            // Angle
+            secondAdjustmentSlider.value = 0
+            secondAdjustmentSlider.maximumValue = 3.141592653589793
+            secondAdjustmentSlider.minimumValue = -3.141592653589793
         }
         
     }
