@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var sliderB: UISlider!
     @IBOutlet weak var sliderC: UISlider!
     @IBOutlet weak var sliderD: UISlider!
-    
+
     // MARK: - Properties
     let context = CIContext(options: nil)
 
@@ -91,5 +91,13 @@ class ViewController: UIViewController {
         imageView.image = memefy(scaledImage)
     }
 
+    // MARK: - Enum
+    enum MemeMode {
+        case zoom
+        case vignette
+        case bump
+        case blur
+        case motionBlur
+    }
 }
 
