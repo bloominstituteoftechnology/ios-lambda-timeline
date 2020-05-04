@@ -9,23 +9,23 @@
 import UIKit
 
 class ImagePostViewController: UIViewController {
-    @IBOutlet var filterContainerShowConstraint: NSLayoutConstraint!
-    @IBOutlet weak var filterContainerView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        filterContainerShowConstraint.isActive = false
         // Do any additional setup after loading the view.
     }
-
-    // MARK: - Actions
     
-    @IBAction func showTools(_ sender: UIBarButtonItem) {
-        filterContainerShowConstraint.isActive.toggle()
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
+    @IBOutlet weak var selectFilterHeightConstraint: NSLayoutConstraint!
+    
+    override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
+        super.preferredContentSizeDidChange(forChildContentContainer: container)
+        if let child = container as? SelectFilterViewController {
+            print(child.preferredContentSize.height)
+            selectFilterHeightConstraint.constant = child.preferredContentSize.height
+            UIView.animate(withDuration: child.animationDuration) {
+                self.view.layoutIfNeeded()
+            }
         }
     }
-    
 }
 

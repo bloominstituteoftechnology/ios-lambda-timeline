@@ -16,47 +16,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SQP-J0-qx6" userLabel="FilterCVC Container">
-                                <rect key="frame" x="0.0" y="753" width="414" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="srX-8l-odX"/>
-                                </constraints>
-                                <connections>
-                                    <segue destination="flO-Rm-vJg" kind="embed" id="epU-IA-etn"/>
-                                </connections>
-                            </containerView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XEp-QU-CEh">
-                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
-                                <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="9rL-r2-Jeb"/>
-                                    <barButtonItem title="Filters" id="eJo-Jj-Ejn">
-                                        <connections>
-                                            <action selector="showTools:" destination="BYZ-38-t0r" id="fDg-18-AKy"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="aZa-9Q-Bd6"/>
-                                </items>
-                            </toolbar>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Elk" translatesAutoresizingMaskIntoConstraints="NO" id="5Be-do-RYg">
                                 <rect key="frame" x="20" y="44" width="374" height="581"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ni2-Vg-RDp">
+                                <rect key="frame" x="0.0" y="796" width="414" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="CPP-uL-nWZ"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="sGm-z6-Rdt" kind="embed" id="Shp-Jy-ObV"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="XEp-QU-CEh" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="4ZS-6e-7Oy"/>
-                            <constraint firstItem="XEp-QU-CEh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="7qC-rQ-RUa"/>
-                            <constraint firstItem="SQP-J0-qx6" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="J6n-hn-VhR"/>
-                            <constraint firstItem="XEp-QU-CEh" firstAttribute="top" secondItem="SQP-J0-qx6" secondAttribute="top" priority="750" id="Kmd-Xc-MsR"/>
-                            <constraint firstItem="SQP-J0-qx6" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="SgX-sT-BKv"/>
-                            <constraint firstItem="XEp-QU-CEh" firstAttribute="top" secondItem="SQP-J0-qx6" secondAttribute="bottom" id="sFI-nM-hqa"/>
-                            <constraint firstItem="XEp-QU-CEh" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="tTo-2q-pFs"/>
+                            <constraint firstItem="ni2-Vg-RDp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="3af-d8-vFx"/>
+                            <constraint firstItem="ni2-Vg-RDp" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="JqL-IS-dHj"/>
+                            <constraint firstAttribute="bottom" secondItem="ni2-Vg-RDp" secondAttribute="bottom" id="RlY-e3-J1e"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="filterContainerShowConstraint" destination="sFI-nM-hqa" id="pAN-aD-2dE"/>
                         <outlet property="filterContainerView" destination="SQP-J0-qx6" id="0p0-td-zBY"/>
+                        <outlet property="selectFilterHeightConstraint" destination="CPP-uL-nWZ" id="Def-de-CSi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -109,7 +93,62 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="80M-MD-oHD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="866.66666666666674" y="291.62946428571428"/>
+            <point key="canvasLocation" x="887" y="351"/>
+        </scene>
+        <!--Select Filter View Controller-->
+        <scene sceneID="E5O-iu-whQ">
+            <objects>
+                <viewController id="sGm-z6-Rdt" customClass="SelectFilterViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Gx1-4o-nQb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SQP-J0-qx6" userLabel="FilterCVC Container">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="srX-8l-odX"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="flO-Rm-vJg" kind="embed" id="epU-IA-etn"/>
+                                </connections>
+                            </containerView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XEp-QU-CEh">
+                                <rect key="frame" x="0.0" y="50" width="414" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Q2s-gt-ib2"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="9rL-r2-Jeb"/>
+                                    <barButtonItem title="Filters" id="eJo-Jj-Ejn">
+                                        <connections>
+                                            <action selector="showFilters:" destination="sGm-z6-Rdt" id="7QI-OB-o25"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="aZa-9Q-Bd6"/>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="XEp-QU-CEh" firstAttribute="top" secondItem="SQP-J0-qx6" secondAttribute="top" priority="750" id="4Vt-b4-uOF"/>
+                            <constraint firstItem="XEp-QU-CEh" firstAttribute="trailing" secondItem="LPY-RO-hrH" secondAttribute="trailing" id="BBK-1x-1cM"/>
+                            <constraint firstItem="SQP-J0-qx6" firstAttribute="trailing" secondItem="LPY-RO-hrH" secondAttribute="trailing" id="dLg-1Q-7Bs"/>
+                            <constraint firstItem="SQP-J0-qx6" firstAttribute="leading" secondItem="LPY-RO-hrH" secondAttribute="leading" id="st1-tA-aY5"/>
+                            <constraint firstItem="XEp-QU-CEh" firstAttribute="leading" secondItem="LPY-RO-hrH" secondAttribute="leading" id="wRU-un-TCf"/>
+                            <constraint firstItem="LPY-RO-hrH" firstAttribute="bottom" secondItem="XEp-QU-CEh" secondAttribute="bottom" id="xy4-RZ-oBh"/>
+                            <constraint firstItem="XEp-QU-CEh" firstAttribute="top" secondItem="SQP-J0-qx6" secondAttribute="bottom" id="yg4-V3-0cV"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="LPY-RO-hrH"/>
+                    </view>
+                    <connections>
+                        <outlet property="filterContainerView" destination="SQP-J0-qx6" id="3W8-ii-Q8g"/>
+                        <outlet property="showFilterContainerConstraint" destination="yg4-V3-0cV" id="Vdz-Nw-Rle"/>
+                        <outlet property="toolbar" destination="XEp-QU-CEh" id="a43-N8-K53"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZN1-tO-WVt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="886.95652173913049" y="456.69642857142856"/>
         </scene>
     </scenes>
     <resources>
