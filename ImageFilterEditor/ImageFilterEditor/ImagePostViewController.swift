@@ -75,7 +75,9 @@ class ImagePostViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
+        // Demo with a starter image from Storyboard
+        originalImage = imageView.image
     }
 
     // MARK: - Private Functions
