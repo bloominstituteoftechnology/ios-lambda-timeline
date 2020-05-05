@@ -21,6 +21,16 @@ class SelectFilterViewController: UIViewController {
     @IBOutlet private weak var filterCollectionView: UICollectionView!
     @IBOutlet private var showFilterContainerConstraint: NSLayoutConstraint!
     
+    // MARK: - Private Properties
+    
+    let filters = [
+        VignetteFilter(),
+        VignetteFilter(),
+        VignetteFilter(),
+        VignetteFilter(),
+        VignetteFilter(),
+    ]
+    
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
@@ -68,13 +78,15 @@ class SelectFilterViewController: UIViewController {
 
 extension SelectFilterViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return filters.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath) as? FilterCell else {
+            fatalError("Unable to cast cell as \(FilterCell.self)")
+        }
     
-        // Configure the cell
+        cell.imageView.image = filters[indexPath.row].icon
     
         return cell
     }
