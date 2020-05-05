@@ -303,6 +303,9 @@ class ViewController: UIViewController {
     }
 
     // MARK: - Actions
+    @IBAction func pickImageTapped(_ sender: Any) {
+        presentImagePickerController()
+    }
 
     @IBAction func filterButtonTapped(_ sender: Any) {
         guard let scaledImage = scaledImage else {
