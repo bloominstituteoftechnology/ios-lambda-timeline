@@ -15,7 +15,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="VoiceCell" rowHeight="123" id="vXw-YY-qhK" customClass="AudioTableViewCell" customModule="AudioComments" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AudioCell" rowHeight="123" id="vXw-YY-qhK" customClass="AudioTableViewCell" customModule="AudioComments" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="123"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vXw-YY-qhK" id="thD-zy-3dF">
@@ -23,7 +23,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="R2G-bg-NeN">
-                                            <rect key="frame" x="20" y="11" width="430" height="101"/>
+                                            <rect key="frame" x="20" y="11" width="438" height="101"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RCY-d0-mYv">
                                                     <rect key="frame" x="0.0" y="0.0" width="35.5" height="20.5"/>
@@ -49,7 +49,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Vh8-37-69g">
-                                                    <rect key="frame" x="-2" y="35" width="434" height="31"/>
+                                                    <rect key="frame" x="-2" y="35" width="442" height="31"/>
                                                 </slider>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="326" translatesAutoresizingMaskIntoConstraints="NO" id="bHC-kO-iph">
                                                     <rect key="frame" x="0.0" y="65" width="380.5" height="13.5"/>
@@ -106,7 +106,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Root View Controller" id="m0K-Jy-of9">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="DMm-ty-uuc"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="DMm-ty-uuc">
+                            <connections>
+                                <action selector="addButton:" destination="Yzz-3e-HUB" id="5ov-p3-XI3"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fak-yM-izR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
