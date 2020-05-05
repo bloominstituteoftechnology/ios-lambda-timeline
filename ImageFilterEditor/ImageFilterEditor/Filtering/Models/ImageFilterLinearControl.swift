@@ -9,8 +9,13 @@
 import Foundation
 
 struct ImageFilterLinearControl {
-    let minValue: Double
-    let maxValue: Double
-    let defaultValue: Double
+    let minValue: Float
+    let maxValue: Float
+    let defaultValue: Float
     let label: String
+    let filterParameterKey: String
+}
+
+protocol ImageFilterLinearControlDelegate: AnyObject {
+    func filterControl(_ control: ImageFilterLinearControl, didChangeValueTo value: Float)
 }

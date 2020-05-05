@@ -8,15 +8,12 @@
 
 import UIKit
 
-protocol SliderControlsDelegate {
-    func sliderAt(index: Int, didChangeValueTo value: Double)
-}
-
 class SliderControlsViewController: UIViewController {
     
     // MARK: - Public Properties
     
     var filterControls: [ImageFilterLinearControl]?
+    weak var delegate: ImageFilterLinearControlDelegate?
     
     // MARK: - IBOutlets
     
@@ -26,16 +23,27 @@ class SliderControlsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setUpSliderControls()
     }
     
     private func setUpSliderControls() {
         guard let filterControls = filterControls else { return }
         
-        for filterControl in filterControls {
+        for (i, filterControl) in filterControls.enumerated() {
             let slider = UISlider()
+            slider.minimumValue = filterControl.minValue
+            slider.maximumValue = filterControl.maxValue
+            slider.value = filterControl.defaultValue
+            slider.addTarget(self, action: #selector(handleSliderValueChanged(_:)), for: .valueChanged)
+            slider.tag = i
             stackView.addArrangedSubview(slider)
         }
+    }
+    
+    @objc private func handleSliderValueChanged(_ sender: UISlider) {
+        guard let filterControls = filterControls else { return }
+        let filterControl = filterControls[sender.tag]
+        delegate?.filterControl(filterControl, didChangeValueTo: sender.value)
     }
     
 

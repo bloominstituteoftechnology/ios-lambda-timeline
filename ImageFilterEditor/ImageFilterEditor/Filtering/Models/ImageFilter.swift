@@ -7,26 +7,24 @@
 //
 
 import UIKit
+import CoreImage
 
 protocol ImageFilter {
     var name: String { get }
     var icon: UIImage { get }
-    var filterControls: [ImageFilterLinearControl] { get }
+    var controls: [ImageFilterLinearControl] { get }
     var coreImageFilter: CIFilter { get }
 }
 
 struct VignetteFilter: ImageFilter {
-    var name = "Vignette"
+    let name = "Vignette"
     
-    var icon = UIImage(systemName: "person.circle.fill")!
+    let icon = UIImage(systemName: "person.circle.fill")!
     
-    var filterControls: [ImageFilterLinearControl] {
-        [
-            ImageFilterLinearControl(minValue: 0, maxValue: 1, defaultValue: 0.5, label: "Strength"),
-        ]
-    }
+    let controls = [
+        ImageFilterLinearControl(minValue: 0, maxValue: 1, defaultValue: 0, label: "Strength", filterParameterKey: kCIInputIntensityKey),
+        ImageFilterLinearControl(minValue: 1, maxValue: 10, defaultValue: 1, label: "Radius", filterParameterKey: kCIInputRadiusKey),
+    ]
     
-    var coreImageFilter: CIFilter {
-        CIFilter.vignette()
-    }
+    let coreImageFilter: CIFilter = CIFilter.vignette()
 }

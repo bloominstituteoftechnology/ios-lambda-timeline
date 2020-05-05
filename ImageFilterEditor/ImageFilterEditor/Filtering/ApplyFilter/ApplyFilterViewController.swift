@@ -7,9 +7,14 @@
 //
 
 import UIKit
+import CoreImage
 
 class ApplyFilterViewController: UIViewController {
 
+    // MARK: - Public Properties
+    
+    var filter: ImageFilter?
+    
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
@@ -26,14 +31,21 @@ class ApplyFilterViewController: UIViewController {
     @IBAction func applyFilter(_ sender: Any) {
         
     }
-    /*
+
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if let sliderControlsVC = segue.destination as? SliderControlsViewController,
+            let filter = filter {
+            sliderControlsVC.filterControls = filter.controls
+            sliderControlsVC.delegate = self
+        }
     }
-    */
+}
 
+extension ApplyFilterViewController: ImageFilterLinearControlDelegate {
+    func filterControl(_ control: ImageFilterLinearControl, didChangeValueTo value: Float) {
+        guard let filter = filter else { return }
+        filter.coreImageFilter.setValue(value, forKey: control.filterParameterKey)
+    }
 }

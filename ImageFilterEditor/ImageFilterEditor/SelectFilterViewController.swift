@@ -48,7 +48,9 @@ class SelectFilterViewController: UIViewController {
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
+        if let applyFilterVC = segue.destination as? ApplyFilterViewController, let indexPath = filterCollectionView.indexPathsForSelectedItems?.first {
+            applyFilterVC.filter = filters[indexPath.item]
+        }
     }
     
     // MARK: - Private Methods
