@@ -440,6 +440,33 @@
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AudioCommentCell" id="3YD-Y5-ITM" customClass="AudioCommentTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="188.5" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="3YD-Y5-ITM" id="b8b-Eu-RhE">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QVZ-5v-f04">
+                                            <rect key="frame" x="20" y="11.5" width="42" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HRy-Fs-NhK">
+                                            <rect key="frame" x="379" y="11" width="15" height="22"/>
+                                            <state key="normal" image="play.fill" catalog="system"/>
+                                            <state key="selected" image="stop.fill" catalog="system"/>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="QVZ-5v-f04" firstAttribute="centerY" secondItem="b8b-Eu-RhE" secondAttribute="centerY" id="MNC-Rw-YKE"/>
+                                        <constraint firstItem="HRy-Fs-NhK" firstAttribute="centerY" secondItem="b8b-Eu-RhE" secondAttribute="centerY" id="Ucu-TZ-Rs9"/>
+                                        <constraint firstItem="QVZ-5v-f04" firstAttribute="leading" secondItem="b8b-Eu-RhE" secondAttribute="leadingMargin" id="iJq-fr-IUJ"/>
+                                        <constraint firstItem="HRy-Fs-NhK" firstAttribute="trailing" secondItem="b8b-Eu-RhE" secondAttribute="trailingMargin" id="suJ-v6-9wf"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="OyM-8q-Icp" id="hEW-Hv-MJ8"/>
@@ -458,11 +485,70 @@
                         <outlet property="imageView" destination="Q0L-w5-qUw" id="0v7-ZB-mgi"/>
                         <outlet property="imageViewAspectRatioConstraint" destination="y1B-iX-x3e" id="wIt-kh-Tzd"/>
                         <outlet property="titleLabel" destination="jyy-BX-c2c" id="UEd-xO-ipC"/>
+                        <segue destination="R5u-lD-3vL" kind="presentation" identifier="RecordAudioModalSegue" id="z7U-4E-UAZ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdL-Y3-4ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1968.8" y="472.71364317841085"/>
         </scene>
+        <!--Record Audio Comment View Controller-->
+        <scene sceneID="aLC-vB-ptO">
+            <objects>
+                <viewController id="R5u-lD-3vL" customClass="RecordAudioCommentViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="w4a-Xe-H4R">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xu1-iL-sy2">
+                                <rect key="frame" x="182" y="738" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="Ezw-34-9US"/>
+                                    <constraint firstAttribute="height" constant="50" id="JSK-kQ-RnE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
+                                <state key="normal" image="mic.circle.fill" catalog="system"/>
+                                <state key="selected" image="stop.circle.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="toggleRecording:" destination="R5u-lD-3vL" eventType="touchUpInside" id="KdA-Ft-Url"/>
+                                </connections>
+                            </button>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ogc-CU-pSq">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                                <items>
+                                    <navigationItem title="Audio Comment" id="k5m-LE-PB9">
+                                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="cBY-Jp-VtE">
+                                            <connections>
+                                                <action selector="doneButtonTapped:" destination="R5u-lD-3vL" id="ggO-e8-WOZ"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="ogc-CU-pSq" firstAttribute="leading" secondItem="cOf-pO-tHW" secondAttribute="leading" id="4s8-Xq-KCv"/>
+                            <constraint firstItem="ogc-CU-pSq" firstAttribute="top" secondItem="cOf-pO-tHW" secondAttribute="top" id="8Wx-vI-UjM"/>
+                            <constraint firstItem="cOf-pO-tHW" firstAttribute="bottom" secondItem="xu1-iL-sy2" secondAttribute="bottom" constant="20" id="PfV-SY-umt"/>
+                            <constraint firstItem="xu1-iL-sy2" firstAttribute="centerX" secondItem="w4a-Xe-H4R" secondAttribute="centerX" id="bNl-b9-7kw"/>
+                            <constraint firstItem="ogc-CU-pSq" firstAttribute="trailing" secondItem="cOf-pO-tHW" secondAttribute="trailing" id="vgC-IZ-tC4"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="cOf-pO-tHW"/>
+                    </view>
+                    <connections>
+                        <outlet property="recordButton" destination="xu1-iL-sy2" id="Tko-58-Oyb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Iir-fD-fPG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2669.5652173913045" y="471.42857142857139"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="mic.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="play.fill" catalog="system" width="116" height="128"/>
+        <image name="stop.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="stop.fill" catalog="system" width="128" height="113"/>
+    </resources>
 </document>

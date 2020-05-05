@@ -64,6 +64,7 @@ class ImagePostDetailTableViewController: UITableViewController {
             /*
             ADD SUPPORT FOR RECORDING AUDIO
             */
+            self.performSegue(withIdentifier: "RecordAudioModalSegue", sender: self)
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -94,10 +95,26 @@ class ImagePostDetailTableViewController: UITableViewController {
     var postController: PostController!
     var imageData: Data?
     
-    
-    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
+    
+    
+    
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "RecordAudioModalSegue" {
+            guard let RecordAudioCommentVC = segue.destination as? RecordAudioCommentViewController else { return }
+            RecordAudioCommentVC.delegate = self
+        }
+    }
+}
+
+extension ImagePostDetailTableViewController: AudioURLDelegate {
+    func passAudioURL(for url: URL) {
+        print("THE URL IS PASSED BACK \(url)")
+    }
 }
