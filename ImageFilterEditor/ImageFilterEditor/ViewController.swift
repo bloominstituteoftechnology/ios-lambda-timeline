@@ -356,6 +356,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
 
         if let image = info[.originalImage] as? UIImage {
             originalImage = image
+            imageView.image = image
         }
 
         picker.dismiss(animated: true)
