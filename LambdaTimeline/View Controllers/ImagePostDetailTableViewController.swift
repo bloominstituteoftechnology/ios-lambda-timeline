@@ -64,7 +64,7 @@ class ImagePostDetailTableViewController: UITableViewController {
         }
 
         let voiceCommentAction = UIAlertAction(title: "Voice Comment", style: .default) { (_) in
-
+            self.performSegue(withIdentifier: "AudioCommentModalSegue", sender: self)
         }
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
