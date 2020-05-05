@@ -55,11 +55,19 @@ class ImagePostViewController: UIViewController {
         updateViews()
     }
 
-    @IBAction func tbd1Action(_ sender: Any) {
+    @IBAction func blurRadiusAction(_ sender: Any) {
         updateViews()
     }
 
-    @IBAction func tbd2Action(_ sender: Any) {
+    @IBAction func blurAngleAction(_ sender: Any) {
+        updateViews()
+    }
+
+    @IBAction func bumpRadiusAction(_ sender: Any) {
+        updateViews()
+    }
+
+    @IBAction func bumpScaleAction(_ sender: Any) {
         updateViews()
     }
 
@@ -67,9 +75,11 @@ class ImagePostViewController: UIViewController {
 
     @IBOutlet weak var brightnessSlider: UISlider!
     @IBOutlet weak var contrastSlider: UISlider!
+    @IBOutlet weak var saturationSlider: UISlider!
     @IBOutlet weak var blurRadiusSlider: UISlider!
     @IBOutlet weak var blurAngleSlider: UISlider!
-    @IBOutlet weak var saturationSlider: UISlider!
+    @IBOutlet weak var bumpRadiusSlider: UISlider!
+    @IBOutlet weak var bumpScaleSlider: UISlider!
 
     @IBOutlet weak var imageView: UIImageView!
 
@@ -78,7 +88,7 @@ class ImagePostViewController: UIViewController {
 
         // Use this to get the details of a given filter.
         // Get CIAttributeSliderMax, CIAttributeSliderMin, & CIAttributeDefault
-        let filter = CIFilter(name: "CIMotionBlur")! // build-in filter from Apple
+        let filter = CIFilter(name: "CIBumpDistortion")! // build-in filter from Apple
         print(filter)
         print(filter.attributes)
 
@@ -130,9 +140,18 @@ class ImagePostViewController: UIViewController {
         blur.setValue(blurRadiusSlider.value, forKey: kCIInputRadiusKey)
         blur.setValue(blurAngleSlider.value, forKey: kCIInputAngleKey)
 
+        guard let stage2 = blur.outputImage else { return nil }
+
+        let bump = CIFilter(name: "CIBumpDistortion")!
+        bump.setValue(stage2, forKey: kCIInputImageKey /* "inputImage" */)
+        bump.setValue([150, 150], forKey: kCIInputCenterKey)
+        bump.setValue(bumpRadiusSlider.value, forKey: kCIInputRadiusKey)
+        print("bumpScaleSlider.value \(bumpScaleSlider.value)")
+        bump.setValue(bumpScaleSlider.value, forKey: kCIInputScaleKey)
+
         // CIImage -> CGImage -> UIImage
 //        guard let outputCIImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else { return nil }
-        guard let outputCIImage = blur.outputImage else { return nil }
+        guard let outputCIImage = bump.outputImage else { return nil }
 
         // Render the image (do image processing here)
         guard let outputCGImage = context.createCGImage(outputCIImage,
