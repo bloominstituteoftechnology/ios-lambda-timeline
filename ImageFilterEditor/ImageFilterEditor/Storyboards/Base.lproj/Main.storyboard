@@ -78,14 +78,14 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="62" translatesAutoresizingMaskIntoConstraints="NO" id="lIY-AP-QnK">
                                         <rect key="frame" x="0.0" y="114" width="374" height="30"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TBD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vGd-4j-brS">
-                                                <rect key="frame" x="0.0" y="0.0" width="33.5" height="30"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Blur Radius" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vGd-4j-brS">
+                                                <rect key="frame" x="0.0" y="0.0" width="86.5" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="xT0-gd-7cn">
-                                                <rect key="frame" x="93.5" y="0.0" width="282.5" height="31"/>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="xT0-gd-7cn">
+                                                <rect key="frame" x="146.5" y="0.0" width="229.5" height="31"/>
                                                 <connections>
                                                     <action selector="tbd1Action:" destination="BYZ-38-t0r" eventType="valueChanged" id="tl1-hv-5wh"/>
                                                 </connections>
@@ -95,14 +95,14 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="56" translatesAutoresizingMaskIntoConstraints="NO" id="Kox-iS-jze">
                                         <rect key="frame" x="0.0" y="152" width="374" height="30"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TBD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="COa-oI-4Jd">
-                                                <rect key="frame" x="0.0" y="0.0" width="33.5" height="30"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Blur Angle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="COa-oI-4Jd">
+                                                <rect key="frame" x="0.0" y="0.0" width="78.5" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ahb-7S-4ec">
-                                                <rect key="frame" x="87.5" y="0.0" width="288.5" height="31"/>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-3.1415926535897931" maxValue="3.1415926535897931" translatesAutoresizingMaskIntoConstraints="NO" id="ahb-7S-4ec">
+                                                <rect key="frame" x="132.5" y="0.0" width="243.5" height="31"/>
                                                 <connections>
                                                     <action selector="tbd2Action:" destination="BYZ-38-t0r" eventType="valueChanged" id="6fj-Ta-wff"/>
                                                 </connections>
@@ -131,12 +131,12 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="blurAngleSlider" destination="ahb-7S-4ec" id="ZLz-hM-cM2"/>
+                        <outlet property="blurRadiusSlider" destination="xT0-gd-7cn" id="qr2-gy-jX1"/>
                         <outlet property="brightnessSlider" destination="E5w-bC-vgK" id="MIr-vq-Gly"/>
                         <outlet property="contrastSlider" destination="IMt-PW-Ley" id="jPO-rF-c4F"/>
                         <outlet property="imageView" destination="MvN-NS-sVm" id="GLc-hF-mKi"/>
                         <outlet property="saturationSlider" destination="78h-nx-HFH" id="8EP-TG-I1S"/>
-                        <outlet property="tbd1Slider" destination="xT0-gd-7cn" id="qr2-gy-jX1"/>
-                        <outlet property="tbd2Slider" destination="ahb-7S-4ec" id="ZLz-hM-cM2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

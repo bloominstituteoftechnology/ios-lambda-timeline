@@ -67,14 +67,20 @@ class ImagePostViewController: UIViewController {
 
     @IBOutlet weak var brightnessSlider: UISlider!
     @IBOutlet weak var contrastSlider: UISlider!
-    @IBOutlet weak var tbd1Slider: UISlider!
-    @IBOutlet weak var tbd2Slider: UISlider!
+    @IBOutlet weak var blurRadiusSlider: UISlider!
+    @IBOutlet weak var blurAngleSlider: UISlider!
     @IBOutlet weak var saturationSlider: UISlider!
 
     @IBOutlet weak var imageView: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // Use this to get the details of a given filter.
+        // Get CIAttributeSliderMax, CIAttributeSliderMin, & CIAttributeDefault
+        let filter = CIFilter(name: "CIMotionBlur")! // build-in filter from Apple
+        print(filter)
+        print(filter.attributes)
 
         // Demo with a starter image from Storyboard
         originalImage = imageView.image
@@ -117,9 +123,16 @@ class ImagePostViewController: UIViewController {
         filter.setValue(brightnessSlider.value, forKey: kCIInputBrightnessKey)
         filter.setValue(contrastSlider.value, forKey: kCIInputContrastKey)
 
+        guard let stage1 = filter.outputImage else { return nil }
+
+        let blur = CIFilter(name: "CIMotionBlur")!
+        blur.setValue(stage1, forKey: kCIInputImageKey /* "inputImage" */)
+        blur.setValue(blurRadiusSlider.value, forKey: kCIInputRadiusKey)
+        blur.setValue(blurAngleSlider.value, forKey: kCIInputAngleKey)
+
         // CIImage -> CGImage -> UIImage
 //        guard let outputCIImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else { return nil }
-        guard let outputCIImage = filter.outputImage else { return nil }
+        guard let outputCIImage = blur.outputImage else { return nil }
 
         // Render the image (do image processing here)
         guard let outputCGImage = context.createCGImage(outputCIImage,
