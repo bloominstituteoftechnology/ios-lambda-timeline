@@ -21,9 +21,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ni2-Vg-RDp">
-                                <rect key="frame" x="0.0" y="746" width="414" height="150"/>
+                                <rect key="frame" x="0.0" y="822" width="414" height="74"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="150" id="CPP-uL-nWZ"/>
+                                    <constraint firstAttribute="height" constant="74" id="CPP-uL-nWZ"/>
                                 </constraints>
                                 <connections>
                                     <segue destination="HsX-Xz-STE" kind="embed" id="Shp-Jy-ObV"/>
@@ -39,6 +39,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="imageView" destination="5Be-do-RYg" id="r8B-el-nzp"/>
                         <outlet property="selectFilterHeightConstraint" destination="CPP-uL-nWZ" id="Def-de-CSi"/>
                     </connections>
                 </viewController>
@@ -260,6 +261,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" definesPresentationContext="YES" navigationBarHidden="YES" id="HsX-Xz-STE" customClass="ImageFilterController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedTopBarMetrics"/>
+                    <size key="freeformSize" width="414" height="150"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="0eF-T5-bzN">
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
