@@ -9,10 +9,6 @@
 import UIKit
 import CoreImage
 
-// TODO: Add labels to sliders
-// TODO: fit sliders in view better
-// TODO: adjust edited image not original
-
 enum FilterTypes: Int {
     case exposure
     case vibrance
@@ -29,6 +25,7 @@ class ImagePostViewController: UIViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var adjustmentSlider: UISlider!
     @IBOutlet weak var secondAdjustmentSlider: UISlider!
+    @IBOutlet weak var saveButton: UIButton!
     
     // MARK: - Properties
     let context = CIContext(options: nil)
@@ -59,10 +56,9 @@ class ImagePostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         secondAdjustmentSlider.isHidden = true
-        
-        let filter = CIFilter(name: "CIMotionBlur")! // Built-in filter from Apple
-        print(filter)
-        print(filter.attributes)
+        adjustmentSlider.isHidden = true
+        nameLabel.isHidden = true
+        saveButton.isHidden = true
     }
     
     // MARK: - IBActions
@@ -240,6 +236,60 @@ class ImagePostViewController: UIViewController {
         
         return UIImage(cgImage: outputCGImage)
     }
+    
+    private func showFilter(for index: IndexPath) {
+        adjustmentSlider.isHidden = false
+        nameLabel.isHidden = false
+        saveButton.isHidden = false
+        
+        nameLabel.text = effectNames[index.row]
+        filterType = FilterTypes(rawValue: index.item)!
+        imageView.image = scaledImage
+
+        if index.item == 0 {
+            secondAdjustmentSlider.isHidden = true
+            
+            adjustmentSlider.value = 0
+            adjustmentSlider.maximumValue = 10
+            adjustmentSlider.minimumValue = -10
+        } else if index.item == 1 {
+            secondAdjustmentSlider.isHidden = true
+            
+            adjustmentSlider.value = 0
+            adjustmentSlider.maximumValue = 1
+            adjustmentSlider.minimumValue = -1
+        } else if index.item == 2 {
+            secondAdjustmentSlider.isHidden = false
+
+            // Intensity
+            adjustmentSlider.value = 0
+            adjustmentSlider.maximumValue = 1
+            adjustmentSlider.minimumValue = -1
+            
+            // Radius
+            secondAdjustmentSlider.value = 0
+            secondAdjustmentSlider.maximumValue = 2000
+            secondAdjustmentSlider.minimumValue = 0
+        } else if index.item == 3 {
+            secondAdjustmentSlider.isHidden = true
+
+            adjustmentSlider.value = 0
+            adjustmentSlider.maximumValue = 1
+            adjustmentSlider.minimumValue = 0
+        } else if index.item == 4 {
+            secondAdjustmentSlider.isHidden = false
+
+            // Radius
+            adjustmentSlider.value = 0
+            adjustmentSlider.maximumValue = 100
+            adjustmentSlider.minimumValue = 0
+            
+            // Angle
+            secondAdjustmentSlider.value = 0
+            secondAdjustmentSlider.maximumValue = 3.141592653589793
+            secondAdjustmentSlider.minimumValue = -3.141592653589793
+        }
+    }
 
 }
 
@@ -261,56 +311,7 @@ extension ImagePostViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        nameLabel.text = effectNames[indexPath.row]
-        filterType = FilterTypes(rawValue: indexPath.item)!
-        
-        // TODO: Add all of this to own function
-        imageView.image = scaledImage
-
-        if indexPath.item == 0 {
-            secondAdjustmentSlider.isHidden = true
-            
-            adjustmentSlider.value = 0
-            adjustmentSlider.maximumValue = 10
-            adjustmentSlider.minimumValue = -10
-        } else if indexPath.item == 1 {
-            secondAdjustmentSlider.isHidden = true
-            
-            adjustmentSlider.value = 0
-            adjustmentSlider.maximumValue = 1
-            adjustmentSlider.minimumValue = -1
-        } else if indexPath.item == 2 {
-            secondAdjustmentSlider.isHidden = false
-
-            // Intensity
-            adjustmentSlider.value = 0
-            adjustmentSlider.maximumValue = 1
-            adjustmentSlider.minimumValue = -1
-            
-            // Radius
-            secondAdjustmentSlider.value = 0
-            secondAdjustmentSlider.maximumValue = 2000
-            secondAdjustmentSlider.minimumValue = 0
-        } else if indexPath.item == 3 {
-            secondAdjustmentSlider.isHidden = true
-
-            adjustmentSlider.value = 0
-            adjustmentSlider.maximumValue = 1
-            adjustmentSlider.minimumValue = 0
-        } else if indexPath.item == 4 {
-            secondAdjustmentSlider.isHidden = false
-
-            // Radius
-            adjustmentSlider.value = 0
-            adjustmentSlider.maximumValue = 100
-            adjustmentSlider.minimumValue = 0
-            
-            // Angle
-            secondAdjustmentSlider.value = 0
-            secondAdjustmentSlider.maximumValue = 3.141592653589793
-            secondAdjustmentSlider.minimumValue = -3.141592653589793
-        }
-        
+        showFilter(for: indexPath)
     }
 }
 
