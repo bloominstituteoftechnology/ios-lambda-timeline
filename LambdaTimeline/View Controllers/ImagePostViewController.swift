@@ -13,25 +13,21 @@ class ImagePostViewController: ShiftableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setImageViewHeight(with: 1.0)
-        
         updateViews()
     }
     
     func updateViews() {
-        
-        guard let imageData = imageData,
-            let image = UIImage(data: imageData) else {
-                title = "New Post"
-                return
-        }
+ 
+        if let scaledImage = scaledImage {
+                imageView.image = filterImage(scaledImage)
+            setImageViewHeight(with: scaledImage.ratio)
+            } else {
+                imageView.image = nil
+            title = "New Post"
+            }
         
         title = post?.title
-        
-        setImageViewHeight(with: image.ratio)
-        
-        imageView.image = image
         
         chooseImageButton.setTitle("", for: [])
     }
@@ -118,11 +114,114 @@ class ImagePostViewController: ShiftableViewController {
     var post: Post?
     var imageData: Data?
     
+    private var context = CIContext(options: nil)
+    
+    private var originalImage: UIImage? {
+        didSet {
+            guard let imageData = imageData,
+                let originalImage = UIImage(data: imageData) else { return }
+            
+            var scaledSize = imageView.bounds.size
+            let scale = UIScreen.main.scale
+            scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
+            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+        }
+    }
+    
+    private var scaledImage: UIImage? {
+        didSet {
+            updateViews()
+        }
+    }
+    
+    // MARK: - Outlets
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    // Filter Outlets
+    @IBOutlet weak var brightnessSlider: UISlider!
+    @IBOutlet weak var contrastSlider: UISlider!
+    @IBOutlet weak var saturationSlider: UISlider!
+    @IBOutlet weak var blurRadiusSlider: UISlider!
+    @IBOutlet weak var kaleidoscopeCountSlider: UISlider!
+    
+    // MARK: Slider events
+    
+    @IBAction func brightnessChanged(_ sender: UISlider) {
+        updateViews()
+    }
+    
+    @IBAction func contrastChanged(_ sender: Any) {
+        updateViews()
+    }
+    
+    @IBAction func saturationChanged(_ sender: Any) {
+        updateViews()
+    }
+    
+    @IBAction func blurRadiusChanged(_ sender: Any) {
+           updateViews()
+       }
+    
+    @IBAction func kaleidoscopeCountChanged(_ sender: Any) {
+        updateViews()
+    }
+    
+    // MARK: - Private Methods
+    
+    private func filterImage(_ image: UIImage) -> UIImage? {
+        guard let cgImage = image.cgImage else { return nil }
+
+        let filterCIImage = kaleidoscopeFilter(motionBlurFilter(colorControlFilter(cgImage)!)!)!
+        
+        guard let outputImage = context.createCGImage(filterCIImage,
+                                                      from: CGRect(origin: .zero,
+                                                                   size: image.size)) else {
+                                                                    return nil
+        }
+        return UIImage(cgImage: outputImage)
+    }
+    
+    private func colorControlFilter(_ image: CGImage) -> CIImage? {
+        let ciImage = CIImage(cgImage: image)
+        let colorControlsFilter = CIFilter.colorControls()
+        colorControlsFilter.inputImage = ciImage
+        colorControlsFilter.brightness = brightnessSlider.value
+        colorControlsFilter.contrast = contrastSlider.value
+        colorControlsFilter.saturation = saturationSlider.value
+        
+        guard let outputCIImage = colorControlsFilter.outputImage else { return nil }
+        return outputCIImage
+    }
+    
+    private func motionBlurFilter(_ image: CIImage) -> CIImage? {
+//        let ciImage = CIImage(cgImage: image)
+        let motionBlurFilter = CIFilter.motionBlur()
+        motionBlurFilter.inputImage = image
+        motionBlurFilter.angle = 0.00
+        motionBlurFilter.radius = blurRadiusSlider.value
+        
+        guard let outputCIImage = motionBlurFilter.outputImage else { return nil }
+        return outputCIImage
+    }
+    
+    private func kaleidoscopeFilter(_ image: CIImage) -> CIImage? {
+        guard let originalImage = originalImage else { return nil }
+//        let ciImage = CIImage(cgImage: image)
+        
+        let kaleidoscopeFilter = CIFilter.kaleidoscope()
+        kaleidoscopeFilter.inputImage = image
+        kaleidoscopeFilter.center = CGPoint(x: originalImage.size.width / 2,
+                                            y: originalImage.size.height / 2)
+        kaleidoscopeFilter.angle = 0.00
+        kaleidoscopeFilter.count = Int(kaleidoscopeCountSlider.value)
+        
+        guard let outputCIImage = kaleidoscopeFilter.outputImage else { return nil }
+        return outputCIImage
+    }
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -142,5 +241,35 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+
+extension UIImage {
+    
+    /// Resize the image to a max dimension from size parameter
+    func imageByScaling(toSize size: CGSize) -> UIImage? {
+        guard size.width > 0 && size.height > 0 else { return nil }
+        
+        let originalAspectRatio = self.size.width/self.size.height
+        var correctedSize = size
+        
+        if correctedSize.width > correctedSize.width*originalAspectRatio {
+            correctedSize.width = correctedSize.width*originalAspectRatio
+        } else {
+            correctedSize.height = correctedSize.height/originalAspectRatio
+        }
+        
+        return UIGraphicsImageRenderer(size: correctedSize, format: imageRendererFormat).image { context in
+            draw(in: CGRect(origin: .zero, size: correctedSize))
+        }
+    }
+    
+    /// Renders the image if the pixel data was rotated due to orientation of camera
+    var flattened: UIImage {
+        if imageOrientation == .up { return self }
+        return UIGraphicsImageRenderer(size: size, format: imageRendererFormat).image { context in
+            draw(at: .zero)
+        }
     }
 }

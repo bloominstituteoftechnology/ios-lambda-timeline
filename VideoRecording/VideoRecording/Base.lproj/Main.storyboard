@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="S47-kO-kLm">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="WDB-tb-W7r">
+            <objects>
+                <viewController id="S47-kO-kLm" customClass="ViewController" customModule="VideoRecording" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="b2G-pz-VQ2">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="J2a-J0-A0m"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="TaT-8w-gyL"/>
+                    <connections>
+                        <segue destination="zfk-2e-CzN" kind="presentation" identifier="ShowCameraSegue" modalPresentationStyle="fullScreen" id="SVM-O1-owv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZeH-XC-DE9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="780" y="116"/>
+        </scene>
+        <!--Video Recording View Controller-->
+        <scene sceneID="0op-RT-mIw">
+            <objects>
+                <viewController id="zfk-2e-CzN" customClass="VideoRecordingViewController" customModule="VideoRecording" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="HXS-EN-ZkN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vLq-59-PO2" customClass="CameraPreviewView" customModule="VideoRecording" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="414" height="414"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="vLq-59-PO2" secondAttribute="height" multiplier="1:1" id="MwF-ee-w3x"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="anh-Rw-Zwc">
+                                <rect key="frame" x="81.5" y="685" width="251" height="157"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ClO-w9-Nvk">
+                                        <rect key="frame" x="110.5" y="0.0" width="30" height="57"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="47"/>
+                                        <state key="normal" image="video" catalog="system"/>
+                                        <state key="selected" image="video.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="cameraTapped:" destination="zfk-2e-CzN" eventType="touchUpInside" id="7dL-dY-8LS"/>
+                                        </connections>
+                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="210" translatesAutoresizingMaskIntoConstraints="NO" id="mdk-Gu-mG8">
+                                        <rect key="frame" x="0.0" y="97" width="251" height="60"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Rw-f6-0nB">
+                                                <rect key="frame" x="0.0" y="0.0" width="24" height="60"/>
+                                                <state key="normal" image="camera.rotate" catalog="system"/>
+                                                <connections>
+                                                    <action selector="flipTapped:" destination="zfk-2e-CzN" eventType="touchUpInside" id="qnW-H0-eC5"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PUa-7i-gJQ">
+                                                <rect key="frame" x="234" y="0.0" width="17" height="60"/>
+                                                <state key="normal" image="bolt" catalog="system"/>
+                                                <state key="selected" image="bolt.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="lightTapped:" destination="zfk-2e-CzN" eventType="touchUpInside" id="lCx-Vf-4un"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="60" id="ieb-e0-vD8"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="GVe-OL-Xh1" firstAttribute="trailing" secondItem="vLq-59-PO2" secondAttribute="trailing" id="GCe-bH-BTm"/>
+                            <constraint firstItem="GVe-OL-Xh1" firstAttribute="bottom" secondItem="anh-Rw-Zwc" secondAttribute="bottom" constant="20" id="MzP-KS-CvC"/>
+                            <constraint firstItem="vLq-59-PO2" firstAttribute="top" secondItem="GVe-OL-Xh1" secondAttribute="top" id="NN6-xJ-hfq"/>
+                            <constraint firstItem="anh-Rw-Zwc" firstAttribute="centerX" secondItem="HXS-EN-ZkN" secondAttribute="centerX" id="sY5-n9-GE4"/>
+                            <constraint firstItem="vLq-59-PO2" firstAttribute="leading" secondItem="GVe-OL-Xh1" secondAttribute="leading" id="tlI-Z4-xtd"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="GVe-OL-Xh1"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="K3N-q6-2mM"/>
+                    <connections>
+                        <outlet property="cameraButton" destination="ClO-w9-Nvk" id="kqc-lr-F1g"/>
+                        <outlet property="cameraView" destination="vLq-59-PO2" id="kjm-rM-nga"/>
+                        <outlet property="flipCameraButton" destination="8Rw-f6-0nB" id="Zim-c1-j8m"/>
+                        <outlet property="lightButton" destination="PUa-7i-gJQ" id="hRU-eV-PAs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GEh-cQ-S0p" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1842.0289855072465" y="124.55357142857142"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="bolt" catalog="system" width="101" height="128"/>
+        <image name="bolt.fill" catalog="system" width="101" height="128"/>
+        <image name="camera.rotate" catalog="system" width="128" height="96"/>
+        <image name="video" catalog="system" width="128" height="83"/>
+        <image name="video.fill" catalog="system" width="128" height="82"/>
+    </resources>
+</document>

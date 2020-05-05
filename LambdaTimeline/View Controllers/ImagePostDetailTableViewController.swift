@@ -7,11 +7,16 @@
 //
 
 import UIKit
+import CoreImage
+import CoreImage.CIFilterBuiltins
 
 class ImagePostDetailTableViewController: UITableViewController {
     
+    // MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+//        originalImage = imageView.image
         updateViews()
     }
     
@@ -22,7 +27,6 @@ class ImagePostDetailTableViewController: UITableViewController {
         
         title = post?.title
         
-        imageView.image = image
         
         titleLabel.text = post.title
         authorLabel.text = post.author.displayName
@@ -75,14 +79,17 @@ class ImagePostDetailTableViewController: UITableViewController {
         return cell
     }
     
+    // MARK: - Properties
+    
     var post: Post!
     var postController: PostController!
     var imageData: Data?
     
-    
+    // MARK: - Outlets
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
+
 }
