@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ImagePostDetailTableViewController: UITableViewController {
     
@@ -89,7 +90,8 @@ class ImagePostDetailTableViewController: UITableViewController {
                 return UITableViewCell()
             }
             
-            cell.authorLabel?.text = comment?.author.displayName
+            cell.delegate = self
+            cell.comment = comment
 
             return cell
         } else if comment?.text != nil {
@@ -111,8 +113,6 @@ class ImagePostDetailTableViewController: UITableViewController {
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
     
-    
-    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -122,10 +122,113 @@ class ImagePostDetailTableViewController: UITableViewController {
             RecordAudioCommentVC.delegate = self
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // MARK: - Timer
+    var timer: Timer?
+    
+    func startTimer() {
+        timer?.invalidate() // Cancel a timeer before you start a new one
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 0.030, repeats: true) { [weak self] (_) in
+            guard let self = self else { return }
+            
+            self.updatePlayer()
+
+        }
+    }
+    
+    func cancelTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
+    
+    // MARK: - Playback
+    
+    var audioPlayer: AVAudioPlayer? {
+        didSet {
+            // Using a didSet allows us to make sure we don't forget to set the delegate
+            audioPlayer?.delegate = self
+            audioPlayer?.isMeteringEnabled = true
+        }
+    }
+    
+    
+    var isPlaying: Bool {
+        audioPlayer?.isPlaying ?? false
+    }
+    
+    func loadAudio(audioURL: URL) {
+        audioPlayer = try? AVAudioPlayer(contentsOf: audioURL)
+        print("loaded")
+    }
+    
+    
+    // Fixes bug for iPhone
+    func prepareAudioSession() throws {
+        let session = AVAudioSession.sharedInstance()
+        try session.setCategory(.playAndRecord, options: [.defaultToSpeaker])
+        try session.setActive(true, options: []) // can fail if on a phone call, for instance
+    }
+    
+    
+    func play() {
+        audioPlayer?.play()
+        startTimer()
+        updatePlayer()
+    }
+    
+    func pause() {
+        audioPlayer?.pause()
+        cancelTimer()
+        updatePlayer()
+    }
+    
+    
+    
+    private func updatePlayer() {
+    }
+    
+    
 }
 
 extension ImagePostDetailTableViewController: AudioURLDelegate {
     func passAudioURL(for url: URL) {
         self.postController.addAudioComment(with: url, to: &self.post!)
+        tableView.reloadData()
+    }
+}
+
+extension ImagePostDetailTableViewController: PlayCommentAudioDelegate {
+    func playAudio(for url: URL) {
+        loadAudio(audioURL: url)
+        
+        if isPlaying {
+            pause()
+        } else {
+            play()
+        }
+    }
+}
+
+extension ImagePostDetailTableViewController: AVAudioPlayerDelegate {
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        updatePlayer()
+    }
+    
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        if let error = error {
+            print("⚠️ Audio Player Error: \(error)")
+        }
+        updatePlayer()
     }
 }
