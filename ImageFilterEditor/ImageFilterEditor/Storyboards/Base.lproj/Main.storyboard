@@ -15,19 +15,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MvN-NS-sVm">
-                                <rect key="frame" x="0.0" y="88" width="414" height="413"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="jorge-martinez-instagram-jmartinezz9-1iBEXJOHCsM-unsplash" translatesAutoresizingMaskIntoConstraints="NO" id="MvN-NS-sVm">
+                                <rect key="frame" x="0.0" y="88" width="414" height="414"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="MvN-NS-sVm" secondAttribute="height" multiplier="1:1" id="BwZ-OA-Vpz"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="MvN-NS-sVm" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="ew9-PP-fGM"/>
+                            <constraint firstItem="MvN-NS-sVm" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="hB9-2Y-nFP"/>
+                            <constraint firstItem="MvN-NS-sVm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="n9U-8q-HsU"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="83l-D7-YqX">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="vXJ-CU-26V"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="vXJ-CU-26V">
+                            <connections>
+                                <action selector="addButton:" destination="BYZ-38-t0r" id="lue-IH-Bnz"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="imageView" destination="MvN-NS-sVm" id="GLc-hF-mKi"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -52,4 +64,7 @@
             <point key="canvasLocation" x="137.68115942028987" y="137.94642857142856"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="jorge-martinez-instagram-jmartinezz9-1iBEXJOHCsM-unsplash" width="2448" height="3264"/>
+    </resources>
 </document>
