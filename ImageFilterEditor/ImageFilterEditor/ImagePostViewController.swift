@@ -144,10 +144,11 @@ class ImagePostViewController: UIViewController {
 
         let bump = CIFilter(name: "CIBumpDistortion")!
         bump.setValue(stage2, forKey: kCIInputImageKey /* "inputImage" */)
-        bump.setValue([150, 150], forKey: kCIInputCenterKey)
+        bump.setValue(CIVector(cgPoint: CGPoint(x: 150, y: 150)), forKey: kCIInputCenterKey)
         bump.setValue(bumpRadiusSlider.value, forKey: kCIInputRadiusKey)
         print("bumpScaleSlider.value \(bumpScaleSlider.value)")
         // FIXME: It doesn't seem to like the number I'm passing in here.
+//        bump.setValue(0.1, forKey: kCIInputScaleKey)
         bump.setValue(NSNumber(value: bumpScaleSlider.value), forKey: kCIInputScaleKey)
 
         // CIImage -> CGImage -> UIImage
