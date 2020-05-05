@@ -35,6 +35,9 @@ class PostController {
         }
     }
     
+    func addAudioComment(url: URL, to: inout Post){
+        
+    }
     func addComment(with text: String, to post: inout Post) {
         
         guard let currentUser = Auth.auth().currentUser,

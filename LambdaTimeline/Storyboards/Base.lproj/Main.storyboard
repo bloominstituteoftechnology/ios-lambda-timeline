@@ -444,11 +444,81 @@
                         <outlet property="imageView" destination="Q0L-w5-qUw" id="0v7-ZB-mgi"/>
                         <outlet property="imageViewAspectRatioConstraint" destination="y1B-iX-x3e" id="wIt-kh-Tzd"/>
                         <outlet property="titleLabel" destination="jyy-BX-c2c" id="UEd-xO-ipC"/>
+                        <segue destination="JYw-MF-cbV" kind="show" id="2NU-mF-IU5"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdL-Y3-4ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1968.8" y="472.71364317841085"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="vgs-YB-kpq">
+            <objects>
+                <viewController id="JYw-MF-cbV" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uyn-4X-s9t">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xQk-NV-d8Q">
+                                <rect key="frame" x="0.0" y="88" width="414" height="495"/>
+                                <connections>
+                                    <segue destination="S11-cW-8D8" kind="embed" id="c8W-Jl-yC8"/>
+                                </connections>
+                            </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BVo-nr-cqd">
+                                <rect key="frame" x="0.0" y="591" width="414" height="271"/>
+                                <connections>
+                                    <segue destination="epn-HA-Zwk" kind="embed" id="aeT-e4-KQK"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="xQk-NV-d8Q" firstAttribute="trailing" secondItem="BVo-nr-cqd" secondAttribute="trailing" id="1wW-ho-8tF"/>
+                            <constraint firstItem="xQk-NV-d8Q" firstAttribute="leading" secondItem="BVo-nr-cqd" secondAttribute="leading" id="HU6-ZZ-znB"/>
+                            <constraint firstItem="xQk-NV-d8Q" firstAttribute="leading" secondItem="Cvs-AR-lRS" secondAttribute="leading" id="KTO-qg-h8y"/>
+                            <constraint firstItem="BVo-nr-cqd" firstAttribute="top" secondItem="xQk-NV-d8Q" secondAttribute="bottom" constant="8" id="Uvi-uX-sf9"/>
+                            <constraint firstItem="xQk-NV-d8Q" firstAttribute="top" secondItem="Cvs-AR-lRS" secondAttribute="top" id="ZmO-Y6-aCg"/>
+                            <constraint firstAttribute="bottom" secondItem="xQk-NV-d8Q" secondAttribute="bottom" constant="313" id="ejN-qk-ZX4"/>
+                            <constraint firstItem="BVo-nr-cqd" firstAttribute="bottom" secondItem="Cvs-AR-lRS" secondAttribute="bottom" id="euQ-uh-O4a"/>
+                            <constraint firstItem="xQk-NV-d8Q" firstAttribute="centerX" secondItem="uyn-4X-s9t" secondAttribute="centerX" id="vBq-tY-s6K"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Cvs-AR-lRS"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="HTq-zM-zzJ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F8I-a6-PbX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2879.7101449275365" y="483.48214285714283"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="Kuh-0o-rkD">
+            <objects>
+                <viewController id="S11-cW-8D8" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="cMD-bA-LcK">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="495"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="ymI-ru-8XG"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pko-yx-70f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3794" y="221"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="eGH-ZP-5Da">
+            <objects>
+                <viewController id="epn-HA-Zwk" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="jZS-dq-baW">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="271"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IQs-y2-d23" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3920" y="617"/>
         </scene>
     </scenes>
 </document>
