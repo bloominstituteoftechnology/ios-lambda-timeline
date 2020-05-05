@@ -457,6 +457,9 @@
                                             <rect key="frame" x="379" y="11" width="15" height="22"/>
                                             <state key="normal" image="play.fill" catalog="system"/>
                                             <state key="selected" image="stop.fill" catalog="system"/>
+                                            <connections>
+                                                <action selector="playButtonTapped:" destination="3YD-Y5-ITM" eventType="touchUpInside" id="Fyk-a2-6ey"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                     <constraints>
@@ -466,6 +469,10 @@
                                         <constraint firstItem="HRy-Fs-NhK" firstAttribute="trailing" secondItem="b8b-Eu-RhE" secondAttribute="trailingMargin" id="suJ-v6-9wf"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="authorLabel" destination="QVZ-5v-f04" id="UpI-1m-Wlb"/>
+                                    <outlet property="playButton" destination="HRy-Fs-NhK" id="PS8-m2-DCn"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
