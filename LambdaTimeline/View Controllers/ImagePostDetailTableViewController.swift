@@ -32,32 +32,44 @@ class ImagePostDetailTableViewController: UITableViewController {
     
     @IBAction func createComment(_ sender: Any) {
         
-        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
+        let textOrVoiceAlert = UIAlertController(title: "Add a Comment", message: "Would you like to add a voice comment, or text comment?", preferredStyle: .alert)
         
-        var commentTextField: UITextField?
-        
-        alert.addTextField { (textField) in
-            textField.placeholder = "Comment:"
-            commentTextField = textField
+        let voiceComment = UIAlertAction(title: "Voice", style: .default) { (_) in
+            self.performSegue(withIdentifier: "VoiceCommentSegue", sender: self)
+            
         }
         
-        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
+        let textComment = UIAlertAction(title: "Text", style: .default) { (_) in
+            let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
             
-            guard let commentText = commentTextField?.text else { return }
+            var commentTextField: UITextField?
             
-            self.postController.addComment(with: commentText, to: &self.post!)
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+            alert.addTextField { (textField) in
+                textField.placeholder = "Comment:"
+                commentTextField = textField
             }
+            
+            let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
+                
+                guard let commentText = commentTextField?.text else { return }
+                
+                self.postController.addTextComment(with: commentText, to: &self.post!)
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            
+            alert.addAction(addCommentAction)
+            alert.addAction(cancelAction)
+            
+            self.present(alert, animated: true, completion: nil)
         }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(addCommentAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true, completion: nil)
+        textOrVoiceAlert.addAction(voiceComment)
+        textOrVoiceAlert.addAction(textComment)
+        present(textOrVoiceAlert, animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
