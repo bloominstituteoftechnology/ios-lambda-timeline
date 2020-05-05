@@ -354,10 +354,10 @@
             </objects>
             <point key="canvasLocation" x="1968.8" y="472.71364317841085"/>
         </scene>
-        <!--View Controller-->
+        <!--Create Audio Comment View Controller-->
         <scene sceneID="gad-zf-YOu">
             <objects>
-                <viewController id="CPE-6a-NOE" sceneMemberID="viewController">
+                <viewController id="CPE-6a-NOE" customClass="CreateAudioCommentViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vlK-L8-HYX">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -365,34 +365,38 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Uvi-kk-c6g">
                                 <rect key="frame" x="50" y="406" width="314" height="30"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3P-Ux-T47">
-                                        <rect key="frame" x="0.0" y="0.0" width="45.5" height="30"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="253" horizontalCompressionResistancePriority="751" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3P-Ux-T47">
+                                        <rect key="frame" x="0.0" y="0.0" width="47" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="vLE-FX-2sr">
-                                        <rect key="frame" x="43.5" y="0.0" width="227" height="31"/>
+                                        <rect key="frame" x="45" y="0.0" width="214" height="31"/>
                                     </slider>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d65-wW-E4g">
-                                        <rect key="frame" x="268.5" y="0.0" width="45.5" height="30"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="253" horizontalCompressionResistancePriority="753" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d65-wW-E4g">
+                                        <rect key="frame" x="257" y="0.0" width="57" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="d65-wW-E4g" firstAttribute="width" secondItem="h3P-Ux-T47" secondAttribute="width" constant="10" id="CB4-yC-WwO"/>
+                                </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Eac-bx-GpQ">
-                                <rect key="frame" x="10" y="446" width="394" height="30"/>
+                                <rect key="frame" x="10" y="446" width="394" height="22"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0h6-T6-b2g">
-                                        <rect key="frame" x="0.0" y="0.0" width="197" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="197" height="22"/>
                                         <state key="normal" image="play.fill" catalog="system"/>
                                         <state key="selected" image="pause.fill" catalog="system"/>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yez-0M-Bao">
-                                        <rect key="frame" x="197" y="0.0" width="197" height="30"/>
-                                        <state key="normal" title="Button"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yez-0M-Bao">
+                                        <rect key="frame" x="197" y="0.0" width="197" height="22"/>
+                                        <state key="normal" image="mic.fill" catalog="system"/>
+                                        <state key="selected" image="circle.fill" catalog="system"/>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -418,6 +422,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="rlp-gl-75H"/>
                     </view>
+                    <connections>
+                        <outlet property="audioSlider" destination="vLE-FX-2sr" id="edW-6U-AAs"/>
+                        <outlet property="currentTimeLabel" destination="h3P-Ux-T47" id="fDP-br-WEQ"/>
+                        <outlet property="durationLabel" destination="d65-wW-E4g" id="GRE-Ow-0Be"/>
+                        <outlet property="playPauseButton" destination="0h6-T6-b2g" id="6mB-RL-NcK"/>
+                        <outlet property="recordButton" destination="Yez-0M-Bao" id="xqw-AZ-2ZB"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kpc-eY-z7c" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -425,6 +436,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="circle.fill" catalog="system" width="128" height="121"/>
+        <image name="mic.fill" catalog="system" width="108" height="128"/>
         <image name="pause.fill" catalog="system" width="116" height="128"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
     </resources>
