@@ -147,7 +147,8 @@ class ImagePostViewController: UIViewController {
         bump.setValue([150, 150], forKey: kCIInputCenterKey)
         bump.setValue(bumpRadiusSlider.value, forKey: kCIInputRadiusKey)
         print("bumpScaleSlider.value \(bumpScaleSlider.value)")
-        bump.setValue(bumpScaleSlider.value, forKey: kCIInputScaleKey)
+        // FIXME: It doesn't seem to like the number I'm passing in here.
+        bump.setValue(NSNumber(value: bumpScaleSlider.value), forKey: kCIInputScaleKey)
 
         // CIImage -> CGImage -> UIImage
 //        guard let outputCIImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else { return nil }
