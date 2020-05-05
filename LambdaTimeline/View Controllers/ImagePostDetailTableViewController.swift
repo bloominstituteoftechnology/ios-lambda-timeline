@@ -35,11 +35,11 @@ class ImagePostDetailTableViewController: UITableViewController {
         let alert = UIAlertController(title: "New Comment", message: "What kind of comment would you like to leave?", preferredStyle: .actionSheet)
 
         let textCommentAction = UIAlertAction(title: "Text Comment", style: .default) { (_) in
-            let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
+            let textCommentAlert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
 
             var commentTextField: UITextField?
 
-            alert.addTextField { (textField) in
+            textCommentAlert.addTextField { (textField) in
                 textField.placeholder = "Comment:"
                 commentTextField = textField
             }
@@ -57,19 +57,20 @@ class ImagePostDetailTableViewController: UITableViewController {
 
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
 
-            alert.addAction(addCommentAction)
-            alert.addAction(cancelAction)
+            textCommentAlert.addAction(addCommentAction)
+            textCommentAlert.addAction(cancelAction)
 
-            present(alert, animated: true, completion: nil)
+            self.present(textCommentAlert, animated: true, completion: nil)
         }
 
         let voiceCommentAction = UIAlertAction(title: "Voice Comment", style: .default) { (_) in
-            self.performSegue(withIdentifier: "AddImagePost", sender: nil)
+
         }
 
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
 
-        alert.addAction(imagePostAction)
+        alert.addAction(textCommentAction)
+        alert.addAction(voiceCommentAction)
         alert.addAction(cancelAction)
 
         self.present(alert, animated: true, completion: nil)
