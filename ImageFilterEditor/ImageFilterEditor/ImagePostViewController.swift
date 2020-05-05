@@ -41,10 +41,37 @@ class ImagePostViewController: UIViewController {
         presentImagePickerControllerToUser()
     }
 
+    // MARK: Slider Actions
+
+    @IBAction func brightnessSlider(_ sender: Any) {
+        updateViews()
+    }
+
+    @IBAction func contrastAction(_ sender: Any) {
+        updateViews()
+    }
+
+    @IBAction func saturationAction(_ sender: Any) {
+        updateViews()
+    }
+
+    @IBAction func tbd1Action(_ sender: Any) {
+        updateViews()
+    }
+
+    @IBAction func tbd2Action(_ sender: Any) {
+        updateViews()
+    }
+
     // MARK: - Outlets
 
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var brightnessSlider: UISlider!
+    @IBOutlet weak var contrastSlider: UISlider!
+    @IBOutlet weak var tbd1Slider: UISlider!
+    @IBOutlet weak var tbd2Slider: UISlider!
+    @IBOutlet weak var saturationSlider: UISlider!
 
+    @IBOutlet weak var imageView: UIImageView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,9 +111,9 @@ class ImagePostViewController: UIViewController {
 
         // setting values / getting values from Core Image
         filter.setValue(ciImage, forKey: kCIInputImageKey /* "inputImage" */)
-//        filter.setValue(saturationSlider.value, forKey: kCIInputSaturationKey)
-//        filter.setValue(brightnessSlider.value, forKey: kCIInputBrightnessKey)
-//        filter.setValue(contrastSlider.value, forKey: kCIInputContrastKey)
+        filter.setValue(saturationSlider.value, forKey: kCIInputSaturationKey)
+        filter.setValue(brightnessSlider.value, forKey: kCIInputBrightnessKey)
+        filter.setValue(contrastSlider.value, forKey: kCIInputContrastKey)
 
         // CIImage -> CGImage -> UIImage
 //        guard let outputCIImage = filter.value(forKey: kCIOutputImageKey) as? CIImage else { return nil }
