@@ -81,14 +81,25 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
-        
         let comment = post?.comments[indexPath.row + 1]
         
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author.displayName
         
-        return cell
+        if comment?.audioURL != nil {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCommentCell", for: indexPath) as? AudioCommentTableViewCell else {
+                return UITableViewCell()
+            }
+            
+            cell.authorLabel?.text = comment?.author.displayName
+
+            return cell
+        } else if comment?.text != nil {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+            
+            cell.textLabel?.text = comment?.text
+            cell.detailTextLabel?.text = comment?.author.displayName
+            return cell
+        }
+        return UITableViewCell()
     }
     
     var post: Post!
@@ -115,6 +126,6 @@ class ImagePostDetailTableViewController: UITableViewController {
 
 extension ImagePostDetailTableViewController: AudioURLDelegate {
     func passAudioURL(for url: URL) {
-        print("THE URL IS PASSED BACK \(url)")
+        self.postController.addAudioComment(with: url, to: &self.post!)
     }
 }
