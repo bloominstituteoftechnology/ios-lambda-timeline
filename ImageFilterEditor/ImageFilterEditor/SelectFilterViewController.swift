@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreImage.CIFilterBuiltins
 
 class SelectFilterViewController: UIViewController {
 

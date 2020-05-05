@@ -8,8 +8,16 @@
 
 import UIKit
 
-class SliderControlsViewController: UIViewController {
+protocol SliderControlsDelegate {
+    func sliderAt(index: Int, didChangeValueTo value: Double)
+}
 
+class SliderControlsViewController: UIViewController {
+    
+    // MARK: - Public Properties
+    
+    var filterControls: [ImageFilterControl]?
+    
     // MARK: - IBOutlets
     
     @IBOutlet private weak var stackView: UIStackView!
@@ -18,8 +26,16 @@ class SliderControlsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+    }
+    
+    private func setUpSliderControls() {
+        guard let filterControls = filterControls else { return }
+        
+        for filterControl in filterControls {
+            let slider = UISlider()
+            stackView.addArrangedSubview(slider)
+        }
     }
     
 
