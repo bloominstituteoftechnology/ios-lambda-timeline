@@ -16,7 +16,7 @@ class SliderControlsViewController: UIViewController {
     
     // MARK: - Public Properties
     
-    var filterControls: [ImageFilterControl]?
+    var filterControls: [ImageFilterLinearControl]?
     
     // MARK: - IBOutlets
     

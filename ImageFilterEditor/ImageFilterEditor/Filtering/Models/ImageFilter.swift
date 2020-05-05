@@ -11,7 +11,7 @@ import UIKit
 protocol ImageFilter {
     var name: String { get }
     var icon: UIImage { get }
-    var filterControls: [ImageFilterControl] { get }
+    var filterControls: [ImageFilterLinearControl] { get }
     var coreImageFilter: CIFilter { get }
 }
 
@@ -20,9 +20,9 @@ struct VignetteFilter: ImageFilter {
     
     var icon = UIImage(systemName: "person.circle.fill")!
     
-    var filterControls: [ImageFilterControl] {
+    var filterControls: [ImageFilterLinearControl] {
         [
-            ImageFilterControl(minValue: 0, maxValue: 1, defaultValue: 0.5, label: "Strength"),
+            ImageFilterLinearControl(minValue: 0, maxValue: 1, defaultValue: 0.5, label: "Strength"),
         ]
     }
     

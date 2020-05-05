@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ImageFilterControl {
+struct ImageFilterLinearControl {
     let minValue: Double
     let maxValue: Double
     let defaultValue: Double
