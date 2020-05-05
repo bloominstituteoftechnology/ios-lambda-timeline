@@ -19,8 +19,7 @@ class ImagePostViewController: UIViewController {
     
     override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
         super.preferredContentSizeDidChange(forChildContentContainer: container)
-        if let child = container as? SelectFilterViewController {
-            print(child.preferredContentSize.height)
+        if let child = container as? ImageFilterController {
             selectFilterHeightConstraint.constant = child.preferredContentSize.height
             UIView.animate(withDuration: child.animationDuration) {
                 self.view.layoutIfNeeded()

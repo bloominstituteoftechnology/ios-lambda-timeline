@@ -13,12 +13,14 @@ class SelectFilterViewController: UIViewController {
     var animationDuration = 0.3
     
     @IBOutlet weak var toolbar: UIToolbar!
-    @IBOutlet weak var filterContainerView: UIView!
+    @IBOutlet weak var filterCollectionView: UICollectionView!
     @IBOutlet var showFilterContainerConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         showFilterContainerConstraint.isActive = false
+        filterCollectionView.dataSource = self
+        filterCollectionView.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -32,14 +34,12 @@ class SelectFilterViewController: UIViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let filterCVC = segue.destination as? FilterCollectionViewController {
-            filterCVC.delegate = self
-        }
+
     }
 
     private func updateContentSize() {
         if showFilterContainerConstraint.isActive {
-            preferredContentSize.height = toolbar.frame.height + filterContainerView.frame.height + view.safeAreaInsets.bottom
+            preferredContentSize.height = toolbar.frame.height + filterCollectionView.frame.height + view.safeAreaInsets.bottom
         } else {
             preferredContentSize.height = toolbar.frame.height + view.safeAreaInsets.bottom
         }
@@ -54,8 +54,34 @@ class SelectFilterViewController: UIViewController {
     }
 }
 
-extension SelectFilterViewController: FilterSelectionDelegate {
-    func selectedFilter() {
+// MARK: UICollectionViewDataSource
+
+extension SelectFilterViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath)
+    
+        // Configure the cell
+    
+        return cell
+    }
+}
+
+// MARK: UICollectionViewDelegate
+
+extension SelectFilterViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         performSegue(withIdentifier: "ApplyFilterSegue", sender: self)
     }
 }
+
+   
+
+   
+
+   
+   
+   

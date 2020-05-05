@@ -17,9 +17,12 @@ class ApplyFilterViewController: UIViewController {
 
 
     @IBAction func goBack(_ sender: Any) {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
+    @IBAction func applyFilter(_ sender: Any) {
+        
+    }
     /*
     // MARK: - Navigation
 
