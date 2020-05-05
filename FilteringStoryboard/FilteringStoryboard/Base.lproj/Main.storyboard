@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Filter Photo View Controller-->
+        <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="FilterPhotoViewController" customModule="FilteringStoryboard" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="FilteringStoryboard" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -30,7 +30,7 @@
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ymg-rr-OXX">
                                                 <rect key="frame" x="13" y="0.0" width="388" height="31"/>
                                                 <connections>
-                                                    <action selector="intensityChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="dub-Ok-PVa"/>
+                                                    <action selector="intensityChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="ztm-At-K49"/>
                                                 </connections>
                                             </slider>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8ez-FG-qEN">
@@ -40,14 +40,14 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="203" height="30"/>
                                                         <state key="normal" title="Choose Filter"/>
                                                         <connections>
-                                                            <action selector="chooseFilterTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="k4I-bV-anx"/>
+                                                            <action selector="changeFilter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lWk-Uc-L3Z"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nbg-Oj-7Ub">
                                                         <rect key="frame" x="211" y="0.0" width="203" height="30"/>
                                                         <state key="normal" title="Save Photo"/>
                                                         <connections>
-                                                            <action selector="savePhotoTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rCh-4q-HfP"/>
+                                                            <action selector="save:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JEa-RS-RAT"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -78,10 +78,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="eeI-AF-V2b"/>
                     <connections>
-                        <outlet property="chooseFilter" destination="8Tf-bJ-Nyz" id="D8g-20-9Ml"/>
-                        <outlet property="imageView" destination="WLS-Nm-1BZ" id="CjU-WO-jSh"/>
-                        <outlet property="savePhoto" destination="nbg-Oj-7Ub" id="fSH-Y9-S9i"/>
-                        <outlet property="valueSlider" destination="Ymg-rr-OXX" id="0FQ-Qq-77A"/>
+                        <outlet property="imageView" destination="WLS-Nm-1BZ" id="we2-L4-ePj"/>
+                        <outlet property="intensity" destination="Ymg-rr-OXX" id="YyG-5R-dVb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
