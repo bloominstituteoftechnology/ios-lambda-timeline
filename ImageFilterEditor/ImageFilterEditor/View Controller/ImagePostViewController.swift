@@ -28,7 +28,6 @@ class ImagePostViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var adjustmentSlider: UISlider!
-    
     @IBOutlet weak var secondAdjustmentSlider: UISlider!
     
     // MARK: - Properties
@@ -77,6 +76,10 @@ class ImagePostViewController: UIViewController {
     
     @IBAction func secondAdjustmentSliderChanged(_ sender: Any) {
         updateViews()
+    }
+    
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        scaledImage = imageView.image
     }
     
     // MARK: - Private Methods
@@ -262,6 +265,7 @@ extension ImagePostViewController: UICollectionViewDelegate, UICollectionViewDat
         filterType = FilterTypes(rawValue: indexPath.item)!
         
         // TODO: Add all of this to own function
+        imageView.image = scaledImage
 
         if indexPath.item == 0 {
             secondAdjustmentSlider.isHidden = true
