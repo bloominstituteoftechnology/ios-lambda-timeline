@@ -39,8 +39,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="imageFilterContainerHeightConstraint" destination="CPP-uL-nWZ" id="Def-de-CSi"/>
                         <outlet property="imageView" destination="5Be-do-RYg" id="r8B-el-nzp"/>
-                        <outlet property="selectFilterHeightConstraint" destination="CPP-uL-nWZ" id="Def-de-CSi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -132,33 +132,36 @@
             </objects>
             <point key="canvasLocation" x="1770" y="382"/>
         </scene>
-        <!--View Controller-->
+        <!--Slider Controls View Controller-->
         <scene sceneID="A0c-mQ-FZr">
             <objects>
-                <viewController id="kjO-WM-i6N" sceneMemberID="viewController">
+                <viewController id="kjO-WM-i6N" customClass="SliderControlsViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dDv-qJ-lQ1">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="HSY-gn-xMB">
-                                <rect key="frame" x="18" y="0.0" width="378" height="61"/>
-                            </slider>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Ivf-rV-AU8">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="HSY-gn-xMB" firstAttribute="top" secondItem="dDv-qJ-lQ1" secondAttribute="top" id="43f-2I-BiD"/>
-                            <constraint firstAttribute="trailing" secondItem="HSY-gn-xMB" secondAttribute="trailing" constant="20" id="8kZ-l0-9W1"/>
-                            <constraint firstItem="HSY-gn-xMB" firstAttribute="leading" secondItem="dDv-qJ-lQ1" secondAttribute="leading" constant="20" id="EUd-91-C5t"/>
-                            <constraint firstAttribute="bottom" secondItem="HSY-gn-xMB" secondAttribute="bottom" id="vfU-83-dUY"/>
+                            <constraint firstItem="jfs-gW-oFg" firstAttribute="bottom" secondItem="Ivf-rV-AU8" secondAttribute="bottom" id="5CH-4f-5xf"/>
+                            <constraint firstItem="Ivf-rV-AU8" firstAttribute="leading" secondItem="jfs-gW-oFg" secondAttribute="leading" id="7Hx-90-BAt"/>
+                            <constraint firstItem="jfs-gW-oFg" firstAttribute="trailing" secondItem="Ivf-rV-AU8" secondAttribute="trailing" id="9dt-HO-mj7"/>
+                            <constraint firstItem="Ivf-rV-AU8" firstAttribute="top" secondItem="dDv-qJ-lQ1" secondAttribute="top" id="Dys-2c-imd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="jfs-gW-oFg"/>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="414" height="60"/>
+                    <connections>
+                        <outlet property="stackView" destination="Ivf-rV-AU8" id="5Wj-Dg-nMn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5H1-y7-Vah" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2677" y="200"/>
+            <point key="canvasLocation" x="2676.811594202899" y="199.55357142857142"/>
         </scene>
         <!--Apply Filter View Controller-->
         <scene sceneID="eFm-RJ-7ox">

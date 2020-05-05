@@ -1,5 +1,5 @@
 //
-//  VignetteViewController.swift
+//  SliderControlsViewController.swift
 //  ImageFilterEditor
 //
 //  Created by Shawn Gee on 5/4/20.
@@ -8,8 +8,14 @@
 
 import UIKit
 
-class VignetteViewController: UIViewController {
+class SliderControlsViewController: UIViewController {
 
+    // MARK: - IBOutlets
+    
+    @IBOutlet private weak var stackView: UIStackView!
+    
+    // MARK: - View Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

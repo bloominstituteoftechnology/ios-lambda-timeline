@@ -10,11 +10,17 @@ import UIKit
 
 class SelectFilterViewController: UIViewController {
 
-    var animationDuration = 0.3
+    // MARK: - Public Properteis
     
-    @IBOutlet weak var toolbar: UIToolbar!
-    @IBOutlet weak var filterCollectionView: UICollectionView!
-    @IBOutlet var showFilterContainerConstraint: NSLayoutConstraint!
+    var animationDuration: TimeInterval?
+    
+    // MARK: - IBOutlets
+    
+    @IBOutlet private weak var toolbar: UIToolbar!
+    @IBOutlet private weak var filterCollectionView: UICollectionView!
+    @IBOutlet private var showFilterContainerConstraint: NSLayoutConstraint!
+    
+    // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,15 +33,14 @@ class SelectFilterViewController: UIViewController {
         super.viewDidAppear(animated)
         updateContentSize()
     }
-    
-
 
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
     }
+    
+    // MARK: - Private Methods
 
     private func updateContentSize() {
         if showFilterContainerConstraint.isActive {
@@ -45,7 +50,11 @@ class SelectFilterViewController: UIViewController {
         }
     }
 
+    // MARK: - IBActions
+    
     @IBAction func showFilters(_ sender: Any) {
+        guard let animationDuration = animationDuration else { return }
+        
         showFilterContainerConstraint.isActive.toggle()
         UIView.animate(withDuration: animationDuration) {
             self.view.layoutIfNeeded()
