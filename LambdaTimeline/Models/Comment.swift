@@ -60,7 +60,7 @@ class Comment: FirebaseConvertible, Equatable {
             return [Comment.textKey: text,
                     Comment.author: author.dictionaryRepresentation,
                     Comment.timestampKey: timestamp.timeIntervalSince1970]
-        } else if let url = audioURL {
+        } else if let url = audioURL?.absoluteString {
             return [Comment.urlKey: url,
                     Comment.author: author.dictionaryRepresentation,
                     Comment.timestampKey: timestamp.timeIntervalSince1970]
