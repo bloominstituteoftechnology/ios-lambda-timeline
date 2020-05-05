@@ -32,29 +32,44 @@ class ImagePostDetailTableViewController: UITableViewController {
     
     @IBAction func createComment(_ sender: Any) {
         
-        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Add a comment", message: "Choose which type of comment you would like to add:", preferredStyle: .actionSheet)
         
-        var commentTextField: UITextField?
+        let addCommentAction = UIAlertAction(title: "Add Text Comment", style: .default) { (_) in
+            let textCommentAlert = UIAlertController(title: "Add a text comment", message: "Write your comment below:", preferredStyle: .alert)
+            
+            var commentTextField: UITextField?
+            
+            textCommentAlert.addTextField { (textField) in
+                textField.placeholder = "Comment:"
+                commentTextField = textField
+            }
+            
+            let addTextCommentAction = UIAlertAction(title: "Add Text Comment", style: .default) { (_) in
+                guard let commentText = commentTextField?.text else { return }
+                self.postController.addComment(with: commentText, to: &self.post!)
+
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
         
-        alert.addTextField { (textField) in
-            textField.placeholder = "Comment:"
-            commentTextField = textField
+            let cancelTextCommentAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+            textCommentAlert.addAction(addTextCommentAction)
+            textCommentAlert.addAction(cancelTextCommentAction)
+            self.present(textCommentAlert, animated: true)
         }
         
-        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
-            
-            guard let commentText = commentTextField?.text else { return }
-            
-            self.postController.addComment(with: commentText, to: &self.post!)
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+        let addAudioAction = UIAlertAction(title: "Add Audio Comment", style: .default) { (_) in
+            /*
+            ADD SUPPORT FOR RECORDING AUDIO
+            */
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(addCommentAction)
+        alert.addAction(addAudioAction)
         alert.addAction(cancelAction)
         
         present(alert, animated: true, completion: nil)
