@@ -67,11 +67,11 @@ class ImagePostViewController: UIViewController {
     }
     
     @IBAction func adjustmentSliderChanged(_ sender: Any) {
-        updateViews()
+        updateViews(withAdjustment: true)
     }
     
     @IBAction func secondAdjustmentSliderChanged(_ sender: Any) {
-        updateViews()
+        updateViews(withAdjustment: true)
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
@@ -90,19 +90,23 @@ class ImagePostViewController: UIViewController {
         present(imagePicker, animated: true, completion: nil)
     }
     
-    private func updateViews() {
+    private func updateViews(withAdjustment: Bool = false) {
         if let scaledImage = scaledImage {
             
-            if filterType.rawValue == 0 {
-                imageView.image = adjustExposure(scaledImage)
-            } else if filterType.rawValue == 1 {
-                imageView.image = adjustVibrance(scaledImage)
-            } else if filterType.rawValue == 2 {
-                imageView.image = adjustVignette(scaledImage)
-            } else if filterType.rawValue == 3 {
-                imageView.image = adjustSepia(scaledImage)
-            } else if filterType.rawValue == 4 {
-                imageView.image = adjustMotionBlur(scaledImage)
+            if withAdjustment {
+                if filterType.rawValue == 0 {
+                    imageView.image = adjustExposure(scaledImage)
+                } else if filterType.rawValue == 1 {
+                    imageView.image = adjustVibrance(scaledImage)
+                } else if filterType.rawValue == 2 {
+                    imageView.image = adjustVignette(scaledImage)
+                } else if filterType.rawValue == 3 {
+                    imageView.image = adjustSepia(scaledImage)
+                } else if filterType.rawValue == 4 {
+                    imageView.image = adjustMotionBlur(scaledImage)
+                }
+            } else {
+                imageView.image = scaledImage
             }
             
         } else {
