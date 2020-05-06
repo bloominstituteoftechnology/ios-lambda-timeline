@@ -45,12 +45,17 @@ class RecordingViewController: UIViewController {
         } else {
             print("Unabled to Cancel Recording.")
         }
+
+        navigationController?.popViewController(animated: true)
     }
 
     @IBAction func sendButton(_ sender: Any) {
-        guard let recordingURL = recordingURL else { return }
 
-        print("Send: \(recordingURL)")
+        if let recordingURL = recordingURL {
+            print("Send: \(recordingURL)")
+        }
+
+        navigationController?.popViewController(animated: true)
     }
 
     // MARK: - Outlets
