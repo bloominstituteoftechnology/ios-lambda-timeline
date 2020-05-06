@@ -8,8 +8,18 @@
 
 import UIKit
 
-class AudioCommentView: UIView {
+protocol AudioCommentViewDelegate {
+    func startRecording(for audioCommentView: AudioCommentView)
+    func stopRecording(for audioCommentView: AudioCommentView)
+    func startPlayback(for audioCommentView: AudioCommentView)
+    func pausePlayback(for audioCommentView: AudioCommentView)
+    func scrubPlayback(to location: Float, for audioCommentView: AudioCommentView)
     
+    func sendAudioComment(for audioCommentView: AudioCommentView)
+    func sendTextualComment(with text: String, for audioCommentView: AudioCommentView)
+}
+
+class AudioCommentView: UIView {
     
     /// The configuration of the AudioCommentView's subviews depends on the state it is in.
     /// It starts in emptyText mode, and transitions to someText when typing begins in the text field.
