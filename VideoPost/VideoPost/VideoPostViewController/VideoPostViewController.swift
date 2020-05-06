@@ -14,6 +14,11 @@ class VideoPostViewController: UIViewController {
     // MARK: - Private Properties
     
     private var shouldShowCamera = true
+    private var player: AVPlayer?
+    
+    
+    
+    @IBOutlet weak var playerView: VideoPlayerView!
     
     // MARK: - View Lifecycle
     
@@ -27,7 +32,12 @@ class VideoPostViewController: UIViewController {
             requestPermissionAndShowCamera()
         }
     }
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let videoRecorderVC = segue.destination as? VideoRecorderViewController {
+            videoRecorderVC.delegate = self
+        }
+    }
     
     // MARK: - Private Methods
     
@@ -62,6 +72,43 @@ class VideoPostViewController: UIViewController {
     private func showCamera() {
         performSegue(withIdentifier: "ShowCameraSegue", sender: self)
         shouldShowCamera = false
+    }
+    
+    // MARK: - IBActions
+    @IBAction func playPauseTapped(_ sender: UIBarButtonItem) {
+        guard let player = player else { return }
+        if player.isPlaying {
+            player.pause()
+            sender.image = UIImage(systemName: "play.fill")
+        } else {
+            player.play()
+            sender.image = UIImage(systemName: "pause.fill")
+        }
+    }
+    
+    @IBAction func rewindTapped(_ sender: Any) {
+    }
+    
+    @IBAction func fastForwardTapped(_ sender: Any) {
+    }
+    
+    @IBAction func clearTapped(_ sender: Any) {
+    }
+    
+    @IBAction func sendTapped(_ sender: Any) {
+    }
+}
+
+extension VideoPostViewController: VideoRecorderDelegate {
+    func didRecordVideo(to url: URL) {
+        player = AVPlayer(url: url)
+        playerView.player = player
+    }
+}
+
+extension AVPlayer {
+    var isPlaying: Bool {
+        return self.rate > 0
     }
 }
 

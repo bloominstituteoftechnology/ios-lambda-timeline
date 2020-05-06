@@ -18,33 +18,62 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LZ0-OO-oeS">
                                 <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                                 <items>
-                                    <barButtonItem image="xmark.circle.fill" catalog="system" id="vES-vM-E29"/>
+                                    <barButtonItem image="xmark.circle.fill" catalog="system" id="vES-vM-E29">
+                                        <connections>
+                                            <action selector="clearTapped:" destination="rkV-m4-9vK" id="WPn-ln-Rms"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="w5r-gp-35Y"/>
-                                    <barButtonItem systemItem="rewind" id="udR-1K-Ies"/>
+                                    <barButtonItem systemItem="rewind" id="udR-1K-Ies">
+                                        <connections>
+                                            <action selector="rewindTapped:" destination="rkV-m4-9vK" id="Li7-fm-sFm"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem width="10" style="plain" systemItem="fixedSpace" id="oiA-Yk-KJN"/>
-                                    <barButtonItem systemItem="play" id="smK-OS-dvc"/>
+                                    <barButtonItem image="play.fill" catalog="system" id="smK-OS-dvc">
+                                        <connections>
+                                            <action selector="playPauseTapped:" destination="rkV-m4-9vK" id="eTB-R6-rpd"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem width="10" style="plain" systemItem="fixedSpace" id="zKo-Ox-E0e"/>
-                                    <barButtonItem systemItem="fastForward" id="Rp3-LO-Bvn"/>
+                                    <barButtonItem systemItem="fastForward" id="Rp3-LO-Bvn">
+                                        <connections>
+                                            <action selector="fastForwardTapped:" destination="rkV-m4-9vK" id="PcG-ej-dI8"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="cvj-0f-gxD"/>
-                                    <barButtonItem image="paperplane.fill" catalog="system" id="PD8-HS-uMw"/>
+                                    <barButtonItem image="paperplane.fill" catalog="system" id="PD8-HS-uMw">
+                                        <connections>
+                                            <action selector="sendTapped:" destination="rkV-m4-9vK" id="STC-wP-idM"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I51-Fd-TTG" customClass="VideoPlayerView" customModule="VideoPost" customModuleProvider="target">
+                                <rect key="frame" x="40" y="84" width="334" height="669"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="LZ0-OO-oeS" firstAttribute="bottom" secondItem="M7E-KO-3Dl" secondAttribute="bottom" id="AT7-dj-yBt"/>
+                            <constraint firstItem="LZ0-OO-oeS" firstAttribute="top" secondItem="I51-Fd-TTG" secondAttribute="bottom" constant="60" id="coN-7N-4MS"/>
+                            <constraint firstItem="I51-Fd-TTG" firstAttribute="leading" secondItem="M7E-KO-3Dl" secondAttribute="leading" constant="40" id="fsl-bl-XoG"/>
+                            <constraint firstItem="M7E-KO-3Dl" firstAttribute="trailing" secondItem="I51-Fd-TTG" secondAttribute="trailing" constant="40" id="jVL-VR-sjW"/>
                             <constraint firstItem="LZ0-OO-oeS" firstAttribute="leading" secondItem="M7E-KO-3Dl" secondAttribute="leading" id="paC-Qj-jsv"/>
                             <constraint firstItem="LZ0-OO-oeS" firstAttribute="trailing" secondItem="M7E-KO-3Dl" secondAttribute="trailing" id="pv4-iG-c7N"/>
+                            <constraint firstItem="I51-Fd-TTG" firstAttribute="top" secondItem="M7E-KO-3Dl" secondAttribute="top" constant="40" id="ynu-bb-XVk"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="M7E-KO-3Dl"/>
                     </view>
                     <connections>
+                        <outlet property="playerView" destination="I51-Fd-TTG" id="zd4-bE-LP3"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="ShowCameraSegue" animates="NO" id="S4A-my-ZCd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2oB-jS-PP6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-769" y="110"/>
+            <point key="canvasLocation" x="-769.56521739130437" y="109.82142857142857"/>
         </scene>
         <!--Video Recorder View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -93,6 +122,7 @@
     </scenes>
     <resources>
         <image name="paperplane.fill" catalog="system" width="128" height="121"/>
+        <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="stop.circle.fill" catalog="system" width="128" height="121"/>
         <image name="video.circle.fill" catalog="system" width="128" height="121"/>
         <image name="xmark.circle.fill" catalog="system" width="128" height="121"/>
