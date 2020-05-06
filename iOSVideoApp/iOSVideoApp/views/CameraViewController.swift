@@ -86,7 +86,8 @@ class CameraViewController: UIViewController {
             fatalError("No camera available - are you on a simulator?")
         }
         
-        
+        //TODO: Fix this shit yo to pop us to the view controller
+    
         @IBAction func recordButtonPressed(_ sender: Any) {
             toggleRecord()
         }

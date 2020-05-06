@@ -17,19 +17,32 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="JhH-p0-RIN">
-                            <size key="itemSize" width="128" height="128"/>
+                            <size key="itemSize" width="170" height="170"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="N8h-JG-Meg">
-                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                <rect key="frame" x="0.0" y="0.0" width="170" height="170"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="df6-tv-RIf">
-                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="170" height="170"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m5g-pw-7P9" customClass="VideoPlayerView" customModule="iOSVideoApp" customModuleProvider="target">
+                                            <rect key="frame" x="8" y="8" width="154" height="154"/>
+                                            <color key="backgroundColor" systemColor="systemGray3Color" red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="m5g-pw-7P9" firstAttribute="top" secondItem="df6-tv-RIf" secondAttribute="topMargin" id="2gt-dq-7QZ"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="m5g-pw-7P9" secondAttribute="bottom" id="SWT-BL-yyL"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="m5g-pw-7P9" secondAttribute="trailing" id="e3f-Np-yEJ"/>
+                                        <constraint firstItem="m5g-pw-7P9" firstAttribute="leading" secondItem="df6-tv-RIf" secondAttribute="leadingMargin" id="jDL-sw-0N5"/>
+                                    </constraints>
                                 </collectionViewCellContentView>
+                                <size key="customSize" width="170" height="170"/>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -48,7 +61,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mPH-SN-9KW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="445" y="736"/>
+            <point key="canvasLocation" x="444.92753623188412" y="735.9375"/>
         </scene>
         <!--Camera View Controller-->
         <scene sceneID="ezq-ug-gty">
@@ -98,7 +111,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ES3-UG-JBB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1286" y="736"/>
+            <point key="canvasLocation" x="1210" y="736"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="8Xa-Nk-zjH">
@@ -116,7 +129,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HLB-js-LHH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-465" y="736"/>
+            <point key="canvasLocation" x="-333" y="736"/>
         </scene>
     </scenes>
     <resources>
