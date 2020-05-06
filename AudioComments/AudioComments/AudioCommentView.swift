@@ -10,6 +10,13 @@ import UIKit
 
 class AudioCommentView: UIView {
     
+    enum UIMode {
+        case emptyText
+        case someText
+        case recording
+        case playback
+    }
+    
     // MARK: - IBOutlets
     
     @IBOutlet var contentView: UIView!
@@ -20,6 +27,17 @@ class AudioCommentView: UIView {
     @IBOutlet weak var timelineSlider: UISlider!
     @IBOutlet weak var audioVisualizer: AudioVisualizer!
     @IBOutlet weak var textField: UITextField!
+    
+    
+    // MARK: - Private Properties
+    
+    var uiMode = UIMode.emptyText {
+        didSet {
+            if oldValue != uiMode {
+                updateUI()
+            }
+        }
+    }
     
     //MARK: - Init
     
@@ -33,6 +51,10 @@ class AudioCommentView: UIView {
         setup()
     }
     
+    @IBAction func toggleRecording(_ sender: UIButton) {
+        recordButton.isSelected.toggle()
+        self.uiMode = recordButton.isSelected ? .recording : .emptyText
+    }
     
     //MARK: - Private Methods
     
@@ -45,4 +67,53 @@ class AudioCommentView: UIView {
         
     }
 
+    private func updateUI() {
+        switch uiMode {
+        case .emptyText:
+            print("emptyText")
+            UIView.hide(playPauseButton, sendButton, clearButton, timelineSlider, audioVisualizer)
+            UIView.show(textField, recordButton)
+        case .someText:
+            print("someText")
+            UIView.hide(playPauseButton, sendButton, clearButton, timelineSlider, audioVisualizer, recordButton)
+            UIView.show(textField, sendButton)
+        case .recording:
+            print("recording")
+            UIView.hide(playPauseButton, sendButton, clearButton, timelineSlider, textField)
+            UIView.show(audioVisualizer, recordButton)
+        case .playback:
+            print("playback")
+            UIView.hide(textField, audioVisualizer, recordButton)
+            UIView.show(playPauseButton, timelineSlider, clearButton, sendButton)
+        }
+        
+        UIView.animate(withDuration: 2) {
+            self.layoutIfNeeded()
+        }
+    }
+    
+}
+
+extension UIView {
+    
+    static func hide(_ views: UIView...) {
+        for view in views {
+            UIView.animate(withDuration: 0.3, animations: {
+                view.layer.opacity = 0
+            }) { _ in
+                view.isHidden = true
+            }
+        }
+    }
+    
+    static func show(_ views: UIView...) {
+        for view in views {
+            view.layer.opacity = 0
+            view.isHidden = false
+            
+            UIView.animate(withDuration: 0.3) {
+                view.layer.opacity = 1
+            }
+        }
+    }
 }
