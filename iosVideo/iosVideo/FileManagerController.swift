@@ -19,9 +19,8 @@ class FilesController {
         do {
             let data = try FileManager.default.contentsOfDirectory(atPath: documentsDirectory.path)
             for path in data {
-                if let urlPath = URL(string: path) {
-                    urls.append(urlPath)
-                }
+                let urlPath = documentsDirectory.appendingPathComponent(path)
+                urls.append(urlPath)
             }
         } catch {
             NSLog("Error fetching all existing video at path \(documentsDirectory.absoluteString): \(error)")

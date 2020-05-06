@@ -56,9 +56,10 @@ class ThumbnailsCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoThumbnailIdentifier", for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoThumbnailIdentifier", for: indexPath) as? ThumbnailCollectionViewCell else { return UICollectionViewCell() }
     
         // Configure the cell
+        cell.thumbURL = urls[indexPath.row]
         return cell
     }
 
