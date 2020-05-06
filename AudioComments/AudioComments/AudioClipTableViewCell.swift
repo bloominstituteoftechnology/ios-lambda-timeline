@@ -40,9 +40,7 @@ class AudioClipTableViewCell: UITableViewCell {
         try session.setActive(true, options: []) // can fail if on a phone call, for instance
     }
 
-    // MARK: - Actions
-
-    @IBAction func playPauseButton(_ sender: UIButton) {
+    private func play() {
         if audioPlayer == nil {
             do {
                 audioPlayer = try AVAudioPlayer(contentsOf: clip)
@@ -54,6 +52,22 @@ class AudioClipTableViewCell: UITableViewCell {
         audioPlayer?.play()
         startTimer()
         updateViews()
+    }
+
+    private func pause() {
+        audioPlayer?.pause()
+        cancelTimer()
+        updateViews()
+    }
+
+    // MARK: - Actions
+
+    @IBAction func playPauseButton(_ sender: UIButton) {
+        if isPlaying { // isPlaying == true
+            pause()
+        } else {
+            play()
+        }
     }
 
     @IBAction func scrubber(_ sender: UISlider) {
