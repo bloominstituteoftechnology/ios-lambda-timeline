@@ -11,15 +11,27 @@ import AVFoundation
 
 class CameraViewController: UIViewController {
 
+    // MARK: - Properites
+
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
 
     private var player: AVPlayer! // Implicetly unwrapped optional. we promise to set it before using it ... or it'll crash!
 
+    // MARK: - Actions
+
+    @IBAction func recordButtonPressed(_ sender: Any) {
+        toggleRecord()
+    }
+
+    // MARK: - Outlets
+
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
 
-	override func viewDidLoad() {
+    // MARK: - View Lifecycle
+
+    override func viewDidLoad() {
 		super.viewDidLoad()
 
 		// Resize camera preview to fill the entire screen
@@ -41,6 +53,8 @@ class CameraViewController: UIViewController {
     private func updateViews() {
         recordButton.isSelected = fileOutput.isRecording
     }
+
+    // MARK: - Private
 
     // Live Preview + inputs/outputs
 
@@ -90,10 +104,6 @@ class CameraViewController: UIViewController {
     }
 
     // Recording
-
-    @IBAction func recordButtonPressed(_ sender: Any) {
-        toggleRecord()
-	}
 
     // DRY: Don't repeat yourself
     private func toggleRecord() {
