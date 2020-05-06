@@ -10,7 +10,7 @@
         <scene sceneID="wzF-lo-jt4">
             <objects>
                 <tableViewController id="Yzz-3e-HUB" customClass="AudioTableViewController" customModule="AudioComments" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="zSV-kn-4v5">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="123" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="zSV-kn-4v5">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -23,7 +23,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="R2G-bg-NeN">
-                                            <rect key="frame" x="20" y="11" width="438" height="101"/>
+                                            <rect key="frame" x="20" y="11" width="458" height="101"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RCY-d0-mYv">
                                                     <rect key="frame" x="0.0" y="0.0" width="35.5" height="20.5"/>
@@ -49,7 +49,10 @@
                                                     </subviews>
                                                 </stackView>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Vh8-37-69g">
-                                                    <rect key="frame" x="-2" y="35" width="442" height="31"/>
+                                                    <rect key="frame" x="-2" y="35" width="462" height="31"/>
+                                                    <connections>
+                                                        <action selector="audioSlider:" destination="vXw-YY-qhK" eventType="valueChanged" id="aPr-Ha-cbJ"/>
+                                                    </connections>
                                                 </slider>
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="326" translatesAutoresizingMaskIntoConstraints="NO" id="bHC-kO-iph">
                                                     <rect key="frame" x="0.0" y="65" width="380.5" height="13.5"/>
@@ -74,23 +77,38 @@
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tRv-1O-XPb">
                                                             <rect key="frame" x="0.0" y="0.0" width="73" height="22.5"/>
                                                             <state key="normal" title="Button" image="square.and.arrow.up" catalog="system"/>
+                                                            <connections>
+                                                                <action selector="shareButton:" destination="vXw-YY-qhK" eventType="touchUpInside" id="FE7-qZ-T37"/>
+                                                            </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MI0-3K-Tzo">
                                                             <rect key="frame" x="78" y="0.0" width="74" height="22.5"/>
                                                             <state key="normal" title="Button" image="gobackward.15" catalog="system"/>
+                                                            <connections>
+                                                                <action selector="backButton:" destination="vXw-YY-qhK" eventType="touchUpInside" id="cFT-4N-zh1"/>
+                                                            </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PPv-co-cM2">
                                                             <rect key="frame" x="157" y="0.0" width="69" height="22.5"/>
                                                             <state key="normal" title="Button" image="play.fill" catalog="system"/>
                                                             <state key="selected" image="pause.fill" catalog="system"/>
+                                                            <connections>
+                                                                <action selector="playPauseRecordStopButton:" destination="vXw-YY-qhK" eventType="touchUpInside" id="Kwp-Mr-xbX"/>
+                                                            </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s0N-y3-2fG">
                                                             <rect key="frame" x="231" y="0.0" width="74" height="22.5"/>
                                                             <state key="normal" title="Button" image="goforward.15" catalog="system"/>
+                                                            <connections>
+                                                                <action selector="forwardButton:" destination="vXw-YY-qhK" eventType="touchUpInside" id="REE-Hc-eyL"/>
+                                                            </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F1R-cD-eYK">
                                                             <rect key="frame" x="310" y="0.0" width="73.5" height="22.5"/>
                                                             <state key="normal" title="Button" image="trash" catalog="system"/>
+                                                            <connections>
+                                                                <action selector="deleteButton:" destination="vXw-YY-qhK" eventType="touchUpInside" id="fMZ-qR-MFE"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                 </stackView>
@@ -98,6 +116,14 @@
                                         </stackView>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="currentTime" destination="rOG-NN-t85" id="zzJ-tG-Rok"/>
+                                    <outlet property="dateLabel" destination="t6K-Qc-6rX" id="eMd-PM-I1q"/>
+                                    <outlet property="durationLabel" destination="2G0-RC-Ndy" id="Mml-ks-lc7"/>
+                                    <outlet property="playPauseRecordStopButtonLabel" destination="PPv-co-cM2" id="qQ7-IJ-r3Q"/>
+                                    <outlet property="remainingTime" destination="3uL-7c-d4u" id="2uV-M7-6uM"/>
+                                    <outlet property="titleLabel" destination="RCY-d0-mYv" id="VdC-0r-P12"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
