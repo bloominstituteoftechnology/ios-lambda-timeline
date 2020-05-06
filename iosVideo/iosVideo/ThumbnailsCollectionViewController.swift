@@ -30,6 +30,7 @@ class ThumbnailsCollectionViewController: UICollectionViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         populateThumbnails()
+        collectionView.reloadData()
     }
 
     /*
