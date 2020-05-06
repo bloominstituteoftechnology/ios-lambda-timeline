@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="iUh-Li-dTM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="L26-vs-Bko">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -7,150 +7,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--meh-->
-        <scene sceneID="wzF-lo-jt4">
-            <objects>
-                <tableViewController id="Yzz-3e-HUB" customClass="AudioTableViewController" customModule="AudioComments" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="123" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="zSV-kn-4v5">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AudioCell" rowHeight="123" id="vXw-YY-qhK" customClass="AudioTableViewCell" customModule="AudioComments" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="414" height="123"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vXw-YY-qhK" id="thD-zy-3dF">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="123"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="R2G-bg-NeN">
-                                            <rect key="frame" x="20" y="11" width="478" height="101"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RCY-d0-mYv">
-                                                    <rect key="frame" x="0.0" y="0.0" width="35.5" height="20.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="324" translatesAutoresizingMaskIntoConstraints="NO" id="U2R-YJ-kgl">
-                                                    <rect key="frame" x="0.0" y="20.5" width="399" height="14.5"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t6K-Qc-6rX">
-                                                            <rect key="frame" x="0.0" y="0.0" width="26.5" height="14.5"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Duration" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2G0-RC-Ndy">
-                                                            <rect key="frame" x="350.5" y="0.0" width="48.5" height="14.5"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                </stackView>
-                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Vh8-37-69g">
-                                                    <rect key="frame" x="-2" y="35" width="482" height="31"/>
-                                                    <connections>
-                                                        <action selector="audioSlider:" destination="vXw-YY-qhK" eventType="valueChanged" id="aPr-Ha-cbJ"/>
-                                                    </connections>
-                                                </slider>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="326" translatesAutoresizingMaskIntoConstraints="NO" id="bHC-kO-iph">
-                                                    <rect key="frame" x="0.0" y="65" width="380.5" height="13.5"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rOG-NN-t85">
-                                                            <rect key="frame" x="0.0" y="0.0" width="24.5" height="13.5"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-0:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3uL-7c-d4u">
-                                                            <rect key="frame" x="350.5" y="0.0" width="30" height="13.5"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption2"/>
-                                                            <nil key="textColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                </stackView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="6a2-hq-SWk">
-                                                    <rect key="frame" x="0.0" y="78.5" width="383.5" height="22.5"/>
-                                                    <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tRv-1O-XPb">
-                                                            <rect key="frame" x="0.0" y="0.0" width="73" height="22.5"/>
-                                                            <state key="normal" title="Button" image="square.and.arrow.up" catalog="system"/>
-                                                            <connections>
-                                                                <action selector="shareButton:" destination="vXw-YY-qhK" eventType="touchUpInside" id="FE7-qZ-T37"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MI0-3K-Tzo">
-                                                            <rect key="frame" x="78" y="0.0" width="74" height="22.5"/>
-                                                            <state key="normal" title="Button" image="gobackward.15" catalog="system"/>
-                                                            <connections>
-                                                                <action selector="backButton:" destination="vXw-YY-qhK" eventType="touchUpInside" id="cFT-4N-zh1"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PPv-co-cM2">
-                                                            <rect key="frame" x="157" y="0.0" width="69" height="22.5"/>
-                                                            <state key="normal" title="Button" image="play.fill" catalog="system"/>
-                                                            <state key="selected" image="pause.fill" catalog="system"/>
-                                                            <connections>
-                                                                <action selector="playPauseRecordStopButton:" destination="vXw-YY-qhK" eventType="touchUpInside" id="Kwp-Mr-xbX"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s0N-y3-2fG">
-                                                            <rect key="frame" x="231" y="0.0" width="74" height="22.5"/>
-                                                            <state key="normal" title="Button" image="goforward.15" catalog="system"/>
-                                                            <connections>
-                                                                <action selector="forwardButton:" destination="vXw-YY-qhK" eventType="touchUpInside" id="REE-Hc-eyL"/>
-                                                            </connections>
-                                                        </button>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F1R-cD-eYK">
-                                                            <rect key="frame" x="310" y="0.0" width="73.5" height="22.5"/>
-                                                            <state key="normal" title="Button" image="trash" catalog="system"/>
-                                                            <connections>
-                                                                <action selector="deleteButton:" destination="vXw-YY-qhK" eventType="touchUpInside" id="fMZ-qR-MFE"/>
-                                                            </connections>
-                                                        </button>
-                                                    </subviews>
-                                                </stackView>
-                                            </subviews>
-                                        </stackView>
-                                    </subviews>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="currentTime" destination="rOG-NN-t85" id="zzJ-tG-Rok"/>
-                                    <outlet property="dateLabel" destination="t6K-Qc-6rX" id="eMd-PM-I1q"/>
-                                    <outlet property="durationLabel" destination="2G0-RC-Ndy" id="Mml-ks-lc7"/>
-                                    <outlet property="playPauseRecordStopButtonLabel" destination="PPv-co-cM2" id="qQ7-IJ-r3Q"/>
-                                    <outlet property="remainingTime" destination="3uL-7c-d4u" id="2uV-M7-6uM"/>
-                                    <outlet property="titleLabel" destination="RCY-d0-mYv" id="VdC-0r-P12"/>
-                                </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="Yzz-3e-HUB" id="uia-qc-Kb7"/>
-                            <outlet property="delegate" destination="Yzz-3e-HUB" id="pJg-KN-cPx"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="meh" id="m0K-Jy-of9">
-                        <rightBarButtonItems>
-                            <barButtonItem systemItem="add" id="DMm-ty-uuc">
-                                <connections>
-                                    <action selector="addButton:" destination="Yzz-3e-HUB" id="5ov-p3-XI3"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem systemItem="compose" id="O45-dI-Odn">
-                                <connections>
-                                    <segue destination="xKH-xv-n23" kind="show" id="zwB-qJ-yH8"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
-                    </navigationItem>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fak-yM-izR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="86.956521739130437" y="-7.3660714285714279"/>
-        </scene>
         <!--Recording View Controller-->
         <scene sceneID="QnK-5B-jKJ">
             <objects>
@@ -204,31 +60,60 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5JH-EO-xuj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="852" y="-7"/>
+            <point key="canvasLocation" x="1760.8695652173915" y="-7.3660714285714279"/>
+        </scene>
+        <!--Playback Table View Controller-->
+        <scene sceneID="e1H-wZ-TIq">
+            <objects>
+                <tableViewController id="W0L-dL-fhT" customClass="PlaybackTableViewController" customModule="AudioComments" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="5IN-fO-iDd">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="p75-jt-pdZ">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="p75-jt-pdZ" id="x7B-dK-W8E">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="W0L-dL-fhT" id="UCC-q0-D4r"/>
+                            <outlet property="delegate" destination="W0L-dL-fhT" id="cGN-0f-hX0"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="6Oc-tL-hxN">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="WWj-y2-0Xc">
+                            <connections>
+                                <segue destination="xKH-xv-n23" kind="show" id="82e-bG-vjQ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OeC-fF-Fq9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="926.08695652173924" y="-7.3660714285714279"/>
         </scene>
         <!--Navigation Controller-->
-        <scene sceneID="E04-4n-Sho">
+        <scene sceneID="MnS-OH-de7">
             <objects>
-                <navigationController id="iUh-Li-dTM" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="OI7-UI-72v">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="L26-vs-Bko" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ncT-ka-Oj5">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
+                    <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="Yzz-3e-HUB" kind="relationship" relationship="rootViewController" id="Lrg-5k-COo"/>
+                        <segue destination="W0L-dL-fhT" kind="relationship" relationship="rootViewController" id="uw2-E1-q1A"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="1MT-Rc-XPr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="di1-yb-G1k" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-831" y="-7"/>
+            <point key="canvasLocation" x="15.942028985507248" y="-7.3660714285714279"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="gobackward.15" catalog="system" width="121" height="128"/>
-        <image name="goforward.15" catalog="system" width="121" height="128"/>
-        <image name="pause.fill" catalog="system" width="116" height="128"/>
-        <image name="play.fill" catalog="system" width="116" height="128"/>
-        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
-        <image name="trash" catalog="system" width="121" height="128"/>
-    </resources>
 </document>
