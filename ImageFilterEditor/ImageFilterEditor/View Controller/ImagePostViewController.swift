@@ -1,13 +1,12 @@
 //
 //  ImagePostViewController.swift
-//  LambdaTimeline
+//  ImageFilterEditor
 //
-//  Created by Spencer Curtis on 10/12/18.
-//  Copyright © 2018 Lambda School. All rights reserved.
+//  Created by Wyatt Harrell on 5/4/20.
+//  Copyright © 2020 Wyatt Harrell. All rights reserved.
 //
 
 import UIKit
-import Photos
 import CoreImage
 
 enum FilterTypes: Int {
@@ -18,25 +17,17 @@ enum FilterTypes: Int {
     case motionBlur
 }
 
-class ImagePostViewController: ShiftableViewController {
-    
+class ImagePostViewController: UIViewController {
+
     // MARK: - IBOutlets
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var chooseImageButton: UIButton!
-    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var postButton: UIBarButtonItem!
-    
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var adjustmentSlider: UISlider!
     @IBOutlet weak var secondAdjustmentSlider: UISlider!
     @IBOutlet weak var saveButton: UIButton!
     
     // MARK: - Properties
-    var postController: PostController!
-    var post: Post?
-    var imageData: Data?
     let context = CIContext(options: nil)
     var filterType: FilterTypes = .exposure
     let effectNames: [String] = ["Exposure", "Vibrance", "Vignette", "Sepia Tone", "Motion Blur"]
@@ -68,90 +59,10 @@ class ImagePostViewController: ShiftableViewController {
         adjustmentSlider.isHidden = true
         nameLabel.isHidden = true
         saveButton.isHidden = true
-        setImageViewHeight(with: 1.0)
-        updateSomeViews()
     }
     
-    func updateSomeViews() {
-        
-        guard let imageData = imageData,
-            let image = UIImage(data: imageData) else {
-                title = "New Post"
-                return
-        }
-        
-        title = post?.title
-        
-        setImageViewHeight(with: image.ratio)
-        
-        imageView.image = image
-        
-        chooseImageButton.setTitle("", for: [])
-    }
-    
-    private func presentImagePickerController() {
-        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
-            print("Error: The photo library is not available")
-            return
-        }
-        let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = .photoLibrary
-        imagePicker.delegate = self
-        present(imagePicker, animated: true, completion: nil)
-    }
-    
-    @IBAction func createPost(_ sender: Any) {
-        
-        view.endEditing(true)
-        
-        guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
-            let title = titleTextField.text, title != "" else {
-            presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
-            return
-        }
-        
-        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
-            guard success else {
-                DispatchQueue.main.async {
-                    self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
-                }
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self.navigationController?.popViewController(animated: true)
-            }
-        }
-    }
-    
-    @IBAction func chooseImage(_ sender: Any) {
-        
-        let authorizationStatus = PHPhotoLibrary.authorizationStatus()
-        
-        switch authorizationStatus {
-        case .authorized:
-            presentImagePickerController()
-        case .notDetermined:
-            
-            PHPhotoLibrary.requestAuthorization { (status) in
-                
-                guard status == .authorized else {
-                    NSLog("User did not authorize access to the photo library")
-                    self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
-                    return
-                }
-                
-                self.presentImagePickerController()
-            }
-            
-        case .denied:
-            self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
-        case .restricted:
-            self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
-            
-        @unknown default:
-            print("FatalError")
-        }
+    // MARK: - IBActions
+    @IBAction func selectPhotoButtonTapped(_ sender: Any) {
         presentImagePickerController()
     }
     
@@ -167,17 +78,17 @@ class ImagePostViewController: ShiftableViewController {
         scaledImage = imageView.image
     }
     
-    func setImageViewHeight(with aspectRatio: CGFloat) {
-        
-        imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
-        
-        view.layoutSubviews()
+    // MARK: - Private Methods
+    private func presentImagePickerController() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            print("Error: The photo library is not available")
+            return
+        }
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
     }
-    
-    
-    
-    
-    
     
     private func updateViews(withAdjustment: Bool = false) {
         if let scaledImage = scaledImage {
@@ -383,27 +294,7 @@ class ImagePostViewController: ShiftableViewController {
             secondAdjustmentSlider.minimumValue = -3.141592653589793
         }
     }
-    
-}
 
-extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-
-        chooseImageButton.setTitle("", for: [])
-        
-        picker.dismiss(animated: true, completion: nil)
-        
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        
-        originalImage = image
-        
-        setImageViewHeight(with: image.ratio)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-    }
 }
 
 extension ImagePostViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -428,4 +319,15 @@ extension ImagePostViewController: UICollectionViewDelegate, UICollectionViewDat
     }
 }
 
-
+extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.originalImage] as? UIImage {
+            originalImage = image
+        }
+        
+        picker.dismiss(animated: true)
+    }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
+}
