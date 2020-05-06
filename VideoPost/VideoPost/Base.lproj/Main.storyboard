@@ -40,14 +40,22 @@
                                 </items>
                             </toolbar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I51-Fd-TTG" customClass="VideoPlayerView" customModule="VideoPost" customModuleProvider="target">
-                                <rect key="frame" x="40" y="84" width="334" height="669"/>
+                                <rect key="frame" x="40" y="84" width="334" height="655"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Add a title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s1J-Yv-ip2">
+                                <rect key="frame" x="40" y="759" width="334" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="s1J-Yv-ip2" firstAttribute="leading" secondItem="M7E-KO-3Dl" secondAttribute="leading" constant="40" id="45w-AI-fZz"/>
+                            <constraint firstItem="s1J-Yv-ip2" firstAttribute="top" secondItem="I51-Fd-TTG" secondAttribute="bottom" constant="20" id="6eR-Or-6Nf"/>
                             <constraint firstItem="LZ0-OO-oeS" firstAttribute="bottom" secondItem="M7E-KO-3Dl" secondAttribute="bottom" id="AT7-dj-yBt"/>
-                            <constraint firstItem="LZ0-OO-oeS" firstAttribute="top" secondItem="I51-Fd-TTG" secondAttribute="bottom" constant="60" id="coN-7N-4MS"/>
+                            <constraint firstItem="s1J-Yv-ip2" firstAttribute="centerX" secondItem="5Ph-yZ-hJ7" secondAttribute="centerX" id="Mk5-bS-yXC"/>
+                            <constraint firstItem="LZ0-OO-oeS" firstAttribute="top" secondItem="s1J-Yv-ip2" secondAttribute="bottom" constant="20" id="epB-fJ-NVH"/>
                             <constraint firstItem="I51-Fd-TTG" firstAttribute="leading" secondItem="M7E-KO-3Dl" secondAttribute="leading" constant="40" id="fsl-bl-XoG"/>
                             <constraint firstItem="M7E-KO-3Dl" firstAttribute="trailing" secondItem="I51-Fd-TTG" secondAttribute="trailing" constant="40" id="jVL-VR-sjW"/>
                             <constraint firstItem="LZ0-OO-oeS" firstAttribute="leading" secondItem="M7E-KO-3Dl" secondAttribute="leading" id="paC-Qj-jsv"/>
@@ -59,6 +67,7 @@
                     <connections>
                         <outlet property="playPauseButton" destination="smK-OS-dvc" id="Kzl-y0-4hk"/>
                         <outlet property="playerView" destination="I51-Fd-TTG" id="zd4-bE-LP3"/>
+                        <outlet property="titleTextField" destination="s1J-Yv-ip2" id="E9A-vh-KJS"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="ShowCameraSegue" animates="NO" id="S4A-my-ZCd"/>
                     </connections>
                 </viewController>
