@@ -36,6 +36,10 @@ class ViewRecordingViewController: UIViewController {
         self.hideKeyboardWhenViewTapped()
         updateViews()
         playMovie(url: recordingURL)
+        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self.player.currentItem, queue: .main) { [weak self] _ in
+            self?.player?.seek(to: CMTime.zero)
+            self?.player?.play()
+        }
     }
     
     private func updateViews() {
