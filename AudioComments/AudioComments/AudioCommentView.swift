@@ -10,11 +10,26 @@ import UIKit
 
 class AudioCommentView: UIView {
     
+    
+    /// The configuration of the AudioCommentView's subviews depends on the state it is in.
+    /// It starts in emptyText mode, and transitions to someText when typing begins in the text field.
+    /// If instead of typing, the user taps the record button, it transitions to recording mode.
+    /// Finally, after completion of recording, it transitions to playback mode.
     enum UIMode {
         case emptyText
         case someText
         case recording
         case playback
+    }
+    
+    // MARK: - Private Properties
+    
+    private(set) var uiMode = UIMode.emptyText {
+        didSet {
+            if oldValue != uiMode {
+                updateUI()
+            }
+        }
     }
     
     // MARK: - IBOutlets
@@ -28,17 +43,6 @@ class AudioCommentView: UIView {
     @IBOutlet weak var audioVisualizer: AudioVisualizer!
     @IBOutlet weak var textField: UITextField!
     
-    
-    // MARK: - Private Properties
-    
-    var uiMode = UIMode.emptyText {
-        didSet {
-            if oldValue != uiMode {
-                updateUI()
-            }
-        }
-    }
-    
     //MARK: - Init
     
     override init(frame: CGRect) {
@@ -51,11 +55,6 @@ class AudioCommentView: UIView {
         setup()
     }
     
-    @IBAction func toggleRecording(_ sender: UIButton) {
-        recordButton.isSelected.toggle()
-        self.uiMode = recordButton.isSelected ? .recording : .emptyText
-    }
-    
     //MARK: - Private Methods
     
     private func setup() {
@@ -63,8 +62,8 @@ class AudioCommentView: UIView {
         self.addSubview(contentView)
         contentView.frame = self.bounds
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        
-        
+        textField.delegate = self
+        textField.autocorrectionType = .no
     }
 
     private func updateUI() {
@@ -86,34 +85,41 @@ class AudioCommentView: UIView {
             UIView.hide(textField, audioVisualizer, recordButton)
             UIView.show(playPauseButton, timelineSlider, clearButton, sendButton)
         }
-        
-        UIView.animate(withDuration: 2) {
-            self.layoutIfNeeded()
-        }
     }
     
+    // MARK: - IBActions
+     
+     @IBAction func toggleRecording(_ sender: UIButton) {
+         recordButton.isSelected.toggle()
+         self.uiMode = recordButton.isSelected ? .recording : .playback
+     }
+     
+     @IBAction func cancel(_ sender: Any) {
+         self.uiMode = .emptyText
+     }
+     
+     @IBAction func send(_ sender: Any) {
+         print("Sending the comment")
+     }
+}
+
+extension AudioCommentView: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        self.uiMode = textField.text == "" ? .emptyText : .someText
+    }
 }
 
 extension UIView {
     
     static func hide(_ views: UIView...) {
         for view in views {
-            UIView.animate(withDuration: 0.3, animations: {
-                view.layer.opacity = 0
-            }) { _ in
-                view.isHidden = true
-            }
+            view.isHidden = true
         }
     }
     
     static func show(_ views: UIView...) {
         for view in views {
-            view.layer.opacity = 0
             view.isHidden = false
-            
-            UIView.animate(withDuration: 0.3) {
-                view.layer.opacity = 1
-            }
         }
     }
 }

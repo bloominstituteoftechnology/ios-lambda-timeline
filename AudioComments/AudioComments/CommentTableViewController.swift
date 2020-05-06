@@ -28,7 +28,7 @@ class CommentTableViewController: UITableViewController {
         return 0
     }
 
-    let audioCommentView = AudioCommentView(frame: CGRect(x: 0, y: 0, width: 0, height: 60))
+    lazy var audioCommentView = AudioCommentView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 60))
     
     override var inputAccessoryView: UIView? {
         return audioCommentView
