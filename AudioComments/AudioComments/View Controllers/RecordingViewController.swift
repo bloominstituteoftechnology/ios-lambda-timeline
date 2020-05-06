@@ -12,7 +12,7 @@ import AVFoundation
 class RecordingViewController: UIViewController {
 
     // MARK: - Properites
-    var elements = [(String, String)]()
+    weak var delegate: PlaybackTableViewController!
 
     var recordingURL: URL?
     var audioRecorder: AVAudioRecorder?
@@ -60,8 +60,8 @@ class RecordingViewController: UIViewController {
 
             print("Send: \(recordingURL.absoluteString)")
             print(date)
-            elements.append((date, recordingURL.absoluteString))
-            print("elements.count \(elements.count)")
+            delegate?.elements.append((date, recordingURL.absoluteString))
+            print("elements.count \(delegate?.elements.count)")
         }
 
         navigationController?.popViewController(animated: true)

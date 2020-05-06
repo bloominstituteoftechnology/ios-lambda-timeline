@@ -10,7 +10,7 @@ import UIKit
 
 class PlaybackTableViewController: UITableViewController {
 
-    var elements = [(String, String)]()
+    var elements: [(String, String)] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,7 +64,7 @@ class PlaybackTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
         if segue.identifier == "AddAudioClip" {
             guard let vc = segue.destination as? RecordingViewController else {return}
-            vc.elements = elements
+            vc.delegate = self
         }
     }
 }
