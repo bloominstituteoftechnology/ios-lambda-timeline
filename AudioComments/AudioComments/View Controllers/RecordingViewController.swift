@@ -20,14 +20,7 @@ class RecordingViewController: UIViewController {
     // MARK: - Actions
 
     @IBAction func recordButton(_ sender: Any) {
-        recordingURL = createNewRecordingURL()
-
-        guard let recordingURL = recordingURL else { return }
-
-        let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
-        audioRecorder = try? AVAudioRecorder(url: recordingURL, format: format) // TODO: Error handling do/catch
-        audioRecorder?.delegate = self
-        audioRecorder?.record()
+        requestPermissionOrStartRecording()
     }
 
     @IBAction func stopButton(_ sender: Any) {
@@ -60,8 +53,8 @@ class RecordingViewController: UIViewController {
 
             print("Send: \(recordingURL.absoluteString)")
             print(date)
-            delegate?.elements.append((date, recordingURL.absoluteString))
-            print("elements.count \(delegate?.elements.count)")
+            delegate?.elements.append((date, recordingURL))
+            print("elements.count \(delegate?.elements.count ?? 0)")
         }
 
         navigationController?.popViewController(animated: true)
@@ -84,6 +77,49 @@ class RecordingViewController: UIViewController {
 
         return file
     }
+
+    func requestPermissionOrStartRecording() {
+        switch AVAudioSession.sharedInstance().recordPermission {
+        case .undetermined:
+            AVAudioSession.sharedInstance().requestRecordPermission { granted in
+                guard granted == true else {
+                    print("We need microphone access")
+                    return
+                }
+
+                print("Recording permission has been granted!")
+                // NOTE: Invite the user to tap record again, since we just interrupted them, and they may not have been ready to record
+            }
+        case .denied:
+            print("Microphone access has been blocked.")
+
+            let alertController = UIAlertController(title: "Microphone Access Denied", message: "Please allow this app to access your Microphone.", preferredStyle: .alert)
+
+            alertController.addAction(UIAlertAction(title: "Open Settings", style: .default) { (_) in
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+            })
+
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+
+            present(alertController, animated: true, completion: nil)
+        case .granted:
+            startRecording()
+        @unknown default:
+            break
+        }
+    }
+
+    func startRecording() {
+        recordingURL = createNewRecordingURL()
+
+        guard let recordingURL = recordingURL else { return }
+
+        let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
+        audioRecorder = try? AVAudioRecorder(url: recordingURL, format: format) // TODO: Error handling do/catch
+        audioRecorder?.delegate = self
+        audioRecorder?.record()
+    }
+
 }
 
 extension RecordingViewController: AVAudioRecorderDelegate {

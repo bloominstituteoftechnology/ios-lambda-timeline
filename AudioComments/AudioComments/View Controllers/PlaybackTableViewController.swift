@@ -10,7 +10,7 @@ import UIKit
 
 class PlaybackTableViewController: UITableViewController {
 
-    var elements: [(String, String)] = []
+    var elements: [(String, URL)] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +40,7 @@ class PlaybackTableViewController: UITableViewController {
 
         // Configure the cell...
         cell.textLabel?.text = elements[indexPath.row].0
+        cell.clip = elements[indexPath.row].1
 
         return cell
     }
