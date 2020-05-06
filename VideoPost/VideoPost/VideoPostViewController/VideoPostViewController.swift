@@ -26,6 +26,7 @@ class VideoPostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(videoFinishedPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -77,8 +78,13 @@ class VideoPostViewController: UIViewController {
         shouldShowCamera = false
     }
     
-    private func updateViews() {
+    @objc private func updateViews() {
         playPauseButton.image = isPlaying ? UIImage(systemName: "pause.fill") : UIImage(systemName: "play.fill")
+    }
+    
+    @objc private func videoFinishedPlaying() {
+        player?.seek(to: .zero)
+        updateViews()
     }
     
     // MARK: - IBActions
