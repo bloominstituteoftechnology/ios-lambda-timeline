@@ -21,10 +21,11 @@ class Comment: FirebaseConvertible, Equatable {
     let author: Author
     let timestamp: Date
     
-    init(text: String, author: Author, timestamp: Date = Date()) {
+    init(text: String? = nil, audioURL: URL? = nil, author: Author, timestamp: Date = Date()) {
         self.text = text
         self.author = author
         self.timestamp = timestamp
+        self.audioURL = audioURL
     }
     
     init?(dictionary: [String : Any]) {
