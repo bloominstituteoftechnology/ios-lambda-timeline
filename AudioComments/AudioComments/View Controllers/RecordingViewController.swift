@@ -12,6 +12,7 @@ import AVFoundation
 class RecordingViewController: UIViewController {
 
     // MARK: - Properites
+    var elements = [String: String]()
 
     var recordingURL: URL?
     var audioRecorder: AVAudioRecorder?
@@ -52,7 +53,14 @@ class RecordingViewController: UIViewController {
     @IBAction func sendButton(_ sender: Any) {
 
         if let recordingURL = recordingURL {
-            print("Send: \(recordingURL)")
+            let df = DateFormatter()
+            df.dateStyle = .short
+            df.timeStyle = .short
+            let date = df.string(from: Date())
+
+            print("Send: \(recordingURL.absoluteString)")
+            print(date)
+            elements[date] = recordingURL.absoluteString
         }
 
         navigationController?.popViewController(animated: true)
