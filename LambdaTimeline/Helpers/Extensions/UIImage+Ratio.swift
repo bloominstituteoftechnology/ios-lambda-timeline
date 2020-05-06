@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIImage {
-    var ratio: CGFloat {
-        return size.height / size.width
-    }
+	var ratio: CGFloat {
+		return size.height / size.width
+	}
 }
