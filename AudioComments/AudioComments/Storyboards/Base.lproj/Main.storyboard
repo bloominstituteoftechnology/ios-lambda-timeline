@@ -82,12 +82,18 @@
                                             <rect key="frame" x="337" y="11" width="69" height="22"/>
                                             <state key="normal" title="Button" image="play.fill" catalog="system"/>
                                             <state key="selected" image="pause.fill" catalog="system"/>
+                                            <connections>
+                                                <action selector="playPauseButton:" destination="p75-jt-pdZ" eventType="touchUpInside" id="pT5-LF-HxC"/>
+                                            </connections>
                                         </button>
                                         <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="b59-Wi-A5I">
                                             <rect key="frame" x="227" y="7" width="104" height="31"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="100" id="Hwa-bS-duW"/>
                                             </constraints>
+                                            <connections>
+                                                <action selector="clipSlider:" destination="p75-jt-pdZ" eventType="valueChanged" id="7Wx-2S-7e2"/>
+                                            </connections>
                                         </slider>
                                     </subviews>
                                     <constraints>
@@ -97,6 +103,9 @@
                                         <constraint firstItem="b59-Wi-A5I" firstAttribute="centerY" secondItem="x7B-dK-W8E" secondAttribute="centerY" id="cDs-vo-IxO"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="playPauseButtonOutlet" destination="KUX-DQ-tpM" id="YLc-jg-szI"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
