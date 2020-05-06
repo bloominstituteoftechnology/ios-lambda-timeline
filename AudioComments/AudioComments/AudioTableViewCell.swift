@@ -11,7 +11,11 @@ import UIKit
 class AudioTableViewCell: UITableViewCell {
 
     // MARK: - Properties
-    var recording: Recording? = nil
+    var recording: Recording? = nil {
+        didSet {
+            updateViews()
+        }
+    }
 
     // MARK: - Outlets
     @IBOutlet weak var titleLabel: UILabel!
@@ -40,4 +44,16 @@ class AudioTableViewCell: UITableViewCell {
     @IBAction func deleteButton(_ sender: UIButton) {
     }
 
+    func updateViews() {
+        guard let recording = recording else { return }
+
+        // Handle state of Play/Pause, Record/Stop button.
+        if recording.filename == nil {
+            playPauseRecordStopButtonLabel.setImage(UIImage(systemName: "mic.fill"), for: .normal)
+            playPauseRecordStopButtonLabel.setImage(UIImage(systemName: "stop.fill"), for: .selected)
+        } else {
+            playPauseRecordStopButtonLabel.setImage(UIImage(systemName: "play.fill"), for: .normal)
+            playPauseRecordStopButtonLabel.setImage(UIImage(systemName: "pause.fill"), for: .selected)
+        }
+    }
 }
