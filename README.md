@@ -48,22 +48,12 @@ Integrate your custom recording UI into the Lambda Timeline project.
     <p>
 
     - In the `Comment` object, change the `text`'s type to be an optional string, and create a new `audioURL: URL?` variable as well. Modify the `dictionaryRepresentation` and the `init?(dictionary: ...)` to accomodate the `audioURL` and the now optional `text` string.
-
-    </p>
-    </details>
-
-4. In the `PostController`, add the ability to create a comment with the audio data that the user records, and save it to Firebase Storage, add the comment to its post, then save the post to the Firebase Database.
-
-    <details><summary>Post Controller Suggestions</summary>
-    <p>
-
       - Create a separate function to create a comment with the audio data.
       - You can very easily change the `store` method to instead take in data and a `StorageReference` to accomodate for storing both Post media data and now the audio data as well.
 
     </p>
     </details>
 5. In the `ImagePostDetailViewController`, make sure that the audio is being fetched for the audio comments. You are welcome to fetch the audio for each audio comment however you want.
-
     <details><summary>Audio Fetching Suggestions</summary>
     <p>
 

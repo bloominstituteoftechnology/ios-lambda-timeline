@@ -29,14 +29,13 @@ class PostController {
                     NSLog("Error posting image post: \(error)")
                     completion(false)
                 }
-        
+
                 completion(true)
             }
         }
     }
     
     func addComment(with text: String, to post: inout Post) {
-        
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
         
@@ -44,6 +43,26 @@ class PostController {
         post.comments.append(comment)
         
         savePostToFirebase(post)
+    }
+
+    func addAudioComment(with audioURL: URL, to post: inout Post) {
+
+        guard let currentUser = Auth.auth().currentUser,
+            let author = Author(user: currentUser) else { return }
+
+        let post = post
+        do {
+            let audio = try Data(contentsOf: audioURL)
+            store(mediaData: audio, mediaType: .audio) { audioURL in
+                guard let audioURL = audioURL?.absoluteString else { return }
+
+                let comment = Comment(audioURL: audioURL, author: author)
+                post.comments.append(comment)
+                self.savePostToFirebase(post)
+            }
+        } catch {
+            NSLog("Error with turning audio URL into data: \(error)")
+        }
     }
 
     func observePosts(completion: @escaping (Error?) -> Void) {

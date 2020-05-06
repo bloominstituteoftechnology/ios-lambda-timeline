@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fS9-WB-soh">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="coffee" translatesAutoresizingMaskIntoConstraints="NO" id="9ll-z6-Q23">
+                                <rect key="frame" x="62" y="189" width="290" height="290"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="9ll-z6-Q23" secondAttribute="height" multiplier="1:1" id="Bgg-OY-P7h"/>
+                                </constraints>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="3aZ-bJ-fby">
+                                <rect key="frame" x="62" y="499" width="290" height="331"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Silder A:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GBi-ux-md7">
+                                        <rect key="frame" x="0.0" y="0.0" width="290" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="-0.5" maxValue="4.5" translatesAutoresizingMaskIntoConstraints="NO" id="SWH-on-PVF">
+                                        <rect key="frame" x="-2" y="31.5" width="294" height="31"/>
+                                    </slider>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Silder B:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aex-Xf-HZY">
+                                        <rect key="frame" x="0.0" y="72.5" width="290" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="-0.5" maxValue="4.5" translatesAutoresizingMaskIntoConstraints="NO" id="KDa-bE-Jgl">
+                                        <rect key="frame" x="-2" y="104" width="294" height="31"/>
+                                    </slider>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Silder C:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STS-ey-GPC">
+                                        <rect key="frame" x="0.0" y="145" width="290" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="-0.5" maxValue="4.5" translatesAutoresizingMaskIntoConstraints="NO" id="HiU-Od-9vq">
+                                        <rect key="frame" x="-2" y="176.5" width="294" height="31"/>
+                                    </slider>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Slider D:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2O3-9N-MWM">
+                                        <rect key="frame" x="0.0" y="217.5" width="290" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="zlx-4M-Bct">
+                                        <rect key="frame" x="-2" y="249" width="294" height="31"/>
+                                    </slider>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r0H-Dj-xOm">
+                                        <rect key="frame" x="0.0" y="290" width="290" height="41"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <state key="normal" title="Apply Filter"/>
+                                        <connections>
+                                            <action selector="filterButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="2Ud-AX-HQX"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="hzO-IK-ow8">
+                                <rect key="frame" x="62" y="148" width="290" height="32"/>
+                                <segments>
+                                    <segment title="Zoom"/>
+                                    <segment title="Vignette"/>
+                                    <segment title="Bump"/>
+                                    <segment title="Blur"/>
+                                    <segment title="Motion Blur"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentSectionTapped:" destination="BYZ-38-t0r" eventType="valueChanged" id="TlY-31-Ab2"/>
+                                </connections>
+                            </segmentedControl>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="3aZ-bJ-fby" firstAttribute="top" secondItem="9ll-z6-Q23" secondAttribute="bottom" constant="20" id="5L4-mW-dNO"/>
+                            <constraint firstItem="3aZ-bJ-fby" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="AP4-sv-5un"/>
+                            <constraint firstItem="9ll-z6-Q23" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="DeB-Op-9AK"/>
+                            <constraint firstItem="9ll-z6-Q23" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.7" id="Qgh-my-YaQ"/>
+                            <constraint firstItem="hzO-IK-ow8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="TOF-fN-8bP"/>
+                            <constraint firstItem="hzO-IK-ow8" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="60" id="hE4-si-R3V"/>
+                            <constraint firstItem="hzO-IK-ow8" firstAttribute="width" secondItem="9ll-z6-Q23" secondAttribute="width" id="mTG-i3-zj2"/>
+                            <constraint firstItem="3aZ-bJ-fby" firstAttribute="width" secondItem="9ll-z6-Q23" secondAttribute="width" id="p2M-cE-gmc"/>
+                            <constraint firstItem="9ll-z6-Q23" firstAttribute="top" secondItem="hzO-IK-ow8" secondAttribute="bottom" constant="10" id="rWy-Mt-j4R"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="qZZ-2r-Yhr">
+                        <barButtonItem key="rightBarButtonItem" title="Pick Image" id="unT-5T-ybx">
+                            <connections>
+                                <action selector="pickImageTapped:" destination="BYZ-38-t0r" id="6Ig-Es-GN8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="filterPicker" destination="hzO-IK-ow8" id="IuP-vS-022"/>
+                        <outlet property="imageView" destination="9ll-z6-Q23" id="cGf-7g-lof"/>
+                        <outlet property="sliderA" destination="SWH-on-PVF" id="Y08-Pe-23a"/>
+                        <outlet property="sliderALabel" destination="GBi-ux-md7" id="6o2-un-ZaD"/>
+                        <outlet property="sliderB" destination="KDa-bE-Jgl" id="ZeT-Oq-LFG"/>
+                        <outlet property="sliderBLabel" destination="Aex-Xf-HZY" id="8b9-yn-acQ"/>
+                        <outlet property="sliderC" destination="HiU-Od-9vq" id="sca-K7-Kyg"/>
+                        <outlet property="sliderCLabel" destination="STS-ey-GPC" id="8Ae-5f-Eo4"/>
+                        <outlet property="sliderD" destination="zlx-4M-Bct" id="FCo-AS-mZF"/>
+                        <outlet property="sliderDLabel" destination="2O3-9N-MWM" id="cIa-OZ-Ble"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="960.86956521739137" y="72.991071428571431"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="3uz-3m-jt0">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fS9-WB-soh" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Jyi-GT-x9Q">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="ZWt-Sh-vMh"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NXv-an-xZi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="50.724637681159422" y="72.991071428571431"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="coffee" width="5721" height="3754"/>
+    </resources>
+</document>

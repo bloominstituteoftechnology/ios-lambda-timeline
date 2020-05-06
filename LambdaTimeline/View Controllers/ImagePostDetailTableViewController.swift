@@ -31,33 +31,50 @@ class ImagePostDetailTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     @IBAction func createComment(_ sender: Any) {
-        
-        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
-        
-        var commentTextField: UITextField?
-        
-        alert.addTextField { (textField) in
-            textField.placeholder = "Comment:"
-            commentTextField = textField
-        }
-        
-        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
-            
-            guard let commentText = commentTextField?.text else { return }
-            
-            self.postController.addComment(with: commentText, to: &self.post!)
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+
+        let alert = UIAlertController(title: "New Comment", message: "What kind of comment would you like to leave?", preferredStyle: .actionSheet)
+
+        let textCommentAction = UIAlertAction(title: "Text Comment", style: .default) { (_) in
+            let textCommentAlert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
+
+            var commentTextField: UITextField?
+
+            textCommentAlert.addTextField { (textField) in
+                textField.placeholder = "Comment:"
+                commentTextField = textField
             }
+
+            let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
+
+                guard let commentText = commentTextField?.text else { return }
+
+                self.postController.addComment(with: commentText, to: &self.post!)
+
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+            textCommentAlert.addAction(addCommentAction)
+            textCommentAlert.addAction(cancelAction)
+
+            self.present(textCommentAlert, animated: true, completion: nil)
         }
-        
+
+        let voiceCommentAction = UIAlertAction(title: "Voice Comment", style: .default) { (_) in
+            self.performSegue(withIdentifier: "AudioCommentModalSegue", sender: self)
+        }
+
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(addCommentAction)
+
+        alert.addAction(textCommentAction)
+        alert.addAction(voiceCommentAction)
         alert.addAction(cancelAction)
-        
-        present(alert, animated: true, completion: nil)
+
+        self.present(alert, animated: true, completion: nil)
+
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -65,14 +82,34 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
-        
+
         let comment = post?.comments[indexPath.row + 1]
-        
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author.displayName
-        
-        return cell
+
+        var cell: UITableViewCell!
+        if let text = comment?.text {
+            cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+
+            cell.textLabel?.text = text
+            cell.detailTextLabel?.text = comment?.author.displayName
+
+            return cell
+        } else if let url = comment?.audioURL {
+            guard let customCell = tableView.dequeueReusableCell(withIdentifier: "AudioCell", for: indexPath) as? AudioCommentTableViewCell else { return UITableViewCell()}
+            customCell.authorLabel.text = comment?.author.displayName
+            customCell.audioURL = url
+            cell = customCell
+        }
+            return cell
+
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AudioCommentModalSegue" {
+            if let audioVC = segue.destination as? CreateAudioCommentViewController {
+                audioVC.postController = postController
+                audioVC.post = post
+            }
+        }
     }
     
     var post: Post!
