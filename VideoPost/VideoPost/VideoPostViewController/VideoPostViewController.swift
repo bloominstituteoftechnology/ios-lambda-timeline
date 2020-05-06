@@ -99,6 +99,8 @@ class VideoPostViewController: UIViewController {
     }
     
     @IBAction func sendTapped(_ sender: Any) {
+        guard let player = player, let url = player.assetURL else { return }
+        print("Sending the video with url: \(url)")
     }
 }
 
@@ -111,6 +113,10 @@ extension VideoPostViewController: VideoRecorderDelegate {
 extension AVPlayer {
     var isPlaying: Bool {
         return self.rate > 0
+    }
+    
+    var assetURL: URL? {
+        return (self.currentItem?.asset as? AVURLAsset)?.url
     }
 }
 
