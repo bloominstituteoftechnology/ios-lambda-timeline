@@ -79,7 +79,7 @@ class AudioCommentView: UIView {
         textField.delegate = self
         textField.autocorrectionType = .no
     }
-
+    
     private func updateUI() {
         switch uiMode {
         case .emptyText:
@@ -101,31 +101,45 @@ class AudioCommentView: UIView {
         }
     }
     
+    private func sendTextualMessage(with text: String) {
+        delegate?.sendTextualComment(with: text, for: self)
+        textField.text = ""
+        textField.resignFirstResponder()
+    }
+    
+    
+    
     // MARK: - IBActions
-     
-     @IBAction func toggleRecording(_ sender: UIButton) {
-         recordButton.isSelected.toggle()
-         self.uiMode = recordButton.isSelected ? .recording : .playback
-     }
-     
-     @IBAction func cancel(_ sender: Any) {
-         self.uiMode = .emptyText
-     }
-     
-     @IBAction func send(_ sender: Any) {
-         print("Sending the comment")
+    
+    @IBAction func toggleRecording(_ sender: UIButton) {
+        recordButton.isSelected.toggle()
+        self.uiMode = recordButton.isSelected ? .recording : .playback
+    }
+    
+    @IBAction func cancel(_ sender: Any) {
+        self.uiMode = .emptyText
+    }
+    
+    @IBAction func send(_ sender: Any) {
+        print("Sending the comment")
         if uiMode == .playback {
             delegate?.sendAudioComment(for: self)
         } else if uiMode == .someText {
             guard let text = textField.text else { return }
-            delegate?.sendTextualComment(with: text, for: self)
+            sendTextualMessage(with: text)
         }
-     }
+    }
 }
 
 extension AudioCommentView: UITextFieldDelegate {
     func textFieldDidChangeSelection(_ textField: UITextField) {
         self.uiMode = textField.text == "" ? .emptyText : .someText
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        guard let text = textField.text else { return false }
+        sendTextualMessage(with: text)
+        return true
     }
 }
 
