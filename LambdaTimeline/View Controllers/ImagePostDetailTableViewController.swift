@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import FirebaseStorage
 
 class ImagePostDetailTableViewController: UITableViewController {
     
@@ -157,7 +158,6 @@ class ImagePostDetailTableViewController: UITableViewController {
         didSet {
             // Using a didSet allows us to make sure we don't forget to set the delegate
             audioPlayer?.delegate = self
-            audioPlayer?.isMeteringEnabled = true
         }
     }
     
@@ -167,10 +167,46 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     func loadAudio(audioURL: URL) {
-        audioPlayer = try? AVAudioPlayer(contentsOf: audioURL)
-        print("loaded")
+        let httpsReference = Storage.storage().reference(forURL: audioURL.absoluteString)
+        let localURL = createNewRecordingURL()
+        let downloadTask = httpsReference.write(toFile: localURL) { url, error in
+            if let error = error {
+                NSLog("Error, cannot load audio file: \(error)")
+                return
+            }
+            
+            guard let url = url else {
+                NSLog("Error, no url for audio file")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                do {
+                    self.audioPlayer = try AVAudioPlayer(contentsOf: url)
+
+                    self.play()
+                    print("Audio player created")
+                } catch {
+                    NSLog("Error, cannot create audio player \(error)")
+                }
+            }
+        }
+        
+        downloadTask.observe(.resume) { snapshot in
+            print("")
+        }
     }
     
+    func createNewRecordingURL() -> URL {
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
+        let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
+        
+        print("recording URL: \(file)")
+        
+        return file
+    }
     
     // Fixes bug for iPhone
     func prepareAudioSession() throws {
@@ -178,7 +214,6 @@ class ImagePostDetailTableViewController: UITableViewController {
         try session.setCategory(.playAndRecord, options: [.defaultToSpeaker])
         try session.setActive(true, options: []) // can fail if on a phone call, for instance
     }
-    
     
     func play() {
         audioPlayer?.play()
@@ -192,12 +227,8 @@ class ImagePostDetailTableViewController: UITableViewController {
         updatePlayer()
     }
     
-    
-    
     private func updatePlayer() {
     }
-    
-    
 }
 
 extension ImagePostDetailTableViewController: AudioURLDelegate {
@@ -210,12 +241,6 @@ extension ImagePostDetailTableViewController: AudioURLDelegate {
 extension ImagePostDetailTableViewController: PlayCommentAudioDelegate {
     func playAudio(for url: URL) {
         loadAudio(audioURL: url)
-        
-        if isPlaying {
-            pause()
-        } else {
-            play()
-        }
     }
 }
 
