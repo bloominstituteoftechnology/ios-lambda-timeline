@@ -137,7 +137,7 @@ extension AudioCommentView: UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        guard let text = textField.text else { return false }
+        guard let text = textField.text, text != "" else { return false }
         sendTextualMessage(with: text)
         return true
     }
