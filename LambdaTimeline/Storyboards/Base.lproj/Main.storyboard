@@ -329,6 +329,35 @@
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AudioCell" id="mhP-96-YVA" customClass="AudioCommentTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="188.5" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mhP-96-YVA" id="mL1-qf-9R3">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tt1-oL-ZP7">
+                                            <rect key="frame" x="30" y="11.5" width="51.5" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fyh-6e-Vpo">
+                                            <rect key="frame" x="389" y="11" width="15" height="22"/>
+                                            <state key="normal" image="play.fill" catalog="system"/>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="tt1-oL-ZP7" firstAttribute="centerY" secondItem="mL1-qf-9R3" secondAttribute="centerY" id="HR2-G2-4Uy"/>
+                                        <constraint firstItem="fyh-6e-Vpo" firstAttribute="centerY" secondItem="mL1-qf-9R3" secondAttribute="centerY" id="Xxi-wN-Sfl"/>
+                                        <constraint firstItem="tt1-oL-ZP7" firstAttribute="leading" secondItem="mL1-qf-9R3" secondAttribute="leadingMargin" constant="10" id="dgg-KV-GHg"/>
+                                        <constraint firstAttribute="trailing" secondItem="fyh-6e-Vpo" secondAttribute="trailing" constant="10" id="tIy-eN-mlB"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="authorLabel" destination="tt1-oL-ZP7" id="Kbu-kq-QoZ"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="OyM-8q-Icp" id="hEW-Hv-MJ8"/>
@@ -366,19 +395,19 @@
                                 <rect key="frame" x="20" y="406" width="374" height="30"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="253" horizontalCompressionResistancePriority="751" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3P-Ux-T47">
-                                        <rect key="frame" x="0.0" y="0.0" width="52.5" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="48.5" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="vLE-FX-2sr">
-                                        <rect key="frame" x="50.5" y="0.0" width="263" height="31"/>
+                                        <rect key="frame" x="46.5" y="0.0" width="271" height="31"/>
                                         <connections>
                                             <action selector="updateCurrentTime:" destination="CPE-6a-NOE" eventType="valueChanged" id="4dB-df-Cto"/>
                                         </connections>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="253" horizontalCompressionResistancePriority="753" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d65-wW-E4g">
-                                        <rect key="frame" x="311.5" y="0.0" width="62.5" height="30"/>
+                                        <rect key="frame" x="315.5" y="0.0" width="58.5" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
