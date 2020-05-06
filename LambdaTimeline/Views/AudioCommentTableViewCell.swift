@@ -12,7 +12,8 @@ class AudioCommentTableViewCell: UITableViewCell {
 
     // MARK: - Outlets
     @IBOutlet weak var authorLabel: UILabel!
-
+    @IBOutlet weak var playButton: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
