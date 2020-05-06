@@ -56,6 +56,15 @@ class AudioClipTableViewCell: UITableViewCell {
         updateViews()
     }
 
+    @IBAction func scrubber(_ sender: UISlider) {
+        if isPlaying {
+            pause() // Don't want to be playing and scrubbing at the same time.
+        }
+
+        audioPlayer?.currentTime = TimeInterval(clipSlider.value)
+        updateViews()
+    }
+
     // MARK: - Outlets
     @IBOutlet weak var playPauseButtonOutlet: UIButton!
     @IBOutlet weak var clipSlider: UISlider!
