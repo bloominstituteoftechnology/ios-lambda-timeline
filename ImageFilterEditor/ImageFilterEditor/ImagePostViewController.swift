@@ -13,6 +13,10 @@ class ImagePostViewController: UIViewController, UIImagePickerControllerDelegate
     //MARK: - IBOutlets
     @IBOutlet weak var imageView: UIImageView!
     
+    //MARK: Properties
+    var context: CIContext = CIContext(options: nil)
+    var appliedFilter: CIFilter!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +48,63 @@ class ImagePostViewController: UIViewController, UIImagePickerControllerDelegate
         imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
         imagePicker.delegate = self
         present(imagePicker, animated: true, completion: nil)
+    }
+
+    
+    @IBAction func actionFilter(sender: AnyObject) {
+        let actionSheet = UIAlertController(title: "Choose filter", message: nil, preferredStyle: .actionSheet)
+        
+        actionSheet.addAction(UIAlertAction(title: "Vignette", style: .default, handler: handleFilterSelection)) // Vignette
+        actionSheet.addAction(UIAlertAction(title: "Film Noir", style: .default, handler: handleFilterSelection)) // Noir
+        actionSheet.addAction(UIAlertAction(title: "Black and White", style: .default, handler: handleFilterSelection)) // Black-and-white
+        actionSheet.addAction(UIAlertAction(title: "Sepia", style: .default, handler: handleFilterSelection))  //Sepia
+        actionSheet.addAction(UIAlertAction(title: "Warm Colors", style: .default, handler: handleFilterSelection)) // Warm Summer
+        
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(actionSheet, animated: true, completion: nil)
+    }
+    
+    //MARK: -  Helper functions
+    func handleFilterSelection(action: UIAlertAction!) {
+        
+        var actionTitle = action.title
+        
+        switch actionTitle {
+        case "Vignette":
+            actionTitle = "CIVignette"
+        case "Film Noir":
+            actionTitle = "CIPhotoEffectNoir"
+        case "Black and White":
+            actionTitle = "CIPhotoEffectTonal"
+        case "Sepia":
+            actionTitle = "CISepiaTone"
+        case "Warm Colors":
+            actionTitle = "CIPhotoEffectTransfer"
+        default:
+            print("Error")
+        }
+        
+        appliedFilter = CIFilter(name: actionTitle!)
+        
+        let beginImage = CIImage(image: imageView.image!)
+        appliedFilter.setValue(beginImage, forKey: kCIInputImageKey)
+        
+        applyFilter()
+    }
+    
+    func applyFilter() {
+        let inputKeys = appliedFilter.inputKeys
+        let intensity = 0.5
+        
+        if inputKeys.contains(kCIInputIntensityKey) { appliedFilter.setValue(intensity, forKey: kCIInputIntensityKey) }
+        if inputKeys.contains(kCIInputRadiusKey) { appliedFilter.setValue(intensity * 200, forKey: kCIInputRadiusKey) }
+        if inputKeys.contains(kCIInputScaleKey) { appliedFilter.setValue(intensity * 10, forKey: kCIInputScaleKey) }
+        if inputKeys.contains(kCIInputCenterKey) { appliedFilter.setValue(CIVector(x: imageView.image!.size.width / 2, y: imageView.image!.size.height / 2), forKey: kCIInputCenterKey) }
+        
+        guard let cgImage = context.createCGImage(appliedFilter.outputImage!, from: appliedFilter.outputImage!.extent) else { return }
+        let filteredImage = UIImage(cgImage: cgImage)
+        
+        self.imageView.image = filteredImage
     }
     
     // MARK: - UIImagePickerControllerDelegate Methods
