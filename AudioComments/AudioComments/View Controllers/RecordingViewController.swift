@@ -12,7 +12,7 @@ import AVFoundation
 class RecordingViewController: UIViewController {
 
     // MARK: - Properites
-    var elements = [String: String]()
+    var elements = [(String, String)]()
 
     var recordingURL: URL?
     var audioRecorder: AVAudioRecorder?
@@ -60,7 +60,8 @@ class RecordingViewController: UIViewController {
 
             print("Send: \(recordingURL.absoluteString)")
             print(date)
-            elements[date] = recordingURL.absoluteString
+            elements.append((date, recordingURL.absoluteString))
+            print("elements.count \(elements.count)")
         }
 
         navigationController?.popViewController(animated: true)

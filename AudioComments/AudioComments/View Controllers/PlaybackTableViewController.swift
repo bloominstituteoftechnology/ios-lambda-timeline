@@ -10,7 +10,7 @@ import UIKit
 
 class PlaybackTableViewController: UITableViewController {
 
-    var elements = [String: String]()
+    var elements = [(String, String)]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,21 +22,27 @@ class PlaybackTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        tableView.reloadData()
+    }
+
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("elements.count \(elements.count)")
         return elements.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "AudioClipCell", for: indexPath) as? AudioClipTableViewCell else { return AudioClipTableViewCell() }
 
         // Configure the cell...
+        cell.textLabel?.text = elements[indexPath.row].0
 
         return cell
     }
-    */
 
     /*
     // Override to support editing the table view.
