@@ -8,10 +8,18 @@
 
 import UIKit
 
+class RecordingTableViewCell: UITableViewCell {
+    
+    @IBOutlet weak var recordingNameLabel: UILabel!
+    @IBOutlet weak var timeRecordedLabel: UILabel!
+    @IBOutlet weak var recordingDurationLabel: UILabel!
+    
+}
+
 struct CellData {
     var opened = Bool()
     var title = String()
-    var sectionData = [String]()
+    var sectionData = [UIView]()
 }
 
 class MessageViewController: UIViewController {
@@ -26,9 +34,9 @@ class MessageViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        tableViewData = [CellData(opened: false, title: "Test Cell", sectionData: ["", "Recorded: Mar 4", "Sender: ", "Reply: "]),
-                         CellData(opened: false, title: "Test Cell2", sectionData: ["", "Recorded: Apr 9", "Sender: ", "Reply: "]),
-                         CellData(opened: false, title: "Test Cell3", sectionData: ["", "Recorded: May 3", "Sender: ", "Reply: "])
+        tableViewData = [CellData(opened: false, title: "Test Cell", sectionData: [UISlider(), UIButton()])
+//                         CellData(opened: false, title: "Test Cell2", sectionData: ["", "Recorded: Apr 9", "Sender: ", "Reply: "]),
+//                         CellData(opened: false, title: "Test Cell3", sectionData: ["", "Recorded: May 3", "Sender: ", "Reply: "])
         ]
     }
 }
@@ -46,11 +54,11 @@ extension MessageViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "customCell") else { return UITableViewCell()}
-            cell.textLabel?.text = tableViewData[indexPath.section].title
+//            cell.textLabel?.text = tableViewData[indexPath.section].title
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "customCell") else { return UITableViewCell()}
-            cell.textLabel?.text = tableViewData[indexPath.section].sectionData[indexPath.row]
+//            cell.textLabel?.text = tableViewData[indexPath.section].sectionData[indexPath.row]
             return cell
         }
     }
