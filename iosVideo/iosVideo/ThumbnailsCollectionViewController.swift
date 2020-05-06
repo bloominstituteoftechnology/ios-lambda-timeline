@@ -11,6 +11,10 @@ import AVFoundation
 
 class ThumbnailsCollectionViewController: UICollectionViewController {
 
+    // Confusing name I know I'm sorry :( but this is a custom class
+    let files = FilesController()
+    var urls: [URL] = []
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,6 +25,11 @@ class ThumbnailsCollectionViewController: UICollectionViewController {
 //        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        populateThumbnails()
     }
 
     /*
@@ -37,20 +46,19 @@ class ThumbnailsCollectionViewController: UICollectionViewController {
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 0
+        return urls.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoThumbnailIdentifier", for: indexPath)
     
         // Configure the cell
-    
         return cell
     }
 
@@ -86,6 +94,12 @@ class ThumbnailsCollectionViewController: UICollectionViewController {
     */
 
     // MARK: - Methods
+
+    private func populateThumbnails() {
+        urls = files.fetchAllVideos()
+    }
+
+
     // MARK: - Video Camera Permission
     private func requestPermissionAndShowCamera() {
         let status = AVCaptureDevice.authorizationStatus(for: .video)
