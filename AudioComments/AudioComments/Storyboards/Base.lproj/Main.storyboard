@@ -71,12 +71,31 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="p75-jt-pdZ">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="p75-jt-pdZ" customClass="AudioClipTableViewCell" customModule="AudioComments" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="p75-jt-pdZ" id="x7B-dK-W8E">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KUX-DQ-tpM">
+                                            <rect key="frame" x="337" y="11" width="69" height="22"/>
+                                            <state key="normal" title="Button" image="play.fill" catalog="system"/>
+                                            <state key="selected" image="pause.fill" catalog="system"/>
+                                        </button>
+                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="b59-Wi-A5I">
+                                            <rect key="frame" x="227" y="7" width="104" height="31"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="100" id="Hwa-bS-duW"/>
+                                            </constraints>
+                                        </slider>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="KUX-DQ-tpM" firstAttribute="centerY" secondItem="x7B-dK-W8E" secondAttribute="centerY" id="Bt9-32-ISK"/>
+                                        <constraint firstItem="KUX-DQ-tpM" firstAttribute="leading" secondItem="b59-Wi-A5I" secondAttribute="trailing" constant="8" id="IgY-Qd-Ni0"/>
+                                        <constraint firstAttribute="trailing" secondItem="KUX-DQ-tpM" secondAttribute="trailing" constant="8" id="Sn8-bE-flQ"/>
+                                        <constraint firstItem="b59-Wi-A5I" firstAttribute="centerY" secondItem="x7B-dK-W8E" secondAttribute="centerY" id="cDs-vo-IxO"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -116,4 +135,8 @@
             <point key="canvasLocation" x="15.942028985507248" y="-7.3660714285714279"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="pause.fill" catalog="system" width="116" height="128"/>
+        <image name="play.fill" catalog="system" width="116" height="128"/>
+    </resources>
 </document>
