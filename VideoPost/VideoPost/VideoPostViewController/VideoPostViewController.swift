@@ -14,7 +14,7 @@ class VideoPostViewController: UIViewController {
     // MARK: - Private Properties
     
     private var shouldShowCamera = true
-    private var player: AVPlayer?
+    private var player: AVPlayer? { didSet { playerView.player = player }}
     private var isPlaying: Bool { player?.isPlaying ?? false }
     
     // MARK: - IBOutlets
@@ -94,6 +94,7 @@ class VideoPostViewController: UIViewController {
     }
     
     @IBAction func clearTapped(_ sender: Any) {
+        player = nil
         showCamera()
     }
     
@@ -104,7 +105,6 @@ class VideoPostViewController: UIViewController {
 extension VideoPostViewController: VideoRecorderDelegate {
     func didRecordVideo(to url: URL) {
         player = AVPlayer(url: url)
-        playerView.player = player
     }
 }
 
