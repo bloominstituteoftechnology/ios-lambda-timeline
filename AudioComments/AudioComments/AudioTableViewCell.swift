@@ -17,6 +17,9 @@ class AudioTableViewCell: UITableViewCell {
         }
     }
 
+    var recordingIndex = 0
+    var crudDelegate: CrudDelegate?
+
     // MARK: - Outlets
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
@@ -42,10 +45,13 @@ class AudioTableViewCell: UITableViewCell {
     }
 
     @IBAction func deleteButton(_ sender: UIButton) {
+        crudDelegate?.deleteRecording(index: recordingIndex)
     }
 
     func updateViews() {
         guard let recording = recording else { return }
+
+        titleLabel.text = recording.title
 
         // Handle state of Play/Pause, Record/Stop button.
         if recording.filename == nil {
@@ -57,3 +63,4 @@ class AudioTableViewCell: UITableViewCell {
         }
     }
 }
+

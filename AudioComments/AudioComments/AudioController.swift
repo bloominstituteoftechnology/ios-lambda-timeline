@@ -14,9 +14,21 @@ class AudioController {
 
     // MARK: - CRUD
 
-    // MARK: Create
+    // Create
+
     func createRecording(title: String) {
         let newRecording = Recording(title: title, date: Date())
         recordings.append(newRecording)
+    }
+
+    // Read
+
+    // Update
+
+    // Delete
+    func deleteRecording(index: Int) {
+        recordings.remove(at: index)
+
+        // FIXME: Delete URL off disk
     }
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AudioTableViewController: UITableViewController {
+class AudioTableViewController: UITableViewController, CrudDelegate {
 
     // MARK: - Properities
     let audioController = AudioController()
@@ -51,7 +51,9 @@ class AudioTableViewController: UITableViewController {
 
         // Configure the cell...
         cell.recording = audioController.recordings[indexPath.row]
-
+        cell.recordingIndex = indexPath.row
+        cell.crudDelegate = self
+        
         return cell
     }
 
@@ -66,4 +68,13 @@ class AudioTableViewController: UITableViewController {
         }    
     }
     */
+
+    func deleteRecording(index: Int) {
+        audioController.deleteRecording(index: index)
+        updateViews()
+    }
+}
+
+protocol CrudDelegate {
+    func deleteRecording(index: Int)
 }
