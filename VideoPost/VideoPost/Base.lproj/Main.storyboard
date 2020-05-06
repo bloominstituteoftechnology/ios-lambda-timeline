@@ -24,11 +24,6 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="w5r-gp-35Y"/>
-                                    <barButtonItem systemItem="rewind" id="udR-1K-Ies">
-                                        <connections>
-                                            <action selector="rewindTapped:" destination="rkV-m4-9vK" id="Li7-fm-sFm"/>
-                                        </connections>
-                                    </barButtonItem>
                                     <barButtonItem width="10" style="plain" systemItem="fixedSpace" id="oiA-Yk-KJN"/>
                                     <barButtonItem image="play.fill" catalog="system" id="smK-OS-dvc">
                                         <connections>
@@ -36,11 +31,6 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem width="10" style="plain" systemItem="fixedSpace" id="zKo-Ox-E0e"/>
-                                    <barButtonItem systemItem="fastForward" id="Rp3-LO-Bvn">
-                                        <connections>
-                                            <action selector="fastForwardTapped:" destination="rkV-m4-9vK" id="PcG-ej-dI8"/>
-                                        </connections>
-                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="cvj-0f-gxD"/>
                                     <barButtonItem image="paperplane.fill" catalog="system" id="PD8-HS-uMw">
                                         <connections>
@@ -67,6 +57,7 @@
                         <viewLayoutGuide key="safeArea" id="M7E-KO-3Dl"/>
                     </view>
                     <connections>
+                        <outlet property="playPauseButton" destination="smK-OS-dvc" id="Kzl-y0-4hk"/>
                         <outlet property="playerView" destination="I51-Fd-TTG" id="zd4-bE-LP3"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="ShowCameraSegue" animates="NO" id="S4A-my-ZCd"/>
                     </connections>

@@ -15,10 +15,12 @@ class VideoPostViewController: UIViewController {
     
     private var shouldShowCamera = true
     private var player: AVPlayer?
+    private var isPlaying: Bool { player?.isPlaying ?? false }
     
-    
+    // MARK: - IBOutlets
     
     @IBOutlet weak var playerView: VideoPlayerView!
+    @IBOutlet weak var playPauseButton: UIBarButtonItem!
     
     // MARK: - View Lifecycle
     
@@ -31,6 +33,7 @@ class VideoPostViewController: UIViewController {
         if shouldShowCamera {
             requestPermissionAndShowCamera()
         }
+        updateViews()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -74,25 +77,24 @@ class VideoPostViewController: UIViewController {
         shouldShowCamera = false
     }
     
+    private func updateViews() {
+        playPauseButton.image = isPlaying ? UIImage(systemName: "pause.fill") : UIImage(systemName: "play.fill")
+    }
+    
     // MARK: - IBActions
+    
     @IBAction func playPauseTapped(_ sender: UIBarButtonItem) {
         guard let player = player else { return }
         if player.isPlaying {
             player.pause()
-            sender.image = UIImage(systemName: "play.fill")
         } else {
             player.play()
-            sender.image = UIImage(systemName: "pause.fill")
         }
-    }
-    
-    @IBAction func rewindTapped(_ sender: Any) {
-    }
-    
-    @IBAction func fastForwardTapped(_ sender: Any) {
+        updateViews()
     }
     
     @IBAction func clearTapped(_ sender: Any) {
+        showCamera()
     }
     
     @IBAction func sendTapped(_ sender: Any) {
