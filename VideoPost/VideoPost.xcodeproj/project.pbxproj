@@ -14,7 +14,7 @@
 		04413B602463522700B61847 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04413B5F2463522700B61847 /* Assets.xcassets */; };
 		04413B632463522700B61847 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04413B612463522700B61847 /* LaunchScreen.storyboard */; };
 		04413B6C2463550000B61847 /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04413B6B2463550000B61847 /* CameraPreviewView.swift */; };
-		04413B6E2463556300B61847 /* RecordVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04413B6D2463556300B61847 /* RecordVideoViewController.swift */; };
+		04413B6E2463556300B61847 /* VideoRecorderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04413B6D2463556300B61847 /* VideoRecorderViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +27,7 @@
 		04413B622463522700B61847 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		04413B642463522700B61847 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		04413B6B2463550000B61847 /* CameraPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
-		04413B6D2463556300B61847 /* RecordVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordVideoViewController.swift; sourceTree = "<group>"; };
+		04413B6D2463556300B61847 /* VideoRecorderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecorderViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,7 +45,6 @@
 			isa = PBXGroup;
 			children = (
 				04413B552463522400B61847 /* VideoPost */,
-				04413B6A246352EC00B61847 /* Resources */,
 				04413B542463522400B61847 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -65,6 +64,7 @@
 				04413B5C2463522400B61847 /* Main.storyboard */,
 				04413B6F2463580000B61847 /* RecordVideoViewController */,
 				04413B5F2463522700B61847 /* Assets.xcassets */,
+				04413B6A246352EC00B61847 /* Resources */,
 			);
 			path = VideoPost;
 			sourceTree = "<group>";
@@ -83,7 +83,7 @@
 		04413B6F2463580000B61847 /* RecordVideoViewController */ = {
 			isa = PBXGroup;
 			children = (
-				04413B6D2463556300B61847 /* RecordVideoViewController.swift */,
+				04413B6D2463556300B61847 /* VideoRecorderViewController.swift */,
 				04413B6B2463550000B61847 /* CameraPreviewView.swift */,
 			);
 			path = RecordVideoViewController;
@@ -161,7 +161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04413B6C2463550000B61847 /* CameraPreviewView.swift in Sources */,
-				04413B6E2463556300B61847 /* RecordVideoViewController.swift in Sources */,
+				04413B6E2463556300B61847 /* VideoRecorderViewController.swift in Sources */,
 				04413B5B2463522400B61847 /* VideoPostViewController.swift in Sources */,
 				04413B572463522400B61847 /* AppDelegate.swift in Sources */,
 				04413B592463522400B61847 /* SceneDelegate.swift in Sources */,
@@ -311,11 +311,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 94ZMA2MYR4;
 				INFOPLIST_FILE = VideoPost/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.swiftstudent.VideoPost;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swiftstudent.astronomy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -329,11 +330,12 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 94ZMA2MYR4;
 				INFOPLIST_FILE = VideoPost/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.swiftstudent.VideoPost;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swiftstudent.astronomy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
