@@ -124,6 +124,8 @@ class AudioCommentView: UIView {
         print("Sending the comment")
         if uiMode == .playback {
             delegate?.sendAudioComment(for: self)
+            uiMode = .emptyText
+            textField.resignFirstResponder()
         } else if uiMode == .someText {
             guard let text = textField.text else { return }
             sendTextualMessage(with: text)
