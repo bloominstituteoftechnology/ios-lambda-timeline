@@ -13,6 +13,8 @@ class CreateAudioCommentViewController: UIViewController {
 
     // MARK: - Properties
 
+    var postController: PostController!
+
     var audioPlayer: AVAudioPlayer? {
         didSet {
             audioPlayer?.delegate = self

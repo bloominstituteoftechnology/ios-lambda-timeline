@@ -50,10 +50,19 @@ class PostController {
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
 
-        let comment = Comment(audioURL: audioURL, author: author)
-        post.comments.append(comment)
+        let post = post
+        do {
+            let audio = try Data(contentsOf: audioURL)
+            store(mediaData: audio, mediaType: .audio) { audioURL in
+                guard let audioURL = audioURL else { return }
 
-        savePostToFirebase(post)
+                let comment = Comment(audioURL: audioURL, author: author)
+                post.comments.append(comment)
+                self.savePostToFirebase(post)
+            }
+        } catch {
+            NSLog("Error with turning audio URL into data: \(error)")
+        }
     }
 
     func observePosts(completion: @escaping (Error?) -> Void) {

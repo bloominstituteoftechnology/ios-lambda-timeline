@@ -29,15 +29,17 @@ class Comment: FirebaseConvertible, Equatable {
     }
     
     init?(dictionary: [String : Any]) {
-        guard let text = dictionary[Comment.textKey] as? String,
-            let authorDictionary = dictionary[Comment.author] as? [String: Any],
+        let audioURL = dictionary[Comment.audioURLKey] as? URL
+        let text = dictionary[Comment.textKey] as? String
+
+        guard let authorDictionary = dictionary[Comment.author] as? [String: Any],
             let author = Author(dictionary: authorDictionary),
-            let timestampTimeInterval = dictionary[Comment.timestampKey] as? TimeInterval,
-            let audioURL = dictionary[Comment.audioURLKey] else { return nil }
+            let timestampTimeInterval = dictionary[Comment.timestampKey] as? TimeInterval else { return nil }
         
         self.text = text
         self.author = author
         self.timestamp = Date(timeIntervalSince1970: timestampTimeInterval)
+        self.audioURL = audioURL
     }
     
     var dictionaryRepresentation: [String: Any] {
