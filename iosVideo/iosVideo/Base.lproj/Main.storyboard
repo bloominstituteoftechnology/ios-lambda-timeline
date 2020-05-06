@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tif-5a-sY2">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ACE-SW-Y9N">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="egl-Mg-879">
+                                        <rect key="frame" x="176" y="688" width="62" height="62"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="egl-Mg-879" secondAttribute="height" multiplier="1:1" id="Zh9-4f-xyS"/>
+                                        </constraints>
+                                        <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="circle.fill" catalog="system">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="black"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="egl-Mg-879" firstAttribute="centerX" secondItem="ACE-SW-Y9N" secondAttribute="centerX" id="FLn-sJ-gsw"/>
+                                    <constraint firstItem="egl-Mg-879" firstAttribute="width" secondItem="ACE-SW-Y9N" secondAttribute="width" multiplier="0.15" id="eZ9-qb-H2X"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="egl-Mg-879" secondAttribute="bottom" constant="112" id="D1Q-f6-rfk"/>
+                            <constraint firstItem="ACE-SW-Y9N" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="JoL-UB-isf"/>
+                            <constraint firstItem="ACE-SW-Y9N" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="dFl-eZ-Ati"/>
+                            <constraint firstItem="ACE-SW-Y9N" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" id="z2z-2i-dXl"/>
+                            <constraint firstItem="ACE-SW-Y9N" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="z6N-Y1-fVq"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="QdA-6D-0MG"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1051" y="139"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ion-HZ-lxJ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="tif-5a-sY2" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="hQ4-Ea-M5b">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="4Zt-GF-av6"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GH3-Ea-m5t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="138.61607142857142"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="circle.fill" catalog="system" width="128" height="121"/>
+    </resources>
+</document>
