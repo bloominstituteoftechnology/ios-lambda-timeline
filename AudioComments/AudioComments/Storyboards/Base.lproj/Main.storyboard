@@ -3,10 +3,11 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Root View Controller-->
+        <!--meh-->
         <scene sceneID="wzF-lo-jt4">
             <objects>
                 <tableViewController id="Yzz-3e-HUB" customClass="AudioTableViewController" customModule="AudioComments" customModuleProvider="target" sceneMemberID="viewController">
@@ -23,7 +24,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="R2G-bg-NeN">
-                                            <rect key="frame" x="20" y="11" width="458" height="101"/>
+                                            <rect key="frame" x="20" y="11" width="474" height="101"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RCY-d0-mYv">
                                                     <rect key="frame" x="0.0" y="0.0" width="35.5" height="20.5"/>
@@ -49,7 +50,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Vh8-37-69g">
-                                                    <rect key="frame" x="-2" y="35" width="462" height="31"/>
+                                                    <rect key="frame" x="-2" y="35" width="478" height="31"/>
                                                     <connections>
                                                         <action selector="audioSlider:" destination="vXw-YY-qhK" eventType="valueChanged" id="aPr-Ha-cbJ"/>
                                                     </connections>
@@ -131,17 +132,67 @@
                             <outlet property="delegate" destination="Yzz-3e-HUB" id="pJg-KN-cPx"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="m0K-Jy-of9">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="DMm-ty-uuc">
-                            <connections>
-                                <action selector="addButton:" destination="Yzz-3e-HUB" id="5ov-p3-XI3"/>
-                            </connections>
-                        </barButtonItem>
+                    <navigationItem key="navigationItem" title="meh" id="m0K-Jy-of9">
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="DMm-ty-uuc">
+                                <connections>
+                                    <action selector="addButton:" destination="Yzz-3e-HUB" id="5ov-p3-XI3"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="compose" id="O45-dI-Odn">
+                                <connections>
+                                    <segue destination="xKH-xv-n23" kind="show" id="zwB-qJ-yH8"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fak-yM-izR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="86.956521739130437" y="-7.3660714285714279"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="QnK-5B-jKJ">
+            <objects>
+                <viewController id="xKH-xv-n23" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8TO-47-bgI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="45" translatesAutoresizingMaskIntoConstraints="NO" id="wuC-3x-kak">
+                                <rect key="frame" x="57" y="433" width="300" height="30"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eho-4S-Tge">
+                                        <rect key="frame" x="0.0" y="0.0" width="49" height="30"/>
+                                        <state key="normal" title="Record"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DYQ-zq-99g">
+                                        <rect key="frame" x="94" y="0.0" width="32" height="30"/>
+                                        <state key="normal" title="Stop"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z3Z-d7-dwb">
+                                        <rect key="frame" x="171" y="0.0" width="48" height="30"/>
+                                        <state key="normal" title="Cancel"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZOg-VN-2SV">
+                                        <rect key="frame" x="264" y="0.0" width="36" height="30"/>
+                                        <state key="normal" title="Send"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="wuC-3x-kak" firstAttribute="centerX" secondItem="8TO-47-bgI" secondAttribute="centerX" id="0zl-g2-5Ne"/>
+                            <constraint firstItem="wuC-3x-kak" firstAttribute="centerY" secondItem="8TO-47-bgI" secondAttribute="centerY" id="gIT-Ec-Tca"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="FPp-d3-LpQ"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Khz-ei-zmA"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5JH-EO-xuj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="852" y="-7"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="E04-4n-Sho">
