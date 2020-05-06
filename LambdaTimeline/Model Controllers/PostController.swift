@@ -51,10 +51,21 @@ class PostController {
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
         
-        let comment = Comment(audioURL: url, author: author)
-        post.comments.append(comment)
+        let post = post
         
-        savePostToFirebase(post)
+        do {
+            let audio = try Data(contentsOf: url)
+            store(mediaData: audio, mediaType: .audio) { (audioURL) in
+                guard let audioURL = audioURL else { return }
+                
+                let comment = Comment(audioURL: audioURL, author: author)
+                post.comments.append(comment)
+                
+                self.savePostToFirebase(post)
+            }
+        } catch {
+            NSLog("Could not save to firebase: \(error)")
+        }
     }
 
     func observePosts(completion: @escaping (Error?) -> Void) {
