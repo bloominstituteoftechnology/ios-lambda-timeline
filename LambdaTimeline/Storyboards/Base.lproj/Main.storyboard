@@ -444,17 +444,17 @@
                         <outlet property="imageView" destination="Q0L-w5-qUw" id="0v7-ZB-mgi"/>
                         <outlet property="imageViewAspectRatioConstraint" destination="y1B-iX-x3e" id="wIt-kh-Tzd"/>
                         <outlet property="titleLabel" destination="jyy-BX-c2c" id="UEd-xO-ipC"/>
-                        <segue destination="JYw-MF-cbV" kind="show" id="2NU-mF-IU5"/>
+                        <segue destination="JYw-MF-cbV" kind="show" identifier="AudioCommentSegue" id="2NU-mF-IU5"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdL-Y3-4ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1968.8" y="472.71364317841085"/>
         </scene>
-        <!--View Controller-->
+        <!--Audio Comments View Controller-->
         <scene sceneID="vgs-YB-kpq">
             <objects>
-                <viewController id="JYw-MF-cbV" sceneMemberID="viewController">
+                <viewController id="JYw-MF-cbV" customClass="AudioCommentsViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uyn-4X-s9t">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -491,30 +491,48 @@
             </objects>
             <point key="canvasLocation" x="2879.7101449275365" y="483.48214285714283"/>
         </scene>
-        <!--View Controller-->
+        <!--Audio Comments View Controller-->
         <scene sceneID="Kuh-0o-rkD">
             <objects>
-                <viewController id="S11-cW-8D8" sceneMemberID="viewController">
+                <viewController id="S11-cW-8D8" customClass="AudioCommentsViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="cMD-bA-LcK">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="495"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="2lo-4g-uMk">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="495"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="2lo-4g-uMk" firstAttribute="bottom" secondItem="ymI-ru-8XG" secondAttribute="bottom" id="OlC-QO-Ed6"/>
+                            <constraint firstItem="2lo-4g-uMk" firstAttribute="centerY" secondItem="cMD-bA-LcK" secondAttribute="centerY" id="c41-Up-SGs"/>
+                            <constraint firstItem="2lo-4g-uMk" firstAttribute="leading" secondItem="ymI-ru-8XG" secondAttribute="leading" id="o4e-cb-mpg"/>
+                            <constraint firstItem="2lo-4g-uMk" firstAttribute="centerX" secondItem="cMD-bA-LcK" secondAttribute="centerX" id="yHZ-TP-VBw"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="ymI-ru-8XG"/>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="2lo-4g-uMk" id="kNq-Fy-fau"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pko-yx-70f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3794" y="221"/>
+            <point key="canvasLocation" x="3792.753623188406" y="220.64732142857142"/>
         </scene>
-        <!--View Controller-->
+        <!--Recorder View Controller-->
         <scene sceneID="eGH-ZP-5Da">
             <objects>
-                <viewController id="epn-HA-Zwk" sceneMemberID="viewController">
+                <viewController id="epn-HA-Zwk" customClass="RecorderViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jZS-dq-baW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="271"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     </view>
+                    <connections>
+                        <outlet property="mainView" destination="jZS-dq-baW" id="db8-w9-dZz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IQs-y2-d23" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
