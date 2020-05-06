@@ -18,14 +18,15 @@ class CameraViewController: UIViewController {
 
     // MARK: - Outlets
     @IBOutlet weak var recordButton: UIButton!
-    
+    @IBOutlet weak var cameraView: CameraPreviewView!
+
     // MARK: - View Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-//        cameraView.videoPlayerView.videoGravity = .resizeAspectFill
+        cameraView.videoPlayerView.videoGravity = .resizeAspectFill
         setUpCaptureSession()
     }
 
@@ -68,7 +69,7 @@ class CameraViewController: UIViewController {
         captureSession.addOutput(fileOutput)
 
         captureSession.commitConfiguration()
-//        cameraView.session = captureSession
+        cameraView.session = captureSession
 
         // TODO: Start/Stop session
 
@@ -85,6 +86,10 @@ class CameraViewController: UIViewController {
         }
         // No cameras present ( simulator )
         fatalError("No camera available - are you on a simmulator?")
+    }
+
+    @IBAction func cameraButtonPressed(_ sender: Any) {
+        toggleRecord()
     }
 
     private func toggleRecord() {

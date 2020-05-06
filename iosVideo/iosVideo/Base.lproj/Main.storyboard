@@ -60,7 +60,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ACE-SW-Y9N">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ACE-SW-Y9N" customClass="CameraPreviewView" customModule="iosVideo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="egl-Mg-879">
@@ -73,6 +73,9 @@
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large" weight="black"/>
                                         </state>
                                         <state key="selected" image="pause.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="cameraButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bfd-mF-ooo"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
@@ -94,6 +97,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="QdA-6D-0MG"/>
                     <connections>
+                        <outlet property="cameraView" destination="ACE-SW-Y9N" id="hZ2-c0-31Q"/>
                         <outlet property="recordButton" destination="egl-Mg-879" id="gGX-Bg-UZO"/>
                     </connections>
                 </viewController>
