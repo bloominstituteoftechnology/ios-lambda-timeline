@@ -116,6 +116,7 @@
                     <connections>
                         <outlet property="cameraView" destination="ACE-SW-Y9N" id="hZ2-c0-31Q"/>
                         <outlet property="recordButton" destination="egl-Mg-879" id="gGX-Bg-UZO"/>
+                        <segue destination="OC7-ZP-XvA" kind="presentation" identifier="PreviewModalSegue" animates="NO" id="Z9E-aH-YEp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -139,6 +140,80 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WC7-Ve-ftu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1063.768115942029" y="138.61607142857142"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="zfA-TL-sfs">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="OC7-ZP-XvA" customClass="CameraViewController" customModule="iosVideo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="U3r-RK-IXf">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ZN-O9-Oim" customClass="CameraPreviewView" customModule="iosVideo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <subviews>
+                                    <view userInteractionEnabled="NO" alpha="0.45000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ML-4t-mLX">
+                                        <rect key="frame" x="0.0" y="573" width="414" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="gPu-Kw-zWK"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fJN-3D-qJX">
+                                        <rect key="frame" x="0.0" y="575.5" width="414" height="45"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                        <state key="normal" title="Save">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                    <view userInteractionEnabled="NO" alpha="0.44999998807907104" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pkd-Pt-2BO">
+                                        <rect key="frame" x="0.0" y="631.5" width="414" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="zqA-uN-bJn"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yxX-Uk-7xm">
+                                        <rect key="frame" x="166" y="634" width="82" height="45"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="pkd-Pt-2BO" firstAttribute="centerY" secondItem="yxX-Uk-7xm" secondAttribute="centerY" id="1Uh-81-Th8"/>
+                                    <constraint firstItem="3ML-4t-mLX" firstAttribute="width" secondItem="9ZN-O9-Oim" secondAttribute="width" id="55e-0Y-pG1"/>
+                                    <constraint firstItem="pkd-Pt-2BO" firstAttribute="width" secondItem="9ZN-O9-Oim" secondAttribute="width" id="6by-dr-zfF"/>
+                                    <constraint firstItem="3ML-4t-mLX" firstAttribute="centerX" secondItem="9ZN-O9-Oim" secondAttribute="centerX" id="Ihl-FV-2xV"/>
+                                    <constraint firstItem="fJN-3D-qJX" firstAttribute="width" secondItem="3ML-4t-mLX" secondAttribute="width" id="M4z-3Q-TXr"/>
+                                    <constraint firstItem="fJN-3D-qJX" firstAttribute="centerY" secondItem="9ZN-O9-Oim" secondAttribute="centerY" constant="150" id="VhD-9c-9HG"/>
+                                    <constraint firstItem="fJN-3D-qJX" firstAttribute="centerX" secondItem="9ZN-O9-Oim" secondAttribute="centerX" id="WHT-3A-yp8"/>
+                                    <constraint firstItem="yxX-Uk-7xm" firstAttribute="top" secondItem="fJN-3D-qJX" secondAttribute="bottom" constant="13.5" id="Y4Q-wa-nb1"/>
+                                    <constraint firstItem="3ML-4t-mLX" firstAttribute="centerY" secondItem="fJN-3D-qJX" secondAttribute="centerY" id="dzM-5P-EXF"/>
+                                    <constraint firstItem="pkd-Pt-2BO" firstAttribute="centerX" secondItem="9ZN-O9-Oim" secondAttribute="centerX" id="q40-ch-3F9"/>
+                                    <constraint firstItem="yxX-Uk-7xm" firstAttribute="centerX" secondItem="9ZN-O9-Oim" secondAttribute="centerX" id="yIa-Ly-VTA"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="9ZN-O9-Oim" firstAttribute="centerX" secondItem="U3r-RK-IXf" secondAttribute="centerX" id="I1U-2M-EtT"/>
+                            <constraint firstItem="9ZN-O9-Oim" firstAttribute="centerY" secondItem="U3r-RK-IXf" secondAttribute="centerY" id="P4N-R4-ze5"/>
+                            <constraint firstItem="9ZN-O9-Oim" firstAttribute="height" secondItem="U3r-RK-IXf" secondAttribute="height" id="ewc-hU-7R4"/>
+                            <constraint firstItem="9ZN-O9-Oim" firstAttribute="width" secondItem="U3r-RK-IXf" secondAttribute="width" id="zRQ-S7-eKm"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="BTk-PP-sCV"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="5l8-9T-2k3"/>
+                    <connections>
+                        <outlet property="cameraView" destination="9ZN-O9-Oim" id="mBv-tn-LrE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rdb-EJ-wiD" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3707" y="139"/>
         </scene>
     </scenes>
     <resources>
