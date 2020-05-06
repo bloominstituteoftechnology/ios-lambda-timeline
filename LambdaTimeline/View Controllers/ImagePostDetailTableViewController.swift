@@ -82,6 +82,7 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
         
         let comment = post?.comments[indexPath.row + 1]
@@ -96,6 +97,7 @@ class ImagePostDetailTableViewController: UITableViewController {
         if segue.identifier == "AudioCommentModalSegue" {
             if let audioVC = segue.destination as? CreateAudioCommentViewController {
                 audioVC.postController = postController
+                audioVC.post = post
             }
         }
     }

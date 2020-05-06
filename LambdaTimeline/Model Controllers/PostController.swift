@@ -54,7 +54,7 @@ class PostController {
         do {
             let audio = try Data(contentsOf: audioURL)
             store(mediaData: audio, mediaType: .audio) { audioURL in
-                guard let audioURL = audioURL else { return }
+                guard let audioURL = audioURL?.absoluteString else { return }
 
                 let comment = Comment(audioURL: audioURL, author: author)
                 post.comments.append(comment)

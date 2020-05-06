@@ -395,19 +395,19 @@
                                 <rect key="frame" x="20" y="406" width="374" height="30"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="253" horizontalCompressionResistancePriority="751" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3P-Ux-T47">
-                                        <rect key="frame" x="0.0" y="0.0" width="48.5" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="47" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="vLE-FX-2sr">
-                                        <rect key="frame" x="46.5" y="0.0" width="271" height="31"/>
+                                        <rect key="frame" x="45" y="0.0" width="274" height="31"/>
                                         <connections>
                                             <action selector="updateCurrentTime:" destination="CPE-6a-NOE" eventType="valueChanged" id="4dB-df-Cto"/>
                                         </connections>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="253" horizontalCompressionResistancePriority="753" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d65-wW-E4g">
-                                        <rect key="frame" x="315.5" y="0.0" width="58.5" height="30"/>
+                                        <rect key="frame" x="317" y="0.0" width="57" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -444,17 +444,38 @@
                                 <color key="textColor" white="0.098591549299999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RTl-T3-fqt">
+                                <rect key="frame" x="127.5" y="548" width="159" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="Save Comment"/>
+                                <connections>
+                                    <action selector="saveButtonTapped:" destination="CPE-6a-NOE" eventType="touchUpInside" id="9cD-N9-OYh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8jh-p6-QZO">
+                                <rect key="frame" x="127.5" y="630" width="159" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelButtonTapped:" destination="CPE-6a-NOE" eventType="touchUpInside" id="00o-fW-V7G"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="h3P-Ux-T47" firstAttribute="top" secondItem="89h-X5-hXe" secondAttribute="bottom" constant="95" id="5LG-Uc-yX1"/>
+                            <constraint firstItem="8jh-p6-QZO" firstAttribute="width" secondItem="RTl-T3-fqt" secondAttribute="width" id="F4i-3m-RJg"/>
                             <constraint firstItem="Uvi-kk-c6g" firstAttribute="centerY" secondItem="vlK-L8-HYX" secondAttribute="centerY" id="Jxa-Qg-bxL"/>
                             <constraint firstItem="Eac-bx-GpQ" firstAttribute="top" secondItem="Uvi-kk-c6g" secondAttribute="bottom" constant="10" id="K2W-9u-RkK"/>
                             <constraint firstItem="89h-X5-hXe" firstAttribute="leading" secondItem="h3P-Ux-T47" secondAttribute="leading" id="LqH-CA-X4E"/>
+                            <constraint firstItem="8jh-p6-QZO" firstAttribute="top" secondItem="RTl-T3-fqt" secondAttribute="bottom" constant="41" id="QZk-96-dHy"/>
                             <constraint firstAttribute="trailing" secondItem="Uvi-kk-c6g" secondAttribute="trailing" constant="20" id="RZK-PR-5WG"/>
+                            <constraint firstItem="8jh-p6-QZO" firstAttribute="centerX" secondItem="RTl-T3-fqt" secondAttribute="centerX" id="Rhe-av-oum"/>
                             <constraint firstItem="Uvi-kk-c6g" firstAttribute="leading" secondItem="vlK-L8-HYX" secondAttribute="leading" constant="20" id="Syc-2s-JcR"/>
                             <constraint firstItem="Eac-bx-GpQ" firstAttribute="centerX" secondItem="vlK-L8-HYX" secondAttribute="centerX" id="UOS-f4-jQG"/>
+                            <constraint firstItem="RTl-T3-fqt" firstAttribute="top" secondItem="Eac-bx-GpQ" secondAttribute="bottom" constant="80" id="bhB-dK-iQ6"/>
                             <constraint firstItem="Eac-bx-GpQ" firstAttribute="leading" secondItem="rlp-gl-75H" secondAttribute="leading" constant="10" id="cUk-xG-vuu"/>
+                            <constraint firstItem="RTl-T3-fqt" firstAttribute="centerX" secondItem="vlK-L8-HYX" secondAttribute="centerX" id="hHp-oT-gZN"/>
                             <constraint firstItem="Uvi-kk-c6g" firstAttribute="centerX" secondItem="vlK-L8-HYX" secondAttribute="centerX" id="pQ4-ar-M5z"/>
                             <constraint firstItem="rlp-gl-75H" firstAttribute="trailing" secondItem="Eac-bx-GpQ" secondAttribute="trailing" constant="10" id="zMn-WY-shZ"/>
                         </constraints>

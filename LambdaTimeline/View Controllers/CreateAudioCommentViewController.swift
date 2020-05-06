@@ -14,6 +14,7 @@ class CreateAudioCommentViewController: UIViewController {
     // MARK: - Properties
 
     var postController: PostController!
+    var post: Post!
 
     var audioPlayer: AVAudioPlayer? {
         didSet {
@@ -208,6 +209,14 @@ class CreateAudioCommentViewController: UIViewController {
         } else {
             requestPermissionOrStartRecording()
         }
+    }
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let recordingURL = recordingURL else { return }
+        postController.addAudioComment(with: recordingURL, to: &post)
+        self.dismiss(animated: true, completion:    nil)
+    }
+    @IBAction func cancelButtonTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
 
 }
