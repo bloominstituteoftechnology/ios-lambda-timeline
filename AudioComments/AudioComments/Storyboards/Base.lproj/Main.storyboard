@@ -24,7 +24,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="R2G-bg-NeN">
-                                            <rect key="frame" x="20" y="11" width="474" height="101"/>
+                                            <rect key="frame" x="20" y="11" width="478" height="101"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RCY-d0-mYv">
                                                     <rect key="frame" x="0.0" y="0.0" width="35.5" height="20.5"/>
@@ -50,7 +50,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Vh8-37-69g">
-                                                    <rect key="frame" x="-2" y="35" width="478" height="31"/>
+                                                    <rect key="frame" x="-2" y="35" width="482" height="31"/>
                                                     <connections>
                                                         <action selector="audioSlider:" destination="vXw-YY-qhK" eventType="valueChanged" id="aPr-Ha-cbJ"/>
                                                     </connections>
@@ -151,10 +151,10 @@
             </objects>
             <point key="canvasLocation" x="86.956521739130437" y="-7.3660714285714279"/>
         </scene>
-        <!--View Controller-->
+        <!--Recording View Controller-->
         <scene sceneID="QnK-5B-jKJ">
             <objects>
-                <viewController id="xKH-xv-n23" sceneMemberID="viewController">
+                <viewController id="xKH-xv-n23" customClass="RecordingViewController" customModule="AudioComments" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8TO-47-bgI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -165,18 +165,30 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eho-4S-Tge">
                                         <rect key="frame" x="0.0" y="0.0" width="49" height="30"/>
                                         <state key="normal" title="Record"/>
+                                        <connections>
+                                            <action selector="recordButton:" destination="xKH-xv-n23" eventType="touchUpInside" id="t9z-sm-HtD"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DYQ-zq-99g">
                                         <rect key="frame" x="94" y="0.0" width="32" height="30"/>
                                         <state key="normal" title="Stop"/>
+                                        <connections>
+                                            <action selector="stopButton:" destination="xKH-xv-n23" eventType="touchUpInside" id="4mg-Kj-lXm"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z3Z-d7-dwb">
                                         <rect key="frame" x="171" y="0.0" width="48" height="30"/>
                                         <state key="normal" title="Cancel"/>
+                                        <connections>
+                                            <action selector="cancelButton:" destination="xKH-xv-n23" eventType="touchUpInside" id="9cD-XP-sIy"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZOg-VN-2SV">
                                         <rect key="frame" x="264" y="0.0" width="36" height="30"/>
                                         <state key="normal" title="Send"/>
+                                        <connections>
+                                            <action selector="sendButton:" destination="xKH-xv-n23" eventType="touchUpInside" id="H5H-TF-7QV"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
