@@ -31,7 +31,7 @@ extension UIImage {
     
     /// Renders the image if the pixel data was rotated due to orientation of camera
 
-    var flatted: UIImage {
+    var flattened: UIImage {
         if imageOrientation == .up { return self }
         return UIGraphicsImageRenderer(size: size, format: imageRendererFormat).image { context in
             draw(at: .zero)
