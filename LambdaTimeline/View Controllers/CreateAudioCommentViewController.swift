@@ -223,6 +223,7 @@ extension CreateAudioCommentViewController: AVAudioRecorderDelegate {
         // play the recording
         if let recordingURL = recordingURL {
             audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL)
+            audioPlayer.da
         }
         updateViews()
     }
