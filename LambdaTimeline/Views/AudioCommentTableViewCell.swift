@@ -50,7 +50,8 @@ class AudioCommentTableViewCell: UITableViewCell {
     }
 
     private func loadSound() {
-        guard let url = audioURL else { return }
+//        guard let url = audioURL else { return }
+        let url =  "https://firebasestorage.googleapis.com/v0/b/projects1-454fc.appspot.com/o/audio%2F28D079F7-CB6A-4043-9C6C-3824184D1DC1?alt=media&token=441660a0-8e07-423e-b564-9477e62c3e16"
         let httpsReference = Storage.storage().reference(forURL: url)
         let localURL = createLocalURL()
 
