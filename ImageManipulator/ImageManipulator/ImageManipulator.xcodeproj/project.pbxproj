@@ -9,14 +9,20 @@
 /* Begin PBXBuildFile section */
 		E393E3CC2460D4B4001C1822 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E393E3CB2460D4B4001C1822 /* AppDelegate.swift */; };
 		E393E3CE2460D4B4001C1822 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E393E3CD2460D4B4001C1822 /* SceneDelegate.swift */; };
-		E393E3D32460D4B4001C1822 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E393E3D12460D4B4001C1822 /* Main.storyboard */; };
 		E393E3D62460D4B4001C1822 /* ImageManipulator.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E393E3D42460D4B4001C1822 /* ImageManipulator.xcdatamodeld */; };
 		E393E3D82460D4B9001C1822 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E393E3D72460D4B9001C1822 /* Assets.xcassets */; };
 		E393E3DB2460D4B9001C1822 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E393E3D92460D4B9001C1822 /* LaunchScreen.storyboard */; };
 		E393E3E62460D4B9001C1822 /* ImageManipulatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E393E3E52460D4B9001C1822 /* ImageManipulatorTests.swift */; };
 		E393E3F12460D4B9001C1822 /* ImageManipulatorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E393E3F02460D4B9001C1822 /* ImageManipulatorUITests.swift */; };
 		E393E3FF2460D4DE001C1822 /* Filters.swift in Sources */ = {isa = PBXBuildFile; fileRef = E393E3FE2460D4DE001C1822 /* Filters.swift */; };
-		E393E4012460D555001C1822 /* PhotoFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E393E4002460D555001C1822 /* PhotoFilterViewController.swift */; };
+		E393E4012460D555001C1822 /* ColorControlsFilterViewcController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E393E4002460D555001C1822 /* ColorControlsFilterViewcController.swift */; };
+		E3B9F5402461FD27007DBD64 /* UIImage+Scaling.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B9F53F2461FD27007DBD64 /* UIImage+Scaling.swift */; };
+		E3B9F5422462000C007DBD64 /* CIDiskBlurController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B9F5412462000C007DBD64 /* CIDiskBlurController.swift */; };
+		E3B9F5442462000E007DBD64 /* CIBloomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B9F5432462000E007DBD64 /* CIBloomController.swift */; };
+		E3B9F54624620010007DBD64 /* CIThermalController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B9F54524620010007DBD64 /* CIThermalController.swift */; };
+		E3B9F54824620017007DBD64 /* CICrystallizeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B9F54724620017007DBD64 /* CICrystallizeController.swift */; };
+		E3B9F54A2462001B007DBD64 /* CIPixellateController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3B9F5492462001B007DBD64 /* CIPixellateController.swift */; };
+		E3B9F54D246209EC007DBD64 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E3B9F54C246209EC007DBD64 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +46,6 @@
 		E393E3C82460D4B4001C1822 /* ImageManipulator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageManipulator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E393E3CB2460D4B4001C1822 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E393E3CD2460D4B4001C1822 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E393E3D22460D4B4001C1822 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E393E3D52460D4B4001C1822 /* ImageManipulator.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ImageManipulator.xcdatamodel; sourceTree = "<group>"; };
 		E393E3D72460D4B9001C1822 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E393E3DA2460D4B9001C1822 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -52,7 +57,14 @@
 		E393E3F02460D4B9001C1822 /* ImageManipulatorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManipulatorUITests.swift; sourceTree = "<group>"; };
 		E393E3F22460D4B9001C1822 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E393E3FE2460D4DE001C1822 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
-		E393E4002460D555001C1822 /* PhotoFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoFilterViewController.swift; sourceTree = "<group>"; };
+		E393E4002460D555001C1822 /* ColorControlsFilterViewcController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorControlsFilterViewcController.swift; sourceTree = "<group>"; };
+		E3B9F53F2461FD27007DBD64 /* UIImage+Scaling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Scaling.swift"; sourceTree = "<group>"; };
+		E3B9F5412462000C007DBD64 /* CIDiskBlurController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIDiskBlurController.swift; sourceTree = "<group>"; };
+		E3B9F5432462000E007DBD64 /* CIBloomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIBloomController.swift; sourceTree = "<group>"; };
+		E3B9F54524620010007DBD64 /* CIThermalController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIThermalController.swift; sourceTree = "<group>"; };
+		E3B9F54724620017007DBD64 /* CICrystallizeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CICrystallizeController.swift; sourceTree = "<group>"; };
+		E3B9F5492462001B007DBD64 /* CIPixellateController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIPixellateController.swift; sourceTree = "<group>"; };
+		E3B9F54C246209EC007DBD64 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,12 +118,13 @@
 				E393E3FE2460D4DE001C1822 /* Filters.swift */,
 				E393E3CB2460D4B4001C1822 /* AppDelegate.swift */,
 				E393E3CD2460D4B4001C1822 /* SceneDelegate.swift */,
-				E393E3D12460D4B4001C1822 /* Main.storyboard */,
 				E393E3D72460D4B9001C1822 /* Assets.xcassets */,
+				E3B9F54C246209EC007DBD64 /* Main.storyboard */,
 				E393E3D92460D4B9001C1822 /* LaunchScreen.storyboard */,
 				E393E3DC2460D4B9001C1822 /* Info.plist */,
 				E393E3D42460D4B4001C1822 /* ImageManipulator.xcdatamodeld */,
-				E393E4002460D555001C1822 /* PhotoFilterViewController.swift */,
+				E3B9F53F2461FD27007DBD64 /* UIImage+Scaling.swift */,
+				E3B9F54B24620026007DBD64 /* FilterVCs */,
 			);
 			path = ImageManipulator;
 			sourceTree = "<group>";
@@ -132,6 +145,19 @@
 				E393E3F22460D4B9001C1822 /* Info.plist */,
 			);
 			path = ImageManipulatorUITests;
+			sourceTree = "<group>";
+		};
+		E3B9F54B24620026007DBD64 /* FilterVCs */ = {
+			isa = PBXGroup;
+			children = (
+				E3B9F5412462000C007DBD64 /* CIDiskBlurController.swift */,
+				E3B9F54524620010007DBD64 /* CIThermalController.swift */,
+				E3B9F5432462000E007DBD64 /* CIBloomController.swift */,
+				E3B9F54724620017007DBD64 /* CICrystallizeController.swift */,
+				E3B9F5492462001B007DBD64 /* CIPixellateController.swift */,
+				E393E4002460D555001C1822 /* ColorControlsFilterViewcController.swift */,
+			);
+			path = FilterVCs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -238,9 +264,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E3B9F54D246209EC007DBD64 /* Main.storyboard in Resources */,
 				E393E3DB2460D4B9001C1822 /* LaunchScreen.storyboard in Resources */,
 				E393E3D82460D4B9001C1822 /* Assets.xcassets in Resources */,
-				E393E3D32460D4B4001C1822 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,10 +291,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E393E4012460D555001C1822 /* PhotoFilterViewController.swift in Sources */,
+				E393E4012460D555001C1822 /* ColorControlsFilterViewcController.swift in Sources */,
+				E3B9F5422462000C007DBD64 /* CIDiskBlurController.swift in Sources */,
+				E3B9F54824620017007DBD64 /* CICrystallizeController.swift in Sources */,
+				E3B9F5442462000E007DBD64 /* CIBloomController.swift in Sources */,
+				E3B9F54624620010007DBD64 /* CIThermalController.swift in Sources */,
 				E393E3D62460D4B4001C1822 /* ImageManipulator.xcdatamodeld in Sources */,
 				E393E3FF2460D4DE001C1822 /* Filters.swift in Sources */,
+				E3B9F5402461FD27007DBD64 /* UIImage+Scaling.swift in Sources */,
 				E393E3CC2460D4B4001C1822 /* AppDelegate.swift in Sources */,
+				E3B9F54A2462001B007DBD64 /* CIPixellateController.swift in Sources */,
 				E393E3CE2460D4B4001C1822 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -305,14 +337,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		E393E3D12460D4B4001C1822 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E393E3D22460D4B4001C1822 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		E393E3D92460D4B9001C1822 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
