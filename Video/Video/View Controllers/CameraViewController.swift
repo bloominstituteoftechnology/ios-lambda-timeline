@@ -18,6 +18,8 @@ class CameraViewController: UIViewController {
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     
+    var recordedVideoURL: URL?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         cameraView.videoPlayerView.videoGravity = .resizeAspectFill
@@ -89,13 +91,13 @@ class CameraViewController: UIViewController {
     }
     
     private func toggleRecord() {
-         if fileOutput.isRecording {
-             fileOutput.stopRecording()
-            performSegue(withIdentifier: "PresentVideoSegue", sender: self)
-         } else {
-             fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
-         }
-     }
+        if fileOutput.isRecording {
+            fileOutput.stopRecording()
+        } else {
+            recordedVideoURL = newRecordingURL()
+            fileOutput.startRecording(to: recordedVideoURL!, recordingDelegate: self)
+        }
+    }
      
      /// Creates a new file URL in the documents directory
      private func newRecordingURL() -> URL {
@@ -115,7 +117,7 @@ class CameraViewController: UIViewController {
         if segue.identifier == "PresentVideoSegue" {
             guard let ViewRecordingVC = segue.destination as? ViewRecordingViewController else { return }
             
-            
+            ViewRecordingVC.recordingURL = recordedVideoURL
         }
     }
     
@@ -138,9 +140,9 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         if let error = error {
             print("Error saving video: \(error)")
         } else {
-            // Show movie
-            // playMovie(url: outputFileURL)
-            
+            //recordedVideoURL = outputFileURL
+            performSegue(withIdentifier: "PresentVideoSegue", sender: self)
+
         }
         updateViews()
         
