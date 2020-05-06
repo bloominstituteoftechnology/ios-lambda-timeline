@@ -363,19 +363,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="Uvi-kk-c6g">
-                                <rect key="frame" x="50" y="406" width="314" height="30"/>
+                                <rect key="frame" x="20" y="406" width="374" height="30"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="253" horizontalCompressionResistancePriority="751" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3P-Ux-T47">
-                                        <rect key="frame" x="0.0" y="0.0" width="47" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="52.5" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="vLE-FX-2sr">
-                                        <rect key="frame" x="45" y="0.0" width="214" height="31"/>
+                                        <rect key="frame" x="50.5" y="0.0" width="263" height="31"/>
+                                        <connections>
+                                            <action selector="updateCurrentTime:" destination="CPE-6a-NOE" eventType="valueChanged" id="4dB-df-Cto"/>
+                                        </connections>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="253" horizontalCompressionResistancePriority="753" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d65-wW-E4g">
-                                        <rect key="frame" x="257" y="0.0" width="57" height="30"/>
+                                        <rect key="frame" x="311.5" y="0.0" width="62.5" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -392,16 +395,22 @@
                                         <rect key="frame" x="0.0" y="0.0" width="197" height="22"/>
                                         <state key="normal" image="play.fill" catalog="system"/>
                                         <state key="selected" image="pause.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="togglePlayback:" destination="CPE-6a-NOE" eventType="touchUpInside" id="223-SB-rt9"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yez-0M-Bao">
                                         <rect key="frame" x="197" y="0.0" width="197" height="22"/>
                                         <state key="normal" image="mic.fill" catalog="system"/>
                                         <state key="selected" image="circle.fill" catalog="system"/>
+                                        <connections>
+                                            <action selector="toggleRecording:" destination="CPE-6a-NOE" eventType="touchUpInside" id="S7y-b0-AF3"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Audio Comment:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="89h-X5-hXe">
-                                <rect key="frame" x="50" y="277.5" width="219" height="33.5"/>
+                                <rect key="frame" x="20" y="277.5" width="219" height="33.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
                                 <color key="textColor" white="0.098591549299999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -413,8 +422,8 @@
                             <constraint firstItem="Uvi-kk-c6g" firstAttribute="centerY" secondItem="vlK-L8-HYX" secondAttribute="centerY" id="Jxa-Qg-bxL"/>
                             <constraint firstItem="Eac-bx-GpQ" firstAttribute="top" secondItem="Uvi-kk-c6g" secondAttribute="bottom" constant="10" id="K2W-9u-RkK"/>
                             <constraint firstItem="89h-X5-hXe" firstAttribute="leading" secondItem="h3P-Ux-T47" secondAttribute="leading" id="LqH-CA-X4E"/>
-                            <constraint firstAttribute="trailing" secondItem="Uvi-kk-c6g" secondAttribute="trailing" constant="50" id="RZK-PR-5WG"/>
-                            <constraint firstItem="Uvi-kk-c6g" firstAttribute="leading" secondItem="vlK-L8-HYX" secondAttribute="leading" constant="50" id="Syc-2s-JcR"/>
+                            <constraint firstAttribute="trailing" secondItem="Uvi-kk-c6g" secondAttribute="trailing" constant="20" id="RZK-PR-5WG"/>
+                            <constraint firstItem="Uvi-kk-c6g" firstAttribute="leading" secondItem="vlK-L8-HYX" secondAttribute="leading" constant="20" id="Syc-2s-JcR"/>
                             <constraint firstItem="Eac-bx-GpQ" firstAttribute="centerX" secondItem="vlK-L8-HYX" secondAttribute="centerX" id="UOS-f4-jQG"/>
                             <constraint firstItem="Eac-bx-GpQ" firstAttribute="leading" secondItem="rlp-gl-75H" secondAttribute="leading" constant="10" id="cUk-xG-vuu"/>
                             <constraint firstItem="Uvi-kk-c6g" firstAttribute="centerX" secondItem="vlK-L8-HYX" secondAttribute="centerX" id="pQ4-ar-M5z"/>

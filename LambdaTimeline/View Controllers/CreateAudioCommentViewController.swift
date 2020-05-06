@@ -46,19 +46,20 @@ class CreateAudioCommentViewController: UIViewController {
     }
 
     // MARK: - Outlets
-
-
-    // MARK: - View Controller
     @IBOutlet weak var currentTimeLabel: UILabel!
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var audioSlider: UISlider!
     @IBOutlet weak var playPauseButton: UIButton!
     @IBOutlet weak var recordButton: UIButton!
 
+    // MARK: - View Controller
     override func viewDidLoad() {
         super.viewDidLoad()
         currentTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: currentTimeLabel.font.pointSize, weight: .regular)
         durationLabel.font = UIFont.monospacedDigitSystemFont(ofSize: durationLabel.font.pointSize, weight: .regular)
+
+        updateViews()
+        try? prepareAudioSession()
     }
 
     // MARK: - Timer
@@ -144,13 +145,6 @@ class CreateAudioCommentViewController: UIViewController {
 
     // MARK: - Playback
 
-    func loadAudio() {
-        let songURL = Bundle.main.url(forResource: "piano", withExtension: "mp3")!
-
-        audioPlayer = try? AVAudioPlayer(contentsOf: songURL)
-        audioPlayer?.isMeteringEnabled = true
-    }
-
     func prepareAudioSession() throws {
         let session = AVAudioSession.sharedInstance()
         try session.setCategory(.playAndRecord, options: [.defaultToSpeaker])
@@ -176,10 +170,38 @@ class CreateAudioCommentViewController: UIViewController {
         let duration = audioPlayer?.duration ?? 0
 
         currentTimeLabel.text = timeIntervalFormatter.string(from: elapsedTime)
+        durationLabel.text = timeIntervalFormatter.string(from: duration)
 
         audioSlider.value = Float(elapsedTime)
         audioSlider.minimumValue = 0
         audioSlider.maximumValue = Float(duration)
+    }
+
+    // MARK: - Actions
+
+    @IBAction func togglePlayback(_ sender: Any) {
+        if isPlaying {
+            pause()
+        } else {
+            play()
+        }
+    }
+
+    @IBAction func updateCurrentTime(_ sender: UISlider) {
+        if isPlaying {
+            pause()
+        }
+
+        audioPlayer?.currentTime = TimeInterval(audioSlider.value)
+        updateViews()
+    }
+
+    @IBAction func toggleRecording(_ sender: Any) {
+        if isRecording {
+            stopRecording()
+        } else {
+            requestPermissionOrStartRecording()
+        }
     }
 
 }
