@@ -86,14 +86,11 @@
                                                 <action selector="playPauseButton:" destination="p75-jt-pdZ" eventType="touchUpInside" id="pT5-LF-HxC"/>
                                             </connections>
                                         </button>
-                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="b59-Wi-A5I">
+                                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="b59-Wi-A5I">
                                             <rect key="frame" x="227" y="7" width="104" height="31"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="100" id="Hwa-bS-duW"/>
                                             </constraints>
-                                            <connections>
-                                                <action selector="clipSlider:" destination="p75-jt-pdZ" eventType="valueChanged" id="7Wx-2S-7e2"/>
-                                            </connections>
                                         </slider>
                                     </subviews>
                                     <constraints>
@@ -104,6 +101,7 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="clipSlider" destination="b59-Wi-A5I" id="iBZ-Al-AwC"/>
                                     <outlet property="playPauseButtonOutlet" destination="KUX-DQ-tpM" id="YLc-jg-szI"/>
                                 </connections>
                             </tableViewCell>

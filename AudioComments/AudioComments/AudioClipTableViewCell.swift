@@ -42,9 +42,6 @@ class AudioClipTableViewCell: UITableViewCell {
 
     // MARK: - Actions
 
-    @IBAction func clipSlider(_ sender: UISlider) {
-    }
-
     @IBAction func playPauseButton(_ sender: UIButton) {
         if audioPlayer == nil {
             do {
@@ -61,6 +58,7 @@ class AudioClipTableViewCell: UITableViewCell {
 
     // MARK: - Outlets
     @IBOutlet weak var playPauseButtonOutlet: UIButton!
+    @IBOutlet weak var clipSlider: UISlider!
 
     // MARK: - Timer
 
@@ -86,6 +84,12 @@ class AudioClipTableViewCell: UITableViewCell {
         // This is what changes the button UI
         playPauseButtonOutlet.isSelected = isPlaying
 
+        let currentTime = audioPlayer?.currentTime ?? 0.0
+        let duration = audioPlayer?.duration ?? 0.0
+
+        clipSlider.minimumValue = 0
+        clipSlider.maximumValue = Float(duration)
+        clipSlider.value = Float(currentTime)
     }
 }
 
