@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol AudioCommentViewDelegate {
+protocol AudioCommentViewDelegate: AnyObject {
     func startRecording(for audioCommentView: AudioCommentView)
     func stopRecording(for audioCommentView: AudioCommentView)
     func startPlayback(for audioCommentView: AudioCommentView)
@@ -31,6 +31,10 @@ class AudioCommentView: UIView {
         case recording
         case playback
     }
+    
+    // MARK: - Public Properties
+    
+    weak var delegate: AudioCommentViewDelegate?
     
     // MARK: - Private Properties
     
@@ -79,19 +83,19 @@ class AudioCommentView: UIView {
     private func updateUI() {
         switch uiMode {
         case .emptyText:
-            print("emptyText")
+            print("emptyText mode")
             UIView.hide(playPauseButton, sendButton, clearButton, timelineSlider, audioVisualizer)
             UIView.show(textField, recordButton)
         case .someText:
-            print("someText")
+            print("someText mode")
             UIView.hide(playPauseButton, sendButton, clearButton, timelineSlider, audioVisualizer, recordButton)
             UIView.show(textField, sendButton)
         case .recording:
-            print("recording")
+            print("recording mode")
             UIView.hide(playPauseButton, sendButton, clearButton, timelineSlider, textField)
             UIView.show(audioVisualizer, recordButton)
         case .playback:
-            print("playback")
+            print("playback mode")
             UIView.hide(textField, audioVisualizer, recordButton)
             UIView.show(playPauseButton, timelineSlider, clearButton, sendButton)
         }
@@ -110,6 +114,12 @@ class AudioCommentView: UIView {
      
      @IBAction func send(_ sender: Any) {
          print("Sending the comment")
+        if uiMode == .playback {
+            delegate?.sendAudioComment(for: self)
+        } else if uiMode == .someText {
+            guard let text = textField.text else { return }
+            delegate?.sendTextualComment(with: text, for: self)
+        }
      }
 }
 

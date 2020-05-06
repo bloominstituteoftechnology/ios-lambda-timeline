@@ -28,7 +28,11 @@ class CommentTableViewController: UITableViewController {
         return 0
     }
 
-    lazy var audioCommentView = AudioCommentView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 60))
+    lazy var audioCommentView: AudioCommentView = {
+        let audioCommentView = AudioCommentView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 60))
+        audioCommentView.delegate = self
+        return audioCommentView
+    }()
     
     override var inputAccessoryView: UIView? {
         return audioCommentView
@@ -92,4 +96,34 @@ class CommentTableViewController: UITableViewController {
     }
     */
 
+}
+
+extension CommentTableViewController: AudioCommentViewDelegate {
+    func startRecording(for audioCommentView: AudioCommentView) {
+        
+    }
+    
+    func stopRecording(for audioCommentView: AudioCommentView) {
+        
+    }
+    
+    func startPlayback(for audioCommentView: AudioCommentView) {
+        
+    }
+    
+    func pausePlayback(for audioCommentView: AudioCommentView) {
+        
+    }
+    
+    func scrubPlayback(to location: Float, for audioCommentView: AudioCommentView) {
+        
+    }
+    
+    func sendAudioComment(for audioCommentView: AudioCommentView) {
+        
+    }
+    
+    func sendTextualComment(with text: String, for audioCommentView: AudioCommentView) {
+        print("Sending text comment: \(text)")
+    }
 }
