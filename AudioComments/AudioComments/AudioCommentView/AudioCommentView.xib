@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AudioCommentView" customModule="AudioComments" customModuleProvider="target">
+            <connections>
+                <outlet property="audioVisualizer" destination="gOQ-e4-p2n" id="x85-IH-rT2"/>
+                <outlet property="clearButton" destination="Ufj-Xt-AL0" id="ygF-5N-xhM"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="HhU-07-bhC"/>
+                <outlet property="playPauseButton" destination="mUF-LW-oh1" id="H9u-G8-8m9"/>
+                <outlet property="recordButton" destination="wXo-u4-97s" id="TxR-M4-ybV"/>
+                <outlet property="sendButton" destination="72j-Gc-zZP" id="62s-44-hlc"/>
+                <outlet property="textField" destination="PkI-jq-Iup" id="9li-os-MKT"/>
+                <outlet property="timelineSlider" destination="R8G-kS-lgI" id="30E-ea-b9R"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KIh-ZF-z5H">
+                    <rect key="frame" x="362" y="8" width="44" height="44"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wXo-u4-97s" userLabel="Record Button">
+                            <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="wXo-u4-97s" secondAttribute="height" multiplier="1:1" id="E1L-DT-iiy"/>
+                            </constraints>
+                            <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <state key="normal" image="mic.circle.fill" catalog="system">
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="30"/>
+                            </state>
+                            <state key="selected" image="stop.circle.fill" catalog="system">
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="30"/>
+                            </state>
+                            <connections>
+                                <action selector="toggleRecording:" destination="-1" eventType="touchUpInside" id="jGq-am-e53"/>
+                            </connections>
+                        </button>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ufj-Xt-AL0" userLabel="Cancel Button">
+                            <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="Ufj-Xt-AL0" secondAttribute="height" multiplier="1:1" id="qte-Bk-cNu"/>
+                            </constraints>
+                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" image="x.circle.fill" catalog="system">
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="30"/>
+                            </state>
+                            <state key="selected" image="stop.circle.fill" catalog="system">
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="30"/>
+                            </state>
+                            <connections>
+                                <action selector="cancel:" destination="-1" eventType="touchUpInside" id="Wkz-iv-DSU"/>
+                            </connections>
+                        </button>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="72j-Gc-zZP" userLabel="Send Button">
+                            <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="72j-Gc-zZP" secondAttribute="height" multiplier="1:1" id="roO-EE-Pfe"/>
+                            </constraints>
+                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" image="paperplane.fill" catalog="system">
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25"/>
+                            </state>
+                            <state key="selected" image="stop.circle.fill" catalog="system">
+                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="30"/>
+                            </state>
+                            <connections>
+                                <action selector="send:" destination="-1" eventType="touchUpInside" id="K1h-IN-qnO"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="wXo-u4-97s" firstAttribute="width" secondItem="wXo-u4-97s" secondAttribute="height" multiplier="1:1" id="KOP-kb-z7U"/>
+                        <constraint firstItem="wXo-u4-97s" firstAttribute="width" secondItem="wXo-u4-97s" secondAttribute="height" multiplier="1:1" id="NB6-Hh-C8F"/>
+                        <constraint firstItem="Ufj-Xt-AL0" firstAttribute="width" secondItem="Ufj-Xt-AL0" secondAttribute="height" multiplier="1:1" id="Xk7-T1-Qkp"/>
+                    </constraints>
+                </stackView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qLS-0e-Ml5">
+                    <rect key="frame" x="66" y="6" width="288" height="48"/>
+                    <subviews>
+                        <slider hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="R8G-kS-lgI">
+                            <rect key="frame" x="-2" y="0.0" width="292" height="49"/>
+                        </slider>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gOQ-e4-p2n" customClass="AudioVisualizer" customModule="AudioComments" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="288" height="48"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="barWidth">
+                                    <real key="value" value="6"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="R8G-kS-lgI" secondAttribute="bottom" id="8rT-6s-IGp"/>
+                        <constraint firstAttribute="trailing" secondItem="R8G-kS-lgI" secondAttribute="trailing" id="9i9-Xh-tdV"/>
+                        <constraint firstItem="R8G-kS-lgI" firstAttribute="top" secondItem="qLS-0e-Ml5" secondAttribute="top" id="Rgj-pk-hML"/>
+                        <constraint firstItem="gOQ-e4-p2n" firstAttribute="top" secondItem="qLS-0e-Ml5" secondAttribute="top" id="VJU-qd-lpK"/>
+                        <constraint firstItem="R8G-kS-lgI" firstAttribute="leading" secondItem="qLS-0e-Ml5" secondAttribute="leading" id="XOK-Cb-gbv"/>
+                        <constraint firstItem="gOQ-e4-p2n" firstAttribute="leading" secondItem="qLS-0e-Ml5" secondAttribute="leading" id="lLe-y5-7Hv"/>
+                        <constraint firstAttribute="bottom" secondItem="gOQ-e4-p2n" secondAttribute="bottom" id="lhe-ZJ-Ujb"/>
+                        <constraint firstAttribute="trailing" secondItem="gOQ-e4-p2n" secondAttribute="trailing" id="rQz-Sa-yuW"/>
+                    </constraints>
+                </view>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mUF-LW-oh1" userLabel="Play/Pause Button">
+                    <rect key="frame" x="8" y="5" width="50" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="OO8-Z9-20I"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" image="play.circle.fill" catalog="system">
+                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="30"/>
+                    </state>
+                    <state key="selected" image="play.circle.fill" catalog="system"/>
+                </button>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your comment here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="PkI-jq-Iup">
+                    <rect key="frame" x="20" y="13" width="334" height="34"/>
+                    <color key="backgroundColor" systemColor="systemGray4Color" red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FO8-wA-V1B" userLabel="Separator Line">
+                    <rect key="frame" x="0.0" y="-1" width="414" height="1"/>
+                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="Sx4-He-y0S"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="KIh-ZF-z5H" firstAttribute="leading" secondItem="qLS-0e-Ml5" secondAttribute="trailing" constant="8" id="3Am-WH-hdC"/>
+                <constraint firstItem="FO8-wA-V1B" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="top" id="3pr-O4-JiU"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="qLS-0e-Ml5" secondAttribute="bottom" constant="6" id="7cF-fR-bkn"/>
+                <constraint firstItem="KIh-ZF-z5H" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="8" id="FLf-om-djn"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="FO8-wA-V1B" secondAttribute="trailing" id="H0K-9d-Izt"/>
+                <constraint firstItem="FO8-wA-V1B" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="ImW-kE-rEf"/>
+                <constraint firstItem="mUF-LW-oh1" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="8" id="JGo-co-Y9H"/>
+                <constraint firstItem="qLS-0e-Ml5" firstAttribute="leading" secondItem="mUF-LW-oh1" secondAttribute="trailing" constant="8" id="Lo1-Qt-M4B"/>
+                <constraint firstItem="PkI-jq-Iup" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="VSY-G5-TtE"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="KIh-ZF-z5H" secondAttribute="bottom" constant="8" id="ZR0-Sl-sqS"/>
+                <constraint firstItem="mUF-LW-oh1" firstAttribute="width" secondItem="mUF-LW-oh1" secondAttribute="height" multiplier="1:1" id="aLM-fW-PDV"/>
+                <constraint firstItem="KIh-ZF-z5H" firstAttribute="leading" secondItem="PkI-jq-Iup" secondAttribute="trailing" constant="8" id="dgO-I2-AnV"/>
+                <constraint firstItem="qLS-0e-Ml5" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="6" id="oFP-VK-lNW"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="KIh-ZF-z5H" secondAttribute="trailing" constant="8" id="s12-kO-xO1"/>
+                <constraint firstItem="mUF-LW-oh1" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="vzN-2q-rf3"/>
+                <constraint firstItem="PkI-jq-Iup" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="xbE-8E-I19"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="137.68115942028987" y="438.58695652173918"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="mic.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="paperplane.fill" catalog="system" width="128" height="121"/>
+        <image name="play.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="stop.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="x.circle.fill" catalog="system" width="128" height="121"/>
+    </resources>
+</document>
