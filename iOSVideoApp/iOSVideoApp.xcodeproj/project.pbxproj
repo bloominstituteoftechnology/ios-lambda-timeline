@@ -9,20 +9,19 @@
 /* Begin PBXBuildFile section */
 		7FDF7D702463640500D83A14 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDF7D6F2463640500D83A14 /* AppDelegate.swift */; };
 		7FDF7D722463640500D83A14 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDF7D712463640500D83A14 /* SceneDelegate.swift */; };
-		7FDF7D742463640500D83A14 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDF7D732463640500D83A14 /* ViewController.swift */; };
 		7FDF7D772463640500D83A14 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FDF7D752463640500D83A14 /* Main.storyboard */; };
 		7FDF7D792463640600D83A14 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FDF7D782463640600D83A14 /* Assets.xcassets */; };
 		7FDF7D7C2463640600D83A14 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7FDF7D7A2463640600D83A14 /* LaunchScreen.storyboard */; };
 		7FDF7D842463653200D83A14 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDF7D832463653200D83A14 /* CameraViewController.swift */; };
 		7FDF7D86246365B000D83A14 /* CameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDF7D85246365B000D83A14 /* CameraPreview.swift */; };
 		7FDF7D882463662F00D83A14 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDF7D872463662F00D83A14 /* VideoPlayerView.swift */; };
+		7FDF7D8D24636F2D00D83A14 /* VideoPostsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FDF7D8C24636F2D00D83A14 /* VideoPostsCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7FDF7D6C2463640500D83A14 /* iOSVideoApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iOSVideoApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FDF7D6F2463640500D83A14 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7FDF7D712463640500D83A14 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		7FDF7D732463640500D83A14 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7FDF7D762463640500D83A14 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		7FDF7D782463640600D83A14 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7FDF7D7B2463640600D83A14 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -30,6 +29,7 @@
 		7FDF7D832463653200D83A14 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		7FDF7D85246365B000D83A14 /* CameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreview.swift; sourceTree = "<group>"; };
 		7FDF7D872463662F00D83A14 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
+		7FDF7D8C24636F2D00D83A14 /* VideoPostsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPostsCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,18 +62,42 @@
 		7FDF7D6E2463640500D83A14 /* iOSVideoApp */ = {
 			isa = PBXGroup;
 			children = (
+				7FDF7D8B24636EF500D83A14 /* controllers */,
+				7FDF7D8A24636EF000D83A14 /* views */,
+				7FDF7D8924636EE900D83A14 /* Models */,
 				7FDF7D6F2463640500D83A14 /* AppDelegate.swift */,
 				7FDF7D712463640500D83A14 /* SceneDelegate.swift */,
-				7FDF7D732463640500D83A14 /* ViewController.swift */,
 				7FDF7D752463640500D83A14 /* Main.storyboard */,
-				7FDF7D832463653200D83A14 /* CameraViewController.swift */,
-				7FDF7D872463662F00D83A14 /* VideoPlayerView.swift */,
-				7FDF7D85246365B000D83A14 /* CameraPreview.swift */,
 				7FDF7D782463640600D83A14 /* Assets.xcassets */,
 				7FDF7D7A2463640600D83A14 /* LaunchScreen.storyboard */,
 				7FDF7D7D2463640600D83A14 /* Info.plist */,
 			);
 			path = iOSVideoApp;
+			sourceTree = "<group>";
+		};
+		7FDF7D8924636EE900D83A14 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7FDF7D8A24636EF000D83A14 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				7FDF7D832463653200D83A14 /* CameraViewController.swift */,
+				7FDF7D872463662F00D83A14 /* VideoPlayerView.swift */,
+				7FDF7D85246365B000D83A14 /* CameraPreview.swift */,
+				7FDF7D8C24636F2D00D83A14 /* VideoPostsCollectionViewController.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		7FDF7D8B24636EF500D83A14 /* controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,10 +172,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FDF7D86246365B000D83A14 /* CameraPreview.swift in Sources */,
-				7FDF7D742463640500D83A14 /* ViewController.swift in Sources */,
 				7FDF7D842463653200D83A14 /* CameraViewController.swift in Sources */,
 				7FDF7D702463640500D83A14 /* AppDelegate.swift in Sources */,
 				7FDF7D722463640500D83A14 /* SceneDelegate.swift in Sources */,
+				7FDF7D8D24636F2D00D83A14 /* VideoPostsCollectionViewController.swift in Sources */,
 				7FDF7D882463662F00D83A14 /* VideoPlayerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
