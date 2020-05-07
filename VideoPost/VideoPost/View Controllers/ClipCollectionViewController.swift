@@ -96,19 +96,15 @@ class ClipCollectionViewController: UICollectionViewController {
     */
 
     func createThumbnail(url : URL, fromTime:Float64 = 0.0) -> UIImage? {
-        let asset = AVAsset(url: url)
 
-        let assetImgGenerate = AVAssetImageGenerator(asset: asset)
-        assetImgGenerate.appliesPreferredTrackTransform = true
-        assetImgGenerate.requestedTimeToleranceAfter = CMTime.zero;
-        assetImgGenerate.requestedTimeToleranceBefore = CMTime.zero;
-
-        let time : CMTime = CMTimeMakeWithSeconds(fromTime, preferredTimescale: 600)
-
-        if let thumbnail = try? assetImgGenerate.copyCGImage(at:time, actualTime: nil) {
-            return UIImage(cgImage: thumbnail)
-        } else {
-            return nil
+        let asset = AVURLAsset(url: url, options: nil)
+        let imgGenerator = AVAssetImageGenerator(asset: asset)
+        let cgImage = try? imgGenerator.copyCGImage(at: CMTimeMake(value: 0, timescale: 1), actualTime: nil)
+        // !! check the error before proceeding
+        if let cgImage = cgImage{
+            let uiImage = UIImage(cgImage: cgImage)
+            return uiImage
         }
+        return nil
     }
 }
