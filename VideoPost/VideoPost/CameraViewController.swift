@@ -35,7 +35,8 @@ class CameraViewController: UIViewController {
 		super.viewDidLoad()
 
 		// Resize camera preview to fill the entire screen
-		cameraView.videoPlayerView.videoGravity = .resizeAspectFill
+        // TODO: ? How does this work?
+//		cameraView.videoPlayerView.videoGravity = .resizeAspectFill
         setUpCaptureSession()
 
         // Setup the Tap Gesture
