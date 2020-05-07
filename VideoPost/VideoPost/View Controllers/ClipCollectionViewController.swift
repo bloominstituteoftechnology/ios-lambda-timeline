@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 
-private let reuseIdentifier = "ClipCollectionViewCell"
+private let reuseIdentifier = "ClipCell"
 
 class ClipCollectionViewController: UICollectionViewController {
 
@@ -23,9 +23,15 @@ class ClipCollectionViewController: UICollectionViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        // FIXME: What is and why did this break the code?
+        // TODO: ? Why did this break my code?
+//        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
 
         // Do any additional setup after loading the view.
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        collectionView.reloadData()
     }
 
     // MARK: - Navigation
@@ -48,10 +54,13 @@ class ClipCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ClipCell", for: indexPath) as? ClipCollectionViewCell else { return UICollectionViewCell() }
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ClipCell", for: indexPath)
+
         // Configure the cell
-    
+        cell.clipName = clips[indexPath.item].0
+        cell.thumbnail = thumbnails[indexPath.item]
+
         return cell
     }
 
