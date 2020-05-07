@@ -139,7 +139,7 @@ class ImagePostViewController: UIViewController, UIImagePickerControllerDelegate
     func presentCustomFilterDetail(action: UIAlertAction!) {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CustomFilterDetailViewController") as? CustomFilterDetailViewController
         {
-            present(vc, animated: true, completion: nil)
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     
