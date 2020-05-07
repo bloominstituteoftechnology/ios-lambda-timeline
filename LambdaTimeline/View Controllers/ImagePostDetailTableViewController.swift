@@ -74,6 +74,50 @@ class ImagePostDetailTableViewController: UITableViewController {
         
         return cell
     }
+    // MARK: - COMMENT CONTROLS
+    func saveOnAudioVC(audio: ) {
+        post.comment
+        
+    }
+    
+    @IBAction func commentButtonClicked() {
+    let alert = UIAlertController(title: "Text or Audio Comment", message: "", style = .Alert)
+    
+        alert.addAction(UIAlertAction(title: "Text", style: .Default, handler: textClicked))
+        alert.addAction(UIAlertAction(title: "Audio", style: .Default, handler: doSomething))
+    }
+    
+    // MARK: - AUDIO COMMENT
+    
+    func audioClicked() {
+        
+        
+    }
+    
+    // MARK: - TEXT COMMENT
+        
+    func textClicked(sender : AnyObject){
+        let alertController = UIAlertController(title: "Enter Comment", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addTextFieldWithConfigurationHandler { (textField : UITextField!) -> Void in
+            textField.placeholder = "Enter Comment"
+        }
+        let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.Default, handler: { alert -> Void in
+            let firstTextField = alertController.textFields![0] as UITextField
+            postController.addComment(with text: firstTextField.text, to post: post)
+            
+        })
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {
+            (action : UIAlertAction!) -> Void in })
+        
+        
+        alertController.addAction(saveAction)
+        alertController.addAction(cancelAction)
+        }
+
+
+    
+    
+    
     
     var post: Post!
     var postController: PostController!
@@ -86,3 +130,4 @@ class ImagePostDetailTableViewController: UITableViewController {
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
 }
+

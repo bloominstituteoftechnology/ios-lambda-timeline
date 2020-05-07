@@ -13,7 +13,7 @@ import CoreImage.CIFilterBuiltins
 import Photos
 
 
-class CIThermalController: UIViewController {
+class HalftoneEffectVC: UIViewController {
     
     let filterName = "CIThermal"
     var filter: CIFilter?
@@ -43,6 +43,9 @@ class CIThermalController: UIViewController {
     }
     
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var centerSlider: UISlider!
+    @IBOutlet weak var widthSlider: UISlider!
+    @IBOutlet weak var sharpnessSlider: UISlider!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,10 +65,25 @@ class CIThermalController: UIViewController {
         let ciImage = CIImage(cgImage: cgImage)
         
         // TODO: show builtins filters
-        filter = CIFilter(name: "CIThermal")
+        filter = CIFilter(name: "CICircularTheme")
         // Filter ima
         
+        var center: [CGFloat] = [150.0, 150.0]
+        var newCenter: [CGFloat] = []
+        for x in center {
+            var a = x
+            a = x * CGFloat(centerSlider.value)
+            newCenter.append(a)
+        }
+        let b = CIVector(x: newCenter[0], y: newCenter[1])
+        filter.setValue(b, forKey: kCIInputCenterKey)
+        
         filter?.setValue(ciImage, forKey: kCIInputImageKey)
+        
+        filter?.setValue(NSNumber(widthSlider.value), forKey: kCIInputWidthKey)
+        filter?.setValue(NSNumber(sharpnessSlider.value), forKey: kCIInputSharpnessKey)
+        
+        
         
         // CIImage -> CGImage -> UIImage
         

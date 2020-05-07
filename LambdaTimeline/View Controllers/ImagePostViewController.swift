@@ -19,6 +19,20 @@ class ImagePostViewController: ShiftableViewController {
         updateViews()
     }
     
+    private func presentImagePickerController() {
+        
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            print("Error: The photo library is not available")
+            return
+        }
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
     func updateViews() {
         
         guard let imageData = imageData,
@@ -50,6 +64,9 @@ class ImagePostViewController: ShiftableViewController {
         imagePicker.sourceType = .photoLibrary
 
         present(imagePicker, animated: true, completion: nil)
+    }
+    @IBAction func chooseImageButtonPressed(_ sender: Any) {
+        presentImagePickerController()
     }
     
     @IBAction func createPost(_ sender: Any) {
