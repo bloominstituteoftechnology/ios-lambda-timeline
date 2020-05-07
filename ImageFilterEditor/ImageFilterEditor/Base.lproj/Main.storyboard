@@ -55,25 +55,8 @@
                                             </slider>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="Xqe-5A-HsY">
-                                        <rect key="frame" x="0.0" y="72.666666666666629" width="343" height="20.333333333333329"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Perspective" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LJb-cN-MKp">
-                                                <rect key="frame" x="0.0" y="0.0" width="90" height="20.333333333333332"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="OTt-ir-LDb">
-                                                <rect key="frame" x="109" y="0.0" width="236" height="21.333333333333332"/>
-                                                <connections>
-                                                    <action selector="filterSettingsChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="yHH-8x-W7R"/>
-                                                </connections>
-                                            </slider>
-                                        </subviews>
-                                    </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="hJP-FY-fUN">
-                                        <rect key="frame" x="0.0" y="109" width="343" height="20.333333333333343"/>
+                                        <rect key="frame" x="0.0" y="72.666666666666629" width="343" height="20.333333333333329"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sketchify" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aZc-nx-33H">
                                                 <rect key="frame" x="0.0" y="0.0" width="71.333333333333329" height="20.333333333333332"/>
@@ -90,7 +73,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="Uvs-B9-cnQ">
-                                        <rect key="frame" x="0.0" y="145.33333333333326" width="343" height="20.333333333333343"/>
+                                        <rect key="frame" x="0.0" y="109" width="343" height="20.333333333333343"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kaleidoscope" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bVY-RR-A9D">
                                                 <rect key="frame" x="0.0" y="0.0" width="103" height="20.333333333333332"/>
@@ -102,6 +85,23 @@
                                                 <rect key="frame" x="122" y="0.0" width="223" height="21.333333333333332"/>
                                                 <connections>
                                                     <action selector="filterSettingsChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="PCB-MG-JAQ"/>
+                                                </connections>
+                                            </slider>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="21" translatesAutoresizingMaskIntoConstraints="NO" id="Xqe-5A-HsY">
+                                        <rect key="frame" x="0.0" y="145.33333333333326" width="343" height="20.333333333333343"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Perspective" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LJb-cN-MKp">
+                                                <rect key="frame" x="0.0" y="0.0" width="90" height="20.333333333333332"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="OTt-ir-LDb">
+                                                <rect key="frame" x="109" y="0.0" width="236" height="21.333333333333332"/>
+                                                <connections>
+                                                    <action selector="filterSettingsChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="yHH-8x-W7R"/>
                                                 </connections>
                                             </slider>
                                         </subviews>
@@ -131,10 +131,10 @@
                     <connections>
                         <outlet property="imageView" destination="aSR-ON-kSI" id="kKF-9H-ZEM"/>
                         <outlet property="invertColorsSwitch" destination="PQM-aW-lOx" id="gCq-RG-bbG"/>
-                        <outlet property="slider1" destination="X8k-pi-F1Y" id="hec-e8-hpl"/>
-                        <outlet property="slider2" destination="OTt-ir-LDb" id="KGe-a0-zqA"/>
-                        <outlet property="slider3" destination="OvO-Hk-Duq" id="XgG-Yd-IPa"/>
-                        <outlet property="slider4" destination="dWu-k5-lyO" id="o7i-02-4bU"/>
+                        <outlet property="kaleidoscopeSlider" destination="dWu-k5-lyO" id="y5p-2r-gNd"/>
+                        <outlet property="lineOverlaySlider" destination="OvO-Hk-Duq" id="EI2-0r-TVC"/>
+                        <outlet property="perspectiveSlider" destination="OTt-ir-LDb" id="zdL-LQ-iGF"/>
+                        <outlet property="vignetteSlider" destination="X8k-pi-F1Y" id="SBY-Nc-bjb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

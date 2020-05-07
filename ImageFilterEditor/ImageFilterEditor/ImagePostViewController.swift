@@ -16,11 +16,9 @@ class ImagePostViewController: UIViewController {
     private let context = CIContext()
     
     // Filters
-    private let colorInvertFilter = CIFilter.colorInvert()
+    private let invertColorsFilter = CIFilter.colorInvert()
     private let vignetteFilter = CIFilter.vignette()
-    private let crystalizeFilter = CIFilter.crystallize()
     private let lineOverlayFilter = CIFilter.lineOverlay()
-    private let pointillizeFilter = CIFilter.pointillize()
     private let kaleidoscopeFilter = CIFilter.kaleidoscope()
     private let perspectiveTransformFilter = CIFilter.perspectiveTransform()
 //    private let crystalizeFilter = CIFilter.crystallize()
@@ -48,16 +46,16 @@ class ImagePostViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var slider1: UISlider!
-    @IBOutlet weak var slider2: UISlider!
-    @IBOutlet weak var slider3: UISlider!
-    @IBOutlet weak var slider4: UISlider!
-    @IBOutlet weak var invertColorsSwitch: UISwitch!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var invertColorsSwitch: UISwitch!
+    @IBOutlet weak var vignetteSlider: UISlider!
+    @IBOutlet weak var lineOverlaySlider: UISlider!
+    @IBOutlet weak var kaleidoscopeSlider: UISlider!
+    @IBOutlet weak var perspectiveSlider: UISlider!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         originalImage = imageView.image
     }
     
@@ -83,39 +81,39 @@ class ImagePostViewController: UIViewController {
         
         // Invert Colors
         if invertColorsSwitch.isOn {
-            colorInvertFilter.inputImage = outputImage
-            guard let filteredImage = colorInvertFilter.outputImage else { return originalImage! }
+            invertColorsFilter.inputImage = outputImage
+            guard let filteredImage = invertColorsFilter.outputImage else { return originalImage! }
             outputImage = filteredImage
         }
         
         // Vignette
-        if slider1.value > 0 {
+        if vignetteSlider.value > 0 {
             vignetteFilter.inputImage = outputImage
-            vignetteFilter.radius = slider1.value * 100
-            vignetteFilter.intensity = slider1.value * 2
+            vignetteFilter.radius = vignetteSlider.value * 100
+            vignetteFilter.intensity = vignetteSlider.value * 2
             if let filteredImage = vignetteFilter.outputImage {
                 outputImage = filteredImage
             }
         }
         
-        // Line Overlay
-        if slider3.value > 0 {
+        // Line Overlay (Sketchify)
+        if lineOverlaySlider.value > 0 {
             //lineOverlayFilter.inputImage = outputImage
             lineOverlayFilter.setValue(outputImage, forKey: kCIInputImageKey)
-            lineOverlayFilter.nrNoiseLevel = 0.09 - (slider3.value * 0.09)
-            lineOverlayFilter.edgeIntensity = 0.5 + (slider3.value * 2.0)
-            lineOverlayFilter.threshold = 0.5 - (slider3.value * 0.4)
+            lineOverlayFilter.nrNoiseLevel = 0.09 - (lineOverlaySlider.value * 0.09)
+            lineOverlayFilter.edgeIntensity = 0.5 + (lineOverlaySlider.value * 2.0)
+            lineOverlayFilter.threshold = 0.5 - (lineOverlaySlider.value * 0.4)
             if let filteredImage = lineOverlayFilter.outputImage {
                 outputImage = filteredImage
             }
         }
         
         // Kaleidoscope
-        if slider4.value > 0 {
+        if kaleidoscopeSlider.value > 0 {
             //kaleidoscopeFilter.inputImage = outputImage
             kaleidoscopeFilter.setValue(outputImage, forKey: kCIInputImageKey)
-            kaleidoscopeFilter.angle = slider4.value * Float.pi * 4
-            kaleidoscopeFilter.count = Int(slider4.value * 20)
+            kaleidoscopeFilter.angle = kaleidoscopeSlider.value * Float.pi * 4
+            kaleidoscopeFilter.count = Int(kaleidoscopeSlider.value * 20)
             kaleidoscopeFilter.center = CGPoint(x: outputImage.extent.midX,
                                                 y: outputImage.extent.midY)
             if let filteredImage = kaleidoscopeFilter.outputImage {
@@ -126,8 +124,8 @@ class ImagePostViewController: UIViewController {
         // PerspectiveTransform
         perspectiveTransformFilter.inputImage = outputImage
         let imageAspectRatio = outputImage.extent.width / outputImage.extent.height
-        let leftSideYOffset: CGFloat = slider2.value > 0.5 ? 0 : (CGFloat(0.5 - slider2.value) * 500)
-        let rightSideYOffset: CGFloat = slider2.value < 0.5 ? 0 : (CGFloat(slider2.value - 0.5) * 500)
+        let leftSideYOffset: CGFloat = perspectiveSlider.value > 0.5 ? 0 : (CGFloat(0.5 - perspectiveSlider.value) * 500)
+        let rightSideYOffset: CGFloat = perspectiveSlider.value < 0.5 ? 0 : (CGFloat(perspectiveSlider.value - 0.5) * 500)
         let leftSideXOffset: CGFloat = imageAspectRatio * leftSideYOffset * 2
         let rightSideXOffset: CGFloat = imageAspectRatio * rightSideYOffset * 2
         perspectiveTransformFilter.bottomLeft = CGPoint(x: outputImage.extent.minX + leftSideXOffset,
