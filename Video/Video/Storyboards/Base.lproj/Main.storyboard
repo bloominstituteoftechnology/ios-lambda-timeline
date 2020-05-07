@@ -50,6 +50,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eA5-oD-paC">
                                         <rect key="frame" x="0.0" y="116" width="214" height="30"/>
                                         <state key="normal" title="MapKit"/>
+                                        <connections>
+                                            <segue destination="55V-c1-JKW" kind="show" id="CnS-lZ-CfD"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -142,20 +145,35 @@
             </objects>
             <point key="canvasLocation" x="1792.753623188406" y="118.52678571428571"/>
         </scene>
-        <!--View Controller-->
+        <!--Video Map View Controller-->
         <scene sceneID="0VN-1J-htb">
             <objects>
-                <viewController id="55V-c1-JKW" sceneMemberID="viewController">
+                <viewController id="55V-c1-JKW" customClass="VideoMapViewController" customModule="Video" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="n74-Rg-D2F">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="vX7-ZN-aFd">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="vX7-ZN-aFd" firstAttribute="trailing" secondItem="91E-zH-aLF" secondAttribute="trailing" id="1yJ-CX-etV"/>
+                            <constraint firstItem="vX7-ZN-aFd" firstAttribute="top" secondItem="91E-zH-aLF" secondAttribute="top" id="M1h-nu-Adh"/>
+                            <constraint firstItem="vX7-ZN-aFd" firstAttribute="bottom" secondItem="91E-zH-aLF" secondAttribute="bottom" id="cqb-0L-NRh"/>
+                            <constraint firstItem="vX7-ZN-aFd" firstAttribute="leading" secondItem="91E-zH-aLF" secondAttribute="leading" id="knc-0e-50g"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="91E-zH-aLF"/>
                     </view>
+                    <navigationItem key="navigationItem" id="kDt-56-PAo"/>
+                    <connections>
+                        <outlet property="mapView" destination="vX7-ZN-aFd" id="P9b-vp-SoJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QkQ-vL-rqY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="993" y="807"/>
+            <point key="canvasLocation" x="419" y="907"/>
         </scene>
         <!--Videos Collection View Controller-->
         <scene sceneID="hWa-Z5-FLw">
@@ -243,7 +261,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="j1v-Xk-6lq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1802.8985507246377" y="775.44642857142856"/>
+            <point key="canvasLocation" x="1617" y="907"/>
         </scene>
         <!--Watch Video View Controller-->
         <scene sceneID="IQo-SK-ReN">
@@ -274,7 +292,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cxI-vb-b7Q" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2508.6956521739135" y="778.79464285714278"/>
+            <point key="canvasLocation" x="2330" y="907"/>
         </scene>
         <!--View Recording View Controller-->
         <scene sceneID="06J-z5-8Uh">
@@ -285,7 +303,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="6rB-Rp-9ns">
-                                <rect key="frame" x="20" y="744" width="374" height="108"/>
+                                <rect key="frame" x="20" y="686" width="374" height="166"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="   Video Name:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z5Y-xS-VEq">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
@@ -296,8 +314,17 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="zgo-rx-fkZ">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="   Author:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NA6-t0-Fg9">
                                         <rect key="frame" x="0.0" y="58" width="374" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemGray6Color" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="leI-Cx-5JM"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="zgo-rx-fkZ">
+                                        <rect key="frame" x="0.0" y="116" width="374" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="erv-aL-5Oi">
                                                 <rect key="frame" x="0.0" y="0.0" width="214" height="50"/>
@@ -333,7 +360,7 @@
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RyD-HU-VEJ" customClass="VideoPlayerView" customModule="Video" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="724"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="666"/>
                                 <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                         </subviews>
@@ -351,6 +378,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Eiz-IB-gSe"/>
                     <connections>
+                        <outlet property="authorTextField" destination="NA6-t0-Fg9" id="405-X8-fqF"/>
                         <outlet property="cancelButton" destination="erv-aL-5Oi" id="yIh-rv-qGV"/>
                         <outlet property="nameTextField" destination="z5Y-xS-VEq" id="F69-qY-QTX"/>
                         <outlet property="saveButton" destination="guJ-gP-GSu" id="OR8-L7-tU3"/>

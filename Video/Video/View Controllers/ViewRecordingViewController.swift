@@ -28,6 +28,7 @@ class ViewRecordingViewController: UIViewController {
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var authorTextField: UITextField!
     
     // MARK: - Properties
     private var player: AVPlayer!
@@ -62,6 +63,7 @@ class ViewRecordingViewController: UIViewController {
         cancelButton.layer.cornerRadius = 8
         saveButton.layer.cornerRadius = 8
         nameTextField.layer.cornerRadius = 8
+        authorTextField.layer.cornerRadius = 8
     }
     
     private func playMovie(url: URL?) {
@@ -85,9 +87,9 @@ class ViewRecordingViewController: UIViewController {
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
-        guard let videoName = nameTextField.text, !videoName.isEmpty else { return }
+        guard let videoName = nameTextField.text, !videoName.isEmpty, let author = authorTextField.text, !author.isEmpty else { return }
         guard let url = recordingURL else { return }
-        let video = Video(recordingURL: url, name: videoName, latitude: latitude, longitude: longitude, author: "")
+        let video = Video(recordingURL: url, name: videoName, latitude: latitude, longitude: longitude, author: author)
         videoController.videos.append(video)
         dismiss(animated: true, completion: nil)
     }
