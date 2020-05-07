@@ -17,13 +17,14 @@ enum MediaType: String {
 
 class Post {
     
-    init(title: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date()) {
+    init(title: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date(), geoTag: CLLocationCoordinate2D?) {
         self.mediaURL = mediaURL
         self.ratio = ratio
         self.mediaType = .image
         self.author = author
         self.comments = [Comment(text: title, author: author)]
         self.timestamp = timestamp
+        self.geotag = geoTag
     }
     
     init?(dictionary: [String : Any], id: String) {
@@ -43,6 +44,7 @@ class Post {
         self.timestamp = Date(timeIntervalSince1970: timestampTimeInterval)
         self.comments = captionDictionaries.compactMap({ Comment(dictionary: $0) })
         self.id = id
+        self.geotag = dictionary[Post.geoKey] as? CLLocationCoordinate2D
     }
     
     var dictionaryRepresentation: [String : Any] {
@@ -66,6 +68,7 @@ class Post {
     var comments: [Comment]
     var id: String?
     var ratio: CGFloat?
+    let geotag: CLLocationCoordinate2D?
     
     var title: String? {
         return comments.first?.text
@@ -78,4 +81,5 @@ class Post {
     static private let commentsKey = "comments"
     static private let timestampKey = "timestamp"
     static private let idKey = "id"
+    static private let geoKey = "geoTag"
 }
