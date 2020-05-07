@@ -38,8 +38,17 @@ class CameraViewController: UIViewController {
 		cameraView.videoPlayerView.videoGravity = .resizeAspectFill
         setUpCaptureSession()
 
+        // Setup the Tap Gesture
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
         view.addGestureRecognizer(tapGesture)
+
+        // Increase the size of the start/stop button
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 48, weight: .regular, scale: .large)
+        let largeStart = UIImage(systemName: "camera.fill", withConfiguration: largeConfig)
+        recordButton.setImage(largeStart, for: .normal)
+
+        let largeStop = UIImage(systemName: "stop.circle.fill", withConfiguration: largeConfig)
+        recordButton.setImage(largeStop, for: .selected)
     }
 
     @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
