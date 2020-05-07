@@ -22,7 +22,10 @@ class ImagePostViewController: UIViewController, UIImagePickerControllerDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        if imageView.image == nil {
+            self.navigationItem.rightBarButtonItem?.isEnabled = false
+            self.navigationItem.leftBarButtonItem?.isEnabled = false
+        }
     }
     
     
@@ -40,6 +43,8 @@ class ImagePostViewController: UIViewController, UIImagePickerControllerDelegate
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
+        self.navigationItem.rightBarButtonItem?.isEnabled = true
+        self.navigationItem.leftBarButtonItem?.isEnabled = true
     }
     
     
@@ -49,6 +54,8 @@ class ImagePostViewController: UIViewController, UIImagePickerControllerDelegate
         imagePicker.sourceType = UIImagePickerController.SourceType.photoLibrary
         imagePicker.delegate = self
         present(imagePicker, animated: true, completion: nil)
+        self.navigationItem.rightBarButtonItem?.isEnabled = true
+        self.navigationItem.leftBarButtonItem?.isEnabled = true
     }
     
     
