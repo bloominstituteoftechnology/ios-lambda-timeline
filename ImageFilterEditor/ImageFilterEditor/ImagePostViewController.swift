@@ -76,22 +76,26 @@ class ImagePostViewController: UIViewController {
     }
     
     private func image(byFiltering inputImage: CIImage) -> UIImage {
+        
         var outputImage = inputImage
         
         // Invert Colors
         if invertColorsSwitch.isOn {
-            colorInvertFilter.inputImage = inputImage
+            colorInvertFilter.inputImage = outputImage
             guard let filteredImage = colorInvertFilter.outputImage else { return originalImage! }
             outputImage = filteredImage
         }
         
         // Vignette
-        vignetteFilter.inputImage = outputImage
-        vignetteFilter.radius = slider1.value * 30
-        vignetteFilter.intensity = slider1.value * 2
-        guard let filteredImage = vignetteFilter.outputImage else { return originalImage! }
-        outputImage = filteredImage
-        
+        if slider1.value > 0 {
+            vignetteFilter.inputImage = outputImage
+            vignetteFilter.radius = slider1.value * 100
+            vignetteFilter.intensity = slider1.value * 2
+            if let filteredImage = vignetteFilter.outputImage {
+                outputImage = filteredImage
+            }
+        }
+        //print(crystalizeFilter.attributes)
         // Crystalize
         
         
@@ -100,6 +104,17 @@ class ImagePostViewController: UIViewController {
         
         // Pointillize
         
+        // Line Overlay
+        if slider3.value > 0 {
+            //lineOverlayFilter.inputImage = outputImage
+            lineOverlayFilter.setValue(outputImage, forKey: kCIInputImageKey)
+            lineOverlayFilter.nrNoiseLevel = 0.09 - (slider3.value * 0.09)
+            lineOverlayFilter.edgeIntensity = 0.5 + (slider3.value * 2.0)
+            lineOverlayFilter.threshold = 0.5 - (slider3.value * 0.4)
+            if let filteredImage = lineOverlayFilter.outputImage {
+                outputImage = filteredImage
+            }
+        }
         
         // Kaleidoscope
         
