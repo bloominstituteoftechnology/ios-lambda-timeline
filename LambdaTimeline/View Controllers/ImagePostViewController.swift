@@ -63,19 +63,41 @@ class ImagePostViewController: ShiftableViewController {
             presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
             return
         }
-        
-        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
-            guard success else {
-                DispatchQueue.main.async {
-                    self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
-                }
+
+        // Check if we have a valid location after requesting it
+        if addLocationSwitch.isOn {
+            guard let location = locationManager.location else {
+                self.presentInformationalAlertController(title: "Location Error", message: "Error fetching your location. Please wait a couple seconds and try again.")
                 return
             }
-            
-            DispatchQueue.main.async {
-                self.navigationController?.popViewController(animated: true)
+            postController.createPost(with: title, ofType: .image, mediaData: imageData, geoTag: location.coordinate, ratio: imageView.image?.ratio) { success in
+                guard success else {
+                    DispatchQueue.main.async {
+                        self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
+                    }
+                    return
+                }
+
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+
+        } else {
+            postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
+                guard success else {
+                    DispatchQueue.main.async {
+                        self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
+                    }
+                    return
+                }
+
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
             }
         }
+
     }
     
     @IBAction func chooseImage(_ sender: Any) {
@@ -124,8 +146,7 @@ class ImagePostViewController: ShiftableViewController {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
-            locationManager.requestLocation()
-            print(locationManager.location)
+            if addLocationSwitch.isOn { locationManager.requestLocation() }
         } else {
             addLocationSwitch.isOn = false
         }
@@ -169,5 +190,8 @@ extension ImagePostViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         print("locations = \(locValue.latitude) and \(locValue.longitude)")
+    }
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        NSLog("location manager failed: \(error)")
     }
 }
