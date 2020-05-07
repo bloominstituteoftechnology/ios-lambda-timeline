@@ -17,7 +17,7 @@ enum MediaType: String {
 
 class Post: NSObject {
     
-    init(title: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date(), geoTag: CLLocationCoordinate2D?) {
+    init(title: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date(), geoTag: CLLocationCoordinate2D? = nil) {
         self.mediaURL = mediaURL
         self.ratio = ratio
         self.mediaType = .image
@@ -48,6 +48,8 @@ class Post: NSObject {
         if let latitude = dictionary[Post.latKey] as? Double,
             let longitude = dictionary[Post.longKey] as? Double {
             self.geotag = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        } else {
+            self.geotag = nil
         }
     }
     
