@@ -107,7 +107,7 @@ class AudioRecorderController: UIViewController {
             }
         }
     }
-    }
+
     func cancelTimer() {
         timer?.invalidate()
         timer = nil
@@ -254,6 +254,7 @@ class AudioRecorderController: UIViewController {
         }
         
     }
+}
 
 
 extension AudioRecorderController: AVAudioPlayerDelegate {

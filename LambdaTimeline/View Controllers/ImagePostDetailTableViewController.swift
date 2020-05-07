@@ -75,8 +75,8 @@ class ImagePostDetailTableViewController: UITableViewController {
         return cell
     }
     // MARK: - COMMENT CONTROLS
-    func saveOnAudioVC(audio: ) {
-        post.comment
+    func saveOnAudioVC(audio: URL) {
+        post.comment. 
         
     }
     
@@ -84,14 +84,13 @@ class ImagePostDetailTableViewController: UITableViewController {
     let alert = UIAlertController(title: "Text or Audio Comment", message: "", style = .Alert)
     
         alert.addAction(UIAlertAction(title: "Text", style: .Default, handler: textClicked))
-        alert.addAction(UIAlertAction(title: "Audio", style: .Default, handler: doSomething))
+        alert.addAction(UIAlertAction(title: "Audio", style: .Default, handler: audioClicked))
     }
     
     // MARK: - AUDIO COMMENT
     
-    func audioClicked() {
-        
-        
+    func audioClickedOnOtherVC(url: URL) {
+        postController.addAudioComment(url: url, post: post)
     }
     
     // MARK: - TEXT COMMENT
@@ -103,7 +102,7 @@ class ImagePostDetailTableViewController: UITableViewController {
         }
         let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.Default, handler: { alert -> Void in
             let firstTextField = alertController.textFields![0] as UITextField
-            postController.addComment(with text: firstTextField.text, to post: post)
+            postController.addComment(text: firstTextField.text, post: post)
             
         })
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {
@@ -122,12 +121,13 @@ class ImagePostDetailTableViewController: UITableViewController {
     var post: Post!
     var postController: PostController!
     var imageData: Data?
-    
+    var audioRecorderVC: Audio
     
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
+    
 }
 
