@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		92516521246399C80094DEB6 /* ClipCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92516520246399C80094DEB6 /* ClipCollectionViewController.swift */; };
+		925165232463B16D0094DEB6 /* ClipCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925165222463B16D0094DEB6 /* ClipCollectionViewCell.swift */; };
 		92D057A12463626700696A1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D057A02463626700696A1A /* AppDelegate.swift */; };
 		92D057A32463626700696A1A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D057A22463626700696A1A /* SceneDelegate.swift */; };
 		92D057A82463626700696A1A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92D057A62463626700696A1A /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		92516520246399C80094DEB6 /* ClipCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipCollectionViewController.swift; sourceTree = "<group>"; };
+		925165222463B16D0094DEB6 /* ClipCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipCollectionViewCell.swift; sourceTree = "<group>"; };
 		92D0579D2463626700696A1A /* VideoPost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoPost.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92D057A02463626700696A1A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92D057A22463626700696A1A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,6 +45,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		925165242463B18A0094DEB6 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				92D057B6246365F800696A1A /* CameraViewController.swift */,
+				92516520246399C80094DEB6 /* ClipCollectionViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		925165252463B1A50094DEB6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				92D057BA2463694F00696A1A /* CameraPreviewView.swift */,
+				92D057B82463689500696A1A /* VideoPlayerView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		92D057942463626700696A1A = {
 			isa = PBXGroup;
 			children = (
@@ -62,12 +82,11 @@
 		92D0579F2463626700696A1A /* VideoPost */ = {
 			isa = PBXGroup;
 			children = (
-				92D057BA2463694F00696A1A /* CameraPreviewView.swift */,
-				92D057B6246365F800696A1A /* CameraViewController.swift */,
-				92516520246399C80094DEB6 /* ClipCollectionViewController.swift */,
+				925165222463B16D0094DEB6 /* ClipCollectionViewCell.swift */,
 				92D057B4246364D800696A1A /* Resources */,
 				92D057B5246364E600696A1A /* Storyboards */,
-				92D057B82463689500696A1A /* VideoPlayerView.swift */,
+				925165242463B18A0094DEB6 /* View Controllers */,
+				925165252463B1A50094DEB6 /* Views */,
 			);
 			path = VideoPost;
 			sourceTree = "<group>";
@@ -164,6 +183,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				92D057B7246365F800696A1A /* CameraViewController.swift in Sources */,
+				925165232463B16D0094DEB6 /* ClipCollectionViewCell.swift in Sources */,
 				92D057A12463626700696A1A /* AppDelegate.swift in Sources */,
 				92D057BB2463694F00696A1A /* CameraPreviewView.swift in Sources */,
 				92D057A32463626700696A1A /* SceneDelegate.swift in Sources */,
