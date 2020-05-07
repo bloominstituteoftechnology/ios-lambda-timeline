@@ -111,17 +111,19 @@ class CameraViewController: UIViewController {
         let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
         return fileURL
     }
-    
 
-    /*
     // MARK: - Navigation
 
+    var editURL: URL!
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "PreviewModalSegue" {
+            guard let detailVC = segue.destination as? EditVideoViewController else { return }
+            detailVC.videoURL = editURL
+        }
     }
-    */
 
 }
 
@@ -131,7 +133,8 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
             print("Error saving video: \(error)")
         } else {
             // show movie
-//            playMovie(url: outputFileURL)
+            editURL = outputFileURL
+            performSegue(withIdentifier: "PreviewModalSegue", sender: self)
         }
         updateViews()
     }

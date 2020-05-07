@@ -141,15 +141,15 @@
             </objects>
             <point key="canvasLocation" x="1063.768115942029" y="138.61607142857142"/>
         </scene>
-        <!--Camera View Controller-->
+        <!--Edit Video View Controller-->
         <scene sceneID="zfA-TL-sfs">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="OC7-ZP-XvA" customClass="CameraViewController" customModule="iosVideo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="OC7-ZP-XvA" customClass="EditVideoViewController" customModule="iosVideo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="U3r-RK-IXf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ZN-O9-Oim" customClass="CameraPreviewView" customModule="iosVideo" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9ZN-O9-Oim" customClass="VideoPlayerView" customModule="iosVideo" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <view userInteractionEnabled="NO" alpha="0.45000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3ML-4t-mLX">
@@ -196,19 +196,29 @@
                                     <constraint firstItem="yxX-Uk-7xm" firstAttribute="centerX" secondItem="9ZN-O9-Oim" secondAttribute="centerX" id="yIa-Ly-VTA"/>
                                 </constraints>
                             </view>
+                            <textField opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Video tiltle" borderStyle="roundedRect" placeholder="Video Title:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QTo-PT-qHX">
+                                <rect key="frame" x="0.0" y="44" width="414" height="34"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="9ZN-O9-Oim" firstAttribute="centerX" secondItem="U3r-RK-IXf" secondAttribute="centerX" id="I1U-2M-EtT"/>
                             <constraint firstItem="9ZN-O9-Oim" firstAttribute="centerY" secondItem="U3r-RK-IXf" secondAttribute="centerY" id="P4N-R4-ze5"/>
+                            <constraint firstItem="QTo-PT-qHX" firstAttribute="top" secondItem="BTk-PP-sCV" secondAttribute="top" id="XR4-ao-Zwf"/>
                             <constraint firstItem="9ZN-O9-Oim" firstAttribute="height" secondItem="U3r-RK-IXf" secondAttribute="height" id="ewc-hU-7R4"/>
+                            <constraint firstItem="QTo-PT-qHX" firstAttribute="width" secondItem="9ZN-O9-Oim" secondAttribute="width" id="o7B-Gl-YP5"/>
+                            <constraint firstItem="QTo-PT-qHX" firstAttribute="centerX" secondItem="U3r-RK-IXf" secondAttribute="centerX" id="sdv-dI-JeL"/>
                             <constraint firstItem="9ZN-O9-Oim" firstAttribute="width" secondItem="U3r-RK-IXf" secondAttribute="width" id="zRQ-S7-eKm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="BTk-PP-sCV"/>
                     </view>
                     <navigationItem key="navigationItem" id="5l8-9T-2k3"/>
                     <connections>
-                        <outlet property="cameraView" destination="9ZN-O9-Oim" id="mBv-tn-LrE"/>
+                        <outlet property="playerView" destination="9ZN-O9-Oim" id="RXD-vb-019"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rdb-EJ-wiD" sceneMemberID="firstResponder"/>
