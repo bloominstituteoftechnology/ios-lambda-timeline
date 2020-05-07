@@ -74,6 +74,12 @@ class ImagePostViewController: UIViewController {
     private func image(byFiltering inputImage: CIImage) -> UIImage {
         var outputImage = inputImage
         
+        if invertColorsSwitch.isOn {
+            colorInvertFilter.inputImage = inputImage
+            guard let filteredImage = colorInvertFilter.outputImage else { return originalImage! }
+            outputImage = filteredImage
+        }
+        
         // TODO: Assign values to filter properties and apply filter for each filter type
 
         guard let renderedImage = context.createCGImage(outputImage, from: inputImage.extent) else { return originalImage! }
