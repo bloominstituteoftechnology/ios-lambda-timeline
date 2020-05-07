@@ -9,5 +9,26 @@
 import UIKit
 
 class ClipCollectionViewCell: UICollectionViewCell {
-    
+
+    // MARK: - Properites
+    var clipName: String? {
+        didSet {
+            clipNameLabel.text = clipName
+        }
+    }
+
+    var thumbnail: UIImage? {
+        didSet {
+            thumbnailView.image = thumbnail
+        }
+    }
+    // MARK: - Actions
+
+    // MARK: - Outlets
+
+    @IBOutlet weak var clipNameLabel: UILabel!
+    @IBOutlet weak var thumbnailView: UIImageView!
+
+    // MARK: - Private
+
 }
