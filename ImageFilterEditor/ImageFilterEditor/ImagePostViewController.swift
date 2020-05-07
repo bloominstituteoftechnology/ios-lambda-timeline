@@ -117,7 +117,17 @@ class ImagePostViewController: UIViewController {
         }
         
         // Kaleidoscope
-        
+        if slider4.value > 0 {
+            //kaleidoscopeFilter.inputImage = outputImage
+            kaleidoscopeFilter.setValue(outputImage, forKey: kCIInputImageKey)
+            kaleidoscopeFilter.angle = slider4.value * Float.pi * 4
+            kaleidoscopeFilter.count = Int(slider4.value * 20)
+            kaleidoscopeFilter.center = CGPoint(x: outputImage.extent.midX,
+                                                y: outputImage.extent.midY)
+            if let filteredImage = kaleidoscopeFilter.outputImage {
+                outputImage = filteredImage
+            }
+        }
         
         // PerspectiveTransform
         
