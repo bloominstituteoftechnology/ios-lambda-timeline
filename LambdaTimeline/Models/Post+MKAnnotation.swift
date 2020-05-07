@@ -13,11 +13,11 @@ extension Post: MKAnnotation {
         guard let geotag = geotag else { return CLLocationCoordinate2D() }
         return geotag
     }
-    
+
     var title: String? {
         self.comments[0].text
     }
-    
+
     var subtitle: String? {
         self.author.displayName
     }
