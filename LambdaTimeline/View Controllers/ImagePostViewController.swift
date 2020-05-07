@@ -17,7 +17,6 @@ class ImagePostViewController: ShiftableViewController {
         super.viewDidLoad()
         
         setImageViewHeight(with: 1.0)
-        addLocationSwitch.isOn = CLLocationManager.locationServicesEnabled()
 
         updateViews()
     }
@@ -121,10 +120,14 @@ class ImagePostViewController: ShiftableViewController {
         locationManager.requestWhenInUseAuthorization()
 
         if CLLocationManager.locationServicesEnabled() {
-            addLocationSwitch.isOn = CLLocationManager.locationServicesEnabled()
+            print("We in here")
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
+            locationManager.requestLocation()
+            print(locationManager.location)
+        } else {
+            addLocationSwitch.isOn = false
         }
     }
 
