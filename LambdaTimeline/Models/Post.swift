@@ -15,7 +15,7 @@ enum MediaType: String {
     case audio
 }
 
-class Post {
+class Post: NSObject {
     
     init(title: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date(), geoTag: CLLocationCoordinate2D?) {
         self.mediaURL = mediaURL
@@ -69,10 +69,6 @@ class Post {
     var id: String?
     var ratio: CGFloat?
     let geotag: CLLocationCoordinate2D?
-    
-    var title: String? {
-        return comments.first?.text
-    }
     
     static private let mediaKey = "media"
     static private let ratioKey = "ratio"
