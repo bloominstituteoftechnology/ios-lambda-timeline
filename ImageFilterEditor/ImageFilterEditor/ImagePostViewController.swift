@@ -23,6 +23,8 @@ class ImagePostViewController: UIViewController {
     private let pointillizeFilter = CIFilter.pointillize()
     private let kaleidoscopeFilter = CIFilter.kaleidoscope()
     private let perspectiveTransformFilter = CIFilter.perspectiveTransform()
+//    private let crystalizeFilter = CIFilter.crystallize()
+//    private let pointillizeFilter = CIFilter.pointillize()
     
     var originalImage: UIImage? {
         didSet {
@@ -95,14 +97,6 @@ class ImagePostViewController: UIViewController {
                 outputImage = filteredImage
             }
         }
-        //print(crystalizeFilter.attributes)
-        // Crystalize
-        
-        
-        // Line Overlay
-        
-        
-        // Pointillize
         
         // Line Overlay
         if slider3.value > 0 {
@@ -147,6 +141,36 @@ class ImagePostViewController: UIViewController {
         if let filteredImage = perspectiveTransformFilter.outputImage {
             outputImage = filteredImage
         }
+        
+        // I could not figure out how to get the crystalize and pointillize filters to work
+        
+        // Crystalize
+        /*
+        if slider2.value > 0 {
+            //crystalizeFilter.inputImage = outputImage
+            crystalizeFilter.setValue(outputImage, forKey: kCIInputImageKey)
+            crystalizeFilter.radius = slider2.value * 10
+            crystalizeFilter.center = CGPoint(x: outputImage.extent.midX,
+                                              y: outputImage.extent.midY)
+            if let filteredImage = crystalizeFilter.outputImage {
+                outputImage = filteredImage
+            }
+        }
+        */
+        
+        // Pointillize
+        /*
+        if slider2.value > 0 {
+            //crystalizeFilter.inputImage = outputImage
+            pointillizeFilter.setValue(outputImage, forKey: kCIInputImageKey)
+            pointillizeFilter.radius = slider2.value * 60
+            pointillizeFilter.center = CGPoint(x: outputImage.extent.midX,
+                                               y: outputImage.extent.midY)
+            if let filteredImage = pointillizeFilter.outputImage {
+                outputImage = filteredImage
+            }
+        }
+        */
         
         guard let renderedImage = context.createCGImage(outputImage, from: inputImage.extent) else { return originalImage! }
         
