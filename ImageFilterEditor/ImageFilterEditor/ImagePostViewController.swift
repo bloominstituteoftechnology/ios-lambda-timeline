@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreImage
+import Photos
 
 class ImagePostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -20,7 +22,6 @@ class ImagePostViewController: UIViewController, UIImagePickerControllerDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view.
     }
     
@@ -49,7 +50,7 @@ class ImagePostViewController: UIViewController, UIImagePickerControllerDelegate
         imagePicker.delegate = self
         present(imagePicker, animated: true, completion: nil)
     }
-
+    
     
     @IBAction func actionFilter(sender: AnyObject) {
         let actionSheet = UIAlertController(title: "Choose filter", message: nil, preferredStyle: .actionSheet)
@@ -64,6 +65,26 @@ class ImagePostViewController: UIViewController, UIImagePickerControllerDelegate
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(actionSheet, animated: true, completion: nil)
     }
+    
+    @IBAction func savePhotoButtonPressed(_ sender: Any) {
+        if let pickedImage = imageView.image {
+            UIImageWriteToSavedPhotosAlbum(pickedImage, self, #selector(saveImageToLibrary(_:didFinishSavingWithError:contextInfo:)), nil)
+        }
+        
+    }
+    @objc func saveImageToLibrary (_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+        if let error = error {
+            let ac = UIAlertController(title: "Save error", message: error.localizedDescription, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        } else {
+            let ac = UIAlertController(title: "Saved!", message: "Your filtered image has been saved to your Photos Library.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+        }
+    }
+    
+    
     
     //MARK: -  Helper functions
     func handleFilterSelection(action: UIAlertAction!) {
