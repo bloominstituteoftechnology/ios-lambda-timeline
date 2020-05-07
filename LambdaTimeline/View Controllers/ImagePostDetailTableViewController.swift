@@ -30,35 +30,6 @@ class ImagePostDetailTableViewController: UITableViewController {
     
     // MARK: - Table view data source
     
-    @IBAction func createComment(_ sender: Any) {
-        
-        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
-        
-        var commentTextField: UITextField?
-        
-        alert.addTextField { (textField) in
-            textField.placeholder = "Comment:"
-            commentTextField = textField
-        }
-        
-        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
-            
-            guard let commentText = commentTextField?.text else { return }
-            
-            self.postController.addComment(with: commentText, to: &self.post!)
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(addCommentAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true, completion: nil)
-    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return (post?.comments.count ?? 0) - 1
@@ -76,41 +47,51 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     // MARK: - COMMENT CONTROLS
     func saveOnAudioVC(audio: URL) {
-        post.comment. 
+        post.comments.append(Comment(text: nil, audio: audio, author: post.author))
         
     }
     
     @IBAction func commentButtonClicked() {
-    let alert = UIAlertController(title: "Text or Audio Comment", message: "", style = .Alert)
+        let alert = UIAlertController(title: "Text or Audio Comment", message: "", preferredStyle: .alert)
     
-        alert.addAction(UIAlertAction(title: "Text", style: .Default, handler: textClicked))
-        alert.addAction(UIAlertAction(title: "Audio", style: .Default, handler: audioClicked))
+        alert.addAction(UIAlertAction(title: "Text", style: .default, handler: textClicked))
+        let audioRecorderVC = AudioRecorderController()
+        alert.addAction(UIAlertAction(title: "Audio", style: .default, handler: { (UIAlertAction) -> Void in  self.present(audioRecorderVC, animated: true, completion: nil)}))
+        present(alert, animated: true, completion: nil)
     }
     
     // MARK: - AUDIO COMMENT
     
-    func audioClickedOnOtherVC(url: URL) {
-        postController.addAudioComment(url: url, post: post)
+    func audioClicked(url: URL) {
+        postController.addAudioComment(with: url, to: &post)
     }
     
     // MARK: - TEXT COMMENT
         
     func textClicked(sender : AnyObject){
-        let alertController = UIAlertController(title: "Enter Comment", message: "", preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addTextFieldWithConfigurationHandler { (textField : UITextField!) -> Void in
+        let alertController = UIAlertController(title: "Enter Comment", message: "", preferredStyle: UIAlertController.Style.alert)
+        alertController.addTextField { (textField : UITextField!) -> Void in
             textField.placeholder = "Enter Comment"
         }
-        let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.Default, handler: { alert -> Void in
+        let saveAction = UIAlertAction(title: "Save", style: UIAlertAction.Style.default, handler: { alert -> Void in
             let firstTextField = alertController.textFields![0] as UITextField
-            postController.addComment(text: firstTextField.text, post: post)
+            guard let a = firstTextField.text  else {
+                let alertCon = UIAlertController(title: "Enter comment to save!", message: "", preferredStyle: UIAlertController.Style.alert)
+                let okAction = UIAlertAction(title: "Okay", style: UIAlertAction.Style.default, handler: nil)
+                alertCon.addAction(okAction)
+                return }
+            self.postController.addComment(with: a, to: &self.post)
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
             
         })
-        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {
-            (action : UIAlertAction!) -> Void in })
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: nil)
         
         
         alertController.addAction(saveAction)
         alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
         }
 
 
@@ -121,7 +102,7 @@ class ImagePostDetailTableViewController: UITableViewController {
     var post: Post!
     var postController: PostController!
     var imageData: Data?
-    var audioRecorderVC: Audio
+    var audioRecorderVC: AudioRecorderController?
     
     
     @IBOutlet weak var imageView: UIImageView!

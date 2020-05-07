@@ -352,7 +352,7 @@
                     <navigationItem key="navigationItem" title="Title" id="ZF5-WY-6Y2">
                         <barButtonItem key="rightBarButtonItem" title="Comment" id="xrT-JD-ey3">
                             <connections>
-                                <action selector="createComment:" destination="OyM-8q-Icp" id="2IY-cQ-DLq"/>
+                                <action selector="commentButtonClicked" destination="OyM-8q-Icp" id="ORA-kq-RCF"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -687,10 +687,10 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="f36-El-7iK" userLabel="Saturation">
-                                                        <rect key="frame" x="0.0" y="119.5" width="382" height="64.5"/>
+                                                        <rect key="frame" x="0.0" y="119.5" width="382" height="67"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" ambiguous="YES" text="Saturation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tuR-J4-uvh" userLabel="Saturation">
-                                                                <rect key="frame" x="0.0" y="0.0" width="382" height="26.5"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Saturation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tuR-J4-uvh" userLabel="Saturation">
+                                                                <rect key="frame" x="0.0" y="0.0" width="382" height="29"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="29" id="gZP-ev-9lX"/>
                                                                 </constraints>
@@ -698,13 +698,13 @@
                                                                 <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="6GS-Vd-zoP" userLabel="Saturation Slider">
-                                                                <rect key="frame" x="-2" y="34.5" width="386" height="31"/>
+                                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="6GS-Vd-zoP" userLabel="Saturation Slider">
+                                                                <rect key="frame" x="-2" y="37" width="386" height="31"/>
                                                             </slider>
                                                         </subviews>
                                                     </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OOb-Na-GqW">
-                                                        <rect key="frame" x="94" y="184" width="194" height="57.5"/>
+                                                        <rect key="frame" x="94" y="186.5" width="194" height="58"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                                         <state key="normal" title="Save Photo">
                                                             <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -714,7 +714,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L4s-nQ-vqc">
-                                                        <rect key="frame" x="70" y="241.5" width="242" height="53.5"/>
+                                                        <rect key="frame" x="70" y="244.5" width="242" height="50.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                                         <state key="normal" title="Choose Photo">
                                                             <color key="titleColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1231,7 +1231,7 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3xE-h4-tF0" customClass="AudioVisualizer" customModule="SimpleAudioRecorder" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3xE-h4-tF0" customClass="AudioVisualizer" customModule="LambdaTimeline" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="88" width="414" height="690"/>
                             </view>
                         </subviews>

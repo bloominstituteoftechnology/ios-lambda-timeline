@@ -69,11 +69,23 @@
 		E32BDBE624642C9300EBC8A4 /* CIDiskBlurController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIDiskBlurController.swift; sourceTree = "<group>"; };
 		E32BDBE724642C9300EBC8A4 /* CIBloomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CIBloomController.swift; sourceTree = "<group>"; };
 		E32BDBEB24642C9300EBC8A4 /* UIImage+Scaling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Scaling.swift"; sourceTree = "<group>"; };
-		E32BDBED24642C9300EBC8A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E32BDBF024642C9300EBC8A4 /* Filters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filters.swift; sourceTree = "<group>"; };
 		E32BDBF624643E6A00EBC8A4 /* AudioVisualizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioVisualizer.swift; sourceTree = "<group>"; };
 		E32BDBF824643E6F00EBC8A4 /* AudioRecorderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderController.swift; sourceTree = "<group>"; };
 		E32BDBFC24643E8000EBC8A4 /* piano.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = piano.mp3; sourceTree = "<group>"; };
+		E32BDC112464BBF700EBC8A4 /* EarthquakesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EarthquakesViewController.swift; sourceTree = "<group>"; };
+		E32BDC122464BBF700EBC8A4 /* Quake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quake.swift; sourceTree = "<group>"; };
+		E32BDC132464BBF700EBC8A4 /* QuakeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuakeDetailView.swift; sourceTree = "<group>"; };
+		E32BDC142464BBF700EBC8A4 /* QuakeResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuakeResults.swift; sourceTree = "<group>"; };
+		E32BDC152464BBF700EBC8A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E32BDC162464BBF700EBC8A4 /* Quake+MKAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Quake+MKAnnotation.swift"; sourceTree = "<group>"; };
+		E32BDC182464BBF700EBC8A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E32BDC192464BBF700EBC8A4 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		E32BDC1A2464BBF700EBC8A4 /* QuakeFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuakeFetcher.swift; sourceTree = "<group>"; };
+		E32BDC1B2464BBF700EBC8A4 /* Quake.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Quake.json; sourceTree = "<group>"; };
+		E32BDC1C2464BBF700EBC8A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E32BDC1D2464BBF700EBC8A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E32BDC1E2464BBF700EBC8A4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +130,7 @@
 		4646377A216FDE4B00E7FF73 /* LambdaTimeline */ = {
 			isa = PBXGroup;
 			children = (
+				E32BDC102464BBF700EBC8A4 /* Quakes */,
 				E32BDBF524643E5B00EBC8A4 /* Audio Recorder */,
 				E32BDBE024642C9300EBC8A4 /* ImageManipulator */,
 				46CFE7042171572900E7FF73 /* Views */,
@@ -232,7 +245,6 @@
 			children = (
 				E32BDBE124642C9300EBC8A4 /* FilterVCs */,
 				E32BDBEB24642C9300EBC8A4 /* UIImage+Scaling.swift */,
-				E32BDBEC24642C9300EBC8A4 /* LaunchScreen.storyboard */,
 				E32BDBF024642C9300EBC8A4 /* Filters.swift */,
 			);
 			path = ImageManipulator;
@@ -259,6 +271,26 @@
 				E32BDBF824643E6F00EBC8A4 /* AudioRecorderController.swift */,
 			);
 			path = "Audio Recorder";
+			sourceTree = "<group>";
+		};
+		E32BDC102464BBF700EBC8A4 /* Quakes */ = {
+			isa = PBXGroup;
+			children = (
+				E32BDC112464BBF700EBC8A4 /* EarthquakesViewController.swift */,
+				E32BDC122464BBF700EBC8A4 /* Quake.swift */,
+				E32BDC132464BBF700EBC8A4 /* QuakeDetailView.swift */,
+				E32BDC142464BBF700EBC8A4 /* QuakeResults.swift */,
+				E32BDC152464BBF700EBC8A4 /* Assets.xcassets */,
+				E32BDC162464BBF700EBC8A4 /* Quake+MKAnnotation.swift */,
+				E32BDC172464BBF700EBC8A4 /* LaunchScreen.storyboard */,
+				E32BDC192464BBF700EBC8A4 /* Main.storyboard */,
+				E32BDC1A2464BBF700EBC8A4 /* QuakeFetcher.swift */,
+				E32BDC1B2464BBF700EBC8A4 /* Quake.json */,
+				E32BDC1C2464BBF700EBC8A4 /* AppDelegate.swift */,
+				E32BDC1D2464BBF700EBC8A4 /* Info.plist */,
+				E32BDC1E2464BBF700EBC8A4 /* SceneDelegate.swift */,
+			);
+			path = Quakes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -438,10 +470,10 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
-		E32BDBEC24642C9300EBC8A4 /* LaunchScreen.storyboard */ = {
+		E32BDC172464BBF700EBC8A4 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E32BDBED24642C9300EBC8A4 /* Base */,
+				E32BDC182464BBF700EBC8A4 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

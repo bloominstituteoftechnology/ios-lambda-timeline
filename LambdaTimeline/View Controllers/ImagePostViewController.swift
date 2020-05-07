@@ -19,20 +19,6 @@ class ImagePostViewController: ShiftableViewController {
         updateViews()
     }
     
-    private func presentImagePickerController() {
-        
-        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
-            print("Error: The photo library is not available")
-            return
-        }
-        
-        let imagePicker = UIImagePickerController()
-        imagePicker.sourceType = .photoLibrary
-        imagePicker.delegate = self
-        
-        present(imagePicker, animated: true, completion: nil)
-    }
-    
     func updateViews() {
         
         guard let imageData = imageData,
