@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="plT-I9-HvK">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Video Posts Collection View Controller-->
+        <scene sceneID="YLx-Go-wei">
+            <objects>
+                <collectionViewController id="FVq-mx-bg2" customClass="VideoPostsCollectionViewController" customModule="iOSVideoApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="wnA-wR-nGw">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="JhH-p0-RIN">
+                            <size key="itemSize" width="170" height="170"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="N8h-JG-Meg">
+                                <rect key="frame" x="0.0" y="0.0" width="170" height="170"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="df6-tv-RIf">
+                                    <rect key="frame" x="0.0" y="0.0" width="170" height="170"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m5g-pw-7P9" customClass="VideoPlayerView" customModule="iOSVideoApp" customModuleProvider="target">
+                                            <rect key="frame" x="8" y="8" width="154" height="154"/>
+                                            <color key="backgroundColor" systemColor="systemGray3Color" red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="m5g-pw-7P9" firstAttribute="top" secondItem="df6-tv-RIf" secondAttribute="topMargin" id="2gt-dq-7QZ"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="m5g-pw-7P9" secondAttribute="bottom" id="SWT-BL-yyL"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="m5g-pw-7P9" secondAttribute="trailing" id="e3f-Np-yEJ"/>
+                                        <constraint firstItem="m5g-pw-7P9" firstAttribute="leading" secondItem="df6-tv-RIf" secondAttribute="leadingMargin" id="jDL-sw-0N5"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <size key="customSize" width="170" height="170"/>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="FVq-mx-bg2" id="mz5-Rt-siN"/>
+                            <outlet property="delegate" destination="FVq-mx-bg2" id="j1k-dc-mLT"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="B9h-sa-E9z">
+                        <barButtonItem key="rightBarButtonItem" systemItem="camera" id="K8g-qs-ohm">
+                            <connections>
+                                <action selector="recordButtonTapped:" destination="FVq-mx-bg2" id="31S-RA-ICj"/>
+                                <segue destination="B5a-nt-rvl" kind="presentation" identifier="ShowCamera" modalPresentationStyle="fullScreen" id="caf-6M-qHf"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mPH-SN-9KW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="444.92753623188412" y="735.9375"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="ezq-ug-gty">
+            <objects>
+                <viewController storyboardIdentifier="CameraView" id="B5a-nt-rvl" customClass="CameraViewController" customModule="iOSVideoApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="AH0-9n-H7R">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y6r-zh-7rP" customClass="CameraPreviewView" customModule="iOSVideoApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sgv-tN-ipe">
+                                <rect key="frame" x="157" y="702" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="K5h-Nv-JEK"/>
+                                    <constraint firstAttribute="width" constant="100" id="QZr-ol-C4U"/>
+                                </constraints>
+                                <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="Record"/>
+                                <state key="selected" image="Stop"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="B5a-nt-rvl" eventType="touchUpInside" id="i30-Jd-xjh"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="y6r-zh-7rP" firstAttribute="top" secondItem="AH0-9n-H7R" secondAttribute="top" id="BIN-Hb-40w"/>
+                            <constraint firstItem="y6r-zh-7rP" firstAttribute="leading" secondItem="fHU-Av-Kyd" secondAttribute="leading" id="JDj-He-wTF"/>
+                            <constraint firstItem="y6r-zh-7rP" firstAttribute="top" secondItem="AH0-9n-H7R" secondAttribute="top" id="KGd-xN-fn8"/>
+                            <constraint firstItem="y6r-zh-7rP" firstAttribute="trailing" secondItem="fHU-Av-Kyd" secondAttribute="trailing" id="Msb-en-eaB"/>
+                            <constraint firstAttribute="bottom" secondItem="y6r-zh-7rP" secondAttribute="bottom" id="NYz-Ny-LXs"/>
+                            <constraint firstItem="sgv-tN-ipe" firstAttribute="centerX" secondItem="fHU-Av-Kyd" secondAttribute="centerX" id="NkT-HT-d0i"/>
+                            <constraint firstAttribute="bottom" secondItem="y6r-zh-7rP" secondAttribute="bottom" id="USl-3D-xgH"/>
+                            <constraint firstItem="fHU-Av-Kyd" firstAttribute="bottom" secondItem="sgv-tN-ipe" secondAttribute="bottom" constant="60" id="cB4-Pm-jhg"/>
+                            <constraint firstItem="y6r-zh-7rP" firstAttribute="trailing" secondItem="fHU-Av-Kyd" secondAttribute="trailing" id="eXy-Se-h5f"/>
+                            <constraint firstItem="y6r-zh-7rP" firstAttribute="leading" secondItem="fHU-Av-Kyd" secondAttribute="leading" id="giI-yy-ypG"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="fHU-Av-Kyd"/>
+                    </view>
+                    <connections>
+                        <outlet property="cameraView" destination="y6r-zh-7rP" id="TXV-PE-rJn"/>
+                        <outlet property="recordButton" destination="sgv-tN-ipe" id="xBz-tl-tpC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ES3-UG-JBB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1210" y="736"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="8Xa-Nk-zjH">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="plT-I9-HvK" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="HJa-jB-65i">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="FVq-mx-bg2" kind="relationship" relationship="rootViewController" id="uRL-QS-9fc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HLB-js-LHH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-333" y="736"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Record" width="116" height="116"/>
+        <image name="Stop" width="116" height="116"/>
+    </resources>
+</document>
