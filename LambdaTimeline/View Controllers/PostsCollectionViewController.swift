@@ -12,6 +12,13 @@ import FirebaseUI
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    @IBOutlet weak var blurSlider: UISlider!
+    @IBOutlet weak var gradientSlider: UISlider!
+    @IBOutlet weak var halftoneSlider: UISlider!
+    @IBOutlet weak var colorSlider: UISlider!
+    @IBOutlet weak var stylizeSlider: UISlider!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -21,7 +28,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             }
         }
     }
-    
+
     @IBAction func signout(_ sender: Any) {
         let firebaseAuth = Auth.auth()
         do {
