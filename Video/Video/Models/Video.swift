@@ -8,7 +8,18 @@
 
 import Foundation
 
-struct Video {
+class Video: NSObject {
+    init(recordingURL: URL, name: String, latitude: Double, longitude: Double, author: String) {
+        self.recordingURL = recordingURL
+        self.name = name
+        self.latitude = latitude
+        self.longitude = longitude
+        self.author = author
+    }
+    
     let recordingURL: URL
     let name: String
+    let author: String
+    let latitude: Double
+    let longitude: Double
 }
