@@ -98,7 +98,14 @@ class CameraViewController: UIViewController {
             captureSession.sessionPreset = .hd1920x1080
         }
 
-        // Microphone input
+        // Audio Microphone input
+        let microphone = AVCaptureDevice.default(for: .audio)! // No audio if crashes
+
+        guard let audioInput = try? AVCaptureDeviceInput(device: microphone),
+            captureSession.canAddInput(audioInput) else {
+                fatalError("Can't create microphone input")
+        }
+        captureSession.addInput(audioInput)
 
         // Add outputs
         guard captureSession.canAddOutput(fileOutput) else {
