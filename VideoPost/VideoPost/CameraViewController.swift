@@ -12,10 +12,12 @@ import AVFoundation
 class CameraViewController: UIViewController {
 
     // MARK: - Properites
+    weak var delegate: ClipCollectionViewController!
 
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
 
+    private var clipFileURL: URL?
     private var player: AVPlayer! // Implicetly unwrapped optional. we promise to set it before using it ... or it'll crash!
 
     // MARK: - Actions
@@ -25,6 +27,13 @@ class CameraViewController: UIViewController {
     }
 
     @IBAction func saveButton(_ sender: UIButton) {
+        guard let clipName = clipNameTextField?.text,
+            clipName.count > 0,
+            let fileURL = clipFileURL else { return }
+
+        delegate?.clips.append((clipName, fileURL))
+
+        navigationController?.popViewController(animated: true)
     }
 
     // MARK: - Outlets
@@ -191,7 +200,8 @@ class CameraViewController: UIViewController {
         var topRect = view.bounds
         topRect.size.height = topRect.size.height / 4
         topRect.size.width = topRect.size.width / 4 // create a constant for the "magic number"
-        topRect.origin.y = view.layoutMargins.top
+//        topRect.origin.y = view.layoutMargins.top
+        topRect.origin.y = cameraView.frame.origin.y
         playerView.frame = topRect
         view.addSubview(playerView) // FIXME: Don't add every time we play
         
@@ -205,6 +215,7 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
             print("Error saving video: \(error)")
         } else {
             // show movie
+            clipFileURL = outputFileURL
             playMovie(url: outputFileURL)
         }
         
