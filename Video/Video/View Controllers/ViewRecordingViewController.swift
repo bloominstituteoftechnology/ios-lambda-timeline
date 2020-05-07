@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import CoreLocation
 
 extension UIViewController {
     func hideKeyboardWhenViewTapped() {
@@ -30,7 +31,7 @@ class ViewRecordingViewController: UIViewController {
     
     // MARK: - Properties
     private var player: AVPlayer!
-    
+    var locationManager: CLLocationManager?
     var recordingURL: URL?
     
     // MARK: - View Lifecycle
@@ -39,9 +40,16 @@ class ViewRecordingViewController: UIViewController {
         self.hideKeyboardWhenViewTapped()
         updateViews()
         playMovie(url: recordingURL)
+        
         NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self.player.currentItem, queue: .main) { [weak self] _ in
             self?.player?.seek(to: CMTime.zero)
             self?.player?.play()
+        }
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager?.delegate = self
+            locationManager?.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager?.startUpdatingLocation()
         }
     }
     
@@ -77,8 +85,15 @@ class ViewRecordingViewController: UIViewController {
     @IBAction func saveButtonTapped(_ sender: Any) {
         guard let videoName = nameTextField.text, !videoName.isEmpty else { return }
         guard let url = recordingURL else { return }
-        let video = Video(recordingURL: url, name: videoName)
-        videoController.videos.append(video)
+        //let video = Video(recordingURL: url, name: videoName)
+        //videoController.videos.append(video)
         dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ViewRecordingViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
     }
 }

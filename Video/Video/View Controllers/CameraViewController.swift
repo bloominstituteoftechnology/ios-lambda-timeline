@@ -8,18 +8,22 @@
 
 import UIKit
 import AVFoundation
+import CoreLocation
 
 class CameraViewController: UIViewController {
 
+    // MARK: - IBOutlets
     @IBOutlet weak var cameraView: CameraPreviewView!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var dismissButton: UIButton!
     
+    // MARK: - Properties
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
-    
+    var locationManager: CLLocationManager?
     var recordedVideoURL: URL?
     
+    // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         cameraView.videoPlayerView.videoGravity = .resizeAspectFill
@@ -36,6 +40,7 @@ class CameraViewController: UIViewController {
         captureSession.stopRunning()
     }
     
+    // MARK: - Private Methods
     private func updateViews() {
         recordButton.isSelected = fileOutput.isRecording
         if fileOutput.isRecording {
@@ -117,6 +122,7 @@ class CameraViewController: UIViewController {
             guard let ViewRecordingVC = segue.destination as? ViewRecordingViewController else { return }
             
             ViewRecordingVC.recordingURL = recordedVideoURL
+            ViewRecordingVC.locationManager = locationManager
         }
     }
     

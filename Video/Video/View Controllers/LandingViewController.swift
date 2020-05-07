@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import CoreLocation
 
 class LandingViewController: UIViewController {
 
@@ -15,9 +16,13 @@ class LandingViewController: UIViewController {
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var myVideosButton: UIButton!
     
+    // MARK: - Properties
+    let locationManager = CLLocationManager()
+    
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationManager.requestWhenInUseAuthorization()
         updateViews()
     }
     
@@ -62,4 +67,15 @@ class LandingViewController: UIViewController {
     @IBAction func recordButtonTapped(_ sender: Any) {
         requestPermissionAndShowCamera()
     }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "PresentCameraSegue" {
+            guard let CameraVC = segue.destination as? CameraViewController else { return }
+            
+            CameraVC.locationManager = locationManager
+        }
+    }
 }
+
+
