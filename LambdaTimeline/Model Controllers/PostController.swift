@@ -23,10 +23,12 @@ class PostController {
             
             guard let mediaURL = mediaURL else { completion(false); return }
 
+            var imagePost: Post!
+
             if geoTag != nil {
-                let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author, geoTag: geoTag)
+                imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author, geoTag: geoTag)
             } else {
-                let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
+                imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
             }
             
             self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
