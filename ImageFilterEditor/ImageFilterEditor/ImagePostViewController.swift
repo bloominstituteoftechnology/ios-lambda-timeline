@@ -130,7 +130,23 @@ class ImagePostViewController: UIViewController {
         }
         
         // PerspectiveTransform
-        
+        perspectiveTransformFilter.inputImage = outputImage
+        let imageAspectRatio = outputImage.extent.width / outputImage.extent.height
+        let leftSideYOffset: CGFloat = slider2.value > 0.5 ? 0 : (CGFloat(0.5 - slider2.value) * 500)
+        let rightSideYOffset: CGFloat = slider2.value < 0.5 ? 0 : (CGFloat(slider2.value - 0.5) * 500)
+        let leftSideXOffset: CGFloat = imageAspectRatio * leftSideYOffset * 2
+        let rightSideXOffset: CGFloat = imageAspectRatio * rightSideYOffset * 2
+        perspectiveTransformFilter.bottomLeft = CGPoint(x: outputImage.extent.minX + leftSideXOffset,
+                                                        y: outputImage.extent.minY + leftSideYOffset)
+        perspectiveTransformFilter.bottomRight = CGPoint(x: outputImage.extent.maxX - rightSideXOffset,
+                                                         y: outputImage.extent.minY + rightSideYOffset)
+        perspectiveTransformFilter.topLeft = CGPoint(x: outputImage.extent.minX + leftSideXOffset,
+                                                     y: outputImage.extent.maxY - leftSideYOffset)
+        perspectiveTransformFilter.topRight = CGPoint(x: outputImage.extent.maxX - rightSideXOffset,
+                                                      y: outputImage.extent.maxY - rightSideYOffset)
+        if let filteredImage = perspectiveTransformFilter.outputImage {
+            outputImage = filteredImage
+        }
         
         guard let renderedImage = context.createCGImage(outputImage, from: inputImage.extent) else { return originalImage! }
         
