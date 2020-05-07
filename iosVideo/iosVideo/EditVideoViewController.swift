@@ -11,6 +11,8 @@ import AVFoundation
 
 class EditVideoViewController: UIViewController {
 
+    var player: AVPlayer!
+
     var videoURL: URL? {
         didSet {
             playVideo()
@@ -30,9 +32,13 @@ class EditVideoViewController: UIViewController {
     private func playVideo() {
         if isViewLoaded {
             guard let url = videoURL else { return }
-            var player = AVPlayer(url: url)
+            player = AVPlayer(url: url)
             playerView.player = player
             player.play()
+            NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: self.player.currentItem, queue: .main) { [weak self] _ in
+                self?.player?.seek(to: CMTime.zero)
+                self?.player?.play()
+            }
         }
     }
 
@@ -47,4 +53,16 @@ class EditVideoViewController: UIViewController {
     }
     */
 
+    // MARK: - Actions
+    @IBAction func cancelButtonTapped(_ sender: Any) {
+        guard let url = videoURL else { return }
+        do {
+            try FileManager.default.removeItem(at: url)
+            navigationController?.popViewController(animated: true)
+            dismiss(animated: true, completion: nil)
+        } catch {
+            NSLog("error deleting: \(error)")
+        }
+
+    }
 }

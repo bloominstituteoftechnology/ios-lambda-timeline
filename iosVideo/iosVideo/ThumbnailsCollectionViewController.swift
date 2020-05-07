@@ -11,6 +11,7 @@ import AVFoundation
 
 class ThumbnailsCollectionViewController: UICollectionViewController {
 
+    @IBAction func saveButtonUnwind(unwindSegue: UIStoryboardSegue) {  }
     // Confusing name I know I'm sorry :( but this is a custom class
     let files = FilesController()
     var urls: [URL] = []
