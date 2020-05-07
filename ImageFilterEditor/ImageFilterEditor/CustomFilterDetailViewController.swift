@@ -38,6 +38,7 @@ class CustomFilterDetailViewController: UIViewController {
         
     }
     //MARK: - IBActions
+    
     @IBAction func brightnessChanged(_ sender: Any) {
     }
     
