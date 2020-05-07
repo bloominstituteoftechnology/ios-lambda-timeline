@@ -44,7 +44,11 @@ class Post: NSObject {
         self.timestamp = Date(timeIntervalSince1970: timestampTimeInterval)
         self.comments = captionDictionaries.compactMap({ Comment(dictionary: $0) })
         self.id = id
-        self.geotag = dictionary[Post.geoKey] as? CLLocationCoordinate2D
+
+        if let latitude = dictionary[Post.latKey] as? Double,
+            let longitude = dictionary[Post.longKey] as? Double {
+            self.geotag = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        }
     }
     
     var dictionaryRepresentation: [String : Any] {
@@ -57,7 +61,12 @@ class Post: NSObject {
         guard let ratio = self.ratio else { return dict }
         
         dict[Post.ratioKey] = ratio
-        
+
+        guard let geotag = self.geotag else { return dict }
+
+        dict[Post.longKey] = Double(geotag.longitude)
+        dict[Post.latKey] = Double(geotag.latitude)
+
         return dict
     }
     
@@ -77,5 +86,6 @@ class Post: NSObject {
     static private let commentsKey = "comments"
     static private let timestampKey = "timestamp"
     static private let idKey = "id"
-    static private let geoKey = "geoTag"
+    static private let longKey = "longitude"
+    static private let latKey = "latitude"
 }
