@@ -39,6 +39,11 @@ class ImagePostTableViewController: UITableViewController {
     
     private let context = CIContext()
     private let blurFilter = CIFilter.gaussianBlur()
+    private let colorClampFilter = CIFilter.colorClamp()
+    private let zoomBlurFilter = CIFilter.zoomBlur()
+    private let colorMapFilter = CIFilter.colorMap()
+    private let vignetteFilter = CIFilter.vignette()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,11 +118,12 @@ class ImagePostTableViewController: UITableViewController {
                     }
                     
                     DispatchQueue.main.async {
-                        self.presentSuccessfulSaveAlert()
-                    }
+                self.presentSuccessfulSaveAlert()
                 }
             }
+        }
     }
+    
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
