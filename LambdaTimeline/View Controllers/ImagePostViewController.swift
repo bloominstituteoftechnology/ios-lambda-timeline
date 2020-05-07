@@ -17,7 +17,8 @@ class ImagePostViewController: ShiftableViewController {
         super.viewDidLoad()
         
         setImageViewHeight(with: 1.0)
-        
+        addLocationSwitch.isOn = CLLocationManager.locationServicesEnabled()
+
         updateViews()
     }
     
@@ -115,10 +116,18 @@ class ImagePostViewController: ShiftableViewController {
         
         view.layoutSubviews()
     }
-    
+
     @IBAction func addLocationTapped(_ sender: Any) {
+        locationManager.requestWhenInUseAuthorization()
+
+        if CLLocationManager.locationServicesEnabled() {
+            addLocationSwitch.isOn = CLLocationManager.locationServicesEnabled()
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
     }
-    
+
     var postController: PostController!
     var post: Post?
     var imageData: Data?
@@ -150,5 +159,12 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ImagePostViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        print("locations = \(locValue.latitude) and \(locValue.longitude)")
     }
 }
