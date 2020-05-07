@@ -103,6 +103,7 @@
                     <connections>
                         <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="jaI-fq-Woc"/>
                         <segue destination="OyM-8q-Icp" kind="show" identifier="ViewImagePost" id="hhs-es-AdQ"/>
+                        <segue destination="TDf-la-ScA" kind="show" id="ox1-SV-uMF"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1263,16 +1264,20 @@
             </objects>
             <point key="canvasLocation" x="1967" y="1522"/>
         </scene>
-        <!--View Controller-->
+        <!--Camera Controller-->
         <scene sceneID="Qrb-sO-Wo9">
             <objects>
-                <viewController id="TDf-la-ScA" sceneMemberID="viewController">
+                <viewController id="TDf-la-ScA" customClass="CameraController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qGV-tE-1aj">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="Mbs-Xv-knh"/>
                     </view>
+                    <navigationItem key="navigationItem" id="yLT-TS-T20"/>
+                    <connections>
+                        <segue destination="5ZU-jn-qyE" kind="show" id="kXq-A7-VWW"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sJP-xz-H08" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1319,6 +1324,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ZZW-Mj-plr"/>
                     </view>
+                    <navigationItem key="navigationItem" id="rt3-n3-WdG"/>
                     <connections>
                         <outlet property="cameraView" destination="ZRD-hd-3DG" id="O4X-gc-Kdq"/>
                         <outlet property="recordButton" destination="tmn-sV-Gyb" id="N0W-nG-AoL"/>

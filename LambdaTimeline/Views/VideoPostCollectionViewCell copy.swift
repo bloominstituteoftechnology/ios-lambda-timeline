@@ -1,5 +1,5 @@
 //
-//  ImagePostCollectionViewCell.swift
+//  VideoPostCollectionViewCell.swift
 //  LambdaTimeline
 //
 //  Created by Spencer Curtis on 10/12/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImagePostCollectionViewCell: UICollectionViewCell {
+class VideoPostCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -47,7 +47,7 @@ class ImagePostCollectionViewCell: UICollectionViewCell {
         }
     }
 
-@IBOutlet weak var imageView: UIImageView!
+@IBOutlet weak var videoPlayerView: Video
 @IBOutlet weak var titleLabel: UILabel!
 @IBOutlet weak var authorLabel: UILabel!
 @IBOutlet weak var labelBackgroundView: UIView!

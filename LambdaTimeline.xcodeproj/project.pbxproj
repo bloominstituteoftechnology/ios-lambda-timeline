@@ -32,6 +32,12 @@
 		E32BDBF724643E6A00EBC8A4 /* AudioVisualizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32BDBF624643E6A00EBC8A4 /* AudioVisualizer.swift */; };
 		E32BDBF924643E6F00EBC8A4 /* AudioRecorderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32BDBF824643E6F00EBC8A4 /* AudioRecorderController.swift */; };
 		E32BDC202464C09900EBC8A4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E32BDC1F2464C09900EBC8A4 /* GoogleService-Info.plist */; };
+		E32BDC302464CFB500EBC8A4 /* VideoPostCollectionViewCell copy.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32BDC2F2464CFB500EBC8A4 /* VideoPostCollectionViewCell copy.swift */; };
+		E32BDC312464D01900EBC8A4 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32BDC262464C73000EBC8A4 /* VideoPlayerView.swift */; };
+		E32BDC322464D01C00EBC8A4 /* CameraHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32BDC242464C73000EBC8A4 /* CameraHandler.swift */; };
+		E32BDC332464D01F00EBC8A4 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32BDC282464C73000EBC8A4 /* CameraViewController.swift */; };
+		E32BDC342464D02800EBC8A4 /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32BDC252464C73000EBC8A4 /* CameraPreviewView.swift */; };
+		E32BDC352464D2BD00EBC8A4 /* piano.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E32BDBFC24643E8000EBC8A4 /* piano.mp3 */; };
 		E453457955DF907FCBD117F1 /* Pods_LambdaTimeline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */; };
 /* End PBXBuildFile section */
 
@@ -89,6 +95,7 @@
 		E32BDC252464C73000EBC8A4 /* CameraPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
 		E32BDC262464C73000EBC8A4 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		E32BDC282464C73000EBC8A4 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		E32BDC2F2464CFB500EBC8A4 /* VideoPostCollectionViewCell copy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPostCollectionViewCell copy.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +207,7 @@
 		46CFE7042171572900E7FF73 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E32BDC2F2464CFB500EBC8A4 /* VideoPostCollectionViewCell copy.swift */,
 				46CFE7022171572600E7FF73 /* ImagePostCollectionViewCell.swift */,
 			);
 			path = Views;
@@ -370,6 +378,7 @@
 			files = (
 				46463786216FDE4C00E7FF73 /* LaunchScreen.storyboard in Resources */,
 				E32BDC202464C09900EBC8A4 /* GoogleService-Info.plist in Resources */,
+				E32BDC352464D2BD00EBC8A4 /* piano.mp3 in Resources */,
 				46463783216FDE4C00E7FF73 /* Assets.xcassets in Resources */,
 				46463781216FDE4B00E7FF73 /* Main.storyboard in Resources */,
 			);
@@ -441,6 +450,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E32BDC302464CFB500EBC8A4 /* VideoPostCollectionViewCell copy.swift in Sources */,
 				46A0366D2170158900E7FF73 /* SignInViewController.swift in Sources */,
 				46CFE6FB21714E6100E7FF73 /* Author.swift in Sources */,
 				46CFE6F92170862C00E7FF73 /* ShiftableViewController.swift in Sources */,
@@ -450,18 +460,22 @@
 				46CFE6FD217154F500E7FF73 /* Networking.swift in Sources */,
 				46CFE6F521707D0000E7FF73 /* ImagePostViewController.swift in Sources */,
 				46CFE6FF2171556D00E7FF73 /* ConcurrentOperation.swift in Sources */,
+				E32BDC342464D02800EBC8A4 /* CameraPreviewView.swift in Sources */,
 				46463790216FFD1B00E7FF73 /* Post.swift in Sources */,
 				46CFE6F32170757F00E7FF73 /* User+DictionaryRepresentation.swift in Sources */,
 				46D571F32172D43B00E7FF73 /* Cache.swift in Sources */,
 				46CFE7012171559500E7FF73 /* FetchMediaOperation.swift in Sources */,
 				46D571F82173FC2700E7FF73 /* ImagePostDetailTableViewController.swift in Sources */,
 				46CFE7032171572600E7FF73 /* ImagePostCollectionViewCell.swift in Sources */,
+				E32BDC332464D01F00EBC8A4 /* CameraViewController.swift in Sources */,
 				4646379C2170091A00E7FF73 /* PostController.swift in Sources */,
 				464637992170048900E7FF73 /* FirebaseConvertible.swift in Sources */,
 				46A0366A21700F5100E7FF73 /* PostsCollectionViewController.swift in Sources */,
 				46D571F52173CF3E00E7FF73 /* UIImage+Ratio.swift in Sources */,
 				46463792216FFDD900E7FF73 /* Comment.swift in Sources */,
+				E32BDC322464D01C00EBC8A4 /* CameraHandler.swift in Sources */,
 				46CFE6F721707FA600E7FF73 /* UIViewController+InformationalAlert.swift in Sources */,
+				E32BDC312464D01900EBC8A4 /* VideoPlayerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
