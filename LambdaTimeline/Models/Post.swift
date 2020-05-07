@@ -8,6 +8,7 @@
 
 import Foundation
 import FirebaseAuth
+import MapKit
 
 enum MediaType: String {
     case image
