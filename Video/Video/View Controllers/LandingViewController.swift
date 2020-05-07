@@ -15,11 +15,13 @@ class LandingViewController: UIViewController {
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var myVideosButton: UIButton!
     
+    // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
     }
     
+    // MARK: - Private Methods
     private func updateViews() {
         recordButton.layer.cornerRadius = 8
         myVideosButton.layer.cornerRadius = 8
@@ -56,28 +58,8 @@ class LandingViewController: UIViewController {
         performSegue(withIdentifier: "PresentCameraSegue", sender: self)
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
+    // MARK: - IBActions
     @IBAction func recordButtonTapped(_ sender: Any) {
         requestPermissionAndShowCamera()
     }
-    
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

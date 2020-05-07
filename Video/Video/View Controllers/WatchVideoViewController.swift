@@ -11,12 +11,15 @@ import AVFoundation
 
 class WatchVideoViewController: UIViewController {
 
+    // MARK: - IBOutlets
     @IBOutlet weak var videoPlayer: VideoPlayerView!
     
+    // MARK: - Properties
     private var player: AVPlayer!
     
     var recordingURL: URL?
     
+    // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
@@ -27,6 +30,7 @@ class WatchVideoViewController: UIViewController {
         }
     }
     
+    // MARK: - Private Methods
     private func updateViews() {
         videoPlayer.videoPlayerLayer.videoGravity = .resizeAspectFill
     }
@@ -38,15 +42,4 @@ class WatchVideoViewController: UIViewController {
         videoPlayer.player = player
         player.play()
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

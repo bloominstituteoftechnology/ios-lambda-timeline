@@ -22,15 +22,18 @@ extension UIViewController {
 
 class ViewRecordingViewController: UIViewController {
 
+    // MARK: - IBOutlets
     @IBOutlet weak var videoPlayerView: VideoPlayerView!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var saveButton: UIButton!
     
+    // MARK: - Properties
     private var player: AVPlayer!
     
     var recordingURL: URL?
     
+    // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenViewTapped()
@@ -42,6 +45,7 @@ class ViewRecordingViewController: UIViewController {
         }
     }
     
+    // MARK: - Private Methods
     private func updateViews() {
         videoPlayerView.videoPlayerLayer.videoGravity = .resizeAspectFill
         videoPlayerView.layer.cornerRadius = 8
@@ -50,6 +54,15 @@ class ViewRecordingViewController: UIViewController {
         nameTextField.layer.cornerRadius = 8
     }
     
+    private func playMovie(url: URL?) {
+        guard let url = url else { return }
+        print("playing \(url)")
+        player = AVPlayer(url: url)
+        videoPlayerView.player = player
+        player.play()
+    }
+    
+    // MARK: - IBActions
     @IBAction func cancelButtonTapped(_ sender: Any) {
         guard let url = recordingURL else { return }
 
@@ -68,23 +81,4 @@ class ViewRecordingViewController: UIViewController {
         videoController.videos.append(video)
         dismiss(animated: true, completion: nil)
     }
-    
-    private func playMovie(url: URL?) {
-        guard let url = url else { return }
-        print("playing \(url)")
-        player = AVPlayer(url: url)
-        videoPlayerView.player = player
-        player.play()
-    }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

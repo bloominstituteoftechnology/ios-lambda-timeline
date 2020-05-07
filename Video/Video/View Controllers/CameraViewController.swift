@@ -110,7 +110,6 @@ class CameraViewController: UIViewController {
          let fileURL = documentsDirectory.appendingPathComponent(name).appendingPathExtension("mov")
          return fileURL
      }
-
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -121,7 +120,6 @@ class CameraViewController: UIViewController {
         }
     }
     
-    
     // MARK: - IBActions
     @IBAction func dismissButtonTapped(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -130,22 +128,17 @@ class CameraViewController: UIViewController {
     @IBAction func recordButtonTapped(_ sender: Any) {
         toggleRecord()
     }
-
 }
 
 
 extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
     func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
-                
         if let error = error {
             print("Error saving video: \(error)")
         } else {
-            //recordedVideoURL = outputFileURL
             performSegue(withIdentifier: "PresentVideoSegue", sender: self)
-
         }
         updateViews()
-        
     }
     
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
