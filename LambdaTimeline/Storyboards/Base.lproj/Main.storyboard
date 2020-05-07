@@ -1263,8 +1263,75 @@
             </objects>
             <point key="canvasLocation" x="1967" y="1522"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="Qrb-sO-Wo9">
+            <objects>
+                <viewController id="TDf-la-ScA" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qGV-tE-1aj">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="Mbs-Xv-knh"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sJP-xz-H08" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1976" y="128"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="84P-qu-lpB">
+            <objects>
+                <viewController storyboardIdentifier="CameraView" id="5ZU-jn-qyE" customClass="CameraViewController" customModule="VideoRecorder" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fiC-05-5YW">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZRD-hd-3DG" customClass="CameraPreviewView" customModule="VideoRecorder" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tmn-sV-Gyb">
+                                <rect key="frame" x="157" y="702" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="fEe-a8-4ah"/>
+                                    <constraint firstAttribute="height" constant="100" id="o89-pO-4tb"/>
+                                </constraints>
+                                <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="Record"/>
+                                <state key="selected" image="Stop"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="5ZU-jn-qyE" eventType="touchUpInside" id="WTP-AD-ZHr"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ZRD-hd-3DG" firstAttribute="leading" secondItem="ZZW-Mj-plr" secondAttribute="leading" id="8WS-zN-9ay"/>
+                            <constraint firstAttribute="bottom" secondItem="ZRD-hd-3DG" secondAttribute="bottom" id="9hV-Ue-hRe"/>
+                            <constraint firstItem="ZRD-hd-3DG" firstAttribute="top" secondItem="fiC-05-5YW" secondAttribute="top" id="Axl-q1-FLR"/>
+                            <constraint firstItem="ZRD-hd-3DG" firstAttribute="trailing" secondItem="ZZW-Mj-plr" secondAttribute="trailing" id="Ea5-N4-NwH"/>
+                            <constraint firstAttribute="bottom" secondItem="ZRD-hd-3DG" secondAttribute="bottom" id="L8x-pW-TFk"/>
+                            <constraint firstItem="tmn-sV-Gyb" firstAttribute="centerX" secondItem="ZZW-Mj-plr" secondAttribute="centerX" id="RQd-yT-xzc"/>
+                            <constraint firstItem="ZRD-hd-3DG" firstAttribute="trailing" secondItem="ZZW-Mj-plr" secondAttribute="trailing" id="Zjn-df-dxu"/>
+                            <constraint firstItem="ZZW-Mj-plr" firstAttribute="bottom" secondItem="tmn-sV-Gyb" secondAttribute="bottom" constant="60" id="g2q-dN-xwA"/>
+                            <constraint firstItem="ZRD-hd-3DG" firstAttribute="top" secondItem="fiC-05-5YW" secondAttribute="top" id="gLa-Xg-6rB"/>
+                            <constraint firstItem="ZRD-hd-3DG" firstAttribute="leading" secondItem="ZZW-Mj-plr" secondAttribute="leading" id="rzx-fE-SqG"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ZZW-Mj-plr"/>
+                    </view>
+                    <connections>
+                        <outlet property="cameraView" destination="ZRD-hd-3DG" id="O4X-gc-Kdq"/>
+                        <outlet property="recordButton" destination="tmn-sV-Gyb" id="N0W-nG-AoL"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KB6-3k-UBC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2735" y="108"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="Record" width="116" height="116"/>
+        <image name="Stop" width="116" height="116"/>
         <image name="capsule" catalog="system" width="128" height="94"/>
         <image name="cloud.rain" catalog="system" width="128" height="125"/>
         <image name="download" width="1000" height="563"/>

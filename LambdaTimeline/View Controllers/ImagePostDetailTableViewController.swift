@@ -55,8 +55,10 @@ class ImagePostDetailTableViewController: UITableViewController {
         let alert = UIAlertController(title: "Text or Audio Comment", message: "", preferredStyle: .alert)
     
         alert.addAction(UIAlertAction(title: "Text", style: .default, handler: textClicked))
-        let audioRecorderVC = AudioRecorderController()
-        alert.addAction(UIAlertAction(title: "Audio", style: .default, handler: { (UIAlertAction) -> Void in  self.present(audioRecorderVC, animated: true, completion: nil)}))
+        audioRecorderVC = AudioRecorderController()
+        alert.addAction(UIAlertAction(title: "Audio", style: .default, handler: { (UIAlertAction) -> Void in
+            self.audioRecorderVC?.commentVC
+            self.present(self.audioRecorderVC!, animated: true, completion: nil)}))
         present(alert, animated: true, completion: nil)
     }
     

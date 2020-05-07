@@ -18,7 +18,7 @@ class AudioRecorderController: UIViewController {
     @IBOutlet var timeSlider: UISlider!
     @IBOutlet var audioVisualizer: AudioVisualizer!
     
-    var commentVC: ImagePostDetailController?
+    var commentVC: ImagePostDetailTableViewController?
     var postController: PostController? 
     
     private lazy var timeIntervalFormatter: DateComponentsFormatter = {

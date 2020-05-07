@@ -78,16 +78,17 @@
 		E32BDC122464BBF700EBC8A4 /* Quake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quake.swift; sourceTree = "<group>"; };
 		E32BDC132464BBF700EBC8A4 /* QuakeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuakeDetailView.swift; sourceTree = "<group>"; };
 		E32BDC142464BBF700EBC8A4 /* QuakeResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuakeResults.swift; sourceTree = "<group>"; };
-		E32BDC152464BBF700EBC8A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E32BDC162464BBF700EBC8A4 /* Quake+MKAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Quake+MKAnnotation.swift"; sourceTree = "<group>"; };
 		E32BDC182464BBF700EBC8A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E32BDC192464BBF700EBC8A4 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		E32BDC1A2464BBF700EBC8A4 /* QuakeFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuakeFetcher.swift; sourceTree = "<group>"; };
 		E32BDC1B2464BBF700EBC8A4 /* Quake.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Quake.json; sourceTree = "<group>"; };
-		E32BDC1C2464BBF700EBC8A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E32BDC1D2464BBF700EBC8A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E32BDC1E2464BBF700EBC8A4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E32BDC1F2464C09900EBC8A4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E32BDC242464C73000EBC8A4 /* CameraHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraHandler.swift; sourceTree = "<group>"; };
+		E32BDC252464C73000EBC8A4 /* CameraPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
+		E32BDC262464C73000EBC8A4 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
+		E32BDC282464C73000EBC8A4 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +133,7 @@
 		4646377A216FDE4B00E7FF73 /* LambdaTimeline */ = {
 			isa = PBXGroup;
 			children = (
+				E32BDC232464C73000EBC8A4 /* VideoRecorder */,
 				E32BDC102464BBF700EBC8A4 /* Quakes */,
 				E32BDBF524643E5B00EBC8A4 /* Audio Recorder */,
 				E32BDBE024642C9300EBC8A4 /* ImageManipulator */,
@@ -283,17 +285,25 @@
 				E32BDC122464BBF700EBC8A4 /* Quake.swift */,
 				E32BDC132464BBF700EBC8A4 /* QuakeDetailView.swift */,
 				E32BDC142464BBF700EBC8A4 /* QuakeResults.swift */,
-				E32BDC152464BBF700EBC8A4 /* Assets.xcassets */,
 				E32BDC162464BBF700EBC8A4 /* Quake+MKAnnotation.swift */,
 				E32BDC172464BBF700EBC8A4 /* LaunchScreen.storyboard */,
 				E32BDC192464BBF700EBC8A4 /* Main.storyboard */,
 				E32BDC1A2464BBF700EBC8A4 /* QuakeFetcher.swift */,
 				E32BDC1B2464BBF700EBC8A4 /* Quake.json */,
-				E32BDC1C2464BBF700EBC8A4 /* AppDelegate.swift */,
-				E32BDC1D2464BBF700EBC8A4 /* Info.plist */,
 				E32BDC1E2464BBF700EBC8A4 /* SceneDelegate.swift */,
 			);
 			path = Quakes;
+			sourceTree = "<group>";
+		};
+		E32BDC232464C73000EBC8A4 /* VideoRecorder */ = {
+			isa = PBXGroup;
+			children = (
+				E32BDC242464C73000EBC8A4 /* CameraHandler.swift */,
+				E32BDC252464C73000EBC8A4 /* CameraPreviewView.swift */,
+				E32BDC262464C73000EBC8A4 /* VideoPlayerView.swift */,
+				E32BDC282464C73000EBC8A4 /* CameraViewController.swift */,
+			);
+			path = VideoRecorder;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
