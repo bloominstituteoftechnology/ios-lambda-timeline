@@ -95,7 +95,7 @@ class ClipCollectionViewController: UICollectionViewController {
     }
     */
 
-    func createThumbnail(url : URL, fromTime:Float64 = 0.0) -> UIImage? {
+    func createThumbnail(url : URL) -> UIImage? {
 
         let asset = AVURLAsset(url: url, options: nil)
         let imgGenerator = AVAssetImageGenerator(asset: asset)
