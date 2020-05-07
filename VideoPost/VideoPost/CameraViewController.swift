@@ -24,10 +24,15 @@ class CameraViewController: UIViewController {
         toggleRecord()
     }
 
+    @IBAction func saveButton(_ sender: UIButton) {
+    }
+
     // MARK: - Outlets
 
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
+    @IBOutlet weak var clipNameTextField: UITextField!
+    @IBOutlet weak var saveButtonOutlet: UIButton!
 
     // MARK: - View Lifecycle
 
@@ -50,6 +55,9 @@ class CameraViewController: UIViewController {
 
         let largeStop = UIImage(systemName: "stop.circle.fill", withConfiguration: largeConfig)
         recordButton.setImage(largeStop, for: .selected)
+
+        // Save button initially disabled
+        saveButtonOutlet.isEnabled = false
     }
 
     @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
@@ -153,6 +161,9 @@ class CameraViewController: UIViewController {
     private func toggleRecord() {
         if fileOutput.isRecording {
             fileOutput.stopRecording()
+
+            // Enable Save button
+            saveButtonOutlet.isEnabled = true
         } else {
             fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
         }

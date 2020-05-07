@@ -76,6 +76,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="COL-7l-lGl">
                                 <rect key="frame" x="360" y="108" width="34" height="30"/>
                                 <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="saveButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wEO-47-vff"/>
+                                </connections>
                             </button>
                             <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="a3Q-yr-Qsk" customClass="CameraPreviewView" customModule="VideoPost" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="162" width="414" height="500"/>
@@ -102,7 +105,9 @@
                     <navigationItem key="navigationItem" id="EfH-uV-XAd"/>
                     <connections>
                         <outlet property="cameraView" destination="a3Q-yr-Qsk" id="AZn-Lf-9WV"/>
+                        <outlet property="clipNameTextField" destination="RXF-Sa-RrK" id="dpK-Hu-c4n"/>
                         <outlet property="recordButton" destination="5Qq-Em-wsr" id="wCt-R4-EiE"/>
+                        <outlet property="saveButtonOutlet" destination="COL-7l-lGl" id="P4A-qJ-DbS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
