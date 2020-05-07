@@ -79,7 +79,7 @@ class VideoPostViewController: ShiftableViewController {
         shouldShowCamera = false
     }
     
-    @objc private func updateViews() {
+    private func updateViews() {
         playPauseButton.image = isPlaying ? UIImage(systemName: "pause.fill") : UIImage(systemName: "play.fill")
     }
     
@@ -128,14 +128,5 @@ extension VideoPostViewController: VideoRecorderDelegate {
     }
 }
 
-extension AVPlayer {
-    var isPlaying: Bool {
-        return self.rate > 0
-    }
-    
-    var assetURL: URL? {
-        return (self.currentItem?.asset as? AVURLAsset)?.url
-    }
-}
 
 

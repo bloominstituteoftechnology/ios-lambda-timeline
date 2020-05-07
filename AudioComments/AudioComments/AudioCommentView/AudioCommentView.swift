@@ -69,7 +69,12 @@ class AudioCommentView: UIView {
         setup()
     }
     
-    //MARK: - Private Methods
+    // MARK: - Public Methods
+    
+    func 
+    
+    
+    // MARK: - Private Methods
     
     private func setup() {
         Bundle.main.loadNibNamed("AudioCommentView", owner: self, options: nil)
