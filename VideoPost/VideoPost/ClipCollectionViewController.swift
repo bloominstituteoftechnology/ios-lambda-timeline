@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import AVFoundation
 
 private let reuseIdentifier = "ClipCollectionViewCell"
 
 class ClipCollectionViewController: UICollectionViewController {
 
     var clips: [(String, URL)] = []
+    var thumbnails: [UIImage?] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,15 +28,18 @@ class ClipCollectionViewController: UICollectionViewController {
         // Do any additional setup after loading the view.
     }
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
+        if segue.identifier == "CreateVideoSegue" {
+            guard let vc = segue.destination as? CameraViewController else {return}
+            vc.delegate = self
+        }
+
     }
-    */
 
     // MARK: UICollectionViewDataSource
 
@@ -81,4 +86,20 @@ class ClipCollectionViewController: UICollectionViewController {
     }
     */
 
+    func createThumbnail(url : URL, fromTime:Float64 = 0.0) -> UIImage? {
+        let asset = AVAsset(url: url)
+
+        let assetImgGenerate = AVAssetImageGenerator(asset: asset)
+        assetImgGenerate.appliesPreferredTrackTransform = true
+        assetImgGenerate.requestedTimeToleranceAfter = CMTime.zero;
+        assetImgGenerate.requestedTimeToleranceBefore = CMTime.zero;
+
+        let time : CMTime = CMTimeMakeWithSeconds(fromTime, preferredTimescale: 600)
+
+        if let thumbnail = try? assetImgGenerate.copyCGImage(at:time, actualTime: nil) {
+            return UIImage(cgImage: thumbnail)
+        } else {
+            return nil
+        }
+    }
 }

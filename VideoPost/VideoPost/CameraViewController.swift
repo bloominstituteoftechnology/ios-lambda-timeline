@@ -32,6 +32,8 @@ class CameraViewController: UIViewController {
             let fileURL = clipFileURL else { return }
 
         delegate?.clips.append((clipName, fileURL))
+        let thumbnail = delegate?.createThumbnail(url: fileURL)
+        delegate?.thumbnails.append(thumbnail)
 
         navigationController?.popViewController(animated: true)
     }
