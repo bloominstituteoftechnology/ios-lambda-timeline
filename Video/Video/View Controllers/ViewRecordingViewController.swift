@@ -33,6 +33,8 @@ class ViewRecordingViewController: UIViewController {
     private var player: AVPlayer!
     var locationManager: CLLocationManager?
     var recordingURL: URL?
+    var latitude: Double = 0
+    var longitude: Double = 0
     
     // MARK: - View Lifecycle
     override func viewDidLoad() {
@@ -85,8 +87,8 @@ class ViewRecordingViewController: UIViewController {
     @IBAction func saveButtonTapped(_ sender: Any) {
         guard let videoName = nameTextField.text, !videoName.isEmpty else { return }
         guard let url = recordingURL else { return }
-        //let video = Video(recordingURL: url, name: videoName)
-        //videoController.videos.append(video)
+        let video = Video(recordingURL: url, name: videoName, latitude: latitude, longitude: longitude, author: "")
+        videoController.videos.append(video)
         dismiss(animated: true, completion: nil)
     }
 }
@@ -94,6 +96,7 @@ class ViewRecordingViewController: UIViewController {
 extension ViewRecordingViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        latitude = locValue.latitude
+        longitude = locValue.longitude
     }
 }
