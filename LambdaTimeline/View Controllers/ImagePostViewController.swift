@@ -8,6 +8,8 @@
 
 import UIKit
 import Photos
+import MapKit
+import CoreLocation
 
 class ImagePostViewController: ShiftableViewController {
     
@@ -114,15 +116,21 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
+    @IBAction func addLocationTapped(_ sender: Any) {
+    }
+    
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    let locationManager = CLLocationManager()
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    @IBOutlet weak var addLocationSwitch: UISwitch!
+
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
