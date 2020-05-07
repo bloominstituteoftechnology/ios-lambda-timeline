@@ -54,6 +54,9 @@ class CameraViewController: UIViewController {
 
     @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
         print("tap")
+
+        view.endEditing(true)
+
         switch(tapGesture.state) {
 
         case .ended:
