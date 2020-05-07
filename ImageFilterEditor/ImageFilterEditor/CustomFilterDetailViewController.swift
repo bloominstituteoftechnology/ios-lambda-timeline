@@ -19,6 +19,7 @@ class CustomFilterDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveButtonClicked))
 
         // Do any additional setup after loading the view.
     }
@@ -33,12 +34,10 @@ class CustomFilterDetailViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
-    //MARK: - IBActions
-    
-    @IBAction func saveButtonClicked(_ sender: Any) {
+    @objc func saveButtonClicked() {
+        
     }
-    
+    //MARK: - IBActions
     @IBAction func brightnessChanged(_ sender: Any) {
     }
     
