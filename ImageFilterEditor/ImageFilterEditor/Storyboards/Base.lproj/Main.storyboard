@@ -7,17 +7,39 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Image Post View Controller-->
         <scene sceneID="bBY-OU-dvy">
             <objects>
-                <viewController id="IdN-wk-Qqz" sceneMemberID="viewController">
+                <viewController id="IdN-wk-Qqz" customClass="ImagePostViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Qxe-aR-10m">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cwu-Rd-gaX">
+                                <rect key="frame" x="0.0" y="140" width="414" height="414"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="cwu-Rd-gaX" secondAttribute="height" multiplier="1:1" id="P2D-vK-3fY"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V26-76-11f">
+                                <rect key="frame" x="170.5" y="594" width="73" height="30"/>
+                                <state key="normal" title="Edit Image"/>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="cwu-Rd-gaX" firstAttribute="trailing" secondItem="Jio-fM-tkw" secondAttribute="trailing" id="OAU-RI-RzK"/>
+                            <constraint firstItem="cwu-Rd-gaX" firstAttribute="top" secondItem="Jio-fM-tkw" secondAttribute="top" id="PcD-Uf-cjF"/>
+                            <constraint firstItem="V26-76-11f" firstAttribute="top" secondItem="cwu-Rd-gaX" secondAttribute="bottom" constant="40" id="j0p-U3-CrD"/>
+                            <constraint firstItem="cwu-Rd-gaX" firstAttribute="leading" secondItem="Jio-fM-tkw" secondAttribute="leading" id="shr-BI-b0u"/>
+                            <constraint firstItem="V26-76-11f" firstAttribute="centerX" secondItem="Qxe-aR-10m" secondAttribute="centerX" id="vvZ-aB-fNQ"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="Jio-fM-tkw"/>
                     </view>
-                    <navigationItem key="navigationItem" id="fap-AS-Lt3"/>
+                    <navigationItem key="navigationItem" id="fap-AS-Lt3">
+                        <barButtonItem key="rightBarButtonItem" title="Choose Image" id="FMB-vX-U56"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3JL-xc-YON" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -28,8 +50,8 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Sqe-ex-auR" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="f9u-wN-cTV">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="f9u-wN-cTV">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
