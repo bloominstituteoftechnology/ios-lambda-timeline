@@ -54,11 +54,12 @@ class ImagePostViewController: UIViewController, UIImagePickerControllerDelegate
     @IBAction func actionFilter(sender: AnyObject) {
         let actionSheet = UIAlertController(title: "Choose filter", message: nil, preferredStyle: .actionSheet)
         
-        actionSheet.addAction(UIAlertAction(title: "Vignette", style: .default, handler: handleFilterSelection)) // Vignette
-        actionSheet.addAction(UIAlertAction(title: "Film Noir", style: .default, handler: handleFilterSelection)) // Noir
-        actionSheet.addAction(UIAlertAction(title: "Black and White", style: .default, handler: handleFilterSelection)) // Black-and-white
-        actionSheet.addAction(UIAlertAction(title: "Sepia", style: .default, handler: handleFilterSelection))  //Sepia
-        actionSheet.addAction(UIAlertAction(title: "Warm Colors", style: .default, handler: handleFilterSelection)) // Warm Summer
+        actionSheet.addAction(UIAlertAction(title: "Vignette", style: .default, handler: handleFilterSelection))
+        actionSheet.addAction(UIAlertAction(title: "Film Noir", style: .default, handler: handleFilterSelection))
+        actionSheet.addAction(UIAlertAction(title: "Black and White", style: .default, handler: handleFilterSelection))
+        actionSheet.addAction(UIAlertAction(title: "Sepia", style: .default, handler: handleFilterSelection))
+        actionSheet.addAction(UIAlertAction(title: "Warm Colors", style: .default, handler: handleFilterSelection))
+        actionSheet.addAction(UIAlertAction(title: "Custom", style: .default, handler: presentCustomFilterDetail))
         
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         present(actionSheet, animated: true, completion: nil)
@@ -105,6 +106,13 @@ class ImagePostViewController: UIViewController, UIImagePickerControllerDelegate
         let filteredImage = UIImage(cgImage: cgImage)
         
         self.imageView.image = filteredImage
+    }
+    
+    func presentCustomFilterDetail(action: UIAlertAction!) {
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CustomFilterDetailViewController") as? CustomFilterDetailViewController
+        {
+            present(vc, animated: true, completion: nil)
+        }
     }
     
     // MARK: - UIImagePickerControllerDelegate Methods
