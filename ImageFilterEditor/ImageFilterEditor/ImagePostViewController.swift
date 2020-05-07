@@ -60,11 +60,24 @@ class ImagePostViewController: UIViewController {
     }
     
     @IBAction func choosePhotoButtonPressed(_ sender: Any) {
-        
+        presentImagePickerController()
     }
     
     @IBAction func filterSettingsChanged(_ sender: Any) {
         updateImage()
+    }
+    
+    private func presentImagePickerController() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            print("The photo library is not available")
+            return
+        }
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        
+        present(imagePicker, animated: true, completion: nil)
     }
     
     private func updateImage() {
@@ -173,5 +186,22 @@ class ImagePostViewController: UIViewController {
         guard let renderedImage = context.createCGImage(outputImage, from: inputImage.extent) else { return originalImage! }
         
         return UIImage(cgImage: renderedImage)
+    }
+}
+
+extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let image = info[.editedImage] as? UIImage {
+            originalImage = image
+        } else if let image = info[.originalImage] as? UIImage {
+            originalImage = image
+        }
+        
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
 }
