@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  ImageFilterEditor
 //
-//  Created by Alex Thompson on 5/6/20.
+//  Created by Alex Thompson on 5/7/20.
 //  Copyright © 2020 Lambda School. All rights reserved.
 //
 
