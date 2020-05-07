@@ -100,7 +100,7 @@ class ClipCollectionViewController: UICollectionViewController {
         let asset = AVURLAsset(url: url, options: nil)
         let imgGenerator = AVAssetImageGenerator(asset: asset)
         let cgImage = try? imgGenerator.copyCGImage(at: CMTimeMake(value: 0, timescale: 1), actualTime: nil)
-        // !! check the error before proceeding
+        // FIXME: Orientation?
         if let cgImage = cgImage{
             let uiImage = UIImage(cgImage: cgImage)
             return uiImage
