@@ -37,8 +37,32 @@ class CameraViewController: UIViewController {
 		// Resize camera preview to fill the entire screen
 		cameraView.videoPlayerView.videoGravity = .resizeAspectFill
         setUpCaptureSession()
-	}
-    
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+        view.addGestureRecognizer(tapGesture)
+    }
+
+    @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
+        print("tap")
+        switch(tapGesture.state) {
+
+        case .ended:
+            replayMovie()
+        default:
+            print("Handled other states: \(tapGesture.state)")
+        }
+    }
+
+    private func replayMovie() {
+        guard let player = player else { return }
+
+        // 30 FPS, 60 FPS, 24 Frames Per Second
+        // CMTime (0, 30) = 1st frame
+        // CMTime(1, 30) = 2nd frame ...
+        player.seek(to: .zero)
+        player.play()
+    }
+
     // Use viewWillAppear so that before the view is displayed, we give the system time to load in video frames
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
