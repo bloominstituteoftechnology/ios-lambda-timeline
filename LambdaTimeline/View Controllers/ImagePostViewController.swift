@@ -51,6 +51,9 @@ class ImagePostViewController: ShiftableViewController {
 
         present(imagePicker, animated: true, completion: nil)
     }
+    @IBAction func chooseImageButtonPressed(_ sender: Any) {
+        presentImagePickerController()
+    }
     
     @IBAction func createPost(_ sender: Any) {
         

@@ -22,7 +22,7 @@ class PostController {
             
             guard let mediaURL = mediaURL else { completion(false); return }
             
-            let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
+            let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author, mediaType: mediaType)
             
             self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
                 if let error = error {
@@ -40,7 +40,16 @@ class PostController {
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
         
-        let comment = Comment(text: text, author: author)
+        let comment = Comment(text: text, audio: nil, author: author)
+        post.comments.append(comment)
+        
+        savePostToFirebase(post)
+    }
+    
+    func addAudioComment(with url: URL, to post: inout Post) {
+        guard let currentUser = Auth.auth().currentUser,
+            let author = Author(user: currentUser) else {return}
+        let comment = Comment(text: nil, audio: url, author: author, timestamp: Date())
         post.comments.append(comment)
         
         savePostToFirebase(post)
