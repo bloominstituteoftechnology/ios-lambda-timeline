@@ -9,13 +9,7 @@
 import UIKit
 
 protocol AudioCommentViewDelegate: AnyObject {
-    func startRecording(for audioCommentView: AudioCommentView)
-    func stopRecording(for audioCommentView: AudioCommentView)
-    func startPlayback(for audioCommentView: AudioCommentView)
-    func pausePlayback(for audioCommentView: AudioCommentView)
-    func scrubPlayback(to location: Float, for audioCommentView: AudioCommentView)
-    
-    func sendAudioComment(for audioCommentView: AudioCommentView)
+    func sendAudioComment(with url: URL, for audioCommentView: AudioCommentView)
     func sendTextualComment(with text: String, for audioCommentView: AudioCommentView)
 }
 
@@ -35,6 +29,7 @@ class AudioCommentView: UIView {
     // MARK: - Public Properties
     
     weak var delegate: AudioCommentViewDelegate?
+    let audioRecorder = AudioRecorder()
     
     // MARK: - Private Properties
     
@@ -45,6 +40,8 @@ class AudioCommentView: UIView {
             }
         }
     }
+    
+    private var audioURL: URL?
     
     // MARK: - IBOutlets
     
@@ -71,7 +68,7 @@ class AudioCommentView: UIView {
     
     // MARK: - Public Methods
     
-    func 
+    
     
     
     // MARK: - Private Methods
@@ -106,19 +103,60 @@ class AudioCommentView: UIView {
         }
     }
     
-    private func sendTextualMessage(with text: String) {
+    private func sendTextualComment() {
+        guard let text = textField.text else { return }
+        
         delegate?.sendTextualComment(with: text, for: self)
         textField.text = ""
         textField.resignFirstResponder()
     }
     
+    private func sendAudioComment() {
+        guard let url = audioURL else { return }
+        
+        delegate?.sendAudioComment(with: url, for: self)
+        uiMode = .emptyText
+        textField.resignFirstResponder()
+    }
     
+    private func startRecording() {
+        audioRecorder.startRecording()
+        recordButton.isSelected = true
+        uiMode = .recording
+    }
     
+    private func stopRecording() {
+        audioRecorder.stopRecording()
+        recordButton.isSelected = false
+        uiMode = .playback
+    }
+    
+    private func play() {
+        audioRecorder.play()
+        playPauseButton.isSelected = true
+    }
+    
+    private func pause() {
+        audioRecorder.pause()
+        playPauseButton.isSelected = false
+    }
+
     // MARK: - IBActions
     
+    @IBAction func togglePlayback(_ sender: Any) {
+        if audioRecorder.isPlaying {
+            pause()
+        } else {
+            play()
+        }
+    }
+    
     @IBAction func toggleRecording(_ sender: UIButton) {
-        recordButton.isSelected.toggle()
-        self.uiMode = recordButton.isSelected ? .recording : .playback
+        if audioRecorder.isRecording {
+            stopRecording()
+        } else {
+            startRecording()
+        }
     }
     
     @IBAction func cancel(_ sender: Any) {
@@ -128,12 +166,9 @@ class AudioCommentView: UIView {
     @IBAction func send(_ sender: Any) {
         print("Sending the comment")
         if uiMode == .playback {
-            delegate?.sendAudioComment(for: self)
-            uiMode = .emptyText
-            textField.resignFirstResponder()
+            sendAudioComment()
         } else if uiMode == .someText {
-            guard let text = textField.text else { return }
-            sendTextualMessage(with: text)
+            sendTextualComment()
         }
     }
 }
@@ -145,13 +180,26 @@ extension AudioCommentView: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         guard let text = textField.text, text != "" else { return false }
-        sendTextualMessage(with: text)
+        sendTextualComment()
         return true
     }
 }
 
-extension UIView {
+extension AudioCommentView: AudioRecorderDelegate {
+    func audioRecorder(_ recorder: AudioRecorder, didUpdatePlaybackLocation: Float) {
+        
+    }
     
+    func audioRecorder(_ recorder: AudioRecorder, didUpdateAudioAmplitude: Float) {
+        
+    }
+    
+    func audioRecorder(_ recorder: AudioRecorder, didRecordTo fileURL: URL) {
+        delegate?.sendAudioComment(with: fileURL, for: self)
+    }
+}
+
+extension UIView {
     static func hide(_ views: UIView...) {
         for view in views {
             view.isHidden = true

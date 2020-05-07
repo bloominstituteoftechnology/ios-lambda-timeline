@@ -9,12 +9,19 @@
 import UIKit
 import AVFoundation
 
+protocol AudioRecorderDelegate: AnyObject {
+    func audioRecorder(_ recorder: AudioRecorder, didRecordTo fileURL: URL)
+    func audioRecorder(_ recorder: AudioRecorder, didUpdatePlaybackLocation: Float)
+    func audioRecorder(_ recorder: AudioRecorder, didUpdateAudioAmplitude: Float)
+}
+
 class AudioRecorder: NSObject {
     
     // MARK: - Public Properties
     
     var isRecording: Bool { recorder?.isRecording ?? false }
     var isPlaying: Bool { player?.isPlaying ?? false }
+    weak var delegate: AudioRecorderDelegate?
     
     // MARK: - Private Properties
     
@@ -94,9 +101,10 @@ class AudioRecorder: NSObject {
 
 extension AudioRecorder: AVAudioRecorderDelegate {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-//        if flag, let recordingURL = recordingURL  {
-//            audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL)
-//        }
+        if flag, let recordingURL = recordingURL  {
+            player = try? AVAudioPlayer(contentsOf: recordingURL)
+            delegate?.audioRecorder(self, didRecordTo: recordingURL)
+        }
     }
     
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {

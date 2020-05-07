@@ -99,27 +99,7 @@ class CommentTableViewController: UITableViewController {
 }
 
 extension CommentTableViewController: AudioCommentViewDelegate {
-    func startRecording(for audioCommentView: AudioCommentView) {
-        
-    }
-    
-    func stopRecording(for audioCommentView: AudioCommentView) {
-        
-    }
-    
-    func startPlayback(for audioCommentView: AudioCommentView) {
-        
-    }
-    
-    func pausePlayback(for audioCommentView: AudioCommentView) {
-        
-    }
-    
-    func scrubPlayback(to location: Float, for audioCommentView: AudioCommentView) {
-        
-    }
-    
-    func sendAudioComment(for audioCommentView: AudioCommentView) {
+    func sendAudioComment(with URL: URL, for audioCommentView: AudioCommentView) {
         
     }
     
