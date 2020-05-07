@@ -46,6 +46,10 @@ class ImagePostViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var slider1: UISlider!
+    @IBOutlet weak var slider2: UISlider!
+    @IBOutlet weak var slider3: UISlider!
+    @IBOutlet weak var slider4: UISlider!
     @IBOutlet weak var invertColorsSwitch: UISwitch!
     @IBOutlet weak var imageView: UIImageView!
     
@@ -74,14 +78,35 @@ class ImagePostViewController: UIViewController {
     private func image(byFiltering inputImage: CIImage) -> UIImage {
         var outputImage = inputImage
         
+        // Invert Colors
         if invertColorsSwitch.isOn {
             colorInvertFilter.inputImage = inputImage
             guard let filteredImage = colorInvertFilter.outputImage else { return originalImage! }
             outputImage = filteredImage
         }
         
-        // TODO: Assign values to filter properties and apply filter for each filter type
-
+        // Vignette
+        vignetteFilter.inputImage = outputImage
+        vignetteFilter.radius = slider1.value * 30
+        vignetteFilter.intensity = slider1.value * 2
+        guard let filteredImage = vignetteFilter.outputImage else { return originalImage! }
+        outputImage = filteredImage
+        
+        // Crystalize
+        
+        
+        // Line Overlay
+        
+        
+        // Pointillize
+        
+        
+        // Kaleidoscope
+        
+        
+        // PerspectiveTransform
+        
+        
         guard let renderedImage = context.createCGImage(outputImage, from: inputImage.extent) else { return originalImage! }
         
         return UIImage(cgImage: renderedImage)
