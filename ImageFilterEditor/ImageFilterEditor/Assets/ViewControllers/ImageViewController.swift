@@ -28,7 +28,7 @@ class ImageViewController: UIViewController {
     
     let context = CIContext()
     var filterType: FilterType = .exposure
-    let effextNames: [String] = ["Exposure",
+    let effectNames: [String] = ["Exposure",
                                  "Vibrance",
                                  "Sepia Tone",
                                  "Motion Blur"
@@ -223,6 +223,76 @@ class ImageViewController: UIViewController {
         }
         
         return UIImage(cgImage: outputCGImage)
+    }
+    
+    private func showFilter(for index: IndexPath) {
+        adjustmentSlider.isHidden = false
+        nameLabel.isHidden = false
+        saveButton.isHidden = false
+        
+        nameLabel.text = effectNames[index.row]
+        filterType = FilterType(rawValue: index.item)!
+        imageView.image = scaledImage
+        
+        if index.item == 0 {
+            secondAdjustmentSlider.isHidden = true
+            
+            adjustmentSlider.value = 0
+            adjustmentSlider.maximumValue = 10
+            adjustmentSlider.minimumValue = -10
+       
+        } else if index.item == 1 {
+            secondAdjustmentSlider.isHidden = true
+            
+            adjustmentSlider.value = 0
+            adjustmentSlider.maximumValue = 1
+            adjustmentSlider.minimumValue = -1
+            
+        } else if index.item == 2 {
+            secondAdjustmentSlider.isHidden = false
+            
+            adjustmentSlider.value = 0
+            adjustmentSlider.maximumValue = 1
+            adjustmentSlider.minimumValue = -1
+            
+            secondAdjustmentSlider.value = 0
+            secondAdjustmentSlider.maximumValue = 2000
+            secondAdjustmentSlider.minimumValue = 0
+            
+        } else if index.item == 3 {
+            secondAdjustmentSlider.isHidden = true
+            
+            adjustmentSlider.value = 9
+            adjustmentSlider.maximumValue = 1
+            adjustmentSlider.minimumValue = 0
+            
+        } else if index.item == 4 {
+            secondAdjustmentSlider.isHidden = false
+            
+            adjustmentSlider.value = 0
+            adjustmentSlider.maximumValue = 100
+            adjustmentSlider.minimumValue = 0
+            
+            secondAdjustmentSlider.value = 0
+            secondAdjustmentSlider.maximumValue = 3.141592653589793
+            secondAdjustmentSlider.minimumValue = -3.141592653589793
+            
+        }
+    }
+}
+
+extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        <#code#>
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        <#code#>
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        <#code#>
     }
 }
 
