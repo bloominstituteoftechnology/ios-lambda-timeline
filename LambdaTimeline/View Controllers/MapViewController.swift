@@ -61,6 +61,7 @@ extension MapViewController: MKMapViewDelegate {
             fatalError("Missing a registered view")
         }
 
+        annotationView.glyphImage = nil // default glyph image of a pin is used
         annotationView.canShowCallout = true
         let detailView = MapDetailView()
         detailView.post = post

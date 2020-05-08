@@ -65,6 +65,18 @@ class ImagePostViewController: ShiftableViewController {
         
         // Grab lat and long
         let locManager = CLLocationManager()
+
+        // Ask for Authorisation from the User.
+        locManager.requestAlwaysAuthorization()
+
+        // For use in foreground
+        locManager.requestWhenInUseAuthorization()
+
+        if CLLocationManager.locationServicesEnabled() {
+            locManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locManager.startUpdatingLocation()
+        }
+
         let latitude = locManager.location?.coordinate.latitude ?? 0.0
         let longitude = locManager.location?.coordinate.longitude ?? 0.0
 
