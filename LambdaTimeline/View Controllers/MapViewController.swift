@@ -20,7 +20,7 @@ class MapViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         mapView.delegate = self
-        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "QuakeView")
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "PostView")
 
         if let posts = postController?.posts {
             mapView.addAnnotations(posts)
@@ -51,6 +51,7 @@ extension MapViewController: MKMapViewDelegate {
         }
 
         annotationView.glyphImage = UIImage(named: "􀉛")
-        annotationView.canShowCallout
+        annotationView.canShowCallout = true
+        return annotationView
     }
 }
