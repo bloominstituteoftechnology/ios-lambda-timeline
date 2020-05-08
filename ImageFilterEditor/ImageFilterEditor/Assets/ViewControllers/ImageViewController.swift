@@ -140,18 +140,89 @@ class ImageViewController: UIViewController {
     
     private func adjustVibrance(_ image: UIImage) -> UIImage? {
         
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        //filter
+        let filter = CIFilter(name: "CIVibrance")!
+        
+        // Trying to get values from core image
+        
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(adjustmentSlider.value, forKey: kCIInputAmountKey)
+        
+        guard let outputCIImage = filter.outputImage else { return nil }
+        
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else {
+            return nil
+        }
+        
+        return UIImage(cgImage: outputCGImage)
     }
     
     private func adjustVignette(_ image: UIImage) -> UIImage? {
         
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        //filter
+        let filter = CIFilter(name: "CIVignetteEffect")!
+        
+        //getting values from core image
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(adjustmentSlider.value, forKey: kCIInputIntensityKey)
+        filter.setValue(secondAdjustmentSlider.value, forKey: kCIInputRadiusKey)
+        
+        guard let outputCIImage = filter.outputImage else { return nil }
+        
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else {
+            return nil
+        }
+        
+        return UIImage(cgImage: outputCGImage)
     }
     
     private func adjustSepia(_ image: UIImage) -> UIImage? {
         
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+                
+        // filter
+        let filter = CIFilter(name: "CISepiaTone")!
+        
+        //getting values from Core Image
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(adjustmentSlider.value, forKey: kCIInputIntensityKey)
+        
+        guard let outputCIImage = filter.outputImage else { return nil }
+        
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else {
+            return nil
+        }
+        
+        return UIImage(cgImage: outputCGImage)
     }
     
     private func adjustMotionBlur(_ image: UIImage) -> UIImage? {
+    
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+                
+        //filter
+        let filter = CIFilter(name: "CIMotionBlur")!
         
+        //getting values from Core Image
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(adjustmentSlider.value, forKey: kCIInputRadiusKey)
+        filter.setValue(secondAdjustmentSlider.value, forKey: kCIInputAngleKey)
+        
+        guard let outputCIImage = filter.outputImage else { return nil }
+        
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else {
+            return nil
+        }
+        
+        return UIImage(cgImage: outputCGImage)
     }
 }
 
