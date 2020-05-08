@@ -12,6 +12,7 @@ import AVFoundation
 protocol AudioRecorderDelegate: AnyObject {
     func didRecord(to fileURL: URL, with duration: TimeInterval)
     func didUpdatePlaybackLocation(to time: TimeInterval)
+    func didFinishPlaying()
     func didUpdateAudioAmplitude(to decibels: Float)
 }
 
@@ -112,6 +113,7 @@ extension AudioRecorder: AVAudioRecorderDelegate {
             do {
                 player = try AVAudioPlayer(contentsOf: recordingURL)
                 player!.isMeteringEnabled = true
+                player!.delegate = self
                 
                 delegate?.didRecord(to: recordingURL, with: player!.duration)
             } catch {
@@ -131,6 +133,7 @@ extension AudioRecorder: AVAudioPlayerDelegate {
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         update()
+        delegate?.didFinishPlaying()
     }
     
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {

@@ -167,6 +167,7 @@ class AudioCommentView: UIView {
     
     @IBAction func scrubTimeline(_ sender: UISlider) {
         audioRecorder.scrub(to: TimeInterval(sender.value))
+        playPauseButton.isSelected = false
     }
 }
 
@@ -187,6 +188,10 @@ extension AudioCommentView: AudioRecorderDelegate {
         timelineSlider.value = Float(time)
     }
     
+    func didFinishPlaying() {
+        playPauseButton.isSelected = false
+    }
+    
     func didUpdateAudioAmplitude(to decibels: Float) {
         audioVisualizer.addValue(decibelValue: decibels)
         print(decibels)
@@ -196,6 +201,7 @@ extension AudioCommentView: AudioRecorderDelegate {
         recordButton.isSelected = false
         timelineSlider.maximumValue = Float(duration)
         timelineSlider.value = 0
+        playPauseButton.isSelected = false
         uiMode = .playback
     }
 }
