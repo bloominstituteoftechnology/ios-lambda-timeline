@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import CoreLocation
 
 class ImagePostViewController: ShiftableViewController {
     
@@ -62,7 +63,29 @@ class ImagePostViewController: ShiftableViewController {
             return
         }
         
-        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
+        // Grab lat and long
+        let locManager = CLLocationManager()
+
+        // Ask for Authorisation from the User.
+        locManager.requestAlwaysAuthorization()
+
+        // For use in foreground
+        locManager.requestWhenInUseAuthorization()
+
+        if CLLocationManager.locationServicesEnabled() {
+            locManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locManager.startUpdatingLocation()
+        }
+
+        let latitude = locManager.location?.coordinate.latitude ?? 0.0
+        let longitude = locManager.location?.coordinate.longitude ?? 0.0
+
+        postController.createPost(with: title,
+                                  ofType: .image,
+                                  mediaData: imageData,
+                                  ratio: imageView.image?.ratio,
+                                  latitude: latitude,
+                                  longitude: longitude) { (success) in
             guard success else {
                 DispatchQueue.main.async {
                     self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")

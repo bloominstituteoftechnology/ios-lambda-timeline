@@ -29,6 +29,10 @@
 		46D571F32172D43B00E7FF73 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D571F22172D43B00E7FF73 /* Cache.swift */; };
 		46D571F52173CF3E00E7FF73 /* UIImage+Ratio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D571F42173CF3E00E7FF73 /* UIImage+Ratio.swift */; };
 		46D571F82173FC2700E7FF73 /* ImagePostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */; };
+		923148DB246502DA00419F45 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923148DA246502DA00419F45 /* MapViewController.swift */; };
+		923148DD246506A400419F45 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 923148DC246506A300419F45 /* MapKit.framework */; };
+		923148DF24650A4F00419F45 /* MapDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923148DE24650A4F00419F45 /* MapDetailView.swift */; };
+		927AFE47246131F100F9A1FD /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 927AFE46246131F100F9A1FD /* GoogleService-Info.plist */; };
 		E453457955DF907FCBD117F1 /* Pods_LambdaTimeline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */; };
 /* End PBXBuildFile section */
 
@@ -59,6 +63,10 @@
 		46D571F42173CF3E00E7FF73 /* UIImage+Ratio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ratio.swift"; sourceTree = "<group>"; };
 		46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePostDetailTableViewController.swift; sourceTree = "<group>"; };
 		5D2CCD6C68779B0A70AC37FA /* Pods-LambdaTimeline.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LambdaTimeline.release.xcconfig"; path = "Pods/Target Support Files/Pods-LambdaTimeline/Pods-LambdaTimeline.release.xcconfig"; sourceTree = "<group>"; };
+		923148DA246502DA00419F45 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		923148DC246506A300419F45 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		923148DE24650A4F00419F45 /* MapDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDetailView.swift; sourceTree = "<group>"; };
+		927AFE46246131F100F9A1FD /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LambdaTimeline.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -67,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				923148DD246506A400419F45 /* MapKit.framework in Frameworks */,
 				E453457955DF907FCBD117F1 /* Pods_LambdaTimeline.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -104,6 +113,7 @@
 		4646377A216FDE4B00E7FF73 /* LambdaTimeline */ = {
 			isa = PBXGroup;
 			children = (
+				927AFE46246131F100F9A1FD /* GoogleService-Info.plist */,
 				46CFE7042171572900E7FF73 /* Views */,
 				46A0366B21700F6100E7FF73 /* View Controllers */,
 				4646379A2170090900E7FF73 /* Model Controllers */,
@@ -155,10 +165,11 @@
 		46A0366B21700F6100E7FF73 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				46A0366C2170158900E7FF73 /* SignInViewController.swift */,
-				46A0366921700F5100E7FF73 /* PostsCollectionViewController.swift */,
-				46CFE6F421707D0000E7FF73 /* ImagePostViewController.swift */,
 				46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */,
+				46CFE6F421707D0000E7FF73 /* ImagePostViewController.swift */,
+				923148DA246502DA00419F45 /* MapViewController.swift */,
+				46A0366921700F5100E7FF73 /* PostsCollectionViewController.swift */,
+				46A0366C2170158900E7FF73 /* SignInViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -167,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				46CFE7022171572600E7FF73 /* ImagePostCollectionViewCell.swift */,
+				923148DE24650A4F00419F45 /* MapDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -206,6 +218,7 @@
 		7C2A25429FC0F968FC1D35E7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				923148DC246506A300419F45 /* MapKit.framework */,
 				AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */,
 			);
 			name = Frameworks;
@@ -276,6 +289,7 @@
 				46463786216FDE4C00E7FF73 /* LaunchScreen.storyboard in Resources */,
 				46463783216FDE4C00E7FF73 /* Assets.xcassets in Resources */,
 				46463781216FDE4B00E7FF73 /* Main.storyboard in Resources */,
+				927AFE47246131F100F9A1FD /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,6 +362,7 @@
 				46A0366D2170158900E7FF73 /* SignInViewController.swift in Sources */,
 				46CFE6FB21714E6100E7FF73 /* Author.swift in Sources */,
 				46CFE6F92170862C00E7FF73 /* ShiftableViewController.swift in Sources */,
+				923148DB246502DA00419F45 /* MapViewController.swift in Sources */,
 				4646377C216FDE4B00E7FF73 /* AppDelegate.swift in Sources */,
 				46CFE6FD217154F500E7FF73 /* Networking.swift in Sources */,
 				46CFE6F521707D0000E7FF73 /* ImagePostViewController.swift in Sources */,
@@ -363,6 +378,7 @@
 				46A0366A21700F5100E7FF73 /* PostsCollectionViewController.swift in Sources */,
 				46D571F52173CF3E00E7FF73 /* UIImage+Ratio.swift in Sources */,
 				46463792216FFDD900E7FF73 /* Comment.swift in Sources */,
+				923148DF24650A4F00419F45 /* MapDetailView.swift in Sources */,
 				46CFE6F721707FA600E7FF73 /* UIViewController+InformationalAlert.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -511,13 +527,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 4ZDYKHFRDV;
 				INFOPLIST_FILE = "$(SRCROOT)/LambdaTimeline/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = net.olivejuice.timeline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -530,13 +546,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 4ZDYKHFRDV;
 				INFOPLIST_FILE = "$(SRCROOT)/LambdaTimeline/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_BUNDLE_IDENTIFIER = net.olivejuice.timeline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
