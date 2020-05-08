@@ -131,7 +131,7 @@ class ImagePostViewController: UIViewController, UIImagePickerControllerDelegate
         if inputKeys.contains(kCIInputCenterKey) { appliedFilter.setValue(CIVector(x: imageView.image!.size.width / 2, y: imageView.image!.size.height / 2), forKey: kCIInputCenterKey) }
         
         guard let cgImage = context.createCGImage(appliedFilter.outputImage!, from: appliedFilter.outputImage!.extent) else { return }
-        let filteredImage = UIImage(cgImage: cgImage)
+        let filteredImage = UIImage(cgImage: cgImage, scale: self.imageView.image!.scale, orientation: self.imageView.image!.imageOrientation)
         
         self.imageView.image = filteredImage
     }
