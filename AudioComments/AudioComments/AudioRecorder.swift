@@ -107,6 +107,8 @@ class AudioRecorder: NSObject {
 
 }
 
+// MARK: - AVAudioRecorderDelegate
+
 extension AudioRecorder: AVAudioRecorderDelegate {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         if flag, let recordingURL = recordingURL  {
@@ -128,6 +130,8 @@ extension AudioRecorder: AVAudioRecorderDelegate {
         }
     }
 }
+
+// MARK: - AVAudioPlayerDelegate
 
 extension AudioRecorder: AVAudioPlayerDelegate {
     
