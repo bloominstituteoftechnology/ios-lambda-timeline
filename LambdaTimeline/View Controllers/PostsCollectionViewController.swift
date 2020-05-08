@@ -169,6 +169,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             destinationVC?.postController = postController
             destinationVC?.post = postController.posts[indexPath.row]
             destinationVC?.imageData = cache.value(for: postID)
+        } else if segue.identifier == "MapSegue" {
+            let destinationVC = segue.destination as? MapViewController
+            destinationVC?.posts = postController.posts
         }
     }
     
