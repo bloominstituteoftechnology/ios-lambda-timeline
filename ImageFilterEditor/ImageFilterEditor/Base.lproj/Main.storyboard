@@ -51,7 +51,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xs8-wd-2oA">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xs8-wd-2oA">
                                                 <rect key="frame" x="0.0" y="200" width="167" height="30"/>
                                                 <state key="normal" title="Invert Colors"/>
                                                 <connections>
@@ -87,36 +87,27 @@
                                                     <action selector="sliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="hbS-HT-2Rm"/>
                                                 </connections>
                                             </slider>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2DF-Tc-qXK">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zv3-iG-NHa">
                                                 <rect key="frame" x="0.0" y="200" width="167" height="30"/>
-                                                <state key="normal" title="Greyscale"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <state key="normal" title="Save Photo">
+                                                    <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </state>
                                                 <connections>
-                                                    <action selector="greyscale:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pyf-SP-AtY"/>
+                                                    <action selector="savePhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5px-gv-rgA"/>
                                                 </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zv3-iG-NHa">
-                                <rect key="frame" x="161" y="752" width="92" height="90"/>
-                                <state key="normal" title="Save Photo">
-                                    <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="savePhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5px-gv-rgA"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="CfS-vQ-bzO" firstAttribute="top" secondItem="5rt-Yx-v3a" secondAttribute="bottom" constant="20" id="2t9-He-9vZ"/>
-                            <constraint firstItem="Zv3-iG-NHa" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="D3t-Iy-eOf"/>
-                            <constraint firstItem="Zv3-iG-NHa" firstAttribute="top" secondItem="CfS-vQ-bzO" secondAttribute="bottom" constant="20" id="FSh-hn-2p4"/>
                             <constraint firstItem="5rt-Yx-v3a" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="KQQ-Pr-Dsy"/>
                             <constraint firstAttribute="trailingMargin" secondItem="CfS-vQ-bzO" secondAttribute="trailing" constant="20" id="Mps-UP-ctk"/>
                             <constraint firstItem="5rt-Yx-v3a" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Pd9-wK-obk"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Zv3-iG-NHa" secondAttribute="bottom" constant="20" id="aTg-s3-0RS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="5rt-Yx-v3a" secondAttribute="trailing" constant="20" id="bZ0-tR-ybg"/>
                             <constraint firstItem="CfS-vQ-bzO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="dqC-qA-30X"/>
                             <constraint firstItem="5rt-Yx-v3a" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="eIZ-BL-6G4"/>

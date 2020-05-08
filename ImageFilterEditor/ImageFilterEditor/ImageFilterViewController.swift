@@ -26,7 +26,7 @@ class ImageFilterViewController: UIViewController {
             guard let originalImage = originalImage else { return }
             
             var scaledSize = imageView.bounds.size
-            let scale: CGFloat = 1 // UIScreen.main.scale
+            let scale: CGFloat = 1
             
             scaledSize = CGSize(width: scaledSize.width*scale,
                                 height: scaledSize.height*scale)
@@ -47,7 +47,7 @@ class ImageFilterViewController: UIViewController {
     private let colorControlsFilter = CIFilter.colorControls()
     private let exposureFilter = CIFilter.exposureAdjust()
     private let invertColorsFilter = CIFilter.colorInvert()
-    private let greyscaleFilter = CIFilter.photoEffectNoir()
+//    private let greyscaleFilter = CIFilter.photoEffectNoir()
     
     
     // MARK: - View
@@ -55,11 +55,10 @@ class ImageFilterViewController: UIViewController {
         super.viewDidLoad()
         
         originalImage = imageView.image
-        
     }
     
     var isInverted: Bool = false
-    var isGreyscale: Bool = false
+//    var isGreyscale: Bool = false
     
     
     // MARK: - Actions
@@ -74,12 +73,12 @@ class ImageFilterViewController: UIViewController {
         isInverted.toggle()
     }
     
-    @IBAction func greyscale(_ sender: UIButton) {
-        guard let inputImage = scaledImage else { return }
-        greyscaleFilter.inputImage = inputImage
-        scaledImage = greyscaleFilter.outputImage
-        isGreyscale.toggle()
-    }
+//    @IBAction func greyscale(_ sender: UIButton) {
+//        guard let inputImage = scaledImage else { return }
+//        greyscaleFilter.inputImage = inputImage
+//        scaledImage = greyscaleFilter.outputImage
+//        isGreyscale.toggle()
+//    }
     
     @IBAction func savePhoto(_ sender: UIButton) {
         guard let originalImage = originalImage?.flattened, let ciImage = CIImage(image: originalImage) else { return }
