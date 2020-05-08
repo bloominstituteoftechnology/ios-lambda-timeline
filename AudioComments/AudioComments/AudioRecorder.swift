@@ -11,8 +11,8 @@ import AVFoundation
 
 protocol AudioRecorderDelegate: AnyObject {
     func audioRecorder(_ recorder: AudioRecorder, didRecordTo fileURL: URL)
-    func audioRecorder(_ recorder: AudioRecorder, didUpdatePlaybackLocation: Float)
-    func audioRecorder(_ recorder: AudioRecorder, didUpdateAudioAmplitude: Float)
+    func audioRecorder(_ recorder: AudioRecorder, didUpdatePlaybackLocationTo time: Float)
+    func audioRecorder(_ recorder: AudioRecorder, didUpdateAudioAmplitudeTo decibels: Float)
 }
 
 class AudioRecorder: NSObject {
@@ -29,6 +29,8 @@ class AudioRecorder: NSObject {
     private var recordingURL: URL?
     private var player: AVAudioPlayer?
     
+    private var updateTimer: Timer?
+    
     // MARK: - Public Methods
     
     func startRecording() {
@@ -36,22 +38,27 @@ class AudioRecorder: NSObject {
         
         let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
         recorder = try? AVAudioRecorder(url: recordingURL, format: format)
+        recorder?.isMeteringEnabled = true
         recorder?.delegate = self
         
         recorder?.record()
         self.recordingURL = recordingURL
+        startUpdateTimer()
     }
     
     func stopRecording() {
         recorder?.stop()
+        stopUpdateTimer()
     }
     
     func play() {
         player?.play()
+        startUpdateTimer()
     }
     
     func pause() {
         player?.pause()
+        stopUpdateTimer()
     }
     
     // MARK: - Private Methods
@@ -65,6 +72,28 @@ class AudioRecorder: NSObject {
         print("recording URL: \(fileURL)")
         
         return fileURL
+    }
+    
+    private func startUpdateTimer() {
+        updateTimer?.invalidate()
+        updateTimer = Timer.scheduledTimer(timeInterval: 1/60, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+    }
+    
+    private func stopUpdateTimer() {
+        updateTimer?.invalidate()
+    }
+    
+    @objc func update() {
+        if isPlaying {
+            guard let player = player else { return }
+            player.updateMeters()
+            delegate?.audioRecorder(self, didUpdateAudioAmplitudeTo: player.averagePower(forChannel: 0))
+            delegate?.audioRecorder(self, didUpdatePlaybackLocationTo: Float(player.currentTime))
+        } else if isRecording {
+            guard let recorder = recorder else { return }
+            recorder.updateMeters()
+            delegate?.audioRecorder(self, didUpdateAudioAmplitudeTo: recorder.averagePower(forChannel: 0))
+        }
     }
     
 //    private func requestPermissionOrStartRecording() {
@@ -103,6 +132,7 @@ extension AudioRecorder: AVAudioRecorderDelegate {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         if flag, let recordingURL = recordingURL  {
             player = try? AVAudioPlayer(contentsOf: recordingURL)
+            player?.isMeteringEnabled = true
             delegate?.audioRecorder(self, didRecordTo: recordingURL)
         }
     }

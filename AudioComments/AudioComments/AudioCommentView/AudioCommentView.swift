@@ -80,6 +80,8 @@ class AudioCommentView: UIView {
         contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         textField.delegate = self
         textField.autocorrectionType = .no
+        
+        audioRecorder.delegate = self
     }
     
     private func updateUI() {
@@ -186,12 +188,13 @@ extension AudioCommentView: UITextFieldDelegate {
 }
 
 extension AudioCommentView: AudioRecorderDelegate {
-    func audioRecorder(_ recorder: AudioRecorder, didUpdatePlaybackLocation: Float) {
-        
+    func audioRecorder(_ recorder: AudioRecorder, didUpdatePlaybackLocationTo time: Float) {
+        timelineSlider.value = time
     }
     
-    func audioRecorder(_ recorder: AudioRecorder, didUpdateAudioAmplitude: Float) {
-        
+    func audioRecorder(_ recorder: AudioRecorder, didUpdateAudioAmplitudeTo decibels: Float) {
+        audioVisualizer.addValue(decibelValue: decibels)
+        print(decibels)
     }
     
     func audioRecorder(_ recorder: AudioRecorder, didRecordTo fileURL: URL) {
