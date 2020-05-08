@@ -51,10 +51,10 @@ extension VideoMapViewController: MKMapViewDelegate {
         
         guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "VideoView", for: annotation) as? MKMarkerAnnotationView else { fatalError("Missing a register view") }
         
-        //annotationView.canShowCallout = true
-        //let detailView = VideoDetailView()
-        //detailView.quake = quake
-        //annotationView.detailCalloutAccessoryView = detailView
+        annotationView.canShowCallout = true
+        let detailView = VideoDetailView()
+        detailView.video = video
+        annotationView.detailCalloutAccessoryView = detailView
         
         return annotationView
     }

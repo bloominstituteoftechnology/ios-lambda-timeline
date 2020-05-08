@@ -15,6 +15,7 @@ class LandingViewController: UIViewController {
     // MARK: - IBOutlets
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var myVideosButton: UIButton!
+    @IBOutlet weak var mapKitButton: UIButton!
     
     // MARK: - Properties
     let locationManager = CLLocationManager()
@@ -30,6 +31,7 @@ class LandingViewController: UIViewController {
     private func updateViews() {
         recordButton.layer.cornerRadius = 8
         myVideosButton.layer.cornerRadius = 8
+        mapKitButton.layer.cornerRadius = 8
     }
     
     private func requestPermissionAndShowCamera() {

@@ -21,6 +21,19 @@ extension UIViewController {
     }
 }
 
+extension UITextField {
+    func setLeftPaddingPoints(_ amount:CGFloat){
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
+        self.leftView = paddingView
+        self.leftViewMode = .always
+    }
+    func setRightPaddingPoints(_ amount:CGFloat) {
+        let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: amount, height: self.frame.size.height))
+        self.rightView = paddingView
+        self.rightViewMode = .always
+    }
+}
+
 class ViewRecordingViewController: UIViewController {
 
     // MARK: - IBOutlets
@@ -64,6 +77,8 @@ class ViewRecordingViewController: UIViewController {
         saveButton.layer.cornerRadius = 8
         nameTextField.layer.cornerRadius = 8
         authorTextField.layer.cornerRadius = 8
+        nameTextField.setLeftPaddingPoints(10)
+        authorTextField.setLeftPaddingPoints(10)
     }
     
     private func playMovie(url: URL?) {
@@ -91,6 +106,7 @@ class ViewRecordingViewController: UIViewController {
         guard let url = recordingURL else { return }
         let video = Video(recordingURL: url, name: videoName, latitude: latitude, longitude: longitude, author: author)
         videoController.videos.append(video)
+        locationManager?.stopUpdatingLocation()
         dismiss(animated: true, completion: nil)
     }
 }

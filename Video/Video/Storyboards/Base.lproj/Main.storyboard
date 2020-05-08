@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--VidEO-->
+        <!--Video-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="LandingViewController" customModule="Video" customModuleProvider="target" sceneMemberID="viewController">
@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="sKc-iE-vYY">
-                                <rect key="frame" x="100" y="375" width="214" height="146"/>
+                                <rect key="frame" x="100" y="365" width="214" height="166"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m7q-bn-5Wn">
                                         <rect key="frame" x="0.0" y="0.0" width="214" height="50"/>
@@ -48,8 +48,14 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eA5-oD-paC">
-                                        <rect key="frame" x="0.0" y="116" width="214" height="30"/>
-                                        <state key="normal" title="MapKit"/>
+                                        <rect key="frame" x="0.0" y="116" width="214" height="50"/>
+                                        <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="hdB-XB-JeO"/>
+                                        </constraints>
+                                        <state key="normal" title="MapKit">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
                                         <connections>
                                             <segue destination="55V-c1-JKW" kind="show" id="CnS-lZ-CfD"/>
                                         </connections>
@@ -68,8 +74,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="VidEO" id="4Z0-i3-0HC"/>
+                    <navigationItem key="navigationItem" title="Video" id="4Z0-i3-0HC"/>
                     <connections>
+                        <outlet property="mapKitButton" destination="eA5-oD-paC" id="zZD-Gf-T2u"/>
                         <outlet property="myVideosButton" destination="pFc-OQ-BXp" id="xXa-jC-hdR"/>
                         <outlet property="recordButton" destination="m7q-bn-5Wn" id="abx-2X-Ygd"/>
                         <segue destination="M61-rj-TPL" kind="presentation" identifier="PresentCameraSegue" modalPresentationStyle="fullScreen" id="rA8-JZ-ZnI"/>
@@ -305,7 +312,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="6rB-Rp-9ns">
                                 <rect key="frame" x="20" y="686" width="374" height="166"/>
                                 <subviews>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="   Video Name:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z5Y-xS-VEq">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Video Name:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z5Y-xS-VEq">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                         <color key="backgroundColor" systemColor="systemGray6Color" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -314,7 +321,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="   Author:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NA6-t0-Fg9">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Author:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NA6-t0-Fg9">
                                         <rect key="frame" x="0.0" y="58" width="374" height="50"/>
                                         <color key="backgroundColor" systemColor="systemGray6Color" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -323,16 +330,16 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="zgo-rx-fkZ">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="zYF-0u-CBy">
                                         <rect key="frame" x="0.0" y="116" width="374" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="erv-aL-5Oi">
-                                                <rect key="frame" x="0.0" y="0.0" width="214" height="50"/>
-                                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="183" height="50"/>
+                                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="eBy-S2-T8m"/>
                                                 </constraints>
-                                                <state key="normal" title="Cancel">
+                                                <state key="normal" title="Delete">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
@@ -340,7 +347,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="guJ-gP-GSu">
-                                                <rect key="frame" x="222" y="0.0" width="152" height="50"/>
+                                                <rect key="frame" x="191" y="0.0" width="183" height="50"/>
                                                 <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="vxF-8M-DBc"/>
@@ -353,9 +360,6 @@
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstItem="guJ-gP-GSu" firstAttribute="width" secondItem="erv-aL-5Oi" secondAttribute="width" multiplier="0.708333" id="Z7U-MO-Jhp"/>
-                                        </constraints>
                                     </stackView>
                                 </subviews>
                             </stackView>
