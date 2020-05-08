@@ -41,8 +41,6 @@ class AudioCommentView: UIView {
         }
     }
     
-    private var audioURL: URL?
-    
     // MARK: - IBOutlets
     
     @IBOutlet var contentView: UIView!
@@ -65,11 +63,6 @@ class AudioCommentView: UIView {
         super.init(coder: aDecoder)
         setup()
     }
-    
-    // MARK: - Public Methods
-    
-    
-    
     
     // MARK: - Private Methods
     
@@ -114,8 +107,8 @@ class AudioCommentView: UIView {
     }
     
     private func sendAudioComment() {
-        guard let url = audioURL else { return }
-        
+        guard let url = audioRecorder.fileURL else { return }
+
         delegate?.sendAudioComment(with: url)
         uiMode = .emptyText
         textField.resignFirstResponder()
@@ -143,7 +136,7 @@ class AudioCommentView: UIView {
 
     // MARK: - IBActions
     
-    @IBAction func togglePlayback(_ sender: Any) {
+    @IBAction func togglePlayback(_ sender: UIButton) {
         if audioRecorder.isPlaying {
             pause()
         } else {
@@ -159,18 +152,21 @@ class AudioCommentView: UIView {
         }
     }
     
-    @IBAction func cancel(_ sender: Any) {
+    @IBAction func cancel(_ sender: UIButton) {
         self.uiMode = .emptyText
         audioRecorder.pause()
     }
     
-    @IBAction func send(_ sender: Any) {
-        print("Sending the comment")
+    @IBAction func send(_ sender: UIButton) {
         if uiMode == .playback {
             sendAudioComment()
         } else if uiMode == .someText {
             sendTextualComment()
         }
+    }
+    
+    @IBAction func scrubTimeline(_ sender: UISlider) {
+        audioRecorder.scrub(to: TimeInterval(sender.value))
     }
 }
 

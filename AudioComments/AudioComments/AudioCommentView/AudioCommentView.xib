@@ -87,6 +87,9 @@
                     <subviews>
                         <slider hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="R8G-kS-lgI">
                             <rect key="frame" x="-2" y="0.0" width="292" height="49"/>
+                            <connections>
+                                <action selector="scrubTimeline:" destination="-1" eventType="valueChanged" id="sUg-oK-NnW"/>
+                            </connections>
                         </slider>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gOQ-e4-p2n" customClass="AudioVisualizer" customModule="AudioComments" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="288" height="48"/>

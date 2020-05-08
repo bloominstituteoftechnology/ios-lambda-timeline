@@ -21,6 +21,8 @@ class AudioRecorder: NSObject {
     
     var isRecording: Bool { recorder?.isRecording ?? false }
     var isPlaying: Bool { player?.isPlaying ?? false }
+    var fileURL: URL? { player?.url }
+    
     weak var delegate: AudioRecorderDelegate?
     
     // MARK: - Private Properties
@@ -59,6 +61,11 @@ class AudioRecorder: NSObject {
     func pause() {
         player?.pause()
         stopUpdateTimer()
+    }
+    
+    func scrub(to time: TimeInterval) {
+        guard let player = player else { return }
+        player.currentTime = time
     }
     
     // MARK: - Private Methods
@@ -123,7 +130,7 @@ extension AudioRecorder: AVAudioRecorderDelegate {
 extension AudioRecorder: AVAudioPlayerDelegate {
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        
+        update()
     }
     
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
