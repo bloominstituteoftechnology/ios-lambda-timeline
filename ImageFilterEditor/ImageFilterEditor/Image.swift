@@ -10,7 +10,7 @@ import UIKit
 
 extension UIImage {
     
-    /// Resize the image to a max dimension from size parameter
+
     func imageByScaling(toSize size: CGSize) -> UIImage? {
         guard size.width > 0 && size.height > 0 else { return nil }
         

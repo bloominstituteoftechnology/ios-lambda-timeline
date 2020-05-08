@@ -69,19 +69,19 @@ class ImageViewController: UIViewController {
     }
     
     @IBAction func selectPhoto(_ sender: Any) {
-        
+        presentImagePickerController()
     }
     
     @IBAction func slider1Changed(_ sender: Any) {
-        
+        updateViews(withAdjustment: true)
     }
     
     @IBAction func slider2Changed(_ sender: Any) {
-        
+        updateViews(withAdjustment: true)
     }
     
     @IBAction func saveTapped(_ sender: Any) {
-        
+        scaledImage = imageView.image
     }
     
     private func presentImagePickerController() {
@@ -284,18 +284,33 @@ class ImageViewController: UIViewController {
 extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        <#code#>
+        effectNames.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
+        cell.layer.cornerRadius = 15
+        cell.myLabel.text = effectNames[indexPath.item]
+        cell.image.image = effectImages[indexPath.item]
+        
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        <#code#>
+        showFilter(for: indexPath)
     }
 }
 
 extension ImageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.originalImage] as? UIImage {
+            originalImage = image
+        }
+        
+        picker.dismiss(animated: true)
+    }
     
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
 }
