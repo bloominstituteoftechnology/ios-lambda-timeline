@@ -62,6 +62,99 @@ class ImageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        secondAdjustmentSlider.isHidden = true
+        adjustmentSlider.isHidden = true
+        nameLabel.isHidden = true
+        saveButton.isHidden = true
+    }
+    
+    @IBAction func selectPhoto(_ sender: Any) {
         
     }
+    
+    @IBAction func slider1Changed(_ sender: Any) {
+        
+    }
+    
+    @IBAction func slider2Changed(_ sender: Any) {
+        
+    }
+    
+    @IBAction func saveTapped(_ sender: Any) {
+        
+    }
+    
+    private func presentImagePickerController() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            print("Photo library unavailable")
+            return
+        }
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    private func updateViews(withAdjustment: Bool = false) {
+        if let scaledImage = scaledImage {
+            
+            if withAdjustment {
+                if filterType.rawValue == 0 {
+                    imageView.image = adjustExposure(scaledImage)
+                } else if filterType.rawValue == 1 {
+                    imageView.image = adjustVibrance(scaledImage)
+                } else if filterType.rawValue == 2 {
+                    imageView.image = adjustVignette(scaledImage)
+                } else if filterType.rawValue == 3 {
+                    imageView.image = adjustSepia(scaledImage)
+                } else if filterType.rawValue == 4 {
+                    imageView.image = adjustMotionBlur(scaledImage)
+                }
+            } else {
+                imageView.image = scaledImage
+            }
+        } else {
+            imageView.image = nil
+        }
+    }
+    
+    private func adjustExposure(_ image: UIImage) -> UIImage? {
+        
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        let filter = CIFilter(name: "CIExposureAdjust")!
+        
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(adjustmentSlider.value, forKey: kCIInputEVKey)
+        
+        guard let outputCIImage = filter.outputImage else { return nil }
+        
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else {
+            return nil
+        }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    private func adjustVibrance(_ image: UIImage) -> UIImage? {
+        
+    }
+    
+    private func adjustVignette(_ image: UIImage) -> UIImage? {
+        
+    }
+    
+    private func adjustSepia(_ image: UIImage) -> UIImage? {
+        
+    }
+    
+    private func adjustMotionBlur(_ image: UIImage) -> UIImage? {
+        
+    }
+}
+
+extension ImageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
 }
