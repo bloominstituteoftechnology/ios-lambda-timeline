@@ -9,8 +9,8 @@
 import UIKit
 
 protocol AudioCommentViewDelegate: AnyObject {
-    func sendAudioComment(with url: URL, for audioCommentView: AudioCommentView)
-    func sendTextualComment(with text: String, for audioCommentView: AudioCommentView)
+    func sendAudioComment(with url: URL)
+    func sendTextualComment(with text: String)
 }
 
 class AudioCommentView: UIView {
@@ -108,7 +108,7 @@ class AudioCommentView: UIView {
     private func sendTextualComment() {
         guard let text = textField.text else { return }
         
-        delegate?.sendTextualComment(with: text, for: self)
+        delegate?.sendTextualComment(with: text)
         textField.text = ""
         textField.resignFirstResponder()
     }
@@ -116,7 +116,7 @@ class AudioCommentView: UIView {
     private func sendAudioComment() {
         guard let url = audioURL else { return }
         
-        delegate?.sendAudioComment(with: url, for: self)
+        delegate?.sendAudioComment(with: url)
         uiMode = .emptyText
         textField.resignFirstResponder()
     }
@@ -129,8 +129,6 @@ class AudioCommentView: UIView {
     
     private func stopRecording() {
         audioRecorder.stopRecording()
-        recordButton.isSelected = false
-        uiMode = .playback
     }
     
     private func play() {
@@ -163,6 +161,7 @@ class AudioCommentView: UIView {
     
     @IBAction func cancel(_ sender: Any) {
         self.uiMode = .emptyText
+        audioRecorder.pause()
     }
     
     @IBAction func send(_ sender: Any) {
@@ -188,17 +187,20 @@ extension AudioCommentView: UITextFieldDelegate {
 }
 
 extension AudioCommentView: AudioRecorderDelegate {
-    func audioRecorder(_ recorder: AudioRecorder, didUpdatePlaybackLocationTo time: Float) {
-        timelineSlider.value = time
+    func didUpdatePlaybackLocation(to time: TimeInterval) {
+        timelineSlider.value = Float(time)
     }
     
-    func audioRecorder(_ recorder: AudioRecorder, didUpdateAudioAmplitudeTo decibels: Float) {
+    func didUpdateAudioAmplitude(to decibels: Float) {
         audioVisualizer.addValue(decibelValue: decibels)
         print(decibels)
     }
     
-    func audioRecorder(_ recorder: AudioRecorder, didRecordTo fileURL: URL) {
-        delegate?.sendAudioComment(with: fileURL, for: self)
+    func didRecord(to fileURL: URL, with duration: TimeInterval) {
+        recordButton.isSelected = false
+        timelineSlider.maximumValue = Float(duration)
+        timelineSlider.value = 0
+        uiMode = .playback
     }
 }
 

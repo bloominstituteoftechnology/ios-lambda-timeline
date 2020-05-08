@@ -10,9 +10,9 @@ import UIKit
 import AVFoundation
 
 protocol AudioRecorderDelegate: AnyObject {
-    func audioRecorder(_ recorder: AudioRecorder, didRecordTo fileURL: URL)
-    func audioRecorder(_ recorder: AudioRecorder, didUpdatePlaybackLocationTo time: Float)
-    func audioRecorder(_ recorder: AudioRecorder, didUpdateAudioAmplitudeTo decibels: Float)
+    func didRecord(to fileURL: URL, with duration: TimeInterval)
+    func didUpdatePlaybackLocation(to time: TimeInterval)
+    func didUpdateAudioAmplitude(to decibels: Float)
 }
 
 class AudioRecorder: NSObject {
@@ -64,10 +64,10 @@ class AudioRecorder: NSObject {
     // MARK: - Private Methods
     
     private func createNewRecordingURL() -> URL {
-        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let tempDir = FileManager.default.temporaryDirectory
         
         let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
-        let fileURL = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
+        let fileURL = tempDir.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
         
         print("recording URL: \(fileURL)")
         
@@ -87,53 +87,29 @@ class AudioRecorder: NSObject {
         if isPlaying {
             guard let player = player else { return }
             player.updateMeters()
-            delegate?.audioRecorder(self, didUpdateAudioAmplitudeTo: player.averagePower(forChannel: 0))
-            delegate?.audioRecorder(self, didUpdatePlaybackLocationTo: Float(player.currentTime))
+            delegate?.didUpdateAudioAmplitude(to: player.averagePower(forChannel: 0))
+            delegate?.didUpdatePlaybackLocation(to: player.currentTime)
         } else if isRecording {
             guard let recorder = recorder else { return }
             recorder.updateMeters()
-            delegate?.audioRecorder(self, didUpdateAudioAmplitudeTo: recorder.averagePower(forChannel: 0))
+            delegate?.didUpdateAudioAmplitude(to: recorder.averagePower(forChannel: 0))
         }
     }
     
-//    private func requestPermissionOrStartRecording() {
-//        switch AVAudioSession.sharedInstance().recordPermission {
-//        case .undetermined:
-//            AVAudioSession.sharedInstance().requestRecordPermission { granted in
-//                guard granted == true else {
-//                    print("We need microphone access")
-//                    return
-//                }
-//
-//                print("Recording permission has been granted!")
-//                // NOTE: Invite the user to tap record again, since we just interrupted them, and they may not have been ready to record
-//            }
-//        case .denied:
-//            print("Microphone access has been blocked.")
-//
-//            let alertController = UIAlertController(title: "Microphone Access Denied", message: "Please allow this app to access your Microphone.", preferredStyle: .alert)
-//
-//            alertController.addAction(UIAlertAction(title: "Open Settings", style: .default) { (_) in
-//                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-//            })
-//
-//            alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-//
-//            present(alertController, animated: true, completion: nil)
-//        case .granted:
-//            startRecording()
-//        @unknown default:
-//            break
-//        }
-//    }
+
 }
 
 extension AudioRecorder: AVAudioRecorderDelegate {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         if flag, let recordingURL = recordingURL  {
-            player = try? AVAudioPlayer(contentsOf: recordingURL)
-            player?.isMeteringEnabled = true
-            delegate?.audioRecorder(self, didRecordTo: recordingURL)
+            do {
+                player = try AVAudioPlayer(contentsOf: recordingURL)
+                player!.isMeteringEnabled = true
+                
+                delegate?.didRecord(to: recordingURL, with: player!.duration)
+            } catch {
+                print(error)
+            }
         }
     }
     
