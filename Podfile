@@ -10,7 +10,4 @@ target 'LambdaTimeline' do
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
   pod 'Firebase/Auth'
-  pod 'FirebaseUI/Google'
-  pod 'FirebaseAuthInterop'
-  pod 'GoogleSignIn'
 end
