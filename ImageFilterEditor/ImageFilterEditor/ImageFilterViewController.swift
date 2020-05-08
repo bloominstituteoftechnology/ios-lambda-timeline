@@ -58,6 +58,9 @@ class ImageFilterViewController: UIViewController {
         
     }
     
+    var isInverted: Bool = false
+    var isGreyscale: Bool = false
+    
     
     // MARK: - Actions
     @IBAction func choosePhoto(_ sender: UIBarButtonItem) {
@@ -67,12 +70,15 @@ class ImageFilterViewController: UIViewController {
     @IBAction func invertColors(_ sender: UIButton) {
         guard let inputImage = scaledImage else { return }
         invertColorsFilter.inputImage = inputImage
-        
-        
+        scaledImage = invertColorsFilter.outputImage
+        isInverted.toggle()
     }
     
     @IBAction func greyscale(_ sender: UIButton) {
-        
+        guard let inputImage = scaledImage else { return }
+        greyscaleFilter.inputImage = inputImage
+        scaledImage = greyscaleFilter.outputImage
+        isGreyscale.toggle()
     }
     
     @IBAction func savePhoto(_ sender: UIButton) {
