@@ -14,7 +14,7 @@ class MapViewController: UIViewController {
 
     // MARK: - Properites
 
-    // FIXME: Post object goes here
+    var posts: [Post] = []
 
     // MARK: - Actions
 
@@ -33,21 +33,18 @@ class MapViewController: UIViewController {
         // MKMarkerAnnotationView like a table view cell
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "PostView")
 
-//        print("Total posts: \(posts.count)")
-//
-//        for post in posts {
-//
-//            DispatchQueue.main.async {
-//                self.mapView.addAnnotations(posts)
-//
-//                // FIXME: Only 1? What about the rest?
-//                guard let posts = posts.first else { return }
-//
-//                let span = MKCoordinateSpan(latitudeDelta: 2, longitudeDelta: 2)
-//                let region = MKCoordinateRegion(center: posts.coordinate, span: span)
-//                self.mapView.setRegion(region, animated: true)
-//            }
-//        }
+        print("Total posts: \(posts.count)")
+
+        DispatchQueue.main.async {
+            self.mapView.addAnnotations(self.posts)
+
+            // Center the map based on the first element
+            guard let post = self.posts.first else { return }
+
+            let span = MKCoordinateSpan(latitudeDelta: 2, longitudeDelta: 2)
+            let region = MKCoordinateRegion(center: post.coordinate, span: span)
+            self.mapView.setRegion(region, animated: true)
+        }
     }
 
     // MARK: - Private
