@@ -7,24 +7,85 @@
 //
 
 import UIKit
+import CoreImage
+import CoreImage.CIFilterBuiltins
+import Photos
 
 class ImagePostViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    @IBOutlet weak var imageView: UIImageView!
+    
+    var originalImage: UIImage? {
+        didSet {
+            guard let originalImage = originalImage else { return }
+            
+            var scaledSize = imageView.bounds.size
+            let scale: CGFloat = UIScreen.main.scale
+            
+            scaledSize = CGSize(width: scaledSize.width*scale,
+                                height: scaledSize.height*scale)
+            
+            guard let scaledUIImage = originalImage.imageByScaling(toSize: scaledSize) else { return }
+            
+            scaledImage = CIImage(image: scaledUIImage)
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    var scaledImage: CIImage? {
+        didSet {
+            updateImage()
+        }
     }
-    */
+    
+    private let context = CIContext()
+    private let colorControlsFilter = CIFilter.colorControls()
+    private let blurFilter = CIFilter.gaussianBlur()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+//      let filter = CIFilter.gaussianBlur()
+//      print(filter.attributes)
+        
+        originalImage = imageView.image
+    }
 
+    private func presentImagePickerController() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            print("The photo library is not available")
+            return
+        }
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    // MARK: Actions
+    
+    @IBAction func choosePhotoButtonPressed(_ sender: Any) {
+        presentImagePickerController()
+    }
 }
+
+
+extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        if let image = info[.editedImage] as? UIImage {
+            originalImage = image
+        } else if let image = info[.originalImage] as? UIImage {
+            originalImage = image
+        }
+        
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+}
+
