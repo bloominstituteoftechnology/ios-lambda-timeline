@@ -26,10 +26,11 @@ class ImageViewController: UIViewController {
     @IBOutlet var secondAdjustmentSlider: UISlider!
     @IBOutlet var saveButton: UIButton!
     
-    let context = CIContext()
+    let context = CIContext(options: nil)
     var filterType: FilterType = .exposure
     let effectNames: [String] = ["Exposure",
                                  "Vibrance",
+                                 "Vignette",
                                  "Sepia Tone",
                                  "Motion Blur"
     ]
@@ -48,7 +49,7 @@ class ImageViewController: UIViewController {
             
             var scaledSize = imageView.bounds.size
             let scale = UIScreen.main.scale
-            scaledSize = CGSize(width: scaledSize.width, height: scaledSize.width * scale)
+            scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.width * scale)
             
             scaledImage = originalImage.imageByScaling(toSize: scaledSize)
         }
@@ -284,7 +285,7 @@ class ImageViewController: UIViewController {
 extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        effectNames.count
+        return effectNames.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
