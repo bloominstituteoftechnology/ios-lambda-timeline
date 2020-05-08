@@ -67,6 +67,8 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
+        case .audio:
+            return UICollectionViewCell()
         }
     }
     
@@ -83,6 +85,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             guard let ratio = post.ratio else { return size }
             
             size.height = size.width * ratio
+        case .audio:
+            return CGSize(width: 0, height: 0)
+            #warning("?")
         }
         
         return size
