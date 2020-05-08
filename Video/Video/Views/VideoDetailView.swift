@@ -33,15 +33,7 @@ class VideoDetailView: UIView {
         placeDateStackView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         placeDateStackView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         placeDateStackView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-//        placeDateStackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
 
-        
-        
-//        var topRect = bounds
-//        topRect.size.height = topRect.size.height / 2
-//        topRect.size.width = topRect.size.width / 2
-////        topRect.origin.y = layoutMargins.top
-//        playerView.frame = topRect
         addSubview(playerView)
         playerView.translatesAutoresizingMaskIntoConstraints = false
         playerView.topAnchor.constraint(equalTo: placeDateStackView.bottomAnchor, constant: 8).isActive = true
@@ -50,7 +42,6 @@ class VideoDetailView: UIView {
         playerView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         playerView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         playerView.videoPlayerLayer.videoGravity = .resizeAspectFill
-
     }
     
     private func playMovie(url: URL) {

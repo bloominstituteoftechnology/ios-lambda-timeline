@@ -16,7 +16,6 @@ class WatchVideoViewController: UIViewController {
     
     // MARK: - Properties
     private var player: AVPlayer!
-    
     var recordingURL: URL?
     
     // MARK: - View Lifecycle
