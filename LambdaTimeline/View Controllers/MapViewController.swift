@@ -7,15 +7,24 @@
 //
 
 import UIKit
+import MapKit
 
 class MapViewController: UIViewController {
 
     var postController: PostController?
 
+    @IBOutlet weak var mapView: MKMapView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        mapView.delegate = self
+        mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: "QuakeView")
+
+        if let posts = postController?.posts {
+            mapView.addAnnotations(posts)
+        }
     }
     
 
@@ -29,4 +38,19 @@ class MapViewController: UIViewController {
     }
     */
 
+}
+
+extension MapViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let post = annotation as? Post else {
+            fatalError("Currently only supporting Posts")
+        }
+
+        guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "PostView", for: post) as? MKMarkerAnnotationView else {
+            fatalError("Missing a registered map annotation")
+        }
+
+        annotationView.glyphImage = UIImage(named: "􀉛")
+        annotationView.canShowCallout
+    }
 }

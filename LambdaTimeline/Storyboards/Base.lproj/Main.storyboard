@@ -8,7 +8,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Item-->
+        <!--Posts-->
         <scene sceneID="JFE-md-uAO">
             <objects>
                 <collectionViewController id="hPa-Td-5A3" customClass="PostsCollectionViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
@@ -87,7 +87,7 @@
                             <outlet property="delegate" destination="hPa-Td-5A3" id="s19-fb-fqF"/>
                         </connections>
                     </collectionView>
-                    <tabBarItem key="tabBarItem" title="Item" id="fN9-80-uVm"/>
+                    <tabBarItem key="tabBarItem" title="Posts" image="book.fill" catalog="system" id="fN9-80-uVm"/>
                     <navigationItem key="navigationItem" id="KIg-ug-6aP">
                         <barButtonItem key="leftBarButtonItem" title="Sign Out" id="iRy-ti-bfU">
                             <connections>
@@ -238,6 +238,9 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="MapKit" image="map" catalog="system" id="guv-5y-KcY"/>
                     <navigationItem key="navigationItem" id="cbY-yz-9HE"/>
+                    <connections>
+                        <outlet property="mapView" destination="TyJ-cB-H2U" id="WmX-xm-54A"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q9v-KX-nIL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -549,6 +552,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="book.fill" catalog="system" width="128" height="100"/>
         <image name="circle.fill" catalog="system" width="128" height="121"/>
         <image name="map" catalog="system" width="128" height="113"/>
         <image name="mic.fill" catalog="system" width="108" height="128"/>

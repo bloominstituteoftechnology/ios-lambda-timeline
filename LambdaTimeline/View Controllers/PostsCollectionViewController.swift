@@ -14,12 +14,6 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        postController?.observePosts { (_) in
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-        }
     }
     
     @IBAction func signout(_ sender: Any) {
@@ -179,7 +173,16 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         }
     }
     
-    var postController: PostController?
+    var postController: PostController? {
+        didSet {
+            guard let postController = postController else { return }
+            postController.observePosts { (_) in
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            }
+        }
+    }
     private var operations = [String : Operation]()
     private let mediaFetchQueue = OperationQueue()
     private let cache = Cache<String, Data>()
