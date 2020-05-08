@@ -82,36 +82,23 @@
                         <constraint firstItem="Ufj-Xt-AL0" firstAttribute="width" secondItem="Ufj-Xt-AL0" secondAttribute="height" multiplier="1:1" id="Xk7-T1-Qkp"/>
                     </constraints>
                 </stackView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qLS-0e-Ml5">
-                    <rect key="frame" x="66" y="6" width="288" height="48"/>
-                    <subviews>
-                        <slider hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="R8G-kS-lgI">
-                            <rect key="frame" x="-2" y="0.0" width="292" height="49"/>
-                            <connections>
-                                <action selector="scrubTimeline:" destination="-1" eventType="valueChanged" id="sUg-oK-NnW"/>
-                            </connections>
-                        </slider>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gOQ-e4-p2n" customClass="AudioVisualizer" customModule="AudioComments" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="288" height="48"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="barWidth">
-                                    <real key="value" value="6"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                        </view>
-                    </subviews>
+                <slider hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="R8G-kS-lgI">
+                    <rect key="frame" x="64" y="15" width="292" height="31"/>
+                    <connections>
+                        <action selector="scrubTimeline:" destination="-1" eventType="valueChanged" id="sUg-oK-NnW"/>
+                    </connections>
+                </slider>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gOQ-e4-p2n" customClass="AudioVisualizer" customModule="AudioComments" customModuleProvider="target">
+                    <rect key="frame" x="20" y="5" width="334" height="50"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="R8G-kS-lgI" secondAttribute="bottom" id="8rT-6s-IGp"/>
-                        <constraint firstAttribute="trailing" secondItem="R8G-kS-lgI" secondAttribute="trailing" id="9i9-Xh-tdV"/>
-                        <constraint firstItem="R8G-kS-lgI" firstAttribute="top" secondItem="qLS-0e-Ml5" secondAttribute="top" id="Rgj-pk-hML"/>
-                        <constraint firstItem="gOQ-e4-p2n" firstAttribute="top" secondItem="qLS-0e-Ml5" secondAttribute="top" id="VJU-qd-lpK"/>
-                        <constraint firstItem="R8G-kS-lgI" firstAttribute="leading" secondItem="qLS-0e-Ml5" secondAttribute="leading" id="XOK-Cb-gbv"/>
-                        <constraint firstItem="gOQ-e4-p2n" firstAttribute="leading" secondItem="qLS-0e-Ml5" secondAttribute="leading" id="lLe-y5-7Hv"/>
-                        <constraint firstAttribute="bottom" secondItem="gOQ-e4-p2n" secondAttribute="bottom" id="lhe-ZJ-Ujb"/>
-                        <constraint firstAttribute="trailing" secondItem="gOQ-e4-p2n" secondAttribute="trailing" id="rQz-Sa-yuW"/>
+                        <constraint firstAttribute="height" constant="50" id="nQC-8g-YnQ"/>
                     </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="barWidth">
+                            <real key="value" value="6"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </view>
                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mUF-LW-oh1" userLabel="Play/Pause Button">
                     <rect key="frame" x="8" y="5" width="50" height="50"/>
@@ -144,19 +131,21 @@
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
-                <constraint firstItem="KIh-ZF-z5H" firstAttribute="leading" secondItem="qLS-0e-Ml5" secondAttribute="trailing" constant="8" id="3Am-WH-hdC"/>
+                <constraint firstItem="KIh-ZF-z5H" firstAttribute="leading" secondItem="R8G-kS-lgI" secondAttribute="trailing" constant="8" id="1vE-Ls-zSM"/>
                 <constraint firstItem="FO8-wA-V1B" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="top" id="3pr-O4-JiU"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="qLS-0e-Ml5" secondAttribute="bottom" constant="6" id="7cF-fR-bkn"/>
+                <constraint firstItem="KIh-ZF-z5H" firstAttribute="leading" secondItem="gOQ-e4-p2n" secondAttribute="trailing" constant="8" id="6dI-Ca-Zx2"/>
+                <constraint firstItem="gOQ-e4-p2n" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="CG6-Oi-MCC"/>
                 <constraint firstItem="KIh-ZF-z5H" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="8" id="FLf-om-djn"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="FO8-wA-V1B" secondAttribute="trailing" id="H0K-9d-Izt"/>
                 <constraint firstItem="FO8-wA-V1B" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="ImW-kE-rEf"/>
                 <constraint firstItem="mUF-LW-oh1" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="8" id="JGo-co-Y9H"/>
-                <constraint firstItem="qLS-0e-Ml5" firstAttribute="leading" secondItem="mUF-LW-oh1" secondAttribute="trailing" constant="8" id="Lo1-Qt-M4B"/>
+                <constraint firstItem="gOQ-e4-p2n" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="NJ9-pw-ZIE"/>
+                <constraint firstItem="R8G-kS-lgI" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="UXL-sg-8Jh"/>
                 <constraint firstItem="PkI-jq-Iup" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="VSY-G5-TtE"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="KIh-ZF-z5H" secondAttribute="bottom" constant="8" id="ZR0-Sl-sqS"/>
                 <constraint firstItem="mUF-LW-oh1" firstAttribute="width" secondItem="mUF-LW-oh1" secondAttribute="height" multiplier="1:1" id="aLM-fW-PDV"/>
                 <constraint firstItem="KIh-ZF-z5H" firstAttribute="leading" secondItem="PkI-jq-Iup" secondAttribute="trailing" constant="8" id="dgO-I2-AnV"/>
-                <constraint firstItem="qLS-0e-Ml5" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="6" id="oFP-VK-lNW"/>
+                <constraint firstItem="R8G-kS-lgI" firstAttribute="leading" secondItem="mUF-LW-oh1" secondAttribute="trailing" constant="8" id="fEN-pw-nGd"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="KIh-ZF-z5H" secondAttribute="trailing" constant="8" id="s12-kO-xO1"/>
                 <constraint firstItem="mUF-LW-oh1" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="vzN-2q-rf3"/>
                 <constraint firstItem="PkI-jq-Iup" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="xbE-8E-I19"/>
