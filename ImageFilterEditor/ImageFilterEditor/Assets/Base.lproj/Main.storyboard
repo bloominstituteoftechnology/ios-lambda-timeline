@@ -27,7 +27,7 @@
         <!--Filter-->
         <scene sceneID="mLV-JS-AJO">
             <objects>
-                <viewController id="edS-fB-PGq" sceneMemberID="viewController">
+                <viewController id="edS-fB-PGq" customClass="ImageViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="c6n-Y1-qgW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -98,10 +98,18 @@
                     <navigationItem key="navigationItem" title="Filter" id="0n9-zZ-BtW">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="camera" catalog="system" id="IyY-AG-0OX"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="adjustmentSlider" destination="0hM-ju-cMZ" id="4AF-V9-ljy"/>
+                        <outlet property="collectionView" destination="AfB-Es-HsW" id="BcX-3V-Mc8"/>
+                        <outlet property="imageView" destination="RFv-eo-sPY" id="1od-KN-8VN"/>
+                        <outlet property="nameLabel" destination="eBD-F9-IVX" id="lWi-Dx-4t1"/>
+                        <outlet property="saveButton" destination="u4R-oX-d4c" id="DOD-2U-0yB"/>
+                        <outlet property="secondAdjustmentSlider" destination="kRt-iH-ycz" id="RZH-8n-oWI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kaE-wM-dIW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="685.50724637681162" y="104.46428571428571"/>
+            <point key="canvasLocation" x="684" y="114"/>
         </scene>
     </scenes>
     <resources>
