@@ -205,17 +205,3 @@ extension AudioCommentView: AudioRecorderDelegate {
         uiMode = .playback
     }
 }
-
-extension UIView {
-    static func hide(_ views: UIView...) {
-        for view in views {
-            view.isHidden = true
-        }
-    }
-    
-    static func show(_ views: UIView...) {
-        for view in views {
-            view.isHidden = false
-        }
-    }
-}
