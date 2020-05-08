@@ -7,7 +7,7 @@
 //
 import UIKit
 
-class QuakeDetailView: UIView {
+class PostDetailView: UIView {
 
     // MARK: - Properties
     var post: Post? {
@@ -21,21 +21,15 @@ class QuakeDetailView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        postImage.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(postImage)
 
-        let placeDateStackView = UIStackView(arrangedSubviews: [magnitudeLabel, dateLabel])
-        placeDateStackView.spacing = UIStackView.spacingUseSystem
-        let latLonStackView = UIStackView(arrangedSubviews: [latitudeLabel, longitudeLabel])
-        latLonStackView.spacing = UIStackView.spacingUseSystem
-        let mainStackView = UIStackView(arrangedSubviews: [placeDateStackView, latLonStackView])
-        mainStackView.axis = .vertical
-        mainStackView.spacing = UIStackView.spacingUseSystem
+        postImage.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 1).isActive = true
+        postImage.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 1).isActive = true
 
-        mainStackView.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(mainStackView)
-        mainStackView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
-        mainStackView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-        mainStackView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        mainStackView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        postImage.heightAnchor.constraint(equalTo: heightAnchor, constant: 1).isActive = true
+        postImage.widthAnchor.constraint(equalTo: widthAnchor, constant: 1).isActive = true
+
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -45,5 +39,8 @@ class QuakeDetailView: UIView {
     // MARK: - Private
 
     private func updateSubviews() {
+        guard let url = post?.mediaURL else { return }
+        let data = try! Data(contentsOf: url)
+        postImage.image = UIImage(data: data)
     }
 }

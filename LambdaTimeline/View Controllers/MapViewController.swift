@@ -51,7 +51,12 @@ extension MapViewController: MKMapViewDelegate {
         }
 
         annotationView.glyphImage = UIImage(named: "􀉛")
+
         annotationView.canShowCallout = true
+        let detailView = PostDetailView()
+        detailView.post = post
+        annotationView.detailCalloutAccessoryView = detailView
+        
         return annotationView
     }
 }
