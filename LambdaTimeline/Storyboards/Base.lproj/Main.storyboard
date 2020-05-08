@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xB5-Kl-GM2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xB5-Kl-GM2">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -93,11 +93,18 @@
                                 <action selector="signout:" destination="hPa-Td-5A3" id="Kmt-q7-uhM"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="cyx-zg-Fv9">
-                            <connections>
-                                <action selector="addPost:" destination="hPa-Td-5A3" id="7DV-9r-fSz"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="cyx-zg-Fv9">
+                                <connections>
+                                    <action selector="addPost:" destination="hPa-Td-5A3" id="7DV-9r-fSz"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Map" id="wVm-Wq-3Sz">
+                                <connections>
+                                    <segue destination="1k9-H6-j9l" kind="show" identifier="MapSegue" id="4K0-KO-bvR"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="jaI-fq-Woc"/>
@@ -251,6 +258,33 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xA4-1f-Wlf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-450.72463768115944" y="107.14285714285714"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="21F-7H-SKJ">
+            <objects>
+                <viewController id="1k9-H6-j9l" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="OQA-kW-sap">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="02p-Me-fMX">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="02p-Me-fMX" firstAttribute="top" secondItem="Uwf-jS-HiA" secondAttribute="top" id="5Fb-78-gnS"/>
+                            <constraint firstItem="02p-Me-fMX" firstAttribute="trailing" secondItem="Uwf-jS-HiA" secondAttribute="trailing" id="EGf-3G-sae"/>
+                            <constraint firstItem="02p-Me-fMX" firstAttribute="leading" secondItem="Uwf-jS-HiA" secondAttribute="leading" id="Vh2-jR-REC"/>
+                            <constraint firstItem="02p-Me-fMX" firstAttribute="bottom" secondItem="Uwf-jS-HiA" secondAttribute="bottom" id="xm7-yQ-TyB"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Uwf-jS-HiA"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="9kG-eT-A9S"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Pef-mK-QTr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1215.9420289855072" y="816.96428571428567"/>
         </scene>
         <!--Title-->
         <scene sceneID="9zi-Aq-zJI">
