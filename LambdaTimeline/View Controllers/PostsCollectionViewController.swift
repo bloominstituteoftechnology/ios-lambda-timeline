@@ -15,7 +15,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        postController.observePosts { (_) in
+        postController?.observePosts { (_) in
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
@@ -51,10 +51,11 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     // MARK: UICollectionViewDataSource
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return postController.posts.count
+        return postController?.posts.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let postController = postController else { return UICollectionViewCell()}
         let post = postController.posts[indexPath.row]
         
         switch post.mediaType {
@@ -73,7 +74,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
+        guard let postController = postController else { return CGSize() }
         var size = CGSize(width: view.frame.width, height: view.frame.width)
         
         let post = postController.posts[indexPath.row]
@@ -103,12 +104,13 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     }
     
     override func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
-        
+        guard let postController = postController else { return }
         guard let postID = postController.posts[indexPath.row].id else { return }
         operations[postID]?.cancel()
     }
     
     func loadImage(for imagePostCell: ImagePostCollectionViewCell, forItemAt indexPath: IndexPath) {
+        guard let postController = postController else { return }
         let post = postController.posts[indexPath.row]
         
         guard let postID = post.id else { return }
@@ -159,6 +161,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let postController = postController else { return }
         if segue.identifier == "AddImagePost" {
             let destinationVC = segue.destination as? ImagePostViewController
             destinationVC?.postController = postController
@@ -176,7 +179,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         }
     }
     
-    private let postController = PostController()
+    var postController: PostController?
     private var operations = [String : Operation]()
     private let mediaFetchQueue = OperationQueue()
     private let cache = Cache<String, Data>()
