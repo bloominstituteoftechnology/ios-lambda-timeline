@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Image Filter View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ImageFilterViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -54,6 +54,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xs8-wd-2oA">
                                                 <rect key="frame" x="0.0" y="200" width="167" height="30"/>
                                                 <state key="normal" title="Invert Colors"/>
+                                                <connections>
+                                                    <action selector="invertColors:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ErX-es-yq5"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -75,6 +78,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2DF-Tc-qXK">
                                                 <rect key="frame" x="0.0" y="200" width="167" height="30"/>
                                                 <state key="normal" title="Greyscale"/>
+                                                <connections>
+                                                    <action selector="greyscale:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pyf-SP-AtY"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -85,6 +91,9 @@
                                 <state key="normal" title="Save Photo">
                                     <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="savePhoto:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5px-gv-rgA"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -102,8 +111,19 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="dpY-3T-NMG">
-                        <barButtonItem key="rightBarButtonItem" title="Choose Photo" id="8OM-iu-8D2"/>
+                        <barButtonItem key="rightBarButtonItem" title="Choose Photo" id="8OM-iu-8D2">
+                            <connections>
+                                <action selector="choosePhoto:" destination="BYZ-38-t0r" id="a7V-xr-ivI"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="brightnessSlider" destination="ZIv-Uq-QCT" id="NIi-sZ-GtA"/>
+                        <outlet property="contrastSlider" destination="50E-1K-KLZ" id="kMO-Do-Bu0"/>
+                        <outlet property="exposureSlider" destination="HIn-O4-dMO" id="FN8-kK-cMo"/>
+                        <outlet property="imageView" destination="5rt-Yx-v3a" id="PN2-gk-ciT"/>
+                        <outlet property="saturationSlider" destination="sx0-5M-VW9" id="3kc-SK-bgO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
