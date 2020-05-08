@@ -56,18 +56,18 @@ class MapViewController: UIViewController {
 
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//        guard let post = annotation as? Post else {
-//            fatalError("Only posts are supported")
-//        }
+        guard let post = annotation as? Post else {
+            fatalError("Only posts are supported")
+        }
 
         guard let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: "PostView", for: annotation) as? MKMarkerAnnotationView else {
             fatalError("Missing a registered view")
         }
 
-//        annotationView.canShowCallout = true
-//        let detailView = QuakeDetailView()
-//        detailView.quake = quake
-//        annotationView.detailCalloutAccessoryView = detailView
+        annotationView.canShowCallout = true
+        let detailView = MapDetailView()
+        detailView.post = post
+        annotationView.detailCalloutAccessoryView = detailView
 
         return annotationView
     }
