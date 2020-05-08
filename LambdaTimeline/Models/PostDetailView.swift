@@ -27,8 +27,11 @@ class PostDetailView: UIView {
         postImage.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 1).isActive = true
         postImage.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 1).isActive = true
 
-        postImage.heightAnchor.constraint(equalTo: heightAnchor, constant: 1).isActive = true
-        postImage.widthAnchor.constraint(equalTo: widthAnchor, constant: 1).isActive = true
+//        postImage.heightAnchor.constraint(equalTo: heightAnchor, constant: 1).isActive = true
+//        postImage.widthAnchor.constraint(equalTo: widthAnchor, constant: 1).isActive = true
+
+        postImage.widthAnchor.constraint(equalToConstant: 200).isActive = true
+        postImage.contentMode = .scaleAspectFit
 
     }
 
