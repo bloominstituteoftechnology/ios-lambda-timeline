@@ -45,15 +45,20 @@ class ImagePostDetailTableViewController: UITableViewController {
             
             guard let commentText = commentTextField?.text else { return }
             
-            self.postController.addComment(with: commentText, to: &self.post!)
+            self.postController.addComment(with: commentText, to: self.post!)
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
         
+        let addVoiceComment = UIAlertAction(title: "Voice Comment", style: .default) { (_) in
+            self.performSegue(withIdentifier: "toAudioVC", sender: self)
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
+        alert.addAction(addVoiceComment)
         alert.addAction(addCommentAction)
         alert.addAction(cancelAction)
         
