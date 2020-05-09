@@ -161,14 +161,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T9f-79-7ba">
                                         <rect key="frame" x="0.0" y="503" width="414" height="281"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GSa-j2-7V6">
-                                                <rect key="frame" x="165" y="8" width="84.5" height="41"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="34"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CLG-Vd-mjf">
-                                                <rect key="frame" x="149" y="57" width="116" height="42"/>
+                                                <rect key="frame" x="149" y="92" width="116" height="42"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="25"/>
                                                 <state key="normal" title="Save Filter"/>
                                                 <connections>
@@ -176,7 +170,7 @@
                                                 </connections>
                                             </button>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="PZM-zZ-d6x">
-                                                <rect key="frame" x="6" y="107" width="402" height="30"/>
+                                                <rect key="frame" x="6" y="142" width="402" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="29" id="gRT-kc-lfq"/>
                                                 </constraints>
@@ -185,7 +179,7 @@
                                                 </connections>
                                             </slider>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="nMS-GB-VmQ">
-                                                <rect key="frame" x="6" y="170" width="402" height="51"/>
+                                                <rect key="frame" x="6" y="188" width="402" height="51"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="Qjj-8n-FZg"/>
                                                 </constraints>
@@ -193,6 +187,12 @@
                                                     <action selector="adjustmentSlider2Changed:" destination="1Aw-4e-BW2" eventType="valueChanged" id="bJq-YA-Aja"/>
                                                 </connections>
                                             </slider>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GSa-j2-7V6">
+                                                <rect key="frame" x="165" y="43" width="84.5" height="41"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="34"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
@@ -203,10 +203,10 @@
                                             <constraint firstItem="PZM-zZ-d6x" firstAttribute="trailing" secondItem="T9f-79-7ba" secondAttribute="trailingMargin" id="hqg-7n-PbN"/>
                                             <constraint firstItem="PZM-zZ-d6x" firstAttribute="trailing" secondItem="nMS-GB-VmQ" secondAttribute="trailing" id="kSt-e3-7Te"/>
                                             <constraint firstItem="PZM-zZ-d6x" firstAttribute="leading" secondItem="nMS-GB-VmQ" secondAttribute="leading" id="s1b-jt-jTu"/>
-                                            <constraint firstItem="nMS-GB-VmQ" firstAttribute="top" secondItem="PZM-zZ-d6x" secondAttribute="bottom" constant="34" id="tB7-C3-s3g"/>
+                                            <constraint firstItem="nMS-GB-VmQ" firstAttribute="top" secondItem="PZM-zZ-d6x" secondAttribute="bottom" constant="17" id="tB7-C3-s3g"/>
                                             <constraint firstItem="CLG-Vd-mjf" firstAttribute="top" secondItem="GSa-j2-7V6" secondAttribute="bottom" constant="8" id="tG5-GC-ZgN"/>
                                             <constraint firstItem="CLG-Vd-mjf" firstAttribute="centerX" secondItem="GSa-j2-7V6" secondAttribute="centerX" id="uWb-7z-DqY"/>
-                                            <constraint firstAttribute="bottom" secondItem="nMS-GB-VmQ" secondAttribute="bottom" constant="61" id="uaG-IV-pi0"/>
+                                            <constraint firstAttribute="bottom" secondItem="nMS-GB-VmQ" secondAttribute="bottom" constant="43" id="uaG-IV-pi0"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SsQ-0F-wVg">
@@ -323,7 +323,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XXa-A2-VJT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1968" y="-202"/>
+            <point key="canvasLocation" x="1968.1159420289857" y="-195.53571428571428"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gdW-Je-ais">

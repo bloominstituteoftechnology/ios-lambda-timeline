@@ -352,6 +352,12 @@ class ImagePostViewController: ShiftableViewController {
         presentImagePickerController()
     }
     
+    func setImageRatio(with scaling: CGSize) {
+        imageHeightConstraint.constant = imageView.frame.size.width
+        
+        view.layoutSubviews()
+    }
+    
     func setImageViewHeight(with aspectRatio: CGFloat) {
         
         imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
@@ -402,22 +408,23 @@ extension ImagePostViewController: UICollectionViewDelegate, UICollectionViewDat
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        
-        
+
+
         chooseImageButton.setTitle("", for: [])
         picker.dismiss(animated: true)
 
         guard let image = info[.originalImage] as? UIImage else { return }
-        
+
         originalImage = image
 
         imageView.image = originalImage
         myCollectionView.isHidden = false
-        
-        setImageViewHeight(with: image.ratio)
+
+        setImageRatio(with: image.size)
     }
 
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true)
     }
 }
+
