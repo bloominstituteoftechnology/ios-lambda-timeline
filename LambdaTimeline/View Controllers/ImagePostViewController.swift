@@ -62,6 +62,7 @@ class ImagePostViewController: ShiftableViewController {
         slider2.isHidden = true
         nameLabel.isHidden = true
         saveFilterButton.isHidden = true
+        myCollectionView.isHidden = true
     }
     
     override func viewDidLoad() {
@@ -391,6 +392,10 @@ extension ImagePostViewController: UICollectionViewDelegate, UICollectionViewDat
         
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        showFilter(for: indexPath)
+    }
 }
 
 @available(iOS 13.0, *)
@@ -407,6 +412,7 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         imageView.image = image
         
         setImageViewHeight(with: image.ratio)
+        myCollectionView.isHidden = false
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
