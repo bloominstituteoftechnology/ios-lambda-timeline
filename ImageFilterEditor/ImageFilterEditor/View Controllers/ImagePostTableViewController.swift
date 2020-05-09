@@ -25,14 +25,16 @@ class ImagePostTableViewController: UITableViewController {
     }()
     
     override func viewWillAppear(_ animated: Bool) {
-        tableView.estimatedRowHeight = 100
-        tableView.rowHeight = UITableView.automaticDimension
+       
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.reloadData()
         
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 600
+
     }
     
     // MARK: - Table view data source
@@ -69,7 +71,9 @@ class ImagePostTableViewController: UITableViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-
+        guard let detailVC = segue.destination as? ImageFilterViewController else { return }
+        guard let indexPath = tableView.indexPathForSelectedRow else { return }
+        detailVC.photo =  fetchedResultsController.object(at: indexPath)
         
     }
 }

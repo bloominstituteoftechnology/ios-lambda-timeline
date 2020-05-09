@@ -20,7 +20,7 @@ class ImagePostTableViewCell: UITableViewCell {
     
     private func updateViews() {
         guard let filteredImage  = filteredImage else { return }
-        imageComment.text = "Comments: \(String(describing: filteredImage.comments))"
+        imageComment.text = "   \(filteredImage.comments ?? "")"
         imageView!.image = UIImage(data: filteredImage.image!)
     }
     
