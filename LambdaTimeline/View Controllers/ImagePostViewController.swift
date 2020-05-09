@@ -24,7 +24,7 @@ enum FilterType: Int {
 class ImagePostViewController: ShiftableViewController {
     
     let context = CIContext(options: nil)
-    let filterType: FilterType = .exposure
+    var filterType: FilterType = .exposure
     let effectNames: [String] = ["Exposure",
                                  "Vibrance",
                                  "Vignette",
@@ -73,7 +73,40 @@ class ImagePostViewController: ShiftableViewController {
         updateViews()
     }
     
-    func updateViews() {
+    @IBAction func adjustmentSliderChanged(_ sender: Any) {
+        
+    }
+    
+    @IBAction func adjustmentSlider2Changed(_ sender: Any) {
+        
+    }
+    
+    @IBAction func filterSavedTapped(_ sender: Any) {
+        
+    }
+    
+    func updateViews(withAdjustment: Bool = false) {
+        
+        if let scaledImage = scaledImage {
+            
+            if withAdjustment {
+                if filterType.rawValue == 0 {
+                    imageView.image = adjustExposure(scaledImage)
+                } else if filterType.rawValue == 1 {
+                    imageView.image = adjustVibrance(scaledImage)
+                } else if filterType.rawValue == 2 {
+                    imageView.image = adjustVignette(scaledImage)
+                } else if filterType.rawValue == 3 {
+                    imageView.image = adjustSepia(scaledImage)
+                } else if filterType.rawValue == 4 {
+                    imageView.image = adjustMotionBlur(scaledImage)
+                }
+            } else {
+                imageView.image = scaledImage
+            }
+        } else {
+            imageView.image = nil
+        }
         
         guard let imageData = imageData,
             let image = UIImage(data: imageData) else {
@@ -88,6 +121,163 @@ class ImagePostViewController: ShiftableViewController {
         imageView.image = image
         
         chooseImageButton.setTitle("", for: [])
+    }
+    
+    private func adjustExposure(_ image: UIImage) -> UIImage? {
+        
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        let filter = CIFilter(name: "CIExposureAdjust")!
+        
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(slider1.value, forKey: kCIInputEVKey)
+        
+        guard let outputCIImage = filter.outputImage else { return nil }
+        
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else {
+            return nil
+        }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    private func adjustVibrance(_ image: UIImage) -> UIImage? {
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        //filter
+        let filter = CIFilter(name: "CIVibrance")!
+        
+        // Trying to get values from core image
+        
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(slider1.value, forKey: kCIInputAmountKey)
+        
+        guard let outputCIImage = filter.outputImage else { return nil }
+        
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else {
+            return nil
+        }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+
+    private func adjustVignette(_ image: UIImage) -> UIImage? {
+        
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        //filter
+        let filter = CIFilter(name: "CIVignetteEffect")!
+        
+        //getting values from core image
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(slider1.value, forKey: kCIInputIntensityKey)
+        filter.setValue(slider2.value, forKey: kCIInputRadiusKey)
+        
+        guard let outputCIImage = filter.outputImage else { return nil }
+        
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else {
+            return nil
+        }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+
+    private func adjustSepia(_ image: UIImage) -> UIImage? {
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+                
+        // filter
+        let filter = CIFilter(name: "CISepiaTone")!
+        
+        //getting values from Core Image
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(slider1.value, forKey: kCIInputIntensityKey)
+        
+        guard let outputCIImage = filter.outputImage else { return nil }
+        
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else {
+            return nil
+        }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+
+    private func adjustMotionBlur(_ image: UIImage) -> UIImage? {
+        guard let cgImage = image.cgImage else { return nil }
+        let ciImage = CIImage(cgImage: cgImage)
+                
+        //filter
+        let filter = CIFilter(name: "CIMotionBlur")!
+        
+        //getting values from Core Image
+        filter.setValue(ciImage, forKey: kCIInputImageKey)
+        filter.setValue(slider1.value, forKey: kCIInputRadiusKey)
+        filter.setValue(slider2.value, forKey: kCIInputAngleKey)
+        
+        guard let outputCIImage = filter.outputImage else { return nil }
+        
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else {
+            return nil
+        }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    private func showFilter(for index: IndexPath) {
+            slider1.isHidden = false
+            nameLabel.isHidden = false
+            saveFilterButton.isHidden = false
+            
+            nameLabel.text = effectNames[index.row]
+            filterType = FilterType(rawValue: index.item)!
+            imageView.image = scaledImage
+            
+            if index.item == 0 {
+                slider2.isHidden = true
+                
+                slider1.value = 0
+                slider1.maximumValue = 10
+                slider1.minimumValue = -10
+           
+            } else if index.item == 1 {
+                slider2.isHidden = true
+                
+                slider1.value = 0
+                slider1.maximumValue = 1
+                slider1.minimumValue = -1
+                
+            } else if index.item == 2 {
+                slider2.isHidden = false
+                
+                slider1.value = 0
+                slider1.maximumValue = 1
+                slider1.minimumValue = -1
+                
+                slider2.value = 0
+                slider2.maximumValue = 2000
+                slider2.minimumValue = 0
+                
+            } else if index.item == 3 {
+                slider2.isHidden = true
+                
+                slider1.value = 9
+                slider1.maximumValue = 1
+                slider1.minimumValue = 0
+                
+            } else if index.item == 4 {
+                slider2.isHidden = false
+                
+                slider1.value = 0
+                slider1.maximumValue = 100
+                slider1.minimumValue = 0
+                
+                slider2.value = 0
+                slider2.maximumValue = 3.141592653589793
+                slider2.minimumValue = -3.141592653589793
+        }
     }
     
     private func presentImagePickerController() {
@@ -182,6 +372,25 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var slider2: UISlider!
     @IBOutlet weak var myCollectionView: UICollectionView!
     @IBOutlet weak var saveFilterButton: UIButton!
+}
+
+
+
+@available(iOS 13.0, *)
+extension ImagePostViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return effectNames.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MyCell", for: indexPath) as? MyCollectionViewCell else { return UICollectionViewCell() }
+        
+        cell.layer.cornerRadius = 15
+        cell.myLabel.text = effectNames[indexPath.item]
+        cell.image.image = effectImages[indexPath.item]
+        
+        return cell
+    }
 }
 
 @available(iOS 13.0, *)

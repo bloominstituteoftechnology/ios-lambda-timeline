@@ -10,7 +10,7 @@ import UIKit
 
 class MyCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet var myImage: UIImage!
+    @IBOutlet var image: UIImageView!
     @IBOutlet var myLabel: UILabel!
     
 }
