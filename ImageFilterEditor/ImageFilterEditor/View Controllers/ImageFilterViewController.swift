@@ -17,11 +17,12 @@ class ImageFilterViewController: UIViewController {
 
     private let context = CIContext()
     private let noiseReductionFilter = CIFilter.noiseReduction()
-    private let colorMatrixFilter = CIFilter.colorMatrix()
+    private let colorControlFilter = CIFilter.colorControls()
     private let whitePointAdjustmentFilter = CIFilter.whitePointAdjust()
     private let crystallizeFilter = CIFilter.crystallize()
     private let noirFilter = CIFilter.photoEffectNoir()
 
+    @IBOutlet weak var chooseFilterSegmentedController: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,10 +35,11 @@ class ImageFilterViewController: UIViewController {
     // CIColorMatrix: inputImage, inputRVector [1 0 0 0], inputGVector [0 1 0 0], inputBVector [0 0 1 0]
     //                inputAVector [0 0 0 1], inputBiasVector [0 0 0 0]
     // CIWhitePointAdjust: inputImage, inputColor
-    // CIDisplacementDistortion: inputImage, inputDisplacementImage (second image), inputScale = 50.0
-    // CICrop: inputImage, inputRectangle
     // CICrystallize: inputImage, inputRadius, inputCenter
     // CIPhotoEffectNoir: inputImage
+
+    // CICrop: inputImage, inputRectangle
+    // CIDisplacementDistortion: inputImage, inputDisplacementImage (second image), inputScale = 50.0
 
     private func image(byFiltering inputImage: CIImage) -> UIImage {
 
