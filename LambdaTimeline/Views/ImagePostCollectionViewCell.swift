@@ -10,6 +10,13 @@ import UIKit
 
 class ImagePostCollectionViewCell: UICollectionViewCell {
     
+    // MARK: - Properties
+
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var labelBackgroundView: UIView!
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         setupLabelBackgroundView()
@@ -45,10 +52,5 @@ class ImagePostCollectionViewCell: UICollectionViewCell {
             updateViews()
         }
     }
-
-@IBOutlet weak var imageView: UIImageView!
-@IBOutlet weak var titleLabel: UILabel!
-@IBOutlet weak var authorLabel: UILabel!
-@IBOutlet weak var labelBackgroundView: UIView!
 
 }

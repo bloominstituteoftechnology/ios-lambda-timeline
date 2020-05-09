@@ -13,6 +13,13 @@ import FirebaseStorage
 
 class PostController {
     
+    // MARK: - Properties
+    var posts: [Post] = []
+    let currentUser = Auth.auth().currentUser
+    let postsRef = Database.database().reference().child("posts")
+    
+    let storageRef = Storage.storage().reference()
+    
     func createPost(with title: String, ofType mediaType: MediaType, mediaData: Data, ratio: CGFloat? = nil, completion: @escaping (Bool) -> Void = { _ in }) {
         
         guard let currentUser = Auth.auth().currentUser,
@@ -35,15 +42,29 @@ class PostController {
         }
     }
     
-    func addComment(with text: String, to post: inout Post) {
-        
+    func addComment(with media: Media, to post: Post, completion: (() -> Void)? = nil) {
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
         
-        let comment = Comment(text: text, author: author)
-        post.comments.append(comment)
-        
-        savePostToFirebase(post)
+        if case .audio(let audio) = media {
+            do {
+                let data = try Data(contentsOf: audio)
+                store(mediaData: data, mediaType: .audio) { (url) in
+                    guard let url = url else { return }
+                    
+                    let comment = Comment(media: .audio(url), author: author)
+                    post.comments.append(comment)
+                    self.savePostToFirebase(post)
+                    completion?()
+                }
+            } catch {
+                print("Error getting audio data: \(error)")
+            }
+        } else {
+            let comment = Comment(media: media, author: author)
+            post.comments.append(comment)
+            self.savePostToFirebase(post)
+        }
     }
 
     func observePosts(completion: @escaping (Error?) -> Void) {
@@ -116,12 +137,4 @@ class PostController {
         
         uploadTask.resume()
     }
-    
-    var posts: [Post] = []
-    let currentUser = Auth.auth().currentUser
-    let postsRef = Database.database().reference().child("posts")
-    
-    let storageRef = Storage.storage().reference()
-    
-    
 }
