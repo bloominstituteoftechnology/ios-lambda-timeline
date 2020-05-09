@@ -75,15 +75,15 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     @IBAction func adjustmentSliderChanged(_ sender: Any) {
-        
+        updateViews(withAdjustment: true)
     }
     
     @IBAction func adjustmentSlider2Changed(_ sender: Any) {
-        
+        updateViews(withAdjustment: true)
     }
     
     @IBAction func filterSavedTapped(_ sender: Any) {
-        
+        scaledImage = imageView.image
     }
     
     func updateViews(withAdjustment: Bool = false) {
@@ -399,23 +399,25 @@ extension ImagePostViewController: UICollectionViewDelegate, UICollectionViewDat
 }
 
 @available(iOS 13.0, *)
-extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 
+extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        
         chooseImageButton.setTitle("", for: [])
+        picker.dismiss(animated: true)
+
+        guard let image = info[.originalImage] as? UIImage else { return }
         
-        picker.dismiss(animated: true, completion: nil)
-        
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        
-        imageView.image = image
+        originalImage = image
+
+        imageView.image = originalImage
+        myCollectionView.isHidden = false
         
         setImageViewHeight(with: image.ratio)
-        myCollectionView.isHidden = false
     }
-    
+
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
+        picker.dismiss(animated: true)
     }
 }
