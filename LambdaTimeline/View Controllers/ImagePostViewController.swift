@@ -8,12 +8,66 @@
 
 import UIKit
 import Photos
+import CoreImage
+
+enum FilterType: Int {
+    case exposure
+    case vibrance
+    case vignette
+    case sepia
+    case motionBlur
+}
+
+@available(iOS 13.0, *)
+@available(iOS 13.0, *)
 
 class ImagePostViewController: ShiftableViewController {
+    
+    let context = CIContext(options: nil)
+    let filterType: FilterType = .exposure
+    let effectNames: [String] = ["Exposure",
+                                 "Vibrance",
+                                 "Vignette",
+                                 "Sepia Tone",
+                                 "Motion Blur"
+    ]
+    
+    let effectImages: [UIImage] = [UIImage(systemName: EffectNames.exposure.rawValue)!,
+                                   UIImage(systemName: EffectNames.vibrance.rawValue)!,
+                                   UIImage(systemName: EffectNames.vignette.rawValue)!,
+                                   UIImage(systemName: EffectNames.sepiaTone.rawValue)!,
+                                   UIImage(systemName: EffectNames.motionBlur.rawValue)!
+    ]
+    
+    var originalImage: UIImage? {
+        didSet {
+            guard let originalImage = originalImage else { return }
+            
+            var scaledSize = imageView.bounds.size
+            let scale = UIScreen.main.scale
+            scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.width * scale)
+            
+            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+        }
+    }
+    
+    var scaledImage: UIImage? {
+        didSet {
+            updateViews()
+        }
+    }
+    
+    func hideViews() {
+        slider1.isHidden = true
+        slider2.isHidden = true
+        nameLabel.isHidden = true
+        saveFilterButton.isHidden = true
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        hideViews()
         setImageViewHeight(with: 1.0)
         
         updateViews()
@@ -123,8 +177,14 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var slider1: UISlider!
+    @IBOutlet weak var slider2: UISlider!
+    @IBOutlet weak var myCollectionView: UICollectionView!
+    @IBOutlet weak var saveFilterButton: UIButton!
 }
 
+@available(iOS 13.0, *)
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
