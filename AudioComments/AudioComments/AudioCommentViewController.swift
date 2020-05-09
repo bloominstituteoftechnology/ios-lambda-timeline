@@ -20,7 +20,10 @@ class AudioCommentViewController: UIViewController {
     @IBOutlet weak var audioVisualizer: AudioVisualizer!
     
     weak var timer: Timer?
-    
+    var listOfRecordings: [URL]?
+
+//    let audioController = AudioController()
+
     var recordingURL: URL?
     var audioCommentRecorder: AVAudioRecorder?
 
@@ -45,7 +48,7 @@ class AudioCommentViewController: UIViewController {
     deinit {
         timer?.invalidate()
     }
-    
+
     // MARK: - Timer
     
     func startTimer() {
@@ -62,12 +65,6 @@ class AudioCommentViewController: UIViewController {
                 audioCommentRecorder.updateMeters()
                 self.audioVisualizer.addValue(decibelValue: audioCommentRecorder.averagePower(forChannel: 0))
             }
-//
-//            if let audioPlayer = self.audioPlayer,
-//                self.isPlaying == true {
-//                audioPlayer.updateMeters()
-//                self.audioVisualizer.addValue(decibelValue: audioPlayer.averagePower(forChannel: 0))
-//            }
         }
     }
     
@@ -77,21 +74,9 @@ class AudioCommentViewController: UIViewController {
     }
     
     func updateViews() {
-//        playButton.isEnabled = !isRecording
-//        recordButton.isEnabled = !isPlaying
         timeSlider.isEnabled = !isRecording
-//        playButton.isSelected = isPlaying
         recordButton.isSelected = isRecording
-//        if !isRecording {
-//            let elapsedTime = audioPlayer?.currentTime ?? 0
-//            let duration = audioPlayer?.duration ?? 0
-//            let timeRemaining = duration.rounded() - elapsedTime
-//            timeElapsedLabel.text = timeIntervalFormatter.string(from: elapsedTime)
-//            timeSlider.minimumValue = 0
-//            timeSlider.maximumValue = Float(duration)
-//            timeSlider.value = Float(elapsedTime)
-//            timeRemainingLabel.text = "-" + timeIntervalFormatter.string(from: timeRemaining)!
-//        } else {
+
         if isRecording {
             let elapsedTime = audioCommentRecorder?.currentTime ?? 0
             timeElapsedLabel.text = "--:--"
@@ -117,6 +102,11 @@ class AudioCommentViewController: UIViewController {
         print("recording URL: \(file)")
 
         return file
+    }
+    
+    func createNewRecording(from url: URL) -> AudioComment{
+        let comment = AudioComment(recordingURL: recordingURL!)
+        return comment
     }
     
     func requestPermissionOrStartRecording() {
@@ -157,7 +147,7 @@ class AudioCommentViewController: UIViewController {
             print("Cannot record audio: \(error)")
             return
         }
-        
+        // TODO: Why does it "create" the same URL every time??
         recordingURL = createNewRecordingURL()
         
         let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
@@ -194,13 +184,24 @@ class AudioCommentViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowTableView" {
+            if let tableViewVC = segue.destination as? AudioCommentsTableViewController,
+                let listOfRecordings = listOfRecordings {
+                tableViewVC.listOfRecordings = listOfRecordings
+            }
+        }
+    }
 }
 
 extension AudioCommentViewController: AVAudioRecorderDelegate {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-//        if let recordingURL = recordingURL {
+        if let recordingURL = recordingURL {
+            listOfRecordings?.append(recordingURL)
+            print(recordingURL)
+            performSegue(withIdentifier: "ShowTableView", sender: nil)
 //            audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL)
-//        }
+        }
 //        audioRecorder = nil
     }
     
