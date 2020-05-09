@@ -85,15 +85,16 @@ class ImageFilterViewController: UIViewController {
         
         blurFilter.inputImage = colorControlsFilter.outputImage?.clampedToExtent()
         blurFilter.radius = blurSlider.value
-        
-        bloomFilter.inputImage = colorControlsFilter.outputImage
+        guard let blurImage = blurFilter.outputImage else { return originalImage! }
+
+        bloomFilter.inputImage = blurImage
         bloomFilter.intensity = 1
         bloomFilter.radius = bloomSlider.value
-    
-        guard var outputImage = blurFilter.outputImage else { return originalImage! }
-        outputImage = bloomFilter.outputImage!
+        
+        guard let outputImage = bloomFilter.outputImage else { return originalImage! }
         
         guard let renderedImage = context.createCGImage(outputImage, from: inputImage.extent) else { return originalImage! }
+        
         
         return UIImage(cgImage: renderedImage)
     }
