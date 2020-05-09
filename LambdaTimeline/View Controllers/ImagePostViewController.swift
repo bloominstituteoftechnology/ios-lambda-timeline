@@ -8,8 +8,65 @@
 
 import UIKit
 import Photos
+import CoreImage
+import CoreImage.CIFilterBuiltins
 
+@available(iOS 13.0, *)
 class ImagePostViewController: ShiftableViewController {
+    
+    //MARK: - Properties
+    
+    var postController: PostController!
+    var post: Post?
+    var imageData: Data?
+    
+    var originalImage: UIImage? {
+        didSet {
+            guard let originalImage = originalImage else { return }
+            
+            var scaledSize = imageView.bounds.size
+            let scale = CGFloat(0.5)
+            
+            scaledSize = CGSize(width: scaledSize.width*scale,
+                                height: scaledSize.height*scale)
+            
+            let scaledUIImage = originalImage.imageByScaling(toSize: scaledSize)
+            guard let scaledCGImage = scaledUIImage?.cgImage else { return }
+            
+            scaledImage = CIImage(cgImage: scaledCGImage)
+        }
+    }
+    
+    var scaledImage: CIImage? {
+        didSet {
+            updateImage()
+        }
+    }
+    
+    private let context = CIContext()
+    private let colorControlsFilter = CIFilter.colorControls()
+    private let blurFilter = CIFilter.gaussianBlur()
+    private let invertFilter = CIFilter.colorInvert()
+    private let noirFilter = CIFilter.photoEffectNoir()
+    private let vividFilter = CIFilter.photoEffectChrome()
+    
+    //MARK: - Outlets
+    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var chooseImageButton: UIButton!
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var postButton: UIBarButtonItem!
+    
+    @IBOutlet weak var brightnessSlider: UISlider!
+    @IBOutlet weak var saturationSlider: UISlider!
+    @IBOutlet weak var contrastSlider: UISlider!
+    @IBOutlet weak var blurSlider: UISlider!
+    @IBOutlet weak var invertSwitch: UISwitch!
+    @IBOutlet weak var noirSwitch: UISwitch!
+    @IBOutlet weak var vividSwitch: UISwitch!
+    
+    //MARK: - Views
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,7 +74,10 @@ class ImagePostViewController: ShiftableViewController {
         setImageViewHeight(with: 1.0)
         
         updateViews()
+        
     }
+    
+    //MARK: - Methods
     
     func updateViews() {
         
@@ -34,6 +94,7 @@ class ImagePostViewController: ShiftableViewController {
         imageView.image = image
         
         chooseImageButton.setTitle("", for: [])
+        
     }
     
     private func presentImagePickerController() {
@@ -43,14 +104,92 @@ class ImagePostViewController: ShiftableViewController {
             return
         }
         
-        let imagePicker = UIImagePickerController()
-        
-        imagePicker.delegate = self
-        
-        imagePicker.sourceType = .photoLibrary
+        DispatchQueue.main.async {
+            let imagePicker = UIImagePickerController()
+            
+            imagePicker.delegate = self
+            
+            imagePicker.sourceType = .photoLibrary
 
-        present(imagePicker, animated: true, completion: nil)
+            self.present(imagePicker, animated: true, completion: nil)
+        }
     }
+    
+    func setImageViewHeight(with aspectRatio: CGFloat) {
+        
+        imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
+        
+        view.layoutSubviews()
+    }
+    
+    func turnOnFilters() {
+        brightnessSlider.isEnabled = true
+        saturationSlider.isEnabled = true
+        contrastSlider.isEnabled = true
+        blurSlider.isEnabled = true
+        invertSwitch.isEnabled = true
+        noirSwitch.isEnabled = true
+        vividSwitch.isEnabled = true
+    }
+    
+    private func image(byFiltering inputImage: CIImage) -> UIImage {
+        colorControlsFilter.inputImage = inputImage
+        colorControlsFilter.brightness = brightnessSlider.value
+        colorControlsFilter.saturation = saturationSlider.value
+        colorControlsFilter.contrast = contrastSlider.value
+        
+        blurFilter.inputImage = colorControlsFilter.outputImage?.clampedToExtent()
+        blurFilter.radius = blurSlider.value
+        
+        if invertSwitch.isOn {
+            colorControlsFilter.inputImage = nil
+            noirFilter.inputImage = nil
+            vividFilter.inputImage = nil
+            blurFilter.inputImage = nil
+            invertFilter.inputImage = inputImage
+            let invertedImage = (invertFilter.outputImage)!
+            guard let renderedImage = context.createCGImage(invertedImage, from: inputImage.extent) else { return UIImage(ciImage: inputImage)}
+            return UIImage(cgImage: renderedImage)
+        }
+        
+        if noirSwitch.isOn {
+            colorControlsFilter.inputImage = nil
+            invertFilter.inputImage = nil
+            vividFilter.inputImage = nil
+            blurFilter.inputImage = nil
+            noirFilter.inputImage = inputImage
+            let noirImage = (noirFilter.outputImage)!
+            guard let renderedImage = context.createCGImage(noirImage, from: inputImage.extent) else { return UIImage(ciImage: inputImage)}
+            return UIImage(cgImage: renderedImage)
+        }
+        
+        if vividSwitch.isOn {
+            colorControlsFilter.inputImage = nil
+            noirFilter.inputImage = nil
+            invertFilter.inputImage = nil
+            blurFilter.inputImage = nil
+            vividFilter.inputImage = inputImage
+            let vividImage = (vividFilter.outputImage)!
+            guard let renderedImage = context.createCGImage(vividImage, from: inputImage.extent) else { return UIImage(ciImage: inputImage)}
+            return UIImage(cgImage: renderedImage)
+        }
+        
+        guard let outputImage = blurFilter.outputImage else { return UIImage(ciImage: inputImage) }
+        
+        guard let renderedImage = context.createCGImage(outputImage, from: inputImage.extent) else { return UIImage(ciImage: inputImage) }
+        
+        return UIImage(cgImage: renderedImage)
+    }
+    
+    private func updateImage() {
+        if let scaledImage = scaledImage {
+            imageView.image = image(byFiltering: scaledImage)
+        } else {
+            imageView.image = nil
+        }
+    }
+    
+    //MARK: - Actions
     
     @IBAction func createPost(_ sender: Any) {
         
@@ -58,8 +197,8 @@ class ImagePostViewController: ShiftableViewController {
         
         guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
             let title = titleTextField.text, title != "" else {
-            presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
-            return
+                presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
+                return
         }
         
         postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
@@ -101,28 +240,42 @@ class ImagePostViewController: ShiftableViewController {
         case .restricted:
             self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
             
+        @unknown default:
+            fatalError()
         }
         presentImagePickerController()
     }
     
-    func setImageViewHeight(with aspectRatio: CGFloat) {
-        
-        imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
-        
-        view.layoutSubviews()
+    @IBAction func brightnessChanged(_ sender: Any) {
+        updateImage()
     }
     
-    var postController: PostController!
-    var post: Post?
-    var imageData: Data?
+    @IBAction func saturationChanged(_ sender: Any) {
+        updateImage()
+    }
     
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var chooseImageButton: UIButton!
-    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var postButton: UIBarButtonItem!
+    @IBAction func contrastChanged(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func blurChanged(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func invertChanged(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func noirChanged(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func vividChanged(_ sender: Any) {
+        updateImage()
+    }
 }
 
+@available(iOS 13.0, *)
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -136,6 +289,10 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         imageView.image = image
         
         setImageViewHeight(with: image.ratio)
+        
+        originalImage = imageView.image
+        
+        turnOnFilters()
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

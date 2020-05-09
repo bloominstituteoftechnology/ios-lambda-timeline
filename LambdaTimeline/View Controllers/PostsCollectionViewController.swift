@@ -10,6 +10,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseUI
 
+@available(iOS 13.0, *)
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     override func viewDidLoad() {
