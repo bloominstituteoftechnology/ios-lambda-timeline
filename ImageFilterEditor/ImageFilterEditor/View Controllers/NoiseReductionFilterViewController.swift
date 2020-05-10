@@ -8,10 +8,19 @@
 
 import UIKit
 
+protocol NoiseFilterProtocol {
+    func applyNoiseFilter() -> CIFilter
+    
+    var noise: Double { get }
+    var sharpness: Double { get }
+}
+
 class NoiseReductionFilterViewController: UIViewController {
 
     @IBOutlet weak var noiseFilterSlider: UISlider!
     @IBOutlet weak var sharpnessFilterSlider: UISlider!
+    
+    var noiseDelegate: NoiseFilterProtocol?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +29,22 @@ class NoiseReductionFilterViewController: UIViewController {
     }
     
 
+//    private func image(byFiltering inputImage: CIImage) -> UIImage {
+//        
+//        colorControlsFilter.inputImage = inputImage
+//        colorControlsFilter.saturation = saturationSlider.value
+//        colorControlsFilter.brightness = brightnessSlider.value
+//        colorControlsFilter.contrast = contrastSlider.value
+//        
+//        blurFilter.inputImage = colorControlsFilter.outputImage?.clampedToExtent()
+//        blurFilter.radius = blurSlider.value
+//        
+//        guard let outputImage = blurFilter.outputImage else { return originalImage! }
+//        
+//        guard let renderedImage = context.createCGImage(outputImage, from: inputImage.extent) else { return originalImage! }
+//        
+//        return UIImage(cgImage: renderedImage)
+//    }
     /*
     // MARK: - Navigation
 

@@ -8,6 +8,13 @@
 
 import UIKit
 
+protocol ColorControlFilterProtocol {
+    func applyColorControlFilter() -> CIFilter
+    
+    var saturation: Double { get }
+    var brightness: Double { get }
+    var contrast: Double { get }
+}
 class ColorControlFilterViewController: UIViewController {
 
     

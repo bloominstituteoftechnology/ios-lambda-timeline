@@ -8,6 +8,12 @@
 
 import UIKit
 
+protocol WhitePointFilterProtocol {
+    func applyWhitePointFilter() -> CIFilter
+    
+    var color: UIColor { get }
+}
+
 class WhitePointFilterViewController: UIViewController {
 
     override func viewDidLoad() {
