@@ -19,15 +19,21 @@ class NoiseReductionFilterViewController: UIViewController {
 
     @IBOutlet weak var noiseFilterSlider: UISlider!
     @IBOutlet weak var sharpnessFilterSlider: UISlider!
+    @IBOutlet weak var imageView: UIImageView!
     
     var noiseDelegate: NoiseFilterProtocol?
 
+    var image: UIImage?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        updateViews()
     }
     
+    func updateViews() {
+        guard let image = image else { return }
+        imageView.image = image
+    }
 
 //    private func image(byFiltering inputImage: CIImage) -> UIImage {
 //        

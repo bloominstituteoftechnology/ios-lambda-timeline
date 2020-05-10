@@ -204,23 +204,24 @@ extension ImagePostViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        switch segue.identifier {
-//        case "PresentNoiseFilter":
-//            guard let destinationVC = segue.destination as? NoiseReductionFilterViewController else { return }
-//            destinationVC.modalPresentationStyle = .custom
-//
-//        case "PresentColorControlFilter":
-//            guard let destinationVC = segue.destination as? ColorControlFilterViewController else { return }
-////            destinationVC.modalPresentationStyle = .pageSheet
-//
-//        case "PresentWhitePointFilter":
-//            guard let destinationVC = segue.destination as? WhitePointFilterViewController else { return }
-////            destinationVC.modalPresentationStyle = .pageSheet
-//
-//        default:
-//            break
-//        }
-//    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "PresentNoiseFilter":
+            guard let destinationVC = segue.destination as? NoiseReductionFilterViewController else { return }
+            destinationVC.image = originalImage
+//            destinationVC.imageView.image = UIImage(ciImage: scaledImage!)
+
+        case "PresentColorControlFilter":
+            guard let destinationVC = segue.destination as? ColorControlFilterViewController else { return }
+            destinationVC.imageView.image = UIImage(ciImage: scaledImage!)
+
+        case "PresentWhitePointFilter":
+            guard let destinationVC = segue.destination as? WhitePointFilterViewController else { return }
+            destinationVC.imageView.image = UIImage(ciImage: scaledImage!)
+
+        default:
+            break
+        }
+    }
     
 }

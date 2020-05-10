@@ -16,6 +16,8 @@ protocol WhitePointFilterProtocol {
 
 class WhitePointFilterViewController: UIViewController {
 
+    @IBOutlet weak var imageView: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

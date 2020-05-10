@@ -21,7 +21,8 @@ class ColorControlFilterViewController: UIViewController {
     @IBOutlet weak var saturationSlider: UISlider!
     @IBOutlet weak var brightnessSlider: UISlider!
     @IBOutlet weak var constrastSlider: UISlider!
-
+    @IBOutlet weak var imageView: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
