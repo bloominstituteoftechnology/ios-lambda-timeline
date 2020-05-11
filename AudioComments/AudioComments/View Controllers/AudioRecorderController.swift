@@ -7,8 +7,19 @@
 //
 
 import UIKit
+import AVFoundation
 
 class AudioRecorderController: UIViewController {
+
+    // MARK: - IBOutlets
+    
+    @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var timeElapsedLabel: UILabel!
+    @IBOutlet weak var timeRemainingLabel: UILabel!
+    @IBOutlet weak var timeSlider: UISlider!
+    
+    // MARK: - View Controller Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,15 +27,18 @@ class AudioRecorderController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    // MARK: - IBActions
+    
+    @IBAction func togglePlayback(_ sender: UIButton) {
+        
     }
-    */
+    
+    @IBAction func updateCurrentTime(_ sender: UISlider) {
+        
+    }
+    
+    @IBAction func toggleRecording(_ sender: UIButton) {
+        
+    }
 
 }

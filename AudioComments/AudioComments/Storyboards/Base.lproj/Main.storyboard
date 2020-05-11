@@ -30,6 +30,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Ncc-j2-NI8">
                                                 <rect key="frame" x="52.000000000000014" y="0.0" width="231.33333333333337" height="31"/>
+                                                <connections>
+                                                    <action selector="updateCurrentTime:" destination="BYZ-38-t0r" eventType="valueChanged" id="WwF-OR-Dlu"/>
+                                                </connections>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YTA-TK-Ex7">
                                                 <rect key="frame" x="289.33333333333331" y="0.0" width="53.666666666666686" height="30"/>
@@ -45,10 +48,16 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ncA-hZ-dCI">
                                                 <rect key="frame" x="0.0" y="0.0" width="167.66666666666666" height="46"/>
                                                 <state key="normal" image="play.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="togglePlayback:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QAp-oA-eos"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9FP-2r-25h">
                                                 <rect key="frame" x="175.66666666666663" y="0.0" width="167.33333333333337" height="46"/>
                                                 <state key="normal" image="mic.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="toggleRecording:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WPS-ft-2mI"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -86,6 +95,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="playButton" destination="ncA-hZ-dCI" id="iZL-9a-79f"/>
+                        <outlet property="recordButton" destination="9FP-2r-25h" id="qEf-RC-3Gd"/>
+                        <outlet property="timeElapsedLabel" destination="WI8-DI-qvf" id="9wv-a2-ld4"/>
+                        <outlet property="timeRemainingLabel" destination="YTA-TK-Ex7" id="d3y-Al-cPo"/>
+                        <outlet property="timeSlider" destination="Ncc-j2-NI8" id="3yZ-gm-oir"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
