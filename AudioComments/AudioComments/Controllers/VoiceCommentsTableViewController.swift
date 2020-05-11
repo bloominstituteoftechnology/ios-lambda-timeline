@@ -63,7 +63,12 @@ class VoiceCommentsTableViewController: UITableViewController {
         if let context = (UIApplication.shared.delegate as? AppDelegate)?.persistentContainer.viewContext {
           let sound = sounds[indexPath.row]
           context.delete(sound)
-          getSound()
+            do {
+                try context.save()
+                getSound()
+            } catch {
+                print("Error deleting audio recording: \(error)")
+            }
         }
       }
     }
