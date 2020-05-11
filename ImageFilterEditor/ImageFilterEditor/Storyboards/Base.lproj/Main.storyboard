@@ -21,7 +21,7 @@
                                     <constraint firstAttribute="width" secondItem="2TQ-Wm-649" secondAttribute="height" multiplier="1:1" id="GKS-jQ-DwX"/>
                                 </constraints>
                             </imageView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Eg1-Up-bK7">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Eg1-Up-bK7">
                                 <rect key="frame" x="0.0" y="562" width="414" height="276"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <prototypes>
@@ -100,7 +100,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="xyC-44-SgY">
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="xyC-44-SgY">
                                         <rect key="frame" x="-2" y="40.5" width="402" height="54"/>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sharpness" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Kf-RU-U9e">
@@ -109,12 +109,16 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="EDt-19-Vkl">
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="EDt-19-Vkl">
                                         <rect key="frame" x="-2" y="137.5" width="402" height="63.5"/>
                                     </slider>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="xyC-44-SgY" firstAttribute="leading" secondItem="pkG-eV-8Wr" secondAttribute="leading" id="HSW-Hl-n0H"/>
+                                    <constraint firstAttribute="trailing" secondItem="EDt-19-Vkl" secondAttribute="trailing" id="QoU-oV-e4K"/>
+                                    <constraint firstAttribute="trailing" secondItem="xyC-44-SgY" secondAttribute="trailing" id="UVB-PR-mF1"/>
                                     <constraint firstAttribute="height" constant="200" id="VK2-dM-NR3"/>
+                                    <constraint firstItem="EDt-19-Vkl" firstAttribute="leading" secondItem="pkG-eV-8Wr" secondAttribute="leading" id="g4a-0s-SaX"/>
                                 </constraints>
                             </stackView>
                         </subviews>

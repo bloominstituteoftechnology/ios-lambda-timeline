@@ -18,12 +18,17 @@ class WhitePointFilterViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
     
+    var image: UIImage?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        updateViews()
     }
     
+    func updateViews() {
+        guard let image = image else { return }
+        imageView.image = image
+    }
 
     /*
     // MARK: - Navigation
