@@ -42,7 +42,7 @@ class ImagePostViewController: ShiftableViewController {
         didSet {
             guard let originalImage = originalImage else { return }
             
-            var scaledSize = imageView = imageView.bounds.size
+            var scaledSize = imageView.bounds.size
             let scale = UIScreen.main.scale
             scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.width * scale)
             
@@ -56,20 +56,20 @@ class ImagePostViewController: ShiftableViewController {
         }
     }
     
-    func hideViews() {
-        slider1.isHidden = true
-        slider2.isHidden = true
-        nameLabel.isHidden = true
-        saveFilterButton.isHidden = true
-        myCollectionView.isHidden = true
-    }
+//    func hideViews() {
+//        slider1.isHidden = true
+//        slider2.isHidden = true
+//        nameLabel.isHidden = true
+//        saveFilterButton.isHidden = true
+//        myCollectionView.isHidden = true
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setImageViewHeight(with: 1.0)
         
-        hideViews()
+        //hideViews()
         updateViews()
     }
     
@@ -82,10 +82,10 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     @IBAction func filterSavedTapped(_ sender: Any) {
-        updateViews()
+        scaledImage = imageView.image
     }
     
-    func updateViews() {
+    func updateViews(withAdjustment: Bool = false) {
         
         if let scaledImage = scaledImage {
             

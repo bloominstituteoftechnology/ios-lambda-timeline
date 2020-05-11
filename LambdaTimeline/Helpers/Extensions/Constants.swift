@@ -12,6 +12,6 @@ enum EffectNames: String {
     case exposure = "sun.max"
     case vibrance = "sunrise"
     case vignette = "smallcircle.circle"
-    case sepiaTone = "slider.horizontal.3"
-    case motionBlur = "Motion Blur" //This case was missing on the project. 
+    case sepiaTone = "eyedropper.halffull"
+    case motionBlur = "slider.horizontal.3"
 }
