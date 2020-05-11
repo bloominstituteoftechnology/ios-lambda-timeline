@@ -213,11 +213,15 @@ extension ImagePostViewController: UITableViewDataSource, UITableViewDelegate {
 
         case "PresentColorControlFilter":
             guard let destinationVC = segue.destination as? ColorControlFilterViewController else { return }
-            destinationVC.imageView.image = UIImage(ciImage: scaledImage!)
+            destinationVC.image = originalImage
+
+//            destinationVC.imageView.image = UIImage(ciImage: scaledImage!)
 
         case "PresentWhitePointFilter":
             guard let destinationVC = segue.destination as? WhitePointFilterViewController else { return }
-            destinationVC.imageView.image = UIImage(ciImage: scaledImage!)
+            destinationVC.image = originalImage
+
+//            destinationVC.imageView.image = UIImage(ciImage: scaledImage!)
 
         default:
             break
