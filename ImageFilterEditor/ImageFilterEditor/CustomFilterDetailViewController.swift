@@ -11,17 +11,24 @@ import UIKit
 class CustomFilterDetailViewController: UIViewController {
     
     //MARK: - IBOutlets
+    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var customFilterImageView: UIImageView!
     @IBOutlet weak var brightnessSliderControl: UISlider!
     @IBOutlet weak var saturationSliderControl: UISlider!
     @IBOutlet weak var contrastSliderControl: UISlider!
     
-
+    var receivedImage: UIImage?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveButtonClicked))
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        imageView.image = receivedImage
     }
     
 

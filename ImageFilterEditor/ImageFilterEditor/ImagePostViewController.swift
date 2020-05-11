@@ -18,7 +18,7 @@ class ImagePostViewController: UIViewController, UIImagePickerControllerDelegate
     //MARK: Properties
     var context: CIContext = CIContext(options: nil)
     var appliedFilter: CIFilter!
-    
+    var originalImage: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -139,6 +139,7 @@ class ImagePostViewController: UIViewController, UIImagePickerControllerDelegate
     func presentCustomFilterDetail(action: UIAlertAction!) {
         if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "CustomFilterDetailViewController") as? CustomFilterDetailViewController
         {
+            vc.receivedImage = originalImage
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -147,6 +148,7 @@ class ImagePostViewController: UIViewController, UIImagePickerControllerDelegate
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] {
             imageView.image = image as? UIImage
+            originalImage = imageView.image
         } else {
             print("Error accessing image.")
         }
