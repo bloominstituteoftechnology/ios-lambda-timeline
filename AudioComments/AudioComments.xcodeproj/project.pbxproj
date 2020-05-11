@@ -13,6 +13,8 @@
 		4276B13F2469E56C00ABA360 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4276B13D2469E56C00ABA360 /* Main.storyboard */; };
 		4276B1412469E56D00ABA360 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4276B1402469E56D00ABA360 /* Assets.xcassets */; };
 		4276B1442469E56D00ABA360 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4276B1422469E56D00ABA360 /* LaunchScreen.storyboard */; };
+		4276B1502469E5AC00ABA360 /* Audio.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4276B14C2469E5AC00ABA360 /* Audio.xcdatamodeld */; };
+		4276B1512469E5AC00ABA360 /* AudioComments.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4276B14E2469E5AC00ABA360 /* AudioComments.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		4276B1402469E56D00ABA360 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4276B1432469E56D00ABA360 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4276B1452469E56D00ABA360 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4276B14D2469E5AC00ABA360 /* TalkBoy.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TalkBoy.xcdatamodel; sourceTree = "<group>"; };
+		4276B14F2469E5AC00ABA360 /* AudioComments.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AudioComments.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +60,7 @@
 		4276B1362469E56C00ABA360 /* AudioComments */ = {
 			isa = PBXGroup;
 			children = (
+				4276B14B2469E5AC00ABA360 /* Model */,
 				4276B1372469E56C00ABA360 /* AppDelegate.swift */,
 				4276B1392469E56C00ABA360 /* SceneDelegate.swift */,
 				4276B13B2469E56C00ABA360 /* ViewController.swift */,
@@ -65,6 +70,15 @@
 				4276B1452469E56D00ABA360 /* Info.plist */,
 			);
 			path = AudioComments;
+			sourceTree = "<group>";
+		};
+		4276B14B2469E5AC00ABA360 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4276B14C2469E5AC00ABA360 /* Audio.xcdatamodeld */,
+				4276B14E2469E5AC00ABA360 /* AudioComments.xcdatamodeld */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,6 +152,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4276B1512469E5AC00ABA360 /* AudioComments.xcdatamodeld in Sources */,
+				4276B1502469E5AC00ABA360 /* Audio.xcdatamodeld in Sources */,
 				4276B13C2469E56C00ABA360 /* ViewController.swift in Sources */,
 				4276B1382469E56C00ABA360 /* AppDelegate.swift in Sources */,
 				4276B13A2469E56C00ABA360 /* SceneDelegate.swift in Sources */,
@@ -338,6 +354,29 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4276B14C2469E5AC00ABA360 /* Audio.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4276B14D2469E5AC00ABA360 /* TalkBoy.xcdatamodel */,
+			);
+			currentVersion = 4276B14D2469E5AC00ABA360 /* TalkBoy.xcdatamodel */;
+			path = Audio.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		4276B14E2469E5AC00ABA360 /* AudioComments.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4276B14F2469E5AC00ABA360 /* AudioComments.xcdatamodel */,
+			);
+			currentVersion = 4276B14F2469E5AC00ABA360 /* AudioComments.xcdatamodel */;
+			path = AudioComments.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 4276B12C2469E56C00ABA360 /* Project object */;
 }
