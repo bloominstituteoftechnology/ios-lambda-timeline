@@ -82,6 +82,16 @@ class AudioRecorderController: UIViewController {
         }
     }
     
+    @IBAction func cancelRecording(_ sender: UIBarButtonItem) {
+        // TODO: Implement cancelRecording
+        
+    }
+    
+    @IBAction func sendRecording(_ sender: UIBarButtonItem) {
+        // TODO: Implement sendRecording
+        
+    }
+    
     // MARK: - Update Views
     
     private func updateViews() {

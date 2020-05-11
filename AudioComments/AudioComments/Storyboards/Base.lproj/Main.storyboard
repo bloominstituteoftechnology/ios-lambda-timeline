@@ -76,8 +76,16 @@
                                 <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                                 <items>
                                     <navigationItem title="Audio Recording" id="bKX-YC-gmE">
-                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="YE5-z2-Zoo"/>
-                                        <barButtonItem key="rightBarButtonItem" title="Send" id="abz-tM-fdl"/>
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="YE5-z2-Zoo">
+                                            <connections>
+                                                <action selector="cancelRecording:" destination="BYZ-38-t0r" id="VIp-sF-1pI"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Send" id="abz-tM-fdl">
+                                            <connections>
+                                                <action selector="sendRecording:" destination="BYZ-38-t0r" id="Gpq-ko-f0o"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
