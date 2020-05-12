@@ -71,10 +71,11 @@ class ImagePostTableViewController: UITableViewController {
     // MARK: - Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "FilterImageSegue" {
         guard let detailVC = segue.destination as? ImageFilterViewController else { return }
         guard let indexPath = tableView.indexPathForSelectedRow else { return }
         detailVC.photo =  fetchedResultsController.object(at: indexPath)
-        
+        } 
     }
 }
 

@@ -75,7 +75,7 @@ class ImageFilterViewController: UIViewController {
         updateViews()
         originalImage = imageView.image
     }
-
+    
     private func image(byFiltering inputImage: CIImage) -> UIImage {
         
         colorControlsFilter.inputImage = inputImage
@@ -86,7 +86,7 @@ class ImageFilterViewController: UIViewController {
         blurFilter.inputImage = colorControlsFilter.outputImage?.clampedToExtent()
         blurFilter.radius = blurSlider.value
         guard let blurImage = blurFilter.outputImage else { return originalImage! }
-
+        
         bloomFilter.inputImage = blurImage
         bloomFilter.intensity = 1
         bloomFilter.radius = bloomSlider.value
@@ -94,7 +94,6 @@ class ImageFilterViewController: UIViewController {
         guard let outputImage = bloomFilter.outputImage else { return originalImage! }
         
         guard let renderedImage = context.createCGImage(outputImage, from: inputImage.extent) else { return originalImage! }
-        
         
         return UIImage(cgImage: renderedImage)
     }
@@ -108,7 +107,6 @@ class ImageFilterViewController: UIViewController {
     }
     
     // MARK: - Private Methods
-    
     @objc private func addImage() {
         let authorizationStatus = PHPhotoLibrary.authorizationStatus()
         switch authorizationStatus {
@@ -128,10 +126,9 @@ class ImageFilterViewController: UIViewController {
     }
     
     private func savePhoto() {
-        
         guard let originalImage = originalImage?.flattened,
-            let comments = commentTextField.text,
-            let ciImage = CIImage(image: originalImage) else { return }
+              let comments = commentTextField.text,
+              let ciImage = CIImage(image: originalImage) else { return }
         
         let processedImage = self.image(byFiltering: ciImage)
         guard let imageData = processedImage.pngData() else {return}
