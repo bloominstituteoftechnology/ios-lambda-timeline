@@ -56,29 +56,29 @@ class ImagePostViewController: ShiftableViewController {
         }
     }
     
-//    func hideViews() {
-//        slider1.isHidden = true
-//        slider2.isHidden = true
-//        nameLabel.isHidden = true
-//        saveFilterButton.isHidden = true
+    func hideViews() {
+        slider1.isHidden = true
+        slider2.isHidden = true
+        nameLabel.isHidden = true
+        saveFilterButton.isHidden = true
 //        myCollectionView.isHidden = true
-//    }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setImageViewHeight(with: 1.0)
         
-        //hideViews()
+        hideViews()
         updateViews()
     }
     
     @IBAction func adjustmentSliderChanged(_ sender: Any) {
-        updateViews()
+        updateViews(withAdjustment: true)
     }
     
     @IBAction func adjustmentSlider2Changed(_ sender: Any) {
-        updateViews()
+        updateViews(withAdjustment: true)
     }
     
     @IBAction func filterSavedTapped(_ sender: Any) {
@@ -177,7 +177,7 @@ class ImagePostViewController: ShiftableViewController {
         
         let filter = CIFilter(name: "CISepiaTone")!
         filter.setValue(ciImage, forKey: kCIInputImageKey)
-        filter.setValue(slider1, forKey: kCIInputIntensityKey)
+        filter.setValue(slider1.value, forKey: kCIInputIntensityKey)
         
         guard let outputCIImage = filter.outputImage else { return nil }
         guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else {
@@ -329,6 +329,14 @@ class ImagePostViewController: ShiftableViewController {
         presentImagePickerController()
     }
     
+    
+    func setImageRatio(with scaling: CGSize) {
+        imageHeightConstraint.constant = imageView.frame.size.width
+        
+        view.layoutSubviews()
+    }
+    
+    
     func setImageViewHeight(with aspectRatio: CGFloat) {
         
         imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
@@ -356,20 +364,18 @@ class ImagePostViewController: ShiftableViewController {
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-
+        
         chooseImageButton.setTitle("", for: [])
-        
-        picker.dismiss(animated: true, completion: nil)
-        
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        
-        imageView.image = image
-        
-        setImageViewHeight(with: image.ratio)
+        picker.dismiss(animated: true)
+        guard let image = info[.originalImage] as? UIImage else { return }
+        originalImage = image
+        imageView.image = originalImage
+        //myCollectionView.isHidden = false
+        setImageRatio(with: image.size)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
+        picker.dismiss(animated: true)
     }
 }
 
