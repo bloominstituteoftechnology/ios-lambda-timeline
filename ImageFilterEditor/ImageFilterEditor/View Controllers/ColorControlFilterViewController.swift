@@ -16,34 +16,61 @@ protocol ColorControlFilterProtocol {
     var contrast: Double { get }
 }
 class ColorControlFilterViewController: UIViewController {
-
+    
     
     @IBOutlet weak var saturationSlider: UISlider!
     @IBOutlet weak var brightnessSlider: UISlider!
     @IBOutlet weak var constrastSlider: UISlider!
     @IBOutlet weak var imageView: UIImageView!
     
-    var image: UIImage?
+    private let colorControlFilter = CIFilter.colorControls()
+    
+    var passedImage: UIImage?
+    
+    var scaledImage: CIImage? {
+        didSet {
+            updateImage()
+        }
+    }
+    var context: CIContext?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateViews()
+        imageView.image = passedImage
     }
     
-    func updateViews() {
-        guard let image = image else { return }
-        imageView.image = image
+    private func updateImage() {
+        if let scaledImage = scaledImage {
+            imageView.image = image(byFiltering: scaledImage)
+        } else {
+            imageView.image = nil
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func image(byFiltering inputImage: CIImage) -> UIImage {
+        
+        colorControlFilter.inputImage = inputImage
+        colorControlFilter.saturation = saturationSlider.value
+        colorControlFilter.brightness = brightnessSlider.value
+        colorControlFilter.contrast = constrastSlider.value
+        
+        //            blurFilter.inputImage = colorControlsFilter.outputImage?.clampedToExtent()
+        //            blurFilter.radius = blurSlider.value
+        
+        guard let outputImage = colorControlFilter.outputImage else { return passedImage! }
+        
+        guard let renderedImage = context?.createCGImage(outputImage, from: inputImage.extent) else { return passedImage! }
+        
+        return UIImage(cgImage: renderedImage)
     }
-    */
-
+    @IBAction func saturationChanged(_ sender: UISlider) {
+        updateImage()
+    }
+    @IBAction func brightnessChanged(_ sender: UISlider) {
+        updateImage()
+    }
+    @IBAction func contrastChanged(_ sender: UISlider) {
+        updateImage()
+    }
+    
 }

@@ -100,8 +100,11 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="xyC-44-SgY">
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="-1" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="xyC-44-SgY">
                                         <rect key="frame" x="-2" y="40.5" width="402" height="54"/>
+                                        <connections>
+                                            <action selector="noiseValueChanged:" destination="Wih-pu-ZCu" eventType="valueChanged" id="4Jh-5s-Ju1"/>
+                                        </connections>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sharpness" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Kf-RU-U9e">
                                         <rect key="frame" x="158.5" y="97.5" width="81.5" height="36"/>
@@ -109,8 +112,11 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="EDt-19-Vkl">
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="-1" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="EDt-19-Vkl">
                                         <rect key="frame" x="-2" y="137.5" width="402" height="63.5"/>
+                                        <connections>
+                                            <action selector="sharpnessValueChanged:" destination="Wih-pu-ZCu" eventType="valueChanged" id="69F-Ac-OhH"/>
+                                        </connections>
                                     </slider>
                                 </subviews>
                                 <constraints>
@@ -169,6 +175,9 @@
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="8cU-nE-Rjd">
                                         <rect key="frame" x="-2" y="24.5" width="402" height="31"/>
+                                        <connections>
+                                            <action selector="saturationChanged:" destination="h8r-1A-kmN" eventType="valueChanged" id="It5-5v-9ju"/>
+                                        </connections>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brightness" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7IM-U7-GWf">
                                         <rect key="frame" x="158" y="58.5" width="82" height="20.5"/>
@@ -178,6 +187,9 @@
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="DRJ-dK-qua">
                                         <rect key="frame" x="-2" y="83" width="402" height="31"/>
+                                        <connections>
+                                            <action selector="brightnessChanged:" destination="h8r-1A-kmN" eventType="valueChanged" id="EKJ-yA-d2Q"/>
+                                        </connections>
                                     </slider>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contrast" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iIC-tb-eCd">
                                         <rect key="frame" x="166" y="117" width="66.5" height="20.5"/>
@@ -187,6 +199,9 @@
                                     </label>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="9NQ-8M-cO4">
                                         <rect key="frame" x="-2" y="141.5" width="402" height="31"/>
+                                        <connections>
+                                            <action selector="contrastChanged:" destination="h8r-1A-kmN" eventType="valueChanged" id="OeI-Kq-kbA"/>
+                                        </connections>
                                     </slider>
                                 </subviews>
                                 <constraints>

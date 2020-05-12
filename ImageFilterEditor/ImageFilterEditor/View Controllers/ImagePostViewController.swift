@@ -19,9 +19,7 @@ class ImagePostViewController: UIViewController {
     @IBOutlet weak var filterTableView: UITableView!
     
     // MARK: - Properties
-    private let context = CIContext()
-    private let noiseReductionFilter = CIFilter.noiseReduction()
-    private let colorControlFilter = CIFilter.colorControls()
+    let context = CIContext()
     private let whitePointAdjustmentFilter = CIFilter.whitePointAdjust()
     private let crystallizeFilter = CIFilter.crystallize()
     private let noirFilter = CIFilter.photoEffectNoir()
@@ -62,23 +60,6 @@ class ImagePostViewController: UIViewController {
         originalImage = imageView.image
     }
 
-//    private func image(byFiltering inputImage: CIImage) -> UIImage {
-//
-//        colorControlsFilter.inputImage = inputImage
-//        colorControlsFilter.saturation = saturationSlider.value
-//        colorControlsFilter.brightness = brightnessSlider.value
-//        colorControlsFilter.contrast = contrastSlider.value
-//
-//        blurFilter.inputImage = colorControlsFilter.outputImage?.clampedToExtent()
-//        blurFilter.radius = blurSlider.value
-//
-//        guard let outputImage = blurFilter.outputImage else { return originalImage! }
-//
-//        guard let renderedImage = context.createCGImage(outputImage, from: inputImage.extent) else { return originalImage! }
-//
-//        return UIImage(cgImage: renderedImage)
-//    }
-
     private func updateImage() {
         if let scaledImage = scaledImage {
             imageView.image = UIImage(ciImage: scaledImage)
@@ -102,26 +83,6 @@ class ImagePostViewController: UIViewController {
     }
     
     // MARK: Actions
-    
-    @IBAction func selectFilter(_ sender: UISegmentedControl) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        switch sender.selectedSegmentIndex {
-        case 0:
-            let controller = storyboard.instantiateViewController(identifier: "NoiseReductionFilterViewController") as! NoiseReductionFilterViewController
-            self.present(controller, animated: true)
-            print("Noise filter selected.")
-        case 1:
-            print("Color Control filter selected.")
-        case 2:
-            print("White Point filter selected.")
-        case 3:
-            print("Crytal filter selected.")
-        case 4:
-            print("Noir filter selected.")
-        default:
-            print("No filter selected.")
-        }
-    }
     
     @IBAction func selectPhotoButtonPressed(_ sender: UIBarButtonItem) {
         if selectImageButton.title == "Select Image" {
@@ -208,19 +169,25 @@ extension ImagePostViewController: UITableViewDataSource, UITableViewDelegate {
         switch segue.identifier {
         case "PresentNoiseFilter":
             guard let destinationVC = segue.destination as? NoiseReductionFilterViewController else { return }
-            destinationVC.image = originalImage
+            if let originalImage = originalImage {
+                destinationVC.passedImage = originalImage
+                destinationVC.context = context
+            }
 //            destinationVC.imageView.image = UIImage(ciImage: scaledImage!)
 
         case "PresentColorControlFilter":
             guard let destinationVC = segue.destination as? ColorControlFilterViewController else { return }
-            destinationVC.image = originalImage
-
+            if let originalImage = originalImage {
+                destinationVC.passedImage = originalImage
+                destinationVC.context = context
+            }
 //            destinationVC.imageView.image = UIImage(ciImage: scaledImage!)
 
         case "PresentWhitePointFilter":
             guard let destinationVC = segue.destination as? WhitePointFilterViewController else { return }
-            destinationVC.image = originalImage
-
+            if let scaledImage = scaledImage {
+                destinationVC.scaledImage = UIImage(ciImage: scaledImage)
+            }
 //            destinationVC.imageView.image = UIImage(ciImage: scaledImage!)
 
         default:

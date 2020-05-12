@@ -18,26 +18,46 @@ class WhitePointFilterViewController: UIViewController {
 
     @IBOutlet weak var imageView: UIImageView!
     
+    private let whitePointAdjustmentFilter = CIFilter.whitePointAdjust()
+
     var image: UIImage?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        updateViews()
-    }
-    
-    func updateViews() {
-        guard let image = image else { return }
-        imageView.image = image
-    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+       
+       var scaledImage: UIImage? {
+           didSet {
+               updateImage()
+           }
+       }
+       
+       private let context = CIContext()
+       
+       override func viewDidLoad() {
+           super.viewDidLoad()
+           updateViews()
+       }
+       
+       func updateViews() {
+           imageView.image = scaledImage
+       }
+       
+       private func updateImage() {
+           guard let transferredImage = CIImage(image: scaledImage!) else { return }
+//           imageView.image = image(byFiltering: transferredImage)
+       }
+//
+//    private func image(byFiltering inputImage: CIImage) -> UIImage {
+//
+//        colorControlFilter.inputImage = inputImage
+//        colorControlFilter.saturation = saturationSlider.value
+//        colorControlFilter.brightness = brightnessSlider.value
+//        colorControlFilter.contrast = constrastSlider.value
+//
+//        //            blurFilter.inputImage = colorControlsFilter.outputImage?.clampedToExtent()
+//        //            blurFilter.radius = blurSlider.value
+//
+//        guard let outputImage = colorControlFilter.outputImage else { return scaledImage! }
+//
+//        guard let renderedImage = context.createCGImage(outputImage, from: inputImage.extent) else { return scaledImage! }
+//
+//        return UIImage(cgImage: renderedImage)
+//    }
 }

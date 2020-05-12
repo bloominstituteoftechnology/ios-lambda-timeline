@@ -22,43 +22,51 @@ class NoiseReductionFilterViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     
     var noiseDelegate: NoiseFilterProtocol?
-
-    var image: UIImage?
+    
+    private let noiseReductionFilter = CIFilter.noiseReduction()
+    
+    var passedImage: UIImage?
+    
+    var scaledImage: CIImage? {
+        didSet {
+            updateImage()
+        }
+    }
+    var context: CIContext?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateViews()
+        imageView.image = passedImage
     }
     
-    func updateViews() {
-        guard let image = image else { return }
-        imageView.image = image
+    private func updateImage() {
+        if let scaledImage = scaledImage {
+            imageView.image = image(byFiltering: scaledImage)
+        } else {
+            imageView.image = nil
+        }
     }
 
-//    private func image(byFiltering inputImage: CIImage) -> UIImage {
-//        
-//        colorControlsFilter.inputImage = inputImage
-//        colorControlsFilter.saturation = saturationSlider.value
-//        colorControlsFilter.brightness = brightnessSlider.value
-//        colorControlsFilter.contrast = contrastSlider.value
-//        
+    private func image(byFiltering inputImage: CIImage) -> UIImage {
+        
+        noiseReductionFilter.inputImage = inputImage
+        noiseReductionFilter.noiseLevel = noiseFilterSlider.value
+        noiseReductionFilter.sharpness = sharpnessFilterSlider.value
+        
 //        blurFilter.inputImage = colorControlsFilter.outputImage?.clampedToExtent()
-//        blurFilter.radius = blurSlider.value
-//        
-//        guard let outputImage = blurFilter.outputImage else { return originalImage! }
-//        
-//        guard let renderedImage = context.createCGImage(outputImage, from: inputImage.extent) else { return originalImage! }
-//        
-//        return UIImage(cgImage: renderedImage)
-//    }
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        guard let outputImage = noiseReductionFilter.outputImage else { return passedImage! }
+
+        guard let renderedImage = context?.createCGImage(outputImage, from: inputImage.extent) else { return passedImage! }
+        
+        return UIImage(cgImage: renderedImage)
     }
-    */
-
+    
+    @IBAction func noiseValueChanged(_ sender: UISlider) {
+        updateImage()
+    }
+    @IBAction func sharpnessValueChanged(_ sender: UISlider) {
+        updateImage()
+    }
+    
 }
