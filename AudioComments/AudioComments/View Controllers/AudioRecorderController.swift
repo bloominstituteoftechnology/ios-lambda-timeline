@@ -9,6 +9,10 @@
 import UIKit
 import AVFoundation
 
+protocol AudioRecorderControllerDelegate: class {
+    func didSendAudioRecording(_ audioComment: AudioComment)
+}
+
 class AudioRecorderController: UIViewController {
     
     // MARK: - Properties
@@ -25,14 +29,9 @@ class AudioRecorderController: UIViewController {
     
     private var recordingURL: URL?
     private var audioRecorder: AVAudioRecorder?
+    private var didSaveRecordingToDisk: Bool = false
     
-    private lazy var timeIntervalFormatter: DateComponentsFormatter = {
-        let formatting = DateComponentsFormatter()
-        formatting.unitsStyle = .positional // 00:00  mm:ss
-        formatting.zeroFormattingBehavior = .pad
-        formatting.allowedUnits = [.minute, .second]
-        return formatting
-    }()
+    weak var delegate: AudioRecorderControllerDelegate?
     
     
     // MARK: - IBOutlets
@@ -42,6 +41,7 @@ class AudioRecorderController: UIViewController {
     @IBOutlet var timeElapsedLabel: UILabel!
     @IBOutlet var timeRemainingLabel: UILabel!
     @IBOutlet var timeSlider: UISlider!
+    @IBOutlet var audioVisualizer: AudioVisualizer!
     
     // MARK: - View Controller Lifecycle
     
@@ -83,18 +83,28 @@ class AudioRecorderController: UIViewController {
     }
     
     @IBAction func cancelRecording(_ sender: UIBarButtonItem) {
-        // TODO: Implement cancelRecording
-        
+        cancelTimer()
+        if didSaveRecordingToDisk, let url = recordingURL {
+            deleteRecording(at: url)
+        }
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func sendRecording(_ sender: UIBarButtonItem) {
-        // TODO: Implement sendRecording
+        guard let audioPlayer = audioPlayer, audioPlayer.duration > 0,
+        let url = recordingURL else { return }
         
+        cancelTimer()
+        
+        let audioComment = AudioComment(title: "New Audio Comment", duration: audioPlayer.duration, url: url)
+        delegate?.didSendAudioRecording(audioComment)
+        dismiss(animated: true, completion: nil)
     }
     
     // MARK: - Update Views
     
     private func updateViews() {
+        //
         playButton.isEnabled = !isRecording
         recordButton.isEnabled = !isPlaying
         timeSlider.isEnabled = !isRecording
@@ -107,13 +117,13 @@ class AudioRecorderController: UIViewController {
             let duration = audioPlayer?.duration ?? 0
             let timeRemaining = duration.rounded() - elapsedTime
             
-            timeElapsedLabel.text = timeIntervalFormatter.string(from: elapsedTime)
+            timeElapsedLabel.text = Formatter.string(from: elapsedTime)
             
             timeSlider.minimumValue = 0
             timeSlider.maximumValue = Float(duration)
             timeSlider.value = Float(elapsedTime)
             
-            timeRemainingLabel.text = "-" + timeIntervalFormatter.string(from: timeRemaining)!
+            timeRemainingLabel.text = "-" + Formatter.string(from: timeRemaining)
         } else {
             let elapsedTime = audioRecorder?.currentTime ?? 0
             
@@ -123,7 +133,7 @@ class AudioRecorderController: UIViewController {
             timeSlider.maximumValue = 1
             timeSlider.value = 0
             
-            timeRemainingLabel.text = timeIntervalFormatter.string(from: elapsedTime)!
+            timeRemainingLabel.text = Formatter.string(from: elapsedTime)
         }
     }
     
@@ -143,12 +153,14 @@ class AudioRecorderController: UIViewController {
                 self.isRecording == true {
 
                 audioRecorder.updateMeters()
+                self.audioVisualizer.addValue(decibelValue: audioRecorder.averagePower(forChannel: 0))
             }
 
             if let audioPlayer = self.audioPlayer,
                 self.isPlaying == true {
 
                 audioPlayer.updateMeters()
+                self.audioVisualizer.addValue(decibelValue: audioPlayer.averagePower(forChannel: 0))
             }
         }
     }
@@ -204,6 +216,8 @@ class AudioRecorderController: UIViewController {
         let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
         
         print("recording URL: \(file)")
+        
+        didSaveRecordingToDisk = false
         
         return file
     }
@@ -268,6 +282,14 @@ class AudioRecorderController: UIViewController {
         updateViews()
         cancelTimer()
     }
+    
+    private func deleteRecording(at url: URL) {
+        do {
+            try FileManager.default.removeItem(at: url)
+        } catch {
+            print("Could not delete recording with URL: \(url)")
+        }
+    }
 }
 
 
@@ -297,6 +319,7 @@ extension AudioRecorderController: AVAudioRecorderDelegate {
             audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL)
         }
         audioRecorder = nil
+        didSaveRecordingToDisk = true
     }
     
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
