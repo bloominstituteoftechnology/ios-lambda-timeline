@@ -11,19 +11,19 @@ import AVKit
 
 class CameraViewController: UIViewController {
 
-    // Properties
+    // MARK: - Properties
     
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     
     private var player: AVPlayer!
     
-    // IBOutlets
+    // MARK: - IBOutlets
     
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
     
-    // IBActions
+    // MARK: - IBActions
     
     @IBAction func recordButtonPressed(_ sender: UIButton) {
         if fileOutput.isRecording {
@@ -33,7 +33,7 @@ class CameraViewController: UIViewController {
         }
     }
     
-    // View Controller Lifecycle
+    // MARK: - View Controller Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +55,7 @@ class CameraViewController: UIViewController {
         captureSession.stopRunning()
     }
     
-    // Video Playback Methods
+    // MARK: - Video Playback
     
     private func playMovie(url: URL) {
         let playerVC = AVPlayerViewController()
@@ -64,7 +64,7 @@ class CameraViewController: UIViewController {
         self.present(playerVC, animated: true, completion: nil)
     }
     
-    // Setup Methods
+    // MARK: - Setup Methods
     
     private func setupCamera() {
         let camera = bestCamera()
@@ -138,7 +138,7 @@ class CameraViewController: UIViewController {
         preconditionFailure("No microphones on device match the specs that we need")
     }
     
-    // Save recorded video file to the documents directory
+    // MARK: - Save video to disk
     
     /// Creates a new file URL in the documents directory
     private func newRecordingURL() -> URL {
@@ -157,7 +157,7 @@ class CameraViewController: UIViewController {
     }
 }
 
-// AVCaptureFileOutput Recording Delegate
+// MARK: - AVCaptureFileOutput Recording Delegate
 
 extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
     
