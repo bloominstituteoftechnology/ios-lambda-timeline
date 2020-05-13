@@ -52,8 +52,6 @@ class NoiseReductionFilterViewController: UIViewController {
         noiseReductionFilter.inputImage = inputImage
         noiseReductionFilter.noiseLevel = noiseFilterSlider.value
         noiseReductionFilter.sharpness = sharpnessFilterSlider.value
-        
-//        blurFilter.inputImage = colorControlsFilter.outputImage?.clampedToExtent()
 
         guard let outputImage = noiseReductionFilter.outputImage else { return passedImage! }
 

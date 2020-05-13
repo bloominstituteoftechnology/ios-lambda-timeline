@@ -26,24 +26,34 @@ class ColorControlFilterViewController: UIViewController {
     private let colorControlFilter = CIFilter.colorControls()
     
     var passedImage: UIImage?
+//    {
+//        didSet {
+//            if let passedImage = passedImage {
+//                scaledImage = CIImage(image: passedImage)
+//            }
+//        }
+//    }
     
     var scaledImage: CIImage? {
         didSet {
+            guard let passedImage = passedImage else { return }
+            scaledImage = CIImage(image: passedImage)
             updateImage()
         }
     }
+    
     var context: CIContext?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageView.image = passedImage
+        updateImage()
     }
     
     private func updateImage() {
         if let scaledImage = scaledImage {
             imageView.image = image(byFiltering: scaledImage)
         } else {
-            imageView.image = nil
+            imageView.image = passedImage
         }
     }
     
@@ -53,22 +63,22 @@ class ColorControlFilterViewController: UIViewController {
         colorControlFilter.saturation = saturationSlider.value
         colorControlFilter.brightness = brightnessSlider.value
         colorControlFilter.contrast = constrastSlider.value
-        
-        //            blurFilter.inputImage = colorControlsFilter.outputImage?.clampedToExtent()
-        //            blurFilter.radius = blurSlider.value
-        
+
         guard let outputImage = colorControlFilter.outputImage else { return passedImage! }
         
         guard let renderedImage = context?.createCGImage(outputImage, from: inputImage.extent) else { return passedImage! }
         
         return UIImage(cgImage: renderedImage)
     }
+    
     @IBAction func saturationChanged(_ sender: UISlider) {
         updateImage()
     }
+    
     @IBAction func brightnessChanged(_ sender: UISlider) {
         updateImage()
     }
+    
     @IBAction func contrastChanged(_ sender: UISlider) {
         updateImage()
     }

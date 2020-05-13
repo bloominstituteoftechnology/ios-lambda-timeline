@@ -52,11 +52,9 @@ class ImagePostViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//      let filter = CIFilter.gaussianBlur()
-//      print(filter.attributes)
         filterTableView.dataSource = self
         filterTableView.delegate = self
+        
         originalImage = imageView.image
     }
 
@@ -173,7 +171,6 @@ extension ImagePostViewController: UITableViewDataSource, UITableViewDelegate {
                 destinationVC.passedImage = originalImage
                 destinationVC.context = context
             }
-//            destinationVC.imageView.image = UIImage(ciImage: scaledImage!)
 
         case "PresentColorControlFilter":
             guard let destinationVC = segue.destination as? ColorControlFilterViewController else { return }
@@ -181,7 +178,6 @@ extension ImagePostViewController: UITableViewDataSource, UITableViewDelegate {
                 destinationVC.passedImage = originalImage
                 destinationVC.context = context
             }
-//            destinationVC.imageView.image = UIImage(ciImage: scaledImage!)
 
         case "PresentWhitePointFilter":
             guard let destinationVC = segue.destination as? WhitePointFilterViewController else { return }
