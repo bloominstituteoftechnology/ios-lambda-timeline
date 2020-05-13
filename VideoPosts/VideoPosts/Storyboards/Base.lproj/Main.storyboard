@@ -48,21 +48,63 @@
                                     <action selector="recordButtonPressed:" destination="gx6-K0-W3z" eventType="touchUpInside" id="Wto-Ko-fiV"/>
                                 </connections>
                             </button>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mnH-e7-uDs" userLabel="Movie Player View" customClass="MoviePlayerView" customModule="VideoPosts" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                            <navigationBar contentMode="scaleToFill" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SZC-0A-1Z9">
+                                <rect key="frame" x="0.0" y="-118" width="414" height="44"/>
+                                <items>
+                                    <navigationItem title="New Video" id="WPK-gV-hv2">
+                                        <barButtonItem key="leftBarButtonItem" image="chevron.left" catalog="system" id="AJu-xD-4Mg">
+                                            <connections>
+                                                <action selector="backButtonTapped:" destination="gx6-K0-W3z" id="5Bv-kh-iAE"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="cwT-TY-hg2">
+                                            <connections>
+                                                <action selector="saveButtonTapped:" destination="gx6-K0-W3z" id="cGY-e0-4xh"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <textField opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter video name:" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Vno-9B-SOo">
+                                <rect key="frame" x="16" y="-54" width="382" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="v1n-GA-WP0" firstAttribute="leading" secondItem="6pT-mw-jch" secondAttribute="leading" id="HYd-ki-qNf"/>
-                            <constraint firstItem="v1n-GA-WP0" firstAttribute="trailing" secondItem="6pT-mw-jch" secondAttribute="trailing" id="PzR-Sa-l6C"/>
-                            <constraint firstItem="v1n-GA-WP0" firstAttribute="top" secondItem="wzn-BJ-7op" secondAttribute="top" id="bDP-hD-hZe"/>
+                            <constraint firstItem="Vno-9B-SOo" firstAttribute="top" secondItem="SZC-0A-1Z9" secondAttribute="bottom" constant="20" id="3b6-RD-xMm"/>
+                            <constraint firstAttribute="top" secondItem="v1n-GA-WP0" secondAttribute="top" id="4he-we-cHt"/>
+                            <constraint firstItem="mnH-e7-uDs" firstAttribute="trailing" secondItem="wzn-BJ-7op" secondAttribute="trailing" id="HSO-Jp-Kni"/>
+                            <constraint firstItem="v1n-GA-WP0" firstAttribute="leading" secondItem="wzn-BJ-7op" secondAttribute="leading" id="HYd-ki-qNf"/>
+                            <constraint firstItem="v1n-GA-WP0" firstAttribute="trailing" secondItem="wzn-BJ-7op" secondAttribute="trailing" id="PzR-Sa-l6C"/>
+                            <constraint firstItem="mnH-e7-uDs" firstAttribute="leading" secondItem="wzn-BJ-7op" secondAttribute="leading" id="TR7-XN-6L5"/>
+                            <constraint firstAttribute="bottom" secondItem="mnH-e7-uDs" secondAttribute="bottom" id="ZRp-3j-Q0N"/>
+                            <constraint firstItem="SZC-0A-1Z9" firstAttribute="leading" secondItem="wzn-BJ-7op" secondAttribute="leading" id="dLO-4n-Tb6"/>
+                            <constraint firstItem="Vno-9B-SOo" firstAttribute="leading" secondItem="6pT-mw-jch" secondAttribute="leading" constant="16" id="f7b-wA-uz1"/>
                             <constraint firstItem="KT6-sA-8dz" firstAttribute="centerX" secondItem="wzn-BJ-7op" secondAttribute="centerX" id="ml3-ey-3Lw"/>
+                            <constraint firstItem="6pT-mw-jch" firstAttribute="trailing" secondItem="Vno-9B-SOo" secondAttribute="trailing" constant="16" id="nkj-lK-J72"/>
+                            <constraint firstItem="SZC-0A-1Z9" firstAttribute="trailing" secondItem="wzn-BJ-7op" secondAttribute="trailing" id="qoF-8W-FSy"/>
+                            <constraint firstItem="mnH-e7-uDs" firstAttribute="top" secondItem="Vno-9B-SOo" secondAttribute="bottom" constant="20" id="snx-Dd-qia"/>
+                            <constraint firstItem="SZC-0A-1Z9" firstAttribute="top" secondItem="6pT-mw-jch" secondAttribute="top" constant="-162" id="u9e-ZY-PxJ"/>
                             <constraint firstItem="6pT-mw-jch" firstAttribute="bottom" secondItem="KT6-sA-8dz" secondAttribute="bottom" constant="40" id="w5Z-rh-yd9"/>
                             <constraint firstAttribute="bottom" secondItem="v1n-GA-WP0" secondAttribute="bottom" id="zYr-GQ-f3b"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6pT-mw-jch"/>
                     </view>
                     <connections>
+                        <outlet property="backButton" destination="AJu-xD-4Mg" id="elk-hb-agK"/>
                         <outlet property="cameraView" destination="v1n-GA-WP0" id="Dvf-mV-UhO"/>
+                        <outlet property="moviePlayerView" destination="mnH-e7-uDs" id="VJU-UW-pNv"/>
+                        <outlet property="navigationBar" destination="SZC-0A-1Z9" id="dxP-hr-sV1"/>
+                        <outlet property="navigationBarTopConstraint" destination="u9e-ZY-PxJ" id="X9J-VW-Mku"/>
                         <outlet property="recordButton" destination="KT6-sA-8dz" id="l4h-HU-tD0"/>
+                        <outlet property="saveButton" destination="cwT-TY-hg2" id="CXo-HE-rxt"/>
+                        <outlet property="videoNameTextField" destination="Vno-9B-SOo" id="iSW-5d-bwX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xZC-IS-rdT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -71,6 +113,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="chevron.left" catalog="system" width="96" height="128"/>
         <image name="largecircle.fill.circle" catalog="system" width="128" height="121"/>
         <image name="stop.circle" catalog="system" width="128" height="121"/>
     </resources>
