@@ -67,6 +67,10 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
+          
+          // need to create an audioPostCell & VideoPostCell
+        case .audio:
+          guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: <#T##String#>, for: <#T##IndexPath#>)
         }
     }
     
