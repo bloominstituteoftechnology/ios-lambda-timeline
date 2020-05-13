@@ -329,6 +329,32 @@
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="99" id="FcO-do-nNW" customClass="AudioCommentsTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="188.5" width="414" height="99"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FcO-do-nNW" id="sMo-iV-sOQ" customClass="AudioCommentsTableViewCell" customModule="LambdaTimeline" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="99"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5MD-Qx-Dlx">
+                                            <rect key="frame" x="20" y="39" width="42" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dVZ-VF-btb">
+                                            <rect key="frame" x="341" y="39" width="24" height="22"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <state key="normal" image="play.rectangle" catalog="system"/>
+                                            <state key="selected" image="pause.rectangle" catalog="system"/>
+                                        </button>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="AZF-Tv-oGP" kind="presentation" identifier="PresentRecordingScreenSegue" id="ezb-lz-sjZ"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="OyM-8q-Icp" id="hEW-Hv-MJ8"/>
@@ -351,29 +377,62 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CdL-Y3-4ej" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1968.8" y="472.71364317841085"/>
+            <point key="canvasLocation" x="1968.1159420289857" y="472.09821428571428"/>
         </scene>
-        <!--Record Audio-->
+        <!--Record Comments-->
         <scene sceneID="ANr-Ro-3AV">
             <objects>
-                <viewController id="AZF-Tv-oGP" sceneMemberID="viewController">
+                <viewController title="Record Comments" id="AZF-Tv-oGP" customClass="RecordAudioCommentViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wgW-G3-FJs">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jN6-os-IiP">
-                                <rect key="frame" x="0.0" y="384" width="414" height="128"/>
+                                <rect key="frame" x="0.0" y="357" width="414" height="128"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="IHU-BD-hPl"/>
                                     <constraint firstAttribute="width" constant="414" id="bhF-xx-fhR"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I1V-Aw-Eoe">
+                                <rect key="frame" x="170" y="702" width="100" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
+                                <state key="normal" image="mic.circle" catalog="system"/>
+                                <state key="selected" image="stop.circle" catalog="system"/>
+                                <connections>
+                                    <action selector="recordBtnTapped:" destination="AZF-Tv-oGP" eventType="touchUpInside" id="LHF-CR-ucM"/>
+                                </connections>
+                            </button>
+                            <navigationBar contentMode="scaleToFill" largeTitles="YES" translatesAutoresizingMaskIntoConstraints="NO" id="frS-vZ-4i6">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="SAv-Kb-KXr"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="Record Audio" id="bdW-gj-P0Y">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="df1-If-oD3">
+                                            <connections>
+                                                <action selector="cancelBtnWasPressed:" destination="AZF-Tv-oGP" id="06J-dM-35l"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="xBb-bV-cr7">
+                                            <connections>
+                                                <action selector="saveBtnWasPressed:" destination="AZF-Tv-oGP" id="arK-vG-cdJ"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="frS-vZ-4i6" firstAttribute="leading" secondItem="CNk-Uy-alj" secondAttribute="leading" id="5kZ-7v-lG7"/>
                             <constraint firstItem="jN6-os-IiP" firstAttribute="leading" secondItem="CNk-Uy-alj" secondAttribute="leading" id="8Pz-by-824"/>
                             <constraint firstItem="CNk-Uy-alj" firstAttribute="trailing" secondItem="jN6-os-IiP" secondAttribute="trailing" id="HmU-r4-baZ"/>
+                            <constraint firstItem="frS-vZ-4i6" firstAttribute="top" secondItem="CNk-Uy-alj" secondAttribute="top" id="IMQ-3I-6rA"/>
+                            <constraint firstItem="frS-vZ-4i6" firstAttribute="trailing" secondItem="CNk-Uy-alj" secondAttribute="trailing" id="R61-FB-qVT"/>
                             <constraint firstItem="jN6-os-IiP" firstAttribute="centerY" secondItem="wgW-G3-FJs" secondAttribute="centerY" id="hLJ-TY-aDl"/>
                             <constraint firstItem="jN6-os-IiP" firstAttribute="centerX" secondItem="wgW-G3-FJs" secondAttribute="centerX" id="m5d-DS-uzn"/>
                         </constraints>
@@ -383,28 +442,20 @@
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="ZBM-rf-LiJ"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="save" id="Qvo-sU-8cF"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="audioVisulizer" destination="jN6-os-IiP" id="fE6-kU-ugw"/>
+                        <outlet property="recordButton" destination="I1V-Aw-Eoe" id="Gd2-4r-mAU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="epW-fS-Ngj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4005.7971014492755" y="454.6875"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="SsT-su-KGt">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vNd-bd-9u6" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="jqh-r1-2YE">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="AZF-Tv-oGP" kind="relationship" relationship="rootViewController" id="GvA-FX-3ys"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gcO-HV-MVd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3095.6521739130435" y="454.6875"/>
+            <point key="canvasLocation" x="2881" y="455"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="mic.circle" catalog="system" width="128" height="121"/>
+        <image name="pause.rectangle" catalog="system" width="128" height="93"/>
+        <image name="play.rectangle" catalog="system" width="128" height="93"/>
+        <image name="stop.circle" catalog="system" width="128" height="121"/>
+    </resources>
 </document>
