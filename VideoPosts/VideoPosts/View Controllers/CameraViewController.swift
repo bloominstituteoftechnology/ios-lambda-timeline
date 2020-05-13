@@ -38,6 +38,7 @@ class CameraViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Resize camera to fill the entire screen
         cameraView.videoPlayerLayer.videoGravity = .resizeAspectFill
         setupCamera()
     }
@@ -69,22 +70,17 @@ class CameraViewController: UIViewController {
         let camera = bestCamera()
         let microphone = bestMicrophone()
         
-        captureSession.beginConfiguration() // begin configuring session
+        captureSession.beginConfiguration()
         
+        // MARK: - Begin Configuring Capture Session
+        
+        // Add input: Video
         guard let cameraInput = try? AVCaptureDeviceInput(device: camera) else {
             preconditionFailure("Can't create an input from the camera, but we should do something better than crashing!")
         }
         
-        guard let microphoneInput = try? AVCaptureDeviceInput(device: microphone) else {
-            preconditionFailure("Can't create an input from the microphone, but we should do something better than crashing!")
-        }
-        
         guard captureSession.canAddInput(cameraInput) else {
             preconditionFailure("This session can't handle this type of input: \(cameraInput)")
-        }
-        
-        guard captureSession.canAddInput(microphoneInput) else {
-            preconditionFailure("This session can't handle this type of input: \(microphoneInput)")
         }
         
         captureSession.addInput(cameraInput)
@@ -93,26 +89,43 @@ class CameraViewController: UIViewController {
             captureSession.sessionPreset = .hd1920x1080
         }
         
+        // Add input: Audio
+        guard let microphoneInput = try? AVCaptureDeviceInput(device: microphone) else {
+            preconditionFailure("Can't create an input from the microphone, but we should do something better than crashing!")
+        }
+        
+        guard captureSession.canAddInput(microphoneInput) else {
+            preconditionFailure("This session can't handle this type of input: \(microphoneInput)")
+        }
+        
+        // Add output: Recording to disk
         guard captureSession.canAddOutput(fileOutput) else {
             preconditionFailure("This session can't handle this type of output: \(fileOutput)")
         }
         
         captureSession.addOutput(fileOutput)
         
-        captureSession.commitConfiguration() // finished configuring session
+        // MARK: - End Configuring Capture Session
         
-        cameraView.session = captureSession
+        captureSession.commitConfiguration()
+        
+        cameraView.session = captureSession // Live preview
     }
     
     private func bestCamera() -> AVCaptureDevice {
+        
         if let device = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) {
             return device
         }
+        
+        // All iPhones have a wide angle camera (front + back)
         if let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
             return device
         }
         
-        preconditionFailure("No cameras on device match the specs that we need")
+        // TODO: Add a button to toggle front/back camera
+        
+        preconditionFailure("No cameras on device match the specs that we need (or you're running this on a Simulator which isn't supported)")
     }
     
     private func bestMicrophone() -> AVCaptureDevice {
