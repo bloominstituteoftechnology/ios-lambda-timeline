@@ -54,7 +54,16 @@ class CameraViewController: UIViewController {
         captureSession.stopRunning()
     }
     
-    // Methods
+    // Video Playback Methods
+    
+    private func playMovie(url: URL) {
+        let playerVC = AVPlayerViewController()
+        playerVC.player = AVPlayer(url: url)
+        
+        self.present(playerVC, animated: true, completion: nil)
+    }
+    
+    // Setup Methods
     
     private func setupCamera() {
         let camera = bestCamera()
@@ -114,6 +123,8 @@ class CameraViewController: UIViewController {
         preconditionFailure("No microphones on device match the specs that we need")
     }
     
+    // Save recorded video file to the documents directory
+    
     /// Creates a new file URL in the documents directory
     private func newRecordingURL() -> URL {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -131,6 +142,8 @@ class CameraViewController: UIViewController {
     }
 }
 
+// AVCaptureFileOutput Recording Delegate
+
 extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
     
     func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
@@ -145,6 +158,6 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         print("Video URL: \(outputFileURL)")
         updateViews()
         
-        // TODO: Playback saved recording
+        playMovie(url: outputFileURL)
     }
 }
