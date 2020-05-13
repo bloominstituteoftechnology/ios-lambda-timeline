@@ -98,6 +98,8 @@ class CameraViewController: UIViewController {
             preconditionFailure("This session can't handle this type of input: \(microphoneInput)")
         }
         
+        captureSession.addInput(microphoneInput)
+        
         // Add output: Recording to disk
         guard captureSession.canAddOutput(fileOutput) else {
             preconditionFailure("This session can't handle this type of output: \(fileOutput)")
