@@ -45,7 +45,27 @@ class PostController {
         
         savePostToFirebase(post)
     }
-
+  
+  // Audio Comments
+  func addAudioComment(with url: URL, to post: inout Post) {
+    guard let currentUser = Auth.auth().currentUser,
+      let author = Author(user: currentUser) else { return }
+    
+    let post = post
+    
+    do {
+      let audio = try Data(contentsOf: url)
+      store(mediaData: audio, mediaType: .audio) { (audioURL) in
+        guard let audioURL = audioURL else { return }
+        let comment = Comment(audioURL: audioURL, author: author)
+        post.comments.append(comment)
+        self.savePostToFirebase(post)
+      }
+    } catch {
+      preconditionFailure("Could not save to Firebase: \(error)")                             
+    }
+  }
+  
     func observePosts(completion: @escaping (Error?) -> Void) {
         
         postsRef.observe(.value, with: { (snapshot) in
