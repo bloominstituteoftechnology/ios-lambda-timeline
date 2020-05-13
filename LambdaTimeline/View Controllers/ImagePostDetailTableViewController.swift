@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import AVKit
+import AVFoundation
+import FirebaseStorage
 
 class ImagePostDetailTableViewController: UITableViewController {
     
@@ -32,47 +35,70 @@ class ImagePostDetailTableViewController: UITableViewController {
     
     @IBAction func createComment(_ sender: Any) {
         
-        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
-        
-        var commentTextField: UITextField?
-        
-        alert.addTextField { (textField) in
-            textField.placeholder = "Comment:"
-            commentTextField = textField
-        }
-        
-        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
+            let alert = UIAlertController(title: "Add a comment", message: "Choose which type of comment you would like to add:", preferredStyle: .actionSheet)
             
-            guard let commentText = commentTextField?.text else { return }
+            let addCommentAction = UIAlertAction(title: "Add Text Comment", style: .default) { (_) in
+                let textCommentAlert = UIAlertController(title: "Add a text comment", message: "Write your comment below:", preferredStyle: .alert)
+                
+                var commentTextField: UITextField?
+                
+                textCommentAlert.addTextField { (textField) in
+                    textField.placeholder = "Comment:"
+                    commentTextField = textField
+                }
+                
+                let addTextCommentAction = UIAlertAction(title: "Add Text Comment", style: .default) { (_) in
+                    guard let commentText = commentTextField?.text else { return }
+                    self.postController.addComment(with: commentText, to: &self.post!)
+
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                }
             
-            self.postController.addComment(with: commentText, to: &self.post!)
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
+                let cancelTextCommentAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+
+                textCommentAlert.addAction(addTextCommentAction)
+                textCommentAlert.addAction(cancelTextCommentAction)
+                self.present(textCommentAlert, animated: true)
             }
+            
+            let addAudioAction = UIAlertAction(title: "Add Audio Comment", style: .default) { (_) in
+                self.performSegue(withIdentifier: "AudioRecordingModalSegue", sender: self)
+            }
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            
+            alert.addAction(addCommentAction)
+            alert.addAction(addAudioAction)
+            alert.addAction(cancelAction)
+            
+            present(alert, animated: true, completion: nil)
         }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(addCommentAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true, completion: nil)
-    }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (post?.comments.count ?? 0) - 1
-    }
-    
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return (post?.comments.count ?? 0) - 1
+  }
+  
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+      let comment = post?.comments[indexPath.row + 1]
+      
+      if comment?.audioURL != nil {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCommentsCell", for: indexPath) as? AudioCommentsTableViewCell else { return UITableViewCell()}
         
-        let comment = post?.comments[indexPath.row + 1]
-        
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author.displayName
+        cell.delegate = self
+        cell.comment = comment
         
         return cell
+      } else if comment?.text != nil {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+        
+         cell.textLabel?.text = comment?.text
+         cell.detailTextLabel?.text = comment?.author.displayName
+          return cell
+      }
+//        let comment = post?.comments[indexPath.row + 1]
+      return UITableViewCell()
     }
     
     var post: Post!
@@ -85,4 +111,136 @@ class ImagePostDetailTableViewController: UITableViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
+  
+  
+  // MARK: - Navigation
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if segue.identifier == "AudioRecordingModalSegue" {
+      guard let RecordingAudioCommentsVC = segue.destination as? RecordAudioCommentViewController else { return }
+      RecordingAudioCommentsVC.delegate = self
+    }
+  }
+  
+  //Mark - Timer
+  var timer: Timer?
+  
+  func startTimer() {
+      timer?.invalidate() // Cancel a timeer before you start a new one
+      
+      timer = Timer.scheduledTimer(withTimeInterval: 0.030, repeats: true) { [weak self] (_) in
+          guard let self = self else { return }
+          self.updatePlayer()
+      }
+  }
+  
+  func cancelTimer() {
+         timer?.invalidate()
+         timer = nil
+     }
+  
+  // MARK: - Playback
+     
+     var audioPlayer: AVAudioPlayer? {
+         didSet {
+             // Using a didSet allows us to make sure we don't forget to set the delegate
+             audioPlayer?.delegate = self
+         }
+     }
+     
+     
+     var isPlaying: Bool {
+         audioPlayer?.isPlaying ?? false
+     }
+     
+     func loadAudio(audioURL: URL) {
+         let httpsReference = Storage.storage().reference(forURL: audioURL.absoluteString)
+         let localURL = createNewRecordingURL()
+         let downloadTask = httpsReference.write(toFile: localURL) { url, error in
+             if let error = error {
+                 NSLog("Error, cannot load audio file: \(error)")
+                 return
+             }
+             
+             guard let url = url else {
+                 NSLog("Error, no url for audio file")
+                 return
+             }
+             
+             DispatchQueue.main.async {
+                 do {
+                     self.audioPlayer = try AVAudioPlayer(contentsOf: url)
+
+                     self.play()
+                     print("Audio player created")
+                 } catch {
+                     NSLog("Error, cannot create audio player \(error)")
+                 }
+             }
+         }
+         
+         downloadTask.observe(.resume) { snapshot in
+             print("")
+         }
+     }
+     
+     func createNewRecordingURL() -> URL {
+         let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+         
+         let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
+         let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
+         
+         print("recording URL: \(file)")
+         
+         return file
+     }
+     
+     // Fixes bug for iPhone
+     func prepareAudioSession() throws {
+         let session = AVAudioSession.sharedInstance()
+         try session.setCategory(.playAndRecord, options: [.defaultToSpeaker])
+         try session.setActive(true, options: []) // can fail if on a phone call, for instance
+     }
+     
+     func play() {
+         audioPlayer?.play()
+         startTimer()
+         updatePlayer()
+     }
+     
+     func pause() {
+         audioPlayer?.pause()
+         cancelTimer()
+         updatePlayer()
+     }
+     
+     private func updatePlayer() {
+     }
+  
+}
+
+extension ImagePostDetailTableViewController: AudioURLDelegate {
+    func passAudioURL(for url: URL) {
+        self.postController.addAudioComment(with: url, to: &self.post!)
+        tableView.reloadData()
+    }
+}
+
+extension ImagePostDetailTableViewController: PlayCommentsAudioDelegate {
+    func playAudio(for url: URL) {
+        loadAudio(audioURL: url)
+    }
+}
+
+extension ImagePostDetailTableViewController: AVAudioPlayerDelegate {
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        updatePlayer()
+    }
+    
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        if let error = error {
+            print("⚠️ Audio Player Error: \(error)")
+        }
+        updatePlayer()
+    }
 }
