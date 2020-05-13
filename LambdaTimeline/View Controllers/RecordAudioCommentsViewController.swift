@@ -27,8 +27,6 @@ class RecordAudioCommentViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
- 
-    
     weak var delegate: AudioURLDelegate?
     var fileURL: URL?
     
@@ -58,8 +56,6 @@ class RecordAudioCommentViewController: UIViewController {
         timer?.invalidate()
         timer = nil
     }
-    
-    
     
     
     private func updateViews() {
@@ -106,6 +102,8 @@ class RecordAudioCommentViewController: UIViewController {
   
   //MARK: IB Actions
   @IBAction func cancelBtnWasPressed(_ sender: UIBarButtonItem) {
+    navigationController?.popToRootViewController(animated: true)
+
    }
    
    @IBAction func saveBtnWasPressed(_ sender: UIBarButtonItem) {
