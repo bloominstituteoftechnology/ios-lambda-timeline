@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -14,16 +15,73 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="jy4-cS-GIm">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lQ9-48-3KO">
+                                    <size key="itemSize" width="182" height="172"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VideoCell" id="F19-1f-CbE">
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="220"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="L1Z-s7-Vbu">
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="220"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j0z-q3-0qV" customClass="VideoPlayerView" customModule="VideoPost" customModuleProvider="target">
+                                                    <rect key="frame" x="10" y="-3" width="180" height="180"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="180" id="ccO-mu-uKc"/>
+                                                        <constraint firstAttribute="width" secondItem="j0z-q3-0qV" secondAttribute="height" multiplier="1:1" id="fKU-wX-83B"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvn-wD-aHQ">
+                                                    <rect key="frame" x="0.0" y="197" width="200" height="23"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="j0z-q3-0qV" firstAttribute="centerX" secondItem="L1Z-s7-Vbu" secondAttribute="centerX" id="Ebg-1e-iXT"/>
+                                                <constraint firstItem="qvn-wD-aHQ" firstAttribute="leading" secondItem="L1Z-s7-Vbu" secondAttribute="leading" id="Ufu-SO-Swx"/>
+                                                <constraint firstItem="qvn-wD-aHQ" firstAttribute="top" secondItem="j0z-q3-0qV" secondAttribute="bottom" constant="20" id="flr-8C-Kqp"/>
+                                                <constraint firstAttribute="trailing" secondItem="qvn-wD-aHQ" secondAttribute="trailing" id="nQI-OB-aXG"/>
+                                                <constraint firstAttribute="bottom" secondItem="qvn-wD-aHQ" secondAttribute="bottom" id="qRK-OO-0IM"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <size key="customSize" width="200" height="220"/>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="8bC-Xf-vdC" id="i4J-JD-WNq"/>
+                                    <outlet property="delegate" destination="8bC-Xf-vdC" id="Ba6-Jm-ytt"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="jy4-cS-GIm" secondAttribute="trailing" id="FKA-4M-eMd"/>
+                            <constraint firstItem="jy4-cS-GIm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Ocm-1p-p5Z"/>
+                            <constraint firstItem="jy4-cS-GIm" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="U8k-FK-nbT"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="jy4-cS-GIm" secondAttribute="bottom" id="mgj-zb-aTL"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="collectionView" destination="jy4-cS-GIm" id="ANv-zX-OIQ"/>
                         <segue destination="6tB-w1-k8p" kind="presentation" identifier="ShowCamera" modalPresentationStyle="fullScreen" id="KPO-oE-kH9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="139" y="119"/>
+            <point key="canvasLocation" x="137.68115942028987" y="118.52678571428571"/>
         </scene>
         <!--Camera View Controller-->
         <scene sceneID="W8D-PC-MSh">

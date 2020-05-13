@@ -15,6 +15,8 @@ class CameraViewController: UIViewController {
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     
+    var videoPostController: VideoPostController?
+    
     private var player: AVPlayer!
     
     @IBOutlet var recordButton: UIButton!

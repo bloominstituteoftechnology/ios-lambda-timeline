@@ -11,6 +11,10 @@ import AVFoundation
 
 class RecorderViewController: UIViewController {
     
+    let videoPostController = VideoPostController()
+    
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -54,4 +58,25 @@ class RecorderViewController: UIViewController {
     private func showCamera() {
         performSegue(withIdentifier: "ShowCamera", sender: self)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ShowCamera" {
+            if let cameraVC = segue.destination as? CameraViewController {
+                cameraVC.videoPostController = videoPostController
+            }
+        }
+    }
+}
+
+extension RecorderViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        videoPostController.collectionOfVideos.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoCell", for: indexPath)
+        return cell
+    }
+    
+    
 }
