@@ -8,17 +8,37 @@
 
 import UIKit
 
+protocol PlayCommentsAudioDelegate: AnyObject {
+  func playAudio(for url: URL)
+}
+
 class AudioCommentsTableViewCell: UITableViewCell {
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+  
+  //Mark: Outlets
+  @IBOutlet weak var nameLabel: UILabel!
+  @IBOutlet weak var playBtn: UIButton!
+  
+  
+  var delegate: PlayCommentsAudioDelegate?
+  var comment: Comment? {
+    didSet {
+      updateViews()
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
+  }
+  
+  private func updateViews() {
+    guard let comment = comment else { return }
+    nameLabel.text = comment.author.displayName
+    
+  }
+  
+ 
+  
+  //MARK: Actions
+  @IBAction func playBtnWasPressed(_ sender: UIButton) {
+    guard let comment = comment,
+      let url = comment.audioURL else { return }
+      delegate?.playAudio(for: url)
+  }
+  
 }

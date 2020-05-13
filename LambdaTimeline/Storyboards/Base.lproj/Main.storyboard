@@ -348,10 +348,15 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <state key="normal" image="play.rectangle" catalog="system"/>
                                             <state key="selected" image="pause.rectangle" catalog="system"/>
+                                            <connections>
+                                                <action selector="playBtnWasPressed:" destination="FcO-do-nNW" eventType="touchUpInside" id="HJQ-RH-t9A"/>
+                                            </connections>
                                         </button>
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="nameLabel" destination="5MD-Qx-Dlx" id="jx6-ce-GAH"/>
+                                    <outlet property="playBtn" destination="dVZ-VF-btb" id="rcu-Db-cuo"/>
                                     <segue destination="AZF-Tv-oGP" kind="presentation" identifier="PresentRecordingScreenSegue" id="ezb-lz-sjZ"/>
                                 </connections>
                             </tableViewCell>
