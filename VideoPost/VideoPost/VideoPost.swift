@@ -7,3 +7,8 @@
 //
 
 import Foundation
+
+struct VideoPost: Codable {
+    let videoPostURL: URL
+    let videoTitle: String
+}

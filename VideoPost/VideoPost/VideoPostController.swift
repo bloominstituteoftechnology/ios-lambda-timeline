@@ -7,3 +7,12 @@
 //
 
 import Foundation
+
+class VideoPostController {
+    
+    var collectionOfVideos: [VideoPost] = []
+    
+    func addVideo(withTitle: String) {
+        
+    }
+}
