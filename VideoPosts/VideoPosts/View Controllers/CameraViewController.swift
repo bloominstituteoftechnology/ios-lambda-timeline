@@ -9,6 +9,10 @@
 import UIKit
 import AVKit
 
+protocol CameraViewControllerDelegate: class {
+    func didSaveVideo(at url: URL, withName videoName: String)
+}
+
 class CameraViewController: UIViewController {
 
     // MARK: - Properties
@@ -17,11 +21,16 @@ class CameraViewController: UIViewController {
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     
     private var player: AVPlayer!
+    private var videoURL: URL? = nil
+    weak var delegate: CameraViewControllerDelegate?
     
     // MARK: - IBOutlets
     
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
+    @IBOutlet weak var moviePlayerView: MoviePlayerView!
+    @IBOutlet weak var videoNameTextField: UITextField!
+    @IBOutlet weak var navigationBarTopConstraint: NSLayoutConstraint!
     
     // MARK: - IBActions
     
@@ -29,8 +38,33 @@ class CameraViewController: UIViewController {
         if fileOutput.isRecording {
             fileOutput.stopRecording()
         } else {
-            fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
+            videoURL = newRecordingURL()
+            fileOutput.startRecording(to: videoURL!, recordingDelegate: self)
         }
+    }
+    
+    @IBAction func backButtonTapped(_ sender: UIBarButtonItem) {
+        dismissMoviePlayerViews()
+    }
+    
+    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+        guard let videoName = videoNameTextField.text,
+            !videoName.isEmpty,
+            let url = videoURL else { return }
+        
+        delegate?.didSaveVideo(at: url, withName: videoName)
+        dismissMoviePlayerViews()
+        
+        // TODO: Dismiss/pop viewcontroller to return to collection view controller
+        // Collection view controller has not been setup yet
+    }
+    
+    private func dismissMoviePlayerViews() {
+        moviePlayerView.player?.pause()
+        moviePlayerView.player = nil
+        animateViewsOffScreen()
+        videoNameTextField.text = nil
+        view.endEditing(true)
     }
     
     // MARK: - View Controller Lifecycle
@@ -41,6 +75,9 @@ class CameraViewController: UIViewController {
         // Resize camera to fill the entire screen
         cameraView.videoPlayerLayer.videoGravity = .resizeAspectFill
         setupCamera()
+        
+        // TODO: Figure out why the video does not fill the entire screen on first load
+        moviePlayerView.videoPlayerLayer.videoGravity = .resizeAspectFill
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -58,10 +95,28 @@ class CameraViewController: UIViewController {
     // MARK: - Video Playback
     
     private func playMovie(url: URL) {
-        let playerVC = AVPlayerViewController()
-        playerVC.player = AVPlayer(url: url)
+        player = AVPlayer(url: url)
         
-        self.present(playerVC, animated: true, completion: nil)
+        moviePlayerView.player = player
+        moviePlayerView.videoPlayerLayer.videoGravity = .resizeAspectFill
+        player?.actionAtItemEnd = .pause
+
+        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
+                                               object: self.player.currentItem,
+                                               queue: .main) { [weak self] _ in
+                                                self?.replayMovie()
+        }
+        player.play()
+        
+        let tapGesture = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    private func replayMovie() {
+        guard let player = player else { return }
+        
+        player.seek(to: .zero)
+        player.play()
     }
     
     // MARK: - Setup Methods
@@ -155,6 +210,42 @@ class CameraViewController: UIViewController {
     private func updateViews() {
         recordButton.isSelected = fileOutput.isRecording
     }
+    
+    // MARK: - Animations
+    
+    private func animateViewsOnScreen() {
+        moviePlayerView.isHidden = false
+        cameraView.isHidden = true
+        
+        UIView.animate(withDuration: 1.0,
+                       delay: 0.25,
+                       usingSpringWithDamping: 0.8,
+                       initialSpringVelocity: 0,
+                       options: .curveEaseOut,
+                       animations: {
+                        
+            self.navigationBarTopConstraint.constant = 0
+            self.view.layoutIfNeeded()
+                        
+        }, completion: nil)
+    }
+    
+    private func animateViewsOffScreen() {
+        moviePlayerView.isHidden = true
+        cameraView.isHidden = false
+        
+        UIView.animate(withDuration: 1.0,
+                       delay: 0,
+                       usingSpringWithDamping: 0.8,
+                       initialSpringVelocity: 0,
+                       options: .curveEaseIn,
+                       animations: {
+                        
+            self.navigationBarTopConstraint.constant = -162
+            self.view.layoutIfNeeded()
+                        
+        }, completion: nil)
+    }
 }
 
 // MARK: - AVCaptureFileOutput Recording Delegate
@@ -174,5 +265,6 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         updateViews()
         
         playMovie(url: outputFileURL)
+        animateViewsOnScreen()
     }
 }
