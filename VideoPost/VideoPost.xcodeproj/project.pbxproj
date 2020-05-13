@@ -18,7 +18,9 @@
 		95D051C3246B8014004D37DE /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D051C2246B8014004D37DE /* VideoPlayerView.swift */; };
 		95D051C5246B8BEB004D37DE /* VideoPostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D051C4246B8BEB004D37DE /* VideoPostController.swift */; };
 		95D051C7246B8C5B004D37DE /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D051C6246B8C5B004D37DE /* Notifications.swift */; };
-		95D051C9246B9051004D37DE /* VideoPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D051C8246B9051004D37DE /* VideoPost.swift */; };
+		95D051C9246B9051004D37DE /* VideoPost+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D051C8246B9051004D37DE /* VideoPost+Convenience.swift */; };
+		95D051CC246B9486004D37DE /* VideoPost.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 95D051CA246B9486004D37DE /* VideoPost.xcdatamodeld */; };
+		95D051CE246B9556004D37DE /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95D051CD246B9556004D37DE /* CoreDataStack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,7 +37,9 @@
 		95D051C2246B8014004D37DE /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		95D051C4246B8BEB004D37DE /* VideoPostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPostController.swift; sourceTree = "<group>"; };
 		95D051C6246B8C5B004D37DE /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
-		95D051C8246B9051004D37DE /* VideoPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPost.swift; sourceTree = "<group>"; };
+		95D051C8246B9051004D37DE /* VideoPost+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VideoPost+Convenience.swift"; sourceTree = "<group>"; };
+		95D051CB246B9486004D37DE /* VideoPost.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VideoPost.xcdatamodel; sourceTree = "<group>"; };
+		95D051CD246B9556004D37DE /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,15 +76,17 @@
 				95D051AC246B7E5F004D37DE /* SceneDelegate.swift */,
 				95D051C4246B8BEB004D37DE /* VideoPostController.swift */,
 				95D051C0246B7FC8004D37DE /* CameraViewController.swift */,
-				95D051BE246B7F96004D37DE /* CameraPreviewView.swift */,
-				95D051C2246B8014004D37DE /* VideoPlayerView.swift */,
 				95D051AE246B7E5F004D37DE /* RecorderViewController.swift */,
 				95D051B0246B7E5F004D37DE /* Main.storyboard */,
 				95D051B3246B7E60004D37DE /* Assets.xcassets */,
 				95D051B5246B7E60004D37DE /* LaunchScreen.storyboard */,
 				95D051B8246B7E60004D37DE /* Info.plist */,
+				95D051C2246B8014004D37DE /* VideoPlayerView.swift */,
+				95D051BE246B7F96004D37DE /* CameraPreviewView.swift */,
 				95D051C6246B8C5B004D37DE /* Notifications.swift */,
-				95D051C8246B9051004D37DE /* VideoPost.swift */,
+				95D051C8246B9051004D37DE /* VideoPost+Convenience.swift */,
+				95D051CA246B9486004D37DE /* VideoPost.xcdatamodeld */,
+				95D051CD246B9556004D37DE /* CoreDataStack.swift */,
 			);
 			path = VideoPost;
 			sourceTree = "<group>";
@@ -161,10 +167,12 @@
 				95D051AF246B7E5F004D37DE /* RecorderViewController.swift in Sources */,
 				95D051C1246B7FC8004D37DE /* CameraViewController.swift in Sources */,
 				95D051C5246B8BEB004D37DE /* VideoPostController.swift in Sources */,
+				95D051CC246B9486004D37DE /* VideoPost.xcdatamodeld in Sources */,
+				95D051CE246B9556004D37DE /* CoreDataStack.swift in Sources */,
 				95D051AB246B7E5F004D37DE /* AppDelegate.swift in Sources */,
 				95D051AD246B7E5F004D37DE /* SceneDelegate.swift in Sources */,
 				95D051C3246B8014004D37DE /* VideoPlayerView.swift in Sources */,
-				95D051C9246B9051004D37DE /* VideoPost.swift in Sources */,
+				95D051C9246B9051004D37DE /* VideoPost+Convenience.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +370,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		95D051CA246B9486004D37DE /* VideoPost.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				95D051CB246B9486004D37DE /* VideoPost.xcdatamodel */,
+			);
+			currentVersion = 95D051CB246B9486004D37DE /* VideoPost.xcdatamodel */;
+			path = VideoPost.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 95D0519F246B7E5F004D37DE /* Project object */;
 }

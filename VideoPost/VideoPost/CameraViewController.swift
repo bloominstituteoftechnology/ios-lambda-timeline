@@ -132,7 +132,8 @@ class CameraViewController: UIViewController {
         if fileOutput.isRecording {
             fileOutput.stopRecording()
         } else {
-            fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
+            let url = newRecordingURL()
+            fileOutput.startRecording(to: url, recordingDelegate: self)
         }
     }
     
@@ -175,10 +176,10 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         alert.addTextField { textField in
             textField.placeholder = "Title:"
         }
-        //swiftlint:disable:next unused_closure_parameter
+        
         alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: { action in
             if let videoTitle = alert.textFields?.first?.text {
-                self.videoPostController?.addVideo(withTitle: videoTitle)
+                self.videoPostController?.addVideo(withTitle: videoTitle, andURL: outputFileURL)
             }
             NotificationCenter.default.post(name: .newVideoAddedAddedNotificationName, object: self)
         }))

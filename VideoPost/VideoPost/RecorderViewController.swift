@@ -39,7 +39,7 @@ class RecorderViewController: UIViewController {
         case .authorized:
             showCamera()
         @unknown default:
-            preconditionFailure("A new stsus code was added that we need to handle")
+            preconditionFailure("A new status code was added that we need to handle")
         }
     }
     
