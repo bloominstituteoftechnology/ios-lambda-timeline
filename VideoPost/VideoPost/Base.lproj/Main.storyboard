@@ -46,6 +46,9 @@
                                         <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="Record"/>
                                         <state key="selected" image="Stop"/>
+                                        <connections>
+                                            <action selector="recordButtonPressed:" destination="6tB-w1-k8p" eventType="touchUpInside" id="GKQ-eq-hY8"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -64,6 +67,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="J7r-2Z-myZ"/>
                     </view>
+                    <connections>
+                        <outlet property="cameraView" destination="bjY-GG-KmA" id="Wlv-iB-sdZ"/>
+                        <outlet property="recordButton" destination="qaJ-et-oRa" id="jZG-bH-2cL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5DW-uz-1tD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
