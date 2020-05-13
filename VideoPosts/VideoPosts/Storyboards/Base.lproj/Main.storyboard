@@ -44,6 +44,9 @@
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="80"/>
                                 </state>
                                 <state key="selected" image="stop.circle" catalog="system"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="gx6-K0-W3z" eventType="touchUpInside" id="Wto-Ko-fiV"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -57,6 +60,10 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6pT-mw-jch"/>
                     </view>
+                    <connections>
+                        <outlet property="cameraView" destination="v1n-GA-WP0" id="Dvf-mV-UhO"/>
+                        <outlet property="recordButton" destination="KT6-sA-8dz" id="l4h-HU-tD0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xZC-IS-rdT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
