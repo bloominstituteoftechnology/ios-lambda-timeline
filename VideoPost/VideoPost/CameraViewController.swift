@@ -163,6 +163,25 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         
         print("Video URL: \(outputFileURL)")
         updateViews()
+        
+        let alert = UIAlertController(title: "Add a Title",
+                                      message: "Add a title for your video",
+                                      preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        alert.addTextField { textField in
+            textField.placeholder = "Title:"
+        }
+        //swiftlint:disable:next unused_closure_parameter
+        alert.addAction(UIAlertAction(title: "Submit", style: .default, handler: { action in
+            if let videoTitle = alert.textFields?.first?.text {
+                self.videoPostController?.addVideo(withTitle: videoTitle)
+            }
+            NotificationCenter.default.post(name: .newVideoAddedAddedNotificationName, object: self)
+        }))
+        self.present(alert, animated: true)
+
         playMovie(url: outputFileURL)
     }
 }
