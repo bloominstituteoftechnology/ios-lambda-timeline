@@ -8,6 +8,6 @@
 
 import Foundation
 
-struct Segues {
-    static let showCameraIdentifier = "ShowCamera"
+struct SegueIdentifiers {
+    static let showCamera = "ShowCamera"
 }
