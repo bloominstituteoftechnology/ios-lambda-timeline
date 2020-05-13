@@ -15,13 +15,15 @@ class RecorderViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectionView.dataSource = self
+        collectionView.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        requestPermissionAndShowCamera()
+        
     }
 
     private func requestPermissionAndShowCamera() {
@@ -66,6 +68,11 @@ class RecorderViewController: UIViewController {
             }
         }
     }
+    
+    
+    @IBAction func takeVideo(_ sender: Any) {
+        requestPermissionAndShowCamera()
+    }
 }
 
 extension RecorderViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -74,7 +81,8 @@ extension RecorderViewController: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoCell", for: indexPath)
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoCell", for: indexPath) as? VideoCollectionViewCell else { return UICollectionViewCell() }
+        cell.videoPost = videoPostController.collectionOfVideos[indexPath.item]
         return cell
     }
     

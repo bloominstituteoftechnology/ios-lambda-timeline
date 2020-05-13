@@ -27,8 +27,16 @@ class CameraViewController: UIViewController {
         // Resize camera preview to fill the entire screen
         cameraView.videoPlayerLayer.videoGravity = .resizeAspectFill
         setUpCamera()
-        let tapgesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
-        view.addGestureRecognizer(tapgesture)
+//        let tapgesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+//        view.addGestureRecognizer(tapgesture)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(dismissCamera),
+                                               name: .newVideoAddedAddedNotificationName,
+                                               object: nil)
+    }
+    
+    @objc func dismissCamera() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func handleTapGesture(_ sender: UITapGestureRecognizer) {
@@ -132,8 +140,7 @@ class CameraViewController: UIViewController {
         if fileOutput.isRecording {
             fileOutput.stopRecording()
         } else {
-            let url = newRecordingURL()
-            fileOutput.startRecording(to: url, recordingDelegate: self)
+            fileOutput.startRecording(to: newRecordingURL(), recordingDelegate: self)
         }
     }
     
@@ -183,8 +190,9 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
             }
             NotificationCenter.default.post(name: .newVideoAddedAddedNotificationName, object: self)
         }))
-        self.present(alert, animated: true)
-
-        playMovie(url: outputFileURL)
+        self.present(alert, animated: true) 
+        
+        
+        //playMovie(url: outputFileURL)
     }
 }

@@ -16,9 +16,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s3u-Es-wp5">
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                                <items>
+                                    <barButtonItem systemItem="camera" id="rIz-n5-0tW">
+                                        <connections>
+                                            <action selector="takeVideo:" destination="BYZ-38-t0r" id="0v0-NG-eGe"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="jy4-cS-GIm">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="lQ9-48-3KO">
                                     <size key="itemSize" width="182" height="172"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -26,7 +36,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VideoCell" id="F19-1f-CbE">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VideoCell" id="F19-1f-CbE" customClass="VideoCollectionViewCell" customModule="VideoPost" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="200" height="220"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="L1Z-s7-Vbu">
@@ -44,7 +54,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Video Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qvn-wD-aHQ">
                                                     <rect key="frame" x="0.0" y="197" width="200" height="23"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -57,20 +67,23 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="200" height="220"/>
+                                        <connections>
+                                            <outlet property="videoPlayerView" destination="j0z-q3-0qV" id="Dqg-07-zwa"/>
+                                            <outlet property="videoTitleLabel" destination="qvn-wD-aHQ" id="XRO-g0-uBT"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="8bC-Xf-vdC" id="i4J-JD-WNq"/>
-                                    <outlet property="delegate" destination="8bC-Xf-vdC" id="Ba6-Jm-ytt"/>
-                                </connections>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="jy4-cS-GIm" secondAttribute="trailing" id="FKA-4M-eMd"/>
                             <constraint firstItem="jy4-cS-GIm" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Ocm-1p-p5Z"/>
-                            <constraint firstItem="jy4-cS-GIm" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="U8k-FK-nbT"/>
+                            <constraint firstItem="s3u-Es-wp5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="PtV-4K-lTF"/>
+                            <constraint firstItem="jy4-cS-GIm" firstAttribute="top" secondItem="s3u-Es-wp5" secondAttribute="bottom" id="U8k-FK-nbT"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="jy4-cS-GIm" secondAttribute="bottom" id="mgj-zb-aTL"/>
+                            <constraint firstItem="s3u-Es-wp5" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="tLj-Yg-7XR"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="s3u-Es-wp5" secondAttribute="trailing" id="wP8-Nu-rdm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
