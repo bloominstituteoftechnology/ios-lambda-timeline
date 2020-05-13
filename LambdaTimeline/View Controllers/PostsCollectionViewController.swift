@@ -70,7 +70,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
           
           // need to create an audioPostCell & VideoPostCell
         case .audio:
-          guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: <#T##String#>, for: <#T##IndexPath#>)
+          return UICollectionViewCell()
         }
     }
     
@@ -87,6 +87,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             guard let ratio = post.ratio else { return size }
             
             size.height = size.width * ratio
+        case .audio:
+            return CGSize(width: 0, height: 0)
+            #warning("?")
         }
         
         return size
