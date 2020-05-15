@@ -8,13 +8,25 @@
 
 import UIKit
 import Photos
+import CoreLocation
 
 class ImagePostViewController: ShiftableViewController {
+    
+    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setImageViewHeight(with: 1.0)
+        
+        if !CLLocationManager.locationServicesEnabled() {
+            self.locationManager.requestAlwaysAuthorization()
+            self.locationManager.requestWhenInUseAuthorization()
+        } else {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.startUpdatingLocation()
+        }
         
         updateViews()
     }
@@ -62,7 +74,7 @@ class ImagePostViewController: ShiftableViewController {
             return
         }
         
-        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio, atGeotag: CLLocationCoordinate2D()) { (success) in
+        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio, atGeotag: locationManager.location?.coordinate) { (success) in
             guard success else {
                 DispatchQueue.main.async {
                     self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
@@ -140,5 +152,14 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ImagePostViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        post?.geotag = CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+        print("locations = \(location.latitude) \(location.longitude)")
     }
 }
