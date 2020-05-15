@@ -30,8 +30,23 @@
 		46D571F52173CF3E00E7FF73 /* UIImage+Ratio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D571F42173CF3E00E7FF73 /* UIImage+Ratio.swift */; };
 		46D571F82173FC2700E7FF73 /* ImagePostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */; };
 		954C6D2C246E4CE10001A55B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 954C6D2B246E4CE10001A55B /* GoogleService-Info.plist */; };
-		E453457955DF907FCBD117F1 /* Pods_LambdaTimeline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */; };
+		9581A78E246F022C003809A8 /* Pods_LambdaTimeline.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */; };
+		9581A78F246F022C003809A8 /* Pods_LambdaTimeline.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AA39CACB677861CF84322FB5 /* Pods_LambdaTimeline.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9581A790246F022C003809A8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9581A78F246F022C003809A8 /* Pods_LambdaTimeline.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2C4146F6DBD14A4F48D48671 /* Pods-LambdaTimeline.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LambdaTimeline.release.xcconfig"; path = "Target Support Files/Pods-LambdaTimeline/Pods-LambdaTimeline.release.xcconfig"; sourceTree = "<group>"; };
@@ -69,7 +84,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E453457955DF907FCBD117F1 /* Pods_LambdaTimeline.framework in Frameworks */,
+				9581A78E246F022C003809A8 /* Pods_LambdaTimeline.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,7 +140,6 @@
 				46463782216FDE4C00E7FF73 /* Assets.xcassets */,
 				954C6D2B246E4CE10001A55B /* GoogleService-Info.plist */,
 				46463787216FDE4C00E7FF73 /* Info.plist */,
-				955C8F952463AEB600260212 /* GoogleService-Info.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -228,6 +242,7 @@
 				46463776216FDE4B00E7FF73 /* Resources */,
 				931381193B5D2856F9B0CA8C /* [CP] Embed Pods Frameworks */,
 				8108F7AF1127B3F2AAFC77E1 /* [CP] Copy Pods Resources */,
+				9581A790246F022C003809A8 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
