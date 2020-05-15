@@ -11,3 +11,7 @@ import Foundation
 struct SegueIdentifiers {
     static let showCamera = "ShowCamera"
 }
+
+struct ReuseIdentifiers {
+    static let postCell = "PostCell"
+}
