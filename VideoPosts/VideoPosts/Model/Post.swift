@@ -54,3 +54,13 @@ extension Post: MKAnnotation {
     }
     
 }
+
+extension Post {
+    static let testPost = Post(postTitle: "post title 😀",
+                               mediaURL: URL(string: "file:///var/mobile/Containers/Data/Application/83EF4DEA-3040-4CA2-9E87-520444D85EAE/Documents/2020-05-15T05:27:06Z.mov")!,
+                               ratio: nil,
+                               author: Author.davidWright,
+                               timestamp: Date(timeIntervalSinceReferenceDate: 611213258.100782),
+                               location: CLLocationCoordinate2D(latitude: 39.916056952857204,
+                                                                longitude: -75.0034365157374))
+}

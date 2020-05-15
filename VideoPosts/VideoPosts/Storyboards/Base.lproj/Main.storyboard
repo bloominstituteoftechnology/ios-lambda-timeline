@@ -98,28 +98,27 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="azk-yF-2ib" customClass="MKMapView" customModule="VideoPosts" customModuleProvider="target">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" showsScale="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dNI-vk-6to">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
-                                <color key="backgroundColor" systemColor="systemGray3Color" red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="oSS-GD-5MD" firstAttribute="bottom" secondItem="azk-yF-2ib" secondAttribute="bottom" id="7j0-M8-3Fx"/>
-                            <constraint firstItem="azk-yF-2ib" firstAttribute="leading" secondItem="oSS-GD-5MD" secondAttribute="leading" id="8GS-f6-EmC"/>
-                            <constraint firstItem="azk-yF-2ib" firstAttribute="top" secondItem="oSS-GD-5MD" secondAttribute="top" id="nke-Hv-IUW"/>
-                            <constraint firstItem="oSS-GD-5MD" firstAttribute="trailing" secondItem="azk-yF-2ib" secondAttribute="trailing" id="sU5-lz-2wn"/>
+                            <constraint firstItem="dNI-vk-6to" firstAttribute="top" secondItem="oSS-GD-5MD" secondAttribute="top" id="5T3-lD-UMe"/>
+                            <constraint firstItem="dNI-vk-6to" firstAttribute="trailing" secondItem="oSS-GD-5MD" secondAttribute="trailing" id="e9v-1P-Zy6"/>
+                            <constraint firstItem="dNI-vk-6to" firstAttribute="leading" secondItem="oSS-GD-5MD" secondAttribute="leading" id="f6N-ac-VVP"/>
+                            <constraint firstItem="dNI-vk-6to" firstAttribute="bottom" secondItem="oSS-GD-5MD" secondAttribute="bottom" id="xMC-IH-otJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="oSS-GD-5MD"/>
                     </view>
                     <navigationItem key="navigationItem" title="Video Post Locations" id="z57-Wo-Ik2"/>
                     <connections>
-                        <outlet property="mapView" destination="azk-yF-2ib" id="rsm-uB-z0R"/>
+                        <outlet property="mapView" destination="dNI-vk-6to" id="OEr-ce-HvO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iyt-T7-aGG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-678" y="816"/>
+            <point key="canvasLocation" x="-678.26086956521749" y="815.625"/>
         </scene>
         <!--Video Posts-->
         <scene sceneID="3NZ-Ki-DIu">
@@ -212,7 +211,7 @@
                     <navigationItem key="navigationItem" title="Video Posts" id="DFP-LS-3Zd">
                         <barButtonItem key="leftBarButtonItem" title="Map" id="cfn-fQ-Zu7">
                             <connections>
-                                <segue destination="9Fr-0y-GMB" kind="show" id="mZt-l7-gxq"/>
+                                <segue destination="9Fr-0y-GMB" kind="show" identifier="ShowMapView" id="mZt-l7-gxq"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="nRH-bc-duR">

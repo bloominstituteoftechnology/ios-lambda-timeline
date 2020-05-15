@@ -12,7 +12,7 @@ import MapKit
 
 class PostsCollectionViewController: UICollectionViewController {
 
-    var posts: [Post] = []
+    var posts: [Post] = [Post.testPost]//[]
     
     @IBAction func addNewVideoPost(_ sender: UIBarButtonItem) {
         requestPermissionAndShowCamera()
@@ -59,6 +59,10 @@ class PostsCollectionViewController: UICollectionViewController {
         if segue.identifier == SegueIdentifiers.showCamera {
             if let destinationVC = segue.destination as? CameraViewController {
                 destinationVC.delegate = self
+            }
+        } else if segue.identifier == SegueIdentifiers.showMapView {
+            if let destinationVC = segue.destination as? PostLocationViewController {
+                destinationVC.posts = posts
             }
         }
     }

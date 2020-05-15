@@ -75,13 +75,14 @@ class CameraViewController: UIViewController {
         super.viewDidLoad()
         
         locationManager.requestWhenInUseAuthorization()
+        locationManager.delegate = self
         
         navigationController?.setNavigationBarHidden(true, animated: true)
         
+        moviePlayerView.videoPlayerLayer.videoGravity = .resizeAspectFill
+        
         cameraView.videoPlayerLayer.videoGravity = .resizeAspectFill
         setupCamera()
-        
-        moviePlayerView.videoPlayerLayer.videoGravity = .resizeAspectFill
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -275,5 +276,19 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         
         playMovie(url: outputFileURL)
         animateViewsOnScreen()
+    }
+}
+
+extension CameraViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            print("Found user's location: \(location)")
+            self.location = location.coordinate
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Failed to find user's location: \(error.localizedDescription)")
     }
 }
