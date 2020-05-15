@@ -44,6 +44,7 @@ class ImageFilterViewController: UIViewController {
         updateImage()
     }
     
+    var photoArray: [FilteredImage] = []
     var photo: FilteredImage?
     private let photoController = FilteredImageController()
     
@@ -129,11 +130,15 @@ class ImageFilterViewController: UIViewController {
         guard let originalImage = originalImage?.flattened,
               let comments = commentTextField.text,
               let ciImage = CIImage(image: originalImage) else { return }
-        
+        let lattitude = 51.5549
+        let longitude = -0.108436
         let processedImage = self.image(byFiltering: ciImage)
         guard let imageData = processedImage.pngData() else {return}
         
-        photoController.appendFilteredImage(images: imageData, comments: comments)
+        photoArray.append(FilteredImage(image: imageData, comments: comments, lattitude: lattitude, longitide: longitude))
+        
+        photoController.appendFilteredImage(images: imageData, comments: comments, lattitude: lattitude, longitude: longitude)
+        
         PHPhotoLibrary.requestAuthorization { status in
             guard status == .authorized else { return }
             
@@ -161,6 +166,29 @@ class ImageFilterViewController: UIViewController {
         imageView.image = UIImage(data: photo.image!)
         commentTextField.text = photo.comments
     }
+    
+    private func viewPhotoLocation() {
+        guard let originalImage = originalImage?.flattened,
+              let comments = commentTextField.text,
+              let ciImage = CIImage(image: originalImage) else { return }
+        
+        let lattitude = 51.5549
+        let longitude = -0.108436
+        
+        let processedImage = self.image(byFiltering: ciImage)
+        guard let imageData = processedImage.pngData() else {return}
+        
+        photoArray.append(FilteredImage(image: imageData, comments: comments, lattitude: lattitude, longitide: longitude))
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ImageLocationSegue" {
+            guard let mapVC = segue.destination as? PhotoMapViewController else { return }
+            viewPhotoLocation()
+            mapVC.photos = self.photoArray
+        }
+    }
+    
     
     private func presentImagePickerController() {
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else { return }

@@ -107,7 +107,7 @@
                                                         <rect key="frame" x="194" y="0.0" width="194" height="30"/>
                                                         <state key="normal" title="Location"/>
                                                         <connections>
-                                                            <segue destination="859-9L-o3e" kind="show" identifier="LocationSegue" id="9dZ-tC-0YF"/>
+                                                            <segue destination="859-9L-o3e" kind="show" identifier="ImageLocationSegue" id="9dZ-tC-0YF"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -154,12 +154,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1084" y="102"/>
+            <point key="canvasLocation" x="1374" y="351"/>
         </scene>
-        <!--Location View Controller-->
+        <!--Photo Map View Controller-->
         <scene sceneID="nnJ-Oo-Cbu">
             <objects>
-                <viewController id="859-9L-o3e" customClass="LocationViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="859-9L-o3e" customClass="PhotoMapViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="G5E-Xo-8RJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -184,7 +184,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="N1f-Vg-miT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1999" y="99"/>
+            <point key="canvasLocation" x="1980" y="-372"/>
         </scene>
         <!--Image Post Table View Controller-->
         <scene sceneID="8iO-ER-EOA">
@@ -224,6 +224,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="fVu-FK-RaM">
+                        <barButtonItem key="leftBarButtonItem" title="Map View" id="Qom-zF-vBH">
+                            <connections>
+                                <segue destination="859-9L-o3e" kind="show" identifier="MapViewSegue" id="Aed-i6-Gdg"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="xQU-dQ-pr8">
                             <connections>
                                 <action selector="addImage:" destination="ESE-gv-fn1" id="WdM-Zy-9ai"/>
@@ -256,6 +261,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="9dZ-tC-0YF"/>
         <segue reference="BHw-se-Sof"/>
     </inferredMetricsTieBreakers>
 </document>

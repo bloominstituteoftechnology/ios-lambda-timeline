@@ -24,6 +24,8 @@ class ImagePostTableViewController: UITableViewController {
         return frc
     }()
     
+    var photosArray: [FilteredImage] = []
+    
     override func viewWillAppear(_ animated: Bool) {
        
     }
@@ -51,6 +53,8 @@ class ImagePostTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ImageCell", for: indexPath) as? ImagePostTableViewCell else { return UITableViewCell() }
         cell.filteredImage = fetchedResultsController.object(at: indexPath)
+        photosArray.append(fetchedResultsController.object(at: indexPath))
+        print(photosArray.count)
         return cell
     }
     
@@ -75,7 +79,10 @@ class ImagePostTableViewController: UITableViewController {
         guard let detailVC = segue.destination as? ImageFilterViewController else { return }
         guard let indexPath = tableView.indexPathForSelectedRow else { return }
         detailVC.photo =  fetchedResultsController.object(at: indexPath)
-        } 
+        } else if segue.identifier == "MapViewSegue" {
+            guard let mapVC = segue.destination as? PhotoMapViewController else { return }
+            mapVC.photos = self.photosArray
+        }
     }
 }
 
