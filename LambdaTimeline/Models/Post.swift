@@ -103,7 +103,7 @@ class PostAnnotation: NSObject, MKAnnotation {
         preconditionFailure("No post provided for annotation.")
     }
     
-    private var title: String? {
+    var title: String? {
         if let post = post {
             return post.title
         }
