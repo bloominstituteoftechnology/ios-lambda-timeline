@@ -80,17 +80,31 @@ struct Post {
     static private let idKey = "id"
 }
 
-extension Post: MKAnnotation {
-    var coordinate: CLLocationCoordinate2D {
-        CLLocationCoordinate2D(latitude: geotag.latitude, longitude: geotag.longitude)
+class PostAnnotation: NSObject, MKAnnotation {
+    init(post: Post) {
+        self.post = post
     }
     
-    var title: String? {
-        title
+    var post: Post?
+    var coordinate: CLLocationCoordinate2D {
+        if let post = post {
+            return CLLocationCoordinate2D(latitude: post.geotag?.latitude ?? 0.0,
+                                          longitude: post.geotag?.longitude ?? 0.0)
+        }
+        preconditionFailure("No post provided for annotation.")
+    }
+    
+    private var title: String? {
+        if let post = post {
+            return post.title
+        }
+        preconditionFailure("No post provided for annotation.")
     }
     
     var subtitle: String? {
-        "Author: \(author)"
+        if let post = post {
+            return "Author: \(post.author)"
+        }
+        preconditionFailure("No post provided for annotation.")
     }
-    
 }
