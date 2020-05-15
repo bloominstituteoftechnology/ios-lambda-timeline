@@ -10,9 +10,13 @@ import UIKit
 import CoreImage
 import CoreImage.CIFilterBuiltins
 import Photos
+import MapKit
 
 class ImageFilterViewController: UIViewController {
     
+    var locationManager = CLLocationManager()
+    var latitude: Double = 0
+    var longitude: Double = 0
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var commentTextField: UITextField!
@@ -44,7 +48,6 @@ class ImageFilterViewController: UIViewController {
         updateImage()
     }
     
-    var photoArray: [FilteredImage] = []
     var photo: FilteredImage?
     private let photoController = FilteredImageController()
     
@@ -73,6 +76,21 @@ class ImageFilterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            
+            if photo?.latitude == nil {
+            locationManager.startUpdatingLocation()
+            } else {
+                locationManager.stopUpdatingLocation()
+                latitude = photo!.latitude
+                longitude = photo!.longitude
+            }
+        }
+        
         updateViews()
         originalImage = imageView.image
     }
@@ -128,16 +146,13 @@ class ImageFilterViewController: UIViewController {
     
     private func savePhoto() {
         guard let originalImage = originalImage?.flattened,
-              let comments = commentTextField.text,
-              let ciImage = CIImage(image: originalImage) else { return }
-        let lattitude = 51.5549
-        let longitude = -0.108436
+            let comments = commentTextField.text,
+            let ciImage = CIImage(image: originalImage) else { return }
+        
         let processedImage = self.image(byFiltering: ciImage)
         guard let imageData = processedImage.pngData() else {return}
         
-        photoArray.append(FilteredImage(image: imageData, comments: comments, lattitude: lattitude, longitide: longitude))
-        
-        photoController.appendFilteredImage(images: imageData, comments: comments, lattitude: lattitude, longitude: longitude)
+        photoController.appendFilteredImage(images: imageData, comments: comments, latitude: latitude, longitude: longitude)
         
         PHPhotoLibrary.requestAuthorization { status in
             guard status == .authorized else { return }
@@ -165,28 +180,7 @@ class ImageFilterViewController: UIViewController {
         title = photo.comments
         imageView.image = UIImage(data: photo.image!)
         commentTextField.text = photo.comments
-    }
-    
-    private func viewPhotoLocation() {
-        guard let originalImage = originalImage?.flattened,
-              let comments = commentTextField.text,
-              let ciImage = CIImage(image: originalImage) else { return }
         
-        let lattitude = 51.5549
-        let longitude = -0.108436
-        
-        let processedImage = self.image(byFiltering: ciImage)
-        guard let imageData = processedImage.pngData() else {return}
-        
-        photoArray.append(FilteredImage(image: imageData, comments: comments, lattitude: lattitude, longitide: longitude))
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ImageLocationSegue" {
-            guard let mapVC = segue.destination as? PhotoMapViewController else { return }
-            viewPhotoLocation()
-            mapVC.photos = self.photoArray
-        }
     }
     
     
@@ -225,5 +219,14 @@ extension ImageFilterViewController: UIImagePickerControllerDelegate, UINavigati
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+
+extension ImageFilterViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let coordinates: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        latitude = coordinates.latitude
+        longitude = coordinates.longitude
     }
 }

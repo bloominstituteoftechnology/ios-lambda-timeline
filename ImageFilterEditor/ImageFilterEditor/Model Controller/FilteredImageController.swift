@@ -14,9 +14,9 @@ class FilteredImageController {
     var imagePosts: [FilteredImage] = []
 
     @discardableResult
-    func appendFilteredImage(images: Data, comments: String, lattitude: Double, longitude: Double) -> FilteredImage {
+    func appendFilteredImage(images: Data, comments: String, latitude: Double, longitude: Double) -> FilteredImage {
         
-        let imagePost = FilteredImage(image: images, comments: comments, lattitude: lattitude, longitide: longitude, date: Date())
+        let imagePost = FilteredImage(image: images, comments: comments, latitude: latitude, longitide: longitude, date: Date())
         imagePosts.append(imagePost)
         do {
             try CoreDataStack.shared.save(context: CoreDataStack.shared.mainContext)

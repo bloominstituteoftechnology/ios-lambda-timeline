@@ -8,6 +8,7 @@
 import UIKit
 import MapKit
 import CoreData
+import CoreLocation
 
 extension String {
     static let annotationReuseIdentifier = "PhotoAnnotationView"
@@ -22,13 +23,12 @@ class PhotoMapViewController: UIViewController {
     @IBOutlet var mapView: MKMapView!
     
     private var userTrackingButton: MKUserTrackingButton!
-    private let locationManager = CLLocationManager()
+    var locationManager: CLLocationManager?
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        locationManager.requestWhenInUseAuthorization()
-        
+
         userTrackingButton = MKUserTrackingButton(mapView: mapView)
         userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(userTrackingButton)
@@ -50,8 +50,9 @@ class PhotoMapViewController: UIViewController {
         annotations.title = photo.comments
         annotations.subtitle = "\(String(describing: photo.date))"
         annotations.coordinate = CLLocationCoordinate2D(latitude:
-          photo.lattitude, longitude: photo.longitude)
+          photo.latitude, longitude: photo.longitude)
         mapView.addAnnotation(annotations)
       }
     }
 }
+

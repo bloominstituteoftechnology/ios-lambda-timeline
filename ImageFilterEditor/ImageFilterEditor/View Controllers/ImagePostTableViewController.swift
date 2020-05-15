@@ -9,7 +9,9 @@
 import UIKit
 import CoreData
 
+
 class ImagePostTableViewController: UITableViewController {
+    
     
     lazy var fetchedResultsController: NSFetchedResultsController<FilteredImage> = {        let fetchRequest: NSFetchRequest<FilteredImage> = FilteredImage.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
@@ -25,7 +27,7 @@ class ImagePostTableViewController: UITableViewController {
     }()
     
     var photosArray: [FilteredImage] = []
-    
+   
     override func viewWillAppear(_ animated: Bool) {
        
     }
@@ -33,9 +35,9 @@ class ImagePostTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.reloadData()
-        
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 600
+
 
     }
     
@@ -82,6 +84,9 @@ class ImagePostTableViewController: UITableViewController {
         } else if segue.identifier == "MapViewSegue" {
             guard let mapVC = segue.destination as? PhotoMapViewController else { return }
             mapVC.photos = self.photosArray
+            for photo in self.photosArray {
+                print("\(photo.latitude) , \(photo.longitude)")
+            }
         }
     }
 }
@@ -135,4 +140,3 @@ extension ImagePostTableViewController: NSFetchedResultsControllerDelegate {
         }
     }
 }
-

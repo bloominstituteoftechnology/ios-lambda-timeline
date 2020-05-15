@@ -13,7 +13,7 @@ extension FilteredImage {
     @discardableResult
     convenience init(image: Data,
                      comments: String,
-                     lattitude: Double,
+                     latitude: Double,
                      longitide: Double,
                      date: Date = Date(),
                      context: NSManagedObjectContext = CoreDataStack.shared.mainContext) {
@@ -21,7 +21,7 @@ extension FilteredImage {
         self.image = image
         self.date = date
         self.comments = comments
-        self.lattitude = lattitude
+        self.latitude = latitude
         self.longitude = longitide
     }
 }
