@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import MapKit
 
 class PostsCollectionViewController: UICollectionViewController {
 
@@ -64,8 +65,8 @@ class PostsCollectionViewController: UICollectionViewController {
 }
 
 extension PostsCollectionViewController: CameraViewControllerDelegate {
-    func didSaveVideo(at url: URL, withTitle title: String) {
-        let post = Post(title: title, mediaURL: url)
+    func didSaveVideo(at url: URL, postTitle: String, location: CLLocationCoordinate2D?) {
+        let post = Post(postTitle: postTitle, mediaURL: url, location: location)
         posts.append(post)
         collectionView.reloadData()
     }

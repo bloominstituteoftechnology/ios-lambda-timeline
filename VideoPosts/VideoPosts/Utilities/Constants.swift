@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import MapKit
 
 struct SegueIdentifiers {
     static let showCamera = "ShowCamera"
@@ -14,4 +15,8 @@ struct SegueIdentifiers {
 
 struct ReuseIdentifiers {
     static let postCell = "PostCell"
+}
+
+struct Locations {
+    static let defaultLocation = CLLocationCoordinate2D(latitude: 39.916, longitude: -75.0035)
 }

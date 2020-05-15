@@ -8,9 +8,10 @@
 
 import UIKit
 import AVKit
+import MapKit
 
 protocol CameraViewControllerDelegate: class {
-    func didSaveVideo(at url: URL, withTitle title: String)
+    func didSaveVideo(at url: URL, postTitle: String, location: CLLocationCoordinate2D?)
 }
 
 class CameraViewController: UIViewController {
@@ -23,6 +24,8 @@ class CameraViewController: UIViewController {
     private var player: AVPlayer!
     private var videoURL: URL? = nil
     weak var delegate: CameraViewControllerDelegate?
+    private let locationManager = CLLocationManager()
+    private var location: CLLocationCoordinate2D?
     
     // MARK: - IBOutlets
     
@@ -53,7 +56,7 @@ class CameraViewController: UIViewController {
             !title.isEmpty,
             let url = videoURL else { return }
         
-        delegate?.didSaveVideo(at: url, withTitle: title)
+        delegate?.didSaveVideo(at: url, postTitle: title, location: location)
         dismissMoviePlayerViews()
     }
     
@@ -70,6 +73,8 @@ class CameraViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        locationManager.requestWhenInUseAuthorization()
         
         navigationController?.setNavigationBarHidden(true, animated: true)
         
@@ -264,6 +269,9 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         
         print("Video URL: \(outputFileURL)")
         updateViews()
+        
+        locationManager.requestLocation()
+        location = locationManager.location?.coordinate
         
         playMovie(url: outputFileURL)
         animateViewsOnScreen()
