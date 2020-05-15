@@ -64,6 +64,7 @@ struct Post {
     var comments: [Comment]
     var id: String?
     var ratio: CGFloat?
+    var geotag: CLLocationCoordinate2D?
     
     var title: String? {
         return comments.first?.text
