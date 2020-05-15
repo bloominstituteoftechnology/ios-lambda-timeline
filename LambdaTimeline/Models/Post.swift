@@ -8,6 +8,7 @@
 
 import Foundation
 import FirebaseAuth
+import MapKit
 
 enum MediaType: String {
     case image
@@ -77,4 +78,19 @@ struct Post {
     static private let commentsKey = "comments"
     static private let timestampKey = "timestamp"
     static private let idKey = "id"
+}
+
+extension Post: MKAnnotation {
+    var coordinate: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: geotag.latitude, longitude: geotag.longitude)
+    }
+    
+    var title: String? {
+        title
+    }
+    
+    var subtitle: String? {
+        "Author: \(author)"
+    }
+    
 }
