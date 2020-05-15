@@ -93,15 +93,26 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y8J-lY-gsR">
-                                                <rect key="frame" x="160.5" y="44" width="77" height="30"/>
-                                                <state key="normal" title="Post Image"/>
-                                                <connections>
-                                                    <action selector="postImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ycX-gk-NfP"/>
-                                                </connections>
-                                            </button>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="gTw-hD-bXX">
+                                                <rect key="frame" x="5" y="44" width="388" height="30"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y8J-lY-gsR">
+                                                        <rect key="frame" x="0.0" y="0.0" width="194" height="30"/>
+                                                        <state key="normal" title="Post Image"/>
+                                                        <connections>
+                                                            <action selector="postImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ycX-gk-NfP"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gF2-Zf-DDh">
+                                                        <rect key="frame" x="194" y="0.0" width="194" height="30"/>
+                                                        <state key="normal" title="Location"/>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
                                         </subviews>
                                         <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="gTw-hD-bXX" secondAttribute="trailing" constant="5" id="Teh-Tz-5jX"/>
+                                            <constraint firstItem="gTw-hD-bXX" firstAttribute="leading" secondItem="iBE-7g-WzF" secondAttribute="leading" constant="5" id="Tk4-Yh-cQi"/>
                                             <constraint firstItem="pnH-bA-hwq" firstAttribute="leading" secondItem="iBE-7g-WzF" secondAttribute="leading" constant="8" id="aDp-CR-5cI"/>
                                             <constraint firstAttribute="trailing" secondItem="pnH-bA-hwq" secondAttribute="trailing" constant="8" id="pbs-9r-df6"/>
                                         </constraints>
