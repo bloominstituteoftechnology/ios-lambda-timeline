@@ -16,16 +16,20 @@ class ImagePostViewController: UIViewController {
     // MARK: - Outlets
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var selectImageButton: UIBarButtonItem!
-    @IBOutlet weak var filterTableView: UITableView!
+    @IBOutlet weak var noiseReductionSlider: UISlider!
+    @IBOutlet weak var sharpnessSlider: UISlider!
+    @IBOutlet weak var saturationSlider: UISlider!
+    @IBOutlet weak var brightnessSlider: UISlider!
+    @IBOutlet weak var contrastSlider: UISlider!
+    @IBOutlet weak var noirFilterButton: UIButton!
+    
     
     // MARK: - Properties
-    let context = CIContext()
-    private let whitePointAdjustmentFilter = CIFilter.whitePointAdjust()
-    private let crystallizeFilter = CIFilter.crystallize()
+    private let context = CIContext()
+    private let noiseReductionFilter = CIFilter.noiseReduction()
+    private let colorControlsFilter = CIFilter.colorControls()
     private let noirFilter = CIFilter.photoEffectNoir()
     
-    var selectedFilter = 0
-    let filterArray = ["Noise Reduction", "Color Control", "White Point Adjustment", "Crystallize", "Photo Filter Noir"]
     var isFiltering: Bool = false
 
     var originalImage: UIImage? {
@@ -52,16 +56,37 @@ class ImagePostViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        filterTableView.dataSource = self
-        filterTableView.delegate = self
-        
         originalImage = imageView.image
+    }
+
+    private func image(byFiltering inputImage: CIImage) -> UIImage {
+        
+        colorControlsFilter.inputImage = inputImage
+        colorControlsFilter.saturation = saturationSlider.value
+        colorControlsFilter.brightness = brightnessSlider.value
+        colorControlsFilter.contrast = contrastSlider.value
+        
+//        noiseReductionFilter.inputImage = colorControlsFilter.outputImage?.clampedToExtent()
+//        noiseReductionFilter.noiseLevel = noiseReductionSlider.value
+//        noiseReductionFilter.sharpness = sharpnessSlider.value
+        
+        colorControlsFilter.inputImage = noiseReductionFilter.outputImage?.clampedToExtent()
+        colorControlsFilter.saturation = saturationSlider.value
+        colorControlsFilter.brightness = brightnessSlider.value
+        colorControlsFilter.contrast = contrastSlider.value
+        
+        noirFilter.inputImage = colorControlsFilter.outputImage?.clampedToExtent()
+        
+        guard let outputImage = noirFilter.outputImage else { return originalImage! }
+        
+        guard let renderedImage = context.createCGImage(outputImage, from: inputImage.extent) else { return originalImage! }
+        
+        return UIImage(cgImage: renderedImage)
     }
 
     private func updateImage() {
         if let scaledImage = scaledImage {
-            imageView.image = UIImage(ciImage: scaledImage)
-                //image(byFiltering: scaledImage)
+            imageView.image = image(byFiltering: scaledImage)
         } else {
             imageView.image = nil
         }
@@ -83,32 +108,33 @@ class ImagePostViewController: UIViewController {
     // MARK: Actions
     
     @IBAction func selectPhotoButtonPressed(_ sender: UIBarButtonItem) {
+        presentImagePickerController()
+
         if selectImageButton.title == "Select Image" {
-            presentImagePickerController()
+            selectImageButton.title = "Save Photo"
+        } else {
+            guard let originalImage = originalImage?.flattened, let ciImage = CIImage(image: originalImage) else { return }
+
+            let processedImage = self.image(byFiltering: ciImage)
+
+            PHPhotoLibrary.requestAuthorization { status in
+                guard status == .authorized else { return }
+
+                PHPhotoLibrary.shared().performChanges({
+                    PHAssetChangeRequest.creationRequestForAsset(from: processedImage)
+                }) { (success, error) in
+                    if let error = error {
+                        print("Error saving photo: \(error)")
+                        // NSLog("%@", error)
+                        return
+                    }
+
+                    DispatchQueue.main.async {
+                        self.presentSuccessfulSaveAlert()
+                    }
+                }
+            }
         }
-//          else {
-//            guard let originalImage = originalImage?.flattened, let ciImage = CIImage(image: originalImage) else { return }
-//
-//            let processedImage = self.image(byFiltering: ciImage)
-//
-//            PHPhotoLibrary.requestAuthorization { status in
-//                guard status == .authorized else { return }
-//
-//                PHPhotoLibrary.shared().performChanges({
-//                    PHAssetChangeRequest.creationRequestForAsset(from: processedImage)
-//                }) { (success, error) in
-//                    if let error = error {
-//                        print("Error saving photo: \(error)")
-//                        // NSLog("%@", error)
-//                        return
-//                    }
-//
-//                    DispatchQueue.main.async {
-//                        self.presentSuccessfulSaveAlert()
-//                    }
-//                }
-//            }
-//        }
     }
 
     private func presentSuccessfulSaveAlert() {
@@ -118,11 +144,35 @@ class ImagePostViewController: UIViewController {
         
         present(alert, animated: true, completion: nil)
     }
+    
+    // MARK: - Slider Events
+    @IBAction func noiseChanged(_ sender: UISlider) {
+        updateImage()
+    }
+    
+    @IBAction func sharpnessChanged(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func saturationChanged(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func brightnessChanged(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func contrastChanged(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func noirFilterButtonSelected(_ sender: Any) {
+        updateImage()
+    }
 }
 
-
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
+
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[.editedImage] as? UIImage {
@@ -139,56 +189,56 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
     }
 }
 
-extension ImagePostViewController: UITableViewDataSource, UITableViewDelegate {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filterArray.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = filterTableView.dequeueReusableCell(withIdentifier: "FilterCell", for: indexPath)
-        cell.textLabel?.text = filterArray[indexPath.row]
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.row {
-        case 0:
-            performSegue(withIdentifier: "PresentNoiseFilter", sender: nil)
-        case 1:
-            performSegue(withIdentifier: "PresentColorControlFilter", sender: nil)
-        case 2:
-            performSegue(withIdentifier: "PresentWhitePointFilter", sender: nil)
-        default:
-            break
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        switch segue.identifier {
-        case "PresentNoiseFilter":
-            guard let destinationVC = segue.destination as? NoiseReductionFilterViewController else { return }
-            if let originalImage = originalImage {
-                destinationVC.passedImage = originalImage
-                destinationVC.context = context
-            }
-
-        case "PresentColorControlFilter":
-            guard let destinationVC = segue.destination as? ColorControlFilterViewController else { return }
-            if let originalImage = originalImage {
-                destinationVC.passedImage = originalImage
-                destinationVC.context = context
-            }
-
-        case "PresentWhitePointFilter":
-            guard let destinationVC = segue.destination as? WhitePointFilterViewController else { return }
-            if let scaledImage = scaledImage {
-                destinationVC.scaledImage = UIImage(ciImage: scaledImage)
-            }
-//            destinationVC.imageView.image = UIImage(ciImage: scaledImage!)
-
-        default:
-            break
-        }
-    }
-    
-}
+//extension ImagePostViewController: UITableViewDataSource, UITableViewDelegate {
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return filterArray.count
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = filterTableView.dequeueReusableCell(withIdentifier: "FilterCell", for: indexPath)
+//        cell.textLabel?.text = filterArray[indexPath.row]
+//        return cell
+//    }
+//
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        switch indexPath.row {
+//        case 0:
+//            performSegue(withIdentifier: "PresentNoiseFilter", sender: nil)
+//        case 1:
+//            performSegue(withIdentifier: "PresentColorControlFilter", sender: nil)
+//        case 2:
+//            performSegue(withIdentifier: "PresentWhitePointFilter", sender: nil)
+//        default:
+//            break
+//        }
+//    }
+//
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        switch segue.identifier {
+//        case "PresentNoiseFilter":
+//            guard let destinationVC = segue.destination as? NoiseReductionFilterViewController else { return }
+//            if let originalImage = originalImage {
+//                destinationVC.passedImage = originalImage
+//                destinationVC.context = context
+//            }
+//
+//        case "PresentColorControlFilter":
+//            guard let destinationVC = segue.destination as? ColorControlFilterViewController else { return }
+//            if let originalImage = originalImage {
+//                destinationVC.passedImage = originalImage
+//                destinationVC.context = context
+//            }
+//
+//        case "PresentWhitePointFilter":
+//            guard let destinationVC = segue.destination as? WhitePointFilterViewController else { return }
+//            if let scaledImage = scaledImage {
+//                destinationVC.scaledImage = UIImage(ciImage: scaledImage)
+//            }
+////            destinationVC.imageView.image = UIImage(ciImage: scaledImage!)
+//
+//        default:
+//            break
+//        }
+//    }
+//
+//}
