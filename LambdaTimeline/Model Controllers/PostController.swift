@@ -10,10 +10,11 @@ import Foundation
 import FirebaseAuth
 import FirebaseDatabase
 import FirebaseStorage
+import MapKit
 
 class PostController {
     
-    func createPost(with title: String, ofType mediaType: MediaType, mediaData: Data, ratio: CGFloat? = nil, completion: @escaping (Bool) -> Void = { _ in }) {
+    func createPost(with title: String, ofType mediaType: MediaType, mediaData: Data, ratio: CGFloat? = nil, atGeotag geotag: CLLocationCoordinate2D?, completion: @escaping (Bool) -> Void = { _ in }) {
         
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }

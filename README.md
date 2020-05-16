@@ -1,4 +1,4 @@
-# Lambda Timeline
+# Lambda Timeline 
 
 ## Introduction
 
@@ -12,7 +12,7 @@ The goal of this project is to take an existing project called LambdaTimeline an
 
 ## Instructions
 
-Please fork and clone this repository, and work from the base project in the repo.
+Create a new branch in the repository called `postGeotags` and work off of it from where you left off yesterday.
 
 ### Part 1 - ~~#NoFilter~~ #Filters
 
@@ -62,9 +62,17 @@ NOTE: If you run `pod update` there may be breaking changes from newer versions 
 ```
 This will allow only users of the app who are authenticated to access the database. (Authentication is already taken care of in the starter project)
 
-6. In the left pane of your Firebase project under "Develop", click the Storage item. Click the "Get Started" button and it will pull up a modal window about security rules. Simply click "Got it". It will set Storage's rules to allow access to any authenticated user, which works great for our uses.
+Either way you decide to do this has its pros and cons, so choose whatever makes the most sense to you.
 
-Firebase Storage is essentially a Google Drive for data in your Firebase. It makes sense to use Storage in this application as we will be storing images, audio, and video data. If you're curious as to how Database and Storage interact, feel free to read Firebase's Storage documentation and look at the code in the base project. Particularly in the `Post`, `Media` and `PostController` objects. (Don't feel like you have to, however)
+3. Update the `dictionaryRepresentation` and both initializers to account for the property (or properties). 
+    - **Note:** Firebase will not store a `CLLocationCoordinate2D`, so you must break it up into a key-value pair for both the latitude and longitude in the `dictionaryRepresentation`.
+4. Update the `PostController` to account for creating posts with and without geotags.
+5. Create a helper class that will take care of requesting location usage authorization from the user, as well as getting their current location in order to geotag a post that is being created. This can be done through using `CLLocationManager` and `CLLocationManagerDelegate`.
+    - **Note:** For the base requirements of this project, every post that should be geotagged will just use the user's current location.
+6. Update the UI for creating **image and video** posts to allow the user to choose whether to geotag their posts or not.
+7. In the Main.storyboard, embed the navigation controller in a tab bar controller. Add a new view controller scene with a map view on it. There are a few things that you will have to change now that the tab bar is essentially the first view controller to be displayed once the user is authenticated.
+    <details><summary>Hints</summary>
+    <p>
 
 At this point, run the app on your simulator or physical device in order to make sure that you've set up your Firebase Project correctly. If set up correctly, you should be able to create posts, comment on them, and have them get sent to Firebase. You should also be able to re-run the app and have the posts and comments get fetched correctly. If this does not work, the likely scenario is that you've not set up your Firebase project correctly. If you can't figure out what's wrong, please reach out to your TL.
 
@@ -80,3 +88,8 @@ At this point, run the app on your simulator or physical device in order to make
 - Clean up the UI of the app, either with the UI you added to support filters. You're welcome to touch up the UI overall if you wish as well.
 - Allow for undoing and redoing of filter effects (i.e.: Reset to the identity values, snap to default, etc.)
 - Try using a `UIPanGestureRecognizer` on your `UIImageView` to get the (x, y) coordinate using `locationInView:` on the panGesture. (You may need to clamp the value to the bounds of the image).
+
+You are encouraged to implement both methods if you feel up to it.
+
+- Customize the annotations that are shown on the map view controller to also show the media (image or video) associated with it. **Note:** if you chose to create a `PostAnnotation` object, you may need to modify it so you can have more information than just the post's title and author.
+- Add the ability to go directly to the detail view controller of a post (the one with the post's comments) from the annotation.
