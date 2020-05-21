@@ -61,12 +61,20 @@ class AudioPlayerController: UIViewController {
     }
     
     func updateCurrentTime(time: TimeInterval) {
+        var shouldResumePlaying = false
+        
         if isPlaying {
             pause()
+            shouldResumePlaying = true
         }
         
         audioPlayer?.currentTime = time
-        updateViews()
+        
+        if shouldResumePlaying {
+            play()
+        } else {
+            updateViews()
+        }
     }
     
     func rewindCurrentTimeBy(seconds: TimeInterval) {
@@ -77,6 +85,7 @@ class AudioPlayerController: UIViewController {
         } else {
             updateCurrentTime(time: newTime)
         }
+        play()
     }
     
     func skipForwardCurrentTimeBy(seconds: TimeInterval) {
@@ -87,6 +96,7 @@ class AudioPlayerController: UIViewController {
         } else {
             updateCurrentTime(time: newTime)
         }
+        play()
     }
     
     func deleteRecording(at url: URL) {
