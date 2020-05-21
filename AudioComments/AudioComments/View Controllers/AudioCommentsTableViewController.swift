@@ -154,14 +154,7 @@ extension AudioCommentsTableViewController: AudioCommentCellDelegate {
 
 extension AudioCommentsTableViewController: AudioPlayerControllerDelegate {
     func updateAudioPlayerViews() {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
         guard let selectedIndexPath = selectedIndexPath else { return }
-        
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
         
         tableView.beginUpdates()
         tableView.reloadRows(at: [selectedIndexPath], with: .none)
