@@ -7,12 +7,17 @@
 //
 
 import UIKit
+import CoreImage
+import CoreImage.CIFilterBuiltins
+import Photos
 
-class ViewController: UIViewController {
+class ImagePostViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+       
+        let filter = CIFilter.photoEffectMono()
+        print(filter)
     }
 
 
