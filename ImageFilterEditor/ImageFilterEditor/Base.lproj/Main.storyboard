@@ -52,6 +52,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ae6-fa-h0a">
                                                 <rect key="frame" x="66" y="0.0" width="318" height="31"/>
+                                                <connections>
+                                                    <action selector="sepiaChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="R82-7N-tfs"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
                                     </stackView>
@@ -66,6 +69,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="fSr-Fk-fPq">
                                                 <rect key="frame" x="66" y="0.0" width="318" height="31"/>
+                                                <connections>
+                                                    <action selector="luminanceChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="mqn-ac-KaA"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
                                     </stackView>
@@ -80,6 +86,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="2TX-Rf-bi4">
                                                 <rect key="frame" x="66" y="0.0" width="318" height="31"/>
+                                                <connections>
+                                                    <action selector="luminanceRadiusChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="sta-9r-3qN"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
                                     </stackView>
@@ -94,6 +103,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="A7o-SE-GfX">
                                                 <rect key="frame" x="66" y="0.0" width="318" height="31"/>
+                                                <connections>
+                                                    <action selector="monoChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="dVi-pU-G0H"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
                                     </stackView>
@@ -108,6 +120,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="2Gr-1H-xWX">
                                                 <rect key="frame" x="66" y="0.0" width="318" height="31"/>
+                                                <connections>
+                                                    <action selector="chromeChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="g1P-g4-yEf"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
                                     </stackView>
@@ -123,6 +138,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jJn-EE-qNg">
                                 <rect key="frame" x="168" y="799" width="78" height="30"/>
                                 <state key="normal" title="Save Photo"/>
+                                <connections>
+                                    <action selector="savePhotoButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GO2-df-LdP"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -140,7 +158,11 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="Veh-47-XZS">
-                        <barButtonItem key="rightBarButtonItem" title="Choose Photo" id="8XY-KH-Qoo"/>
+                        <barButtonItem key="rightBarButtonItem" title="Choose Photo" id="8XY-KH-Qoo">
+                            <connections>
+                                <action selector="choosePhotoButtonPressed:" destination="BYZ-38-t0r" id="CxC-dX-JGK"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="chromeSlider" destination="2Gr-1H-xWX" id="YTc-SK-v5q"/>
