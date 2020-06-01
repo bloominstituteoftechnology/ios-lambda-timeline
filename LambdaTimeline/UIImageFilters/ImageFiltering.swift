@@ -11,12 +11,21 @@ import Photos
 import CoreImage
 import CoreImage.CIFilterBuiltins
 
+protocol PhotoFinishedEditing {
+    func photoFinishedEditing(image: UIImage)
+}
+
 class ImageFiltering: UIViewController {
+    
+    var delegate: PhotoFinishedEditing?
     
     private let context = CIContext(options: nil)
         
-        private var originalImage: UIImage? {
+    var originalImage: UIImage? {
             didSet {
+                
+                guard isViewLoaded else { return }
+                
                 guard let originalImage = originalImage else {
                     scaledImage = nil // clear out image if original image fails
                     return
@@ -45,12 +54,17 @@ class ImageFiltering: UIViewController {
         
         override func viewDidLoad() {
             super.viewDidLoad()
-            let filter = CIFilter.colorControls()
-            filter.brightness = 1 // Ranges are determined by the filter / documentation
-            //print(filter.attributes)
-            
             originalImage = imageView.image
         }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        brightnessSlider.value = 0
+        contrastSlider.value = 1
+        saturationSlider.value = 1
+        blurSlider.value = 1
+        sharpnessSlider.value = 0.4
+    }
         
         private func filterImage(_ image: UIImage) -> UIImage? {
             // UIImage -> CGImage -> CIImage
@@ -97,27 +111,10 @@ class ImageFiltering: UIViewController {
         
         // MARK: Actions
         
-        @IBAction func choosePhotoButtonPressed(_ sender: Any) {
-            //TODO: Inject the image from the postVC and
-        }
-        
-        private func presentImagePickerController() {
-            guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
-                print("Error: The photo library is not available")
-                return
-            }
-            
-            let imagePicker = UIImagePickerController()
-            imagePicker.sourceType = .photoLibrary
-            imagePicker.delegate = self
-            
-            present(imagePicker, animated: true, completion: nil)
-        }
-        
-        
         @IBAction func savePhotoButtonPressed(_ sender: UIBarButtonItem) {
             // TODO: Save to photo library
             saveAndFilterPhoto()
+            self.navigationController?.popViewController(animated: true)
         }
         
         private func saveAndFilterPhoto() {
@@ -145,6 +142,8 @@ class ImageFiltering: UIViewController {
                     print("Saved photo")
                 }
             }
+            
+            delegate?.photoFinishedEditing(image: originalImage)
         }
         
 
@@ -169,32 +168,4 @@ class ImageFiltering: UIViewController {
     @IBAction func sharpnessChanged(_ sender: Any) {
         updateViews()
     }
-    }
-
-
-
-    extension ImageFiltering: UIImagePickerControllerDelegate {
-        
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-            
-            if let image = info[.originalImage] as? UIImage {
-                originalImage = image
-            }
-            dismiss(animated: true) {
-                DispatchQueue.main.async {
-                    self.contrastSlider.value = 1
-                    self.brightnessSlider.value = 0
-                    self.saturationSlider.value = 1
-                    self.updateViews()
-                }
-            }
-        }
-        
-        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-            dismiss(animated: true, completion: nil)
-        }
-}
-
-    extension ImageFiltering: UINavigationControllerDelegate {
-        
     }

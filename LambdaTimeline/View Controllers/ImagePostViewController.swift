@@ -42,14 +42,23 @@ class ImagePostViewController: ShiftableViewController {
             presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
             return
         }
-        
+        DispatchQueue.main.async {
         let imagePicker = UIImagePickerController()
         
         imagePicker.delegate = self
         
         imagePicker.sourceType = .photoLibrary
 
-        present(imagePicker, animated: true, completion: nil)
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if segue.identifier == "EditPhotoShowSegue" {
+        let destinationVC = segue.destination as? ImageFiltering
+        destinationVC?.originalImage = imageView.image
+        
+        }
     }
     
     @IBAction func createPost(_ sender: Any) {
@@ -142,5 +151,11 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ImagePostViewController: PhotoFinishedEditing {
+    func photoFinishedEditing(image: UIImage) {
+        self.imageView.image = image
     }
 }

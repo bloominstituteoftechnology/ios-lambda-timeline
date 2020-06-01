@@ -187,6 +187,7 @@
                             </barButtonItem>
                             <barButtonItem title="Edit" id="dH8-la-HYr">
                                 <connections>
+                                    <action selector="editPhotoTapped:" destination="1Aw-4e-BW2" id="V4r-Pj-w0O"/>
                                     <segue destination="Oka-kB-ccV" kind="show" identifier="EditPhotoShowSegue" id="qRF-rF-dWJ"/>
                                 </connections>
                             </barButtonItem>
@@ -287,8 +288,8 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mxF-V3-wMA">
-                                <rect key="frame" x="8" y="96" width="398" height="496"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mxF-V3-wMA">
+                                <rect key="frame" x="8" y="96" width="398" height="377"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -296,7 +297,7 @@
                             <constraint firstItem="S1s-JF-bm2" firstAttribute="bottom" secondItem="72t-bt-Cqj" secondAttribute="bottom" constant="50" id="34L-vy-GpU"/>
                             <constraint firstItem="S1s-JF-bm2" firstAttribute="trailing" secondItem="mxF-V3-wMA" secondAttribute="trailing" constant="8" id="3Ee-Vk-YCt"/>
                             <constraint firstItem="mxF-V3-wMA" firstAttribute="top" secondItem="S1s-JF-bm2" secondAttribute="top" constant="8" id="9Pn-2w-4Dc"/>
-                            <constraint firstItem="72t-bt-Cqj" firstAttribute="top" secondItem="mxF-V3-wMA" secondAttribute="bottom" constant="70" id="OvQ-05-gVL"/>
+                            <constraint firstItem="72t-bt-Cqj" firstAttribute="top" secondItem="mxF-V3-wMA" secondAttribute="bottom" constant="189" id="OvQ-05-gVL"/>
                             <constraint firstItem="mxF-V3-wMA" firstAttribute="leading" secondItem="S1s-JF-bm2" secondAttribute="leading" constant="8" id="RW8-7P-tMw"/>
                             <constraint firstAttribute="trailing" secondItem="72t-bt-Cqj" secondAttribute="trailing" constant="8" id="ZLj-a9-hps"/>
                             <constraint firstItem="72t-bt-Cqj" firstAttribute="leading" secondItem="S1s-JF-bm2" secondAttribute="leading" constant="8" id="qeJ-HY-ReR"/>
@@ -321,7 +322,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FM0-DG-jqK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2732" y="-196"/>
+            <point key="canvasLocation" x="2731.8840579710145" y="-196.20535714285714"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gdW-Je-ais">
