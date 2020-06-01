@@ -22,7 +22,7 @@
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZD5-Rv-p2c">
-                                <rect key="frame" x="16" y="518" width="382" height="267"/>
+                                <rect key="frame" x="16" y="518" width="382" height="265"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="19" translatesAutoresizingMaskIntoConstraints="NO" id="644-oI-7zf">
                                         <rect key="frame" x="0.0" y="0.0" width="382" height="30"/>
@@ -81,36 +81,38 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="xiq-au-VZ0">
-                                        <rect key="frame" x="0.0" y="188" width="382" height="31"/>
+                                        <rect key="frame" x="0.0" y="188" width="382" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mono Effect:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3OJ-hE-9Vq">
-                                                <rect key="frame" x="0.0" y="0.0" width="323" height="31"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="58" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hws-hT-8ER">
-                                                <rect key="frame" x="333" y="0.0" width="51" height="31"/>
-                                            </switch>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="A7o-SE-GfX">
+                                                <rect key="frame" x="66" y="0.0" width="318" height="31"/>
+                                            </slider>
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="PHB-do-xdR">
-                                        <rect key="frame" x="0.0" y="236" width="382" height="31"/>
+                                        <rect key="frame" x="0.0" y="235" width="382" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chrome Effect:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oir-jy-A5Y">
-                                                <rect key="frame" x="0.0" y="0.0" width="319" height="31"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="54" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ovt-Hg-7lE">
-                                                <rect key="frame" x="333" y="0.0" width="51" height="31"/>
-                                            </switch>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="2Gr-1H-xWX">
+                                                <rect key="frame" x="66" y="0.0" width="318" height="31"/>
+                                            </slider>
                                         </subviews>
                                     </stackView>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstItem="A7o-SE-GfX" firstAttribute="leading" secondItem="2Gr-1H-xWX" secondAttribute="leading" id="IGe-ry-WlH"/>
                                     <constraint firstItem="fSr-Fk-fPq" firstAttribute="leading" secondItem="2TX-Rf-bi4" secondAttribute="leading" id="LQ9-aJ-WiS"/>
+                                    <constraint firstItem="2TX-Rf-bi4" firstAttribute="leading" secondItem="A7o-SE-GfX" secondAttribute="leading" id="rUk-2w-9H0"/>
                                     <constraint firstItem="ae6-fa-h0a" firstAttribute="leading" secondItem="Gxa-FT-tJ9" secondAttribute="leading" id="tSI-5F-P7A"/>
                                     <constraint firstItem="ae6-fa-h0a" firstAttribute="leading" secondItem="fSr-Fk-fPq" secondAttribute="leading" id="txR-5C-TUO"/>
                                 </constraints>
@@ -130,6 +132,15 @@
                     <navigationItem key="navigationItem" id="Veh-47-XZS">
                         <barButtonItem key="rightBarButtonItem" title="Choose Photo" id="8XY-KH-Qoo"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="chromeSlider" destination="2Gr-1H-xWX" id="YTc-SK-v5q"/>
+                        <outlet property="imageView" destination="4at-Nv-DS9" id="UIM-iW-14S"/>
+                        <outlet property="monoSlider" destination="A7o-SE-GfX" id="hrh-Gm-dfS"/>
+                        <outlet property="posterizeSlider" destination="Gxa-FT-tJ9" id="EJn-lQ-6Xb"/>
+                        <outlet property="radiusSlider" destination="2TX-Rf-bi4" id="CgC-9w-VNz"/>
+                        <outlet property="sepiaSlider" destination="ae6-fa-h0a" id="OGV-dY-6QX"/>
+                        <outlet property="sharpnessSlider" destination="fSr-Fk-fPq" id="UVQ-YK-abM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
