@@ -35,6 +35,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="6" minValue="2" maxValue="30" translatesAutoresizingMaskIntoConstraints="NO" id="Gxa-FT-tJ9">
                                                 <rect key="frame" x="66" y="0.0" width="318" height="31"/>
+                                                <connections>
+                                                    <action selector="posterizeChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="t7O-eJ-zRw"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
                                     </stackView>
@@ -117,14 +120,21 @@
                                     <constraint firstItem="ae6-fa-h0a" firstAttribute="leading" secondItem="fSr-Fk-fPq" secondAttribute="leading" id="txR-5C-TUO"/>
                                 </constraints>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jJn-EE-qNg">
+                                <rect key="frame" x="168" y="799" width="78" height="30"/>
+                                <state key="normal" title="Save Photo"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="jJn-EE-qNg" secondAttribute="trailing" constant="168" id="4Oc-yo-Q69"/>
                             <constraint firstItem="ZD5-Rv-p2c" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="MTE-Oi-mJc"/>
                             <constraint firstItem="4at-Nv-DS9" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="U4c-47-Kgo"/>
                             <constraint firstItem="ZD5-Rv-p2c" firstAttribute="top" secondItem="4at-Nv-DS9" secondAttribute="bottom" constant="16" id="YVt-VP-yYL"/>
                             <constraint firstAttribute="trailing" secondItem="ZD5-Rv-p2c" secondAttribute="trailing" constant="16" id="fjf-1S-ZCj"/>
+                            <constraint firstItem="jJn-EE-qNg" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="168" id="qIF-w3-ymA"/>
                             <constraint firstItem="4at-Nv-DS9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="vIE-Be-nOy"/>
+                            <constraint firstItem="jJn-EE-qNg" firstAttribute="top" secondItem="ZD5-Rv-p2c" secondAttribute="bottom" constant="16" id="w1V-D5-9sZ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="4at-Nv-DS9" secondAttribute="trailing" id="wMZ-7F-CRJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
