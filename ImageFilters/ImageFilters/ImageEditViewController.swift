@@ -169,7 +169,7 @@ class ImageEditViewController: UIViewController {
     private func saveAndFilterPhoto() {
         guard let originalImage = originalImage else { return }
 
-        guard let processedImage = filterImage(originalImage) else { return }
+        guard let processedImage = filterImage(originalImage.flattened) else { return }
 
         PHPhotoLibrary.requestAuthorization { (status) in
             guard status == .authorized else { return } // TODO: Handle other cases
