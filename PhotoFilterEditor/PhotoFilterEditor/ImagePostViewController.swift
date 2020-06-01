@@ -10,9 +10,11 @@ import UIKit
 
 class ImagePostViewController: UIViewController {
 
+    @IBOutlet weak var choosePhotoOutlet: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        choosePhotoOutlet.layer.cornerRadius = 12
         // Do any additional setup after loading the view.
     }
     
