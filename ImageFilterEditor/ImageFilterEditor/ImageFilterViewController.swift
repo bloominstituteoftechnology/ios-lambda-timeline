@@ -73,9 +73,6 @@ class ImageFilterViewController: UIViewController {
     }
     
     private func filterImage(_ image: UIImage) -> UIImage? {
-        imageLock.lock()
-        defer { imageLock.unlock() }
-        
         guard let cgImage = image.cgImage else { return nil }
         let ciImage = CIImage(cgImage: cgImage)
         
