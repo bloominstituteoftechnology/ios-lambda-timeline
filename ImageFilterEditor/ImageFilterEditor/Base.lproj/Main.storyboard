@@ -7,15 +7,15 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Image Filter View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ImageFilterViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="uIj-S7-YIn">
+                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="uIj-S7-YIn">
                                 <rect key="frame" x="12" y="441.5" width="390" height="210"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="ssl-Y9-zvV">
@@ -27,8 +27,11 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="I37-iB-pYd">
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="I37-iB-pYd">
                                                 <rect key="frame" x="113.5" y="0.0" width="278.5" height="31"/>
+                                                <connections>
+                                                    <action selector="gaussianChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="8sv-6h-7os"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
                                     </stackView>
@@ -43,6 +46,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="aFI-YF-qeL">
                                                 <rect key="frame" x="113.5" y="0.0" width="278.5" height="31"/>
+                                                <connections>
+                                                    <action selector="brightnessChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="cw8-ao-TiO"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
                                     </stackView>
@@ -57,6 +63,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.25" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="ljA-9k-aO5">
                                                 <rect key="frame" x="113" y="0.0" width="279" height="31"/>
+                                                <connections>
+                                                    <action selector="contrastChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="BHo-J6-noC"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
                                     </stackView>
@@ -71,6 +80,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="jhH-Eq-G0d">
                                                 <rect key="frame" x="112.5" y="0.0" width="279.5" height="31"/>
+                                                <connections>
+                                                    <action selector="saturationChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="ChA-zn-n4O"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
                                     </stackView>
@@ -85,6 +97,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-3.1415926535897931" maxValue="3.1415926535897931" translatesAutoresizingMaskIntoConstraints="NO" id="9ge-Cr-3EU">
                                                 <rect key="frame" x="112" y="0.0" width="280" height="31"/>
+                                                <connections>
+                                                    <action selector="hueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="ukI-4P-nFZ"/>
+                                                </connections>
                                             </slider>
                                         </subviews>
                                     </stackView>
@@ -93,7 +108,7 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fZm-cF-qwQ">
                                 <rect key="frame" x="0.0" y="88" width="414" height="313.5"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rdU-Ej-61t">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rdU-Ej-61t">
                                 <rect key="frame" x="190" y="731.5" width="34" height="30"/>
                                 <state key="normal" title="Save"/>
                                 <connections>
@@ -132,7 +147,10 @@
                         <outlet property="contrastSlider" destination="ljA-9k-aO5" id="dlk-Uw-Aho"/>
                         <outlet property="guassianBlurSlider" destination="I37-iB-pYd" id="wwk-dJ-Lok"/>
                         <outlet property="hueSlider" destination="9ge-Cr-3EU" id="rgy-Nd-4ay"/>
+                        <outlet property="imageView" destination="fZm-cF-qwQ" id="NBa-Bv-rRE"/>
                         <outlet property="saturationSlider" destination="jhH-Eq-G0d" id="1IO-vs-aa0"/>
+                        <outlet property="saveButton" destination="rdU-Ej-61t" id="ZEL-q0-b5B"/>
+                        <outlet property="sliderStackView" destination="uIj-S7-YIn" id="Oh1-Ld-BX9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
