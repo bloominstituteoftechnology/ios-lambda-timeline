@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Image Post View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ImagePostViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -42,8 +42,11 @@
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="1Nk-2d-JOk">
+                                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="1Nk-2d-JOk">
                                                                         <rect key="frame" x="109" y="0.0" width="297" height="31"/>
+                                                                        <connections>
+                                                                            <action selector="brightnessChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="niR-fG-ZQf"/>
+                                                                        </connections>
                                                                     </slider>
                                                                 </subviews>
                                                             </stackView>
@@ -56,8 +59,11 @@
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="THO-Ud-eTV">
+                                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.29999999999999999" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="THO-Ud-eTV">
                                                                         <rect key="frame" x="108.5" y="0.0" width="297.5" height="31"/>
+                                                                        <connections>
+                                                                            <action selector="contrastChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="fXK-Nl-d86"/>
+                                                                        </connections>
                                                                     </slider>
                                                                 </subviews>
                                                             </stackView>
@@ -70,8 +76,11 @@
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="lNT-UM-bde">
+                                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="2" translatesAutoresizingMaskIntoConstraints="NO" id="lNT-UM-bde">
                                                                         <rect key="frame" x="109" y="0.0" width="297" height="31"/>
+                                                                        <connections>
+                                                                            <action selector="saturationChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="DqZ-MD-n6l"/>
+                                                                        </connections>
                                                                     </slider>
                                                                 </subviews>
                                                             </stackView>
@@ -80,6 +89,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xvn-wj-Z45">
                                                         <rect key="frame" x="163" y="124" width="78" height="74"/>
                                                         <state key="normal" title="Save Photo"/>
+                                                        <connections>
+                                                            <action selector="savePhotoPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Kbw-fK-EEv"/>
+                                                        </connections>
                                                     </button>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3kY-ty-def" userLabel="Blank Space">
                                                         <rect key="frame" x="11" y="222" width="382" height="128"/>
@@ -109,8 +121,18 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="tL5-pg-B0G">
-                        <barButtonItem key="rightBarButtonItem" title="Choose Photo" id="lI4-4l-Uv6"/>
+                        <barButtonItem key="rightBarButtonItem" title="Choose Photo" id="lI4-4l-Uv6">
+                            <connections>
+                                <action selector="savePhotoPressed:" destination="BYZ-38-t0r" id="3eJ-SD-9Gt"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="brightnessSlider" destination="1Nk-2d-JOk" id="QE0-oU-1Ag"/>
+                        <outlet property="contrastSlider" destination="THO-Ud-eTV" id="0Bt-fx-2o4"/>
+                        <outlet property="imageView" destination="f6W-LU-EXh" id="0Fn-kg-McM"/>
+                        <outlet property="saturationSlider" destination="lNT-UM-bde" id="6UG-zg-oCy"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
