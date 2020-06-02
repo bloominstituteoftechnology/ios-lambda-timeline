@@ -10,7 +10,7 @@
         <!--Voice Comments-->
         <scene sceneID="P3O-dV-8NJ">
             <objects>
-                <viewController id="Vgq-rY-zUq" sceneMemberID="viewController">
+                <viewController id="Vgq-rY-zUq" customClass="AudioRecorderController" customModule="AudioComments" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="22d-EK-253">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -79,39 +79,29 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j8K-UM-mtx">
-                                <rect key="frame" x="0.0" y="813" width="414" height="83"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FbI-2B-cPZ">
-                                        <rect key="frame" x="40" y="21" width="17" height="41"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
-                                        <state key="normal" image="mic.fill" catalog="system"/>
-                                        <state key="selected" image="stop.fill" catalog="system"/>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="FbI-2B-cPZ" secondAttribute="bottom" constant="21" id="FCn-eS-q8e"/>
-                                    <constraint firstItem="FbI-2B-cPZ" firstAttribute="leading" secondItem="j8K-UM-mtx" secondAttribute="leading" constant="40" id="PGn-il-s8t"/>
-                                    <constraint firstItem="FbI-2B-cPZ" firstAttribute="top" secondItem="j8K-UM-mtx" secondAttribute="top" constant="21" id="aaE-lK-Jgy"/>
-                                </constraints>
-                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FbI-2B-cPZ">
+                                <rect key="frame" x="40" y="813" width="17" height="41"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                <state key="normal" image="mic.fill" catalog="system"/>
+                                <state key="selected" image="stop.fill" catalog="system"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="hzf-hS-eK7" firstAttribute="trailing" secondItem="j8K-UM-mtx" secondAttribute="trailing" id="6le-dB-TzZ"/>
                             <constraint firstItem="NqC-k1-hFN" firstAttribute="leading" secondItem="hzf-hS-eK7" secondAttribute="leading" id="7EC-tV-YA5"/>
-                            <constraint firstItem="j8K-UM-mtx" firstAttribute="top" secondItem="NqC-k1-hFN" secondAttribute="bottom" id="8jJ-bc-9QI"/>
-                            <constraint firstItem="j8K-UM-mtx" firstAttribute="leading" secondItem="hzf-hS-eK7" secondAttribute="leading" id="BAl-ei-v4M"/>
                             <constraint firstItem="NqC-k1-hFN" firstAttribute="trailing" secondItem="hzf-hS-eK7" secondAttribute="trailing" id="ERn-G1-SBU"/>
-                            <constraint firstAttribute="bottom" secondItem="j8K-UM-mtx" secondAttribute="bottom" id="KgF-gk-DYm"/>
-                            <constraint firstItem="j8K-UM-mtx" firstAttribute="centerX" secondItem="22d-EK-253" secondAttribute="centerX" id="UrC-bG-vuX"/>
+                            <constraint firstItem="hzf-hS-eK7" firstAttribute="bottom" secondItem="FbI-2B-cPZ" secondAttribute="bottom" constant="8" id="FGb-62-kDR"/>
+                            <constraint firstItem="FbI-2B-cPZ" firstAttribute="leading" secondItem="hzf-hS-eK7" secondAttribute="leading" constant="40" id="TNw-Ya-pRy"/>
                             <constraint firstItem="hzf-hS-eK7" firstAttribute="bottom" secondItem="NqC-k1-hFN" secondAttribute="bottom" constant="49" id="eGV-25-BrA"/>
                             <constraint firstItem="NqC-k1-hFN" firstAttribute="top" secondItem="hzf-hS-eK7" secondAttribute="top" id="yFV-wJ-UuM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hzf-hS-eK7"/>
                     </view>
                     <navigationItem key="navigationItem" title="Voice Comments" id="8IK-On-K7g"/>
+                    <connections>
+                        <outlet property="recordButton" destination="FbI-2B-cPZ" id="Mo7-hp-H1z"/>
+                        <outlet property="tableView" destination="NqC-k1-hFN" id="cra-Ol-JbH"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nxz-eQ-HRp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
