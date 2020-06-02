@@ -18,7 +18,7 @@ class AudioCommentsTableViewController: UIViewController {
         return formatting
     }()
     
-    let audioPlayerController = AudioPlayerController()
+    private let audioPlayerController = AudioPlayerController()
     private let audioRecorderController = AudioRecorderController()
     
     override func viewDidLoad() {
@@ -32,6 +32,7 @@ class AudioCommentsTableViewController: UIViewController {
         if segue.identifier == "AddAudioCommentSegue" {
             guard let createVC = segue.destination as? AudioCommentCreationViewController else { return }
             
+            createVC.audioPlayerController = audioPlayerController
             createVC.audioRecorderController = audioRecorderController
             createVC.timeIntervalFormatter = timeIntervalFormatter
         }

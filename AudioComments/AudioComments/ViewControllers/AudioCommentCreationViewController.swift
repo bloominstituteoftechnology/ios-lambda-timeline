@@ -15,14 +15,6 @@ class AudioCommentCreationViewController: UIViewController {
     
     var timeIntervalFormatter: DateComponentsFormatter?
     
-//    private lazy var timeIntervalFormatter: DateComponentsFormatter = {
-//        let formatting = DateComponentsFormatter()
-//        formatting.unitsStyle = .positional
-//        formatting.zeroFormattingBehavior = .pad
-//        formatting.allowedUnits = [.minute, .second]
-//        return formatting
-//    }()
-    
     var audioPlayerController: AudioPlayerController?
     var audioRecorderController: AudioRecorderController?
     
@@ -64,6 +56,7 @@ class AudioCommentCreationViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func togglePlayer(_ sender: Any) {
+        togglePlayback()
     }
     
     @IBAction func toggleRecording(_ sender: Any) {
@@ -78,15 +71,42 @@ class AudioCommentCreationViewController: UIViewController {
         startTimer()
     }
     
+    private func togglePlayback() {
+        audioPlayerController?.togglePlayback()
+        audioPlayerController?.audioPlayer?.delegate = self
+        startTimer()
+    }
+    
     private func updateViews() {
         recordButton.isSelected = audioRecorderController?.audioRecorder?.isRecording ?? false
         
         if recordButton.isSelected {
-            guard let duration = audioRecorderController?.audioRecorder?.currentTime else { return }
             playButton.isEnabled = false
+            
+            let duration = audioRecorderController?.audioRecorder?.currentTime ?? 0
+            
             durationLabel.text = timeIntervalFormatter?.string(from: duration)
         } else if !recordButton.isSelected {
             playButton.isEnabled = true
+        }
+        
+        playButton.isSelected = audioPlayerController?.audioPlayer?.isPlaying ?? false
+        
+        if playButton.isSelected {
+            recordButton.isEnabled = false
+            
+            let duration = audioPlayerController?.audioPlayer?.duration ?? 0
+            let elapsedTime = audioPlayerController?.audioPlayer?.currentTime ?? 0
+            let timeRemaining = round(duration) - elapsedTime
+            
+            elapsedTimeLabel.text = timeIntervalFormatter?.string(from: elapsedTime)
+            durationLabel.text = timeIntervalFormatter?.string(from: timeRemaining)
+            
+            timeSlider.minimumValue = 0
+            timeSlider.maximumValue = Float(duration)
+            timeSlider.value = Float(elapsedTime)
+        } else if !playButton.isSelected {
+            recordButton.isEnabled = true
         }
     }
 }
@@ -114,9 +134,14 @@ extension AudioCommentCreationViewController: AVAudioRecorderDelegate {
         if let recordingURL = audioRecorderController?.recordingURL {
             print("Finished recording: \(recordingURL.path)")
             
-            // TODO: Set audio player to recordingURL
+            do {
+                audioPlayerController?.audioPlayer = try AVAudioPlayer(contentsOf: recordingURL)
+            } catch {
+                print("Error setting audio player: \(error)")
+            }
         }
         
+        stopTimer()
         updateViews()
     }
     
@@ -125,6 +150,22 @@ extension AudioCommentCreationViewController: AVAudioRecorderDelegate {
             print("Error recording: \(error)")
         }
         
+        stopTimer()
+        updateViews()
+    }
+}
+
+extension AudioCommentCreationViewController: AVAudioPlayerDelegate {
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        updateViews()
+    }
+    
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        if let error = error {
+            print("Error during playback: \(error)")
+        }
+        
+        stopTimer()
         updateViews()
     }
 }
