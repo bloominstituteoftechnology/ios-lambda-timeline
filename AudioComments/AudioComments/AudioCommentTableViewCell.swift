@@ -19,7 +19,12 @@ class AudioCommentTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        timeElapsedLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeElapsedLabel.font.pointSize,
+                                                          weight: .regular)
+        timeRemainingLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeRemainingLabel.font.pointSize,
+                                                                   weight: .regular)
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
