@@ -139,7 +139,11 @@
                         <viewLayoutGuide key="safeArea" id="zDY-Ie-uel"/>
                     </view>
                     <navigationItem key="navigationItem" id="xtH-X3-4k0">
-                        <barButtonItem key="rightBarButtonItem" title="Choose Photo" id="p1f-HS-Xjm"/>
+                        <barButtonItem key="rightBarButtonItem" title="Choose Photo" id="p1f-HS-Xjm">
+                            <connections>
+                                <action selector="choosePhotoButton:" destination="tEI-OW-Jfz" id="Dpt-pN-gOb"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="blurRadiusSlider" destination="QUB-xy-LJY" id="afE-dj-HS4"/>

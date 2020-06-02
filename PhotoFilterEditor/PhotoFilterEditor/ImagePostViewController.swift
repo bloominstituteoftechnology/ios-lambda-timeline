@@ -105,6 +105,32 @@ class ImagePostViewController: UIViewController {
         
     }
     
+    private func saveAndFilterPhoto() {
+        guard let originalImage = originalImage else { return }
+        
+        guard let processedImage = filterImage(originalImage.flattened) else { return }
+        
+        PHPhotoLibrary.requestAuthorization { (status) in
+            guard status == .authorized else { return } // TODO: Handle other cases
+            //        as long as we are authorized then we are able to do changes
+            PHPhotoLibrary.shared().performChanges({
+                
+                PHAssetChangeRequest.creationRequestForAsset(from: processedImage)
+                
+            }) { (success, error) in
+                if let error = error {
+                    print("error saving photo: \(error)")
+                    return
+                }
+                DispatchQueue.main.async {
+                    print("saved photo")
+                }
+            }
+        }
+        
+        
+    }
+    
     private func updateViews() {
         guard let scaledImage = scaledImage else { return }
         imageView.image = filterImage(scaledImage)
@@ -130,6 +156,10 @@ class ImagePostViewController: UIViewController {
     }
     
     @IBAction func savePhotoButton(_ sender: UIButton) {
+        saveAndFilterPhoto()
+    }
+    @IBAction func choosePhotoButton(_ sender: UIBarButtonItem) {
+presentPickerType()
     }
     /*
      // MARK: - Navigation
@@ -149,11 +179,11 @@ extension ImagePostViewController: UIImagePickerControllerDelegate {
         if let image = info[.originalImage] as? UIImage {
             originalImage = image
         }
-        dismiss(animated: false)
+         picker.dismiss(animated: true)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true)
+       picker.dismiss(animated: true)
     }
     
 }
