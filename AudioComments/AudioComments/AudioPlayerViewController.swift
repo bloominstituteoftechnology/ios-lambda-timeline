@@ -10,11 +10,31 @@ import UIKit
 
 class AudioPlayerViewController: UIViewController {
 
+    @IBOutlet private var playButton: UIButton!
+    @IBOutlet private var audioSlider: UISlider!
+    @IBOutlet private var recordingButton: UIButton!
+    @IBOutlet weak var currentTime: UILabel!
+    @IBOutlet weak var durationTime: UILabel!
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
+    
+        @IBAction func togglePlayback(_ sender: Any) {
+          
+        }
+        
+        @IBAction func updateCurrentTime(_ sender: UISlider) {
+            
+        }
+        
+        @IBAction func toggleRecording(_ sender: Any) {
+       
+        }
     
 
     /*
