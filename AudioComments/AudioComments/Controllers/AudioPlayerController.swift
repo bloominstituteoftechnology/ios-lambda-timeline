@@ -12,7 +12,7 @@ import AVFoundation
 class AudioPlayerController {
     var audioPlayer: AVAudioPlayer?
     
-    var isPlaying: Bool {
+    private var isPlaying: Bool {
         audioPlayer?.isPlaying ?? false
     }
     

@@ -8,7 +8,6 @@
 
 import Foundation
 import AVFoundation
-import UIKit
 
 protocol AudioRecorderControllerDelegate {
     func didNotRecievePermission() -> Void
@@ -20,7 +19,7 @@ class AudioRecorderController {
     var recordingURL: URL?
     var audioRecorder: AVAudioRecorder?
     
-    var isRecording: Bool {
+    private var isRecording: Bool {
         audioRecorder?.isRecording ?? false
     }
     
@@ -62,8 +61,11 @@ class AudioRecorderController {
     }
     
     private func startRecording() {
-        guard let audioFormat = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1) else { return }
-        let recordingURL = createNewRecordingURL()
+        if recordingURL == nil {
+            recordingURL = createNewRecordingURL()
+        }
+        guard let audioFormat = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1),
+            let recordingURL = recordingURL else { return }
         
         do {
             audioRecorder = try AVAudioRecorder(url: recordingURL, format: audioFormat)

@@ -36,6 +36,12 @@ class AudioCommentCreationViewController: UIViewController {
         updateViews()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        audioRecorderController?.recordingURL = nil
+    }
+    
     // MARK: - Timer
     
     func startTimer() {
