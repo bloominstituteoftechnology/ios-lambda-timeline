@@ -14,6 +14,9 @@ import Photos
 class ImagePostViewController: UIViewController {
     
     // MARK: - Properites
+   let sharpenFilter = CIFilter(name: "CISharpenLuminance")
+   let vignetteFilter = CIFilter(name: "CIVignette")
+    
     private let context = CIContext(options: nil)
     private var originalImage: UIImage? {
         didSet {
@@ -21,210 +24,140 @@ class ImagePostViewController: UIViewController {
                 scaledImage = nil
                 return
             }
-            
             var scaledSize = imageView.bounds.size
             let scale = UIScreen.main.scale
             scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
             scaledImage = originalImage.imageByScaling(toSize: scaledSize)
         }
     }
-    private var scaledImage: UIImage? {
-        didSet {
-            updateViews()
-        }
-    }
+   private var scaledImage: UIImage? {
+       didSet {
+           updateViews()
+       }
+   }
     
     // MARK: - Outlets
     @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var posterizeSlider: UISlider!
     @IBOutlet weak var sepiaSlider: UISlider!
-    @IBOutlet weak var luminanceSlider: UISlider!
-    @IBOutlet weak var radiusSlider: UISlider!
-    @IBOutlet weak var monoSlider: UISlider!
-    @IBOutlet weak var chromeSlider: UISlider!
-    
+    @IBOutlet weak var posterizeSlider: UISlider!
+    @IBOutlet weak var blurSlider: UISlider!
+    @IBOutlet weak var sharpenSlider: UISlider!
+    @IBOutlet weak var vignetteSlider: UISlider!
     
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         originalImage = imageView.image
+        let sepiaFilter = CIFilter.sepiaTone()
+        
+        print(sepiaFilter.attributes)
     }
     
-    private func updateViews() {
+    
+     private func updateViews() {
+           guard let scaledImage = scaledImage else {return}
+           imageView.image = filterImage(scaledImage)
+       }
+    
+    private func filterImage(_ image: UIImage) -> UIImage? {
+        
+        // UIImage -> CGImage -> CIImage
+        guard let cgImage = image.cgImage else {return nil}
+        let ciImage = CIImage(cgImage: cgImage)
+    
+        // Apply the Sepia Filter
+        let sepiafilter = CIFilter.sepiaTone()
+        sepiafilter.inputImage = ciImage
+        sepiafilter.intensity = sepiaSlider.value
+        guard let sepiaImage = sepiafilter.outputImage else { return nil }
+        
+        // Apply the Posterize Filter
+        let posterizeFilter = CIFilter.colorPosterize()
+        posterizeFilter.inputImage = sepiaImage
+        posterizeFilter.levels = posterizeSlider.value
+        guard let posterizeImage = posterizeFilter.outputImage else { return nil }
+        
+        // Apply the Blur Filter
+        let blurFilter = CIFilter.gaussianBlur()
+        blurFilter.inputImage = posterizeImage
+        blurFilter.radius = blurSlider.value
+        guard let blurImage = blurFilter.outputImage else { return nil }
+        
+        // Apply the Sharpen Filter
+        let sharpenFilter = CIFilter.sharpenLuminance()
+        sharpenFilter.inputImage = blurImage
+        sharpenFilter.sharpness = sharpenSlider.value
+        guard let sharpenImage = sharpenFilter.outputImage else { return nil }
+        
+        // Apply the Vignette Filter
+        let vignetteFilter = CIFilter.vignette()
+        vignetteFilter.inputImage = sharpenImage
+        vignetteFilter.intensity = vignetteSlider.value
+        vignetteFilter.radius = vignetteSlider.value
+        guard let vignetteImage = vignetteFilter.outputImage else { return nil }
+        
+        
+        guard let outputCGImage = context.createCGImage(vignetteImage, from: CGRect(origin: .zero, size: image.size)) else {return image}
+        return UIImage(cgImage: outputCGImage)
     }
     
-    @IBAction func choosePhotoButtonPressed(_ sender: Any) {
-        // TODO: show the photo picker so we can choose on-device photos
-        // UIImagePickerController + Delegate
+    // MARK: - Slider Events
+    @IBAction func sepiaChanged(_ sender: UISlider) {
+        updateViews()
+    }
+    @IBAction func posterizeChanged(_ sender: UISlider) {
+        updateViews()
+    }
+    @IBAction func blurChanged(_ sender: UISlider) {
+        updateViews()
+    }
+    @IBAction func sharpenChanged(_ sender: UISlider) {
+        updateViews()
+    }
+    @IBAction func vignetteChanged(_ sender: Any) {
+        updateViews()
+    }
+    
+    // MARK: - Actions
+    @IBAction func choosePhotoButtonPressed(_ sender: UIBarButtonItem) {
         presentImagePickerController()
     }
-    
     private func presentImagePickerController() {
-        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
-            print("Error: the photo library is not available")
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else { print("Error: the photo libary is not available.")
             return
         }
+        
         let imagePicker = UIImagePickerController()
         imagePicker.sourceType = .photoLibrary
         imagePicker.delegate = self
         
         present(imagePicker, animated: true, completion: nil)
+        
     }
-    
-    @IBAction func savePhotoButtonPressed(_ sender: UIButton) {
-        // TODO: Save to photo library
-        saveAndFilterPhoto()
+    @IBAction func saveButtonPresset(_ sender: UIBarButtonItem) {
+          saveAndFilterPhoto()
     }
     
     private func saveAndFilterPhoto() {
-        guard let originalImage = originalImage?.flattened, let ciImage = CIImage(image: originalImage) else { return }
+        guard let originalImage = originalImage else { return }
+        guard let processedImage = filterImage(originalImage.flattened) else { return }
         
-    }
-    
-    
-    @IBAction func posterizeChanged(_ sender: Any) {
-        updatePosterizedImage()
-    }
-    
-    @IBAction func sepiaChanged(_ sender: Any) {
-        updateSepiaToneImage()
-    }
-    
-    @IBAction func luminanceRadiusChanged(_ sender: Any) {
-        updateLuminanceImage()
-    }
-    
-    @IBAction func luminanceChanged(_ sender: Any) {
-        updateLuminanceImage()
-    }
-    
-    @IBAction func monoChanged(_ sender: Any) {
-        updateMonoEffect()
-    }
-    
-    @IBAction func chromeChanged(_ sender: Any ) {
-        updateChromeEffect()
-    }
-    
-    
-    
-    func posterizeImage(_ image: UIImage) -> UIImage? {
-        
-        // UIImage > CGImage > CIImage
-        guard let cgImage = image.cgImage else { return nil }
-        let ciImage = CIImage(cgImage: cgImage)
-        let filter = CIFilter.colorPosterize()
-        filter.inputImage = ciImage
-        filter.levels = posterizeSlider.value
-        
-        guard let outputCIImage = filter.outputImage else { return nil }
-        
-        // Render the image (apply the filter to the image)
-        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: CGPoint.zero, size: image.size)) else { return nil }
-        // CIImage > CGImage > UIImage
-        return UIImage(cgImage: outputCGImage)
-    }
-    
-    func sepiaToneImage(_ image: UIImage) -> UIImage? {
-        guard let cgImage = image.cgImage else { return nil }
-        let ciImage = CIImage(cgImage: cgImage)
-        
-        let filter = CIFilter.sepiaTone()
-        filter.inputImage = ciImage
-        filter.intensity = sepiaSlider.value
-        
-        guard let outputCIImage = filter.outputImage else { return nil }
-        
-        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else { return nil }
-        
-        return UIImage(cgImage: outputCGImage)
-    }
-    
-    func sharpenLuminanceImage(_ image: UIImage) -> UIImage? {
-           guard let cgImage = image.cgImage else { return nil }
-           let ciImage = CIImage(cgImage: cgImage)
-           
-           let filter = CIFilter.sharpenLuminance()
-           filter.inputImage = ciImage
-           filter.sharpness = luminanceSlider.value
-           filter.radius = radiusSlider.value
-           
-           
-           guard let outputCIImage = filter.outputImage else { return nil }
-           
-           guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else { return nil }
-           
-           return UIImage(cgImage: outputCGImage)
-       }
-    
-    func monoEffectImage(_ image: UIImage) -> UIImage? {
-        guard let cgImage = image.cgImage else { return nil }
-        let ciImage = CIImage(cgImage: cgImage)
-        
-        let filter = CIFilter.photoEffectMono()
-        filter.inputImage = ciImage
-        
-        guard let outputCIImage = filter.outputImage else {return nil }
-        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else { return nil }
-        
-        return UIImage(cgImage: outputCGImage)
-    }
-    
-    func chromeEffectImage(_ image: UIImage) -> UIImage? {
-        guard let cgImage = image.cgImage else { return nil }
-        let ciImage = CIImage(cgImage: cgImage)
-        
-        let filter = CIFilter.photoEffectChrome()
-        filter.inputImage = ciImage
-        
-        guard let outputCIImage = filter.outputImage else {return nil }
-        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else { return nil }
-        
-        return UIImage(cgImage: outputCGImage)
-    }
-    
-    func updatePosterizedImage() {
-        if let scaledImage = scaledImage {
-            imageView.image = posterizeImage(scaledImage)
-        } else {
-            imageView.image = nil
+        PHPhotoLibrary.requestAuthorization { (status) in
+            guard status == .authorized else { return } // TODO: Handle other cases
+            PHPhotoLibrary.shared().performChanges({
+                PHAssetChangeRequest.creationRequestForAsset(from: processedImage)
+            }) { (success, error) in
+                if let error = error {
+                    print("Error saving photo: \(error)")
+                    return
+                }
+                DispatchQueue.main.async {
+                    print("Saved photo")
+                }
+            }
         }
     }
-    
-    func updateSepiaToneImage() {
-        if let scaledImage = scaledImage {
-            imageView.image = sepiaToneImage(scaledImage)
-        } else {
-            imageView.image = nil
-        }
-    }
-    
-    func updateLuminanceImage() {
-        if let scaledImage = scaledImage {
-            imageView.image = sharpenLuminanceImage(scaledImage)
-        } else {
-            imageView.image = nil
-        }
-    }
-    
-    func updateMonoEffect() {
-        if let scaledImage = scaledImage {
-                   imageView.image = monoEffectImage(scaledImage)
-               } else {
-                   imageView.image = nil
-               }
-    }
-    
-    func updateChromeEffect() {
-        if let scaledImage = scaledImage {
-            imageView.image = chromeEffectImage(scaledImage)
-        } else {
-            imageView.image = nil
-        }
-    }
-    
-    
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate {
