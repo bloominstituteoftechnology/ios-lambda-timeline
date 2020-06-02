@@ -48,6 +48,9 @@
                                                             <rect key="frame" x="359" y="0.0" width="15" height="30"/>
                                                             <state key="normal" image="play.fill" catalog="system"/>
                                                             <state key="selected" image="pause.fill" catalog="system"/>
+                                                            <connections>
+                                                                <action selector="togglePlayback:" destination="jDy-Uq-irb" eventType="touchUpInside" id="7qS-IS-dZD"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                 </stackView>
@@ -58,6 +61,12 @@
                                                 <constraint firstItem="b29-nY-743" firstAttribute="leading" secondItem="tnu-bb-oeu" secondAttribute="leading" constant="20" id="seV-0v-ej4"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="elapsedTimeLabel" destination="cgJ-D7-IjZ" id="fjA-7n-vsx"/>
+                                            <outlet property="playButtton" destination="h1d-4M-JoH" id="ZUa-VU-0Fm"/>
+                                            <outlet property="timeRemainingLabel" destination="ry4-G6-lRH" id="sTx-X8-J1I"/>
+                                            <outlet property="timeSlider" destination="K31-Zq-h6I" id="PAQ-wR-9Fd"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -78,6 +87,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="ayC-Je-t9C" id="a34-BE-BOT"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -152,7 +164,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="sPS-CP-12m"/>
                     </view>
-                    <navigationItem key="navigationItem" id="fk8-pc-Adk"/>
+                    <navigationItem key="navigationItem" id="fk8-pc-Adk">
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="xlo-e0-YBK">
+                            <connections>
+                                <action selector="saveAudioComment:" destination="hjV-ln-a7o" id="2r3-Nf-1X8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="durationLabel" destination="vXg-ku-0Gb" id="tSI-i5-oav"/>
                         <outlet property="elapsedTimeLabel" destination="TPi-fS-Ljz" id="tsp-Tn-vgu"/>

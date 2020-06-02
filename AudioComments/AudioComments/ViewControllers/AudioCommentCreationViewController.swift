@@ -9,7 +9,12 @@
 import UIKit
 import AVFoundation
 
+protocol AudioCommentCreationDelegate {
+    func didSaveAudioComment(_ url: URL) -> Void
+}
+
 class AudioCommentCreationViewController: UIViewController {
+    var delegate: AudioCommentCreationDelegate?
     
     var timer: Timer?
     
@@ -69,18 +74,42 @@ class AudioCommentCreationViewController: UIViewController {
         toggleRecording()
     }
     
+    @IBAction func saveAudioComment(_ sender: Any) {
+        saveAudioComment()
+    }
+    
     // MARK: - Private functions
     
     private func toggleRecording() {
         audioRecorderController?.toggleRecording()
         audioRecorderController?.audioRecorder?.delegate = self
-        startTimer()
+        updateViews()
+        
+        switch recordButton.isSelected {
+        case true:
+            startTimer()
+        case false:
+            stopTimer()
+        }
     }
     
     private func togglePlayback() {
         audioPlayerController?.togglePlayback()
         audioPlayerController?.audioPlayer?.delegate = self
-        startTimer()
+        updateViews()
+        
+        switch playButton.isSelected {
+        case true:
+            startTimer()
+        case false:
+            stopTimer()
+        }
+    }
+    
+    private func saveAudioComment() {
+        guard let recordingURL = audioRecorderController?.recordingURL else { return }
+        delegate?.didSaveAudioComment(recordingURL)
+        navigationController?.popViewController(animated: true)
     }
     
     private func updateViews() {
@@ -163,6 +192,7 @@ extension AudioCommentCreationViewController: AVAudioRecorderDelegate {
 
 extension AudioCommentCreationViewController: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        stopTimer()
         updateViews()
     }
     
