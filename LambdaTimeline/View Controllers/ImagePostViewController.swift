@@ -32,9 +32,7 @@ class ImagePostViewController: ShiftableViewController {
         setImageViewHeight(with: image.ratio)
         
         originalImage = image
-        imageView.image = originalImage
-        
-        
+
         chooseImageButton.setTitle("", for: [])
     }
     
@@ -152,9 +150,7 @@ class ImagePostViewController: ShiftableViewController {
         
         //Render image
         guard let outputCGImage = context.createCGImage(sharpenFilterImage, from: CGRect(origin: .zero, size: image.size)) else { return nil }
-        
-        print(filter.attributes, blurFilter.attributes, sharpenFilter.attributes)
-        
+                
         return UIImage(cgImage: outputCGImage)
     }
     
@@ -170,6 +166,8 @@ class ImagePostViewController: ShiftableViewController {
     
     var originalImage: UIImage? {
         didSet {
+            
+            imageView.image = originalImage
             
             guard let originalImage = originalImage else {
                 scaledImage = nil // clear out image if original image fails
@@ -240,8 +238,8 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         picker.dismiss(animated: true, completion: nil)
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        
-        imageView.image = image
+        originalImage = image
+        imageView.image = originalImage
         
         setImageViewHeight(with: image.ratio)
     }
