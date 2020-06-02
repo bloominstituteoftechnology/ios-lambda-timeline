@@ -13,9 +13,6 @@ import Photos
 
 class ImagePostViewController: UIViewController {
     
-    // MARK: - Properites
-   let sharpenFilter = CIFilter(name: "CISharpenLuminance")
-   let vignetteFilter = CIFilter(name: "CIVignette")
     
     private let context = CIContext(options: nil)
     private var originalImage: UIImage? {
