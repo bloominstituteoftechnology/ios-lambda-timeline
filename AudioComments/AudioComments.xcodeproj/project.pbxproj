@@ -12,9 +12,11 @@
 		27923DB52486E2CE002EC221 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27923DB32486E2CE002EC221 /* Main.storyboard */; };
 		27923DB72486E2D4002EC221 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27923DB62486E2D4002EC221 /* Assets.xcassets */; };
 		27923DBA2486E2D4002EC221 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27923DB82486E2D4002EC221 /* LaunchScreen.storyboard */; };
-		27923DC22486E821002EC221 /* AudioRecorderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27923DC12486E821002EC221 /* AudioRecorderController.swift */; };
-		27923DC62486F553002EC221 /* AudioCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27923DC52486F553002EC221 /* AudioCommentTableViewCell.swift */; };
-		27923DC82486F67D002EC221 /* RecordingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27923DC72486F67D002EC221 /* RecordingModel.swift */; };
+		27923DCE24870234002EC221 /* AudioModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27923DCD24870234002EC221 /* AudioModel.swift */; };
+		27923DD02487024B002EC221 /* AudioController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27923DCF2487024B002EC221 /* AudioController.swift */; };
+		27923DD2248702A4002EC221 /* AudioCommentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27923DD1248702A4002EC221 /* AudioCommentTableViewController.swift */; };
+		27923DD424870312002EC221 /* AudioClipTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27923DD324870312002EC221 /* AudioClipTableViewCell.swift */; };
+		27923DD6248703DC002EC221 /* RecordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27923DD5248703DC002EC221 /* RecordingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,9 +27,11 @@
 		27923DB62486E2D4002EC221 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27923DB92486E2D4002EC221 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		27923DBB2486E2D4002EC221 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		27923DC12486E821002EC221 /* AudioRecorderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderController.swift; sourceTree = "<group>"; };
-		27923DC52486F553002EC221 /* AudioCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCommentTableViewCell.swift; sourceTree = "<group>"; };
-		27923DC72486F67D002EC221 /* RecordingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingModel.swift; sourceTree = "<group>"; };
+		27923DCD24870234002EC221 /* AudioModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioModel.swift; sourceTree = "<group>"; };
+		27923DCF2487024B002EC221 /* AudioController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioController.swift; sourceTree = "<group>"; };
+		27923DD1248702A4002EC221 /* AudioCommentTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCommentTableViewController.swift; sourceTree = "<group>"; };
+		27923DD324870312002EC221 /* AudioClipTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioClipTableViewCell.swift; sourceTree = "<group>"; };
+		27923DD5248703DC002EC221 /* RecordingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,10 +66,12 @@
 			children = (
 				27923DAD2486E2CE002EC221 /* AppDelegate.swift */,
 				27923DAF2486E2CE002EC221 /* SceneDelegate.swift */,
-				27923DC12486E821002EC221 /* AudioRecorderController.swift */,
-				27923DC72486F67D002EC221 /* RecordingModel.swift */,
-				27923DC52486F553002EC221 /* AudioCommentTableViewCell.swift */,
 				27923DB32486E2CE002EC221 /* Main.storyboard */,
+				27923DCD24870234002EC221 /* AudioModel.swift */,
+				27923DCF2487024B002EC221 /* AudioController.swift */,
+				27923DD1248702A4002EC221 /* AudioCommentTableViewController.swift */,
+				27923DD324870312002EC221 /* AudioClipTableViewCell.swift */,
+				27923DD5248703DC002EC221 /* RecordingViewController.swift */,
 				27923DB62486E2D4002EC221 /* Assets.xcassets */,
 				27923DB82486E2D4002EC221 /* LaunchScreen.storyboard */,
 				27923DBB2486E2D4002EC221 /* Info.plist */,
@@ -144,11 +150,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27923DD424870312002EC221 /* AudioClipTableViewCell.swift in Sources */,
 				27923DAE2486E2CE002EC221 /* AppDelegate.swift in Sources */,
-				27923DC22486E821002EC221 /* AudioRecorderController.swift in Sources */,
-				27923DC62486F553002EC221 /* AudioCommentTableViewCell.swift in Sources */,
+				27923DD2248702A4002EC221 /* AudioCommentTableViewController.swift in Sources */,
+				27923DD6248703DC002EC221 /* RecordingViewController.swift in Sources */,
 				27923DB02486E2CE002EC221 /* SceneDelegate.swift in Sources */,
-				27923DC82486F67D002EC221 /* RecordingModel.swift in Sources */,
+				27923DD02487024B002EC221 /* AudioController.swift in Sources */,
+				27923DCE24870234002EC221 /* AudioModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
