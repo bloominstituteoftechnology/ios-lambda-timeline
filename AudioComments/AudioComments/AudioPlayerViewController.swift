@@ -7,9 +7,15 @@
 //
 
 import UIKit
-
+import AVFoundation
 class AudioPlayerViewController: UIViewController {
-
+    
+    var audioPlayer: AVAudioPlayer?
+    
+    var isPlayer: Bool {
+        return audioPlayer?.isPlaying ?? false
+    }
+    
     @IBOutlet private weak var sendButton: UIButton!
     @IBOutlet private var playButton: UIButton!
     @IBOutlet private var audioSlider: UISlider!
@@ -20,33 +26,34 @@ class AudioPlayerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
     @IBAction func sendButtonTapped(_ sender: Any) {
     }
-    @IBAction func togglePlayback(_ sender: Any) {
-          
-        }
-        
-        @IBAction func updateCurrentTime(_ sender: UISlider) {
-            
-        }
-        
-        @IBAction func toggleRecording(_ sender: Any) {
-       
-        }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func togglePlayback(_ sender: Any) {
+        
     }
-    */
-
+    
+    @IBAction func updateCurrentTime(_ sender: UISlider) {
+        
+    }
+    
+    @IBAction func toggleRecording(_ sender: Any) {
+        
+    }
+    
+    
+    /*
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
