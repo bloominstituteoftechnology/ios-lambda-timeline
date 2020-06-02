@@ -28,12 +28,12 @@ class ImagePostViewController: UIViewController {
             scaledImage = originalImage.imageByScaling(toSize: scaledSize)
         }
     }
+    
     var scaledImage: UIImage? {
         didSet {
             updateViews()
         }
     }
-    
     
     @IBOutlet weak var choosePhotoOutlet: UIButton!
     @IBOutlet weak var imageView: UIImageView!
