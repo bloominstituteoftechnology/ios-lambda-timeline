@@ -10,6 +10,7 @@ import UIKit
 
 class AudioPlayerViewController: UIViewController {
 
+    @IBOutlet private weak var sendButton: UIButton!
     @IBOutlet private var playButton: UIButton!
     @IBOutlet private var audioSlider: UISlider!
     @IBOutlet private var recordingButton: UIButton!
@@ -17,15 +18,15 @@ class AudioPlayerViewController: UIViewController {
     @IBOutlet weak var durationTime: UILabel!
     @IBOutlet weak var audioVisualizer: AudioVisualizer!
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-        @IBAction func togglePlayback(_ sender: Any) {
+    @IBAction func sendButtonTapped(_ sender: Any) {
+    }
+    @IBAction func togglePlayback(_ sender: Any) {
           
         }
         
