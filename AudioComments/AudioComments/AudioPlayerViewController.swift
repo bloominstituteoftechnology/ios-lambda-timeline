@@ -15,6 +15,7 @@ class AudioPlayerViewController: UIViewController {
     @IBOutlet private var recordingButton: UIButton!
     @IBOutlet weak var currentTime: UILabel!
     @IBOutlet weak var durationTime: UILabel!
+    @IBOutlet weak var audioVisualizer: AudioVisualizer!
     
     
     
