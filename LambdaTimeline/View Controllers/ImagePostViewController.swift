@@ -222,12 +222,7 @@ class ImagePostViewController: ShiftableViewController {
     @IBAction func sharpnessChanged(_ sender: Any) {
         updateScaleImage()
     }
-    
 }
-
-
-
-
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
