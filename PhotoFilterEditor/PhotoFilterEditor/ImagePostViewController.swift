@@ -12,26 +12,28 @@ import CoreImage.CIFilterBuiltins
 import Photos
 
 class ImagePostViewController: UIViewController {
-
+    
     let context = CIContext(options: nil)
     
-    var originalImage: UIImage? {
+    private var originalImage: UIImage? {
         didSet {
-            guard let originalImage = originalImage else { return }
-            
-            var scaleSize = imageView.bounds.size
-            var scale = UIScreen.main.scale
-            scaleSize = CGSize(width: scaleSize.width * scale, height: scaleSize.height * scale)
+            //            updateViews()
+            guard let originalImage = originalImage else {
+                scaledImage = nil // clear out image if set to nil
+                return
+            }
+            var scaledSize = imageView.bounds.size
+            let scale = UIScreen.main.scale
+            scaledSize = CGSize(width: scaledSize.width * scale, height: scaledSize.height * scale)
             scaledImage = originalImage.imageByScaling(toSize: scaledSize)
         }
-        
     }
- var scaledImage: UIImage? {
+    var scaledImage: UIImage? {
         didSet {
             updateViews()
         }
     }
-
+    
     
     @IBOutlet weak var choosePhotoOutlet: UIButton!
     @IBOutlet weak var imageView: UIImageView!
@@ -44,7 +46,7 @@ class ImagePostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       
+        
         choosePhotoOutlet.layer.cornerRadius = 12
         // Do any additional setup after loading the view.
         let filter = CIFilter.colorControls()
@@ -84,7 +86,7 @@ class ImagePostViewController: UIViewController {
                                                         from: CGRect(origin: .zero, size: image.size)) else {
                                                             return nil
         }
-
+        
         return UIImage(cgImage: outputCGImage)
     }
     
@@ -130,15 +132,15 @@ class ImagePostViewController: UIViewController {
     @IBAction func savePhotoButton(_ sender: UIButton) {
     }
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate {
@@ -147,11 +149,11 @@ extension ImagePostViewController: UIImagePickerControllerDelegate {
         if let image = info[.originalImage] as? UIImage {
             originalImage = image
         }
-          dismiss(animated: false)
+        dismiss(animated: false)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-          dismiss(animated: true)
+        dismiss(animated: true)
     }
     
 }
