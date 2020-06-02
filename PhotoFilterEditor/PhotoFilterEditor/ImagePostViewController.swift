@@ -13,7 +13,26 @@ import Photos
 
 class ImagePostViewController: UIViewController {
 
-    private var originalImage: UIImage?
+    let context = CIContext(options: nil)
+    
+    var originalImage: UIImage? {
+        didSet {
+            guard let originalImage = originalImage else { return }
+            
+            var scaleSize = imageView.bounds.size
+            var scale = UIScreen.main.scale
+            scaleSize = CGSize(width: scaleSize.width * scale, height: scaleSize.height * scale)
+            scaledImage = originalImage.imageByScaling(toSize: scaledSize)
+        }
+        
+    }
+ var scaledImage: UIImage? {
+        didSet {
+            updateViews()
+        }
+    }
+
+    
     @IBOutlet weak var choosePhotoOutlet: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var brightnessSlider: UISlider!
@@ -24,6 +43,8 @@ class ImagePostViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+       
         choosePhotoOutlet.layer.cornerRadius = 12
         // Do any additional setup after loading the view.
         let filter = CIFilter.colorControls()
@@ -40,29 +61,74 @@ class ImagePostViewController: UIViewController {
         let ciImage = CIImage(cgImage: cgImage)
         
         let filter = CIFilter.colorControls()
-        filter.brightness = 1
-        filter.saturation = 1
-        filter.contrast = 1
+        filter.setValue(cgImage, forKey: kCIInputImageKey)
+        filter.brightness = brightnessSlider.value
+        filter.saturation = saturationSlider.value
+        filter.contrast = contrastSlider.value
         filter.inputImage = ciImage
         
+        guard let blurImage = filter.outputImage else { return nil }
+        let blur = CIFilter.motionBlur()
+        blur.setValue(blurImage, forKey: kCIInputImageKey)
+        blur.setValue(blurRadiusSlider.value, forKey: kCIInputRadiusKey)
         
-        return nil
+        guard let bumpImage = blur.outputImage else { return nil }
+        let bump = CIFilter(name: "CIBumpDistortion")!
+        bump.setValue(bumpImage, forKey: kCIInputImageKey)
+        bump.setValue(CIVector(cgPoint: CGPoint(x: 150, y: 150)), forKey: kCIInputCenterKey)
+        bump.setValue(bumpRadiusSlider.value, forKey: kCIInputRadiusKey)
+        
+        guard let outputCIImage = bump.outputImage else { return nil }
+        
+        guard let outputCGImage = context.createCGImage(outputCIImage,
+                                                        from: CGRect(origin: .zero, size: image.size)) else {
+                                                            return nil
+        }
+
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    private func presentPickerType() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            print(" picker view controller not available")
+            return
+        }
+        
+        let imagePickerView = UIImagePickerController()
+        imagePickerView.sourceType = .photoLibrary
+        imagePickerView.delegate = self
+        
+        present(imagePickerView, animated: true, completion: nil)
+        
+        
+    }
+    
+    private func updateViews() {
+        guard let scaledImage = scaledImage else { return }
+        imageView.image = filterImage(scaledImage)
     }
     
     @IBAction func brightnessSlider(_ sender: UISlider) {
+        updateViews()
     }
     
     @IBAction func contrastSlider(_ sender: UISlider) {
+        updateViews()
     }
     
     @IBAction func saturationSlider(_ sender: UISlider) {
+        updateViews()
     }
     @IBAction func blurRadiusSlider(_ sender: UISlider) {
+        updateViews()
     }
     
     @IBAction func bumpRadiusSlider(_ sender: UISlider) {
+        updateViews()
     }
     
+    @IBAction func savePhotoButton(_ sender: UIButton) {
+    }
     /*
     // MARK: - Navigation
 
@@ -73,4 +139,22 @@ class ImagePostViewController: UIViewController {
     }
     */
 
+}
+
+extension ImagePostViewController: UIImagePickerControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.originalImage] as? UIImage {
+            originalImage = image
+        }
+          dismiss(animated: false)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+          dismiss(animated: true)
+    }
+    
+}
+extension ImagePostViewController: UINavigationControllerDelegate {
+    
 }
