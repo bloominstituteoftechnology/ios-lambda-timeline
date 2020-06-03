@@ -18,6 +18,8 @@ class RequestViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        requestCameraPermission()
     }
     
     func requestCameraPermission() {
@@ -65,7 +67,7 @@ class RequestViewController: UIViewController {
                     alert.addAction(okAction)
                     self.present(alert, animated: true, completion: nil)
                 }
-                
+                return
             }
             DispatchQueue.main.async {
                 self.showCamera()
