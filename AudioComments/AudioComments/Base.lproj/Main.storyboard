@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Gf0-Zs-PWd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7Hl-qi-O7l">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -16,12 +16,35 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="FAe-e3-A43">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="AudioCell" rowHeight="58" id="FAe-e3-A43" customClass="PlayerTableViewCell" customModule="AudioComments" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="58"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FAe-e3-A43" id="fTX-Yq-yZ2">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="58"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="RJ2-QN-gkO">
+                                            <rect key="frame" x="180" y="9" width="229" height="40"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ylu-sV-St9">
+                                                    <rect key="frame" x="0.0" y="0.0" width="15" height="40"/>
+                                                    <state key="normal" image="play.fill" catalog="system"/>
+                                                    <state key="selected" image="pause.fill" catalog="system"/>
+                                                </button>
+                                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="UO1-SM-p7m">
+                                                    <rect key="frame" x="33" y="0.0" width="198" height="41"/>
+                                                </slider>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="40" id="gi8-dW-jt1"/>
+                                            </constraints>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="RJ2-QN-gkO" firstAttribute="leading" secondItem="fTX-Yq-yZ2" secondAttribute="leading" constant="180" id="ASn-HQ-QDK"/>
+                                        <constraint firstAttribute="trailing" secondItem="RJ2-QN-gkO" secondAttribute="trailing" constant="5" id="Cf9-j3-gGa"/>
+                                        <constraint firstItem="RJ2-QN-gkO" firstAttribute="centerY" secondItem="fTX-Yq-yZ2" secondAttribute="centerY" id="way-ft-ugd"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -30,28 +53,29 @@
                             <outlet property="delegate" destination="w6J-bY-evg" id="C7i-qE-33B"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="VQ9-lD-4K7"/>
                     <connections>
                         <segue destination="Gf0-Zs-PWd" kind="show" identifier="detailSegue" id="2Gu-e2-mHn"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rby-dr-Ebe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="210" y="96"/>
+            <point key="canvasLocation" x="1118.840579710145" y="95.758928571428569"/>
         </scene>
         <!--Audio Player View Controller-->
         <scene sceneID="eBc-cu-SHx">
             <objects>
                 <viewController id="Gf0-Zs-PWd" customClass="AudioPlayerViewController" customModule="AudioComments" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TKb-NT-G74">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eVq-AB-kJo" customClass="AudioVisualizer" customModule="AudioComments" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="706"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="672"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ihg-mK-I7s">
-                                <rect key="frame" x="4" y="724" width="406" height="30"/>
+                                <rect key="frame" x="4" y="778" width="406" height="30"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ceA-y7-CgN">
                                         <rect key="frame" x="0.0" y="0.0" width="55" height="30"/>
@@ -80,7 +104,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="epT-ak-WrH">
-                                <rect key="frame" x="73" y="762" width="268" height="46"/>
+                                <rect key="frame" x="73" y="816" width="268" height="46"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZQq-nl-Mbo">
                                         <rect key="frame" x="0.0" y="0.0" width="15" height="46"/>
@@ -139,7 +163,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fke-AI-GpJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1063.768115942029" y="95.758928571428569"/>
+            <point key="canvasLocation" x="1973.913043478261" y="95.758928571428569"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="TNW-Ir-CZm">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7Hl-qi-O7l" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="o8x-1H-Yeq">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="w6J-bY-evg" kind="relationship" relationship="rootViewController" id="Jsa-Yd-CTt"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cvR-X5-SbK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="208.69565217391306" y="95.758928571428569"/>
         </scene>
     </scenes>
     <resources>
