@@ -125,7 +125,8 @@ class AudioPlayerViewController: UIViewController {
             
             let audioFormat = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)! // if programmer error , add error mossage or log.
             audioRecorder = try? AVAudioRecorder(url: recordingURL, format: audioFormat)
-            
+            audioRecorder?.delegate = self
+            audioRecorder?.record()
             self.recordingURL = recordingURL
         }
         
@@ -225,6 +226,33 @@ extension AudioPlayerViewController: AVAudioPlayerDelegate {
         }
     }
     
+}
+
+extension AudioPlayerViewController: AVAudioRecorderDelegate {
+    
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+       if flag,
+                  let recordingURL = recordingURL {
+                  let playbackAudioPlayer = try? AVAudioPlayer(contentsOf: recordingURL) // TODO: Error handling
+
+                  if let _ = playbackAudioPlayer {
+                      print("Saved recording to \(recordingURL)")
+                  } else {
+                      print("Nothing to playback")
+                  }
+
+                  // Dispose of recorder (otherwise I can still cancel and it will delete the recording!)
+                  audioRecorder = nil
+              }
+        updateViews()
+    }
+    
+    func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
+        if let error = error {
+            print("Audio Record Error: \(error)")
+        }
+        updateViews()
+    }
 }
 
 
