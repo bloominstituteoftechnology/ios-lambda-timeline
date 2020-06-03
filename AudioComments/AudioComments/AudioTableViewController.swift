@@ -40,7 +40,7 @@ class AudioTableViewController: UITableViewController {
        guard let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCell", for: indexPath) as? PlayerTableViewCell else { return UITableViewCell() }
         
         cell.textLabel?.text = audioElements[indexPath.row].0
-        
+        cell.audioClip = audioElements[indexPath.row].1
 
         // Configure the cell...
 

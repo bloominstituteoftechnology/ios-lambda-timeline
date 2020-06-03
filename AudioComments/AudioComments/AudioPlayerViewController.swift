@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 class AudioPlayerViewController: UIViewController {
     
-    
+    weak var delegate: AudioTableViewController!
     var recordingURL: URL?
     
     var audioPlayer: AVAudioPlayer? {
@@ -195,6 +195,19 @@ class AudioPlayerViewController: UIViewController {
     
     
     @IBAction func sendButtonTapped(_ sender: Any) {
+        if let recordingURL = recordingURL {
+            let df = DateFormatter()
+            df.dateStyle = .short
+            df.timeStyle = .short
+            let date = df.string(from: Date())
+
+            print("Send: \(recordingURL.absoluteString)")
+            print(date)
+            delegate?.audioElements.append((date, recordingURL))
+         
+        }
+
+        navigationController?.popViewController(animated: true)
            }
            
            @IBAction func togglePlayback(_ sender: Any) {
