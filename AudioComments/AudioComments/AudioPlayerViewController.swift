@@ -11,8 +11,8 @@ import AVFoundation
 class AudioPlayerViewController: UIViewController {
     
     var audioPlayer: AVAudioPlayer?
-    
-    var isPlayer: Bool {
+    var timer: Timer?
+    var isPlaying: Bool {
         return audioPlayer?.isPlaying ?? false
     }
     
@@ -44,6 +44,38 @@ class AudioPlayerViewController: UIViewController {
     @IBAction func toggleRecording(_ sender: Any) {
         
     }
+    
+    func startTimer() {
+    timer?.invalidate() // import to invalidate the timer to start a new one to prevent multiple timers.
+    timer = Timer.scheduledTimer(withTimeInterval: 0.030, repeats: true) { [weak self] (_) in
+        guard let self = self else { return }
+        }
+    }
+        
+    func updateViews() {
+        playButton.isSelected = isPlaying
+    }
+    
+    func play() {
+        audioPlayer?.play()
+        startTimer()
+        updateViews()
+    }
+        
+        func pause() {
+        audioPlayer?.pause()
+            updateViews()
+        }
+        
+    func togglePlayBack() {
+        if isPlaying {
+            pause()
+        } else {
+            play()
+        }
+    }
+    
+    
     
     
     /*
