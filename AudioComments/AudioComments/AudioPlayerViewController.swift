@@ -67,6 +67,11 @@ class AudioPlayerViewController: UIViewController {
         
     func updateViews() {
         playButton.isSelected = isPlaying
+        
+        let elapsedTime = audioPlayer?.currentTime ?? 0
+        let duration = audioPlayer?.duration ?? 0
+        
+        let timeRemaining = round(duration) - elapsedTime
     }
     
     func play() {
