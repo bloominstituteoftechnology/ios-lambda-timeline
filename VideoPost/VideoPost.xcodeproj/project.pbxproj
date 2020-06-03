@@ -9,21 +9,29 @@
 /* Begin PBXBuildFile section */
 		272862CA2488349E0080FDED /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272862C92488349E0080FDED /* AppDelegate.swift */; };
 		272862CC2488349E0080FDED /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272862CB2488349E0080FDED /* SceneDelegate.swift */; };
-		272862CE2488349E0080FDED /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272862CD2488349E0080FDED /* ViewController.swift */; };
 		272862D12488349E0080FDED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 272862CF2488349E0080FDED /* Main.storyboard */; };
 		272862D3248834A30080FDED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 272862D2248834A30080FDED /* Assets.xcassets */; };
 		272862D6248834A30080FDED /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 272862D4248834A30080FDED /* LaunchScreen.storyboard */; };
+		272862E1248836020080FDED /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272862E0248836020080FDED /* CameraViewController.swift */; };
+		272862E3248836230080FDED /* VideoCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272862E2248836230080FDED /* VideoCollectionViewController.swift */; };
+		272862E52488364B0080FDED /* CameraPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272862E42488364B0080FDED /* CameraPreview.swift */; };
+		272862E72488365C0080FDED /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272862E62488365C0080FDED /* VideoPlayerView.swift */; };
+		272862E9248836790080FDED /* VideoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 272862E8248836790080FDED /* VideoCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		272862C62488349E0080FDED /* VideoPost.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoPost.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		272862C92488349E0080FDED /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		272862CB2488349E0080FDED /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		272862CD2488349E0080FDED /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		272862D02488349E0080FDED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		272862D2248834A30080FDED /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		272862D5248834A30080FDED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		272862D7248834A30080FDED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		272862E0248836020080FDED /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		272862E2248836230080FDED /* VideoCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCollectionViewController.swift; sourceTree = "<group>"; };
+		272862E42488364B0080FDED /* CameraPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreview.swift; sourceTree = "<group>"; };
+		272862E62488365C0080FDED /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
+		272862E8248836790080FDED /* VideoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,13 +66,41 @@
 			children = (
 				272862C92488349E0080FDED /* AppDelegate.swift */,
 				272862CB2488349E0080FDED /* SceneDelegate.swift */,
-				272862CD2488349E0080FDED /* ViewController.swift */,
-				272862CF2488349E0080FDED /* Main.storyboard */,
+				272862DE248835620080FDED /* View Controllers */,
+				272862DF248835BA0080FDED /* Views */,
+				272862DD248835410080FDED /* Storyboards */,
 				272862D2248834A30080FDED /* Assets.xcassets */,
-				272862D4248834A30080FDED /* LaunchScreen.storyboard */,
 				272862D7248834A30080FDED /* Info.plist */,
 			);
 			path = VideoPost;
+			sourceTree = "<group>";
+		};
+		272862DD248835410080FDED /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				272862CF2488349E0080FDED /* Main.storyboard */,
+				272862D4248834A30080FDED /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		272862DE248835620080FDED /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				272862E0248836020080FDED /* CameraViewController.swift */,
+				272862E2248836230080FDED /* VideoCollectionViewController.swift */,
+				272862E8248836790080FDED /* VideoCollectionViewCell.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		272862DF248835BA0080FDED /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				272862E42488364B0080FDED /* CameraPreview.swift */,
+				272862E62488365C0080FDED /* VideoPlayerView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,9 +174,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				272862CE2488349E0080FDED /* ViewController.swift in Sources */,
+				272862E9248836790080FDED /* VideoCollectionViewCell.swift in Sources */,
+				272862E52488364B0080FDED /* CameraPreview.swift in Sources */,
+				272862E3248836230080FDED /* VideoCollectionViewController.swift in Sources */,
 				272862CA2488349E0080FDED /* AppDelegate.swift in Sources */,
 				272862CC2488349E0080FDED /* SceneDelegate.swift in Sources */,
+				272862E1248836020080FDED /* CameraViewController.swift in Sources */,
+				272862E72488365C0080FDED /* VideoPlayerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
