@@ -18,9 +18,15 @@ class AudioPlayerViewController: UIViewController {
             audioPlayer?.delegate = self
         }
     }
+    var audioRecorder: AVAudioRecorder?
+    
     var timer: Timer?
     var isPlaying: Bool {
         return audioPlayer?.isPlaying ?? false
+    }
+    
+    var isRecording: Bool {
+        return audioRecorder?.isRecording ?? false 
     }
     
     @IBOutlet private weak var sendButton: UIButton!
@@ -126,8 +132,19 @@ class AudioPlayerViewController: UIViewController {
         }
         
         func startRecording() {
-            recordingURL = createNewRecordingURL()
+            let recordingURL = createNewRecordingURL()
+            
+            let audioFormat = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)! // if programmer error , add error mossage or log.
+            audioRecorder = try? AVAudioRecorder(url: recordingURL, format: audioFormat)
+
+            self.recordingURL = recordingURL
         }
+        
+        func stopRecording() {
+
+            audioRecorder?.stop()
+        }
+        
         
         func requestPermissionOrStartRecording() {
             switch AVAudioSession.sharedInstance().recordPermission {
@@ -194,3 +211,5 @@ extension AudioPlayerViewController: AVAudioPlayerDelegate {
     }
     
 }
+
+
