@@ -34,6 +34,10 @@ class AudioPlayerViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    deinit {
+        cancelTimer()
+    }
+    
     @IBAction func sendButtonTapped(_ sender: Any) {
     }
     
@@ -55,6 +59,11 @@ class AudioPlayerViewController: UIViewController {
         guard let self = self else { return }
         }
     }
+    
+    func cancelTimer() {
+           timer?.invalidate()
+           timer = nil
+       }
         
     func updateViews() {
         playButton.isSelected = isPlaying
