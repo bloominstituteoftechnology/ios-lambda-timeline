@@ -50,8 +50,19 @@ class AudioPlayerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        currentTime.font = UIFont.monospacedDigitSystemFont(ofSize: currentTime.font.pointSize,
+                                                               weight: .regular)
+             durationTime.font = UIFont.monospacedDigitSystemFont(ofSize: durationTime.font.pointSize,
+                                                                        weight: .regular)
+       
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        try? prepareAudioSession()
+        updateViews()
     }
     
     deinit {
@@ -106,7 +117,11 @@ class AudioPlayerViewController: UIViewController {
             play()
         }
     }
-        
+        func prepareAudioSession() throws {
+            let session = AVAudioSession.sharedInstance()
+            try session.setCategory(.playAndRecord, options: [.defaultToSpeaker])
+            try session.setActive(true, options: []) // can fail if on a phone call, for instance            try session.setActive(true, options: []) // can fail if on a phone call, for instance
+        }
         
         
         func createNewRecordingURL() -> URL {
@@ -183,7 +198,7 @@ class AudioPlayerViewController: UIViewController {
            }
            
            @IBAction func togglePlayback(_ sender: Any) {
-               
+            togglePlayBack()
            }
            
            @IBAction func updateCurrentTime(_ sender: UISlider) {
@@ -231,22 +246,16 @@ extension AudioPlayerViewController: AVAudioPlayerDelegate {
 extension AudioPlayerViewController: AVAudioRecorderDelegate {
     
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-       if flag,
-                  let recordingURL = recordingURL {
-                  let playbackAudioPlayer = try? AVAudioPlayer(contentsOf: recordingURL) // TODO: Error handling
-
-                  if let _ = playbackAudioPlayer {
-                      print("Saved recording to \(recordingURL)")
-                  } else {
-                      print("Nothing to playback")
-                  }
-
-                  // Dispose of recorder (otherwise I can still cancel and it will delete the recording!)
-                  audioRecorder = nil
-              }
+        if let recordingURL = recordingURL {
+        print("finished recording: \(recordingURL.path)")
+            // this method to listen yourself when recording.
+            audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL) // TODO: errors
+            
+        }
+        
         updateViews()
     }
-    
+
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
         if let error = error {
             print("Audio Record Error: \(error)")
