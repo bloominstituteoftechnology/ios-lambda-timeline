@@ -79,7 +79,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uhv-Lb-y11" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1063.768115942029" y="123.88392857142857"/>
+            <point key="canvasLocation" x="941" y="591"/>
         </scene>
         <!--Videos Collection-->
         <scene sceneID="Uhl-dE-lFi">
@@ -130,6 +130,7 @@
                                 <connections>
                                     <outlet property="imageView" destination="PaL-MN-lgS" id="717-1j-MrF"/>
                                     <outlet property="titleLabel" destination="xvb-eU-q0D" id="yoD-yw-bvU"/>
+                                    <segue destination="vD8-sP-OFs" kind="show" id="dXM-rw-gNT"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -149,6 +150,37 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3An-w4-SpG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-613.04347826086962" y="119.86607142857142"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="1lD-mN-N5R">
+            <objects>
+                <viewController id="vD8-sP-OFs" customClass="DetailViewController" customModule="VideoCollection" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="25R-K3-Xuu">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8ib-sR-rWd">
+                                <rect key="frame" x="0.0" y="188" width="414" height="271"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="8ib-sR-rWd" firstAttribute="leading" secondItem="jGU-dY-cDM" secondAttribute="leading" id="NIr-Ov-cM5"/>
+                            <constraint firstItem="jGU-dY-cDM" firstAttribute="bottom" secondItem="8ib-sR-rWd" secondAttribute="bottom" constant="403" id="OcC-3M-0TL"/>
+                            <constraint firstItem="jGU-dY-cDM" firstAttribute="trailing" secondItem="8ib-sR-rWd" secondAttribute="trailing" id="U11-2C-Hco"/>
+                            <constraint firstItem="8ib-sR-rWd" firstAttribute="top" secondItem="jGU-dY-cDM" secondAttribute="top" constant="100" id="ZyA-FF-weX"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="jGU-dY-cDM"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="8dO-Qj-LWE"/>
+                    <connections>
+                        <outlet property="videoView" destination="8ib-sR-rWd" id="jpO-bS-61i"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W1h-Wv-bhG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="940.57971014492762" y="-90.401785714285708"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="An9-CW-eXo">

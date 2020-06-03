@@ -27,6 +27,9 @@ class CameraViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+        view.addGestureRecognizer(tapGesture)
+        
         setUpCaptureSession()
         cameraView.videoPlayerView.videoGravity = .resizeAspectFill
         // Do any additional setup after loading the view.
@@ -92,6 +95,26 @@ class CameraViewController: UIViewController {
         cameraView.session = captureSession
         
     }
+    
+    @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
+           print("tap")
+
+           view.endEditing(true)
+
+           switch(tapGesture.state) {
+
+           case .ended:
+               replayMovie()
+           default:
+               print("Handled other states: \(tapGesture.state)")
+           }
+       }
+    
+    private func replayMovie() {
+        guard let player = player else { return }
+          player.seek(to: .zero)
+          player.play()
+      }
     
     private func bestCamera() -> AVCaptureDevice {
         if let ultraWideCamera = AVCaptureDevice.default(.builtInUltraWideCamera, for: .video, position: .back) {
