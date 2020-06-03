@@ -26,7 +26,7 @@ class AudioPlayerViewController: UIViewController {
     }
     
     var isRecording: Bool {
-        return audioRecorder?.isRecording ?? false 
+        return audioRecorder?.isRecording ?? false
     }
     
     @IBOutlet private weak var sendButton: UIButton!
@@ -58,21 +58,7 @@ class AudioPlayerViewController: UIViewController {
         cancelTimer()
     }
     
-    @IBAction func sendButtonTapped(_ sender: Any) {
-    }
-    
-    @IBAction func togglePlayback(_ sender: Any) {
-        
-    }
-    
-    @IBAction func updateCurrentTime(_ sender: UISlider) {
-        
-    }
-    
-    @IBAction func toggleRecording(_ sender: Any) {
-        
-    }
-    
+
     func startTimer() {
         timer?.invalidate() // import to invalidate the timer to start a new one to prevent multiple timers.
         timer = Timer.scheduledTimer(withTimeInterval: 0.030, repeats: true) { [weak self] (_) in
@@ -88,7 +74,7 @@ class AudioPlayerViewController: UIViewController {
     
     func updateViews() {
         playButton.isSelected = isPlaying
-        
+        recordingButton.isSelected = isRecording
         let elapsedTime = audioPlayer?.currentTime ?? 0
         let duration = audioPlayer?.duration ?? 0
         
@@ -119,6 +105,9 @@ class AudioPlayerViewController: UIViewController {
         } else {
             play()
         }
+    }
+        
+        
         
         func createNewRecordingURL() -> URL {
             let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
@@ -136,13 +125,8 @@ class AudioPlayerViewController: UIViewController {
             
             let audioFormat = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)! // if programmer error , add error mossage or log.
             audioRecorder = try? AVAudioRecorder(url: recordingURL, format: audioFormat)
-
+            
             self.recordingURL = recordingURL
-        }
-        
-        func stopRecording() {
-
-            audioRecorder?.stop()
         }
         
         
@@ -176,8 +160,39 @@ class AudioPlayerViewController: UIViewController {
                 break
             }
         }
-    }
+        
+        func stopRecording() {
+            audioRecorder?.stop()
+            updateViews()
+        }
+        
+        func toggleRecording() {
+            if isRecording {
+                stopRecording()
+                updateViews()
+            } else {
+                requestPermissionOrStartRecording()
+            }
+        }
+        
+        
     
+    
+    @IBAction func sendButtonTapped(_ sender: Any) {
+           }
+           
+           @IBAction func togglePlayback(_ sender: Any) {
+               
+           }
+           
+           @IBAction func updateCurrentTime(_ sender: UISlider) {
+               
+           }
+           
+           @IBAction func toggleRecording(_ sender: Any) {
+            toggleRecording()
+               
+           }
     
     
     
