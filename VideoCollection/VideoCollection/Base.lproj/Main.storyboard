@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dFQ-GX-yHN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tiP-rF-fI5">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -45,6 +45,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="zF6-PV-oS9"/>
                     </view>
+                    <navigationItem key="navigationItem" id="WRV-mK-CEL"/>
                     <connections>
                         <outlet property="cameraPreview" destination="cTP-gq-qkN" id="eOU-Dy-7Lp"/>
                     </connections>
@@ -52,6 +53,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uhv-Lb-y11" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="154" y="124"/>
+        </scene>
+        <!--Request View Controller-->
+        <scene sceneID="zHX-ML-zpi">
+            <objects>
+                <viewController id="tiP-rF-fI5" customClass="RequestViewController" customModule="VideoCollection" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="RCx-ea-lPg">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="ESh-gd-pUM"/>
+                    </view>
+                    <connections>
+                        <segue destination="dFQ-GX-yHN" kind="presentation" identifier="showCamera" modalPresentationStyle="fullScreen" id="Rei-MH-AcY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lnh-Nt-ciY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-652" y="124"/>
         </scene>
     </scenes>
     <resources>

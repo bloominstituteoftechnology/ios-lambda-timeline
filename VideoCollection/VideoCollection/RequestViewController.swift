@@ -25,9 +25,42 @@ class RequestViewController: UIViewController {
         
         switch status {
         case .authorized:
-            <#code#>
+            // second time authorized
+            showCamera()
+        case .denied:
+            // denied
+        let alertController = UIAlertController(title: "Camera Access Denied", message: "Please allow this app to access your Microphone.", preferredStyle: .alert)
+          
+          alertController.addAction(UIAlertAction(title: "Open Settings", style: .default) { (_) in
+              UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+          })
+          
+          alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+          
+          present(alertController, animated: true, completion: nil)
+        case .notDetermined:
+            
         default:
             <#code#>
+        }
+    }
+    
+    private func requestCamera() {
+        
+        AVCaptureDevice.requestAccess(for: .video) { (granted) in
+            guard granted else {
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Access Granted", message: "You are able to use the camera now!", preferredStyle: .alert)
+                    let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+                    
+                    alert.addAction(okAction)
+                    self.present(alert, animated: true, completion: nil)
+                }
+        
+            }
+            DispatchQueue.main.async {
+                self.showCamera()
+            }
         }
     }
     /*
@@ -42,4 +75,5 @@ class RequestViewController: UIViewController {
     private func showCamera() {
         performSegue(withIdentifier: "showCamera", sender: self)
     }
+    
 }
