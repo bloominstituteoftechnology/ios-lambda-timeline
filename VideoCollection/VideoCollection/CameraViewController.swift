@@ -26,6 +26,11 @@ class CameraViewController: UIViewController {
         
     }
     
+    @IBAction func recordButtonPressed(_ sender: Any) {
+        
+    }
+    
+    
     private func newRecordingURL() -> URL {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         

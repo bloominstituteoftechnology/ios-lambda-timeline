@@ -17,24 +17,21 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kjH-Yh-Njc" customClass="CameraPreviewView" customModule="VideoCollection" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cTP-gq-qkN" customClass="Camera">
-                                        <rect key="frame" x="157" y="658" width="100" height="100"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="100" id="K4D-8p-y3x"/>
-                                            <constraint firstAttribute="height" constant="100" id="ixU-VK-z5A"/>
-                                        </constraints>
-                                        <color key="tintColor" systemColor="systemPinkColor" red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" image="Record"/>
-                                        <state key="selected" image="Stop"/>
-                                    </button>
-                                </subviews>
                                 <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="cTP-gq-qkN" secondAttribute="bottom" constant="60" id="0T9-Sa-hIE"/>
-                                    <constraint firstItem="cTP-gq-qkN" firstAttribute="centerX" secondItem="kjH-Yh-Njc" secondAttribute="centerX" id="CIh-EJ-m3E"/>
-                                </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h0H-rc-ssP">
+                                <rect key="frame" x="157" y="702" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="7kN-wr-WLc"/>
+                                    <constraint firstAttribute="width" constant="100" id="IoX-PO-0am"/>
+                                </constraints>
+                                <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="Record"/>
+                                <state key="selected" image="Stop"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="dFQ-GX-yHN" eventType="touchUpInside" id="ttE-a1-jYB"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -42,12 +39,15 @@
                             <constraint firstItem="kjH-Yh-Njc" firstAttribute="top" secondItem="zF6-PV-oS9" secondAttribute="top" id="PGq-lW-uUQ"/>
                             <constraint firstItem="zF6-PV-oS9" firstAttribute="bottom" secondItem="kjH-Yh-Njc" secondAttribute="bottom" id="QIn-3y-Y1a"/>
                             <constraint firstItem="zF6-PV-oS9" firstAttribute="trailing" secondItem="kjH-Yh-Njc" secondAttribute="trailing" id="bqD-xG-elZ"/>
+                            <constraint firstItem="zF6-PV-oS9" firstAttribute="bottom" secondItem="h0H-rc-ssP" secondAttribute="bottom" constant="60" id="lph-pr-nUj"/>
+                            <constraint firstItem="h0H-rc-ssP" firstAttribute="centerX" secondItem="UER-vL-8Nn" secondAttribute="centerX" id="thc-Tf-pR3"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="zF6-PV-oS9"/>
                     </view>
                     <navigationItem key="navigationItem" id="WRV-mK-CEL"/>
                     <connections>
                         <outlet property="cameraView" destination="kjH-Yh-Njc" id="ASR-5s-A07"/>
+                        <outlet property="recordButton" destination="h0H-rc-ssP" id="EqA-5w-23H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uhv-Lb-y11" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
