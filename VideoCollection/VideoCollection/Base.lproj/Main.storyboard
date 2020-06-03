@@ -32,15 +32,31 @@
                                     <action selector="recordButtonPressed:" destination="dFQ-GX-yHN" eventType="touchUpInside" id="ttE-a1-jYB"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6wa-VL-ygh">
+                                <rect key="frame" x="20" y="812" width="374" height="50"/>
+                                <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="t6R-Dn-Umc"/>
+                                </constraints>
+                                <state key="normal" title="Send">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="sendButtonTapped:" destination="dFQ-GX-yHN" eventType="touchUpInside" id="zn0-xq-HXo"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="kjH-Yh-Njc" firstAttribute="leading" secondItem="zF6-PV-oS9" secondAttribute="leading" id="JiW-5V-CQk"/>
-                            <constraint firstItem="kjH-Yh-Njc" firstAttribute="top" secondItem="zF6-PV-oS9" secondAttribute="top" id="PGq-lW-uUQ"/>
-                            <constraint firstItem="zF6-PV-oS9" firstAttribute="bottom" secondItem="kjH-Yh-Njc" secondAttribute="bottom" id="QIn-3y-Y1a"/>
-                            <constraint firstItem="zF6-PV-oS9" firstAttribute="trailing" secondItem="kjH-Yh-Njc" secondAttribute="trailing" id="bqD-xG-elZ"/>
+                            <constraint firstItem="zF6-PV-oS9" firstAttribute="trailing" secondItem="6wa-VL-ygh" secondAttribute="trailing" constant="20" id="3TU-Qu-fRU"/>
+                            <constraint firstItem="kjH-Yh-Njc" firstAttribute="bottom" secondItem="zF6-PV-oS9" secondAttribute="bottom" id="3ew-Uf-lQc"/>
+                            <constraint firstItem="kjH-Yh-Njc" firstAttribute="leading" secondItem="zF6-PV-oS9" secondAttribute="leading" id="7dl-kA-P2e"/>
+                            <constraint firstItem="kjH-Yh-Njc" firstAttribute="trailing" secondItem="zF6-PV-oS9" secondAttribute="trailing" id="WvL-kv-4sY"/>
                             <constraint firstItem="zF6-PV-oS9" firstAttribute="bottom" secondItem="h0H-rc-ssP" secondAttribute="bottom" constant="60" id="lph-pr-nUj"/>
+                            <constraint firstItem="kjH-Yh-Njc" firstAttribute="top" secondItem="zF6-PV-oS9" secondAttribute="top" id="mag-Lj-KzW"/>
+                            <constraint firstItem="h0H-rc-ssP" firstAttribute="top" secondItem="6wa-VL-ygh" secondAttribute="bottom" constant="-160" id="rq5-87-q0G"/>
                             <constraint firstItem="h0H-rc-ssP" firstAttribute="centerX" secondItem="UER-vL-8Nn" secondAttribute="centerX" id="thc-Tf-pR3"/>
+                            <constraint firstItem="6wa-VL-ygh" firstAttribute="leading" secondItem="zF6-PV-oS9" secondAttribute="leading" constant="20" id="vf9-cq-cag"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="zF6-PV-oS9"/>
                     </view>
@@ -48,11 +64,12 @@
                     <connections>
                         <outlet property="cameraView" destination="kjH-Yh-Njc" id="ASR-5s-A07"/>
                         <outlet property="recordButton" destination="h0H-rc-ssP" id="EqA-5w-23H"/>
+                        <outlet property="sendButton" destination="6wa-VL-ygh" id="SDP-cD-0WF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uhv-Lb-y11" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="154" y="124"/>
+            <point key="canvasLocation" x="153.62318840579712" y="123.88392857142857"/>
         </scene>
         <!--Request View Controller-->
         <scene sceneID="zHX-ML-zpi">
