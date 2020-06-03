@@ -28,6 +28,17 @@ class AudioPlayerViewController: UIViewController {
     @IBOutlet weak var durationTime: UILabel!
     @IBOutlet weak var audioVisualizer: AudioVisualizer!
     
+    private lazy var timeIntervalFormatter: DateComponentsFormatter = {
+          // NOTE: DateComponentFormatter is good for minutes/hours/seconds
+          // DateComponentsFormatter is not good for milliseconds, use DateFormatter instead)
+          
+          let formatting = DateComponentsFormatter()
+          formatting.unitsStyle = .positional // 00:00  mm:ss
+          formatting.zeroFormattingBehavior = .pad
+          formatting.allowedUnits = [.minute, .second]
+          return formatting
+      }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,6 +68,7 @@ class AudioPlayerViewController: UIViewController {
     timer?.invalidate() // import to invalidate the timer to start a new one to prevent multiple timers.
     timer = Timer.scheduledTimer(withTimeInterval: 0.030, repeats: true) { [weak self] (_) in
         guard let self = self else { return }
+        self.updateViews()
         }
     }
     
@@ -72,6 +84,8 @@ class AudioPlayerViewController: UIViewController {
         let duration = audioPlayer?.duration ?? 0
         
         let timeRemaining = round(duration) - elapsedTime
+        currentTime.text = timeIntervalFormatter.string(from: elapsedTime)
+        durationTime.text = timeIntervalFormatter.string(from: timeRemaining)
     }
     
     func play() {
@@ -82,6 +96,7 @@ class AudioPlayerViewController: UIViewController {
         
         func pause() {
         audioPlayer?.pause()
+            cancelTimer()
             updateViews()
         }
         
