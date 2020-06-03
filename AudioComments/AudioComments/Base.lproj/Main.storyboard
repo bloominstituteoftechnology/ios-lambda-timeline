@@ -30,9 +30,15 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="15" height="40"/>
                                                     <state key="normal" image="play.fill" catalog="system"/>
                                                     <state key="selected" image="pause.fill" catalog="system"/>
+                                                    <connections>
+                                                        <action selector="playPauseButton:" destination="FAe-e3-A43" eventType="touchUpInside" id="77M-Fx-mXy"/>
+                                                    </connections>
                                                 </button>
                                                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="UO1-SM-p7m">
                                                     <rect key="frame" x="33" y="0.0" width="198" height="41"/>
+                                                    <connections>
+                                                        <action selector="playSlider:" destination="FAe-e3-A43" eventType="valueChanged" id="VBJ-eU-59N"/>
+                                                    </connections>
                                                 </slider>
                                             </subviews>
                                             <constraints>
@@ -46,6 +52,10 @@
                                         <constraint firstItem="RJ2-QN-gkO" firstAttribute="centerY" secondItem="fTX-Yq-yZ2" secondAttribute="centerY" id="way-ft-ugd"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="clipSlider" destination="UO1-SM-p7m" id="CX6-tv-IXR"/>
+                                    <outlet property="playPauseButtonOutlet" destination="Ylu-sV-St9" id="cmk-YU-aYo"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -53,10 +63,13 @@
                             <outlet property="delegate" destination="w6J-bY-evg" id="C7i-qE-33B"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="VQ9-lD-4K7"/>
-                    <connections>
-                        <segue destination="Gf0-Zs-PWd" kind="show" identifier="detailSegue" id="2Gu-e2-mHn"/>
-                    </connections>
+                    <navigationItem key="navigationItem" id="VQ9-lD-4K7">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="eTv-qW-els">
+                            <connections>
+                                <segue destination="Gf0-Zs-PWd" kind="show" identifier="detailSegue" id="WTG-4W-vr1"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rby-dr-Ebe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
