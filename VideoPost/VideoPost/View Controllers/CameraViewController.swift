@@ -32,7 +32,11 @@ class CameraViewController: UIViewController {
     }
     
     @IBAction func saveButton(_ sender: UIButton) {
+        guard let fileURL = videoFileURL else { return }
         
+        delegate?.videos.append(fileURL)
+        let thumbnail = delegate?.createThumbnail(url: fileURL)
+        delegate?.thumbnails.append(thumbnail)
         navigationController?.popViewController(animated: true)
     }
     
