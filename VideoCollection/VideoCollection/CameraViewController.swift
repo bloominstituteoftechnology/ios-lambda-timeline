@@ -26,6 +26,8 @@ class CameraViewController: UIViewController {
         setUpCaptureSession()
         cameraView.videoPlayerView.videoGravity = .resizeAspectFill
         // Do any additional setup after loading the view.
+        
+        sendButton.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -166,6 +168,7 @@ class CameraViewController: UIViewController {
             self.playerView = playerView
         }
         player.play()
+        sendButton.isHidden = false
         self.player = player
     }
 }
