@@ -14,19 +14,23 @@ class CameraViewController: UIViewController {
     lazy private var fileOutput = AVCaptureMovieFileOutput()
     var player: AVPlayer?
     var playerView: VideoPlayerView!
-
+    var delegate: VideosCollectionViewController!
+    var videoClipURL: URL?
+    
     @IBOutlet weak var sendButton: UIButton!
     
+    @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setUpCaptureSession()
         cameraView.videoPlayerView.videoGravity = .resizeAspectFill
         // Do any additional setup after loading the view.
-        
+        titleTextField.isHidden = true 
         sendButton.isHidden = true
     }
     
@@ -82,7 +86,7 @@ class CameraViewController: UIViewController {
             return
         }
         captureSession.addOutput(fileOutput)
-    
+        
         captureSession.commitConfiguration()
         
         cameraView.session = captureSession
@@ -117,6 +121,15 @@ class CameraViewController: UIViewController {
     }
     
     @IBAction func sendButtonTapped(_ sender: Any) {
+        guard let clipName = titleTextField.text,
+            clipName.count > 0,
+            let fileURL = videoClipURL else { return }
+        
+        delegate?.videoClip.append((clipName, fileURL))
+        let thumbnail = delegate?.createThumbnail(url: fileURL)
+        delegate?.imageView.append(thumbnail)
+        
+        navigationController?.popViewController(animated: true)
     }
     
     
@@ -169,6 +182,7 @@ class CameraViewController: UIViewController {
         }
         player.play()
         sendButton.isHidden = false
+        titleTextField.isHidden = false 
         self.player = player
     }
 }
@@ -188,6 +202,7 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         print("Play Movie!")
         
         DispatchQueue.main.async {
+            self.videoClipURL = outputFileURL
             self.playMovie(url: outputFileURL)
         }
         

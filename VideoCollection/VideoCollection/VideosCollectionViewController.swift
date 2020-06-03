@@ -7,11 +7,13 @@
 //
 
 import UIKit
-
+import AVFoundation
 private let reuseIdentifier = "Cell"
 
 class VideosCollectionViewController: UICollectionViewController {
 
+    var videoClip: [(String, URL)] = []
+    var imageView: [UIImage?] = []
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,20 +38,17 @@ class VideosCollectionViewController: UICollectionViewController {
 
     // MARK: UICollectionViewDataSource
 
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 0
+        return videoClip.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoCell", for: indexPath) as? VideosCollectionViewCell else { return UICollectionViewCell() }
+        
+        cell.clipName = videoClip[indexPath.item].0
+        cell.imageName = imageView[indexPath.item]
         // Configure the cell
     
         return cell
@@ -85,5 +84,18 @@ class VideosCollectionViewController: UICollectionViewController {
     
     }
     */
+    
+    func createThumbnail(url : URL) -> UIImage? {
+
+        let asset = AVURLAsset(url: url, options: nil)
+        let imgGenerator = AVAssetImageGenerator(asset: asset)
+        let cgImage = try? imgGenerator.copyCGImage(at: CMTimeMake(value: 0, timescale: 1), actualTime: nil)
+        if let cgImage = cgImage{
+            let uiImage = UIImage(cgImage: cgImage)
+            return uiImage
+        }
+        return nil
+    }
+
 
 }
