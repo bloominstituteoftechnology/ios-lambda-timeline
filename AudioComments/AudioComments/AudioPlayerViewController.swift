@@ -10,7 +10,11 @@ import UIKit
 import AVFoundation
 class AudioPlayerViewController: UIViewController {
     
-    var audioPlayer: AVAudioPlayer?
+    var audioPlayer: AVAudioPlayer? {
+        didSet {
+            audioPlayer?.delegate = self
+        }
+    }
     var timer: Timer?
     var isPlaying: Bool {
         return audioPlayer?.isPlaying ?? false
@@ -87,5 +91,24 @@ class AudioPlayerViewController: UIViewController {
      // Pass the selected object to the new view controller.
      }
      */
+    
+}
+
+extension AudioPlayerViewController: AVAudioPlayerDelegate {
+    
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        DispatchQueue.main.async {
+            self.updateViews()
+        }
+    }
+    
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        if let error = error {
+            print(error)
+        }
+        DispatchQueue.main.async {
+            self.updateViews()
+        }
+    }
     
 }
