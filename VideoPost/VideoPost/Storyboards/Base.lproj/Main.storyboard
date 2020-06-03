@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="PhF-BP-Nfb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="PhF-BP-Nfb">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -23,7 +23,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ClipCell" id="ROY-yU-JGl" customClass="ClipCollectionViewCell" customModule="VideoPost" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VideoCell" id="ROY-yU-JGl" customClass="ClipCollectionViewCell" customModule="VideoPost" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="176" height="173"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="VCk-X3-jrB">
@@ -37,25 +37,16 @@
                                                 <constraint firstAttribute="width" constant="150" id="Ve9-DP-R7i"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jhR-Ja-IfR">
-                                            <rect key="frame" x="67" y="144" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="jhR-Ja-IfR" firstAttribute="centerX" secondItem="VCk-X3-jrB" secondAttribute="centerX" id="8je-Jk-FSe"/>
                                         <constraint firstItem="lhE-GQ-gLn" firstAttribute="leading" secondItem="VCk-X3-jrB" secondAttribute="leading" id="8yK-oR-b9O"/>
                                         <constraint firstItem="lhE-GQ-gLn" firstAttribute="top" secondItem="VCk-X3-jrB" secondAttribute="top" id="Bip-Tt-AFS"/>
                                         <constraint firstAttribute="trailing" secondItem="lhE-GQ-gLn" secondAttribute="trailing" id="XPI-l9-CMz"/>
                                         <constraint firstAttribute="bottom" secondItem="lhE-GQ-gLn" secondAttribute="bottom" id="ZcJ-Kb-6zg"/>
-                                        <constraint firstAttribute="bottom" secondItem="jhR-Ja-IfR" secondAttribute="bottom" constant="8" id="a7L-6x-zl2"/>
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <size key="customSize" width="176" height="173"/>
                                 <connections>
-                                    <outlet property="clipNameLabel" destination="jhR-Ja-IfR" id="Mw3-md-uGd"/>
                                     <outlet property="thumbnailView" destination="lhE-GQ-gLn" id="4dh-qK-LnE"/>
                                 </connections>
                             </collectionViewCell>
@@ -93,14 +84,6 @@
                                     <action selector="recordButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="7Xy-By-RaK"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RXF-Sa-RrK">
-                                <rect key="frame" x="20" y="108" width="250" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="250" id="ym5-vz-OE7"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="COL-7l-lGl">
                                 <rect key="frame" x="360" y="108" width="34" height="30"/>
                                 <state key="normal" title="Save"/>
@@ -119,21 +102,19 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="COL-7l-lGl" secondAttribute="trailing" constant="20" id="0QE-Vh-9IL"/>
-                            <constraint firstItem="RXF-Sa-RrK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="LlP-WJ-5vQ"/>
                             <constraint firstItem="a3Q-yr-Qsk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Nwp-sV-B32"/>
-                            <constraint firstItem="a3Q-yr-Qsk" firstAttribute="top" secondItem="RXF-Sa-RrK" secondAttribute="bottom" constant="20" id="RcC-1P-cEg"/>
+                            <constraint firstItem="COL-7l-lGl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="360" id="gi7-TJ-Ny0"/>
                             <constraint firstItem="COL-7l-lGl" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="hz9-eN-FYR"/>
                             <constraint firstItem="5Qq-Em-wsr" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="oO8-AW-I68"/>
                             <constraint firstItem="a3Q-yr-Qsk" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="oeh-Vz-a7u"/>
                             <constraint firstItem="5Qq-Em-wsr" firstAttribute="top" secondItem="a3Q-yr-Qsk" secondAttribute="bottom" constant="20" id="qc1-al-c9G"/>
-                            <constraint firstItem="RXF-Sa-RrK" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="u6I-nF-G7H"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="5Qq-Em-wsr" secondAttribute="bottom" constant="158" id="sD6-SD-2nd"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="EfH-uV-XAd"/>
                     <connections>
                         <outlet property="cameraView" destination="a3Q-yr-Qsk" id="AZn-Lf-9WV"/>
-                        <outlet property="clipNameTextField" destination="RXF-Sa-RrK" id="dpK-Hu-c4n"/>
                         <outlet property="recordButton" destination="5Qq-Em-wsr" id="wCt-R4-EiE"/>
                         <outlet property="saveButtonOutlet" destination="COL-7l-lGl" id="P4A-qJ-DbS"/>
                     </connections>

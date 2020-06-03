@@ -10,4 +10,14 @@ import UIKit
 
 class VideoCollectionViewCell: UICollectionViewCell {
     
+    // MARK: - Properites
+    var thumbnail: UIImage? {
+        didSet {
+            thumbnailView.image = thumbnail
+        }
+    }
+    
+    // MARK: - Outlets
+    @IBOutlet weak var thumbnailView: UIImageView!
+    
 }
