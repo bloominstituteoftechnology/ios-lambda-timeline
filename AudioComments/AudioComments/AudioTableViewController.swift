@@ -37,7 +37,10 @@ class AudioTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+       guard let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCell", for: indexPath) as? PlayerTableViewCell else { return UITableViewCell() }
+        
+        cell.textLabel?.text = audioElements[indexPath.row].0
+        
 
         // Configure the cell...
 
