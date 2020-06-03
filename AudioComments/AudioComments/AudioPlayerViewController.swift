@@ -10,6 +10,9 @@ import UIKit
 import AVFoundation
 class AudioPlayerViewController: UIViewController {
     
+    
+    var recordingURL: URL?
+    
     var audioPlayer: AVAudioPlayer? {
         didSet {
             audioPlayer?.delegate = self
@@ -29,15 +32,15 @@ class AudioPlayerViewController: UIViewController {
     @IBOutlet weak var audioVisualizer: AudioVisualizer!
     
     private lazy var timeIntervalFormatter: DateComponentsFormatter = {
-          // NOTE: DateComponentFormatter is good for minutes/hours/seconds
-          // DateComponentsFormatter is not good for milliseconds, use DateFormatter instead)
-          
-          let formatting = DateComponentsFormatter()
-          formatting.unitsStyle = .positional // 00:00  mm:ss
-          formatting.zeroFormattingBehavior = .pad
-          formatting.allowedUnits = [.minute, .second]
-          return formatting
-      }()
+        // NOTE: DateComponentFormatter is good for minutes/hours/seconds
+        // DateComponentsFormatter is not good for milliseconds, use DateFormatter instead)
+        
+        let formatting = DateComponentsFormatter()
+        formatting.unitsStyle = .positional // 00:00  mm:ss
+        formatting.zeroFormattingBehavior = .pad
+        formatting.allowedUnits = [.minute, .second]
+        return formatting
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,18 +68,18 @@ class AudioPlayerViewController: UIViewController {
     }
     
     func startTimer() {
-    timer?.invalidate() // import to invalidate the timer to start a new one to prevent multiple timers.
-    timer = Timer.scheduledTimer(withTimeInterval: 0.030, repeats: true) { [weak self] (_) in
-        guard let self = self else { return }
-        self.updateViews()
+        timer?.invalidate() // import to invalidate the timer to start a new one to prevent multiple timers.
+        timer = Timer.scheduledTimer(withTimeInterval: 0.030, repeats: true) { [weak self] (_) in
+            guard let self = self else { return }
+            self.updateViews()
         }
     }
     
     func cancelTimer() {
-           timer?.invalidate()
-           timer = nil
-       }
-        
+        timer?.invalidate()
+        timer = nil
+    }
+    
     func updateViews() {
         playButton.isSelected = isPlaying
         
@@ -97,18 +100,64 @@ class AudioPlayerViewController: UIViewController {
         startTimer()
         updateViews()
     }
-        
-        func pause() {
+    
+    func pause() {
         audioPlayer?.pause()
-            cancelTimer()
-            updateViews()
-        }
-        
+        cancelTimer()
+        updateViews()
+    }
+    
     func togglePlayBack() {
         if isPlaying {
             pause()
         } else {
             play()
+        }
+        
+        func createNewRecordingURL() -> URL {
+            let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+            
+            let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
+            let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
+            
+            //        print("recording URL: \(file)")
+            
+            return file
+        }
+        
+        func startRecording() {
+            recordingURL = createNewRecordingURL()
+        }
+        
+        func requestPermissionOrStartRecording() {
+            switch AVAudioSession.sharedInstance().recordPermission {
+            case .undetermined:
+                AVAudioSession.sharedInstance().requestRecordPermission { granted in
+                    guard granted == true else {
+                        print("We need microphone access")
+                        return
+                    }
+                    
+                    print("Recording permission has been granted!")
+                    // NOTE: Invite the user to tap record again, since we just interrupted them, and they may not have been ready to record
+                }
+            case .denied:
+                print("Microphone access has been blocked.")
+                
+                let alertController = UIAlertController(title: "Microphone Access Denied", message: "Please allow this app to access your Microphone.", preferredStyle: .alert)
+                
+                alertController.addAction(UIAlertAction(title: "Open Settings", style: .default) { (_) in
+                    UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+                })
+                
+                alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                
+                present(alertController, animated: true, completion: nil)
+            case .granted:
+                startRecording()
+            @unknown default:
+                break
+            }
         }
     }
     
