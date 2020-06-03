@@ -9,10 +9,10 @@
 import UIKit
 import AVFoundation
 class RequestViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
     
@@ -29,19 +29,28 @@ class RequestViewController: UIViewController {
             showCamera()
         case .denied:
             // denied
-        let alertController = UIAlertController(title: "Camera Access Denied", message: "Please allow this app to access your Microphone.", preferredStyle: .alert)
-          
-          alertController.addAction(UIAlertAction(title: "Open Settings", style: .default) { (_) in
-              UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
-          })
-          
-          alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-          
-          present(alertController, animated: true, completion: nil)
-        case .notDetermined:
+            let alertController = UIAlertController(title: "Camera Access Denied", message: "Please allow this app to access your Microphone.", preferredStyle: .alert)
             
-        default:
-            <#code#>
+            alertController.addAction(UIAlertAction(title: "Open Settings", style: .default) { (_) in
+                UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)
+            })
+            
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            
+            present(alertController, animated: true, completion: nil)
+        case .notDetermined:
+            requestCamera()
+        case .restricted:
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: "Access Restricted", message: "You are not allowed to use this access", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+                
+                alert.addAction(okAction)
+                self.present(alert, animated: true, completion: nil)
+            }
+            
+        @unknown default:
+            fatalError("Apple added extra default.")
         }
     }
     
@@ -56,7 +65,7 @@ class RequestViewController: UIViewController {
                     alert.addAction(okAction)
                     self.present(alert, animated: true, completion: nil)
                 }
-        
+                
             }
             DispatchQueue.main.async {
                 self.showCamera()
@@ -64,14 +73,14 @@ class RequestViewController: UIViewController {
         }
     }
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
     private func showCamera() {
         performSegue(withIdentifier: "showCamera", sender: self)
     }
