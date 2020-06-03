@@ -86,6 +86,10 @@ class AudioPlayerViewController: UIViewController {
         let timeRemaining = round(duration) - elapsedTime
         currentTime.text = timeIntervalFormatter.string(from: elapsedTime)
         durationTime.text = timeIntervalFormatter.string(from: timeRemaining)
+        
+        audioSlider.minimumValue = 0
+        audioSlider.maximumValue = Float(duration)
+        audioSlider.value = Float(elapsedTime)
     }
     
     func play() {
