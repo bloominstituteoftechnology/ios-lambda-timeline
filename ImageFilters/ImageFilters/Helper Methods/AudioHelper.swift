@@ -8,7 +8,7 @@
 
 import Foundation
 
-class AudioHelper {
+class Audio {
 
     
 
