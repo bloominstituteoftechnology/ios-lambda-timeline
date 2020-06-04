@@ -10,6 +10,7 @@ import UIKit
 import CoreImage
 import CoreImage.CIFilterBuiltins
 import Photos
+import CoreLocation
 
 class ImagePostViewController: UIViewController {
     
@@ -40,6 +41,8 @@ class ImagePostViewController: UIViewController {
     @IBOutlet weak var blurSlider: UISlider!
     @IBOutlet weak var sharpenSlider: UISlider!
     @IBOutlet weak var vignetteSlider: UISlider!
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var authorTextField: UITextField!
     
     
     
@@ -137,6 +140,8 @@ class ImagePostViewController: UIViewController {
     }
     
     private func saveAndFilterPhoto() {
+        guard let title = titleTextField.text, !title.isEmpty else { return }
+        guard let author = authorTextField.text, !author.isEmpty else { return }
         guard let originalImage = originalImage else { return }
         guard let processedImage = filterImage(originalImage.flattened) else { return }
         
