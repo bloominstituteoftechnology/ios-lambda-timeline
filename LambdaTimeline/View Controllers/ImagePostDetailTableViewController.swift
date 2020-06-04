@@ -51,11 +51,18 @@ class ImagePostDetailTableViewController: UITableViewController {
                 self.tableView.reloadData()
             }
         }
+
+        let addAudioCommentAction = UIAlertAction(title: "Add Audio", style: .default) { _ in
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "AudioCommentSegue", sender: nil)
+            }
+        }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(addCommentAction)
         alert.addAction(cancelAction)
+        alert.addAction(addAudioCommentAction)
         
         present(alert, animated: true, completion: nil)
     }
