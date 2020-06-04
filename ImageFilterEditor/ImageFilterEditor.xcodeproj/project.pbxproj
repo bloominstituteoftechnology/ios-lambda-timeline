@@ -19,6 +19,10 @@
 		27EFFAAB2489B16A00EE10AF /* Image+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EFFAAA2489B16A00EE10AF /* Image+Convenience.swift */; };
 		27EFFAAE2489B1CE00EE10AF /* ImageFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EFFAAD2489B1CE00EE10AF /* ImageFilterViewController.swift */; };
 		27EFFAB12489B2BB00EE10AF /* ImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EFFAB02489B2BB00EE10AF /* ImageController.swift */; };
+		27EFFAB32489B58200EE10AF /* PostTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EFFAB22489B58200EE10AF /* PostTableViewController.swift */; };
+		27EFFAB62489B67400EE10AF /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EFFAB52489B67400EE10AF /* PostTableViewCell.swift */; };
+		27EFFAB82489B7B800EE10AF /* CoordinateRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EFFAB72489B7B800EE10AF /* CoordinateRegion.swift */; };
+		27EFFABA2489B7F300EE10AF /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27EFFAB92489B7F300EE10AF /* MapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +40,10 @@
 		27EFFAAA2489B16A00EE10AF /* Image+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Image+Convenience.swift"; sourceTree = "<group>"; };
 		27EFFAAD2489B1CE00EE10AF /* ImageFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFilterViewController.swift; sourceTree = "<group>"; };
 		27EFFAB02489B2BB00EE10AF /* ImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageController.swift; sourceTree = "<group>"; };
+		27EFFAB22489B58200EE10AF /* PostTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewController.swift; sourceTree = "<group>"; };
+		27EFFAB52489B67400EE10AF /* PostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
+		27EFFAB72489B7B800EE10AF /* CoordinateRegion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinateRegion.swift; sourceTree = "<group>"; };
+		27EFFAB92489B7F300EE10AF /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,13 +80,12 @@
 			children = (
 				275EDEE5248592DA001B3C2D /* AppDelegate.swift */,
 				275EDEE7248592DA001B3C2D /* SceneDelegate.swift */,
-				275EDEEB248592DA001B3C2D /* Main.storyboard */,
-				275EDEF92485A871001B3C2D /* UIImage+Scaling.swift */,
+				27EFFAA92489B14A00EE10AF /* Core Data */,
 				27EFFAAF2489B29E00EE10AF /* Model Controllers */,
 				27EFFAAC2489B1AF00EE10AF /* View Controllers */,
-				27EFFAA92489B14A00EE10AF /* Core Data */,
+				27EFFAB42489B65500EE10AF /* Views */,
+				27EFFABB2489B85F00EE10AF /* Storyboards */,
 				275EDEEE248592DF001B3C2D /* Assets.xcassets */,
-				275EDEF0248592DF001B3C2D /* LaunchScreen.storyboard */,
 				275EDEF3248592DF001B3C2D /* Info.plist */,
 			);
 			path = ImageFilterEditor;
@@ -106,6 +113,8 @@
 			isa = PBXGroup;
 			children = (
 				27EFFAAD2489B1CE00EE10AF /* ImageFilterViewController.swift */,
+				27EFFAB22489B58200EE10AF /* PostTableViewController.swift */,
+				27EFFAB92489B7F300EE10AF /* MapViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -114,8 +123,27 @@
 			isa = PBXGroup;
 			children = (
 				27EFFAB02489B2BB00EE10AF /* ImageController.swift */,
+				27EFFAB72489B7B800EE10AF /* CoordinateRegion.swift */,
 			);
 			path = "Model Controllers";
+			sourceTree = "<group>";
+		};
+		27EFFAB42489B65500EE10AF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				275EDEF92485A871001B3C2D /* UIImage+Scaling.swift */,
+				27EFFAB52489B67400EE10AF /* PostTableViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		27EFFABB2489B85F00EE10AF /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				275EDEEB248592DA001B3C2D /* Main.storyboard */,
+				275EDEF0248592DF001B3C2D /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,10 +219,14 @@
 			files = (
 				27EFFAAE2489B1CE00EE10AF /* ImageFilterViewController.swift in Sources */,
 				27EFFAA82489B12300EE10AF /* CoreDataStack.swift in Sources */,
+				27EFFAB82489B7B800EE10AF /* CoordinateRegion.swift in Sources */,
 				275EDEFA2485A871001B3C2D /* UIImage+Scaling.swift in Sources */,
 				27EFFAA62489B0C000EE10AF /* Image.xcdatamodeld in Sources */,
+				27EFFAB32489B58200EE10AF /* PostTableViewController.swift in Sources */,
 				27EFFAAB2489B16A00EE10AF /* Image+Convenience.swift in Sources */,
+				27EFFABA2489B7F300EE10AF /* MapViewController.swift in Sources */,
 				275EDEE6248592DA001B3C2D /* AppDelegate.swift in Sources */,
+				27EFFAB62489B67400EE10AF /* PostTableViewCell.swift in Sources */,
 				275EDEE8248592DA001B3C2D /* SceneDelegate.swift in Sources */,
 				27EFFAB12489B2BB00EE10AF /* ImageController.swift in Sources */,
 			);
