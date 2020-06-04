@@ -10,10 +10,10 @@ import Foundation
 
 class Post: NSObject {
     
-    var title: String
-    var author: String
-    var longitude: Double
-    var latitude: Double
+    var title: String?
+    var author: String?
+    var longitude: Double?
+    var latitude: Double?
     
     
     init(title: String, author: String, longitude: Double, latitude: Double) {
