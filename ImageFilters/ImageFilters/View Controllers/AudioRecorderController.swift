@@ -7,22 +7,20 @@
 //
 
 import UIKit
+import Foundation
 import AVFoundation
 
 class AudioRecorderController: UIViewController {
 
-    @IBOutlet var playButton: UIButton!
-    @IBOutlet var recordButton: UIButton!
-    @IBOutlet var timeElapsedLabel: UILabel!
-    @IBOutlet var timeRemainingLabel: UILabel!
-    @IBOutlet var timeSlider: UISlider!
-    @IBOutlet var audioVisualizer: AudioVisualizer!
-    
+    // MARK: - Properties
 
+    var postController: PostController!
+    var post: Post?
+    
     private lazy var timeIntervalFormatter: DateComponentsFormatter = {
         // NOTE: DateComponentFormatter is good for minutes/hours/seconds
         // DateComponentsFormatter is not good for milliseconds, use DateFormatter instead)
-
+        
         let formatting = DateComponentsFormatter()
         formatting.unitsStyle = .positional // 00:00  mm:ss
         formatting.zeroFormattingBehavior = .pad
@@ -30,25 +28,32 @@ class AudioRecorderController: UIViewController {
         return formatting
     }()
 
+    // MARK: - Outlets
+
+    @IBOutlet var playButton: UIButton!
+    @IBOutlet var recordButton: UIButton!
+    @IBOutlet var timeElapsedLabel: UILabel!
+    @IBOutlet var timeRemainingLabel: UILabel!
+    @IBOutlet var timeSlider: UISlider!
+    @IBOutlet var audioVisualizer: AudioVisualizer!
+    @IBOutlet var titleField: UITextField?
+
 
     // MARK: - View Controller Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Use a font that won't jump around as values change
         timeElapsedLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeElapsedLabel.font.pointSize,
                                                                  weight: .regular)
         timeRemainingLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeRemainingLabel.font.pointSize,
                                                                    weight: .regular)
-
         loadAudio()
         updateViews()
         try? prepareAudioSession()
     }
 
     deinit {
-        // Stop all timers if this screen is not visible.
         cancelTimer()
     }
 
@@ -58,10 +63,6 @@ class AudioRecorderController: UIViewController {
         let currentTime = audioPlayer?.currentTime ?? 0.0
         let duration = audioPlayer?.duration ?? 0.0
 
-        // Rounding the duration prevents a glitch with labels updating at different times
-        // 3.1 = currentTime -> 3
-        // 7 = duration
-        // 3.7 = timeRemaining -> 4
         let timeRemaining = round(duration) - currentTime
 
         timeElapsedLabel.text = timeIntervalFormatter.string(from: currentTime) ?? "00:00"
@@ -73,36 +74,44 @@ class AudioRecorderController: UIViewController {
 
         // Recording
         recordButton.isSelected = isRecording
+
+        guard let post = post,
+            let titleField = titleField else {
+                return
         }
+        titleField.text = post.title
+        recordingURL = post.recordingURL
+
+    }
 
     // MARK: - Timer
 
     private var timer: Timer?
 
     func startTimer() {
-           timer?.invalidate() // Cancel a timer before you start a new one!
+        timer?.invalidate() // Cancel a timer before you start a new one!
 
-           timer = Timer.scheduledTimer(withTimeInterval: 0.030, repeats: true) { [weak self] (_) in
-               guard let self = self else { return }
+        timer = Timer.scheduledTimer(withTimeInterval: 0.030, repeats: true) { [weak self] (_) in
+            guard let self = self else { return }
 
-               self.updateViews()
+            self.updateViews()
 
-//                   if let audioRecorder = self.audioRecorder,
-//                       self.isRecording == true {
-//
-//                       audioRecorder.updateMeters()
-//                       self.audioVisualizer.addValue(decibelValue: audioRecorder.averagePower(forChannel: 0))
-//
-//                   }
-//
-//                   if let audioPlayer = self.audioPlayer,
-//                       self.isPlaying == true {
-//
-//                       audioPlayer.updateMeters()
-//                       self.audioVisualizer.addValue(decibelValue: audioPlayer.averagePower(forChannel: 0))
-//                   }
-           }
-       }
+            //                   if let audioRecorder = self.audioRecorder,
+            //                       self.isRecording == true {
+            //
+            //                       audioRecorder.updateMeters()
+            //                       self.audioVisualizer.addValue(decibelValue: audioRecorder.averagePower(forChannel: 0))
+            //
+            //                   }
+            //
+            //                   if let audioPlayer = self.audioPlayer,
+            //                       self.isPlaying == true {
+            //
+            //                       audioPlayer.updateMeters()
+            //                       self.audioVisualizer.addValue(decibelValue: audioPlayer.averagePower(forChannel: 0))
+            //                   }
+        }
+    }
 
     func cancelTimer() {
         timer?.invalidate()
@@ -119,7 +128,7 @@ class AudioRecorderController: UIViewController {
     }
 
     func loadAudio() {
-        let songURL = Bundle.main.url(forResource: "piano", withExtension: "mp3")!  // Crash early if we are missing a resource that a programmer didn't add, etc.
+        let songURL = Bundle.main.url(forResource: "piano", withExtension: "mp3")!
 
         // TODO: Do more error checking and fail early if programmer error,
         // or present a message to the user.  Do Catch or Guard Let.
@@ -147,7 +156,7 @@ class AudioRecorderController: UIViewController {
     }
 
     func play() {
-        audioPlayer?.play() // don't crash if player is nil ... if nothign to play, just don't do anything.
+        audioPlayer?.play() // don't crash if player is nil ... if nothig to play, just don't do anything.
         startTimer()
         updateViews()
     }
@@ -218,8 +227,6 @@ class AudioRecorderController: UIViewController {
         }
     }
 
-    // TODO: start/cancel timer?
-
     func startRecording() {
         let recordingURL = createNewRecordingURL()
 
@@ -255,7 +262,6 @@ class AudioRecorderController: UIViewController {
         updateViews()
     }
 
-
     @IBAction func toggleRecording(_ sender: Any) {
         toggleRecording()
     }
@@ -266,16 +272,22 @@ class AudioRecorderController: UIViewController {
         audioRecorder?.deleteRecording()
         
         navigationController?.popViewController(animated: true)
-
-        dismiss(animated: true, completion: nil)
     }
 
+    @IBAction func saveRecording(_ sender: Any) {
+        guard let title = titleField?.text, !title.isEmpty,
+            let url = recordingURL else { return }
+
+        postController.createPost(title: title, url: url)
+        print(postController.posts.count)
+        navigationController?.popViewController(animated: true)
+
+        dismiss(animated: true, completion: nil)
+
+    }
 }
 
-// Delegate
-// Asking someone else to do something for you
-// 1. action/event: Pickup a coffee - Starbucks
-// 2. question: darkMode?
+// MARK: - Extensions
 
 extension AudioRecorderController: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {

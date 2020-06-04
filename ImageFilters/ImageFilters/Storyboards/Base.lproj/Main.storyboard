@@ -205,16 +205,16 @@
             </objects>
             <point key="canvasLocation" x="789.85507246376812" y="105.80357142857143"/>
         </scene>
-        <!--Table View Controller-->
+        <!--List Table View Controller-->
         <scene sceneID="lhL-UB-JcS">
             <objects>
-                <tableViewController id="03b-S3-fNL" sceneMemberID="viewController">
+                <tableViewController id="03b-S3-fNL" customClass="ListTableViewController" customModule="ImageFilters" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="at2-Fo-eGA">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="Dqg-CG-f7I" style="IBUITableViewCellStyleDefault" id="5An-we-PIh">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostCell" textLabel="Dqg-CG-f7I" style="IBUITableViewCellStyleDefault" id="5An-we-PIh">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5An-we-PIh" id="0ry-ZJ-pXV">
@@ -230,6 +230,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="XVZ-U6-SsY" kind="show" identifier="viewAudioRecordingSegue" id="3Ys-Qd-VDb"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -240,27 +243,32 @@
                     <navigationItem key="navigationItem" id="bsW-Zi-dNf">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="5O9-eS-a56">
                             <connections>
-                                <segue destination="XVZ-U6-SsY" kind="show" id="mpB-bO-Q7A"/>
+                                <segue destination="XVZ-U6-SsY" kind="show" identifier="newAudioRecordingSegue" id="mpB-bO-Q7A"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jGM-EH-9P1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-939" y="-653"/>
+            <point key="canvasLocation" x="-1051" y="-654"/>
         </scene>
         <!--Audio Recorder Controller-->
         <scene sceneID="nb0-NE-Q8Z">
             <objects>
-                <viewController id="XVZ-U6-SsY" customClass="AudioRecorderController" customModule="AudioComments" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="XVZ-U6-SsY" customClass="AudioRecorderController" customModule="ImageFilters" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Std-bO-cXn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZPV-6J-aIj">
-                                <rect key="frame" x="0.0" y="88" width="414" height="618"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="576"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Bcx-R2-FZU">
+                                <rect key="frame" x="8" y="672" width="398" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="nay-Lj-GdN">
                                 <rect key="frame" x="8" y="714" width="398" height="92"/>
                                 <subviews>
@@ -322,6 +330,9 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zeG-3Z-4fo">
                                                 <rect key="frame" x="298.5" y="0.0" width="99.5" height="46"/>
                                                 <state key="normal" title="Save"/>
+                                                <connections>
+                                                    <action selector="saveRecording:" destination="XVZ-U6-SsY" eventType="touchUpInside" id="KLR-de-4yh"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <constraints>
@@ -335,7 +346,10 @@
                         <constraints>
                             <constraint firstItem="ZPV-6J-aIj" firstAttribute="leading" secondItem="a3Q-yY-rEN" secondAttribute="leading" id="1X8-Ct-Y5n"/>
                             <constraint firstItem="nay-Lj-GdN" firstAttribute="leading" secondItem="a3Q-yY-rEN" secondAttribute="leading" constant="8" id="7Lh-7w-5KR"/>
-                            <constraint firstItem="nay-Lj-GdN" firstAttribute="top" secondItem="ZPV-6J-aIj" secondAttribute="bottom" constant="8" id="IdI-vY-KUQ"/>
+                            <constraint firstItem="Bcx-R2-FZU" firstAttribute="top" secondItem="ZPV-6J-aIj" secondAttribute="bottom" constant="8" id="IdI-vY-KUQ"/>
+                            <constraint firstItem="a3Q-yY-rEN" firstAttribute="trailing" secondItem="Bcx-R2-FZU" secondAttribute="trailing" constant="8" id="W9y-g3-l6v"/>
+                            <constraint firstItem="Bcx-R2-FZU" firstAttribute="leading" secondItem="a3Q-yY-rEN" secondAttribute="leading" constant="8" id="bc8-Sl-bvr"/>
+                            <constraint firstItem="nay-Lj-GdN" firstAttribute="top" secondItem="Bcx-R2-FZU" secondAttribute="bottom" constant="8" id="hl8-bh-Za5"/>
                             <constraint firstAttribute="bottom" secondItem="nay-Lj-GdN" secondAttribute="bottom" constant="90" id="jlJ-dP-syc"/>
                             <constraint firstItem="a3Q-yY-rEN" firstAttribute="trailing" secondItem="ZPV-6J-aIj" secondAttribute="trailing" id="os9-5U-e4H"/>
                             <constraint firstItem="a3Q-yY-rEN" firstAttribute="trailing" secondItem="nay-Lj-GdN" secondAttribute="trailing" constant="8" id="otJ-jd-fWh"/>
@@ -351,11 +365,12 @@
                         <outlet property="timeElapsedLabel" destination="fet-Ma-8Lo" id="ypD-ao-Okn"/>
                         <outlet property="timeRemainingLabel" destination="hK6-wo-pHT" id="nvO-8i-VS3"/>
                         <outlet property="timeSlider" destination="FCd-aC-9pl" id="8zN-DH-C0G"/>
+                        <outlet property="titleField" destination="Bcx-R2-FZU" id="FYA-Rz-fXw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fDG-4L-Vw1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="119" y="-649"/>
+            <point key="canvasLocation" x="-120" y="-654"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="cZo-Nh-gYZ">
@@ -398,6 +413,9 @@
             <point key="canvasLocation" x="-120.28985507246378" y="105.80357142857143"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="3Ys-Qd-VDb"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="mic.fill" catalog="system" width="108" height="128"/>
         <image name="pause.fill" catalog="system" width="116" height="128"/>

@@ -13,6 +13,8 @@ import Photos
 
 class ImageEditViewController: UIViewController {
 
+    // MARK: - Helpers
+
     enum filterKey: String {
         case inputImage = "inputImage"
         case exposure = "inputEV"
@@ -51,12 +53,16 @@ class ImageEditViewController: UIViewController {
         }
     }
 
+    // MARK: - Outlets
+
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var exposureSlider: UISlider!
     @IBOutlet weak var posterizeSlider: UISlider!
     @IBOutlet weak var vibranceSlider: UISlider!
     @IBOutlet weak var sharpenSlider: UISlider!
     @IBOutlet weak var vignetteSlider: UISlider!
+
+    // MARK: - View Controller Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,6 +83,8 @@ class ImageEditViewController: UIViewController {
         guard let scaledImage = scaledImage else {return}
         imageView.image = filterImage(scaledImage)
     }
+
+    // MARK: Image Filtering
 
     private func filterImage(_ image: UIImage) -> UIImage? {
 
@@ -139,6 +147,10 @@ class ImageEditViewController: UIViewController {
     // MARK: - Actions
 
     @IBAction func choosePhotoButtonPressed(_ sender: UIBarButtonItem) {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            print("The photo library is unavailable")
+            return
+        }
         presentImagePickerController()
     }
 
@@ -146,23 +158,20 @@ class ImageEditViewController: UIViewController {
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else { print("Error: the photo libary is not available.")
             return
         }
-        
         let imagePicker = UIImagePickerController()
         imagePicker.sourceType = .photoLibrary
         imagePicker.delegate = self
         
         present(imagePicker, animated: true, completion: nil)
-        
     }
 
     @IBAction func resetButtonPressed(_ sender: UIBarButtonItem) {
-
         resetDefaultValues()
         updateViews()
     }
 
     @IBAction func saveButtonPresset(_ sender: UIBarButtonItem) {
-          saveAndFilterPhoto()
+        saveAndFilterPhoto()
     }
     
 
@@ -193,7 +202,7 @@ class ImageEditViewController: UIViewController {
 
 // MARK: - Extensions
 
-extension ImageEditViewController: UIImagePickerControllerDelegate {
+extension ImageEditViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     func  imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 
@@ -209,6 +218,3 @@ extension ImageEditViewController: UIImagePickerControllerDelegate {
     }
 }
 
-extension ImageEditViewController: UINavigationControllerDelegate {
-
-}

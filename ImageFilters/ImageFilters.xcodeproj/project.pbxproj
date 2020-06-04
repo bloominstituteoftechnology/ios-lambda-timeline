@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1812F71A2488A1E000FBD582 /* AudioHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1812F7192488A1E000FBD582 /* AudioHelper.swift */; };
+		1876F53F24871E7C009DFE8C /* ListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F53E24871E7C009DFE8C /* ListTableViewController.swift */; };
+		1876F542248720F0009DFE8C /* PostController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F541248720F0009DFE8C /* PostController.swift */; };
+		1876F5452487217F009DFE8C /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1876F5442487217F009DFE8C /* Post.swift */; };
 		18C27970248588C5002916F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C2796F248588C5002916F9 /* AppDelegate.swift */; };
 		18C27972248588C5002916F9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C27971248588C5002916F9 /* SceneDelegate.swift */; };
 		18C27977248588C5002916F9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 18C27975248588C5002916F9 /* Main.storyboard */; };
@@ -20,6 +24,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1812F7192488A1E000FBD582 /* AudioHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHelper.swift; sourceTree = "<group>"; };
+		1876F53E24871E7C009DFE8C /* ListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListTableViewController.swift; sourceTree = "<group>"; };
+		1876F541248720F0009DFE8C /* PostController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostController.swift; sourceTree = "<group>"; };
+		1876F5442487217F009DFE8C /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		18C2796C248588C5002916F9 /* ImageFilters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFilters.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		18C2796F248588C5002916F9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		18C27971248588C5002916F9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +53,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1876F540248720C8009DFE8C /* Model Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1876F541248720F0009DFE8C /* PostController.swift */,
+			);
+			path = "Model Controller";
+			sourceTree = "<group>";
+		};
+		1876F54324872162009DFE8C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1876F5442487217F009DFE8C /* Post.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		18C27963248588C5002916F9 = {
 			isa = PBXGroup;
 			children = (
@@ -64,11 +88,13 @@
 		18C2796E248588C5002916F9 /* ImageFilters */ = {
 			isa = PBXGroup;
 			children = (
-				18C279B324870917002916F9 /* piano.mp3 */,
+				1876F54324872162009DFE8C /* Model */,
+				1876F540248720C8009DFE8C /* Model Controller */,
 				18C279892486DDD3002916F9 /* Storyboards */,
-				18C2798A2486DDE2002916F9 /* Helper Methods */,
 				18C2798B2486DDEF002916F9 /* View Controllers */,
+				18C2798A2486DDE2002916F9 /* Helper Methods */,
 				18C27978248588C7002916F9 /* Assets.xcassets */,
+				18C279B324870917002916F9 /* piano.mp3 */,
 				18C2796F248588C5002916F9 /* AppDelegate.swift */,
 				18C27971248588C5002916F9 /* SceneDelegate.swift */,
 				18C2797A248588C7002916F9 /* LaunchScreen.storyboard */,
@@ -89,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				18C279B424870917002916F9 /* AudioVisualizer.swift */,
+				1812F7192488A1E000FBD582 /* AudioHelper.swift */,
 				18C279852485A67A002916F9 /* UIImage+Scaling.swift */,
 			);
 			path = "Helper Methods";
@@ -99,6 +126,7 @@
 			children = (
 				18C279B224870917002916F9 /* AudioRecorderController.swift */,
 				18C2798324858BA3002916F9 /* ImageEditViewController.swift */,
+				1876F53E24871E7C009DFE8C /* ListTableViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -179,8 +207,12 @@
 				18C279862485A67A002916F9 /* UIImage+Scaling.swift in Sources */,
 				18C279B524870917002916F9 /* AudioRecorderController.swift in Sources */,
 				18C27970248588C5002916F9 /* AppDelegate.swift in Sources */,
+				1812F71A2488A1E000FBD582 /* AudioHelper.swift in Sources */,
 				18C279B724870917002916F9 /* AudioVisualizer.swift in Sources */,
+				1876F542248720F0009DFE8C /* PostController.swift in Sources */,
 				18C27972248588C5002916F9 /* SceneDelegate.swift in Sources */,
+				1876F5452487217F009DFE8C /* Post.swift in Sources */,
+				1876F53F24871E7C009DFE8C /* ListTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
