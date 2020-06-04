@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Camera Base View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="CameraBaseViewController" customModule="VideoPrototype" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0kJ-d7-d03">
+                                <rect key="frame" x="344" y="64" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="czJ-Eo-k1c"/>
+                                    <constraint firstAttribute="width" secondItem="0kJ-d7-d03" secondAttribute="height" multiplier="1:1" id="v3d-ob-0HO"/>
+                                </constraints>
+                                <state key="normal" image="camera" catalog="system"/>
+                                <connections>
+                                    <action selector="cameraButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eZ5-yE-4mf"/>
+                                    <segue destination="GpI-Y8-JRx" kind="show" identifier="ShowCamera" id="Y5l-4e-gW5"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="0kJ-d7-d03" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="jld-BN-Aet"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0kJ-d7-d03" secondAttribute="trailing" constant="20" id="m6b-us-CF0"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="133" y="113"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="9Rr-Qc-wnG">
+            <objects>
+                <viewController modalPresentationStyle="fullScreen" id="GpI-Y8-JRx" customClass="CameraViewController" customModule="VideoPrototype" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Cbp-Xv-DS5">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fxe-wg-dAC" customClass="CameraPreviewView" customModule="VideoPrototype" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xmm-dc-5pG">
+                                        <rect key="frame" x="149" y="666" width="116" height="116"/>
+                                        <color key="tintColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal" image="Record"/>
+                                        <state key="selected" image="Stop"/>
+                                        <connections>
+                                            <action selector="recordButtonPressed:" destination="GpI-Y8-JRx" eventType="touchUpInside" id="3tp-Uo-Vlh"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="xmm-dc-5pG" secondAttribute="bottom" constant="36" id="1gR-QG-uGH"/>
+                                    <constraint firstItem="xmm-dc-5pG" firstAttribute="centerX" secondItem="Fxe-wg-dAC" secondAttribute="centerX" id="Fji-tO-gcY"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Fxe-wg-dAC" firstAttribute="trailing" secondItem="su3-l1-lFY" secondAttribute="trailing" id="8KY-Rg-A0R"/>
+                            <constraint firstItem="su3-l1-lFY" firstAttribute="bottom" secondItem="Fxe-wg-dAC" secondAttribute="bottom" id="GBw-0N-0p3"/>
+                            <constraint firstItem="Fxe-wg-dAC" firstAttribute="top" secondItem="su3-l1-lFY" secondAttribute="top" id="Qbj-1N-znA"/>
+                            <constraint firstItem="Fxe-wg-dAC" firstAttribute="leading" secondItem="su3-l1-lFY" secondAttribute="leading" id="aCS-5z-lzC"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="su3-l1-lFY"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="YRT-Kt-jHY"/>
+                    <connections>
+                        <outlet property="cameraView" destination="Fxe-wg-dAC" id="Pz3-mm-kTW"/>
+                        <outlet property="recordButton" destination="xmm-dc-5pG" id="JTH-Sz-5kY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fk8-Lg-yso" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="951" y="113"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Record" width="116" height="116"/>
+        <image name="Stop" width="116" height="116"/>
+        <image name="camera" catalog="system" width="128" height="96"/>
+    </resources>
+</document>

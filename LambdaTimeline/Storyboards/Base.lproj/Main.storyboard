@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xB5-Kl-GM2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xB5-Kl-GM2">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -120,7 +119,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="PkI-rS-ua9">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="417"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="812.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yQ3-V3-hIf">
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="375"/>
@@ -155,6 +154,201 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                             </textField>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="324-5A-d3Z" userLabel="MainFIlterStack">
+                                                <rect key="frame" x="0.0" y="425" width="414" height="387.5"/>
+                                                <subviews>
+                                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="2F2-KG-Z4x">
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="32"/>
+                                                        <segments>
+                                                            <segment title="Blur"/>
+                                                            <segment title="Checker"/>
+                                                            <segment title="Contrast"/>
+                                                            <segment title="Sepia"/>
+                                                            <segment title="Bloom"/>
+                                                        </segments>
+                                                        <color key="selectedSegmentTintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <connections>
+                                                            <action selector="filterControl:" destination="1Aw-4e-BW2" eventType="valueChanged" id="O8W-JA-Gsr"/>
+                                                        </connections>
+                                                    </segmentedControl>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="v5k-iz-geJ" userLabel="Slider Stack">
+                                                        <rect key="frame" x="0.0" y="39" width="414" height="348.5"/>
+                                                        <subviews>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="3fZ-CB-fC3" userLabel="Color1 Stack">
+                                                                <rect key="frame" x="0.0" y="0.0" width="414" height="52.5"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="45l-F6-OE2" userLabel="Color 1">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="20.5"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="idB-Yw-mvE">
+                                                                        <rect key="frame" x="0.0" y="32.5" width="414" height="20"/>
+                                                                        <subviews>
+                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="91S-uw-NCj" userLabel="Black">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                                                                <color key="backgroundColor" systemColor="systemFillColor" red="0.47058823529999999" green="0.47058823529999999" blue="0.50196078430000002" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="height" constant="20" id="01m-Nb-wN2"/>
+                                                                                    <constraint firstAttribute="width" constant="20" id="0tQ-eZ-VcM"/>
+                                                                                </constraints>
+                                                                                <connections>
+                                                                                    <action selector="color1WasTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="PeE-W6-dBv"/>
+                                                                                </connections>
+                                                                            </button>
+                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9JW-fr-uTq" userLabel="Purple">
+                                                                                <rect key="frame" x="131.5" y="0.0" width="20" height="20"/>
+                                                                                <color key="backgroundColor" systemColor="systemPurpleColor" red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="width" constant="20" id="vAW-Tm-WH9"/>
+                                                                                    <constraint firstAttribute="height" constant="20" id="vTc-DS-gs3"/>
+                                                                                </constraints>
+                                                                                <connections>
+                                                                                    <action selector="color1WasTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="PhP-0H-6gS"/>
+                                                                                </connections>
+                                                                            </button>
+                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zAt-8b-c3N" userLabel="Orange">
+                                                                                <rect key="frame" x="262.5" y="0.0" width="20" height="20"/>
+                                                                                <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="height" constant="20" id="82f-Ot-fvg"/>
+                                                                                    <constraint firstAttribute="width" constant="20" id="PNj-3e-e2Q"/>
+                                                                                </constraints>
+                                                                                <connections>
+                                                                                    <action selector="color1WasTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="EvN-fE-jt7"/>
+                                                                                </connections>
+                                                                            </button>
+                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iUF-3A-mBw" userLabel="Lime">
+                                                                                <rect key="frame" x="394" y="0.0" width="20" height="20"/>
+                                                                                <color key="backgroundColor" red="0.76978343950000006" green="0.98039215690000003" blue="0.72842935259999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="height" constant="20" id="brP-Hz-hDE"/>
+                                                                                    <constraint firstAttribute="width" constant="20" id="c1y-zf-TNC"/>
+                                                                                </constraints>
+                                                                                <connections>
+                                                                                    <action selector="color1WasTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="AdN-R0-oD8"/>
+                                                                                </connections>
+                                                                            </button>
+                                                                        </subviews>
+                                                                    </stackView>
+                                                                </subviews>
+                                                            </stackView>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="y3c-0O-RRd" userLabel="Color2 Stack">
+                                                                <rect key="frame" x="0.0" y="72.5" width="414" height="52.5"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color 2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cGc-fr-BNH" userLabel="Color 1">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="20.5"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="23" translatesAutoresizingMaskIntoConstraints="NO" id="Fxn-x7-FUD">
+                                                                        <rect key="frame" x="0.0" y="32.5" width="414" height="20"/>
+                                                                        <subviews>
+                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SgJ-Br-YPf" userLabel="Black">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                                                                <color key="backgroundColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="height" constant="20" id="0uW-Yc-apY"/>
+                                                                                    <constraint firstAttribute="width" constant="20" id="LBa-Xg-nBx"/>
+                                                                                </constraints>
+                                                                                <connections>
+                                                                                    <action selector="color2WasTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="qP2-pM-8ro"/>
+                                                                                </connections>
+                                                                            </button>
+                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kKV-aT-hii" userLabel="Purple">
+                                                                                <rect key="frame" x="131.5" y="0.0" width="20" height="20"/>
+                                                                                <color key="backgroundColor" systemColor="systemIndigoColor" red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="width" constant="20" id="WMp-fH-EXo"/>
+                                                                                    <constraint firstAttribute="height" constant="20" id="wlr-mh-XHF"/>
+                                                                                </constraints>
+                                                                                <connections>
+                                                                                    <action selector="color2WasTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="Ro2-a3-O4z"/>
+                                                                                </connections>
+                                                                            </button>
+                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qrL-zC-t2Q" userLabel="Orange">
+                                                                                <rect key="frame" x="262.5" y="0.0" width="20" height="20"/>
+                                                                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="width" constant="20" id="9z2-CN-1td"/>
+                                                                                    <constraint firstAttribute="height" constant="20" id="pLr-5G-kBc"/>
+                                                                                </constraints>
+                                                                                <connections>
+                                                                                    <action selector="color2WasTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="guB-PL-yHB"/>
+                                                                                </connections>
+                                                                            </button>
+                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="egZ-7a-6d5" userLabel="Lime">
+                                                                                <rect key="frame" x="394" y="0.0" width="20" height="20"/>
+                                                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="width" constant="20" id="0iG-bD-TzG"/>
+                                                                                    <constraint firstAttribute="height" constant="20" id="Iba-jl-Hyc"/>
+                                                                                </constraints>
+                                                                                <connections>
+                                                                                    <action selector="color2WasTapped:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="G8K-ds-4AW"/>
+                                                                                </connections>
+                                                                            </button>
+                                                                        </subviews>
+                                                                    </stackView>
+                                                                </subviews>
+                                                            </stackView>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="UdG-8J-pt1" userLabel="SliderStack1">
+                                                                <rect key="frame" x="0.0" y="145" width="414" height="54.5"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Slider 1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fcn-e6-DJX" userLabel="Slider 1">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="20.5"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="LbT-U9-bSh">
+                                                                        <rect key="frame" x="-2" y="24.5" width="418" height="31"/>
+                                                                        <connections>
+                                                                            <action selector="filterSlider1DidChange:" destination="1Aw-4e-BW2" eventType="valueChanged" id="oYi-We-djZ"/>
+                                                                        </connections>
+                                                                    </slider>
+                                                                </subviews>
+                                                            </stackView>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="yTt-Wi-oDC" userLabel="SliderStack2">
+                                                                <rect key="frame" x="0.0" y="219.5" width="414" height="54.5"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Slider 2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gDA-li-wGh" userLabel="Slider 2">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="20.5"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="LxJ-OQ-d5L">
+                                                                        <rect key="frame" x="-2" y="24.5" width="418" height="31"/>
+                                                                        <connections>
+                                                                            <action selector="filterSlider2DidChange:" destination="1Aw-4e-BW2" eventType="valueChanged" id="fsM-p8-Ntu"/>
+                                                                        </connections>
+                                                                    </slider>
+                                                                </subviews>
+                                                            </stackView>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="tpf-JM-sjQ" userLabel="SliderStack3">
+                                                                <rect key="frame" x="0.0" y="294" width="414" height="54.5"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Slider 3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Sp-Wv-k0B" userLabel="Slider 3">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="20.5"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="dQC-bC-JxY">
+                                                                        <rect key="frame" x="-2" y="24.5" width="418" height="31"/>
+                                                                        <connections>
+                                                                            <action selector="filterSlider3DidChange:" destination="1Aw-4e-BW2" eventType="valueChanged" id="6ci-F5-Fxi"/>
+                                                                        </connections>
+                                                                    </slider>
+                                                                </subviews>
+                                                            </stackView>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                            </stackView>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -187,9 +381,21 @@
                     </navigationItem>
                     <connections>
                         <outlet property="chooseImageButton" destination="VxD-cu-jHT" id="KVs-no-MbU"/>
+                        <outlet property="colorStack1" destination="3fZ-CB-fC3" id="2qD-Uo-PZQ"/>
+                        <outlet property="colorStack2" destination="y3c-0O-RRd" id="HwR-ac-6MF"/>
                         <outlet property="imageHeightConstraint" destination="MHD-wr-Gq9" id="HyG-8g-Ck1"/>
                         <outlet property="imageView" destination="4eK-5F-H5h" id="e7m-c5-Xhz"/>
+                        <outlet property="mainFilterStack" destination="324-5A-d3Z" id="2Yh-gT-eoZ"/>
                         <outlet property="postButton" destination="hsH-Uv-tug" id="ZBn-KE-cpU"/>
+                        <outlet property="slider1" destination="LbT-U9-bSh" id="Mk1-Km-Dyt"/>
+                        <outlet property="slider1Label" destination="fcn-e6-DJX" id="o8e-Og-dC5"/>
+                        <outlet property="slider2" destination="LxJ-OQ-d5L" id="zk7-uG-32O"/>
+                        <outlet property="slider2Label" destination="gDA-li-wGh" id="RyV-qU-Zld"/>
+                        <outlet property="slider3" destination="dQC-bC-JxY" id="8QF-vR-BLs"/>
+                        <outlet property="slider3Label" destination="7Sp-Wv-k0B" id="KFc-0O-qPE"/>
+                        <outlet property="sliderStack1" destination="UdG-8J-pt1" id="0mP-q9-dcl"/>
+                        <outlet property="sliderStack2" destination="yTt-Wi-oDC" id="dE5-t0-xtc"/>
+                        <outlet property="sliderStack3" destination="tpf-JM-sjQ" id="rby-hl-Cip"/>
                         <outlet property="titleTextField" destination="Op6-OA-6Ou" id="JEe-cj-4mv"/>
                     </connections>
                 </viewController>
