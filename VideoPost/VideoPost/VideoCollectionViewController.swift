@@ -7,51 +7,89 @@
 //
 
 import UIKit
-
-private let reuseIdentifier = "Cell"
+import AVFoundation
 
 class VideoCollectionViewController: UICollectionViewController {
+    
+    var videos = [(URL, Double)]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-        // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        collectionView.reloadData()
     }
 
-    /*
+    @IBAction func showCamera(_ sender: Any) {
+        requestPermissionAndShowCamera()
+    }
+    
+    func requestPermissionAndShowCamera() {
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        
+        switch status {
+        case .notDetermined:
+            requestPermission()
+        case .restricted:
+            fatalError("Show user UI to let them know they don't have access")
+        case .denied:
+            fatalError("Show user UI to get them to give access")
+        case .authorized:
+            showCamera()
+        @unknown default:
+            fatalError("Apple added another enum value that we're not handling")
+        }
+    }
+    
+    private func requestPermission() {
+        AVCaptureDevice.requestAccess(for: .video) { granted in
+            guard granted else {
+                fatalError("Show user UI to get them to give access")
+            }
+            
+            DispatchQueue.main.async {
+                self.showCamera()
+            }
+        }
+    }
+    
+    private func showCamera() {
+        performSegue(withIdentifier: "CameraSegue", sender: self)
+    }
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "CameraSegue" {
+            guard let cameraVC = segue.destination as? CameraViewController else { return }
+            
+            cameraVC.delegate = self
+        } else if segue.identifier == "PlayerSegue" {
+            guard let playerVC = segue.destination as? PlayerViewController,
+                let cell = sender as? VideoCollectionViewCell,
+                let indexPath = collectionView.indexPath(for: cell) else { return }
+            
+            playerVC.videoURL = videos[indexPath.row].0
+        }
     }
-    */
 
     // MARK: UICollectionViewDataSource
-
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
-
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return 0
+        return videos.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
-        // Configure the cell
-    
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoCell", for: indexPath) as? VideoCollectionViewCell else {
+            fatalError("Messed up the reuse identifier")
+        }
+        
+        cell.videoTime = videos[indexPath.row].1
+        
         return cell
     }
 
@@ -86,4 +124,10 @@ class VideoCollectionViewController: UICollectionViewController {
     }
     */
 
+}
+
+extension VideoCollectionViewController: CameraViewDelegate {
+    func didFinishRecording(to url: URL, lasting length: Double) {
+        videos.append((url, length))
+    }
 }

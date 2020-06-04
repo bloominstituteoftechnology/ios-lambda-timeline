@@ -11,7 +11,7 @@
         <!--Videos-->
         <scene sceneID="PYg-44-khL">
             <objects>
-                <collectionViewController id="Ddt-7v-1Ih" sceneMemberID="viewController">
+                <collectionViewController id="Ddt-7v-1Ih" customClass="VideoCollectionViewController" customModule="VideoPost" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="9qX-Zq-Meu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -23,15 +23,38 @@
                             <inset key="sectionInset" minX="20" minY="20" maxX="20" maxY="20"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VideoCell" id="ntV-4h-CGE">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VideoCell" id="ntV-4h-CGE" customClass="VideoCollectionViewCell" customModule="VideoPost" customModuleProvider="target">
                                 <rect key="frame" x="20" y="20" width="128" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="eag-Qy-tR3">
                                     <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4uA-tY-a2O">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="84"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="84" id="5EO-Up-yEi"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TFq-hB-fsH">
+                                            <rect key="frame" x="41" y="94" width="46" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="4uA-tY-a2O" secondAttribute="trailing" id="CD5-ur-z9K"/>
+                                        <constraint firstItem="4uA-tY-a2O" firstAttribute="top" secondItem="eag-Qy-tR3" secondAttribute="top" id="Q12-vo-wfc"/>
+                                        <constraint firstItem="TFq-hB-fsH" firstAttribute="top" secondItem="4uA-tY-a2O" secondAttribute="bottom" constant="10" id="fId-X2-AOU"/>
+                                        <constraint firstItem="4uA-tY-a2O" firstAttribute="leading" secondItem="eag-Qy-tR3" secondAttribute="leading" id="gfM-eG-vRn"/>
+                                        <constraint firstItem="TFq-hB-fsH" firstAttribute="centerX" secondItem="eag-Qy-tR3" secondAttribute="centerX" id="hLD-2K-Rdu"/>
+                                    </constraints>
                                 </collectionViewCellContentView>
                                 <connections>
-                                    <segue destination="UXz-Oc-ISo" kind="show" id="4tb-MA-Uih"/>
+                                    <outlet property="imageView" destination="4uA-tY-a2O" id="Jyu-7g-td7"/>
+                                    <outlet property="timeLabel" destination="TFq-hB-fsH" id="zn1-mo-Whb"/>
+                                    <segue destination="UXz-Oc-ISo" kind="show" identifier="PlayerSegue" id="4tb-MA-Uih"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -43,19 +66,22 @@
                     <navigationItem key="navigationItem" title="Videos" id="U2t-Tr-0G2">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="ptl-nd-hKj">
                             <connections>
-                                <segue destination="BYZ-38-t0r" kind="show" id="iCu-e5-27Y"/>
+                                <action selector="showCamera:" destination="Ddt-7v-1Ih" id="Oe0-sc-iOp"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="CameraSegue" id="hpH-WQ-Evi"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hwX-fs-dz3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1010.144927536232" y="138.61607142857142"/>
+            <point key="canvasLocation" x="1009" y="139"/>
         </scene>
-        <!--View Controller-->
+        <!--Player View Controller-->
         <scene sceneID="q6b-Yg-rTW">
             <objects>
-                <viewController id="UXz-Oc-ISo" sceneMemberID="viewController">
+                <viewController id="UXz-Oc-ISo" customClass="PlayerViewController" customModule="VideoPost" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ofk-as-pbY">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -73,6 +99,9 @@
                                 <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" backgroundImage="play.circle" catalog="system"/>
                                 <state key="selected" backgroundImage="stop.circle" catalog="system"/>
+                                <connections>
+                                    <action selector="togglePlayback:" destination="UXz-Oc-ISo" eventType="touchUpInside" id="2aa-ny-KBc"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -85,8 +114,16 @@
                             <constraint firstItem="fno-1l-ceI" firstAttribute="centerX" secondItem="Ofk-as-pbY" secondAttribute="centerX" id="wpW-wa-Uw8"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="r7f-VL-qhg"/>
+                        <connections>
+                            <outlet property="playButton" destination="fno-1l-ceI" id="FTk-78-GbN"/>
+                            <outlet property="playerView" destination="MhR-SV-VBX" id="vma-XK-LFs"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="nBA-Wg-4bc"/>
+                    <connections>
+                        <outlet property="playButton" destination="fno-1l-ceI" id="x2R-zh-WIr"/>
+                        <outlet property="playerView" destination="MhR-SV-VBX" id="uPC-4b-yQk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TdE-Uy-uDp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

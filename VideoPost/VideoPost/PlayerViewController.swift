@@ -9,22 +9,40 @@
 import UIKit
 
 class PlayerViewController: UIViewController {
+    var videoURL: URL?
+    
+    let playerController = PlayerController()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    @IBOutlet weak var playerView: VideoPlayerView!
+    @IBOutlet weak var playButton: UIButton!
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        playerController.videoURL = videoURL
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @IBAction func togglePlayback(_ sender: Any) {
+        togglePlayback()
     }
-    */
-
+    
+    private func togglePlayback() {
+        playerController.togglePlayback()
+        updateViews()
+    }
+    
+    private func updateViews() {
+        guard let player = playerController.player else { return }
+        
+        switch player.timeControlStatus {
+        case .playing:
+            playButton.isSelected = true
+        default:
+            playButton.isSelected = false
+        }
+    }
+    
+    private func playMovie() {
+        playerView.player = playerController.player
+    }
 }

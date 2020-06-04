@@ -11,14 +11,10 @@ import AVFoundation
 
 class CameraController {
     
-    init() {
-        setUpCaptureSession()
-    }
-    
     lazy var captureSession = AVCaptureSession()
     lazy var fileOutput = AVCaptureMovieFileOutput()
     
-    private func setUpCaptureSession() {
+    func setUpCaptureSession() {
         captureSession.beginConfiguration()
         
         let camera = bestCamera()
@@ -44,6 +40,7 @@ class CameraController {
         captureSession.addOutput(fileOutput)
         
         captureSession.commitConfiguration()
+        captureSession.startRunning()
     }
     
     private func bestCamera() -> AVCaptureDevice {
