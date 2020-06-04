@@ -140,7 +140,7 @@ class ImagePostViewController: UIViewController {
     }
     
     private func saveAndFilterPhoto() {
-        guard let title = titleTextField.text, !title.isEmpty else { return }
+        guard let imageTitle = titleTextField.text, !imageTitle.isEmpty else { return }
         guard let author = authorTextField.text, !author.isEmpty else { return }
         guard let originalImage = originalImage else { return }
         guard let processedImage = filterImage(originalImage.flattened) else { return }

@@ -10,6 +10,18 @@ import MapKit
 
 extension Post: MKAnnotation {
     
+    var coordinate: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: latitude ?? 0, longitude: longitude ?? 0)
+    }
+    
+    var title: String? {
+        imageTitle
+    }
+    
+    var subtitle: String? {
+        author
+    }
+    
 }
 
 

@@ -65,7 +65,7 @@ class MapDetailView: UIView {
         let latitude = post.latitude ?? 0.0
         let longitude = post.longitude ?? 0.0
         
-        titleLabel.text = post.title ?? "Untitled"
+        titleLabel.text = post.imageTitle ?? "Untitled"
         authorLabel.text = post.author ?? "Anonymous"
         latitudeLabel.text = "Lat: " + latLonFormatter.string(from: latitude as NSNumber)!
         longitudeLabel.text = "Lon: " + latLonFormatter.string(from: longitude as NSNumber)!

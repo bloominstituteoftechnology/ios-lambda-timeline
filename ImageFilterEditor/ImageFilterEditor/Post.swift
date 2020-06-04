@@ -10,14 +10,14 @@ import Foundation
 
 class Post: NSObject {
     
-    var title: String?
+    var imageTitle: String?
     var author: String?
     var longitude: Double?
     var latitude: Double?
     
     
-    init(title: String, author: String, longitude: Double, latitude: Double) {
-        self.title = title
+    init(imageTitle: String, author: String, longitude: Double, latitude: Double) {
+        self.imageTitle = imageTitle
         self.author = author
         self.longitude = longitude
         self.latitude = latitude
