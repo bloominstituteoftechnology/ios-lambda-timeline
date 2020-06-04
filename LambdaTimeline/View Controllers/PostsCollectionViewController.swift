@@ -22,6 +22,16 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         }
     }
     
+    @IBAction func signout(_ sender: Any) {
+        let firebaseAuth = Auth.auth()
+        do {
+          try firebaseAuth.signOut()
+        } catch let signOutError as NSError {
+          print ("Error signing out: %@", signOutError)
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
     @IBAction func addPost(_ sender: Any) {
         
         let alert = UIAlertController(title: "New Post", message: "Which kind of post do you want to create?", preferredStyle: .actionSheet)
@@ -57,6 +67,8 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
+        default:
+            return UICollectionViewCell()
         }
     }
     
@@ -73,6 +85,8 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             guard let ratio = post.ratio else { return size }
             
             size.height = size.width * ratio
+        default:
+            break
         }
         
         return size
