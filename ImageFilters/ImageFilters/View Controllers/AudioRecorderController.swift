@@ -96,20 +96,20 @@ class AudioRecorderController: UIViewController {
 
             self.updateViews()
 
-            //                   if let audioRecorder = self.audioRecorder,
-            //                       self.isRecording == true {
-            //
-            //                       audioRecorder.updateMeters()
-            //                       self.audioVisualizer.addValue(decibelValue: audioRecorder.averagePower(forChannel: 0))
-            //
-            //                   }
-            //
-            //                   if let audioPlayer = self.audioPlayer,
-            //                       self.isPlaying == true {
-            //
-            //                       audioPlayer.updateMeters()
-            //                       self.audioVisualizer.addValue(decibelValue: audioPlayer.averagePower(forChannel: 0))
-            //                   }
+            if let audioRecorder = self.audioRecorder,
+                self.isRecording == true {
+
+                audioRecorder.updateMeters()
+                self.audioVisualizer.addValue(decibelValue: audioRecorder.averagePower(forChannel: 0))
+
+            }
+            
+            if let audioPlayer = self.audioPlayer,
+                self.isPlaying == true {
+
+                audioPlayer.updateMeters()
+                self.audioVisualizer.addValue(decibelValue: audioPlayer.averagePower(forChannel: 0))
+            }
         }
     }
 
@@ -144,7 +144,7 @@ class AudioRecorderController: UIViewController {
 
 
     var isPlaying: Bool {
-        return audioPlayer?.isPlaying ?? false
+        audioPlayer?.isPlaying ?? false
     }
 
     func togglePlayback() { // app/business logic
