@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="YrC-UD-lJU">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Videos-->
+        <scene sceneID="PYg-44-khL">
+            <objects>
+                <collectionViewController id="Ddt-7v-1Ih" customClass="VideoCollectionViewController" customModule="VideoPost" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="9qX-Zq-Meu">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="J3G-3P-svw">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="20" minY="20" maxX="20" maxY="20"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VideoCell" id="ntV-4h-CGE" customClass="VideoCollectionViewCell" customModule="VideoPost" customModuleProvider="target">
+                                <rect key="frame" x="20" y="20" width="128" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="eag-Qy-tR3">
+                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4uA-tY-a2O">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="84"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="84" id="5EO-Up-yEi"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TFq-hB-fsH">
+                                            <rect key="frame" x="41" y="94" width="46" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="4uA-tY-a2O" secondAttribute="trailing" id="CD5-ur-z9K"/>
+                                        <constraint firstItem="4uA-tY-a2O" firstAttribute="top" secondItem="eag-Qy-tR3" secondAttribute="top" id="Q12-vo-wfc"/>
+                                        <constraint firstItem="TFq-hB-fsH" firstAttribute="top" secondItem="4uA-tY-a2O" secondAttribute="bottom" constant="10" id="fId-X2-AOU"/>
+                                        <constraint firstItem="4uA-tY-a2O" firstAttribute="leading" secondItem="eag-Qy-tR3" secondAttribute="leading" id="gfM-eG-vRn"/>
+                                        <constraint firstItem="TFq-hB-fsH" firstAttribute="centerX" secondItem="eag-Qy-tR3" secondAttribute="centerX" id="hLD-2K-Rdu"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <connections>
+                                    <outlet property="imageView" destination="4uA-tY-a2O" id="Jyu-7g-td7"/>
+                                    <outlet property="timeLabel" destination="TFq-hB-fsH" id="zn1-mo-Whb"/>
+                                    <segue destination="UXz-Oc-ISo" kind="show" identifier="PlayerSegue" id="4tb-MA-Uih"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <connections>
+                            <outlet property="dataSource" destination="Ddt-7v-1Ih" id="HIi-it-T7y"/>
+                            <outlet property="delegate" destination="Ddt-7v-1Ih" id="JPZ-Qd-GeQ"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" title="Videos" id="U2t-Tr-0G2">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="ptl-nd-hKj">
+                            <connections>
+                                <action selector="showCamera:" destination="Ddt-7v-1Ih" id="Oe0-sc-iOp"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="CameraSegue" id="hpH-WQ-Evi"/>
+                    </connections>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hwX-fs-dz3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1009" y="139"/>
+        </scene>
+        <!--Player View Controller-->
+        <scene sceneID="q6b-Yg-rTW">
+            <objects>
+                <viewController id="UXz-Oc-ISo" customClass="PlayerViewController" customModule="VideoPost" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ofk-as-pbY">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MhR-SV-VBX" customClass="VideoPlayerView" customModule="VideoPost" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="140" width="414" height="722"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fno-1l-ceI">
+                                <rect key="frame" x="157" y="702.5" width="100" height="99"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="fno-1l-ceI" secondAttribute="height" multiplier="1:1" id="B7q-lC-WhE"/>
+                                    <constraint firstAttribute="width" constant="100" id="POO-XB-q9t"/>
+                                </constraints>
+                                <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" backgroundImage="play.circle" catalog="system"/>
+                                <state key="selected" backgroundImage="stop.circle" catalog="system"/>
+                                <connections>
+                                    <action selector="togglePlayback:" destination="UXz-Oc-ISo" eventType="touchUpInside" id="2aa-ny-KBc"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="r7f-VL-qhg" firstAttribute="bottom" secondItem="MhR-SV-VBX" secondAttribute="bottom" id="2lI-yC-t1W"/>
+                            <constraint firstItem="r7f-VL-qhg" firstAttribute="trailing" secondItem="MhR-SV-VBX" secondAttribute="trailing" id="5mD-V6-x6N"/>
+                            <constraint firstItem="MhR-SV-VBX" firstAttribute="leading" secondItem="r7f-VL-qhg" secondAttribute="leading" id="9eI-8f-Ely"/>
+                            <constraint firstItem="MhR-SV-VBX" firstAttribute="top" secondItem="r7f-VL-qhg" secondAttribute="top" id="9p5-md-CNR"/>
+                            <constraint firstItem="r7f-VL-qhg" firstAttribute="bottom" secondItem="fno-1l-ceI" secondAttribute="bottom" constant="60" id="I2p-rE-Mst"/>
+                            <constraint firstItem="fno-1l-ceI" firstAttribute="centerX" secondItem="Ofk-as-pbY" secondAttribute="centerX" id="wpW-wa-Uw8"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="r7f-VL-qhg"/>
+                        <connections>
+                            <outlet property="playButton" destination="fno-1l-ceI" id="FTk-78-GbN"/>
+                            <outlet property="playerView" destination="MhR-SV-VBX" id="vma-XK-LFs"/>
+                        </connections>
+                    </view>
+                    <navigationItem key="navigationItem" id="nBA-Wg-4bc"/>
+                    <connections>
+                        <outlet property="playButton" destination="fno-1l-ceI" id="x2R-zh-WIr"/>
+                        <outlet property="playerView" destination="MhR-SV-VBX" id="uPC-4b-yQk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TdE-Uy-uDp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1010" y="910"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="CameraViewController" customModule="VideoPost" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V1E-cM-LYU" customClass="CameraPreviewView" customModule="VideoPost" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="140" width="414" height="722"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="led-mD-bbV">
+                                <rect key="frame" x="157" y="702" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="led-mD-bbV" secondAttribute="height" multiplier="1:1" id="FSA-sn-zjy"/>
+                                    <constraint firstAttribute="width" constant="100" id="tlz-cZ-Az2"/>
+                                </constraints>
+                                <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="Record"/>
+                                <state key="selected" image="Stop"/>
+                                <connections>
+                                    <action selector="toggleRecording:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Okd-i5-ok1"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="led-mD-bbV" secondAttribute="bottom" constant="60" id="UQa-NR-edI"/>
+                            <constraint firstItem="V1E-cM-LYU" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="YdR-af-Hcm"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="V1E-cM-LYU" secondAttribute="trailing" id="a1T-ab-B5a"/>
+                            <constraint firstItem="led-mD-bbV" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fVN-sT-B7C"/>
+                            <constraint firstItem="V1E-cM-LYU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="hrB-j5-cp6"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="V1E-cM-LYU" secondAttribute="bottom" id="ruu-hv-l95"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="cT8-VM-aJX"/>
+                    <connections>
+                        <outlet property="cameraView" destination="V1E-cM-LYU" id="JC6-M1-DHZ"/>
+                        <outlet property="recordButton" destination="led-mD-bbV" id="0eE-h5-Osn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1957.9710144927537" y="138.61607142857142"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="GVy-zm-M3f">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YrC-UD-lJU" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="mwc-pt-F51">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Ddt-7v-1Ih" kind="relationship" relationship="rootViewController" id="slO-OZ-MXe"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="svI-Yb-AvF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="100.00000000000001" y="138.61607142857142"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Record" width="116" height="116"/>
+        <image name="Stop" width="116" height="116"/>
+        <image name="play.circle" catalog="system" width="128" height="121"/>
+        <image name="stop.circle" catalog="system" width="128" height="121"/>
+    </resources>
+</document>
