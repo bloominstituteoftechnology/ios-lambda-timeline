@@ -1,19 +1,24 @@
-# Lambda Timeline
+# Lambda Timeline 
 
 ## Introduction
 
 The goal of this project is to take an existing project called LambdaTimeline and add features to it throughout this sprint. 
 
+<<<<<<< HEAD
 1. To begin with you will design the photo filter UI in a new Xcode project using different filters.
 2. After you finish implementing your UI for filters, you'll update the Lambda Timeline project with the ability to:
     1. Create posts with images from the user's photo library
     2. Add comments to posts
     3. Filter images you post using your photo filter UI
+=======
+Today you will be adding video posts.
+>>>>>>> video
 
 ## Instructions
 
-Please fork and clone this repository, and work from the base project in the repo.
+Create a new branch in the repository called `video` and work off of it from where you left off yesterday.
 
+<<<<<<< HEAD
 ### Part 1 - ~~#NoFilter~~ #Filters
 
 Create a new Xcode project called `ImageFilterEditor` to use as a playground for your Core Image filters and UI setup. *It is ok to create extra Xcode projects to make sure things are working (and it's faster to build and test).*
@@ -61,11 +66,24 @@ NOTE: If you run `pod update` there may be breaking changes from newer versions 
 }
 ```
 This will allow only users of the app who are authenticated to access the database. (Authentication is already taken care of in the starter project)
+=======
+You're welcome to fulfill these instructions however you want. There are a few suggestions to help you along if you need them.
 
-6. In the left pane of your Firebase project under "Develop", click the Storage item. Click the "Get Started" button and it will pull up a modal window about security rules. Simply click "Got it". It will set Storage's rules to allow access to any authenticated user, which works great for our uses.
+## Part 1: VideoPost Prototype
 
-Firebase Storage is essentially a Google Drive for data in your Firebase. It makes sense to use Storage in this application as we will be storing images, audio, and video data. If you're curious as to how Database and Storage interact, feel free to read Firebase's Storage documentation and look at the code in the base project. Particularly in the `Post`, `Media` and `PostController` objects. (Don't feel like you have to, however)
+Create a new Xcode project with the UI and functionality to capture and save a video to a URL that can be shared.
+>>>>>>> video
 
+1.  The UI should allow the user to record a video. 
+    1. Once the video has been recorded, it should play back the video (the playback can be looped if you want).
+    2. The user can add a title just like in an image post and can post it (to a collection view)
+    3. Optional: There can be a button to retake the video before posting (discard the old video file using the FileManager).
+2. A video post should be displayed in a custom Collection View cell (there can be multiple video posts)
+3. You can decide how you want to handle preview and playback controls (Looping Instagram Story style with an `x` button, or QuickTime style with playback and seek controls)
+
+### Tips
+
+<<<<<<< HEAD
 At this point, run the app on your simulator or physical device in order to make sure that you've set up your Firebase Project correctly. If set up correctly, you should be able to create posts, comment on them, and have them get sent to Firebase. You should also be able to re-run the app and have the posts and comments get fetched correctly. If this does not work, the likely scenario is that you've not set up your Firebase project correctly. If you can't figure out what's wrong, please reach out to your TL.
 
 *Note: If you have a free Apple Developer account you may need to reuse your Bundle ID from a previous project to run on a real device (Apple limits you to three unique identifiers).*
@@ -80,3 +98,28 @@ At this point, run the app on your simulator or physical device in order to make
 - Clean up the UI of the app, either with the UI you added to support filters. You're welcome to touch up the UI overall if you wish as well.
 - Allow for undoing and redoing of filter effects (i.e.: Reset to the identity values, snap to default, etc.)
 - Try using a `UIPanGestureRecognizer` on your `UIImageView` to get the (x, y) coordinate using `locationInView:` on the panGesture. (You may need to clamp the value to the bounds of the image).
+=======
+1. You may take the `CameraViewController` used in the guided project as a base. 
+2. You should be able to play the video using the `AVPlayer` and `AVPlayerLayer` classes.
+3. You can reuse the special `UIView` layer backed classes to live preview the camera, as well as the video playback.
+4. Optional: Grab the first frame of video to use when displaying a video post (alternatively you can use a placeholder image).
+
+## Part 2: Video Posts on Lambda Timeline
+1. Integrate your UI to create a video post onto your Firebase backend.
+
+    <details><summary>Recording UI Suggestions</summary>
+    <p>
+
+      - If you use the `CameraViewController` you may need to modify it so the video doesn't get stored to the user's photo library. Instead you can use the url that the `didFinishRecordingTo outPutFileURL: URL` method gives you back to send the video data to Firebase
+    </p>
+    </details>
+2. Add a new case to the `MediaType` enum in the Post.swift file for videos. Take a look at the memberwise initializer for the Post. Make sure that it takes in a `MediaType` and sets `mediaType` correctly.
+3. Create a new collection view cell in the `PostsCollectionViewController`. It should display the video, as well as the post's title and author. It's up to you if you want the video to play automatically or have it play when you tap the cell, or a button, etc.
+4. Create a detail view controller for video posts similar to the `ImagePostDetailViewController`. It should display the post's video, title, artist, and its comments. It should also allow the user to add their own text and audio comments.
+
+## Go Further
+
+- Add the ability to record audio with the video. When the video plays on a cell or in the video post view controller, the audio should play as well.
+- Add the ability to record from the front camera and let the user flip the cameras.
+- Add the option to save the video to the user's photo library
+>>>>>>> video
