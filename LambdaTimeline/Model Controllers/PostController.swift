@@ -35,15 +35,38 @@ class PostController {
         }
     }
     
-    func addComment(with text: String, to post: inout Post) {
+    func addTextComment(with text: String, to post: inout Post) {
         
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
         
-        let comment = Comment(text: text, author: author)
+        let comment = Comment(text: text, author: author, audioURL: nil)
         post.comments.append(comment)
         
         savePostToFirebase(post)
+    }
+    
+    //Should post be inout?
+    func addAudioComment(with audioURL: URL, to post: Post) {
+        
+        guard let currentUser = Auth.auth().currentUser,
+            let author = Author(user: currentUser) else { return }
+    
+        do {
+            let data = try Data(contentsOf: audioURL)
+            
+            store(mediaData: data, mediaType: .audioComments) { (firebaseAudioURL) in
+                let comment = Comment(text: nil, author: author, audioURL: firebaseAudioURL)
+                
+                post.comments.append(comment)
+                
+                self.savePostToFirebase(post)
+            }
+            
+        } catch {
+            NSLog("Error fetching data from url: \(error)")
+        }
+
     }
 
     func observePosts(completion: @escaping (Error?) -> Void) {
