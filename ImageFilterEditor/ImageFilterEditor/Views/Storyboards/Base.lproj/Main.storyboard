@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Image Post View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ImagePostViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TJC-82-WGY">
+                                <rect key="frame" x="12" y="54" width="390" height="354.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="TJC-82-WGY" secondAttribute="height" multiplier="1.1:1" id="dbe-fr-rAr"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yTy-zi-yg1">
+                                <rect key="frame" x="12" y="420.5" width="390" height="194.5"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="yTy-zi-yg1" secondAttribute="height" multiplier="2:1" constant="1" id="i4r-0A-Jdj"/>
+                                </constraints>
+                            </view>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gQv-4R-NrN">
+                                <rect key="frame" x="12" y="627" width="390" height="216"/>
+                            </pickerView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="yTy-zi-yg1" firstAttribute="top" secondItem="TJC-82-WGY" secondAttribute="bottom" constant="12" id="7ni-vZ-56K"/>
+                            <constraint firstItem="gQv-4R-NrN" firstAttribute="trailing" secondItem="TJC-82-WGY" secondAttribute="trailing" id="9ly-tm-Moy"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TJC-82-WGY" secondAttribute="trailing" constant="12" id="ZF4-aV-S6P"/>
+                            <constraint firstItem="TJC-82-WGY" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="ZV3-XT-hCN"/>
+                            <constraint firstItem="gQv-4R-NrN" firstAttribute="leading" secondItem="TJC-82-WGY" secondAttribute="leading" id="i20-IE-mBX"/>
+                            <constraint firstItem="TJC-82-WGY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="12" id="k21-UJ-oQi"/>
+                            <constraint firstItem="gQv-4R-NrN" firstAttribute="top" secondItem="yTy-zi-yg1" secondAttribute="bottom" constant="12" id="l6t-6L-b2r"/>
+                            <constraint firstItem="yTy-zi-yg1" firstAttribute="trailing" secondItem="TJC-82-WGY" secondAttribute="trailing" id="pDX-u5-7YK"/>
+                            <constraint firstItem="yTy-zi-yg1" firstAttribute="leading" secondItem="TJC-82-WGY" secondAttribute="leading" id="vI9-LQ-mV6"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="controlView" destination="yTy-zi-yg1" id="qGh-wv-s5D"/>
+                        <outlet property="filterPicker" destination="gQv-4R-NrN" id="DPi-A5-bOw"/>
+                        <outlet property="selectedImageView" destination="TJC-82-WGY" id="HtP-0P-n2x"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="139" y="130"/>
+        </scene>
+    </scenes>
+</document>
