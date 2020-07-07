@@ -12,7 +12,35 @@
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="502" height="270"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="CRj-Cb-7sv">
+                    <rect key="frame" x="0.0" y="116" width="502" height="38.5"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sharpness" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z8t-4E-H6p">
+                            <rect key="frame" x="0.0" y="0.0" width="146.5" height="38.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Pad-Ys-Yru">
+                            <rect key="frame" x="156.5" y="0.0" width="347.5" height="39.5"/>
+                        </slider>
+                    </subviews>
+                </stackView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HXA-uB-1hc">
+                    <rect key="frame" x="217" y="207" width="68" height="51"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                    <state key="normal" title="Save"/>
+                </button>
+            </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="HXA-uB-1hc" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Aa6-Fn-dA0"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="CRj-Cb-7sv" secondAttribute="trailing" id="dOE-dQ-Tr8"/>
+                <constraint firstItem="CRj-Cb-7sv" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="kAU-qW-Fca"/>
+                <constraint firstItem="CRj-Cb-7sv" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="o3H-RL-PAR"/>
+                <constraint firstAttribute="bottom" secondItem="HXA-uB-1hc" secondAttribute="bottom" constant="12" id="rJc-NL-SVR"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="204.34782608695653" y="270.53571428571428"/>
