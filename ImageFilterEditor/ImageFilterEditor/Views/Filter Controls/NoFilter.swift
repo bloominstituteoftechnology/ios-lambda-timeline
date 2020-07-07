@@ -1,14 +1,14 @@
 //
-//  MotionBlurControl.swift
+//  NoFilter.swift
 //  ImageFilterEditor
 //
-//  Created by Cody Morley on 7/6/20.
+//  Created by Cody Morley on 7/7/20.
 //  Copyright © 2020 Cody Morley. All rights reserved.
 //
 
 import UIKit
 
-class MotionBlurControl: UIView {
+class NoFilter: UIView {
     
     //MARK: - Life Cycles -
     override init(frame: CGRect) {
@@ -25,3 +25,4 @@ class MotionBlurControl: UIView {
         
     }
 }
+
