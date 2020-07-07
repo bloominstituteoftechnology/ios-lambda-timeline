@@ -26,7 +26,10 @@ class CircleSplashControl: UIView {
     }
     
     private func commonInit() {
-        
+        Bundle.main.loadNibNamed("CircleSplashControl", owner: self, options: nil)
+        addSubview(contentView)
+        contentView.frame = self.bounds
+        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
     
     

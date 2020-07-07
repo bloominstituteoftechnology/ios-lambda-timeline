@@ -29,7 +29,10 @@ class ColorMonochromeControl: UIView {
     }
     
     private func commonInit() {
-        
+        Bundle.main.loadNibNamed("ColorMonochromeControl", owner: self, options: nil)
+        addSubview(contentView)
+        contentView.frame = self.bounds
+        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
     }
     
     
