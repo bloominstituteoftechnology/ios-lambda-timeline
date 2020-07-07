@@ -9,6 +9,15 @@
 import UIKit
 
 class ImagePostDetailTableViewController: UITableViewController {
+
+    var post: Post!
+    var postController: PostController!
+    var imageData: Data?
+    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,14 +25,10 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     func updateViews() {
-        
         guard let imageData = imageData,
             let image = UIImage(data: imageData) else { return }
-        
         title = post?.title
-        
         imageView.image = image
-        
         titleLabel.text = post.title
         authorLabel.text = post.author.displayName
     }
@@ -31,9 +36,7 @@ class ImagePostDetailTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     @IBAction func createComment(_ sender: Any) {
-        
-        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
-        
+        let alert = UIAlertController(title: "Add A Comment", message: "Select a comment type below:", preferredStyle: .alert)
         var commentTextField: UITextField?
         
         alert.addTextField { (textField) in
@@ -41,22 +44,22 @@ class ImagePostDetailTableViewController: UITableViewController {
             commentTextField = textField
         }
         
-        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
-            
+        let addTextCommentAction = UIAlertAction(title: "Add a Text Comment", style: .default) { (_) in
             guard let commentText = commentTextField?.text else { return }
-            
             self.postController.addComment(with: commentText, to: &self.post!)
-            
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
         
+        let addAudioCommentAction = UIAlertAction(title: "Leave an Audio Comment Instead", style: .default, handler: { _ in
+            self.performSegue(withIdentifier: "AudioCommentModalSegue", sender: nil)
+        })
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(addCommentAction)
+        alert.addAction(addTextCommentAction)
+        alert.addAction(addAudioCommentAction)
         alert.addAction(cancelAction)
-        
         present(alert, animated: true, completion: nil)
     }
     
@@ -65,24 +68,39 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
         
         let comment = post?.comments[indexPath.row + 1]
         
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author.displayName
+//        switch comment?.type {
+//        case .text:
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+//            cell.textLabel?.text = comment?.text
+//            cell.detailTextLabel?.text = comment?.author.displayName
+//            return cell
+//        case .audio:
+//            guard let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCommentCell", for: indexPath) as? AudioCommentTableViewCell else { return UITableViewCell() }
+//            cell.authorLabel.text = comment?.author.displayName
+//        default:
+//            return UITableViewCell()
+//        }
         
-        return cell
+        if comment?.type == .text {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+            cell.textLabel?.text = comment?.text
+            cell.detailTextLabel?.text = comment?.author.displayName
+            return cell
+        } else if comment?.type == .audio {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCommentCell", for: indexPath) as? AudioCommentTableViewCell else { return UITableViewCell() }
+            cell.authorLabel.text = comment?.author.displayName
+            return cell
+        } else {
+            return UITableViewCell()
+        }
     }
     
-    var post: Post!
-    var postController: PostController!
-    var imageData: Data?
-    
-    
-    
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var authorLabel: UILabel!
-    @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "AudioCommentModalSegue" {
+            _ = segue.destination as? AudioCommentViewController
+        }
+    }
 }
