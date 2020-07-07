@@ -13,6 +13,13 @@ import FirebaseStorage
 
 class PostController {
     
+    var posts: [Post] = []
+    var videoPosts: [VideoPost] = []
+    let currentUser = Auth.auth().currentUser
+    let postsRef = Database.database().reference().child("posts")
+    let videoPostsRef = Database.database().reference().child("videoPosts")
+    let storageRef = Storage.storage().reference()
+    
     func createPost(with title: String, ofType mediaType: MediaType, mediaData: Data, ratio: CGFloat? = nil, completion: @escaping (Bool) -> Void = { _ in }) {
         
         guard let currentUser = Auth.auth().currentUser,
@@ -22,16 +29,54 @@ class PostController {
             
             guard let mediaURL = mediaURL else { completion(false); return }
             
-            let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
-            
-            self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
-                if let error = error {
-                    NSLog("Error posting image post: \(error)")
-                    completion(false)
+            switch mediaType {
+            case .image:
+                let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
+                self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
+                        if let error = error {
+                            NSLog("Error posting image post: \(error)")
+                            completion(false)
+                        }
+                
+                        completion(true)
+                    }
+            case .video:
+                let videoPost = VideoPost(title: title, mediaURL: mediaURL, author: author)
+                self.videoPostsRef.childByAutoId().setValue(videoPost.dictionaryRepresentation) { error, ref in
+                    if let error = error {
+                        NSLog("Error posting video post: \(error)")
+                        completion(false)
+                    }
+                    completion(true)
+                    
                 }
-        
-                completion(true)
+            default:
+                break
             }
+        }
+    }
+    
+    func addComment(with text: String, and audio: Data, to post: inout Post) {
+        guard let currentUser = Auth.auth().currentUser,
+            let author = Author(user: currentUser) else { return }
+        store(mediaData: audio, mediaType: .audio) { [weak post] mediaURL in
+            guard let mediaURL = mediaURL else { return }
+            let comment = Comment(text: text, author: author, audio: mediaURL.absoluteString)
+            post?.comments.append(comment)
+            guard let post = post else { return }
+            self.savePostToFirebase(post)
+        }
+    }
+    
+    func addComment(with text: String, and audio: Data, to videoPost: inout VideoPost) {
+        guard let currentUser = Auth.auth().currentUser,
+            let author = Author(user: currentUser) else { return }
+        store(mediaData: audio, mediaType: .audio) { [weak videoPost] mediaURL in
+            guard let mediaURL = mediaURL else { return }
+            let comment = Comment(text: text, author: author, audio: mediaURL.absoluteString)
+            videoPost?.comments.append(comment)
+            guard let videoPost = videoPost else { return }
+            self.savePostToFirebase(videoPost)
         }
     }
     
@@ -45,10 +90,21 @@ class PostController {
         
         savePostToFirebase(post)
     }
+    
+    func addComment(with text: String, to videoPost: inout VideoPost) {
+        
+        guard let currentUser = Auth.auth().currentUser,
+            let author = Author(user: currentUser) else { return }
+        
+        let comment = Comment(text: text, author: author)
+        videoPost.comments.append(comment)
+        
+        savePostToFirebase(videoPost)
+    }
 
     func observePosts(completion: @escaping (Error?) -> Void) {
         
-        postsRef.observe(.value, with: { (snapshot) in
+        postsRef.observe(.value, with: { snapshot in
             
             guard let postDictionaries = snapshot.value as? [String: [String: Any]] else { return }
             
@@ -65,7 +121,31 @@ class PostController {
             
             completion(nil)
             
-        }) { (error) in
+        }) { error in
+            NSLog("Error fetching posts: \(error)")
+        }
+    }
+    
+    func observeVideoPosts(completion: @escaping (Error?) -> Void) {
+        
+        videoPostsRef.observe(.value, with: { snapshot in
+            
+            guard let postDictionaries = snapshot.value as? [String: [String: Any]] else { return }
+            
+            var posts: [VideoPost] = []
+            
+            for (key, value) in postDictionaries {
+                
+                guard let post = VideoPost(dictionary: value, id: key) else { continue }
+                
+                posts.append(post)
+            }
+            
+            self.videoPosts = posts.sorted(by: { $0.timestamp > $1.timestamp })
+            
+            completion(nil)
+            
+        }) { error in
             NSLog("Error fetching posts: \(error)")
         }
     }
@@ -78,12 +158,30 @@ class PostController {
         
         ref.setValue(post.dictionaryRepresentation)
     }
+    
+    func savePostToFirebase(_ post: VideoPost, completion: (Error?) -> Void = { _ in }) {
+        
+        guard let postID = post.id else { return }
+        
+        let ref = videoPostsRef.child(postID)
+        
+        ref.setValue(post.dictionaryRepresentation)
+    }
 
     private func store(mediaData: Data, mediaType: MediaType, completion: @escaping (URL?) -> Void) {
         
         let mediaID = UUID().uuidString
         
-        let mediaRef = storageRef.child(mediaType.rawValue).child(mediaID)
+        var mediaRef: StorageReference
+        
+        switch mediaType {
+        case .image:
+            mediaRef = storageRef.child(mediaType.rawValue).child("\(mediaID).jpeg")
+        case .audio:
+            mediaRef = storageRef.child(mediaType.rawValue).child("\(mediaID).caf")
+        case .video:
+            mediaRef = storageRef.child(mediaType.rawValue).child("\(mediaID).mov")
+        }
         
         let uploadTask = mediaRef.putData(mediaData, metadata: nil) { (metadata, error) in
             if let error = error {
@@ -116,12 +214,4 @@ class PostController {
         
         uploadTask.resume()
     }
-    
-    var posts: [Post] = []
-    let currentUser = Auth.auth().currentUser
-    let postsRef = Database.database().reference().child("posts")
-    
-    let storageRef = Storage.storage().reference()
-    
-    
 }

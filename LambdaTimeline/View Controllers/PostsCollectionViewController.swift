@@ -24,9 +24,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     
     @IBAction func addPost(_ sender: Any) {
         
-        let alert = UIAlertController(title: "New Post", message: "Which kind of post do you want to create?", preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "New Post", message: nil, preferredStyle: .actionSheet)
         
-        let imagePostAction = UIAlertAction(title: "Image", style: .default) { (_) in
+        let imagePostAction = UIAlertAction(title: "Ok", style: .default) { (_) in
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
         
@@ -57,6 +57,8 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
+        default:
+            return UICollectionViewCell()
         }
     }
     
@@ -73,7 +75,10 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             guard let ratio = post.ratio else { return size }
             
             size.height = size.width * ratio
+        default:
+            break
         }
+        
         
         return size
     }
