@@ -24,10 +24,23 @@ class NoFilter: UIView {
     }
     
     private func commonInit() {
-        Bundle.main.loadNibNamed("NoFilter", owner: self, options: nil)
-        addSubview(contentView)
-        contentView.frame = self.bounds
-        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        //        Bundle.main.loadNibNamed("NoFilter", owner: self, options: nil)
+        //        addSubview(contentView)
+        //        contentView.frame = self.bounds
+        //        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+        let name = String(describing: type(of: self))
+        let nib = UINib(nibName: name, bundle: .main)
+        nib.instantiate(withOwner: self, options: nil)
+        
+        self.addSubview(self.contentView)
+        self.contentView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.contentView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.contentView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            self.contentView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.contentView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+        ])
     }
 }
 
