@@ -65,6 +65,10 @@ class ColorMonochromeControl: UIView {
         
     }
     
+    @IBAction func filter(_ sender: Any) {
+        
+    }
+    
     @IBAction func save(_ sender: Any) {
         
     }

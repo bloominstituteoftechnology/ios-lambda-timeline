@@ -74,21 +74,34 @@
                         </stackView>
                     </subviews>
                 </stackView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z2T-ad-66k">
-                    <rect key="frame" x="312" y="319.5" width="68" height="51"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                    <state key="normal" title="Save"/>
-                    <connections>
-                        <action selector="save:" destination="-1" eventType="touchUpInside" id="Xqo-uR-1Di"/>
-                    </connections>
-                </button>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="324" translatesAutoresizingMaskIntoConstraints="NO" id="bJ9-fs-b5y">
+                    <rect key="frame" x="116" y="325" width="460" height="51"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DpP-ch-lix">
+                            <rect key="frame" x="0.0" y="0.0" width="68" height="51"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                            <state key="normal" title="Filter"/>
+                            <connections>
+                                <action selector="filter:" destination="-1" eventType="touchUpInside" id="e9k-X0-H4e"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z2T-ad-66k">
+                            <rect key="frame" x="392" y="0.0" width="68" height="51"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                            <state key="normal" title="Save"/>
+                            <connections>
+                                <action selector="save:" destination="-1" eventType="touchUpInside" id="bBM-e1-m8L"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
                 <constraint firstItem="T3c-3h-rt2" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="BqT-wH-rA2"/>
-                <constraint firstItem="Z2T-ad-66k" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="FGN-fT-sZw"/>
                 <constraint firstAttribute="trailing" secondItem="T3c-3h-rt2" secondAttribute="trailing" id="Ias-US-77n"/>
-                <constraint firstItem="Z2T-ad-66k" firstAttribute="top" secondItem="T3c-3h-rt2" secondAttribute="bottom" constant="6" id="gax-DX-gdf"/>
+                <constraint firstItem="bJ9-fs-b5y" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Psq-Kk-gE4"/>
+                <constraint firstAttribute="bottom" secondItem="bJ9-fs-b5y" secondAttribute="bottom" constant="6" id="cWw-Is-mCa"/>
                 <constraint firstItem="T3c-3h-rt2" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="nz9-hd-raN"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

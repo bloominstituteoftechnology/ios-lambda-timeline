@@ -52,20 +52,33 @@
                         </stackView>
                     </subviews>
                 </stackView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zgd-Hs-YMV">
-                    <rect key="frame" x="224" y="232" width="68" height="51"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                    <state key="normal" title="Save"/>
-                    <connections>
-                        <action selector="save:" destination="-1" eventType="touchUpInside" id="28E-5e-Y6R"/>
-                    </connections>
-                </button>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="324" translatesAutoresizingMaskIntoConstraints="NO" id="bkD-mw-Wz5">
+                    <rect key="frame" x="28" y="232" width="460" height="51"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="icd-ah-l6q">
+                            <rect key="frame" x="0.0" y="0.0" width="68" height="51"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                            <state key="normal" title="Filter"/>
+                            <connections>
+                                <action selector="filter:" destination="-1" eventType="touchUpInside" id="dpH-Ne-kpr"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zgd-Hs-YMV">
+                            <rect key="frame" x="392" y="0.0" width="68" height="51"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                            <state key="normal" title="Save"/>
+                            <connections>
+                                <action selector="save:" destination="-1" eventType="touchUpInside" id="tsD-FU-aAN"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
+                <constraint firstItem="bkD-mw-Wz5" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="0rc-yV-YVc"/>
                 <constraint firstItem="n1D-if-8jA" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="8Yl-fa-PeF"/>
-                <constraint firstAttribute="bottom" secondItem="Zgd-Hs-YMV" secondAttribute="bottom" constant="12" id="ERs-2J-Ldx"/>
-                <constraint firstItem="Zgd-Hs-YMV" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="PFU-zH-mDr"/>
+                <constraint firstAttribute="bottom" secondItem="bkD-mw-Wz5" secondAttribute="bottom" constant="12" id="AaR-JU-rKs"/>
                 <constraint firstAttribute="trailing" secondItem="n1D-if-8jA" secondAttribute="trailing" id="VEv-ud-BNu"/>
                 <constraint firstItem="n1D-if-8jA" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="uvL-e4-gKT"/>
             </constraints>

@@ -18,6 +18,11 @@ class BloomControl: UIView {
     
     
     //MARK: - Life Cycles -
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setUpView()
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -51,14 +56,23 @@ class BloomControl: UIView {
     
     
     //MARK: - Actions -
+    @IBAction func filter(_ sender: Any) {
+        
+    }
+    
     @IBAction func save(_ sender: Any) {
         
     }
     
-    
     //MARK: - Methods -
     private func setUpView() {
+        intensitySlider.minimumValue = 0
+        intensitySlider.maximumValue = 1
+        intensitySlider.setValue(0.5, animated: false)
         
+        radiusSlider.minimumValue = 0
+        radiusSlider.maximumValue = 100
+        radiusSlider.setValue(10, animated: false)
     }
 }
 

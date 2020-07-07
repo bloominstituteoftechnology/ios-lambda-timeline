@@ -12,11 +12,18 @@ class CircleSplashControl: UIView {
     //MARK: - Properties -
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var radiusSlider: UISlider!
-    @IBOutlet weak var effectCenterSelector: UIView!
+    @IBOutlet weak var centerXTextField: UITextField!
+    @IBOutlet weak var centerYTextField: UITextField!
+    
     
     private var filters = Filters()
     
     //MARK: - Life Cycles -
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setUpView()
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -50,6 +57,10 @@ class CircleSplashControl: UIView {
     
     
     //MARK: - Actions -
+    @IBAction func filter(_ sender: Any) {
+        
+    }
+    
     @IBAction func save(_ sender: Any) {
         
     }
@@ -57,6 +68,8 @@ class CircleSplashControl: UIView {
     
     //MARK: - Methods -
     private func setUpView() {
-        
+        radiusSlider.minimumValue = 0
+        radiusSlider.maximumValue = 1000
+        radiusSlider.setValue(150, animated: false)
     }
 }

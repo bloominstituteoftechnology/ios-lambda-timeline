@@ -17,6 +17,11 @@ class SharpenLuminanceControl: UIView {
     
     
     //MARK: - Life Cycles -
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setUpView()
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -50,6 +55,10 @@ class SharpenLuminanceControl: UIView {
     
     
     //MARK - Actions -
+    @IBAction func filter(_ sender: Any) {
+        
+    }
+    
     @IBAction func save(_ sender: Any) {
         
     }
@@ -57,6 +66,9 @@ class SharpenLuminanceControl: UIView {
     
     //MARK: - Methods -
     private func setUpView() {
+        sharpnessSlider.minimumValue = 0
+        sharpnessSlider.maximumValue = 20
+        sharpnessSlider.setValue(1.69, animated: false)
         
     }
 }

@@ -56,6 +56,10 @@ class MotionBlurControl: UIView {
     
     
     //MARK: - Actions -
+    @IBAction func filter(_ sender: Any) {
+        
+    }
+    
     @IBAction func save(_ sender: Any) {
         
     }

@@ -32,30 +32,43 @@
                         </slider>
                     </subviews>
                 </stackView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HXA-uB-1hc">
-                    <rect key="frame" x="217" y="207" width="68" height="51"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                    <state key="normal" title="Save"/>
-                    <connections>
-                        <action selector="save:" destination="-1" eventType="touchUpInside" id="sE3-om-zL1"/>
-                    </connections>
-                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The amount of sharpening to apply. Larger values are sharper." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wiU-QT-YEH">
                     <rect key="frame" x="0.0" y="160.5" width="502" height="20.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="324" translatesAutoresizingMaskIntoConstraints="NO" id="A1L-5T-VLH">
+                    <rect key="frame" x="21" y="207" width="460" height="51"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7eA-YS-uu4">
+                            <rect key="frame" x="0.0" y="0.0" width="68" height="51"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                            <state key="normal" title="Filter"/>
+                            <connections>
+                                <action selector="filter:" destination="-1" eventType="touchUpInside" id="WgC-Va-OFZ"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HXA-uB-1hc">
+                            <rect key="frame" x="392" y="0.0" width="68" height="51"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                            <state key="normal" title="Save"/>
+                            <connections>
+                                <action selector="save:" destination="-1" eventType="touchUpInside" id="xBf-b3-0aX"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
-                <constraint firstItem="HXA-uB-1hc" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Aa6-Fn-dA0"/>
+                <constraint firstAttribute="bottom" secondItem="A1L-5T-VLH" secondAttribute="bottom" constant="12" id="4Y3-Uz-3xU"/>
+                <constraint firstItem="A1L-5T-VLH" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="QeB-le-vbQ"/>
                 <constraint firstItem="wiU-QT-YEH" firstAttribute="trailing" secondItem="Pad-Ys-Yru" secondAttribute="trailing" id="RYD-qz-w1n"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="CRj-Cb-7sv" secondAttribute="trailing" id="dOE-dQ-Tr8"/>
                 <constraint firstItem="CRj-Cb-7sv" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="kAU-qW-Fca"/>
                 <constraint firstItem="CRj-Cb-7sv" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="o3H-RL-PAR"/>
                 <constraint firstItem="wiU-QT-YEH" firstAttribute="leading" secondItem="z8t-4E-H6p" secondAttribute="leading" id="otA-W9-1ca"/>
-                <constraint firstAttribute="bottom" secondItem="HXA-uB-1hc" secondAttribute="bottom" constant="12" id="rJc-NL-SVR"/>
                 <constraint firstItem="wiU-QT-YEH" firstAttribute="top" secondItem="z8t-4E-H6p" secondAttribute="bottom" constant="6" id="zKc-Ar-bZK"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
