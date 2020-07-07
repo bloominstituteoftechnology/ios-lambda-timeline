@@ -14,6 +14,8 @@ class CircleSplashControl: UIView {
     @IBOutlet weak var radiusSlider: UISlider!
     @IBOutlet weak var effectCenterSelector: UIView!
     
+    private var filters = Filters()
+    
     //MARK: - Life Cycles -
     override init(frame: CGRect) {
         super.init(frame: frame)

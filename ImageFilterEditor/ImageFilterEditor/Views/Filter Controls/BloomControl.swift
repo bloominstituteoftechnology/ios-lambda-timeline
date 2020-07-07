@@ -14,6 +14,9 @@ class BloomControl: UIView {
     @IBOutlet weak var radiusSlider: UISlider!
     @IBOutlet weak var intensitySlider: UISlider!
     
+    private var filters = Filters()
+    
+    
     //MARK: - Life Cycles -
     override init(frame: CGRect) {
         super.init(frame: frame)

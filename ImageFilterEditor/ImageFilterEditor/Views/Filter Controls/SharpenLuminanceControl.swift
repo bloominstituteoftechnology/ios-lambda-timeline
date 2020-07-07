@@ -13,6 +13,9 @@ class SharpenLuminanceControl: UIView {
     @IBOutlet var contentView: UIView!
     @IBOutlet weak var sharpnessSlider: UISlider!
     
+    private var filters = Filters()
+    
+    
     //MARK: - Life Cycles -
     override init(frame: CGRect) {
         super.init(frame: frame)

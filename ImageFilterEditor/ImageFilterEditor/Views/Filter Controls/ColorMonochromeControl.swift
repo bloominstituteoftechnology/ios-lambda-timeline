@@ -15,6 +15,7 @@ class ColorMonochromeControl: UIView {
     @IBOutlet weak var colorPreview: UILabel!
     @IBOutlet weak var intensitySlider: UISlider!
     
+    private var filters = Filters()
     
     
     //MARK: - Life Cycles -

@@ -14,6 +14,8 @@ class MotionBlurControl: UIView {
     @IBOutlet weak var angleSlider: UISlider!
     @IBOutlet weak var radiusSlider: UISlider!
     
+    private var filters = Filters()
+        
     
     //MARK: - Life Cycles -
     override init(frame: CGRect) {
