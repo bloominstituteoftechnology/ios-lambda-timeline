@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="ivs-1r-WlP">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Image Post View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ImagePostViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="small" translatesAutoresizingMaskIntoConstraints="NO" id="Jui-Lu-wkW">
+                                <rect key="frame" x="0.0" y="85" width="414" height="318"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="quw-t0-9Ay">
+                                <rect key="frame" x="8" y="462" width="398" height="51"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="QV4-E0-kvX">
+                                        <rect key="frame" x="0.0" y="0.0" width="48" height="51"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Radius" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x5c-gD-bSZ">
+                                                <rect key="frame" x="0.0" y="0.0" width="48" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Angle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xYu-zT-RfW">
+                                                <rect key="frame" x="0.0" y="30.5" width="48" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Lmb-s4-Ws2">
+                                        <rect key="frame" x="56" y="0.0" width="342" height="51"/>
+                                        <subviews>
+                                            <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="6Cz-FE-xHz">
+                                                <rect key="frame" x="-2" y="0.0" width="346" height="7"/>
+                                                <connections>
+                                                    <action selector="inputRadiusChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="fJc-nO-aEy"/>
+                                                </connections>
+                                            </slider>
+                                            <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="-3.1400000000000001" maxValue="3.1400000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="5Lh-ln-b1L">
+                                                <rect key="frame" x="-2" y="21" width="346" height="31"/>
+                                                <connections>
+                                                    <action selector="inputAngleChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Ibm-hv-NUv"/>
+                                                </connections>
+                                            </slider>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="quw-t0-9Ay" secondAttribute="bottom" constant="349" id="2nK-FC-Cdp"/>
+                            <constraint firstItem="Jui-Lu-wkW" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="HAo-zv-nAf"/>
+                            <constraint firstItem="Jui-Lu-wkW" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="85" id="Vgd-Bs-p6x"/>
+                            <constraint firstItem="quw-t0-9Ay" firstAttribute="top" secondItem="Jui-Lu-wkW" secondAttribute="bottom" constant="59" id="d4x-jw-7Ig"/>
+                            <constraint firstItem="quw-t0-9Ay" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="dG7-43-zJ6"/>
+                            <constraint firstAttribute="trailing" secondItem="quw-t0-9Ay" secondAttribute="trailing" constant="8" id="j1t-v3-TY0"/>
+                            <constraint firstItem="Jui-Lu-wkW" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="k4N-xg-f4c"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="gZi-Im-8Wo"/>
+                    <connections>
+                        <outlet property="imageView" destination="Jui-Lu-wkW" id="iPL-Qh-UnE"/>
+                        <outlet property="inputAngleSlider" destination="5Lh-ln-b1L" id="YaX-hP-h5m"/>
+                        <outlet property="inputRadiusSlider" destination="6Cz-FE-xHz" id="RFP-gq-Mjp"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1042.0289855072465" y="83.705357142857139"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="I8g-3E-tpt">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ivs-1r-WlP" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="4ZH-Ka-AfU">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Rxl-XI-E4K"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Zm-Qb-oZ8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="131.8840579710145" y="83.705357142857139"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="small" width="1200" height="800"/>
+    </resources>
+</document>
