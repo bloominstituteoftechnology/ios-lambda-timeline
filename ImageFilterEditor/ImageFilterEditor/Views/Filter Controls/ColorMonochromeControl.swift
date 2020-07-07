@@ -16,9 +16,18 @@ class ColorMonochromeControl: UIView {
     @IBOutlet weak var intensitySlider: UISlider!
     
     private var filters = Filters()
+    private let ciColors: [CIColor] = [.black, .red, .blue, .green, .yellow, .cyan, .gray]
+    private let uiColors: [UIColor] = [.black, .red, .blue, .green, .yellow, .cyan, .gray]
+    private let colorNames: [String] = ["Black", "Red", "Blue", "Green", "Yellow", "Cyan", "Gray"]
+    private var colorIndex: Int = 0
     
     
     //MARK: - Life Cycles -
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setUpView()
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -63,8 +72,13 @@ class ColorMonochromeControl: UIView {
     
     //MARK: - Methods -
     private func setUpView() {
-        
+        colorStepper.value = 0.0
+        colorPreview.textColor = .black
+        colorPreview.text = "Black"
+        colorIndex = 0
+        intensitySlider.minimumValue = 0
+        intensitySlider.maximumValue = 1
+        intensitySlider.setValue(0.5, animated: false)
     }
-    
 }
 

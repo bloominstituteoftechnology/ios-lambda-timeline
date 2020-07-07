@@ -18,6 +18,11 @@ class MotionBlurControl: UIView {
         
     
     //MARK: - Life Cycles -
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setUpView()
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -58,6 +63,12 @@ class MotionBlurControl: UIView {
     
     //MARK: - Methods -
     private func setUpView() {
+        angleSlider.minimumValue = -.pi
+        angleSlider.maximumValue = .pi
+        angleSlider.setValue(0, animated: false)
         
+        radiusSlider.minimumValue = 0
+        radiusSlider.maximumValue = 100
+        radiusSlider.setValue(20, animated: false)
     }
 }
