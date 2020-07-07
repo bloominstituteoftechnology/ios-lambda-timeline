@@ -11,6 +11,7 @@ import CoreImage
 import CoreImage.CIFilterBuiltins
 
 enum FilterType: String, CaseIterable {
+    case .noFilter = "No Filter"
     case .motionBlur = "Motion Blur"
     case .colorMonochrome = "Color Monochrome"
     case .circleSplash = "Circle Splash"

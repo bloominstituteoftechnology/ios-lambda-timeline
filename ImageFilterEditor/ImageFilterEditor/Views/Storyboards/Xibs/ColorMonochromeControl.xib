@@ -12,7 +12,65 @@
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="525" height="300"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="62" translatesAutoresizingMaskIntoConstraints="NO" id="EJJ-du-8Dv">
+                    <rect key="frame" x="0.0" y="80.5" width="525" height="139"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="200" translatesAutoresizingMaskIntoConstraints="NO" id="G5c-Rv-naz">
+                            <rect key="frame" x="0.0" y="0.0" width="525" height="38.5"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOp-jz-5rO">
+                                    <rect key="frame" x="0.0" y="0.0" width="143.5" height="38.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="vZj-BH-AfE">
+                                    <rect key="frame" x="343.5" y="0.0" width="181.5" height="38.5"/>
+                                    <subviews>
+                                        <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="Myp-fx-nt2">
+                                            <rect key="frame" x="0.0" y="0.0" width="94" height="38.5"/>
+                                        </stepper>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dux-5b-iUa">
+                                            <rect key="frame" x="106" y="0.0" width="75.5" height="38.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="s5D-dY-bgt">
+                            <rect key="frame" x="0.0" y="100.5" width="525" height="38.5"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Intensity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zHx-eX-Phd">
+                                    <rect key="frame" x="0.0" y="0.0" width="116.5" height="38.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="EVq-Yn-GR9">
+                                    <rect key="frame" x="126.5" y="0.0" width="400.5" height="39.5"/>
+                                </slider>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                </stackView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W16-Pb-bN5">
+                    <rect key="frame" x="228.5" y="225.5" width="68" height="51"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                    <state key="normal" title="Save"/>
+                </button>
+            </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="W16-Pb-bN5" firstAttribute="top" secondItem="EJJ-du-8Dv" secondAttribute="bottom" constant="6" id="744-rJ-OkX"/>
+                <constraint firstItem="EJJ-du-8Dv" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="cX8-1o-ksB"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="EJJ-du-8Dv" secondAttribute="trailing" id="rkl-Sz-T4W"/>
+                <constraint firstItem="W16-Pb-bN5" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="tD9-R7-b33"/>
+                <constraint firstItem="EJJ-du-8Dv" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="tF9-ie-CS5"/>
+            </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="221.01449275362322" y="-54.910714285714285"/>
