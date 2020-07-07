@@ -35,6 +35,7 @@ class ImagePostViewController: UIViewController {
 }
 
 extension ImagePostViewController: UIPickerViewDelegate {
+    //didselectrow 
     
 }
 
@@ -44,7 +45,7 @@ extension ImagePostViewController: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        <#code#>
+        FilterType.allCases.count
     }
     
     
