@@ -9,6 +9,8 @@
 import UIKit
 
 class NoFilter: UIView {
+    //MARK: - Properties -
+    @IBOutlet var contentView: UIView!
     
     //MARK: - Life Cycles -
     override init(frame: CGRect) {

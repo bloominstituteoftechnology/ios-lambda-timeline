@@ -9,6 +9,9 @@
 import UIKit
 
 class SharpenLuminanceControl: UIView {
+    //MARK: - Properties -
+    @IBOutlet var contentView: UIView!
+    @IBOutlet weak var sharpnessSlider: UISlider!
     
     //MARK: - Life Cycles -
     override init(frame: CGRect) {
@@ -22,6 +25,18 @@ class SharpenLuminanceControl: UIView {
     }
     
     private func commonInit() {
+        
+    }
+    
+    
+    //MARK - Actions -
+    @IBAction func save(_ sender: Any) {
+        
+    }
+    
+    
+    //MARK: - Methods -
+    private func setUpView() {
         
     }
 }

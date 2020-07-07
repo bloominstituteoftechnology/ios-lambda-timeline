@@ -9,6 +9,10 @@
 import UIKit
 
 class BloomControl: UIView {
+    //MARK: - Properties -
+    @IBOutlet var contentView: UIView!
+    @IBOutlet weak var radiusSlider: UISlider!
+    @IBOutlet weak var intensitySlider: UISlider!
     
     //MARK: - Life Cycles -
     override init(frame: CGRect) {
@@ -22,6 +26,18 @@ class BloomControl: UIView {
     }
     
     private func commonInit() {
+        
+    }
+    
+    
+    //MARK: - Actions -
+    @IBAction func save(_ sender: Any) {
+        
+    }
+    
+    
+    //MARK: - Methods -
+    private func setUpView() {
         
     }
 }

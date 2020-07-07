@@ -9,6 +9,13 @@
 import UIKit
 
 class ColorMonochromeControl: UIView {
+    //MARK: - Properties -
+    @IBOutlet var contentView: UIView!
+    @IBOutlet weak var colorStepper: UIStepper!
+    @IBOutlet weak var colorPreview: UILabel!
+    @IBOutlet weak var intensitySlider: UISlider!
+    
+    
     
     //MARK: - Life Cycles -
     override init(frame: CGRect) {
@@ -24,5 +31,22 @@ class ColorMonochromeControl: UIView {
     private func commonInit() {
         
     }
+    
+    
+    //MARK: - Actions -
+    @IBAction func stepperTapped(_ sender: UIStepper) {
+        
+    }
+    
+    @IBAction func save(_ sender: Any) {
+        
+    }
+    
+    
+    //MARK: - Methods -
+    private func setUpView() {
+        
+    }
+    
 }
 

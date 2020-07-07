@@ -7,7 +7,14 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ColorMonochromeControl" customModule="ImageFilterEditor" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ColorMonochromeControl" customModule="ImageFilterEditor" customModuleProvider="target">
+            <connections>
+                <outlet property="colorPreview" destination="dux-5b-iUa" id="eGV-uZ-BB0"/>
+                <outlet property="colorStepper" destination="Myp-fx-nt2" id="YtC-H5-6PB"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="kLK-Sh-QLN"/>
+                <outlet property="intensitySlider" destination="EVq-Yn-GR9" id="6z5-4S-24S"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="525" height="300"/>
@@ -20,19 +27,22 @@
                             <rect key="frame" x="0.0" y="0.0" width="525" height="38.5"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uOp-jz-5rO">
-                                    <rect key="frame" x="0.0" y="0.0" width="143.5" height="38.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="144.5" height="38.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="vZj-BH-AfE">
-                                    <rect key="frame" x="343.5" y="0.0" width="181.5" height="38.5"/>
+                                    <rect key="frame" x="344.5" y="0.0" width="180.5" height="38.5"/>
                                     <subviews>
                                         <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="Myp-fx-nt2">
                                             <rect key="frame" x="0.0" y="0.0" width="94" height="38.5"/>
+                                            <connections>
+                                                <action selector="stepperTapped:forEvent:" destination="-1" eventType="valueChanged" id="mJ6-FC-0V3"/>
+                                            </connections>
                                         </stepper>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dux-5b-iUa">
-                                            <rect key="frame" x="106" y="0.0" width="75.5" height="38.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" text="Color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dux-5b-iUa">
+                                            <rect key="frame" x="106" y="0.0" width="74.5" height="38.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -61,6 +71,9 @@
                     <rect key="frame" x="228.5" y="225.5" width="68" height="51"/>
                     <fontDescription key="fontDescription" type="system" pointSize="32"/>
                     <state key="normal" title="Save"/>
+                    <connections>
+                        <action selector="save:" destination="-1" eventType="touchUpInside" id="Xuw-rS-exv"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

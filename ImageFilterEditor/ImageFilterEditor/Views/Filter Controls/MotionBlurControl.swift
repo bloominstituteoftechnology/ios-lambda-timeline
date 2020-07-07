@@ -9,6 +9,11 @@
 import UIKit
 
 class MotionBlurControl: UIView {
+    //MARK: - Properties -
+    @IBOutlet var contentView: UIView!
+    @IBOutlet weak var angleSlider: UISlider!
+    @IBOutlet weak var radiusSlider: UISlider!
+    
     
     //MARK: - Life Cycles -
     override init(frame: CGRect) {
@@ -22,6 +27,18 @@ class MotionBlurControl: UIView {
     }
     
     private func commonInit() {
+        
+    }
+    
+    
+    //MARK: - Actions -
+    @IBAction func save(_ sender: Any) {
+        
+    }
+    
+    
+    //MARK: - Methods -
+    private func setUpView() {
         
     }
 }

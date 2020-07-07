@@ -7,7 +7,13 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CircleSplashControl" customModule="ImageFilterEditor" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CircleSplashControl" customModule="ImageFilterEditor" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="IAx-DJ-fqe"/>
+                <outlet property="effectCenterSelector" destination="6FE-GU-8Bc" id="5vP-uO-5e1"/>
+                <outlet property="radiusSlider" destination="b6g-cx-Ck9" id="tzG-a0-PbO"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="545" height="301"/>
@@ -74,6 +80,9 @@
                     <rect key="frame" x="238.5" y="238" width="68" height="51"/>
                     <fontDescription key="fontDescription" type="system" pointSize="32"/>
                     <state key="normal" title="Save"/>
+                    <connections>
+                        <action selector="save:" destination="-1" eventType="touchUpInside" id="5vb-fg-cZz"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

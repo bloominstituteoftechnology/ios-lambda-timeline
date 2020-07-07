@@ -7,7 +7,13 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MotionBlurControl" customModule="ImageFilterEditor" customModuleProvider="target"/>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MotionBlurControl" customModule="ImageFilterEditor" customModuleProvider="target">
+            <connections>
+                <outlet property="angleSlider" destination="1aE-Zm-X8d" id="MTT-lJ-QUa"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="WaV-5B-wsH"/>
+                <outlet property="radiusSlider" destination="QbF-YI-RUE" id="Gn3-xi-oww"/>
+            </connections>
+        </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="692" height="382"/>
@@ -33,7 +39,7 @@
                                         </slider>
                                     </subviews>
                                 </stackView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;The angle of the motion determines which direction the blur smears.&quot;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ewa-KJ-mQ2">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The angle of the motion determines which direction the blur smears." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ewa-KJ-mQ2">
                                     <rect key="frame" x="0.0" y="60.5" width="692" height="20.5"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
@@ -58,7 +64,7 @@
                                         </slider>
                                     </subviews>
                                 </stackView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;The radius determines how many pixels are used to create the blur. The larger the radius, the blurrier the result.&quot;" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tjv-GW-uwD">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The radius determines how many pixels are used to create the blur. The larger the radius, the blurrier the result." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tjv-GW-uwD">
                                     <rect key="frame" x="0.0" y="60.5" width="692" height="41"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
@@ -72,6 +78,9 @@
                     <rect key="frame" x="312" y="319.5" width="68" height="51"/>
                     <fontDescription key="fontDescription" type="system" pointSize="32"/>
                     <state key="normal" title="Save"/>
+                    <connections>
+                        <action selector="save:" destination="-1" eventType="touchUpInside" id="Xqo-uR-1Di"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
