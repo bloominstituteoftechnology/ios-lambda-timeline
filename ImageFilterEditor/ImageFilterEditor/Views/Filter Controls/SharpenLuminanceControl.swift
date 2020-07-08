@@ -67,7 +67,7 @@ class SharpenLuminanceControl: UIView {
     }
     
     @IBAction func save(_ sender: Any) {
-        
+        delegate?.saveCurrentImage()
     }
     
     

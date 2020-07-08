@@ -77,7 +77,7 @@ class ColorMonochromeControl: UIView {
     }
     
     @IBAction func save(_ sender: Any) {
-        
+        delegate?.saveCurrentImage()
     }
     
     

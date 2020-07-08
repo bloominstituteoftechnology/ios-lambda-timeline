@@ -79,7 +79,7 @@ class CircleSplashControl: UIView {
     }
     
     @IBAction func save(_ sender: Any) {
-        
+        delegate?.saveCurrentImage()
     }
     
     

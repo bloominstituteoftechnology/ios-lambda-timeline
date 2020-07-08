@@ -69,7 +69,7 @@ class BloomControl: UIView {
     }
     
     @IBAction func save(_ sender: Any) {
-        
+        delegate?.saveCurrentImage()
     }
     
     //MARK: - Methods -

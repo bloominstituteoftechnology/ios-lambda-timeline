@@ -69,7 +69,7 @@ class MotionBlurControl: UIView {
     }
     
     @IBAction func save(_ sender: Any) {
-        
+        delegate?.saveCurrentImage()
     }
     
     
