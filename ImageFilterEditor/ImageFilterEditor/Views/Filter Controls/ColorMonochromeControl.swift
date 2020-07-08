@@ -40,26 +40,27 @@ class ColorMonochromeControl: UIView {
         commonInit()
     }
     
-       private func commonInit() {
-            //not sure if this or the below is right will test both
-    //        Bundle.main.loadNibNamed("ColorMonochromeControl", owner: self, options: nil)
-    //        addSubview(contentView)
-    //        contentView.frame = self.bounds
-    //        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-            
-            let name = String(describing: type(of: self))
-            let nib = UINib(nibName: name, bundle: .main)
-            nib.instantiate(withOwner: self, options: nil)
-            
-            self.addSubview(self.contentView)
-            self.contentView.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                self.contentView.topAnchor.constraint(equalTo: self.topAnchor),
-                self.contentView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-                self.contentView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-                self.contentView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            ])
-        }
+    private func commonInit() {
+        //not sure if this or the below is right will test both
+        //        Bundle.main.loadNibNamed("MotionBlurControl", owner: self, options: nil)
+        //        addSubview(contentView)
+        //        contentView.frame = self.bounds
+        //        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        
+        let name = String(describing: type(of: self))
+        let nib = UINib(nibName: name, bundle: .main)
+        let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.addSubview(self.contentView)
+        self.contentView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.contentView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.contentView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            self.contentView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.contentView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+        ])
+    }
     
     
     //MARK: - Actions -
@@ -79,12 +80,14 @@ class ColorMonochromeControl: UIView {
     //MARK: - Methods -
     private func setUpView() {
         colorStepper.value = 0.0
+        colorStepper.isUserInteractionEnabled = true
         colorPreview.textColor = .black
         colorPreview.text = "Black"
         colorIndex = 0
         intensitySlider.minimumValue = 0
         intensitySlider.maximumValue = 1
         intensitySlider.setValue(0.5, animated: false)
+        intensitySlider.isUserInteractionEnabled = true
     }
 }
 

@@ -11,7 +11,7 @@ import UIKit
 class NoFilter: UIView {
     //MARK: - Properties -
     @IBOutlet var contentView: UIView!
-
+    
     var delegate: FilteredImageDelegate?
     
     
@@ -31,14 +31,16 @@ class NoFilter: UIView {
     }
     
     private func commonInit() {
-        //        Bundle.main.loadNibNamed("NoFilter", owner: self, options: nil)
+        //not sure if this or the below is right will test both
+        //        Bundle.main.loadNibNamed("MotionBlurControl", owner: self, options: nil)
         //        addSubview(contentView)
         //        contentView.frame = self.bounds
         //        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         
         let name = String(describing: type(of: self))
         let nib = UINib(nibName: name, bundle: .main)
-        nib.instantiate(withOwner: self, options: nil)
+        let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
+        view.translatesAutoresizingMaskIntoConstraints = false
         
         self.addSubview(self.contentView)
         self.contentView.translatesAutoresizingMaskIntoConstraints = false

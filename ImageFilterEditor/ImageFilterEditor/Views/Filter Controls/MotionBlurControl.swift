@@ -43,7 +43,8 @@ class MotionBlurControl: UIView {
         
         let name = String(describing: type(of: self))
         let nib = UINib(nibName: name, bundle: .main)
-        nib.instantiate(withOwner: self, options: nil)
+        let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
+        view.translatesAutoresizingMaskIntoConstraints = false
         
         self.addSubview(self.contentView)
         self.contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -64,8 +65,7 @@ class MotionBlurControl: UIView {
                                                radius: radiusSlider.value,
                                                angle: angleSlider.value)
         
-        
-        
+        delegate?.filteredImage(filteredImage)
     }
     
     @IBAction func save(_ sender: Any) {
@@ -78,9 +78,11 @@ class MotionBlurControl: UIView {
         angleSlider.minimumValue = -.pi
         angleSlider.maximumValue = .pi
         angleSlider.setValue(0, animated: false)
+        angleSlider.isUserInteractionEnabled = true
         
         radiusSlider.minimumValue = 0
         radiusSlider.maximumValue = 100
         radiusSlider.setValue(20, animated: false)
+        radiusSlider.isUserInteractionEnabled = true
     }
 }
