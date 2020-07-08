@@ -9,6 +9,7 @@
 //TODO: When the picker sets a filter set the delegate of the subview to self.
 
 import UIKit
+import Photos
 
 class ImagePostViewController: UIViewController {
     // MARK: - Properties -
@@ -22,7 +23,12 @@ class ImagePostViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpViews()
-
+    }
+    
+    
+    //MARK: - Actions -
+    @IBAction func selectImage(_ sender: Any) {
+        presentImagePicker()
     }
     
     
@@ -36,7 +42,6 @@ class ImagePostViewController: UIViewController {
         selectedImageView.isUserInteractionEnabled = true
         
         let noFilter = NoFilter()
-        //noFilter.bounds = controlView.bounds
         noFilter.translatesAutoresizingMaskIntoConstraints = false
         noFilter.contentMode = .scaleAspectFit
         controlView.addSubview(noFilter)
@@ -51,7 +56,6 @@ class ImagePostViewController: UIViewController {
         switch filter {
         case .noFilter:
             let noFilter = NoFilter()
-            //noFilter.frame.size = controlView.bounds.size
             noFilter.translatesAutoresizingMaskIntoConstraints = false
             noFilter.contentMode = .scaleAspectFit
             controlView.addSubview(noFilter)
@@ -61,7 +65,6 @@ class ImagePostViewController: UIViewController {
             noFilter.trailingAnchor.constraint(equalTo: controlView.trailingAnchor).isActive = true
         case .motionBlur:
             let motionBlur = MotionBlurControl()
-            //motionBlur.frame.size = controlView.bounds.size
             motionBlur.translatesAutoresizingMaskIntoConstraints = false
             motionBlur.delegate = self
             motionBlur.image = self.selectedImageView.image
@@ -73,7 +76,6 @@ class ImagePostViewController: UIViewController {
             motionBlur.trailingAnchor.constraint(equalTo: controlView.trailingAnchor).isActive = true
         case .colorMonochrome:
             let colorMonochrome = ColorMonochromeControl()
-            //colorMonochrome.frame.size = controlView.bounds.size
             colorMonochrome.translatesAutoresizingMaskIntoConstraints = false
             colorMonochrome.delegate = self
             colorMonochrome.image = self.selectedImageView.image
@@ -85,7 +87,6 @@ class ImagePostViewController: UIViewController {
             colorMonochrome.trailingAnchor.constraint(equalTo: controlView.trailingAnchor).isActive = true
         case .circleSplash:
             let circleSplash = CircleSplashControl()
-            //circleSplash.frame.size = controlView.bounds.size
             circleSplash.translatesAutoresizingMaskIntoConstraints = false
             circleSplash.delegate = self
             circleSplash.image = self.selectedImageView.image
@@ -97,7 +98,6 @@ class ImagePostViewController: UIViewController {
             circleSplash.trailingAnchor.constraint(equalTo: controlView.trailingAnchor).isActive = true
         case .sharpenLuminance:
             let sharpenLuminance = SharpenLuminanceControl()
-            //sharpenLuminance.frame.size = controlView.bounds.size
             sharpenLuminance.translatesAutoresizingMaskIntoConstraints = false
             sharpenLuminance.delegate = self
             sharpenLuminance.image = self.selectedImageView.image
@@ -109,7 +109,6 @@ class ImagePostViewController: UIViewController {
             sharpenLuminance.trailingAnchor.constraint(equalTo: controlView.trailingAnchor).isActive = true
         case .bloom:
             let bloom = BloomControl()
-            //bloom.frame.size = controlView.bounds.size
             bloom.translatesAutoresizingMaskIntoConstraints = false
             bloom.delegate = self
             bloom.image = self.selectedImageView.image
@@ -121,9 +120,22 @@ class ImagePostViewController: UIViewController {
             bloom.trailingAnchor.constraint(equalTo: controlView.trailingAnchor).isActive = true
         }
     }
+    
+    private func presentImagePicker() {
+        guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
+            NSLog("The photo library is not available.")
+            return
+        }
+        
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
+    }
 
 }
 
+// MARK: - Extensions -
 extension ImagePostViewController: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let filter = FilterType.allCases[row]
@@ -146,8 +158,41 @@ extension ImagePostViewController: UIPickerViewDataSource {
     }
 }
 
+extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[.originalImage] as? UIImage {
+            self.selectedImageView.image = selectedImage
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+}
+
 extension ImagePostViewController: FilteredImageDelegate {
     func filteredImage(_ image: UIImage) {
         self.selectedImageView.image = image
+    }
+    
+    func saveCurrentImage() {
+        guard let imageToSave = selectedImageView.image else { return }
+        
+        PHPhotoLibrary.requestAuthorization { status in
+            guard status == .authorized else {
+                NSLog("User must grant photo library permissions to access photos.")
+                return
+            }
+            
+            PHPhotoLibrary.shared().performChanges({
+                PHAssetCreationRequest.creationRequestForAsset(from: imageToSave)
+            }) { (success, error) in
+                if let error = error {
+                    NSLog("Something went wrong saving the photo to the device library. \(error) \(error.localizedDescription)")
+                    return
+                }
+            }
+        }
     }
 }

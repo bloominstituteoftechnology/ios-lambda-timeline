@@ -11,4 +11,6 @@ import UIKit
 
 protocol FilteredImageDelegate {
     func filteredImage(_ image: UIImage)
+    
+    func saveCurrentImage()
 }
