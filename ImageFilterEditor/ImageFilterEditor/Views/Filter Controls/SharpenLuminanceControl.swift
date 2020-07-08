@@ -14,6 +14,8 @@ class SharpenLuminanceControl: UIView {
     @IBOutlet weak var sharpnessSlider: UISlider!
     
     private var filters = Filters()
+    var image: UIImage?
+    var delegate: FilteredImageDelegate?
     
     
     //MARK: - Life Cycles -

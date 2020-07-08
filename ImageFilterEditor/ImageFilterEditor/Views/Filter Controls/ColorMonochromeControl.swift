@@ -16,6 +16,8 @@ class ColorMonochromeControl: UIView {
     @IBOutlet weak var intensitySlider: UISlider!
     
     private var filters = Filters()
+    var image: UIImage?
+    var delegate: FilteredImageDelegate?
     private let ciColors: [CIColor] = [.black, .red, .blue, .green, .yellow, .cyan, .gray]
     private let uiColors: [UIColor] = [.black, .red, .blue, .green, .yellow, .cyan, .gray]
     private let colorNames: [String] = ["Black", "Red", "Blue", "Green", "Yellow", "Cyan", "Gray"]

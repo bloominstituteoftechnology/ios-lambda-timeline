@@ -15,7 +15,8 @@ class MotionBlurControl: UIView {
     @IBOutlet weak var radiusSlider: UISlider!
     
     private var filters = Filters()
-        
+    var image: UIImage?
+    var delegate: FilteredImageDelegate?
     
     //MARK: - Life Cycles -
     override func awakeFromNib() {
@@ -57,6 +58,13 @@ class MotionBlurControl: UIView {
     
     //MARK: - Actions -
     @IBAction func filter(_ sender: Any) {
+        guard let image = image else { return }
+        
+        let filteredImage = filters.motionBlur(for: image,
+                                               radius: radiusSlider.value,
+                                               angle: angleSlider.value)
+        
+        
         
     }
     

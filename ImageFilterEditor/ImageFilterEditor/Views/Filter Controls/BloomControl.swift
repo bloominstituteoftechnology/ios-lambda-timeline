@@ -15,6 +15,8 @@ class BloomControl: UIView {
     @IBOutlet weak var intensitySlider: UISlider!
     
     private var filters = Filters()
+    var image: UIImage?
+    var delegate: FilteredImageDelegate?
     
     
     //MARK: - Life Cycles -

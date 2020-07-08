@@ -11,12 +11,12 @@ import CoreImage
 import CoreImage.CIFilterBuiltins
 
 enum FilterType: String, CaseIterable {
-    case .noFilter = "No Filter"
-    case .motionBlur = "Motion Blur"
-    case .colorMonochrome = "Color Monochrome"
-    case .circleSplash = "Circle Splash"
-    case .sharpenLuminance = "Sharpen Luminance"
-    case .bloom = "Bloom"
+    case noFilter = "No Filter"
+    case motionBlur = "Motion Blur"
+    case colorMonochrome = "Color Monochrome"
+    case circleSplash = "Circle Splash"
+    case sharpenLuminance = "Sharpen Luminance"
+    case bloom = "Bloom"
 }
 
 struct Filters {
@@ -26,14 +26,14 @@ struct Filters {
     
     //MARK: Filters
     ///blur filters
-    func motionBlur(for image: UIImage) -> UIImage {
+    func motionBlur(for image: UIImage, radius: Float, angle: Float) -> UIImage {
         guard let cgImage = image.cgImage else { return image }
         let ciImage = CIImage(cgImage: cgImage)
         
         let motionBlur = CIFilter.motionBlur()
         motionBlur.inputImage = ciImage
-        motionBlur.radius = 20 //TODO: Attach to UI
-        motionBlur.angle = 0  //TODO: Attach to UI
+        motionBlur.radius = radius
+        motionBlur.angle = angle
         
         guard let outputImage = motionBlur.outputImage else { return image }
         guard let outputCGImage = context.createCGImage(outputImage, from: outputImage.extent) else { return image }

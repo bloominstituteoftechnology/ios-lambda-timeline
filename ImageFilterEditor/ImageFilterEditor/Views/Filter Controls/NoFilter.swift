@@ -11,6 +11,9 @@ import UIKit
 class NoFilter: UIView {
     //MARK: - Properties -
     @IBOutlet var contentView: UIView!
+
+    var delegate: FilteredImageDelegate?
+    
     
     //MARK: - Life Cycles -
     override func awakeFromNib() {
