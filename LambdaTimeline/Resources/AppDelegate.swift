@@ -14,7 +14,6 @@ import GoogleSignIn
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         FirebaseApp.configure()
         
@@ -23,8 +22,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if Auth.auth().currentUser != nil {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")
-            window?.rootViewController = postsNavigationController
+            let postsTabBarController = storyboard.instantiateViewController(withIdentifier: "NavigationController")
+            window?.rootViewController = postsTabBarController
             window?.makeKeyAndVisible()
         }
         
