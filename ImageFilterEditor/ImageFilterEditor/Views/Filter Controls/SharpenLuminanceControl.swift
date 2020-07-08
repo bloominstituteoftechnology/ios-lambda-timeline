@@ -59,7 +59,11 @@ class SharpenLuminanceControl: UIView {
     
     //MARK - Actions -
     @IBAction func filter(_ sender: Any) {
+        guard let image = image else { return }
         
+        let filteredImage = filters.sharpenLuminance(for: image,
+                                                     sharpness: sharpnessSlider.value)
+        delegate?.filteredImage(filteredImage)
     }
     
     @IBAction func save(_ sender: Any) {

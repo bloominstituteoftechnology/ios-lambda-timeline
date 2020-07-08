@@ -41,14 +41,14 @@ struct Filters {
     }
     
     ///color effect filters
-    func colorMonochrome(for image: UIImage, color: CIColor) -> UIImage {
+    func colorMonochrome(for image: UIImage, color: CIColor, intensity: Float) -> UIImage {
         guard let cgImage = image.cgImage else { return image }
         let ciImage = CIImage(cgImage: cgImage)
         
         let monochrome = CIFilter.colorMonochrome()
         monochrome.inputImage = ciImage
-        monochrome.color = color //TODO: Attach to UI
-        monochrome.intensity = 1.0 //TODO: Attach to UI
+        monochrome.color = color
+        monochrome.intensity = intensity
         
         guard let outputImage = monochrome.outputImage else { return image }
         guard let outputCGImage = context.createCGImage(outputImage, from: outputImage.extent) else { return image }
@@ -62,7 +62,7 @@ struct Filters {
         
         let circleSplash = CIFilter(name: "CICircleSplashDistortion")!
         circleSplash.setValuesForKeys(["inputImage" : ciImage,
-                                        "inputCenter" : center,//change center to center of view
+                                        "inputCenter" : center,
                                         "inputRadius" : radius])
         
         guard let outputImage = circleSplash.outputImage else { return image }
@@ -71,13 +71,13 @@ struct Filters {
     }
     
     ///luminance filters
-    func sharpenLuminance(for image: UIImage) -> UIImage {
+    func sharpenLuminance(for image: UIImage, sharpness: Float) -> UIImage {
         guard let cgImage = image.cgImage else { return image }
         let ciImage = CIImage(cgImage: cgImage)
         
         let sharpen = CIFilter.sharpenLuminance()
         sharpen.inputImage = ciImage
-        sharpen.sharpness = 0.50 //TODO: attach to UI
+        sharpen.sharpness = sharpness
         
         guard let outputImage = sharpen.outputImage else { return image }
         guard let outputCGImage = context.createCGImage(outputImage, from: outputImage.extent) else { return image }
@@ -85,14 +85,14 @@ struct Filters {
     }
     
     //stylized filters
-    func bloom(for image: UIImage, with intensity: Float = 10.0) -> UIImage {
+    func bloom(for image: UIImage, with intensity: Float, radius: Float) -> UIImage {
         guard let cgImage = image.cgImage else { return image }
         let ciImage = CIImage(cgImage: cgImage)
         
         let bloom = CIFilter.bloom()
         bloom.inputImage = ciImage
-        bloom.radius = 0.5 //TODO: Attach to UI
-        bloom.intensity = intensity //TODO: Attach to UI
+        bloom.radius = radius
+        bloom.intensity = intensity
         
         guard let outputImage = bloom.outputImage else { return image }
         guard let outputCGImage = context.createCGImage(outputImage, from: outputImage.extent) else { return image }

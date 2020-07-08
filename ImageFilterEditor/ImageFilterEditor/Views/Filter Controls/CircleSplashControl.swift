@@ -62,7 +62,20 @@ class CircleSplashControl: UIView {
     
     //MARK: - Actions -
     @IBAction func filter(_ sender: Any) {
+        guard let image = image else { return }
         
+        let xText = centerXTextField.text ?? "150"
+        let yText = centerYTextField.text ?? "150"
+        let xInt = Int(xText) ?? 150
+        let yInt = Int(yText) ?? 150
+        let xCGFloat = CGFloat(exactly: xInt)!
+        let yCGFloat = CGFloat(exactly: yInt)!
+        let vector = CIVector(x: xCGFloat, y: yCGFloat)
+        
+        let filteredImage = filters.circleSplash(for: image,
+                                                 at: vector,
+                                                 radius: radiusSlider.value)
+        delegate?.filteredImage(filteredImage)
     }
     
     @IBAction func save(_ sender: Any) {

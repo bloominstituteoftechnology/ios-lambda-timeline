@@ -60,7 +60,12 @@ class BloomControl: UIView {
     
     //MARK: - Actions -
     @IBAction func filter(_ sender: Any) {
+        guard let image = image else { return }
         
+        let filteredImage = filters.bloom(for: image,
+                                          with: intensitySlider.value,
+                                          radius: radiusSlider.value)
+        delegate?.filteredImage(filteredImage)
     }
     
     @IBAction func save(_ sender: Any) {

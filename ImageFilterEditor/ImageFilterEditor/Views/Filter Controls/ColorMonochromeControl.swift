@@ -21,7 +21,6 @@ class ColorMonochromeControl: UIView {
     private let ciColors: [CIColor] = [.black, .red, .blue, .green, .yellow, .cyan, .gray]
     private let uiColors: [UIColor] = [.black, .red, .blue, .green, .yellow, .cyan, .gray]
     private let colorNames: [String] = ["Black", "Red", "Blue", "Green", "Yellow", "Cyan", "Gray"]
-    private var colorIndex: Int = 0
     
     
     //MARK: - Life Cycles -
@@ -65,11 +64,16 @@ class ColorMonochromeControl: UIView {
     
     //MARK: - Actions -
     @IBAction func stepperTapped(_ sender: UIStepper) {
-        
+        updateViews()
     }
     
     @IBAction func filter(_ sender: Any) {
+        guard let image = image else { return }
         
+        let filteredimage = filters.colorMonochrome(for: image,
+                                                    color: ciColors[Int(colorStepper.value)],
+                                                    intensity: intensitySlider.value)
+        delegate?.filteredImage(filteredimage)
     }
     
     @IBAction func save(_ sender: Any) {
@@ -83,11 +87,24 @@ class ColorMonochromeControl: UIView {
         colorStepper.isUserInteractionEnabled = true
         colorPreview.textColor = .black
         colorPreview.text = "Black"
-        colorIndex = 0
+        
         intensitySlider.minimumValue = 0
         intensitySlider.maximumValue = 1
-        intensitySlider.setValue(0.5, animated: false)
+        intensitySlider.value = 0.5
         intensitySlider.isUserInteractionEnabled = true
+        
+        colorStepper.minimumValue = 0
+        colorStepper.maximumValue = 6
+        colorStepper.stepValue = 1
+        colorStepper.isContinuous = true
+        colorStepper.value = 0
+        colorStepper.isUserInteractionEnabled = true
+        colorStepper.wraps = true
+    }
+    
+    private func updateViews() {
+        colorPreview.textColor = uiColors[Int(colorStepper.value)]
+        colorPreview.text = colorNames[Int(colorStepper.value)]
     }
 }
 
