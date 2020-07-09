@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SharpenLuminanceControl" customModule="ImageFilterEditor" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="X3r-hC-kvc"/>
+                <outlet property="sharpnessSlider" destination="Pad-Ys-Yru" id="exh-dv-Zs8"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleAspectFit" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="214"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="CRj-Cb-7sv">
+                    <rect key="frame" x="0.0" y="92" width="375" height="30"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sharpness" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z8t-4E-H6p">
+                            <rect key="frame" x="0.0" y="0.0" width="85.5" height="30"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Pad-Ys-Yru">
+                            <rect key="frame" x="95.5" y="0.0" width="281.5" height="31"/>
+                        </slider>
+                    </subviews>
+                </stackView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The amount of sharpening to apply. Larger values are sharper." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wiU-QT-YEH">
+                    <rect key="frame" x="0.0" y="126" width="375" height="14.5"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="A1L-5T-VLH">
+                    <rect key="frame" x="8" y="173" width="359" height="33"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7eA-YS-uu4">
+                            <rect key="frame" x="0.0" y="0.0" width="167.5" height="33"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                            <state key="normal" title="Filter"/>
+                            <connections>
+                                <action selector="filter:" destination="-1" eventType="touchUpInside" id="WgC-Va-OFZ"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HXA-uB-1hc">
+                            <rect key="frame" x="191.5" y="0.0" width="167.5" height="33"/>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                            <state key="normal" title="Save"/>
+                            <connections>
+                                <action selector="save:" destination="-1" eventType="touchUpInside" id="xBf-b3-0aX"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="A1L-5T-VLH" secondAttribute="bottom" constant="8" id="4Y3-Uz-3xU"/>
+                <constraint firstItem="A1L-5T-VLH" firstAttribute="top" relation="greaterThanOrEqual" secondItem="wiU-QT-YEH" secondAttribute="bottom" constant="4" id="LUA-A4-Fw0"/>
+                <constraint firstItem="wiU-QT-YEH" firstAttribute="trailing" secondItem="Pad-Ys-Yru" secondAttribute="trailing" id="RYD-qz-w1n"/>
+                <constraint firstItem="CRj-Cb-7sv" firstAttribute="trailing" secondItem="A1L-5T-VLH" secondAttribute="trailing" constant="8" id="aXv-xa-Snu"/>
+                <constraint firstItem="CRj-Cb-7sv" firstAttribute="top" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="top" id="cAN-7J-xRR"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="CRj-Cb-7sv" secondAttribute="trailing" id="dOE-dQ-Tr8"/>
+                <constraint firstItem="CRj-Cb-7sv" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" priority="750" id="kAU-qW-Fca"/>
+                <constraint firstItem="CRj-Cb-7sv" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="o3H-RL-PAR"/>
+                <constraint firstItem="wiU-QT-YEH" firstAttribute="leading" secondItem="z8t-4E-H6p" secondAttribute="leading" id="otA-W9-1ca"/>
+                <constraint firstItem="A1L-5T-VLH" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="8" id="x4C-nz-LzR"/>
+                <constraint firstItem="wiU-QT-YEH" firstAttribute="top" secondItem="z8t-4E-H6p" secondAttribute="bottom" constant="4" id="zKc-Ar-bZK"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="112.31884057971016" y="251.78571428571428"/>
+        </view>
+    </objects>
+</document>
