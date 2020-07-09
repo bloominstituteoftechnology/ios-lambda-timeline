@@ -21,40 +21,53 @@
                                     <constraint firstAttribute="width" secondItem="TJC-82-WGY" secondAttribute="height" multiplier="1.1:1" id="dbe-fr-rAr"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yTy-zi-yg1">
+                            <view contentMode="scaleToFill" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="yTy-zi-yg1">
                                 <rect key="frame" x="12" y="420.5" width="390" height="194.5"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="yTy-zi-yg1" secondAttribute="height" multiplier="2:1" constant="1" id="i4r-0A-Jdj"/>
                                 </constraints>
                             </view>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gQv-4R-NrN">
-                                <rect key="frame" x="12" y="627" width="390" height="216"/>
+                            <pickerView contentMode="scaleToFill" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="gQv-4R-NrN">
+                                <rect key="frame" x="12" y="627" width="390" height="235"/>
                             </pickerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aO6-XC-MQN">
+                                <rect key="frame" x="184" y="216.5" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="selectImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FDb-pr-bQy"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="yTy-zi-yg1" firstAttribute="top" secondItem="TJC-82-WGY" secondAttribute="bottom" constant="12" id="7ni-vZ-56K"/>
                             <constraint firstItem="gQv-4R-NrN" firstAttribute="trailing" secondItem="TJC-82-WGY" secondAttribute="trailing" id="9ly-tm-Moy"/>
+                            <constraint firstItem="yTy-zi-yg1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="12" id="B6e-Ff-tX9"/>
+                            <constraint firstItem="aO6-XC-MQN" firstAttribute="width" secondItem="TJC-82-WGY" secondAttribute="width" multiplier="0.117949" id="NwF-PW-ENB"/>
+                            <constraint firstItem="aO6-XC-MQN" firstAttribute="centerX" secondItem="TJC-82-WGY" secondAttribute="centerX" id="Pm5-7w-Y1y"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="gQv-4R-NrN" secondAttribute="bottom" id="RCf-C8-lkA"/>
+                            <constraint firstItem="aO6-XC-MQN" firstAttribute="centerY" secondItem="TJC-82-WGY" secondAttribute="centerY" id="StD-aZ-Z52"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TJC-82-WGY" secondAttribute="trailing" constant="12" id="ZF4-aV-S6P"/>
                             <constraint firstItem="TJC-82-WGY" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="ZV3-XT-hCN"/>
+                            <constraint firstAttribute="trailing" secondItem="yTy-zi-yg1" secondAttribute="trailing" constant="12" id="cWX-pc-7ta"/>
                             <constraint firstItem="gQv-4R-NrN" firstAttribute="leading" secondItem="TJC-82-WGY" secondAttribute="leading" id="i20-IE-mBX"/>
                             <constraint firstItem="TJC-82-WGY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="12" id="k21-UJ-oQi"/>
                             <constraint firstItem="gQv-4R-NrN" firstAttribute="top" secondItem="yTy-zi-yg1" secondAttribute="bottom" constant="12" id="l6t-6L-b2r"/>
-                            <constraint firstItem="yTy-zi-yg1" firstAttribute="trailing" secondItem="TJC-82-WGY" secondAttribute="trailing" id="pDX-u5-7YK"/>
-                            <constraint firstItem="yTy-zi-yg1" firstAttribute="leading" secondItem="TJC-82-WGY" secondAttribute="leading" id="vI9-LQ-mV6"/>
+                            <constraint firstItem="aO6-XC-MQN" firstAttribute="height" secondItem="TJC-82-WGY" secondAttribute="height" multiplier="0.0846262" id="sMt-RJ-f2k"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="controlView" destination="yTy-zi-yg1" id="qGh-wv-s5D"/>
                         <outlet property="filterPicker" destination="gQv-4R-NrN" id="DPi-A5-bOw"/>
+                        <outlet property="imageSelectionButton" destination="aO6-XC-MQN" id="vk0-xz-Nia"/>
                         <outlet property="selectedImageView" destination="TJC-82-WGY" id="HtP-0P-n2x"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-571" y="70"/>
+            <point key="canvasLocation" x="-422" y="20"/>
         </scene>
     </scenes>
 </document>

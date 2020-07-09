@@ -16,6 +16,7 @@ class ImagePostViewController: UIViewController {
     @IBOutlet weak var selectedImageView: UIImageView!
     @IBOutlet weak var controlView: UIView!
     @IBOutlet weak var filterPicker: UIPickerView!
+    @IBOutlet weak var imageSelectionButton: UIButton!
     
     
     
@@ -40,6 +41,13 @@ class ImagePostViewController: UIViewController {
         filterPicker.isUserInteractionEnabled = true
         controlView.isUserInteractionEnabled = true
         selectedImageView.isUserInteractionEnabled = true
+        imageSelectionButton.backgroundColor = .none
+        
+        if selectedImageView.image == nil {
+            imageSelectionButton.setTitle("Tap to get started.", for: .normal)
+        } else {
+            imageSelectionButton.setTitle("", for: .normal)
+        }
         
         let noFilter = NoFilter()
         noFilter.translatesAutoresizingMaskIntoConstraints = false
@@ -132,6 +140,14 @@ class ImagePostViewController: UIViewController {
         imagePicker.delegate = self
         present(imagePicker, animated: true, completion: nil)
     }
+    
+    private func updateViews() {
+        if selectedImageView.image == nil {
+            imageSelectionButton.setTitle("Tap to get started.", for: .normal)
+        } else {
+            imageSelectionButton.setTitle("", for: .normal)
+        }
+    }
 
 }
 
@@ -162,8 +178,10 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
             self.selectedImageView.image = selectedImage
+            updateViews()
         }
         dismiss(animated: true, completion: nil)
+        updateViews()
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
