@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Audio Comment View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="AudioComments" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="AudioCommentViewController" customModule="AudioComments" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -29,6 +29,9 @@
                                             </label>
                                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="SqG-tD-Y7q">
                                                 <rect key="frame" x="51" y="0.0" width="296" height="31"/>
+                                                <connections>
+                                                    <action selector="updateCurrentTime:" destination="BYZ-38-t0r" eventType="valueChanged" id="PZY-mq-j9A"/>
+                                                </connections>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uz6-Ly-BaN">
                                                 <rect key="frame" x="349" y="0.0" width="49" height="30"/>
@@ -47,6 +50,9 @@
                                                 <state key="normal" image="circle.fill" catalog="system">
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="toggleRecording:" destination="BYZ-38-t0r" eventType="touchUpInside" id="T6v-ai-xaT"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vab-8J-vuZ">
                                                 <rect key="frame" x="103.5" y="0.0" width="87.5" height="77"/>
@@ -54,6 +60,9 @@
                                                 <state key="normal" image="playpause.fill" catalog="system">
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="togglePlayback:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LBb-mc-LBW"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rU5-YT-R9s">
                                                 <rect key="frame" x="207" y="0.0" width="87.5" height="77"/>
@@ -61,6 +70,9 @@
                                                 <state key="normal" image="square.fill" catalog="system">
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="cancelPlaybackOrRecord:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xHy-Wz-Yi2"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3B0-LF-am0">
                                                 <rect key="frame" x="310.5" y="0.0" width="87.5" height="77"/>
@@ -68,6 +80,9 @@
                                                 <state key="normal" image="square.and.arrow.up" catalog="system">
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="sendCommentToServer:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hbW-uQ-9KC"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                     </stackView>
@@ -90,6 +105,16 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="audioVisualizer" destination="dao-Hs-3Vw" id="xYi-gh-ZyU"/>
+                        <outlet property="playPauseButton" destination="Vab-8J-vuZ" id="4XW-qR-j9u"/>
+                        <outlet property="recordButton" destination="QhG-sI-ZN9" id="PKv-hf-8ic"/>
+                        <outlet property="sendButton" destination="3B0-LF-am0" id="Ict-K5-PWD"/>
+                        <outlet property="stopButton" destination="rU5-YT-R9s" id="puc-5S-ogd"/>
+                        <outlet property="timeElapsedLabel" destination="ug9-Q3-aHT" id="kln-3k-vPB"/>
+                        <outlet property="timeRemainingLabel" destination="Uz6-Ly-BaN" id="acK-AO-aZe"/>
+                        <outlet property="timeSlider" destination="SqG-tD-Y7q" id="je2-h9-t3N"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
