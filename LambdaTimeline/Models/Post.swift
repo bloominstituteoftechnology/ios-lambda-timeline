@@ -8,20 +8,24 @@
 
 import Foundation
 import FirebaseAuth
+import CoreLocation
 
 enum MediaType: String {
     case image
+    case video
 }
 
-struct Post {
+class Post: NSObject {
+    let locationManager = CLLocationManager()
     
-    init(title: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date()) {
+    init(title: String, mediaURL: URL, ratio: CGFloat? = nil, mediaType: MediaType, author: Author, timestamp: Date = Date(), latitude: Double, longitude: Double) {
         self.mediaURL = mediaURL
         self.ratio = ratio
-        self.mediaType = .image
+        self.mediaType = mediaType
         self.author = author
         self.comments = [Comment(text: title, author: author)]
         self.timestamp = timestamp
+       
     }
     
     init?(dictionary: [String : Any], id: String) {
@@ -32,7 +36,8 @@ struct Post {
             let authorDictionary = dictionary[Post.authorKey] as? [String: Any],
             let author = Author(dictionary: authorDictionary),
             let timestampTimeInterval = dictionary[Post.timestampKey] as? TimeInterval,
-            let captionDictionaries = dictionary[Post.commentsKey] as? [[String: Any]] else { return nil }
+            let captionDictionaries = dictionary[Post.commentsKey] as? [[String: Any]]
+            else { return nil }
         
         self.mediaURL = mediaURL
         self.mediaType = mediaType
@@ -56,6 +61,8 @@ struct Post {
         
         return dict
     }
+
+ 
     
     var mediaURL: URL
     let mediaType: MediaType
@@ -64,6 +71,7 @@ struct Post {
     var comments: [Comment]
     var id: String?
     var ratio: CGFloat?
+    var geotag: CLLocationCoordinate2D?
     
     var title: String? {
         return comments.first?.text
