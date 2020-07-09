@@ -2,8 +2,8 @@
 //  SignInViewController.swift
 //  LambdaTimeline
 //
-//  Created by Spencer Curtis on 10/11/18.
-//  Copyright © 2018 Lambda School. All rights reserved.
+//  Created by Michael Stoffer on 9/24/19.
+//  Copyright © 2019 Lambda School. All rights reserved.
 //
 
 import UIKit
@@ -44,8 +44,8 @@ class SignInViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDele
             
             DispatchQueue.main.async {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")
-                self.present(postsNavigationController, animated: true, completion: nil)
+                let postsTabBarController = storyboard.instantiateViewController(withIdentifier: "PostsTabBarController")
+                self.present(postsTabBarController, animated: true, completion: nil)
             }
         }
     }

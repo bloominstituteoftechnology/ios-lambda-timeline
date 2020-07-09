@@ -2,8 +2,8 @@
 //  PostsCollectionViewController.swift
 //  LambdaTimeline
 //
-//  Created by Spencer Curtis on 10/11/18.
-//  Copyright © 2018 Lambda School. All rights reserved.
+//  Created by Michael Stoffer on 9/24/19.
+//  Copyright © 2019 Lambda School. All rights reserved.
 //
 
 import UIKit
@@ -11,6 +11,12 @@ import FirebaseAuth
 import FirebaseUI
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+    
+    private let postController = PostController()
+    
+    private var operations = [String : Operation]()
+    private let mediaFetchQueue = OperationQueue()
+    private let cache = Cache<String, Any>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,9 +36,14 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
         
+        let videoPostAction = UIAlertAction(title: "Video", style: .default) { (_) in
+            self.performSegue(withIdentifier: "AddVideoPost", sender: nil)
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(imagePostAction)
+        alert.addAction(videoPostAction)
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true, completion: nil)
@@ -57,6 +68,14 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
+            
+        case .video:
+            
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPostCell", for: indexPath) as? VideoPostCollectionViewCell else { return UICollectionViewCell() }
+            
+            cell.post = post
+            
+            return cell
         }
     }
     
@@ -66,14 +85,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         
         let post = postController.posts[indexPath.row]
         
-        switch post.mediaType {
-            
-        case .image:
-            
-            guard let ratio = post.ratio else { return size }
-            
-            size.height = size.width * ratio
-        }
+        guard let ratio = post.ratio else { return size }
+        
+        size.height = size.width * ratio
         
         return size
     }
@@ -99,7 +113,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         
         guard let postID = post.id else { return }
         
-        if let mediaData = cache.value(for: postID),
+        if let mediaData = cache.value(for: postID) as? Data,
             let image = UIImage(data: mediaData) {
             imagePostCell.setImage(image)
             self.collectionView.reloadItems(at: [indexPath])
@@ -149,6 +163,12 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             let destinationVC = segue.destination as? ImagePostViewController
             destinationVC?.postController = postController
             
+        } else if segue.identifier == "AddVideoPost" {
+            
+            let destinationVC = segue.destination as? VideoPostViewController
+            
+            destinationVC?.postController = postController
+            
         } else if segue.identifier == "ViewImagePost" {
             
             let destinationVC = segue.destination as? ImagePostDetailTableViewController
@@ -158,12 +178,14 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             
             destinationVC?.postController = postController
             destinationVC?.post = postController.posts[indexPath.row]
-            destinationVC?.imageData = cache.value(for: postID)
+            destinationVC?.imageData = cache.value(for: postID) as? Data
+        } else if segue.identifier == "ViewVideoPost" {
+            let destinationVC = segue.destination as? VideoPostDetailTableViewController
+            
+            guard let indexPath = collectionView.indexPathsForSelectedItems?.first else { return }
+            
+            destinationVC?.postController = postController
+            destinationVC?.post = postController.posts[indexPath.row]
         }
     }
-    
-    private let postController = PostController()
-    private var operations = [String : Operation]()
-    private let mediaFetchQueue = OperationQueue()
-    private let cache = Cache<String, Data>()
 }

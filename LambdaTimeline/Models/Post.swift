@@ -2,8 +2,8 @@
 //  Post.swift
 //  LambdaTimeline
 //
-//  Created by Spencer Curtis on 10/11/18.
-//  Copyright © 2018 Lambda School. All rights reserved.
+//  Created by Michael Stoffer on 9/24/19.
+//  Copyright © 2019 Lambda School. All rights reserved.
 //
 
 import Foundation
@@ -11,14 +11,19 @@ import FirebaseAuth
 
 enum MediaType: String {
     case image
+    case video
 }
 
-struct Post {
+class Post {
     
-    init(title: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date()) {
+    static func ==(lhs: Post, rhs: Post) -> Bool {
+        return lhs.mediaURL == rhs.mediaURL
+    }
+    
+    init(title: String, mediaURL: URL, mediaType: MediaType, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date()) {
         self.mediaURL = mediaURL
         self.ratio = ratio
-        self.mediaType = .image
+        self.mediaType = mediaType
         self.author = author
         self.comments = [Comment(text: title, author: author)]
         self.timestamp = timestamp
@@ -33,6 +38,7 @@ struct Post {
             let author = Author(dictionary: authorDictionary),
             let timestampTimeInterval = dictionary[Post.timestampKey] as? TimeInterval,
             let captionDictionaries = dictionary[Post.commentsKey] as? [[String: Any]] else { return nil }
+        
         
         self.mediaURL = mediaURL
         self.mediaType = mediaType
@@ -49,10 +55,10 @@ struct Post {
                 Post.commentsKey: comments.map({ $0.dictionaryRepresentation }),
                 Post.authorKey: author.dictionaryRepresentation,
                 Post.timestampKey: timestamp.timeIntervalSince1970]
-        
-        guard let ratio = self.ratio else { return dict }
-        
-        dict[Post.ratioKey] = ratio
+              
+        if let ratio = self.ratio {
+            dict[Post.ratioKey] = ratio
+        }
         
         return dict
     }

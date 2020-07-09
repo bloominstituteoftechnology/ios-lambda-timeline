@@ -2,8 +2,8 @@
 //  ConcurrentOperation.swift
 //  LambdaTimeline
 //
-//  Created by Andrew Madsen
-//  Copyright © 2018 Lambda School. All rights reserved.
+//  Created by Michael Stoffer on 9/24/19.
+//  Copyright © 2019 Lambda School. All rights reserved.
 //
 
 import Foundation
