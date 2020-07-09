@@ -5,16 +5,15 @@
 //  Created by Spencer Curtis on 10/12/18.
 //  Copyright © 2018 Lambda School. All rights reserved.
 //
-//swiftlint:disable private_outlet
 
 import UIKit
 
-class ImagePostCollectionViewCell: UICollectionViewCell {
+class VideoPostCollectionViewCell: UICollectionViewCell {
 
-	@IBOutlet weak var imageView: UIImageView!
 	@IBOutlet private weak var titleLabel: UILabel!
 	@IBOutlet private weak var authorLabel: UILabel!
 	@IBOutlet private weak var labelBackgroundView: UIView!
+	@IBOutlet private weak var videoPlayerView: VideoPlayerView!
 
 	override func layoutSubviews() {
 		super.layoutSubviews()
@@ -23,9 +22,11 @@ class ImagePostCollectionViewCell: UICollectionViewCell {
 	override func prepareForReuse() {
 		super.prepareForReuse()
 
-		imageView.image = nil
 		titleLabel.text = ""
 		authorLabel.text = ""
+		videoPlayerView.shouldLoop = false
+		videoPlayerView.stop()
+		videoPlayerView.isHidden = true
 	}
 
 	func updateViews() {
@@ -35,15 +36,17 @@ class ImagePostCollectionViewCell: UICollectionViewCell {
 		authorLabel.text = post.author.displayName
 	}
 
-	func setupLabelBackgroundView() {
-		labelBackgroundView.layer.cornerRadius = 8
-//		labelBackgroundView.layer.borderColor = UIColor.white.cgColor
-//		labelBackgroundView.layer.borderWidth = 0.5
-		labelBackgroundView.clipsToBounds = true
+	func loadVideo(with url: URL) {
+		videoPlayerView.loadMovie(url: url)
+		videoPlayerView.isHidden = false
+		videoPlayerView.shouldLoop = true
+		videoPlayerView.play()
+		videoPlayerView.volume = 0
 	}
 
-	func setImage(_ image: UIImage?) {
-		imageView.image = image
+	func setupLabelBackgroundView() {
+		labelBackgroundView.layer.cornerRadius = 8
+		labelBackgroundView.clipsToBounds = true
 	}
 
 	var post: Post? {
