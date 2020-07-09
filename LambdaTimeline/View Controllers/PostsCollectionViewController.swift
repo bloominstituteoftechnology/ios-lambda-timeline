@@ -9,11 +9,21 @@
 import UIKit
 import FirebaseAuth
 import FirebaseUI
+import AuthenticationServices
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    
+    private let postController = PostController()
+    private var operations = [String : Operation]()
+    private let mediaFetchQueue = OperationQueue()
+    private let cache = Cache<String, Data>()
+    
+    //MARK:- View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "Lambda Timeline"
         
         postController.observePosts { (_) in
             DispatchQueue.main.async {
@@ -21,18 +31,22 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             }
         }
     }
+   //MARK:- Actions
+  
     
     @IBAction func signout(_ sender: Any) {
+        
         let firebaseAuth = Auth.auth()
         do {
           try firebaseAuth.signOut()
+             dismiss(animated: true, completion: nil)
         } catch let signOutError as NSError {
           print ("Error signing out: %@", signOutError)
         }
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func addPost(_ sender: Any) {
+    @IBAction func addPost(_ sender: UIBarButtonItem) {
         
         let alert = UIAlertController(title: "New Post", message: "Which kind of post do you want to create?", preferredStyle: .actionSheet)
         
@@ -40,8 +54,8 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
+        alert.popoverPresentationController?.barButtonItem = sender 
         alert.addAction(imagePostAction)
         alert.addAction(cancelAction)
         
@@ -69,6 +83,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             return cell
         }
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
@@ -172,8 +187,4 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         }
     }
     
-    private let postController = PostController()
-    private var operations = [String : Operation]()
-    private let mediaFetchQueue = OperationQueue()
-    private let cache = Cache<String, Data>()
 }
