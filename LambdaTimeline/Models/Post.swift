@@ -8,12 +8,16 @@
 
 import Foundation
 import FirebaseAuth
+import CoreLocation
 
 enum MediaType: String {
     case image
+    case audio
+    case video
 }
 
-struct Post {
+class Post {
+
     
     init(title: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date()) {
         self.mediaURL = mediaURL
@@ -21,6 +25,7 @@ struct Post {
         self.mediaType = .image
         self.author = author
         self.comments = [Comment(text: title, author: author)]
+        
         self.timestamp = timestamp
     }
     

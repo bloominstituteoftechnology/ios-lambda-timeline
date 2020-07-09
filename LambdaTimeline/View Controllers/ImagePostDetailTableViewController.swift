@@ -7,12 +7,28 @@
 //
 
 import UIKit
+import AVFoundation
+import AVKit
 
-class ImagePostDetailTableViewController: UITableViewController {
+class ImagePostDetailTableViewController: UITableViewController, PlayerDelegate, RecorderDelegate {
+  
+    func recorderDidChangeState(_ recorder: Recorder) {
+        updateViews()
+    }
+    
+    func playerDidChangeState(_ playe: Player) {
+        updateViews()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.reloadData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
+        player.delegate = self
+        recorder.delegate = self
     }
     
     func updateViews() {
@@ -26,38 +42,87 @@ class ImagePostDetailTableViewController: UITableViewController {
         
         titleLabel.text = post.title
         authorLabel.text = post.author.displayName
+        
+        
     }
-    
+   
     // MARK: - Table view data source
-    
+    var cameraBool: Bool = false
+    var recordFile: URL?
+    private let player = Player()
+    private let recorder = Recorder()
     @IBAction func createComment(_ sender: Any) {
         
-        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
-        
-        var commentTextField: UITextField?
-        
-        alert.addTextField { (textField) in
-            textField.placeholder = "Comment:"
-            commentTextField = textField
-        }
-        
-        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
+        let alert = UIAlertController(title: "Leave Comment", message: "Please Select an Option", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Text Comment", style: .default, handler: { (_) in
+            print("User click Text Comment button")
+            let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
+            var commentTextField: UITextField?
             
-            guard let commentText = commentTextField?.text else { return }
+            alert.addTextField { (textField) in
+                textField.placeholder = "Comment:"
+                commentTextField = textField
+            }
             
-            self.postController.addComment(with: commentText, to: &self.post!)
+            let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
+                
+                guard let commentText = commentTextField?.text else { return }
+                
+                self.postController.addComment(with: commentText, to: self.post!)
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            
+            alert.addAction(addCommentAction)
+            alert.addAction(cancelAction)
+            
+            self.present(alert, animated: true, completion: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Audio Comment", style: .default, handler: { (_) in
+            print("User click Audio Comment button")
+
+                let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+                let nextViewController = storyBoard.instantiateViewController(withIdentifier: "audio") as! AudioViewController
+                nextViewController.post = self.post
+                self.present(nextViewController, animated:true, completion:nil)
+         
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+         
+            
+            self.present(alert, animated: true, completion: nil)
+            
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Video Comment", style: .default, handler: { (_) in
+            print("User click Video Comment button")
+            
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+            let nextViewController = storyBoard.instantiateViewController(withIdentifier: "Video") as! CameraViewController
+            nextViewController.post = self.post
+            self.present(nextViewController, animated:true, completion:nil)
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
-        }
+            
+            
+            self.present(alert, animated: true, completion: nil)
+        }))
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: { (_) in
+            print("User click Dismiss button")
+        }))
         
-        alert.addAction(addCommentAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: {
+            print("completion block")
+        })
+    
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -65,13 +130,14 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as! ImagePostTableViewCell
         
         let comment = post?.comments[indexPath.row + 1]
         
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author.displayName
-        
+        cell.comment?.text = comment?.text
+        cell.author?.text = comment?.author.displayName
+        //cell.play.titleLabel?.text = comment?.audio!.absoluteString
+        cell.playAction(player.play(song: recordFile))
         return cell
     }
     
