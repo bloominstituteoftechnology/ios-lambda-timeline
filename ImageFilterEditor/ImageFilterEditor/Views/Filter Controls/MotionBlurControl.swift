@@ -18,6 +18,7 @@ class MotionBlurControl: UIView {
     var image: UIImage?
     var delegate: FilteredImageDelegate?
     
+    
     //MARK: - Life Cycles -
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,13 +35,7 @@ class MotionBlurControl: UIView {
         commonInit()
     }
     
-    private func commonInit() {
-        //not sure if this or the below is right will test both
-//        Bundle.main.loadNibNamed("MotionBlurControl", owner: self, options: nil)
-//        addSubview(contentView)
-//        contentView.frame = self.bounds
-//        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        
+    private func commonInit() {    
         let name = String(describing: type(of: self))
         let nib = UINib(nibName: name, bundle: .main)
         let view = nib.instantiate(withOwner: self, options: nil).first as! UIView

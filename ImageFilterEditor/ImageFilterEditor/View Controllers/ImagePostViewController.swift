@@ -19,7 +19,6 @@ class ImagePostViewController: UIViewController {
     @IBOutlet weak var imageSelectionButton: UIButton!
     
     
-    
     //MARK: - Life Cycles -
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,38 +34,26 @@ class ImagePostViewController: UIViewController {
     
     //MARK: - Methods -
     private func setUpViews() {
+        selectedImageView.isUserInteractionEnabled = true
+        imageSelectionButton.backgroundColor = .none
+        controlView.isUserInteractionEnabled = true
         controlView.subviews.forEach { $0.removeFromSuperview() }
+        let noFilter = NoFilter()
+        setupControl(noFilter)
         filterPicker.delegate = self
         filterPicker.dataSource = self
         filterPicker.isUserInteractionEnabled = true
-        controlView.isUserInteractionEnabled = true
-        selectedImageView.isUserInteractionEnabled = true
-        imageSelectionButton.backgroundColor = .none
-        
+        updateViews()
+    }
+    
+    private func updateViews() {
         if selectedImageView.image == nil {
             imageSelectionButton.setTitle("Tap to get started.", for: .normal)
         } else {
             imageSelectionButton.setTitle("", for: .normal)
         }
         
-        let noFilter = NoFilter()
-//        noFilter.translatesAutoresizingMaskIntoConstraints = false
-//        noFilter.contentMode = .scaleAspectFit
-//        controlView.addSubview(noFilter)
-//        noFilter.topAnchor.constraint(equalTo: controlView.topAnchor).isActive = true
-//        noFilter.bottomAnchor.constraint(equalTo: controlView.bottomAnchor).isActive = true
-//        noFilter.leadingAnchor.constraint(equalTo: controlView.leadingAnchor).isActive = true
-//        noFilter.trailingAnchor.constraint(equalTo: controlView.trailingAnchor).isActive = true
-        setupControl(noFilter)
     }
-    
-    private func updateViews() {
-           if selectedImageView.image == nil {
-               imageSelectionButton.setTitle("Tap to get started.", for: .normal)
-           } else {
-               imageSelectionButton.setTitle("", for: .normal)
-           }
-       }
     
     private func presentImagePicker() {
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
@@ -80,92 +67,52 @@ class ImagePostViewController: UIViewController {
         present(imagePicker, animated: true, completion: nil)
     }
     
+    private func setupControl(_ control: UIView) {
+           control.translatesAutoresizingMaskIntoConstraints = false
+           control.contentMode = .scaleAspectFit
+           controlView.addSubview(control)
+           control.topAnchor.constraint(equalTo: controlView.topAnchor).isActive = true
+           control.bottomAnchor.constraint(equalTo: controlView.bottomAnchor).isActive = true
+           control.leadingAnchor.constraint(equalTo: controlView.leadingAnchor).isActive = true
+           control.trailingAnchor.constraint(equalTo: controlView.trailingAnchor).isActive = true
+       }
+    
     private func updateControls(filter: FilterType) {
         controlView.subviews.forEach { $0.removeFromSuperview() }
         switch filter {
         case .noFilter:
             let noFilter = NoFilter()
-//            noFilter.translatesAutoresizingMaskIntoConstraints = false
-//            noFilter.contentMode = .scaleAspectFit
-//            controlView.addSubview(noFilter)
-//            noFilter.topAnchor.constraint(equalTo: controlView.topAnchor).isActive = true
-//            noFilter.bottomAnchor.constraint(equalTo: controlView.bottomAnchor).isActive = true
-//            noFilter.leadingAnchor.constraint(equalTo: controlView.leadingAnchor).isActive = true
-//            noFilter.trailingAnchor.constraint(equalTo: controlView.trailingAnchor).isActive = true
             setupControl(noFilter)
         case .motionBlur:
             let motionBlur = MotionBlurControl()
-           // motionBlur.translatesAutoresizingMaskIntoConstraints = false
             motionBlur.delegate = self
             motionBlur.image = self.selectedImageView.image
             setupControl(motionBlur)
-//            motionBlur.contentMode = .scaleAspectFit
-//            controlView.addSubview(motionBlur)
-//            motionBlur.topAnchor.constraint(equalTo: controlView.topAnchor).isActive = true
-//            motionBlur.bottomAnchor.constraint(equalTo: controlView.bottomAnchor).isActive = true
-//            motionBlur.leadingAnchor.constraint(equalTo: controlView.leadingAnchor).isActive = true
-//            motionBlur.trailingAnchor.constraint(equalTo: controlView.trailingAnchor).isActive = true
         case .colorMonochrome:
             let colorMonochrome = ColorMonochromeControl()
-        //    colorMonochrome.translatesAutoresizingMaskIntoConstraints = false
             colorMonochrome.delegate = self
             colorMonochrome.image = self.selectedImageView.image
             setupControl(colorMonochrome)
-//            colorMonochrome.contentMode = .scaleAspectFit
-//            controlView.addSubview(colorMonochrome)
-//            colorMonochrome.topAnchor.constraint(equalTo: controlView.topAnchor).isActive = true
-//            colorMonochrome.bottomAnchor.constraint(equalTo: controlView.bottomAnchor).isActive = true
-//            colorMonochrome.leadingAnchor.constraint(equalTo: controlView.leadingAnchor).isActive = true
-//            colorMonochrome.trailingAnchor.constraint(equalTo: controlView.trailingAnchor).isActive = true
         case .circleSplash:
             let circleSplash = CircleSplashControl()
-           // circleSplash.translatesAutoresizingMaskIntoConstraints = false
             circleSplash.delegate = self
             circleSplash.image = self.selectedImageView.image
             setupControl(circleSplash)
-//            circleSplash.contentMode = .scaleAspectFit
-//            controlView.addSubview(circleSplash)
-//            circleSplash.topAnchor.constraint(equalTo: controlView.topAnchor).isActive = true
-//            circleSplash.bottomAnchor.constraint(equalTo: controlView.bottomAnchor).isActive = true
-//            circleSplash.leadingAnchor.constraint(equalTo: controlView.leadingAnchor).isActive = true
-//            circleSplash.trailingAnchor.constraint(equalTo: controlView.trailingAnchor).isActive = true
         case .sharpenLuminance:
             let sharpenLuminance = SharpenLuminanceControl()
-//            sharpenLuminance.translatesAutoresizingMaskIntoConstraints = false
             sharpenLuminance.delegate = self
             sharpenLuminance.image = self.selectedImageView.image
             setupControl(sharpenLuminance)
-//            sharpenLuminance.contentMode = .scaleAspectFit
-//            controlView.addSubview(sharpenLuminance)
-//            sharpenLuminance.topAnchor.constraint(equalTo: controlView.topAnchor).isActive = true
-//            sharpenLuminance.bottomAnchor.constraint(equalTo: controlView.bottomAnchor).isActive = true
-//            sharpenLuminance.leadingAnchor.constraint(equalTo: controlView.leadingAnchor).isActive = true
-//            sharpenLuminance.trailingAnchor.constraint(equalTo: controlView.trailingAnchor).isActive = true
         case .bloom:
             let bloom = BloomControl()
-            //bloom.translatesAutoresizingMaskIntoConstraints = false
             bloom.delegate = self
             bloom.image = self.selectedImageView.image
             setupControl(bloom)
-//            bloom.contentMode = .scaleAspectFit
-//            controlView.addSubview(bloom)
-//            bloom.topAnchor.constraint(equalTo: controlView.topAnchor).isActive = true
-//            bloom.bottomAnchor.constraint(equalTo: controlView.bottomAnchor).isActive = true
-//            bloom.leadingAnchor.constraint(equalTo: controlView.leadingAnchor).isActive = true
-//            bloom.trailingAnchor.constraint(equalTo: controlView.trailingAnchor).isActive = true
         }
     }
-    
-    private func setupControl(_ control: UIView) {
-        control.translatesAutoresizingMaskIntoConstraints = false
-        control.contentMode = .scaleAspectFit
-        controlView.addSubview(control)
-        control.topAnchor.constraint(equalTo: controlView.topAnchor).isActive = true
-        control.bottomAnchor.constraint(equalTo: controlView.bottomAnchor).isActive = true
-        control.leadingAnchor.constraint(equalTo: controlView.leadingAnchor).isActive = true
-        control.trailingAnchor.constraint(equalTo: controlView.trailingAnchor).isActive = true
-    }
 }
+
+
 
 // MARK: - Extensions -
 extension ImagePostViewController: UIPickerViewDelegate {
@@ -175,6 +122,7 @@ extension ImagePostViewController: UIPickerViewDelegate {
     }
     
 }
+
 
 extension ImagePostViewController: UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -190,6 +138,7 @@ extension ImagePostViewController: UIPickerViewDataSource {
     }
 }
 
+
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[.originalImage] as? UIImage {
@@ -204,6 +153,7 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         dismiss(animated: true, completion: nil)
     }
 }
+
 
 extension ImagePostViewController: FilteredImageDelegate {
     func filteredImage(_ image: UIImage) {

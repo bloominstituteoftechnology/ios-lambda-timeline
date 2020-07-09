@@ -15,7 +15,6 @@ class CircleSplashControl: UIView {
     @IBOutlet weak var centerXTextField: UITextField!
     @IBOutlet weak var centerYTextField: UITextField!
     
-    
     private var filters = Filters()
     var image: UIImage?
     var delegate: FilteredImageDelegate?
@@ -38,12 +37,6 @@ class CircleSplashControl: UIView {
     }
     
     private func commonInit() {
-        //not sure if this or the below is right will test both
-        //        Bundle.main.loadNibNamed("MotionBlurControl", owner: self, options: nil)
-        //        addSubview(contentView)
-        //        contentView.frame = self.bounds
-        //        contentView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        
         let name = String(describing: type(of: self))
         let nib = UINib(nibName: name, bundle: .main)
         let view = nib.instantiate(withOwner: self, options: nil).first as! UIView
