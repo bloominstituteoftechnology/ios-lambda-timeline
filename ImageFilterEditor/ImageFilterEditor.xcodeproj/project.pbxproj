@@ -17,6 +17,8 @@
 		3AC8E6F724B95326000053C0 /* AudioCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC8E6F624B95326000053C0 /* AudioCommentTableViewCell.swift */; };
 		3AC8E6F924B95387000053C0 /* AudioCommentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC8E6F824B95387000053C0 /* AudioCommentsTableViewController.swift */; };
 		3AC8E6FB24B953AB000053C0 /* CreateAudioCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC8E6FA24B953AB000053C0 /* CreateAudioCommentViewController.swift */; };
+		3AC8E70124B9562A000053C0 /* AudioPlayerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC8E70024B9562A000053C0 /* AudioPlayerController.swift */; };
+		3AC8E70324B9564A000053C0 /* AudioRecorderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC8E70224B9564A000053C0 /* AudioRecorderController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		3AC8E6F624B95326000053C0 /* AudioCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCommentTableViewCell.swift; sourceTree = "<group>"; };
 		3AC8E6F824B95387000053C0 /* AudioCommentsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCommentsTableViewController.swift; sourceTree = "<group>"; };
 		3AC8E6FA24B953AB000053C0 /* CreateAudioCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAudioCommentViewController.swift; sourceTree = "<group>"; };
+		3AC8E70024B9562A000053C0 /* AudioPlayerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerController.swift; sourceTree = "<group>"; };
+		3AC8E70224B9564A000053C0 /* AudioRecorderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +68,7 @@
 		3A23603224B6A19700952E90 /* ImageFilterEditor */ = {
 			isa = PBXGroup;
 			children = (
+				3AC8E6FD24B95605000053C0 /* Controller */,
 				3A23603324B6A19700952E90 /* AppDelegate.swift */,
 				3A23603524B6A19700952E90 /* SceneDelegate.swift */,
 				3A23603724B6A19700952E90 /* ViewController.swift */,
@@ -73,10 +78,27 @@
 				3A23604124B6A19800952E90 /* Info.plist */,
 				3A23604724B6ACD400952E90 /* UIImage+Scaling.swift */,
 				3AC8E6F624B95326000053C0 /* AudioCommentTableViewCell.swift */,
+				3AC8E6FC24B954D8000053C0 /* View Controllers */,
+			);
+			path = ImageFilterEditor;
+			sourceTree = "<group>";
+		};
+		3AC8E6FC24B954D8000053C0 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
 				3AC8E6F824B95387000053C0 /* AudioCommentsTableViewController.swift */,
 				3AC8E6FA24B953AB000053C0 /* CreateAudioCommentViewController.swift */,
 			);
-			path = ImageFilterEditor;
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		3AC8E6FD24B95605000053C0 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3AC8E70024B9562A000053C0 /* AudioPlayerController.swift */,
+				3AC8E70224B9564A000053C0 /* AudioRecorderController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,11 +173,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A23603824B6A19700952E90 /* ViewController.swift in Sources */,
+				3AC8E70124B9562A000053C0 /* AudioPlayerController.swift in Sources */,
 				3A23604824B6ACD400952E90 /* UIImage+Scaling.swift in Sources */,
 				3A23603424B6A19700952E90 /* AppDelegate.swift in Sources */,
 				3AC8E6FB24B953AB000053C0 /* CreateAudioCommentViewController.swift in Sources */,
 				3AC8E6F724B95326000053C0 /* AudioCommentTableViewCell.swift in Sources */,
 				3AC8E6F924B95387000053C0 /* AudioCommentsTableViewController.swift in Sources */,
+				3AC8E70324B9564A000053C0 /* AudioRecorderController.swift in Sources */,
 				3A23603624B6A19700952E90 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

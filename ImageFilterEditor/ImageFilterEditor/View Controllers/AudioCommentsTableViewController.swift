@@ -9,7 +9,21 @@
 import UIKit
 
 class AudioCommentsTableViewController: UITableViewController {
-
+ 
+    private lazy var timeIntervalFormatter: DateComponentsFormatter = {
+           // NOTE: DateComponentFormatter is good for minutes/hours/seconds
+           // DateComponentsFormatter is not good for milliseconds, use DateFormatter instead)
+           
+           let formatting = DateComponentsFormatter()
+           formatting.unitsStyle = .positional // 00:00  mm:ss
+           formatting.zeroFormattingBehavior = .pad
+           formatting.allowedUnits = [.minute, .second]
+           return formatting
+       }()
+    
+    let audioPlayerController = AudioPlayerController()
+    let audioRecordingController = AudioRecorderController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -77,14 +91,17 @@ class AudioCommentsTableViewController: UITableViewController {
     }
     */
 
-    /*
+
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "createAudioSegue" {
+            guard let createVC = segue.destination as? CreateAudioCommentViewController else { return }
+            
+            createVC.audioRecorderController = audioRecordingController
+            createVC.audioPlayerController = audioPlayerController
+        }
     }
-    */
+
 
 }
