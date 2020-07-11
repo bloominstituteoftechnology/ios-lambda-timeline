@@ -41,13 +41,34 @@ class CreateAudioCommentViewController: UIViewController {
         recordButton.isSelected = audioRecorderController?.audioRecorder?.isRecording ?? false
 
         if recordButton.isSelected {
-            guard let duration = audioRecorderController?.audioRecorder?.currentTime else { return }
+            let duration = audioRecorderController?.audioRecorder?.currentTime ?? 0
             playButton.isEnabled = false
             durationLabel.text = timeIntervalFormatter?.string(from: duration)
         } else if !recordButton.isSelected {
             playButton.isEnabled = true
             }
+        
+        playButton.isSelected = audioPlayerController?.audioPlayer?.isPlaying ?? false
+
+        if playButton.isSelected {
+            recordButton.isEnabled = false
+
+            let duration = audioPlayerController?.audioPlayer?.duration ?? 0
+            let elapsedTime = audioPlayerController?.audioPlayer?.currentTime ?? 0
+            let timeRemaining = round(duration) - elapsedTime
+
+            elapsedTimelabel.text = timeIntervalFormatter?.string(from: elapsedTime)
+            durationLabel.text = timeIntervalFormatter?.string(from: timeRemaining)
+
+            timeSlider.minimumValue = 0
+            timeSlider.maximumValue = Float(duration)
+            timeSlider.value = Float(elapsedTime)
+        } else if !playButton.isSelected {
+            recordButton.isEnabled = true
         }
+        }
+    
+    
         
         deinit {
             timer?.invalidate()
@@ -75,7 +96,9 @@ class CreateAudioCommentViewController: UIViewController {
         // MARK: - Actions
         
         @IBAction func togglePlayback(_ sender: Any) {
-
+            audioPlayerController?.togglePlayback()
+            audioPlayerController?.audioPlayer?.delegate = self
+            startTimer()
         }
         
         @IBAction func toggleRecording(_ sender: Any) {
@@ -91,19 +114,27 @@ class CreateAudioCommentViewController: UIViewController {
             if let error = error {
                 print("Audio Recorder Error: \(error)")
             }
+            
+            cancelTimer()
+            updateViews()
         }
         
         func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
             if let recordingURL = audioRecorderController?.recordingURL {
-                //audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL)
+                do {
+                    audioPlayerController?.audioPlayer = try AVAudioPlayer(contentsOf: recordingURL)
+                } catch {
+                    print("Error setting audio plyaer: \(error)")
+                }
             }
 
             audioRecorderController?.audioRecorder = nil
             cancelTimer()
+            updateViews()
         }
     }
 
-    extension AudioCommentsTableViewController: AudioRecorderControllerDelegate {
+    extension CreateAudioCommentViewController: AudioRecorderControllerDelegate {
     func didNotRecievePermission() {
         print("Microphone access has been blocked.")
 
@@ -116,5 +147,20 @@ class CreateAudioCommentViewController: UIViewController {
         alertController.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
 
         present(alertController, animated: true)
+    }
+}
+
+extension CreateAudioCommentViewController: AVAudioPlayerDelegate {
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        updateViews()
+    }
+
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        if let error = error {
+            print("Error during playback: \(error)")
+        }
+
+        cancelTimer()
+        updateViews()
     }
 }

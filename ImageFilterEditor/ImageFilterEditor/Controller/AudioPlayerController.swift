@@ -7,7 +7,28 @@
 //
 
 import Foundation
+import AVFoundation
 
 class AudioPlayerController {
-    
+    var audioPlayer: AVAudioPlayer?
+
+    var isPlaying: Bool {
+        audioPlayer?.isPlaying ?? false
+    }
+
+    func togglePlayback() {
+        if isPlaying {
+            pause()
+        } else {
+            play()
+        }
+    }
+
+    private func play() {
+        audioPlayer?.play()
+    }
+
+    private func pause() {
+        audioPlayer?.pause()
+    }
 }
