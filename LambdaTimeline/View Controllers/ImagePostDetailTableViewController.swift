@@ -10,6 +10,8 @@ import UIKit
 
 class ImagePostDetailTableViewController: UITableViewController {
     
+    var selectedImage: UIImage = UIImage()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
@@ -23,6 +25,7 @@ class ImagePostDetailTableViewController: UITableViewController {
         title = post?.title
         
         imageView.image = image
+        selectedImage = image
         
         titleLabel.text = post.title
         authorLabel.text = post.author.displayName
@@ -85,4 +88,5 @@ class ImagePostDetailTableViewController: UITableViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
+    
 }
