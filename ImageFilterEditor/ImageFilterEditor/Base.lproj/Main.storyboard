@@ -16,13 +16,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Kgt-Yr-xGu">
-                                <rect key="frame" x="0.0" y="0.0" width="450" height="450"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Kgt-Yr-xGu" secondAttribute="height" multiplier="1:1" id="dit-Wr-MVA"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="SJU-rV-adv">
-                                <rect key="frame" x="10" y="460" width="430" height="177.5"/>
+                                <rect key="frame" x="10" y="424" width="430" height="177.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" id="RKy-aw-kj5">
                                         <rect key="frame" x="0.0" y="0.0" width="430" height="27"/>
@@ -124,7 +124,7 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8qp-y1-xeb">
-                                <rect key="frame" x="185" y="697.5" width="80" height="30"/>
+                                <rect key="frame" x="167" y="661.5" width="80" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="80" id="pLf-si-lLt"/>
                                 </constraints>
@@ -216,7 +216,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="2j1-ca-Ikb" customClass="AudioCommentTableViewCell" customModule="ImageFilterEditor" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="audioCell" id="2j1-ca-Ikb" customClass="AudioCommentTableViewCell" customModule="ImageFilterEditor" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2j1-ca-Ikb" id="Rts-dn-2zF">
@@ -233,17 +233,20 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="5PS-Na-lWO">
-                                                    <rect key="frame" x="59" y="0.0" width="184" height="31"/>
+                                                    <rect key="frame" x="59" y="0.0" width="192" height="31"/>
                                                 </slider>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f0t-Ms-VNf">
-                                                    <rect key="frame" x="256" y="0.0" width="54" height="30"/>
+                                                    <rect key="frame" x="264" y="0.0" width="54" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PGe-pC-GLq">
-                                                    <rect key="frame" x="325" y="0.0" width="49" height="30"/>
+                                                    <rect key="frame" x="333" y="0.0" width="41" height="30"/>
                                                     <state key="normal" image="play.fill" catalog="system"/>
+                                                    <connections>
+                                                        <action selector="togglePlayback:" destination="2j1-ca-Ikb" eventType="touchUpInside" id="QlN-8i-Teq"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </stackView>
@@ -254,6 +257,12 @@
                                         <constraint firstItem="K7Z-5J-hmq" firstAttribute="centerY" secondItem="Rts-dn-2zF" secondAttribute="centerY" id="tQg-Co-Fq2"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="durationLabel" destination="f0t-Ms-VNf" id="SYu-PY-Cby"/>
+                                    <outlet property="elapsedTimeLabel" destination="MJT-Hp-pvA" id="m5e-cl-ezm"/>
+                                    <outlet property="playButton" destination="PGe-pC-GLq" id="gP2-Nc-GDq"/>
+                                    <outlet property="timeSlider" destination="5PS-Na-lWO" id="viT-RV-sJx"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -345,7 +354,11 @@
                         <viewLayoutGuide key="safeArea" id="0vR-TV-byx"/>
                     </view>
                     <navigationItem key="navigationItem" id="z6C-HW-ZYI">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="AOq-mH-QFr"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="AOq-mH-QFr">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="JUs-hL-8mg" id="iWJ-Og-HOH"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="durationLabel" destination="34W-Gh-1Sz" id="Oq8-fu-F1g"/>

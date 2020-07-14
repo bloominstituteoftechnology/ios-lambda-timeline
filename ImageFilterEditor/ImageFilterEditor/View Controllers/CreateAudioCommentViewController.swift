@@ -9,6 +9,10 @@
 import UIKit
 import AVFoundation
 
+protocol CreateCommentDelegate {
+    func didSaveAudioComment(_ url: URL) -> Void
+}
+
 class CreateAudioCommentViewController: UIViewController {
 
     var timer: Timer?
@@ -16,6 +20,8 @@ class CreateAudioCommentViewController: UIViewController {
     var audioRecorderController: AudioRecorderController?
     
     var timeIntervalFormatter: DateComponentsFormatter?
+    
+    var delegate: CreateCommentDelegate?
     
     // MARK: - IBOutlets
     @IBOutlet var playButton: UIButton!
@@ -95,16 +101,36 @@ class CreateAudioCommentViewController: UIViewController {
         
         // MARK: - Actions
         
-        @IBAction func togglePlayback(_ sender: Any) {
+    @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let recordingURL = audioRecorderController?.recordingURL else { return }
+        delegate?.didSaveAudioComment(recordingURL)
+        navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func togglePlayback(_ sender: Any) {
             audioPlayerController?.togglePlayback()
             audioPlayerController?.audioPlayer?.delegate = self
-            startTimer()
+            updateViews()
+            
+            switch playButton.isSelected {
+            case true:
+                startTimer()
+            default:
+                cancelTimer()
+            }
         }
         
         @IBAction func toggleRecording(_ sender: Any) {
             audioRecorderController?.toggleRecording()
             audioRecorderController?.audioRecorder?.delegate = self
-            startTimer()
+            updateViews()
+            
+            switch recordButton.isSelected {
+            case true:
+                startTimer()
+            default:
+                cancelTimer()
+            }
         }
     }
 
@@ -153,6 +179,7 @@ class CreateAudioCommentViewController: UIViewController {
 extension CreateAudioCommentViewController: AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         updateViews()
+        cancelTimer()
     }
 
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
