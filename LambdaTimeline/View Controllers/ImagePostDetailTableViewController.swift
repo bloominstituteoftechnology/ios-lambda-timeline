@@ -10,6 +10,8 @@ import UIKit
 
 class ImagePostDetailTableViewController: UITableViewController {
     
+    var selectedImage: UIImage = UIImage()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
@@ -23,10 +25,13 @@ class ImagePostDetailTableViewController: UITableViewController {
         title = post?.title
         
         imageView.image = image
+        selectedImage = image
         
         titleLabel.text = post.title
         authorLabel.text = post.author.displayName
     }
+    
+    @IBAction func unwindToDetail(_ sender: UIStoryboardSegue) {}
     
     // MARK: - Table view data source
     
@@ -52,9 +57,14 @@ class ImagePostDetailTableViewController: UITableViewController {
             }
         }
         
+        let addVoiceAction = UIAlertAction(title: "Add Voice Message", style: .default) { (_) in
+            self.performSegue(withIdentifier: "addVoiceComment", sender: nil)
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(addCommentAction)
+        alert.addAction(addVoiceAction)
         alert.addAction(cancelAction)
         
         present(alert, animated: true, completion: nil)
@@ -65,12 +75,14 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as? CellCommentPostDetailTableViewCell else { return UITableViewCell() }
         
         let comment = post?.comments[indexPath.row + 1]
         
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author.displayName
+        cell.commentMessageLabel.text = comment?.text
+        cell.commentAuthorLabel.text = comment?.author.displayName
+        #warning("Need to implement if comment has an audio file")
+        cell.playVoiceMessage.alpha = 0
         
         return cell
     }
@@ -85,4 +97,7 @@ class ImagePostDetailTableViewController: UITableViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
+    
+    
+    
 }

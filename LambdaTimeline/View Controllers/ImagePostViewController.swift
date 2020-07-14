@@ -11,8 +11,13 @@ import Photos
 
 class ImagePostViewController: ShiftableViewController {
     
+    var editPicture: UIImage!
+    @IBOutlet var editPhotoButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        editPhotoButton.titleLabel?.alpha = 0
         
         setImageViewHeight(with: 1.0)
         
@@ -32,7 +37,7 @@ class ImagePostViewController: ShiftableViewController {
         setImageViewHeight(with: image.ratio)
         
         imageView.image = image
-        
+                
         chooseImageButton.setTitle("", for: [])
     }
     
@@ -50,6 +55,7 @@ class ImagePostViewController: ShiftableViewController {
         imagePicker.sourceType = .photoLibrary
 
         present(imagePicker, animated: true, completion: nil)
+
     }
     
     @IBAction func createPost(_ sender: Any) {
@@ -92,7 +98,6 @@ class ImagePostViewController: ShiftableViewController {
                     self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
                     return
                 }
-                
                 self.presentImagePickerController()
             }
             
@@ -105,6 +110,9 @@ class ImagePostViewController: ShiftableViewController {
             print("FatalError")
         }
         presentImagePickerController()
+    }
+    @IBAction func unwindToPostVC(_ sender: UIStoryboardSegue) {
+        imageView.image = editPicture
     }
     
     func setImageViewHeight(with aspectRatio: CGFloat) {
@@ -138,9 +146,22 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         imageView.image = image
         
         setImageViewHeight(with: image.ratio)
+        self.editPhotoButton.titleLabel?.alpha = 1
+
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "editSelectedPicture" {
+            if #available(iOS 13.0, *) {
+                let destinationVC = segue.destination as? EditPhotoViewController
+                destinationVC?.selectedImage = imageView.image
+            } else {
+                return
+            }
+        }
     }
 }
