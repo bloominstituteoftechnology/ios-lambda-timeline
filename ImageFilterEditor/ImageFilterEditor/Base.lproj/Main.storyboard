@@ -217,10 +217,10 @@
             </objects>
             <point key="canvasLocation" x="57.971014492753625" y="267.85714285714283"/>
         </scene>
-        <!--Collection View Controller-->
+        <!--Videos Collection View Controller-->
         <scene sceneID="R75-YI-D8r">
             <objects>
-                <collectionViewController id="3Zn-wR-aFJ" sceneMemberID="viewController">
+                <collectionViewController id="3Zn-wR-aFJ" customClass="VideosCollectionViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="pRj-tV-cxE">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -232,15 +232,40 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Jqc-Ja-2vE">
-                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="videoCell" id="Jqc-Ja-2vE" customClass="VideosCollectionViewCell" customModule="ImageFilterEditor" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="135" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="nM3-1a-lb1">
-                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="135" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fYP-jv-jeb">
+                                            <rect key="frame" x="0.0" y="0.0" width="135" height="128"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="135" id="6eo-Fg-OGi"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rbR-kV-tdd">
+                                            <rect key="frame" x="0.0" y="107" width="128" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="fYP-jv-jeb" firstAttribute="top" secondItem="nM3-1a-lb1" secondAttribute="top" id="0kp-XB-7sO"/>
+                                        <constraint firstItem="rbR-kV-tdd" firstAttribute="trailing" secondItem="fYP-jv-jeb" secondAttribute="trailing" constant="-7" id="D5K-EA-8Oy"/>
+                                        <constraint firstItem="rbR-kV-tdd" firstAttribute="leading" secondItem="fYP-jv-jeb" secondAttribute="leading" id="HZd-BL-l3U"/>
+                                        <constraint firstAttribute="trailing" secondItem="fYP-jv-jeb" secondAttribute="trailing" id="gXI-Hy-28F"/>
+                                        <constraint firstAttribute="bottom" secondItem="fYP-jv-jeb" secondAttribute="bottom" id="hPR-3Q-gug"/>
+                                        <constraint firstItem="fYP-jv-jeb" firstAttribute="leading" secondItem="nM3-1a-lb1" secondAttribute="leading" id="qfs-dq-F99"/>
+                                        <constraint firstItem="rbR-kV-tdd" firstAttribute="bottom" secondItem="fYP-jv-jeb" secondAttribute="bottom" id="xYd-HP-6s1"/>
+                                    </constraints>
                                 </collectionViewCellContentView>
                                 <connections>
-                                    <segue destination="nkr-D4-geR" kind="show" id="ICg-qM-qrL"/>
+                                    <outlet property="imageView" destination="fYP-jv-jeb" id="9eS-6x-UoQ"/>
+                                    <outlet property="titleLabel" destination="rbR-kV-tdd" id="9ry-Jg-NFl"/>
+                                    <segue destination="nkr-D4-geR" kind="show" identifier="detailViewSegue" id="ICg-qM-qrL"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -259,7 +284,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cn9-27-oUX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="58" y="1357"/>
+            <point key="canvasLocation" x="57.971014492753625" y="1356.6964285714284"/>
         </scene>
         <!--Camera View Controller-->
         <scene sceneID="rKw-Sc-nG6">

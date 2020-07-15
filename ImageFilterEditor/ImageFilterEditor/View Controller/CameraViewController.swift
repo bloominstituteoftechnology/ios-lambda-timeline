@@ -17,6 +17,9 @@ class CameraViewController: UIViewController {
     var player: AVPlayer?
     var playerView: VideoPlayerView!
     
+    var delegate: VideosCollectionViewController!
+    var videoClipURL: URL?
+    
     //MARK: - IBOutlets
     @IBOutlet var cameraPreview: CameraPreviewView!
     @IBOutlet var recordButton: UIButton!
@@ -24,8 +27,13 @@ class CameraViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+        view.addGestureRecognizer(tapGesture)
+        
         setUpCaptureSession()
         cameraPreview.videoPlayerView.videoGravity = .resizeAspectFill
+        videoTitle.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,9 +51,37 @@ class CameraViewController: UIViewController {
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let videoTitle = videoTitle.text, !videoTitle.isEmpty, let fileURL = videoClipURL else { return }
+        
+        delegate?.videoClip.append((videoTitle, fileURL))
+        let thumbnail = delegate?.createThumbnail(url: fileURL)
+        delegate?.imageview.append(thumbnail)
+        
+        navigationController?.popViewController(animated: true)
     }
     
     // MARK: - Functions
+    
+    @objc func handleTapGesture(_ tapGesture: UITapGestureRecognizer) {
+              print("tap")
+
+              view.endEditing(true)
+
+              switch(tapGesture.state) {
+
+              case .ended:
+                  replayMovie()
+              default:
+                  print("Handled other states: \(tapGesture.state)")
+              }
+          }
+
+       private func replayMovie() {
+           guard let player = player else { return }
+             player.seek(to: .zero)
+             player.play()
+         }
+    
     private func bestAudio() -> AVCaptureDevice {
         if let device = AVCaptureDevice.default(for: .audio) {
             return device
@@ -153,6 +189,7 @@ class CameraViewController: UIViewController {
             self.playerView = playerView
         }
         player.play()
+        videoTitle.isHidden = false
         self.player = player
     }
 
@@ -174,6 +211,7 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
 
         DispatchQueue.main.async {
             self.playMovie(url: outputFileURL)
+            self.videoClipURL = outputFileURL
         }
 
         //play the movie if no error
