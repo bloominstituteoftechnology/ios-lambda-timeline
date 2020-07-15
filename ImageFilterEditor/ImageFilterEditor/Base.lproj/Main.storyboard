@@ -261,10 +261,10 @@
             </objects>
             <point key="canvasLocation" x="58" y="1357"/>
         </scene>
-        <!--View Controller-->
+        <!--Camera View Controller-->
         <scene sceneID="rKw-Sc-nG6">
             <objects>
-                <viewController id="kxs-l3-Jgd" sceneMemberID="viewController">
+                <viewController id="kxs-l3-Jgd" customClass="CameraViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WAN-9p-G6m">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -274,7 +274,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ez-61-UUW">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ez-61-UUW" customClass="CameraPreviewView" customModule="ImageFilterEditor" customModuleProvider="target">
                                 <rect key="frame" x="20" y="202" width="374" height="393"/>
                                 <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
@@ -313,6 +313,9 @@
                         <viewLayoutGuide key="safeArea" id="khc-Wg-hYI"/>
                     </view>
                     <navigationItem key="navigationItem" id="sw4-uN-x6d"/>
+                    <connections>
+                        <outlet property="cameraPreview" destination="9Ez-61-UUW" id="Y1x-kX-GKZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vSk-nE-qD3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
