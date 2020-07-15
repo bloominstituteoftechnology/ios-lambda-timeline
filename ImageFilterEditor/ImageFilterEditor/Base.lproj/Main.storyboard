@@ -285,6 +285,9 @@
                                     <constraint firstAttribute="width" secondItem="vbX-eQ-bDP" secondAttribute="height" multiplier="1:1" id="zxR-Zd-C5a"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="Record"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="kxs-l3-Jgd" eventType="touchUpInside" id="qtM-Lq-4ML"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v1M-Xh-ogu">
                                 <rect key="frame" x="20" y="771" width="374" height="51"/>
@@ -293,6 +296,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <state key="normal" title="SAVE"/>
+                                <connections>
+                                    <action selector="saveButtonTapped:" destination="kxs-l3-Jgd" eventType="touchUpInside" id="gPu-mG-Vc0"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -315,6 +321,8 @@
                     <navigationItem key="navigationItem" id="sw4-uN-x6d"/>
                     <connections>
                         <outlet property="cameraPreview" destination="9Ez-61-UUW" id="Y1x-kX-GKZ"/>
+                        <outlet property="recordButton" destination="vbX-eQ-bDP" id="SOn-rr-UDz"/>
+                        <outlet property="videoTitle" destination="iRH-1D-tCj" id="Qhv-79-a8M"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vSk-nE-qD3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
