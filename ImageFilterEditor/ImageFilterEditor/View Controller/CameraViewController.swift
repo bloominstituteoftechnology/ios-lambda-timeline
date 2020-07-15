@@ -33,7 +33,6 @@ class CameraViewController: UIViewController {
         
         setUpCaptureSession()
         cameraPreview.videoPlayerView.videoGravity = .resizeAspectFill
-        videoTitle.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,6 +47,7 @@ class CameraViewController: UIViewController {
 
     // MARK: - IBAction
     @IBAction func recordButtonPressed(_ sender: Any) {
+        toggleRecording()
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {

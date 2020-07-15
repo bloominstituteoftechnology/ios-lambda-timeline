@@ -42,8 +42,6 @@ class VideosCollectionViewController: UICollectionViewController {
         cell.clipName = videoClip[indexPath.item].0
         cell.imageName = imageview[indexPath.item]
     
-        // Configure the cell
-    
         return cell
     }
 
