@@ -245,6 +245,10 @@
                                                 <constraint firstAttribute="width" constant="135" id="6eo-Fg-OGi"/>
                                             </constraints>
                                         </imageView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n0Z-Nh-87n" customClass="VideoPlayerView" customModule="ImageFilterEditor" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="135" height="128"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        </view>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rbR-kV-tdd">
                                             <rect key="frame" x="0.0" y="107" width="128" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -255,16 +259,21 @@
                                     <constraints>
                                         <constraint firstItem="fYP-jv-jeb" firstAttribute="top" secondItem="nM3-1a-lb1" secondAttribute="top" id="0kp-XB-7sO"/>
                                         <constraint firstItem="rbR-kV-tdd" firstAttribute="trailing" secondItem="fYP-jv-jeb" secondAttribute="trailing" constant="-7" id="D5K-EA-8Oy"/>
+                                        <constraint firstItem="n0Z-Nh-87n" firstAttribute="top" secondItem="nM3-1a-lb1" secondAttribute="top" id="GaR-hw-X0t"/>
                                         <constraint firstItem="rbR-kV-tdd" firstAttribute="leading" secondItem="fYP-jv-jeb" secondAttribute="leading" id="HZd-BL-l3U"/>
+                                        <constraint firstItem="n0Z-Nh-87n" firstAttribute="leading" secondItem="nM3-1a-lb1" secondAttribute="leading" id="fZg-Ox-BeI"/>
                                         <constraint firstAttribute="trailing" secondItem="fYP-jv-jeb" secondAttribute="trailing" id="gXI-Hy-28F"/>
+                                        <constraint firstAttribute="trailing" secondItem="n0Z-Nh-87n" secondAttribute="trailing" id="gqc-Kw-dLS"/>
                                         <constraint firstAttribute="bottom" secondItem="fYP-jv-jeb" secondAttribute="bottom" id="hPR-3Q-gug"/>
                                         <constraint firstItem="fYP-jv-jeb" firstAttribute="leading" secondItem="nM3-1a-lb1" secondAttribute="leading" id="qfs-dq-F99"/>
+                                        <constraint firstAttribute="bottom" secondItem="n0Z-Nh-87n" secondAttribute="bottom" id="trS-5s-uoa"/>
                                         <constraint firstItem="rbR-kV-tdd" firstAttribute="bottom" secondItem="fYP-jv-jeb" secondAttribute="bottom" id="xYd-HP-6s1"/>
                                     </constraints>
                                 </collectionViewCellContentView>
                                 <connections>
                                     <outlet property="imageView" destination="fYP-jv-jeb" id="9eS-6x-UoQ"/>
                                     <outlet property="titleLabel" destination="rbR-kV-tdd" id="9ry-Jg-NFl"/>
+                                    <outlet property="videoPlayerView" destination="n0Z-Nh-87n" id="ECQ-PK-GBo"/>
                                     <segue destination="nkr-D4-geR" kind="show" identifier="detailViewSegue" id="ICg-qM-qrL"/>
                                 </connections>
                             </collectionViewCell>
