@@ -17,14 +17,16 @@ class Post: NSObject {
     let author: Author
     let timestamp: Date
     let location: CLLocationCoordinate2D
+    var image: UIImage
     
-    init(postTitle: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author = Author.claudiaMaciel, timestamp: Date = Date(), location: CLLocationCoordinate2D? = nil) {
+    init(postTitle: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author = Author.claudiaMaciel, timestamp: Date = Date(), location: CLLocationCoordinate2D? = nil, image: UIImage) {
         self.postTitle = postTitle
         self.mediaURL = mediaURL
         self.ratio = ratio
         self.author = author
         self.timestamp = timestamp
         self.location = location ?? Locations.defaultLocation
+        self.image = image
     }
     
     static func == (lhs: Post, rhs: Post) -> Bool {

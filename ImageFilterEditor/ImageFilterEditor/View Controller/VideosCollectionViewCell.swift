@@ -14,9 +14,14 @@ class VideosCollectionViewCell: UICollectionViewCell {
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var titleLabel: UILabel!
     
-    
     var videoClip: URL!
     
+    
+    var post: Post? {
+        didSet {
+            updateViews()
+        }
+    }
     var clipName: String? {
         didSet {
             titleLabel.text = clipName
@@ -27,5 +32,11 @@ class VideosCollectionViewCell: UICollectionViewCell {
         didSet {
             imageView.image = imageName
         }
+    }
+    
+    func updateViews() {
+        guard let post = post else { return }
+        titleLabel.text = post.title
+        imageView.image = post.image
     }
 }

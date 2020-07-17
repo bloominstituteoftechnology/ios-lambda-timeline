@@ -8,15 +8,20 @@
 
 import UIKit
 import AVFoundation
-
-private let reuseIdentifier = "Cell"
+import MapKit
 
 class VideosCollectionViewController: UICollectionViewController {
 
     var videoClip: [(String, URL)] = []
     var imageview: [UIImage?] = []
+    
+    var posts: [Post] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.collectionView!.register(VideosCollectionViewCell.self,
+                                      forCellWithReuseIdentifier: "videoCell")
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -34,14 +39,16 @@ class VideosCollectionViewController: UICollectionViewController {
 
     // MARK: UICollectionViewDataSource
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return videoClip.count
+        return posts.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "videoCell", for: indexPath) as? VideosCollectionViewCell else { return UICollectionViewCell() }
-        cell.clipName = videoClip[indexPath.item].0
-        cell.imageName = imageview[indexPath.item]
+        
+//        cell.clipName = videoClip[indexPath.item].0
+//        cell.imageName = imageview[indexPath.item]
     
+        cell.post = posts[indexPath.row]
         return cell
     }
 
@@ -57,4 +64,15 @@ class VideosCollectionViewController: UICollectionViewController {
         return nil
     }
 
+}
+
+//MARK: - Extension
+extension VideosCollectionViewController: CameraViewControllerDelegate {
+    func didSaveVideo(at url: URL, postTitle: String, location: CLLocationCoordinate2D?, image: UIImage) {
+        let post = Post(postTitle: postTitle, mediaURL: url, location: location, image: image)
+        posts.append(post)
+        collectionView.reloadData()
+    }
+    
+    
 }

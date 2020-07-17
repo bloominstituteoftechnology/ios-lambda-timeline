@@ -8,33 +8,48 @@
 
 import UIKit
 import AVFoundation
+import MapKit
 
+protocol CameraViewControllerDelegate {
+    func didSaveVideo(at url: URL, postTitle: String, location: CLLocationCoordinate2D?, image: UIImage)
+}
 class CameraViewController: UIViewController {
 
     //MARK: - Properties
     lazy var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
+    
     var player: AVPlayer?
     var playerView: VideoPlayerView!
     
     var delegate: VideosCollectionViewController!
     var videoClipURL: URL?
     
+    let locationManager = CLLocationManager()
+    var location: CLLocationCoordinate2D?
+    
     //MARK: - IBOutlets
     @IBOutlet var cameraPreview: CameraPreviewView!
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var videoTitle: UITextField!
+    @IBOutlet var saveButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        locationManager.requestWhenInUseAuthorization()
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
         view.addGestureRecognizer(tapGesture)
         
         setUpCaptureSession()
         cameraPreview.videoPlayerView.videoGravity = .resizeAspectFill
+        
+        videoTitle.isHidden = true
+        saveButton.isHidden = true
     }
     
+    // MARK: - View Functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         captureSession.startRunning()
@@ -51,11 +66,15 @@ class CameraViewController: UIViewController {
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
-        guard let videoTitle = videoTitle.text, !videoTitle.isEmpty, let fileURL = videoClipURL else { return }
+        guard let videoTitle = videoTitle.text,
+            !videoTitle.isEmpty,
+            let fileURL = videoClipURL else { return }
         
-        delegate?.videoClip.append((videoTitle, fileURL))
-        let thumbnail = delegate?.createThumbnail(url: fileURL)
-        delegate?.imageview.append(thumbnail)
+//        delegate?.videoClip.append((videoTitle, fileURL))
+        let thumbnail = (delegate?.createThumbnail(url: fileURL)!)!
+//        delegate?.imageview.append(thumbnail)
+        
+        delegate?.didSaveVideo(at: fileURL, postTitle: videoTitle, location: location, image: thumbnail)
         
         navigationController?.popViewController(animated: true)
     }
@@ -68,7 +87,6 @@ class CameraViewController: UIViewController {
               view.endEditing(true)
 
               switch(tapGesture.state) {
-
               case .ended:
                   replayMovie()
               default:
@@ -131,15 +149,14 @@ class CameraViewController: UIViewController {
             return ultraWideCamera
         }
 
-        if let wideAngleCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) { // try .front
+        if let wideAngleCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) {
             return wideAngleCamera
         }
 
         // simulator or thr request hardware camera doesn't work
-        fatalError("Error in handling.")// TODO: show UI instead of a fatal error.
-        
-
+        fatalError("Error in handling.")
     }
+    
     private func toggleRecording() {
         if fileOutput.isRecording {
             fileOutput.stopRecording()
@@ -179,6 +196,12 @@ class CameraViewController: UIViewController {
             let playerView = VideoPlayerView()
             playerView.player = player
 
+            NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
+                                                   object: self.player?.currentItem,
+                                                   queue: .main) { [weak self] _ in
+                                                    self?.replayMovie()
+            }
+            
             // customize frame
             var frame = view.bounds
             frame.size.height = frame.size.height / 4
@@ -190,6 +213,7 @@ class CameraViewController: UIViewController {
         }
         player.play()
         videoTitle.isHidden = false
+        saveButton.isHidden = false
         self.player = player
     }
 
@@ -210,12 +234,14 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         print("Play Movie!")
 
         DispatchQueue.main.async {
-            self.playMovie(url: outputFileURL)
             self.videoClipURL = outputFileURL
+            self.playMovie(url: outputFileURL)
         }
 
         //play the movie if no error
         updateViews()
+        locationManager.requestLocation()
+        location = locationManager.location?.coordinate
     }
 
 }
