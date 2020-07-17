@@ -275,11 +275,18 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" id="1fx-3Z-CC8">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="6kk-RW-1mz">
-                            <connections>
-                                <segue destination="kxs-l3-Jgd" kind="show" identifier="createVideoSegue" id="WeA-2V-nNk"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="6kk-RW-1mz">
+                                <connections>
+                                    <segue destination="kxs-l3-Jgd" kind="show" identifier="createVideoSegue" id="WeA-2V-nNk"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="MapView" id="I6F-eR-soo">
+                                <connections>
+                                    <segue destination="dh6-O9-bmQ" kind="show" identifier="showMapViewSegue" id="nJZ-in-ElH"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cn9-27-oUX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -354,6 +361,36 @@
             </objects>
             <point key="canvasLocation" x="821.73913043478262" y="1074.1071428571429"/>
         </scene>
+        <!--Location View Controller-->
+        <scene sceneID="Qsk-jM-7gh">
+            <objects>
+                <viewController id="dh6-O9-bmQ" customClass="LocationViewController" customModule="ImageFilterEditor" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gJa-My-r9I">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="bjh-PJ-8fZ">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="bjh-PJ-8fZ" firstAttribute="top" secondItem="0Pb-TR-9bk" secondAttribute="top" id="Cpq-Hx-x4v"/>
+                            <constraint firstItem="0Pb-TR-9bk" firstAttribute="trailing" secondItem="bjh-PJ-8fZ" secondAttribute="trailing" id="cjb-Gg-xf5"/>
+                            <constraint firstItem="0Pb-TR-9bk" firstAttribute="bottom" secondItem="bjh-PJ-8fZ" secondAttribute="bottom" id="n01-Wd-mac"/>
+                            <constraint firstItem="bjh-PJ-8fZ" firstAttribute="leading" secondItem="0Pb-TR-9bk" secondAttribute="leading" id="zZH-UI-4NO"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="0Pb-TR-9bk"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="BUA-QC-5c1"/>
+                    <connections>
+                        <outlet property="mapView" destination="bjh-PJ-8fZ" id="Ggq-Eo-seP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Va-8g-kIp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-932" y="1179"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="EDq-z8-2LQ">
             <objects>
@@ -411,16 +448,16 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <slider opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="5PS-Na-lWO">
-                                                    <rect key="frame" x="59" y="0.0" width="196" height="31"/>
+                                                    <rect key="frame" x="59" y="0.0" width="200" height="31"/>
                                                 </slider>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f0t-Ms-VNf">
-                                                    <rect key="frame" x="268" y="0.0" width="54" height="30"/>
+                                                    <rect key="frame" x="272" y="0.0" width="54" height="30"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PGe-pC-GLq">
-                                                    <rect key="frame" x="337" y="0.0" width="37" height="30"/>
+                                                    <rect key="frame" x="341" y="0.0" width="33" height="30"/>
                                                     <state key="normal" image="play.fill" catalog="system"/>
                                                     <connections>
                                                         <action selector="togglePlayback:" destination="2j1-ca-Ikb" eventType="touchUpInside" id="QlN-8i-Teq"/>
