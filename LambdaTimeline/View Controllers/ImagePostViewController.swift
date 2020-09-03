@@ -105,8 +105,8 @@ class ImagePostViewController: ShiftableViewController {
             print("FatalError")
         }
         presentImagePickerController()
+
     }
-    
     func setImageViewHeight(with aspectRatio: CGFloat) {
         
         imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
