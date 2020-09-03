@@ -8,6 +8,8 @@
 
 import UIKit
 
+// Part 2 firebase
+
 class ImagePostCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
