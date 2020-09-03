@@ -83,8 +83,8 @@ class ImagePostViewController: ShiftableViewController {
         // Vignette
         let vignetteFilter = CIFilter.vignette()
         vignetteFilter.inputImage = sharpenFilter.outputImage?.clampedToExtent()
-        vignetteFilter.intensity = vignetteSlider.value
-        vignetteFilter.radius = vignetteSlider.value
+        vignetteFilter.intensity = vignetteSlider.value * 2
+        vignetteFilter.radius = vignetteSlider.value * 100
         
         // Sepia
         let sepiaFilter = CIFilter.sepiaTone()
