@@ -19,4 +19,8 @@ class Filters {
     let vignetteFilter = CIFilter.vignette()
     let whitePointFilter = CIFilter.whitePointAdjust()
     let monoChromaticFilter = CIFilter.photoEffectMono()
+    
+    
+    
+    
 }
