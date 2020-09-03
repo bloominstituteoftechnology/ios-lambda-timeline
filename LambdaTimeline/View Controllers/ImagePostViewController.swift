@@ -7,62 +7,76 @@
 //
 
 import UIKit
+import CoreImage
 import Photos
 
 class ImagePostViewController: ShiftableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setImageViewHeight(with: 1.0)
-        
-        updateViews()
+
+        if let filtered = filteredImage {
+            imageView.image = filtered
+            setImageViewHeight(with: filtered.ratio)
+            title = post?.title ?? "New Post"
+            chooseImageButton.setTitle("", for: [])
+             editPhoto.setTitleColor(.systemBlue, for: .normal)
+        } else {
+            updateViews()
+        }
     }
     
     func updateViews() {
+        editPhoto.setTitle("Edit Photo", for: .normal)
         
         guard let imageData = imageData,
             let image = UIImage(data: imageData) else {
                 title = "New Post"
+                editPhoto.setTitleColor(.white, for: .normal)
                 return
         }
         
         title = post?.title
-        
+
         setImageViewHeight(with: image.ratio)
         
         imageView.image = image
-        
+
+        editPhoto.setTitleColor(.systemBlue, for: .normal)
+
         chooseImageButton.setTitle("", for: [])
     }
-    
+
     private func presentImagePickerController() {
         
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
             presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
             return
         }
-        
-        let imagePicker = UIImagePickerController()
-        
-        imagePicker.delegate = self
-        
-        imagePicker.sourceType = .photoLibrary
+        DispatchQueue.main.async {
+            let imagePicker = UIImagePickerController()
 
-        present(imagePicker, animated: true, completion: nil)
+            imagePicker.delegate = self
+
+            imagePicker.sourceType = .photoLibrary
+
+            self.present(imagePicker, animated: true, completion: nil)
+        }
     }
     
     @IBAction func createPost(_ sender: Any) {
         
         view.endEditing(true)
         
-        guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
-            let title = titleTextField.text, title != "" else {
-            presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
-            return
+        guard let imageData = filteredImageData?.jpegData(compressionQuality: 0.1) ?? imageView.image?.jpegData(compressionQuality: 0.1),
+            let title = titleTextField.text, title != "", let ratio = imageView.image?.ratio else {
+                presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
+                return
         }
         
-        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
+        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: ratio) { (success) in
             guard success else {
                 DispatchQueue.main.async {
                     self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
@@ -107,6 +121,13 @@ class ImagePostViewController: ShiftableViewController {
         presentImagePickerController()
 
     }
+
+    @IBAction func editPhoto(_ sender: Any) {
+        guard let image = imageView.image else { return }
+        ImagePostViewController.sharedPhoto = image
+    }
+
+
     func setImageViewHeight(with aspectRatio: CGFloat) {
         
         imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
@@ -117,7 +138,11 @@ class ImagePostViewController: ShiftableViewController {
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    var filteredImage: UIImage?
+    var filteredImageData: UIImage?
+    static var sharedPhoto = UIImage()
     
+    @IBOutlet weak var editPhoto: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
@@ -136,6 +161,10 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
         imageView.image = image
+        
+        ImagePostViewController.sharedPhoto = image
+
+         editPhoto.setTitleColor(.systemBlue, for: .normal)
         
         setImageViewHeight(with: image.ratio)
     }

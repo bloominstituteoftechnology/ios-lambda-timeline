@@ -99,7 +99,7 @@ class BlurViewController: UIViewController {
      override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
             if segue.identifier == "saveBlur" {
                 if let imageVC = segue.destination as? ImagePostViewController {
-                imageVC.filteredImage = imageView.image
+                    imageVC.filteredImage = imageView.image
                 }
             }
         }
