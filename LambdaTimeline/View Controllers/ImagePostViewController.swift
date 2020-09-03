@@ -8,15 +8,19 @@
 
 import UIKit
 import Photos
+import CoreImage
+import CoreImage.CIFilterBuiltins
 
 class ImagePostViewController: ShiftableViewController {
     
+    // MARK: - IBOutlets
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
     
+    // MARK: - Properties
     var postController: PostController!
     var post: Post?
     var imageData: Data?
@@ -27,6 +31,14 @@ class ImagePostViewController: ShiftableViewController {
         setImageViewHeight(with: 1.0)
     }
     
+    let blurFilter = CIFilter.gaussianBlur()
+    let falseColorFilter = CIFilter.falseColor()
+    let vignetteFilter = CIFilter.vignette()
+    let whitePointFilter = CIFilter.whitePointAdjust()
+    let monoChromaticFilter = CIFilter.photoEffectMono()
+    
+    
+    // MARK: - Methods
     private func presentImagePickerController() {
         
         guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
@@ -99,6 +111,7 @@ class ImagePostViewController: ShiftableViewController {
     }
 }
 
+// MARK: - Extenstions
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
