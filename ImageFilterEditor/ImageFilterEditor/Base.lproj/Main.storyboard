@@ -30,8 +30,11 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="aLa-ox-5nf">
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="aLa-ox-5nf">
                                         <rect key="frame" x="54" y="0.0" width="342" height="31"/>
+                                        <connections>
+                                            <action selector="blurChanged:" destination="h6G-ge-qXh" eventType="valueChanged" id="flE-fg-ilH"/>
+                                        </connections>
                                     </slider>
                                 </subviews>
                             </stackView>
@@ -44,8 +47,11 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="6uQ-ni-thc">
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="300" translatesAutoresizingMaskIntoConstraints="NO" id="6uQ-ni-thc">
                                         <rect key="frame" x="86.5" y="0.0" width="309.5" height="31"/>
+                                        <connections>
+                                            <action selector="vignetteChanged:" destination="h6G-ge-qXh" eventType="valueChanged" id="ngQ-jm-6Pl"/>
+                                        </connections>
                                     </slider>
                                 </subviews>
                             </stackView>
@@ -65,22 +71,27 @@
                                     </stackView>
                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="AcG-vH-f2a">
                                         <rect key="frame" x="114.5" y="0.0" width="281.5" height="31"/>
+                                        <connections>
+                                            <action selector="whitePointChanged:" destination="h6G-ge-qXh" eventType="valueChanged" id="PcY-rL-DpN"/>
+                                        </connections>
                                     </slider>
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="sDM-JX-Atj">
                                 <rect key="frame" x="10" y="728" width="394" height="30"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="False Color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3TH-2p-nIU">
-                                        <rect key="frame" x="0.0" y="0.0" width="106" height="30"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sharpen" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3TH-2p-nIU">
+                                        <rect key="frame" x="0.0" y="0.0" width="80.5" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a8R-II-8WR">
-                                        <rect key="frame" x="141" y="0.0" width="253" height="30"/>
-                                        <state key="normal" title="Try Me!"/>
-                                    </button>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="20" translatesAutoresizingMaskIntoConstraints="NO" id="5nK-72-fwf">
+                                        <rect key="frame" x="113.5" y="0.0" width="282.5" height="31"/>
+                                        <connections>
+                                            <action selector="falseColorChanged:" destination="h6G-ge-qXh" eventType="valueChanged" id="NxC-aV-ikJ"/>
+                                        </connections>
+                                    </slider>
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="fIW-N9-f3y">
@@ -92,10 +103,12 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5ow-Ju-JdI">
-                                        <rect key="frame" x="166.5" y="0.0" width="227.5" height="30"/>
-                                        <state key="normal" title="Try Me!"/>
-                                    </button>
+                                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="FKj-IM-uj2">
+                                        <rect key="frame" x="164.5" y="0.0" width="231.5" height="31"/>
+                                        <connections>
+                                            <action selector="monoChromaticChanged:" destination="h6G-ge-qXh" eventType="valueChanged" id="N81-k8-IAS"/>
+                                        </connections>
+                                    </slider>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RyJ-DK-ezf">
@@ -128,6 +141,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="A7c-GT-D14"/>
                     </view>
+                    <connections>
+                        <outlet property="blurSlider" destination="aLa-ox-5nf" id="I3N-OP-enh"/>
+                        <outlet property="falseColorSilder" destination="5nK-72-fwf" id="FGZ-UV-dve"/>
+                        <outlet property="imageView" destination="yDb-RU-LIg" id="ghF-8p-Tn5"/>
+                        <outlet property="monoChromaticSlider" destination="FKj-IM-uj2" id="eK7-g7-bmi"/>
+                        <outlet property="vignetteSilder" destination="6uQ-ni-thc" id="bEb-Ln-8H7"/>
+                        <outlet property="whitePointSlider" destination="AcG-vH-f2a" id="GK5-Tn-vJP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BLf-UN-6AQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
