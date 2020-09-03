@@ -8,24 +8,73 @@
 
 import UIKit
 import Photos
+import CoreImage
+import CoreImage.CIFilterBuiltins
+
+enum FilterType {
+    case bokehFilter
+}
 
 class ImagePostViewController: ShiftableViewController {
     
+    //MARK: - IBOutlets -
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    //MARK: - Properties -
     
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    private let bokehFilter = CIFilter.bokehBlur()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setImageViewHeight(with: 1.0)
     }
+    
+    var originalImage: UIImage? {
+            didSet {
+                guard let originalImage = originalImage else {
+                    scaledImage = nil
+                    return
+                }
+                
+                var scaledSize = imageView.bounds.size
+                let scale = imageView.contentScaleFactor
+                scaledSize.width *= scale
+                scaledSize.height *= scale
+                
+                guard let scaledUIImage = originalImage.imageByScaling(toSize: scaledSize) else {
+                    scaledImage = nil
+                    return
+                }
+                
+                scaledImage = CIImage(image: scaledUIImage)
+        }
+    }
+    
+    var scaledImage: CIImage? {
+        didSet {
+            updateImage()
+        }
+    }
+    private func updateImage() {
+        if let scaledImage = scaledImage {
+            imageView.image = image(byFiltering: scaledImage)
+        } else {
+            imageView.image = nil
+        }
+    }
+//    private func image(byFiltering inputImage: CIImage) -> UIImage? {
+//        
+//        
+//        return UIImage(cgImage: )
+//    }
+    
     
     private func presentImagePickerController() {
         
