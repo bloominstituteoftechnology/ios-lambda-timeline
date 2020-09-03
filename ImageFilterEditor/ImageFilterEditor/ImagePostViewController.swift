@@ -57,10 +57,6 @@ class ImagePostViewController: UIViewController {
     }
     
     // MARK: - Methods
-
-
-    //        let monoChromaticFilter = CIFilter.photoEffectMono()
-    
     private func image(byFiltering image: CIImage) -> UIImage? {
         let inputImage = image
         
