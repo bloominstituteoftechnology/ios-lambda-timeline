@@ -214,13 +214,16 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         
         chooseImageButton.setTitle("", for: [])
         
+        if let image = info[.editedImage] as? UIImage {
+            originalImage = image
+        } else if let image = info[.originalImage] as? UIImage {
+            originalImage = image
+        }
+        
         picker.dismiss(animated: true, completion: nil)
         
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
-        imageView.image = image
-        
-        setImageViewHeight(with: image.ratio)
+//        setImageViewHeight(with: image.ratio)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
