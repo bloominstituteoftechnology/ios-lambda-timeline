@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class ImagePostDetailTableViewController: UITableViewController {
     
     @IBOutlet weak var imageView: UIImageView!
@@ -77,6 +76,8 @@ class ImagePostDetailTableViewController: UITableViewController {
         let voicePostAction = UIAlertAction(title: "Voice", style: .default) { _ in
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "AudioCommentController") as! AudioCommentViewController
+            vc.post = self.post
+            vc.delegate = self
             self.navigationController?.pushViewController(vc, animated: true)
         }
         
@@ -94,6 +95,9 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
         
         let comment = post?.comments[indexPath.row + 1]
@@ -103,4 +107,14 @@ class ImagePostDetailTableViewController: UITableViewController {
         
         return cell
     }
+    
+    @IBAction func undwindSegue(_ sender: UIStoryboardSegue){}
+}
+
+extension ImagePostDetailTableViewController: VoiceCommentAddedDelegate {
+    func reloadData() {
+        tableView.reloadData()
+    }
+    
+    
 }

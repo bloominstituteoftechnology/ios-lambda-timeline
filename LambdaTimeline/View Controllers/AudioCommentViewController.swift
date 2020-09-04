@@ -9,6 +9,10 @@
 import UIKit
 import AVFoundation
 
+protocol VoiceCommentAddedDelegate {
+    func reloadData()
+}
+
 class AudioCommentViewController: UIViewController {
     
     // MARK: - IBOutlets
@@ -35,7 +39,9 @@ class AudioCommentViewController: UIViewController {
     var recordingURL: URL?
     var audioRecorder: AVAudioRecorder?
     
-    let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveRecording))
+    let postController = PostController.shared
+    var post: Post!
+    var delegate: VoiceCommentAddedDelegate?
     
     private lazy var timeIntervalFormatter: DateComponentsFormatter = {
         // NOTE: DateComponentFormatter is good for minutes/hours/seconds
@@ -61,8 +67,6 @@ class AudioCommentViewController: UIViewController {
                                                                    weight: .regular)
         
         loadAudio()
-        
-        navigationItem.setRightBarButton(saveButton, animated: true)
     }
     
     func updateViews() {
@@ -242,9 +246,10 @@ class AudioCommentViewController: UIViewController {
         cancelTimer()
     }
     
-    @objc func saveRecording() {
-        let recordedCommentURL = recordingURL
-        
+    @IBAction func saveRecording(_ sender: Any) {
+        let commentUrl = createNewRecordingURL()
+        self.postController.addAudioComment(with: commentUrl, to: &self.post)
+        self.delegate?.reloadData()
     }
     
     // MARK: - Actions

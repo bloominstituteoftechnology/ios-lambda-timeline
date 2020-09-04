@@ -448,6 +448,33 @@
                                     </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CommentCell" id="ocq-KT-PTi">
+                                <rect key="frame" x="0.0" y="188.66666793823242" width="414" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ocq-KT-PTi" id="jBy-3i-k1L">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yem-jW-a8T">
+                                            <rect key="frame" x="20.333333333333336" y="11.666666666666666" width="78.666666666666657" height="20.333333333333336"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XSo-rh-g5d">
+                                            <rect key="frame" x="369" y="11" width="15" height="22"/>
+                                            <state key="normal" image="play.fill" catalog="system"/>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Yem-jW-a8T" firstAttribute="leading" secondItem="jBy-3i-k1L" secondAttribute="leadingMargin" constant="0.33000000000000002" id="LSe-2G-70a"/>
+                                        <constraint firstItem="Yem-jW-a8T" firstAttribute="centerY" secondItem="jBy-3i-k1L" secondAttribute="centerY" id="U8A-Qy-4gy"/>
+                                        <constraint firstAttribute="trailing" secondItem="XSo-rh-g5d" secondAttribute="trailing" constant="30" id="f80-2s-beS"/>
+                                        <constraint firstItem="XSo-rh-g5d" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Yem-jW-a8T" secondAttribute="trailing" constant="8" id="q9c-Sg-Zdb"/>
+                                        <constraint firstItem="XSo-rh-g5d" firstAttribute="centerY" secondItem="jBy-3i-k1L" secondAttribute="centerY" id="wOo-JI-Q1d"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="OyM-8q-Icp" id="hEW-Hv-MJ8"/>
@@ -517,7 +544,7 @@
                                         <rect key="frame" x="0.0" y="30" width="382" height="46"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VEt-iH-1ao">
-                                                <rect key="frame" x="0.0" y="0.0" width="191" height="46"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="127.33333333333333" height="46"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <state key="normal" image="play.fill" catalog="system"/>
                                                 <state key="selected" image="pause.fill" catalog="system"/>
@@ -526,11 +553,19 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JcE-T7-geQ">
-                                                <rect key="frame" x="191" y="0.0" width="191" height="46"/>
+                                                <rect key="frame" x="127.33333333333334" y="0.0" width="127.33333333333334" height="46"/>
                                                 <state key="normal" image="mic.fill" catalog="system"/>
                                                 <state key="selected" image="stop.fill" catalog="system"/>
                                                 <connections>
                                                     <action selector="toggleRecording:" destination="M6X-ct-p04" eventType="touchUpInside" id="YJi-xD-XHd"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="udy-Pb-Y2C">
+                                                <rect key="frame" x="254.66666666666671" y="0.0" width="127.33333333333334" height="46"/>
+                                                <state key="normal" title="Save"/>
+                                                <connections>
+                                                    <action selector="saveRecording:" destination="M6X-ct-p04" eventType="touchUpInside" id="uzg-LA-Q4n"/>
+                                                    <segue destination="kS7-iN-wPh" kind="unwind" unwindAction="undwindSegue:" id="ISX-7W-DEB"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -566,6 +601,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jqT-5b-9Sa" sceneMemberID="firstResponder"/>
+                <exit id="kS7-iN-wPh" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3675" y="-332"/>
         </scene>
