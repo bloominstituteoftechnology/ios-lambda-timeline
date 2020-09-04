@@ -10,7 +10,7 @@ import UIKit
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    var postController: PostController!
+    let postController = PostController.shared
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

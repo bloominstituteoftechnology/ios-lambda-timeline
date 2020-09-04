@@ -18,7 +18,7 @@ class ImagePostDetailTableViewController: UITableViewController {
     @IBOutlet weak var commentButton: UIBarButtonItem!
     
     var post: Post!
-    var postController: PostController!
+    let postController = PostController.shared
     var imageData: Data?
     
     override func viewDidLoad() {

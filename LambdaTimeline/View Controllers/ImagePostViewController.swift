@@ -26,7 +26,7 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var monoChromaticSlider: UISlider!
     
     // MARK: - Properties
-    var postController: PostController!
+    let postController = PostController.shared
     var post: Post?
     var imageData: Data?
     
