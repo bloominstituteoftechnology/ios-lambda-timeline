@@ -45,7 +45,7 @@ class ImagePostDetailTableViewController: UITableViewController {
         let alert = UIAlertController(title: "New Comment", message: "Which kind of comment do you want to create?", preferredStyle: .actionSheet)
         
         // If comment is a Text Post
-        let textPostAction = UIAlertAction(title: "Text", style: .default) { (_) in
+        let textPostAction = UIAlertAction(title: "Text", style: .default) { _ in
             let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
             
             var commentTextField: UITextField?
@@ -73,9 +73,17 @@ class ImagePostDetailTableViewController: UITableViewController {
             self.present(alert, animated: true, completion: nil)
         }
         
+        // If comment is a voice comment
+        let voicePostAction = UIAlertAction(title: "Voice", style: .default) { _ in
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "AudioCommentController") as! AudioCommentViewController
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(textPostAction)
+        alert.addAction(voicePostAction)
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true, completion: nil)

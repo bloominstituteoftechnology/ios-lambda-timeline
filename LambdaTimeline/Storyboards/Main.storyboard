@@ -473,8 +473,108 @@
             </objects>
             <point key="canvasLocation" x="2845" y="-332"/>
         </scene>
+        <!--Audio Comment View Controller-->
+        <scene sceneID="GEH-0f-sOa">
+            <objects>
+                <viewController storyboardIdentifier="AudioCommentController" id="M6X-ct-p04" customClass="AudioCommentViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="seA-mY-31z">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="dWu-Aq-XN1">
+                                <rect key="frame" x="16" y="786" width="382" height="76"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="UNX-9q-dbx">
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="30"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6dK-ad-PdN">
+                                                <rect key="frame" x="0.0" y="0.0" width="55" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="55" id="47x-cD-c5q"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Nz0-l7-hI2">
+                                                <rect key="frame" x="61" y="0.0" width="260" height="31"/>
+                                                <connections>
+                                                    <action selector="updateCurrentTime:" destination="M6X-ct-p04" eventType="valueChanged" id="TuY-b6-e3V"/>
+                                                </connections>
+                                            </slider>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7bh-Qw-5Xq">
+                                                <rect key="frame" x="327" y="0.0" width="55" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="55" id="Xj6-DM-Lvf"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="7AQ-pE-rC8">
+                                        <rect key="frame" x="0.0" y="30" width="382" height="46"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VEt-iH-1ao">
+                                                <rect key="frame" x="0.0" y="0.0" width="191" height="46"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <state key="normal" image="play.fill" catalog="system"/>
+                                                <state key="selected" image="pause.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="togglePlayback:" destination="M6X-ct-p04" eventType="touchUpInside" id="jZp-X1-uGs"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JcE-T7-geQ">
+                                                <rect key="frame" x="191" y="0.0" width="191" height="46"/>
+                                                <state key="normal" image="mic.fill" catalog="system"/>
+                                                <state key="selected" image="stop.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="toggleRecording:" destination="M6X-ct-p04" eventType="touchUpInside" id="YJi-xD-XHd"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="46" id="4Uf-Lb-ygT"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ERP-js-Bn0" customClass="AudioVisualizer" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="414" height="734"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="ERP-js-Bn0" firstAttribute="top" secondItem="IE1-H2-arW" secondAttribute="top" id="3R6-F7-ILF"/>
+                            <constraint firstItem="dWu-Aq-XN1" firstAttribute="leading" secondItem="IE1-H2-arW" secondAttribute="leading" constant="16" id="3gA-ng-Tal"/>
+                            <constraint firstItem="dWu-Aq-XN1" firstAttribute="top" secondItem="ERP-js-Bn0" secondAttribute="bottom" constant="8" id="78G-zM-FvS"/>
+                            <constraint firstItem="IE1-H2-arW" firstAttribute="bottom" secondItem="dWu-Aq-XN1" secondAttribute="bottom" id="GUG-3P-58W"/>
+                            <constraint firstItem="ERP-js-Bn0" firstAttribute="leading" secondItem="IE1-H2-arW" secondAttribute="leading" id="Qiz-ua-Zl7"/>
+                            <constraint firstItem="IE1-H2-arW" firstAttribute="trailing" secondItem="dWu-Aq-XN1" secondAttribute="trailing" constant="16" id="WRT-w6-cjB"/>
+                            <constraint firstItem="ERP-js-Bn0" firstAttribute="trailing" secondItem="IE1-H2-arW" secondAttribute="trailing" id="eju-rC-eR6"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="IE1-H2-arW"/>
+                    </view>
+                    <connections>
+                        <outlet property="audioVisualizer" destination="ERP-js-Bn0" id="KOs-9e-n9q"/>
+                        <outlet property="playButton" destination="VEt-iH-1ao" id="peS-VX-3Nj"/>
+                        <outlet property="recordButton" destination="JcE-T7-geQ" id="9F9-M5-68v"/>
+                        <outlet property="timeElapsedLabel" destination="6dK-ad-PdN" id="KOi-sT-8GS"/>
+                        <outlet property="timeRemainingLabel" destination="7bh-Qw-5Xq" id="htb-0k-uVN"/>
+                        <outlet property="timeSlider" destination="Nz0-l7-hI2" id="cjT-d8-rB3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jqT-5b-9Sa" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3675" y="-332"/>
+        </scene>
     </scenes>
     <resources>
         <image name="house" catalog="system" width="128" height="110"/>
+        <image name="mic.fill" catalog="system" width="108" height="128"/>
+        <image name="pause.fill" catalog="system" width="116" height="128"/>
+        <image name="play.fill" catalog="system" width="116" height="128"/>
+        <image name="stop.fill" catalog="system" width="128" height="113"/>
     </resources>
 </document>
