@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class ImagePostDetailTableViewController: UITableViewController {
     
     @IBOutlet weak var imageView: UIImageView!
@@ -40,7 +41,6 @@ class ImagePostDetailTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     @IBAction func createComment(_ sender: Any) {
-        
         let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
         
         var commentTextField: UITextField?
@@ -55,7 +55,6 @@ class ImagePostDetailTableViewController: UITableViewController {
             guard let commentText = commentTextField?.text else { return }
             
             self.postController.addComment(with: commentText, to: &self.post!)
-            
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
@@ -66,7 +65,8 @@ class ImagePostDetailTableViewController: UITableViewController {
         alert.addAction(addCommentAction)
         alert.addAction(cancelAction)
         
-        present(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
+        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
