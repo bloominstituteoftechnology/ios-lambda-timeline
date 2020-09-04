@@ -35,6 +35,8 @@ class AudioCommentViewController: UIViewController {
     var recordingURL: URL?
     var audioRecorder: AVAudioRecorder?
     
+    let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveRecording))
+    
     private lazy var timeIntervalFormatter: DateComponentsFormatter = {
         // NOTE: DateComponentFormatter is good for minutes/hours/seconds
         // DateComponentsFormatter is not good for milliseconds, use DateFormatter instead)
@@ -59,6 +61,8 @@ class AudioCommentViewController: UIViewController {
                                                                    weight: .regular)
         
         loadAudio()
+        
+        navigationItem.setRightBarButton(saveButton, animated: true)
     }
     
     func updateViews() {
@@ -236,6 +240,11 @@ class AudioCommentViewController: UIViewController {
         audioRecorder?.stop()
         updateViews()
         cancelTimer()
+    }
+    
+    @objc func saveRecording() {
+        let recordedCommentURL = recordingURL
+        
     }
     
     // MARK: - Actions

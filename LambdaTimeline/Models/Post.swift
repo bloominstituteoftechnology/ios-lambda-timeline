@@ -22,14 +22,18 @@ class Post: Equatable {
     var id: String?
     
     var title: String? {
-        return comments.first?.text
+        comments.first?.text
     }
     
-    init(title: String, mediaType: MediaType, ratio: CGFloat?, author: String, timestamp: Date = Date()) {
+    var audioURL: URL? {
+        comments.first?.audioURL
+    }
+    
+    init(title: String, mediaType: MediaType, ratio: CGFloat?, author: String, timestamp: Date = Date(), audioURL: URL?) {
         self.mediaType = mediaType
         self.ratio = ratio
         self.author = author
-        self.comments = [Comment(text: title, author: author)]
+        self.comments = [Comment(text: title, author: author, audioURL: audioURL)]
         self.timestamp = timestamp
         self.id = UUID().uuidString
     }
