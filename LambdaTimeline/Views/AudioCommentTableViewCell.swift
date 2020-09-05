@@ -23,15 +23,18 @@ class AudioCommentTableViewCell: UITableViewCell {
     }
     
     @IBAction func playButtonTapped(_ sender: Any) {
+        print(recordingURL!)
         do {
             try prepareAudioSession()
-            guard let commentURL = self.recordingURL else { return }
-            print(commentURL)
-            audioPlayer = try AVAudioPlayer(contentsOf: commentURL)
-            guard let audioPlayer = audioPlayer else { return }
-            audioPlayer.play()
+            if let recordingURL = recordingURL{
+                print(recordingURL)
+                audioPlayer = try AVAudioPlayer(contentsOf: recordingURL)
+                guard let audioPlayer = self.audioPlayer else { return }
+                audioPlayer.play()
+            }
+            
         } catch {
-            preconditionFailure("Failure to load audio file: \(error)")
+            preconditionFailure("Failure to load audio file at path \(recordingURL!): \(error)")
         }
     }
 }

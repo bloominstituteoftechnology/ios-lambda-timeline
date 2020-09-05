@@ -35,13 +35,12 @@ class AudioCommentViewController: UIViewController {
     }
     
     weak var timer: Timer?
-    
-    var recordingURL: URL?
     var audioRecorder: AVAudioRecorder?
     
     let postController = PostController.shared
     var post: Post!
     var delegate: VoiceCommentAddedDelegate?
+    var recordingURL: URL?
     
     private lazy var timeIntervalFormatter: DateComponentsFormatter = {
         // NOTE: DateComponentFormatter is good for minutes/hours/seconds
@@ -54,18 +53,16 @@ class AudioCommentViewController: UIViewController {
         return formatting
     }()
     
-    
     // MARK: - View Controller Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//         Use a font that won't jump around as values change
+        //         Use a font that won't jump around as values change
         timeElapsedLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeElapsedLabel.font.pointSize,
                                                                  weight: .regular)
         timeRemainingLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeRemainingLabel.font.pointSize,
                                                                    weight: .regular)
-        
         loadAudio()
     }
     
@@ -135,12 +132,12 @@ class AudioCommentViewController: UIViewController {
     }
     
     func loadAudio() {
-//        let songURL = Bundle.main.url(forResource: "piano", withExtension: "mp3")!
-//        do {
-//            audioPlayer = try AVAudioPlayer(contentsOf: songURL)
-//        } catch {
-//            preconditionFailure("Failure to load audio file: \(error)")
-//        }
+        //        let songURL = Bundle.main.url(forResource: "piano", withExtension: "mp3")!
+        //        do {
+        //            audioPlayer = try AVAudioPlayer(contentsOf: songURL)
+        //        } catch {
+        //            preconditionFailure("Failure to load audio file: \(error)")
+        //        }
     }
     
     func prepareAudioSession() throws {
@@ -173,16 +170,32 @@ class AudioCommentViewController: UIViewController {
         audioRecorder?.isRecording ?? false
     }
     
-    func createNewRecordingURL() -> URL {
-        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-
-        let file = documents.appendingPathComponent("AudioComment" + "\(Date())", isDirectory: false).appendingPathExtension("caf")
-        
-        print("recording URL: \(file)")
-
-        return file
-        
-    }
+//    func createNewRecordingURL() -> URL {
+//        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+//
+//        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
+//        let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
+//
+//        print("recording URL: \(file)")
+//
+//        return file
+//    }
+    
+ 
+    
+    //    func getDocumentsDirectory() -> URL
+    //    {
+    //        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+    //        let documentsDirectory = paths[0]
+    //        return documentsDirectory
+    //    }
+    //
+    //    func getFileUrl() -> URL
+    //    {
+    //        let filename = "myRecording.m4a"
+    //        let filePath = getDocumentsDirectory().appendingPathComponent(filename)
+    //        return filePath
+    //    }
     
     
     func requestPermissionOrStartRecording() {
@@ -216,6 +229,14 @@ class AudioCommentViewController: UIViewController {
         }
     }
     
+    func newRecordingURL() -> URL {
+         let fm = FileManager.default
+         let documentsDir = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+
+//         let randomNumber = Int.random(in: 0...1_000_00)
+         
+         return documentsDir.appendingPathComponent("TestRecording").appendingPathExtension("caf")
+     }
     
     func startRecording() {
         do{
@@ -225,7 +246,7 @@ class AudioCommentViewController: UIViewController {
             return
         }
         
-        recordingURL = createNewRecordingURL()
+        recordingURL = newRecordingURL()
         
         let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
         do {
@@ -247,8 +268,8 @@ class AudioCommentViewController: UIViewController {
     }
     
     @IBAction func saveRecording(_ sender: Any) {
-        let commentUrl = createNewRecordingURL()
-        self.postController.addAudioComment(with: commentUrl, to: &self.post)
+        let commentURL = newRecordingURL()
+        self.postController.addAudioComment(with: commentURL, to: &self.post)
         self.delegate?.reloadData()
     }
     
