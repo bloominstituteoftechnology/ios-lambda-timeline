@@ -175,13 +175,13 @@ class AudioCommentViewController: UIViewController {
     
     func createNewRecordingURL() -> URL {
         let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        
-        let name = ISO8601DateFormatter.string(from: Date(), timeZone: .current, formatOptions: .withInternetDateTime)
-        let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
+
+        let file = documents.appendingPathComponent("AudioComment" + "\(Date())", isDirectory: false).appendingPathExtension("caf")
         
         print("recording URL: \(file)")
-        
+
         return file
+        
     }
     
     

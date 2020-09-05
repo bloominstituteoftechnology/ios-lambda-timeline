@@ -95,17 +95,25 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
-        
         let comment = post?.comments[indexPath.row + 1]
         
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author
-        
-        return cell
+        if comment?.audioURL != nil {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCommentCell", for: indexPath) as? AudioCommentTableViewCell else { return UITableViewCell()}
+            let comment = post?.comments[indexPath.row + 1]
+            cell.recordingURL = comment?.audioURL
+            cell.usernameLabel.text = comment?.author
+            return cell
+        } else {
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+            
+            let comment = post?.comments[indexPath.row + 1]
+            
+            cell.textLabel?.text = comment?.text
+            cell.detailTextLabel?.text = comment?.author
+            
+            return cell
+        }
     }
     
     @IBAction func undwindSegue(_ sender: UIStoryboardSegue){}
