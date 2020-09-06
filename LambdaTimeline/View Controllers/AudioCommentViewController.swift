@@ -196,7 +196,7 @@ class AudioCommentViewController: UIViewController {
         let fm = FileManager.default
         let documentsDir = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         
-                 let randomId = Int.random(in: 0...1_000_00)
+        let randomId = Int.random(in: 0...1_000_00)
         
         return documentsDir.appendingPathComponent("TestRecording" + "\(randomId)").appendingPathExtension("caf")
     }
