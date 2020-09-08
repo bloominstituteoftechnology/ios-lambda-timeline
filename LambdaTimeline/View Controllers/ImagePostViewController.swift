@@ -10,6 +10,7 @@ import UIKit
 import CoreImage
 import Photos
 
+
 class ImagePostViewController: ShiftableViewController {
     
     @IBOutlet weak var editPhoto: UIButton!
