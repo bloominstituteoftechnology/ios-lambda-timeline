@@ -74,6 +74,15 @@ At this point, run the app on your simulator or physical device in order to make
 
 1. Integrate your `ImagePostViewController` into the Lambda Timeline Firebase project.
 2. You should be able to create a new post, select a photo, edit the photo, and post it to your Firebase server.
+3. Ensure that the controls to add your filters, adjust them, etc. are only available to the user at the appropriate time. 
+    1. For example, you shouldn't let the user add a filter if they haven't selected an image yet. And it doesn't make sense to show the adjustment UI if they selected a filter that has no adjustment.
+4. You can use a Collection or Table View to select filters with additional detail screens to fine tune amounts of filters (i.e.: Instagram or Apple Photo)
+
+### Part 2: Feature Integration
+
+1. Integrate your `ImagePostViewController` into the Lambda Timeline project.
+2. You should be able to create a new post, select a photo, edit the photo, and create an image post. 
+3. Be sure that you are able to add comments to posts.
 
 ## Go Further
 
