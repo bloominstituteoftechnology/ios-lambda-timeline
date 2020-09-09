@@ -11,6 +11,7 @@ import FirebaseAuth
 
 enum MediaType: String {
     case image
+    case audio
 }
 
 class Post {
@@ -68,7 +69,7 @@ class Post {
     var title: String? {
         return comments.first?.text
     }
-    
+
     static private let mediaKey = "media"
     static private let ratioKey = "ratio"
     static private let mediaTypeKey = "mediaType"

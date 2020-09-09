@@ -166,11 +166,7 @@ class ImagePostViewController: ShiftableViewController {
                 (sharpenController as? SharpenViewController)?.originalImagePost = self.originalImagePost
                 let colorInvertController = tabController.children.first(where: { $0 is ColorInvertViewController })
                 (colorInvertController as? ColorInvertViewController)?.originalImagePost = self.originalImagePost
-                
-                
-                
-                
-                
+
             }
         }
     }
