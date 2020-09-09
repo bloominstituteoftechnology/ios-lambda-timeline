@@ -25,6 +25,8 @@ class AudioRecorderController: UIViewController {
     weak var timer: Timer?
 
     var recordingURL: URL?
+    var savedRecording: URL?
+
     var audioRecorder: AVAudioRecorder?
 
     @IBOutlet var playButton: UIButton!
@@ -188,7 +190,6 @@ class AudioRecorderController: UIViewController {
         let file = documents.appendingPathComponent(name, isDirectory: false).appendingPathExtension("caf")
 
                 print("recording URL: \(file)")
-
         return file
     }
 
@@ -236,7 +237,8 @@ class AudioRecorderController: UIViewController {
         recordingURL = createNewRecordingURL()
 
         //can return option because you can give it invalid format and combinations
-        let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
+       // let format = AVAudioFormat(standardFormatWithSampleRate: 44_100, channels: 1)!
+        let format = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: 44_100, channels: 1, interleaved: false)!
 
         do {
             audioRecorder = try AVAudioRecorder(url: recordingURL!, format: format)
@@ -283,6 +285,18 @@ class AudioRecorderController: UIViewController {
                   requestPermissionOrStartRecording()
               }
     }
+
+    @IBAction func saveRecording(_ sender: Any) {
+
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "saveRecording" {
+            if let tableVC = segue.destination as? RecordedCommentTableViewController, let recording = savedRecording {
+                tableVC.audioRecording = recording
+            }
+        }
+    }
 }
 
 extension AudioRecorderController: AVAudioPlayerDelegate {
@@ -303,6 +317,7 @@ extension AudioRecorderController: AVAudioRecorderDelegate {
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         if let recordingURL = recordingURL {
             audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL)
+            savedRecording = recordingURL
         }
         recordingURL = nil
 
