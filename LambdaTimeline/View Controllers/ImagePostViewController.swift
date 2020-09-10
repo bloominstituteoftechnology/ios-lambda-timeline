@@ -10,6 +10,7 @@ import UIKit
 import Photos
 import CoreImage
 import CoreImage.CIFilterBuiltins
+import MapKit
 
 class ImagePostViewController: ShiftableViewController {
     
@@ -24,6 +25,7 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var vignetteSlider: UISlider!
     @IBOutlet weak var sepiaSlider: UISlider!
     @IBOutlet weak var monoChromaticSlider: UISlider!
+    @IBOutlet weak var locationSwitch: UISwitch!
     
     // MARK: - Properties
     let postController = PostController.shared
@@ -128,6 +130,10 @@ class ImagePostViewController: ShiftableViewController {
         }
     }
     
+    @IBAction func locationSwitchIsOn(_ sender: Any) {
+        
+    }
+    
     @IBAction func createPost(_ sender: Any) {
         
         view.endEditing(true)
@@ -138,7 +144,7 @@ class ImagePostViewController: ShiftableViewController {
                 return
         }
         
-        postController.createImagePost(with: title, image: image, ratio: image.ratio, audioURL: nil)
+        postController.createImagePost(with: title, image: image, ratio: image.ratio, audioURL: nil, location: )
         
         navigationController?.popViewController(animated: true)
     }

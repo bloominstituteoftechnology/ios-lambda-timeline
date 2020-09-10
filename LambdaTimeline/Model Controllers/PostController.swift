@@ -23,7 +23,7 @@ class PostController {
         
         guard let currentUser = currentUser else { return }
         
-        let post = Post(title: title, mediaType: .image(image), ratio: ratio, author: currentUser, audioURL: audioURL)
+        let post = Post(title: title, mediaType: .image(image), ratio: ratio, author: currentUser, audioURL: audioURL, location: location)
         
         posts.append(post)
     }
