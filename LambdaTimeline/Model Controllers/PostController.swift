@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class PostController {
     
@@ -18,7 +19,7 @@ class PostController {
         UserDefaults.standard.string(forKey: "username")
     }
     
-    func createImagePost(with title: String, image: UIImage, ratio: CGFloat?, audioURL: URL?) {
+    func createImagePost(with title: String, image: UIImage, ratio: CGFloat?, audioURL: URL?, location: CLLocationCoordinate2D) {
         
         guard let currentUser = currentUser else { return }
         
