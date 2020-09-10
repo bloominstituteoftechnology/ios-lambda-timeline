@@ -60,12 +60,16 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     let context = CIContext()
-
+    
+    let locationManager = CLLocationManager()
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setImageViewHeight(with: 1.0)
         originalImage = imageView.image
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
     }
     
     // MARK: - Methods
@@ -81,7 +85,7 @@ class ImagePostViewController: ShiftableViewController {
         let sharpenFilter = CIFilter.sharpenLuminance()
         sharpenFilter.inputImage = blurFilter.outputImage?.clampedToExtent()
         sharpenFilter.sharpness =  sharpenSlider.value
-     
+        
         // Vignette
         let vignetteFilter = CIFilter.vignette()
         vignetteFilter.inputImage = sharpenFilter.outputImage?.clampedToExtent()
@@ -130,8 +134,13 @@ class ImagePostViewController: ShiftableViewController {
         }
     }
     
-    @IBAction func locationSwitchIsOn(_ sender: Any) {
-        
+    @IBAction func locationSwitchIsOn(_ sender: UISwitch) {
+        if sender.isOn {
+            if CLLocationManager.locationServicesEnabled() {
+                locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                locationManager.startUpdatingLocation()
+            }
+        }
     }
     
     @IBAction func createPost(_ sender: Any) {
@@ -144,7 +153,9 @@ class ImagePostViewController: ShiftableViewController {
                 return
         }
         
-        postController.createImagePost(with: title, image: image, ratio: image.ratio, audioURL: nil, location: )
+        let newLocation = locationManager.location?.coordinate
+        
+        postController.createImagePost(with: title, image: image, ratio: image.ratio, audioURL: nil, location: newLocation!)
         
         navigationController?.popViewController(animated: true)
     }
@@ -229,10 +240,21 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         picker.dismiss(animated: true, completion: nil)
         
         
-//        setImageViewHeight(with: image.ratio)
+        //        setImageViewHeight(with: image.ratio)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ImagePostViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+      print(error)
     }
 }
