@@ -91,13 +91,16 @@ class ImagePostDetailTableViewController: UITableViewController {
 
         if comment?.audioURL != nil {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCell", for: indexPath) as? AudioCommentTableViewCell else { return UITableViewCell() }
+
+            let comment = post?.comments[indexPath.row + 1]
             cell.recordingURL = comment?.audioURL
             cell.usernameLabel.text = comment?.author
+
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
 
-
+            let comment = post?.comments[indexPath.row + 1]
             cell.textLabel?.text = comment?.text
             cell.detailTextLabel?.text = comment?.author
 

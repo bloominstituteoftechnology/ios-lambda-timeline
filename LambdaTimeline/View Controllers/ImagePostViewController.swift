@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Photos
 import CoreImage
 import CoreImage.CIFilterBuiltins
 
@@ -30,7 +31,7 @@ class ImagePostViewController: ShiftableViewController {
 
     // MARK: - Properties
 
-    var postController = PostController.shared
+    let postController = PostController.shared
     var post: Post?
     var imageData: Data?
     private let context = CIContext()
@@ -69,7 +70,7 @@ class ImagePostViewController: ShiftableViewController {
         super.viewDidLoad()
         
         setImageViewHeight(with: 1.0)
-        updateViews()
+        originalImage = imageView.image
     }
     
     func updateViews() {
@@ -158,51 +159,17 @@ class ImagePostViewController: ShiftableViewController {
         
         view.endEditing(true)
         
-        guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
+        guard let image = imageView.image,
             let title = titleTextField.text, title != "" else {
             presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
             return
         }
-        
-        postController.createImagePost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
-            guard success else {
-                DispatchQueue.main.async {
-                    self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
-                }
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self.navigationController?.popViewController(animated: true)
-            }
-        }
+
+        postController.createImagePost(with: title, image: image, ratio: image.ratio, audioURL: nil)
+        navigationController?.popViewController(animated: true)
     }
 
-//        DispatchQueue.main.async {
-//            let imagePicker = UIImagePickerController()
-//            imagePicker.delegate = self
-//            imagePicker.sourceType = .photoLibrary
-//
-//            self.present(imagePicker, animated: true, completion: nil)
-//        }
-//    }
-
     // MARK: - IBActions
-
-//    @IBAction func createPost(_ sender: Any) {
-//
-//        view.endEditing(true)
-//
-//        guard let image = imageView.image,
-//            let title = titleTextField.text, title != "" else {
-//                presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
-//                return
-//        }
-//
-//        postController.createImagePost(with: title, image: image, ratio: image.ratio, audioURL: nil)
-//
-//        navigationController?.popViewController(animated: true)
-//    }
 
     @IBAction func chooseImage(_ sender: Any) {
         
@@ -268,12 +235,6 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         }
 
         picker.dismiss(animated: true, completion: nil)
-        
-        guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
-        
-        imageView.image = image
-        
-        setImageViewHeight(with: image.ratio)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

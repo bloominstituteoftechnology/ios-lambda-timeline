@@ -169,24 +169,14 @@ class AudioCommentViewController: UIViewController {
         audioRecorder?.isRecording ?? false
     }
 
-//    func createNewRecordingURL() -> URL {
-//        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-//
-//        let file = documents.appendingPathComponent("Audio Comment" + "\(Date())", isDirectory: false).appendingPathExtension("caf")
-//
-//        print("recording URL: \(file)")
-//
-//        return file
-//    }
+    func newRecordingURL() -> URL {
+         let fm = FileManager.default
+         let documentsDir = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
-        func newRecordingURL() -> URL {
-             let fm = FileManager.default
-             let documentsDir = try! fm.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+         let randomId = Int.random(in: 0...1_000_00)
 
-    //         let randomNumber = Int.random(in: 0...1_000_00)
-
-             return documentsDir.appendingPathComponent("TestRecording").appendingPathExtension("caf")
-         }
+         return documentsDir.appendingPathComponent("TestRecording" + "\(randomId)").appendingPathExtension("caf")
+     }
 
     func requestPermissionOrStartRecording() {
         switch AVAudioSession.sharedInstance().recordPermission {
@@ -269,8 +259,7 @@ class AudioCommentViewController: UIViewController {
     }
 
     @IBAction func saveRecording(_ sender: Any) {
-        let commentURL = newRecordingURL()
-        self.postController.addAudioComment(with: commentURL, to: &self.post)
+        self.postController.addAudioComment(with: recordingURL!, to: &self.post)
         self.delegate?.reloadData()
 
         navigationController?.popToRootViewController(animated: true)
@@ -285,9 +274,6 @@ class AudioCommentViewController: UIViewController {
         }
     }
 }
-
-
-
 
 extension AudioCommentViewController: AVAudioPlayerDelegate {
 
@@ -306,19 +292,16 @@ extension AudioCommentViewController: AVAudioPlayerDelegate {
 
 
 extension AudioCommentViewController: AVAudioRecorderDelegate {
-
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         if let recordingURL = recordingURL {
             audioPlayer = try? AVAudioPlayer(contentsOf: recordingURL)
         }
-        recordingURL = nil
         cancelTimer()
     }
 
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
-        if let error = error {
-            print("Audio Recorder Error: \(error)")
+        if let error = error{
+            print("Recoder Player Error: \(error)")
         }
     }
-
 }
