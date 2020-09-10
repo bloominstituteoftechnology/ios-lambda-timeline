@@ -51,3 +51,13 @@ class Post: NSObject {
         return lhs.id == rhs.id
     }
 }
+
+extension Post: MKAnnotation {
+    var coordinate: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: location.latitude, longitude: location.longitude)
+    }
+    
+    var postTitle: String? { title }
+    
+    var subtitle: String? { author }
+}

@@ -124,5 +124,10 @@ extension ImagePostDetailTableViewController: VoiceCommentAddedDelegate {
         tableView.reloadData()
     }
     
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let mapViewVC = segue.destination as? PostLocationViewController else { return }
+        mapViewVC.location = post.location
+        mapViewVC.postTitle = post.title
+        mapViewVC.postAuthor = post.author
+    }
 }
