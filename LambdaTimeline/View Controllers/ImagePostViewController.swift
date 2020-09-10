@@ -8,9 +8,16 @@
 
 import UIKit
 import Photos
+import CoreImage
+import CoreImage.CIFilterBuiltins
 
 class ImagePostViewController: ShiftableViewController {
     
+    @IBOutlet weak var hueSlider: UISlider!
+    @IBOutlet weak var blurSlider: UISlider!
+    @IBOutlet weak var contrastSlider: UISlider!
+    @IBOutlet weak var brightnessSlider: UISlider!
+    @IBOutlet weak var saturationSlider: UISlider!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
@@ -20,6 +27,38 @@ class ImagePostViewController: ShiftableViewController {
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    var originalImage: UIImage? {
+        didSet {
+            guard let originalImage = originalImage else {
+                scaledImage = nil
+                return
+            }
+
+            var scaledSize = imageView.bounds.size
+            let scale = imageView.contentScaleFactor
+
+            scaledSize.width *= scale
+            scaledSize.height *= scale
+
+            guard let scaledUIImage = originalImage.imageByScaling(toSize: scaledSize) else {
+                scaledImage = nil
+                return
+            }
+
+            scaledImage = CIImage(image: scaledUIImage)
+        }
+    }
+
+    var scaledImage: CIImage? {
+        didSet {
+            updateImage()
+        }
+    }
+
+    private let context = CIContext()
+    private let colorControlsFilter = CIFilter.colorControls()
+    private let blurFilter = CIFilter.gaussianBlur()
+    private let hueAdjustment = CIFilter.hueAdjust()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,12 +72,12 @@ class ImagePostViewController: ShiftableViewController {
             presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
             return
         }
-        
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        
-        present(imagePicker, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            self.present(imagePicker, animated: true, completion: nil)
+        }
     }
     
     @IBAction func createPost(_ sender: Any) {
@@ -96,6 +135,54 @@ class ImagePostViewController: ShiftableViewController {
         
         view.layoutSubviews()
     }
+
+    private func image(byFiltering inputImage: CIImage) -> UIImage? {
+        colorControlsFilter.inputImage = inputImage
+        colorControlsFilter.saturation = saturationSlider.value
+        colorControlsFilter.brightness = brightnessSlider.value
+        colorControlsFilter.contrast = contrastSlider.value
+
+        blurFilter.inputImage = colorControlsFilter.outputImage?.clampedToExtent()
+        blurFilter.radius = blurSlider.value
+
+        hueAdjustment.inputImage = blurFilter.outputImage
+        hueAdjustment.angle = hueSlider.value
+
+        guard let outputImage = hueAdjustment.outputImage else { return nil }
+
+        guard let renderedCGImage = context.createCGImage(outputImage, from: inputImage.extent) else { return nil }
+
+        return UIImage(cgImage: renderedCGImage)
+    }
+
+    private func updateImage() {
+        if let scaledImage = scaledImage {
+            imageView.image = image(byFiltering: scaledImage)
+        } else {
+            imageView.image = nil
+        }
+    }
+
+    @IBAction func saturationChanged(_ sender: UISlider) {
+        updateImage()
+    }
+
+    @IBAction func brightnessChanged(_ sender: UISlider) {
+        updateImage()
+    }
+
+    @IBAction func contrastChanged(_ sender: UISlider) {
+        updateImage()
+    }
+    
+    @IBAction func blurChanged(_ sender: UISlider) {
+        updateImage()
+    }
+
+    @IBAction func hueChanged(_ sender: UISlider) {
+        updateImage()
+    }
+
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -103,7 +190,11 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 
         chooseImageButton.setTitle("", for: [])
-        
+        if let images = info[.editedImage] as? UIImage {
+            originalImage = images
+        } else if let images  = info[.originalImage] as? UIImage {
+            originalImage = images
+        }
         picker.dismiss(animated: true, completion: nil)
         
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
