@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import GoogleSignIn
+import AVFoundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -28,8 +29,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.makeKeyAndVisible()
         }
         
+        requestRecordPermission()
         
         return true
+    }
+    
+    private func requestRecordPermission() {
+        let session = AVAudioSession.sharedInstance()
+        session.requestRecordPermission { (granted) in
+            guard granted == true else {
+                print("Error: We need permission to use your phone's microphone")
+                return
+            }
+            do {
+                try session.setCategory(.playAndRecord,
+                                        mode: .default,
+                                        options: [])
+                try session.overrideOutputAudioPort(.speaker)
+                try session.setActive(true, options: [])
+            } catch {
+                print("Error setting up audio session: \(error)")
+            }
+        }
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {

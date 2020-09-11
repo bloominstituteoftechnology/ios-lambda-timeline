@@ -29,7 +29,6 @@ class PostController {
                     NSLog("Error posting image post: \(error)")
                     completion(false)
                 }
-        
                 completion(true)
             }
         }

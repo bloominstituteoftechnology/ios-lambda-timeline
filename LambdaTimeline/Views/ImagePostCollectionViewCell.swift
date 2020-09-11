@@ -14,6 +14,7 @@ class ImagePostCollectionViewCell: UICollectionViewCell {
         super.layoutSubviews()
         setupLabelBackgroundView()
     }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -50,5 +51,7 @@ class ImagePostCollectionViewCell: UICollectionViewCell {
 @IBOutlet weak var titleLabel: UILabel!
 @IBOutlet weak var authorLabel: UILabel!
 @IBOutlet weak var labelBackgroundView: UIView!
+    
+    
 
 }
