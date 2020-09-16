@@ -10,7 +10,7 @@ import UIKit
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    var postController: PostController!
+    let postController = PostController.shared
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -37,7 +37,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     // MARK: UICollectionViewDataSource
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return postController?.posts.count ?? 0
+        return postController.posts.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -85,7 +85,6 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddImagePost" {
             let destinationVC = segue.destination as? ImagePostViewController
-            destinationVC?.postController = postController
             
         } else if segue.identifier == "ViewImagePost" {
             
@@ -93,7 +92,6 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             
             guard let indexPath = collectionView.indexPathsForSelectedItems?.first else { return }
             
-            destinationVC?.postController = postController
             destinationVC?.post = postController.posts[indexPath.row]
         }
     }

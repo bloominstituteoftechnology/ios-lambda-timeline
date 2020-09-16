@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B43785B25017D92009599C4 /* UIImage+Scaling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B43785A25017D92009599C4 /* UIImage+Scaling.swift */; };
+		0B78558E250ACACB0073FC82 /* PostLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B78558D250ACACB0073FC82 /* PostLocationViewController.swift */; };
+		0B8396BF250307D2009DF3ED /* AudioCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8396BE250307D2009DF3ED /* AudioCommentTableViewCell.swift */; };
+		0B88760C2502E5ED00B6AAED /* AudioVisualizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B88760B2502E5ED00B6AAED /* AudioVisualizer.swift */; };
+		0B88760E2502E65600B6AAED /* AudioCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B88760D2502E65600B6AAED /* AudioCommentViewController.swift */; };
 		4646377C216FDE4B00E7FF73 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4646377B216FDE4B00E7FF73 /* AppDelegate.swift */; };
 		46463783216FDE4C00E7FF73 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46463782216FDE4C00E7FF73 /* Assets.xcassets */; };
 		46463786216FDE4C00E7FF73 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46463784216FDE4C00E7FF73 /* LaunchScreen.storyboard */; };
@@ -25,6 +30,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B43785A25017D92009599C4 /* UIImage+Scaling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Scaling.swift"; sourceTree = "<group>"; };
+		0B78558D250ACACB0073FC82 /* PostLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLocationViewController.swift; sourceTree = "<group>"; };
+		0B8396BE250307D2009DF3ED /* AudioCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCommentTableViewCell.swift; sourceTree = "<group>"; };
+		0B88760B2502E5ED00B6AAED /* AudioVisualizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioVisualizer.swift; sourceTree = "<group>"; };
+		0B88760D2502E65600B6AAED /* AudioCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCommentViewController.swift; sourceTree = "<group>"; };
 		46463778216FDE4B00E7FF73 /* LambdaTimeline.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LambdaTimeline.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4646377B216FDE4B00E7FF73 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		46463782216FDE4C00E7FF73 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -90,6 +100,7 @@
 			children = (
 				4646378F216FFD1B00E7FF73 /* Post.swift */,
 				46463791216FFDD900E7FF73 /* Comment.swift */,
+				0B88760B2502E5ED00B6AAED /* AudioVisualizer.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -128,6 +139,8 @@
 				46A0366921700F5100E7FF73 /* PostsCollectionViewController.swift */,
 				46CFE6F421707D0000E7FF73 /* ImagePostViewController.swift */,
 				46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */,
+				0B88760D2502E65600B6AAED /* AudioCommentViewController.swift */,
+				0B78558D250ACACB0073FC82 /* PostLocationViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -136,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				46CFE7022171572600E7FF73 /* ImagePostCollectionViewCell.swift */,
+				0B8396BE250307D2009DF3ED /* AudioCommentTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -145,6 +159,7 @@
 			children = (
 				46D571F62173D6D200E7FF73 /* Extensions */,
 				46CFE6F82170862C00E7FF73 /* ShiftableViewController.swift */,
+				0B43785A25017D92009599C4 /* UIImage+Scaling.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -230,10 +245,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B88760C2502E5ED00B6AAED /* AudioVisualizer.swift in Sources */,
+				0B88760E2502E65600B6AAED /* AudioCommentViewController.swift in Sources */,
+				0B78558E250ACACB0073FC82 /* PostLocationViewController.swift in Sources */,
+				0B8396BF250307D2009DF3ED /* AudioCommentTableViewCell.swift in Sources */,
 				46A0366D2170158900E7FF73 /* SignInViewController.swift in Sources */,
 				46CFE6F92170862C00E7FF73 /* ShiftableViewController.swift in Sources */,
 				4646377C216FDE4B00E7FF73 /* AppDelegate.swift in Sources */,
 				46CFE6F521707D0000E7FF73 /* ImagePostViewController.swift in Sources */,
+				0B43785B25017D92009599C4 /* UIImage+Scaling.swift in Sources */,
 				46463790216FFD1B00E7FF73 /* Post.swift in Sources */,
 				46D571F82173FC2700E7FF73 /* ImagePostDetailTableViewController.swift in Sources */,
 				46CFE7032171572600E7FF73 /* ImagePostCollectionViewCell.swift in Sources */,

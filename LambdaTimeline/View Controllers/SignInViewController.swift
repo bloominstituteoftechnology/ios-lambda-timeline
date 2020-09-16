@@ -38,7 +38,6 @@ class SignInViewController: UIViewController {
         if segue.identifier == "ModalPostsVC" {
             guard let postsVC = (segue.destination as? UINavigationController)?.topViewController as? PostsCollectionViewController else { return }
             
-            postsVC.postController = postController
         }
     }
 }
