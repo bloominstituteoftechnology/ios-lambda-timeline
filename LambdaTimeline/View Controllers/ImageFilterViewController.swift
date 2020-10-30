@@ -146,8 +146,11 @@ class ImageFilterViewController: UIViewController {
                 imageView.image = crystallize(byFiltering: scaledImage)
                 filteredImage = imageView.image
             default:
-                imageView.image = originalImage
-                filteredImage = nil
+                if let filteredImage = filteredImage {
+                    imageView.image = filteredImage
+                } else {
+                    imageView.image = originalImage
+                }
             }
         } else {
             imageView.image = nil
@@ -160,7 +163,11 @@ class ImageFilterViewController: UIViewController {
         slider2.isHidden = true
         slider3.isHidden = true
         activeFilter = .none
-        imageView.image = originalImage
+        if let filteredImage = filteredImage {
+            imageView.image = filteredImage
+        } else {
+            imageView.image = originalImage
+        }
     }
     
     private func hueAdjustSetUp() {
@@ -170,7 +177,11 @@ class ImageFilterViewController: UIViewController {
         slider2.isHidden = true
         slider3.isHidden = true
         activeFilter = .hueAdjust
-        imageView.image = originalImage
+        if let filteredImage = filteredImage {
+            imageView.image = filteredImage
+        } else {
+            imageView.image = originalImage
+        }
         updateImage()
     }
     
@@ -185,7 +196,11 @@ class ImageFilterViewController: UIViewController {
         slider3.maximumValue = 1
         slider3.setValue(1, animated: true)
         activeFilter = .colorMonochrome
-        imageView.image = originalImage
+        if let filteredImage = filteredImage {
+            imageView.image = filteredImage
+        } else {
+            imageView.image = originalImage
+        }
         updateImage()
     }
     
@@ -198,7 +213,11 @@ class ImageFilterViewController: UIViewController {
         slider2.setValue(0.5, animated: true)
         slider3.isHidden = true
         activeFilter = .bumpDistortion
-        imageView.image = originalImage
+        if let filteredImage = filteredImage {
+            imageView.image = filteredImage
+        } else {
+            imageView.image = originalImage
+        }
         updateImage()
     }
     
@@ -211,7 +230,11 @@ class ImageFilterViewController: UIViewController {
         slider2.setValue(.pi, animated: true)
         slider3.isHidden = true
         activeFilter = .twirlDistortion
-        imageView.image = originalImage
+        if let filteredImage = filteredImage {
+            imageView.image = filteredImage
+        } else {
+            imageView.image = originalImage
+        }
         updateImage()
     }
     
@@ -222,7 +245,11 @@ class ImageFilterViewController: UIViewController {
         slider2.isHidden = true
         slider3.isHidden = true
         activeFilter = .crystallize
-        imageView.image = originalImage
+        if let filteredImage = filteredImage {
+            imageView.image = filteredImage
+        } else {
+            imageView.image = originalImage
+        }
         updateImage()
     }
     

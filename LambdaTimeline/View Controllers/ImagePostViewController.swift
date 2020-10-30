@@ -110,6 +110,7 @@ class ImagePostViewController: ShiftableViewController {
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let filterVC = storyBoard.instantiateViewController(withIdentifier: "ImageFilterViewController") as! ImageFilterViewController
         filterVC.originalImage = originalImage
+        filterVC.filteredImage = nil
         filterVC.delegate = self
         self.present(filterVC, animated: true, completion: nil)
     }
