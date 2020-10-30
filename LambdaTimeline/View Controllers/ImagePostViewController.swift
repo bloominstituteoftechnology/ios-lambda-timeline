@@ -11,20 +11,40 @@ import Photos
 
 class ImagePostViewController: ShiftableViewController {
     
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var chooseImageButton: UIButton!
-    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var postButton: UIBarButtonItem!
+    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet private var titleTextField: UITextField!
+    @IBOutlet private var chooseImageButton: UIButton!
+    @IBOutlet private var imageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private var postButton: UIBarButtonItem!
+    
+    @IBOutlet private var filterImageButton: UIButton!
+    @IBOutlet private var filterAgainButton: UIButton!
+    @IBOutlet private var clearFiltersButton: UIButton!
     
     var postController: PostController!
     var post: Post?
     var imageData: Data?
     
+    var originalImage: UIImage? {
+        didSet {
+            filterImageButton.isHidden = false
+        }
+    }
+    var filteredImage: UIImage? {
+        didSet {
+            self.filterImageButton.isHidden = true
+            self.filterAgainButton.isHidden = false
+            self.clearFiltersButton.isHidden = false
+            self.imageView.image = self.filteredImage
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setImageViewHeight(with: 1.0)
+        filterImageButton.isHidden = true
+        filterAgainButton.isHidden = true
+        clearFiltersButton.isHidden = true
     }
     
     private func presentImagePickerController() {
@@ -86,8 +106,29 @@ class ImagePostViewController: ShiftableViewController {
         presentImagePickerController()
     }
     
-    @IBAction func addFilter(_ sender: Any) {
-        
+    @IBAction func filterImage(_ sender: UIButton) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let filterVC = storyBoard.instantiateViewController(withIdentifier: "ImageFilterViewController") as! ImageFilterViewController
+        filterVC.originalImage = originalImage
+        filterVC.delegate = self
+        self.present(filterVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func filterAgain(_ sender: UIButton) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let filterVC = storyBoard.instantiateViewController(withIdentifier: "ImageFilterViewController") as! ImageFilterViewController
+        filterVC.originalImage = originalImage
+        filterVC.filteredImage = filteredImage
+        filterVC.delegate = self
+        self.present(filterVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func clearFilters(_ sender: UIButton) {
+        filteredImage = nil
+        imageView.image = originalImage
+        filterImageButton.isHidden = false
+        filterAgainButton.isHidden = true
+        clearFiltersButton.isHidden = true
     }
     
     func setImageViewHeight(with aspectRatio: CGFloat) {
@@ -109,11 +150,18 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
         imageView.image = image
-        
+        originalImage = image
         setImageViewHeight(with: image.ratio)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ImagePostViewController: FilterVCDelegate {
+    func updateImage(originalImage: UIImage, filteredImage: UIImage?) {
+        self.originalImage = originalImage
+        self.filteredImage = filteredImage
     }
 }

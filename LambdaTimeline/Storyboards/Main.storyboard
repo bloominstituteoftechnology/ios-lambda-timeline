@@ -107,7 +107,7 @@
         <!--Title-->
         <scene sceneID="kP9-yp-I8H">
             <objects>
-                <viewController id="1Aw-4e-BW2" customClass="ImagePostViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImagePostViewController" id="1Aw-4e-BW2" customClass="ImagePostViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CkP-uJ-8jW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -153,9 +153,9 @@
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5qi-Vb-E6V">
-                                        <rect key="frame" x="118.5" y="437" width="161" height="44"/>
+                                        <rect key="frame" x="133.5" y="437" width="131" height="37"/>
                                         <color key="backgroundColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                         <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
                                         <state key="normal" title="Filter Image">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -167,11 +167,11 @@
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <segue destination="iZD-uW-RS0" kind="presentation" identifier="modalFilterSegue" id="0fH-0V-TTz"/>
+                                            <action selector="filterImage:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="Ur3-v1-Wz6"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C72-EC-2HH">
-                                        <rect key="frame" x="132.5" y="548" width="133" height="37"/>
+                                        <rect key="frame" x="132.5" y="541" width="133" height="37"/>
                                         <color key="backgroundColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                         <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
@@ -184,9 +184,12 @@
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="clearFilters:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="ehZ-6Q-o5f"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hbF-09-gLG">
-                                        <rect key="frame" x="135.5" y="496" width="127" height="37"/>
+                                        <rect key="frame" x="135.5" y="489" width="127" height="37"/>
                                         <color key="backgroundColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                         <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
@@ -199,6 +202,9 @@
                                             </userDefinedRuntimeAttribute>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                         </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="filterAgain:" destination="1Aw-4e-BW2" eventType="touchUpInside" id="feK-iU-hcx"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -236,6 +242,9 @@
                     </navigationItem>
                     <connections>
                         <outlet property="chooseImageButton" destination="VxD-cu-jHT" id="KVs-no-MbU"/>
+                        <outlet property="clearFiltersButton" destination="C72-EC-2HH" id="SzZ-Bq-6eS"/>
+                        <outlet property="filterAgainButton" destination="hbF-09-gLG" id="ne0-B1-xgU"/>
+                        <outlet property="filterImageButton" destination="5qi-Vb-E6V" id="L5K-nm-DHc"/>
                         <outlet property="imageHeightConstraint" destination="MHD-wr-Gq9" id="HyG-8g-Ck1"/>
                         <outlet property="imageView" destination="4eK-5F-H5h" id="e7m-c5-Xhz"/>
                         <outlet property="postButton" destination="hsH-Uv-tug" id="ZBn-KE-cpU"/>
@@ -246,52 +255,58 @@
             </objects>
             <point key="canvasLocation" x="2004" y="-922"/>
         </scene>
-        <!--View Controller-->
+        <!--Image Filter View Controller-->
         <scene sceneID="isC-gk-ETa">
             <objects>
-                <viewController id="iZD-uW-RS0" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImageFilterViewController" id="iZD-uW-RS0" customClass="ImageFilterViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zKy-GW-U6n">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vys-al-3dU">
-                                <rect key="frame" x="50" y="20" width="314" height="275"/>
+                                <rect key="frame" x="50" y="64" width="314" height="314"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="275" id="ezf-J7-QDq"/>
+                                    <constraint firstAttribute="height" constant="314" id="ezf-J7-QDq"/>
                                 </constraints>
                             </imageView>
                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BY5-t9-5b1">
-                                <rect key="frame" x="20" y="305" width="374" height="100"/>
+                                <rect key="frame" x="20" y="388" width="374" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="FM4-he-Lep"/>
                                 </constraints>
                             </pickerView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k1b-Bl-gEY">
-                                <rect key="frame" x="50" y="415" width="314" height="21"/>
+                                <rect key="frame" x="50" y="498" width="314" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MDn-cH-2HP">
-                                <rect key="frame" x="50" y="491" width="314" height="21"/>
+                                <rect key="frame" x="50" y="574" width="314" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="NjG-u3-GQ6">
-                                <rect key="frame" x="28" y="517" width="358" height="31"/>
+                                <rect key="frame" x="28" y="600" width="358" height="31"/>
+                                <connections>
+                                    <action selector="slider2Changed:" destination="iZD-uW-RS0" eventType="valueChanged" id="K0i-a0-jqx"/>
+                                </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lJE-Qm-hQf">
-                                <rect key="frame" x="50" y="567" width="314" height="21"/>
+                                <rect key="frame" x="50" y="650" width="314" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Xo0-1j-cHg">
-                                <rect key="frame" x="28" y="593" width="358" height="31"/>
+                                <rect key="frame" x="28" y="676" width="358" height="31"/>
+                                <connections>
+                                    <action selector="slider3Changed:" destination="iZD-uW-RS0" eventType="valueChanged" id="HwY-fM-WlU"/>
+                                </connections>
                             </slider>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AhT-tx-ht1">
-                                <rect key="frame" x="138" y="663" width="138" height="37"/>
+                                <rect key="frame" x="138" y="746" width="138" height="37"/>
                                 <color key="backgroundColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
@@ -304,9 +319,15 @@
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="applyFilters:" destination="iZD-uW-RS0" eventType="touchUpInside" id="2mZ-7i-4ic"/>
+                                </connections>
                             </button>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Mef-qb-dAr">
-                                <rect key="frame" x="28" y="441" width="358" height="31"/>
+                                <rect key="frame" x="28" y="524" width="358" height="31"/>
+                                <connections>
+                                    <action selector="slider1Changed:" destination="iZD-uW-RS0" eventType="valueChanged" id="jJ1-S6-4dg"/>
+                                </connections>
                             </slider>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="nhy-Xg-Vef"/>
@@ -340,10 +361,21 @@
                             <constraint firstItem="vys-al-3dU" firstAttribute="top" secondItem="nhy-Xg-Vef" secondAttribute="top" constant="20" id="xIB-lb-dO1"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="imageHeightConstraint" destination="ezf-J7-QDq" id="HaR-l8-PlV"/>
+                        <outlet property="imageView" destination="vys-al-3dU" id="TNE-ex-vPg"/>
+                        <outlet property="label1" destination="k1b-Bl-gEY" id="pOz-kJ-sWo"/>
+                        <outlet property="label2" destination="MDn-cH-2HP" id="LvU-cD-vgK"/>
+                        <outlet property="label3" destination="lJE-Qm-hQf" id="Dzd-SE-Cbi"/>
+                        <outlet property="pickerView" destination="BY5-t9-5b1" id="1Gl-Fo-yZg"/>
+                        <outlet property="slider1" destination="Mef-qb-dAr" id="ryA-do-438"/>
+                        <outlet property="slider2" destination="NjG-u3-GQ6" id="igb-Hd-3Fw"/>
+                        <outlet property="slider3" destination="Xo0-1j-cHg" id="tj1-tJ-Nvh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wj6-8Z-QMX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2943" y="-1061"/>
+            <point key="canvasLocation" x="2942.0289855072465" y="-1061.3839285714284"/>
         </scene>
         <!--Timeline-->
         <scene sceneID="gdW-Je-ais">
