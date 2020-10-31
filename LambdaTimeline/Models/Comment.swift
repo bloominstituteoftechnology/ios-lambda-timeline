@@ -15,11 +15,13 @@ class Comment: Hashable {
     static private let timestampKey = "timestamp"
     
     let text: String?
+    let audioURL: URL?
     let author: String
     let timestamp: Date
     
-    init(text: String? = nil, author: String, timestamp: Date = Date()) {
+    init(text: String? = nil, audioURL: URL? = nil, author: String, timestamp: Date = Date()) {
         self.text = text
+        self.audioURL = audioURL
         self.author = author
         self.timestamp = timestamp
     }
