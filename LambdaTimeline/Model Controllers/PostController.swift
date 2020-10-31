@@ -33,4 +33,11 @@ class PostController {
         post.comments.append(comment)
 
     }
+    
+    func addAudioComment(with url: URL, to post: inout Post) {
+        guard let currentUser = currentUser else { return }
+        let comment = Comment(audioURL: url, author: currentUser)
+        post.comments.append(comment)
+    }
+    
 }
