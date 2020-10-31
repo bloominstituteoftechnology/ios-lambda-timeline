@@ -10,6 +10,13 @@ import UIKit
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    @IBOutlet var colorMapSlider: UISlider!
+    @IBOutlet var colorInvertSlider: UISlider!
+    @IBOutlet var photoEffectFadeSlider: UISlider!
+    @IBOutlet var colorPosterizeSlider: UISlider!
+    @IBOutlet var photoEffectChromeSlider: UISlider!
+    
+    
     var postController: PostController!
     
     override func viewWillAppear(_ animated: Bool) {
