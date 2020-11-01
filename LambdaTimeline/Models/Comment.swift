@@ -17,11 +17,13 @@ class Comment: Hashable {
     let text: String?
     let author: String
     let timestamp: Date
+    let audioURL: URL?
     
-    init(text: String? = nil, author: String, timestamp: Date = Date()) {
+    init(text: String? = nil, author: String, timestamp: Date = Date(), audioURL: URL? = nil) {
         self.text = text
         self.author = author
         self.timestamp = timestamp
+        self.audioURL = audioURL
     }
     
     func hash(into hasher: inout Hasher) {
