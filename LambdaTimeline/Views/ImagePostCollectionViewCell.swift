@@ -6,6 +6,8 @@
 //  Copyright © 2018 Lambda School. All rights reserved.
 //
 
+//starting project so this is my commit - craig belinfante
+
 import UIKit
 
 class ImagePostCollectionViewCell: UICollectionViewCell {
