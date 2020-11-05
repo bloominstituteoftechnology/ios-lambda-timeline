@@ -27,7 +27,6 @@ class AudioRecorderController: UIViewController {
     
     // MARK: - Properties
     
-    var post: Post!
     weak var delegate: AudioRecorderDelegate!
     
     var audioPlayer: AVAudioPlayer? {
@@ -41,6 +40,7 @@ class AudioRecorderController: UIViewController {
     
     var recordingURL: URL?
     var audioRecorder: AVAudioRecorder?
+    var playOnlyMode: Bool = false
     
     private lazy var timeIntervalFormatter: DateComponentsFormatter = {
         let formatting = DateComponentsFormatter()
@@ -59,7 +59,20 @@ class AudioRecorderController: UIViewController {
         timeRemainingLabel.font = UIFont.monospacedDigitSystemFont(ofSize: timeRemainingLabel.font.pointSize,
                                                                    weight: .regular)
         saveButton.isHidden = true
-//        playButton.isHidden = true
+        playButton.isHidden = true
+        updateViews()
+        setPlayOnly()
+    }
+    
+    private func setPlayOnly() {
+        if playOnlyMode {
+            loadAudio()
+            recordButton.isHidden = true
+            playButton.isHidden = false
+            saveButton.isHidden = false
+            saveButton.setTitle("Return to Post", for: .normal)
+            updateViews()
+        }
     }
     
     private func updateViews() {
@@ -129,6 +142,15 @@ class AudioRecorderController: UIViewController {
     
     var isPlaying: Bool {
         audioPlayer?.isPlaying ?? false
+    }
+    
+    func loadAudio() {
+        guard let recordingURL = recordingURL else { return }
+        do {
+            audioPlayer = try AVAudioPlayer(contentsOf: recordingURL)
+        } catch {
+            preconditionFailure("Failure to load audio file: \(error)")
+        }
     }
     
     func prepareAudioSession() throws {
@@ -258,6 +280,10 @@ class AudioRecorderController: UIViewController {
     }
 
     @IBAction func saveAudioButton(_ sender: UIButton) {
+        guard !playOnlyMode else {
+            dismiss(animated: true, completion: nil)
+            return
+        }
         guard let recordingURL = recordingURL else { return }
         delegate.updatePostWithAudioComment(url: recordingURL)
         dismiss(animated: true, completion: nil)

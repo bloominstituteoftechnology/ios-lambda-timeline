@@ -65,7 +65,6 @@ class ImagePostDetailTableViewController: UITableViewController {
             let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let audioVC = storyBoard.instantiateViewController(withIdentifier: "AudioRecorderController") as! AudioRecorderController
             audioVC.delegate = self
-            audioVC.post = self.post
             self.present(audioVC, animated: true, completion: nil)
         }
         
@@ -83,14 +82,30 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
-        
         let comment = post?.comments[indexPath.row + 1]
-        
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author
-        
-        return cell
+        if comment?.audioURL == nil {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+            cell.textLabel?.text = comment?.text
+            cell.detailTextLabel?.text = comment?.author
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCommentCell", for: indexPath)
+            cell.textLabel?.text = comment?.author
+            return cell
+        }
+    }
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "playCommentSegue" {
+            if let audioVC = segue.destination as? AudioRecorderController,
+               let indexPath = tableView.indexPathForSelectedRow {
+                let comment = post.comments[indexPath.row + 1]
+                audioVC.playOnlyMode = true
+                audioVC.recordingURL = comment.audioURL
+            }
+        }
     }
 }
 
