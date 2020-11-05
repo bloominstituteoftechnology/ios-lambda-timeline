@@ -17,6 +17,8 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
     
+    @IBOutlet weak var brightnessSlider: UISlider!
+    
     var postController: PostController!
     var post: Post?
     var imageData: Data?
