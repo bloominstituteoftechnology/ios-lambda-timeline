@@ -41,7 +41,7 @@ class ImagePostDetailTableViewController: UITableViewController {
     
     @IBAction func createComment(_ sender: Any) {
         
-        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below or choose Audio Comment", preferredStyle: .alert)
         
         var commentTextField: UITextField?
         
@@ -50,7 +50,7 @@ class ImagePostDetailTableViewController: UITableViewController {
             commentTextField = textField
         }
         
-        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
+        let addCommentAction = UIAlertAction(title: "Add Text Comment", style: .default) { (_) in
             
             guard let commentText = commentTextField?.text else { return }
             
@@ -61,9 +61,18 @@ class ImagePostDetailTableViewController: UITableViewController {
             }
         }
         
+        let addAudioCommentAction = UIAlertAction(title: "Add Audio Comment", style: .default) { (_) in
+            let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let audioVC = storyBoard.instantiateViewController(withIdentifier: "AudioRecorderController") as! AudioRecorderController
+            audioVC.delegate = self
+            audioVC.post = self.post
+            self.present(audioVC, animated: true, completion: nil)
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(addCommentAction)
+        alert.addAction(addAudioCommentAction)
         alert.addAction(cancelAction)
         
         present(alert, animated: true, completion: nil)
@@ -82,5 +91,12 @@ class ImagePostDetailTableViewController: UITableViewController {
         cell.detailTextLabel?.text = comment?.author
         
         return cell
+    }
+}
+
+extension ImagePostDetailTableViewController: AudioRecorderDelegate {
+    func updatePostWithAudioComment(url: URL) {
+        postController.addAudioComment(with: url, to: &post)
+        tableView.reloadData()
     }
 }

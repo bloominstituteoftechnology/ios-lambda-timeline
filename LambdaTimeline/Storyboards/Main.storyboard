@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="xB5-Kl-GM2">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -555,9 +554,129 @@
             </objects>
             <point key="canvasLocation" x="2943.1999999999998" y="-253.2233883058471"/>
         </scene>
+        <!--Audio Recorder Controller-->
+        <scene sceneID="xVV-SO-r1o">
+            <objects>
+                <viewController storyboardIdentifier="AudioRecorderController" id="fDQ-w3-0A3" customClass="AudioRecorderController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Dok-JD-3yp">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="J03-Eh-4ed">
+                                <rect key="frame" x="16" y="754" width="382" height="108"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Adn-tq-9WL">
+                                        <rect key="frame" x="0.0" y="0.0" width="382" height="30"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f6y-kJ-pne">
+                                                <rect key="frame" x="0.0" y="0.0" width="55" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="55" id="dwM-Ws-vsQ"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ySB-2Y-7VM">
+                                                <rect key="frame" x="61" y="0.0" width="260" height="31"/>
+                                                <color key="tintColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            </slider>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WJ7-EB-hDV">
+                                                <rect key="frame" x="327" y="0.0" width="55" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="55" id="vjg-yU-ZSV"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="8dx-TV-bAl">
+                                        <rect key="frame" x="0.0" y="62" width="382" height="46"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yXS-rC-Azk">
+                                                <rect key="frame" x="0.0" y="0.0" width="191" height="46"/>
+                                                <color key="tintColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" image="play.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="togglePlayback:" destination="fDQ-w3-0A3" eventType="touchUpInside" id="Ibe-Hj-evA"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qW7-g7-c8U">
+                                                <rect key="frame" x="191" y="0.0" width="191" height="46"/>
+                                                <color key="tintColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" image="mic.fill" catalog="system"/>
+                                                <connections>
+                                                    <action selector="toggleRecording:" destination="fDQ-w3-0A3" eventType="touchUpInside" id="wfh-R6-SJA"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="46" id="8Lk-fW-0wc"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="POY-1K-MBJ" customClass="AudioVisualizer" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="414" height="702"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g64-fx-cag">
+                                        <rect key="frame" x="123.5" y="20" width="167" height="28"/>
+                                        <color key="backgroundColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
+                                        <state key="normal" title="Save Audio Comment">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="saveAudioButton:" destination="fDQ-w3-0A3" eventType="touchUpInside" id="W7w-6A-Cfr"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="g64-fx-cag" firstAttribute="top" secondItem="POY-1K-MBJ" secondAttribute="top" constant="20" id="izt-lK-ZfO"/>
+                                    <constraint firstItem="g64-fx-cag" firstAttribute="centerX" secondItem="POY-1K-MBJ" secondAttribute="centerX" id="vhZ-rQ-LiA"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="cBm-gK-HhB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="POY-1K-MBJ" firstAttribute="leading" secondItem="cBm-gK-HhB" secondAttribute="leading" id="9Td-cV-u8P"/>
+                            <constraint firstItem="cBm-gK-HhB" firstAttribute="bottom" secondItem="J03-Eh-4ed" secondAttribute="bottom" id="NNj-Ur-GAe"/>
+                            <constraint firstItem="cBm-gK-HhB" firstAttribute="trailing" secondItem="POY-1K-MBJ" secondAttribute="trailing" id="QGJ-C8-JRY"/>
+                            <constraint firstItem="J03-Eh-4ed" firstAttribute="leading" secondItem="cBm-gK-HhB" secondAttribute="leading" constant="16" id="bv2-Gq-mrg"/>
+                            <constraint firstItem="POY-1K-MBJ" firstAttribute="top" secondItem="cBm-gK-HhB" secondAttribute="top" id="nx3-Tu-Xes"/>
+                            <constraint firstItem="cBm-gK-HhB" firstAttribute="trailing" secondItem="J03-Eh-4ed" secondAttribute="trailing" constant="16" id="sb2-W7-RNf"/>
+                            <constraint firstItem="J03-Eh-4ed" firstAttribute="top" secondItem="POY-1K-MBJ" secondAttribute="bottom" constant="8" id="v8m-Ka-gRW"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="audioVisualizer" destination="POY-1K-MBJ" id="DLq-Y6-afR"/>
+                        <outlet property="playButton" destination="yXS-rC-Azk" id="9Fe-mo-ygm"/>
+                        <outlet property="recordButton" destination="qW7-g7-c8U" id="fMq-oZ-wqO"/>
+                        <outlet property="saveButton" destination="g64-fx-cag" id="tac-lW-kzl"/>
+                        <outlet property="timeElapsedLabel" destination="f6y-kJ-pne" id="Qzj-5J-yog"/>
+                        <outlet property="timeRemainingLabel" destination="WJ7-EB-hDV" id="G64-1F-Zve"/>
+                        <outlet property="timeSlider" destination="ySB-2Y-7VM" id="ZcJ-vB-LnO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tEI-yN-tnM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3948" y="-254"/>
+        </scene>
     </scenes>
     <resources>
         <image name="house" catalog="system" width="128" height="106"/>
+        <image name="mic.fill" catalog="system" width="108" height="128"/>
+        <image name="play.fill" catalog="system" width="116" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
