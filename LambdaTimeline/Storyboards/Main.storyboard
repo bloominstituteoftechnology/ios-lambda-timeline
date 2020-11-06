@@ -147,6 +147,11 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" id="KIg-ug-6aP">
+                        <barButtonItem key="leftBarButtonItem" title="Geotagging Off" id="K1S-S1-XjW">
+                            <connections>
+                                <action selector="toggleGeotagging:" destination="hPa-Td-5A3" id="2MC-QP-3tD"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="cyx-zg-Fv9">
                             <connections>
                                 <action selector="addPost:" destination="hPa-Td-5A3" id="7DV-9r-fSz"/>
@@ -154,6 +159,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="geotagButton" destination="K1S-S1-XjW" id="pLT-iw-ItS"/>
                         <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="jaI-fq-Woc"/>
                         <segue destination="OyM-8q-Icp" kind="show" identifier="ViewImagePost" id="hhs-es-AdQ"/>
                         <segue destination="f5S-XN-oly" kind="show" identifier="AddVideoPost" id="LWO-dN-wFX"/>

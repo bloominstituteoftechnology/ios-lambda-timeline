@@ -11,12 +11,24 @@ import AVKit
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    @IBOutlet weak var geotagButton: UIBarButtonItem!
+    
     var postController: PostController!
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         collectionView.reloadData()
+    }
+    
+    @IBAction func toggleGeotagging(_ sender: UIBarButtonItem) {
+        if postController.geotagging {
+            postController.geotagging = false
+            geotagButton.title = "Geotagging Off"
+        } else {
+            postController.geotagging = true
+            geotagButton.title = "Geotagging On"
+        }
     }
     
     @IBAction func addPost(_ sender: Any) {
@@ -91,7 +103,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             let destinationVC = segue.destination as? ImagePostViewController
             destinationVC?.postController = postController
             
-        } else if segue.identifier == "ViewImagePost" {
+        } else if segue.identifier == "ViewImagePost" { // Also serves Video Posts
             let destinationVC = segue.destination as? ImagePostDetailTableViewController
             guard let indexPath = collectionView.indexPathsForSelectedItems?.first else { return }
             destinationVC?.postController = postController

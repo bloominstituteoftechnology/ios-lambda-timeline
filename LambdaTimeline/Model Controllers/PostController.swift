@@ -7,27 +7,29 @@
 //
 
 import UIKit
+import MapKit
 
 class PostController {
     
     var posts: [Post] = []
+    var geotagging: Bool = false
     
     var currentUser: String? {
         UserDefaults.standard.string(forKey: "username")
     }
     
-    func createImagePost(with title: String, image: UIImage, ratio: CGFloat?) {
+    func createImagePost(with title: String, image: UIImage, ratio: CGFloat?, geotag: CLLocationCoordinate2D?) {
         
         guard let currentUser = currentUser else { return }
         
-        let post = Post(title: title, mediaType: .image(image), ratio: ratio, author: currentUser)
+        let post = Post(title: title, mediaType: .image(image), ratio: ratio, geotag: geotag, author: currentUser)
         
         posts.append(post)
     }
     
-    func createVideoPost(with title: String, videoURL: URL) {
+    func createVideoPost(with title: String, videoURL: URL, geotag: CLLocationCoordinate2D?) {
         guard let currentUser = currentUser else { return }
-        let post = Post(title: title, mediaType: .video(videoURL), author: currentUser)
+        let post = Post(title: title, mediaType: .video(videoURL), geotag: geotag, author: currentUser)
         posts.append(post)
     }
     

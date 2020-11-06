@@ -147,7 +147,7 @@ class CameraViewController: UIViewController {
         
         let postVideoAction = UIAlertAction(title: "Post Video", style: .default) { (_) in
             guard let title = titleTextField?.text else { return }
-            self.postController.createVideoPost(with: title, videoURL: outputUrl)
+            self.postController.createVideoPost(with: title, videoURL: outputUrl, geotag: nil)
             self.navigationController?.popViewController(animated: true)
         }
         
