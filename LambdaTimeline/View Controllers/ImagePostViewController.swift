@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import MapKit
 
 class ImagePostViewController: ShiftableViewController {
     
@@ -16,16 +17,30 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    @IBOutlet weak var locationSwitch: UISwitch!
     
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
         setImageViewHeight(with: 1.0)
     }
+    
+    @IBAction func locationSwitchOn(_ sender: UISwitch) {
+        if sender.isOn {
+            if CLLocationManager.locationServicesEnabled() {
+                locationManager.desiredAccuracy = kCLLocationAccuracyBest
+                locationManager.startUpdatingLocation()
+            }
+        }
+    }
+    
+    
     
     private func presentImagePickerController() {
         
@@ -47,11 +62,13 @@ class ImagePostViewController: ShiftableViewController {
         
         guard let image = imageView.image,
             let title = titleTextField.text, title != "" else {
-                presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
+                presentInformationalAlertController(title: "Oops", message: "Make sure that you add a photo and a caption before posting.")
                 return
         }
+        
+        let currentLocation = locationManager.location?.coordinate
 
-        postController.createImagePost(with: title, image: image, ratio: image.ratio, audioURL: nil)
+        postController.createImagePost(with: title, image: image, ratio: image.ratio, audioURL: nil, location: currentLocation!)
         
         navigationController?.popViewController(animated: true)
     }
@@ -116,4 +133,12 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+}
+
+extension ImagePostViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locationValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        print("locations - \(locationValue.latitude) \(locationValue.longitude)")
+    }
+    
 }
