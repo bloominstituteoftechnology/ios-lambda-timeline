@@ -103,6 +103,110 @@
             </objects>
             <point key="canvasLocation" x="2156" y="108.39580209895054"/>
         </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="oKO-yQ-YkA">
+            <objects>
+                <viewController storyboardIdentifier="CameraViewController" id="f5S-XN-oly" customClass="CameraViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EeG-ld-hHr">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JBm-ho-i4c" customClass="CameraPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="of7-h4-gz3">
+                                        <rect key="frame" x="82" y="668" width="250" height="50"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Neq-Go-rcT">
+                                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                <color key="backgroundColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="qx1-pi-VbA"/>
+                                                    <constraint firstAttribute="width" constant="50" id="wIp-cC-nMZ"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" image="play.fill" catalog="system"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="10"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="playButtonPressed:" destination="f5S-XN-oly" eventType="touchUpInside" id="hHU-uO-ri1"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y2W-S8-ixk">
+                                                <rect key="frame" x="100" y="0.0" width="50" height="50"/>
+                                                <color key="backgroundColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="50" id="M59-HA-FzI"/>
+                                                    <constraint firstAttribute="height" constant="50" id="ftp-Ni-NN2"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" image="record.circle.fill" catalog="system"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="10"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="recordButtonPressed:" destination="f5S-XN-oly" eventType="touchUpInside" id="7Mw-oG-xjO"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hDE-mu-HIR">
+                                                <rect key="frame" x="200" y="0.0" width="50" height="50"/>
+                                                <color key="backgroundColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="ZV9-e8-89W"/>
+                                                    <constraint firstAttribute="width" constant="50" id="vKI-3O-3yd"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <state key="normal" image="paperplane.circle.fill" catalog="system"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="10"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="saveButtonPressed:" destination="f5S-XN-oly" eventType="touchUpInside" id="4pE-N1-wwr"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.47684186699999997" green="0.50480759139999998" blue="1" alpha="0.75267551369863017" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="of7-h4-gz3" firstAttribute="centerX" secondItem="JBm-ho-i4c" secondAttribute="centerX" id="LFO-ZC-S59"/>
+                                    <constraint firstAttribute="bottom" secondItem="of7-h4-gz3" secondAttribute="bottom" constant="100" id="qPh-cf-ce3"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="UZB-TH-bGQ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="JBm-ho-i4c" firstAttribute="leading" secondItem="UZB-TH-bGQ" secondAttribute="leading" id="4RH-DU-rZ7"/>
+                            <constraint firstItem="UZB-TH-bGQ" firstAttribute="trailing" secondItem="JBm-ho-i4c" secondAttribute="trailing" id="KdN-P5-kSh"/>
+                            <constraint firstItem="UZB-TH-bGQ" firstAttribute="bottom" secondItem="JBm-ho-i4c" secondAttribute="bottom" id="hHZ-Af-2S4"/>
+                            <constraint firstItem="JBm-ho-i4c" firstAttribute="top" secondItem="UZB-TH-bGQ" secondAttribute="top" id="vpm-MT-I3I"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="cameraView" destination="JBm-ho-i4c" id="XNr-Hg-TN6"/>
+                        <outlet property="playButton" destination="Neq-Go-rcT" id="FPd-2L-Cpa"/>
+                        <outlet property="recordButton" destination="Y2W-S8-ixk" id="tuM-um-BfL"/>
+                        <outlet property="saveButton" destination="hDE-mu-HIR" id="0Ka-a3-ujq"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zXD-jS-dHl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2942" y="517"/>
+        </scene>
         <!--Title-->
         <scene sceneID="kP9-yp-I8H">
             <objects>
@@ -702,7 +806,9 @@
     <resources>
         <image name="house" catalog="system" width="128" height="106"/>
         <image name="mic.fill" catalog="system" width="108" height="128"/>
+        <image name="paperplane.circle.fill" catalog="system" width="128" height="121"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
+        <image name="record.circle.fill" catalog="system" width="128" height="121"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
