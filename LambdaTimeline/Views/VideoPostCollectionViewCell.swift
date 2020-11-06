@@ -11,13 +11,11 @@ import AVKit
 
 class VideoPostCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet private var playerView: VideoPlayerView!
+    @IBOutlet weak var playerView: VideoPlayerView!
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var authorLabel: UILabel!
     @IBOutlet private var labelBackgroundView: UIView!
-    
-    lazy private var player = AVPlayer()
-    
+        
     var post: Post? {
         didSet {
             updateViews()
@@ -31,17 +29,15 @@ class VideoPostCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        playerView = nil
         titleLabel.text = ""
         authorLabel.text = ""
     }
     
     func updateViews() {
-        guard let post = post,
-            case MediaType.video(let videoURL) = post.mediaType else { return }
+        guard let post = post else { return }
         titleLabel.text = post.title
         authorLabel.text = post.author
-        playMovie(url: videoURL)
+        playMovie()
     }
     
     func setupLabelBackgroundView() {
@@ -49,21 +45,17 @@ class VideoPostCollectionViewCell: UICollectionViewCell {
         labelBackgroundView.clipsToBounds = true
     }
     
-    func playMovie(url: URL) {
-        player.replaceCurrentItem(with: AVPlayerItem(url: url))
-        
-        if playerView == nil {
-            playerView = VideoPlayerView()
-            playerView.player = player
-            
-            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(playRecording(_:)))
-            playerView.addGestureRecognizer(tapGesture)
-        }
+    func playMovie() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(playRecording(_:)))
+        playerView.addGestureRecognizer(tapGesture)
     }
     
     @IBAction func playRecording(_ sender: UITapGestureRecognizer) {
-        guard sender.state == .ended else { return }
-        player.play()
+        guard sender.state == .ended,
+              let post = post else { return }
+        if case MediaType.video(let videoURL) = post.mediaType {
+            playerView.player?.replaceCurrentItem(with: AVPlayerItem(url: videoURL))
+            playerView.player?.play()
+        }
     }
-    
 }

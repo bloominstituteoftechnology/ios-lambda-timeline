@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVKit
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -58,6 +59,10 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         case .video:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPostCell", for: indexPath) as? VideoPostCollectionViewCell else { return UICollectionViewCell() }
             cell.post = post
+            if case MediaType.video(let videoURL) = post.mediaType {
+                let player = AVPlayer(url: videoURL)
+                cell.playerView.player = player
+            }
             return cell
         }
     }
@@ -102,6 +107,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             
             destinationVC?.postController = postController
             destinationVC?.post = postController.posts[indexPath.row]
+        } else if segue.identifier == "AddVideoPost" {
+            let destinationVC = segue.destination as? CameraViewController
+            destinationVC?.postController = postController
         }
     }
 }
