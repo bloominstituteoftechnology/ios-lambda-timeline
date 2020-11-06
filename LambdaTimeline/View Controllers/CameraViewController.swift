@@ -23,9 +23,11 @@ class CameraViewController: UIViewController {
     @IBOutlet private var cameraView: CameraPreviewView!
     
     var outputURL: URL?
+    var postController: PostController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        requestPermissionForCamera()
         cameraView.videoPlayerLayer.videoGravity = .resizeAspectFill
         playButton.isHidden = true
         saveButton.isHidden = true
@@ -133,6 +135,33 @@ class CameraViewController: UIViewController {
     }
     
     @IBAction func saveButtonPressed(_ sender: UIButton) {
+        guard let outputUrl = outputURL else { return }
+        let alert = UIAlertController(title: "Add a Title", message: "Please title your video.", preferredStyle: .alert)
+        
+        var titleTextField: UITextField?
+        
+        alert.addTextField { (textField) in
+            textField.placeholder = "Title:"
+            titleTextField = textField
+        }
+        
+        let postVideoAction = UIAlertAction(title: "Post Video", style: .default) { (_) in
+            guard let title = titleTextField?.text else { return }
+            self.postController.createVideoPost(with: title, videoURL: outputUrl)
+            self.navigationController?.popViewController(animated: true)
+        }
+        
+        let returnToPostsAction = UIAlertAction(title: "Return to Posts", style: .default) { (_) in
+            self.navigationController?.popViewController(animated: true)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(postVideoAction)
+        alert.addAction(returnToPostsAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     @IBAction func recordButtonPressed(_ sender: Any) {
@@ -156,6 +185,29 @@ class CameraViewController: UIViewController {
     
     private func updateViews() {
         recordButton.isSelected = fileOutput.isRecording
+    }
+    
+    private func requestPermissionForCamera() {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .notDetermined:
+            requestVideoPermission()
+        case .restricted:
+            preconditionFailure("Video is disabled. Please review device restrictions.")
+        case .denied:
+            preconditionFailure("Tell the user they can't use the app without giving permission via Settings > Privacy > Video")
+        case .authorized:
+            break
+        @unknown default:
+            preconditionFailure("A new status code was added that we need to handle")
+        }
+    }
+    
+    private func requestVideoPermission() {
+        AVCaptureDevice.requestAccess(for: .video) { isGranted in
+            guard isGranted else {
+                preconditionFailure("UI: Tell the user to enable permissions for Video/Camera")
+            }
+        }
     }
 }
 

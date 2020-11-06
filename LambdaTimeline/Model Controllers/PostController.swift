@@ -25,6 +25,12 @@ class PostController {
         posts.append(post)
     }
     
+    func createVideoPost(with title: String, videoURL: URL) {
+        guard let currentUser = currentUser else { return }
+        let post = Post(title: title, mediaType: .video(videoURL), author: currentUser)
+        posts.append(post)
+    }
+    
     func addComment(with text: String, to post: inout Post) {
         
         guard let currentUser = currentUser else { return }

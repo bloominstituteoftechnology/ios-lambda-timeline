@@ -10,6 +10,7 @@ import UIKit
 
 enum MediaType {
     case image(UIImage)
+    case video(URL)
 }
 
 class Post: Equatable {
@@ -25,7 +26,7 @@ class Post: Equatable {
         return comments.first?.text
     }
     
-    init(title: String, mediaType: MediaType, ratio: CGFloat?, author: String, timestamp: Date = Date()) {
+    init(title: String, mediaType: MediaType, ratio: CGFloat? = nil, author: String, timestamp: Date = Date()) {
         self.mediaType = mediaType
         self.ratio = ratio
         self.author = author
