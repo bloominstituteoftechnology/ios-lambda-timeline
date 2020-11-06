@@ -205,11 +205,11 @@
             </objects>
             <point key="canvasLocation" x="2004" y="-922"/>
         </scene>
-        <!--Timeline-->
+        <!--Back to Home-->
         <scene sceneID="gdW-Je-ais">
             <objects>
                 <navigationController storyboardIdentifier="NavigationController" automaticallyAdjustsScrollViewInsets="NO" id="ohA-ly-1Yj" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Timeline" image="house" catalog="system" id="g2L-gG-myC"/>
+                    <tabBarItem key="tabBarItem" title="Back to Home" image="house" catalog="system" id="g2L-gG-myC"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="XJY-X6-mEY">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -224,7 +224,7 @@
             </objects>
             <point key="canvasLocation" x="2126.0869565217395" y="107.8125"/>
         </scene>
-        <!--Post Location View Controller-->
+        <!--Item-->
         <scene sceneID="9Xj-BW-F4S">
             <objects>
                 <viewController id="r0T-us-uLe" customClass="PostLocationViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
@@ -233,7 +233,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Gf4-f6-CUj">
-                                <rect key="frame" x="0.0" y="92" width="414" height="770"/>
+                                <rect key="frame" x="0.0" y="92" width="414" height="721"/>
                                 <connections>
                                     <outlet property="delegate" destination="r0T-us-uLe" id="Q4U-Ro-i17"/>
                                 </connections>
@@ -248,13 +248,16 @@
                             <constraint firstItem="Gf4-f6-CUj" firstAttribute="top" secondItem="FDf-hO-Sd1" secondAttribute="top" constant="48" id="sh5-er-rfS"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Item" id="ISD-Ah-2zQ"/>
+                    <navigationItem key="navigationItem" id="6Co-eE-4El"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="mapView" destination="Gf4-f6-CUj" id="DEZ-3w-RZ7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SyH-ib-HbP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2124.6376811594205" y="767.41071428571422"/>
+            <point key="canvasLocation" x="1391" y="836"/>
         </scene>
         <!--Sign In View Controller-->
         <scene sceneID="O74-ZV-TrY">
@@ -508,11 +511,14 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="acU-HA-MVQ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="PzU-uL-d8l">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
                         <segue destination="ohA-ly-1Yj" kind="relationship" relationship="viewControllers" id="JIl-8A-ikA"/>
+                        <segue destination="r0T-us-uLe" kind="relationship" relationship="viewControllers" id="gte-kN-QZg"/>
+                        <segue destination="r0T-us-uLe" kind="show" id="H5W-Z6-6z3"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YYS-5F-zTy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -520,27 +526,15 @@
             <point key="canvasLocation" x="1215.9420289855072" y="107.8125"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="gte-kN-QZg"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="house" catalog="system" width="128" height="106"/>
         <image name="mic.fill" catalog="system" width="108" height="128"/>
         <image name="pause.fill" catalog="system" width="116" height="128"/>
         <image name="play.fill" catalog="system" width="116" height="128"/>
         <image name="stop.fill" catalog="system" width="128" height="113"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
