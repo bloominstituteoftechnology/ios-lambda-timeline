@@ -56,13 +56,11 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
             cell.post = post
             return cell
-        case .video:
+        case .video(let videoURL):
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VideoPostCell", for: indexPath) as? VideoPostCollectionViewCell else { return UICollectionViewCell() }
             cell.post = post
-            if case MediaType.video(let videoURL) = post.mediaType {
-                let player = AVPlayer(url: videoURL)
-                cell.playerView.player = player
-            }
+            let player = AVPlayer(url: videoURL)
+            cell.playerView.player = player
             return cell
         }
     }
@@ -82,31 +80,23 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        
-        if let cell = cell as? ImagePostCollectionViewCell,
-            cell.imageView.image != nil {
             self.performSegue(withIdentifier: "ViewImagePost", sender: nil)
-        }
     }
     
     
     // MARK: - Navigation
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "AddImagePost" {
             let destinationVC = segue.destination as? ImagePostViewController
             destinationVC?.postController = postController
             
         } else if segue.identifier == "ViewImagePost" {
-            
             let destinationVC = segue.destination as? ImagePostDetailTableViewController
-            
             guard let indexPath = collectionView.indexPathsForSelectedItems?.first else { return }
-            
             destinationVC?.postController = postController
             destinationVC?.post = postController.posts[indexPath.row]
+            
         } else if segue.identifier == "AddVideoPost" {
             let destinationVC = segue.destination as? CameraViewController
             destinationVC?.postController = postController

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVKit
 
 class ImagePostDetailTableViewController: UITableViewController {
     
@@ -18,7 +19,6 @@ class ImagePostDetailTableViewController: UITableViewController {
     
     var post: Post!
     var postController: PostController!
-    var imageData: Data?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,13 +26,15 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     func updateViews() {
-        
-        guard case MediaType.image(let image) = post.mediaType else { return }
-        
+        switch post.mediaType {
+        case .image(let image):
+            imageView.image = image
+        case .video(let videoURL):
+            imageFromVideo(url: videoURL, at: 0) { image in
+                self.imageView.image = image
+            }
+        }
         title = post?.title
-        
-        imageView.image = image
-        
         titleLabel.text = post.title
         authorLabel.text = post.author
     }
@@ -104,6 +106,29 @@ class ImagePostDetailTableViewController: UITableViewController {
                 let comment = post.comments[indexPath.row + 1]
                 audioVC.playOnlyMode = true
                 audioVC.recordingURL = comment.audioURL
+            }
+        }
+    }
+    
+    private func imageFromVideo(url: URL, at time: TimeInterval, completion: @escaping (UIImage?) -> Void) {
+        DispatchQueue.global(qos: .background).async {
+            let asset = AVURLAsset(url: url)
+
+            let assetIG = AVAssetImageGenerator(asset: asset)
+            assetIG.appliesPreferredTrackTransform = true
+            assetIG.apertureMode = AVAssetImageGenerator.ApertureMode.encodedPixels
+
+            let cmTime = CMTime(seconds: time, preferredTimescale: 60)
+            let thumbnailImageRef: CGImage
+            do {
+                thumbnailImageRef = try assetIG.copyCGImage(at: cmTime, actualTime: nil)
+            } catch let error {
+                print("Error: \(error)")
+                return completion(nil)
+            }
+
+            DispatchQueue.main.async {
+                completion(UIImage(cgImage: thumbnailImageRef))
             }
         }
     }
