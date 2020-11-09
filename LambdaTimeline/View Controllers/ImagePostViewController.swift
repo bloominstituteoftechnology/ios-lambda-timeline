@@ -17,6 +17,20 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
     
+    @IBOutlet weak var addFilterLabel: UILabel!
+    @IBOutlet weak var clearFiltersButton: UIButton!
+    @IBOutlet weak var toneButton: UIButton!
+    @IBOutlet weak var vintageButton: UIButton!
+    @IBOutlet weak var noirButton: UIButton!
+    @IBOutlet weak var tweakLabel: UILabel!
+    @IBOutlet weak var exposureLabel: UILabel!
+    @IBOutlet weak var exposureSlider: UISlider!
+    @IBOutlet weak var vibranceLabel: UILabel!
+    @IBOutlet weak var vibranceSlider: UISlider!
+    @IBOutlet weak var posterizeLabel: UILabel!
+    @IBOutlet weak var posterizeSlider: UISlider!
+    
+    
     var postController: PostController!
     var post: Post?
     var imageData: Data?
@@ -25,6 +39,19 @@ class ImagePostViewController: ShiftableViewController {
         super.viewDidLoad()
         
         setImageViewHeight(with: 1.0)
+        
+        addFilterLabel.isHidden = true
+        clearFiltersButton.isHidden = true
+        toneButton.isHidden = true
+        vintageButton.isHidden = true
+        noirButton.isHidden = true
+        tweakLabel.isHidden = true
+        exposureLabel.isHidden = true
+        exposureSlider.isHidden = true
+        vibranceLabel.isHidden = true
+        vibranceSlider.isHidden = true
+        posterizeLabel.isHidden = true
+        posterizeSlider.isHidden = true
     }
     
     private func presentImagePickerController() {
@@ -34,11 +61,13 @@ class ImagePostViewController: ShiftableViewController {
             return
         }
         
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        
-        present(imagePicker, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            
+            self.present(imagePicker, animated: true, completion: nil)
+        }
     }
     
     @IBAction func createPost(_ sender: Any) {
@@ -96,6 +125,34 @@ class ImagePostViewController: ShiftableViewController {
         
         view.layoutSubviews()
     }
+    
+    @IBAction func clearFilters(_ sender: Any) {
+        
+    }
+    
+    @IBAction func addToneFilter(_ sender: Any) {
+        
+    }
+    
+    @IBAction func addVintageFilter(_ sender: Any) {
+        
+    }
+    
+    @IBAction func addNoirFilter(_ sender: Any) {
+        
+    }
+    
+    @IBAction func expoureChanged(_ sender: Any) {
+        
+    }
+    
+    @IBAction func vibranceChanged(_ sender: Any) {
+        
+    }
+    
+    @IBAction func posterizeChanged(_ sender: Any) {
+        
+    }
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -111,6 +168,19 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         imageView.image = image
         
         setImageViewHeight(with: image.ratio)
+        
+        addFilterLabel.isHidden = false
+        clearFiltersButton.isHidden = false
+        toneButton.isHidden = false
+        vintageButton.isHidden = false
+        noirButton.isHidden = false
+        tweakLabel.isHidden = false
+        exposureLabel.isHidden = false
+        exposureSlider.isHidden = false
+        vibranceLabel.isHidden = false
+        vibranceSlider.isHidden = false
+        posterizeLabel.isHidden = false
+        posterizeSlider.isHidden = false
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
