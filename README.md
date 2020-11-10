@@ -33,18 +33,17 @@ Integrate your custom recording UI into the Lambda Timeline project.
     <details><summary>Comment Suggestions</summary>
     <p>
 
-    - In the `Comment` object, change the `text`'s type to be an optional string, and create a new `audioURL: URL?` variable as well. Modify the `dictionaryRepresentation` and the `init?(dictionary: ...)` to accomodate the `audioURL` and the now optional `text` string.
+    - In the `Comment` object, change the `text`'s type to be an optional string, and create a new `audioURL: URL?` variable as well. Modify the `init?(text: ...)` to accomodate the `audioURL` and the now optional `text` string.
 
     </p>
     </details>
 
-2. In the `PostController`, add the ability to create a comment with the audio data that the user records, and save it to Firebase Storage, add the comment to its post, then save the post to the Firebase Database.
+2. In the `PostController`, add the ability to create a comment with the audio data that the user records and add the comment to its post.
 
     <details><summary>Post Controller Suggestions</summary>
     <p>
 
       - Create a separate function to create a comment with the audio data.
-      - You can very easily change the `store` method to instead take in data and a `StorageReference` to accomodate for storing both Post media data and now the audio data as well.
 
     </p>
     </details>
@@ -61,17 +60,7 @@ Integrate your custom recording UI into the Lambda Timeline project.
     
 4. Create a new table view cell that displays at least the author of the audio comment, and a button to play the comment.
 
-5. In the `ImagePostDetailViewController`, make sure that the audio is being fetched for the audio comments. You are welcome to fetch the audio for each audio comment however you want.
-
-    <details><summary>Audio Fetching Suggestions</summary>
-    <p>
-
-      - You can implement the audio fetching similar to the way images are fetched on the `PostsCollectionViewController` by using operations, an operation queue, and a new cache. Make a new subclass of `ConcurrentOperation` that fetches audio using the comment's `audioURL` and a `URLSessionDataTask`.
-
-    </p>
-    </details>
-
-6. Implement the ability to play a comment's audio from the new audio comment cell from step 2. As you implement the `AVAudioRecorder`, remember to add a microphone usage description in the Info.plist.
+5. Implement the ability to play a comment's audio from the new audio comment cell from step 2. As you implement the `AVAudioRecorder`, remember to add a microphone usage description in the Info.plist.
 
 ## Go Further
 
