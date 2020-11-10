@@ -31,6 +31,5 @@ class PostController {
         
         let comment = Comment(text: text, author: currentUser)
         post.comments.append(comment)
-
     }
 }

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CoreImage
+import CoreImage.CIFilterBuiltins
 import Photos
 
 class ImagePostViewController: ShiftableViewController {
@@ -17,14 +19,77 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
     
+    @IBOutlet weak var addFilterLabel: UILabel!
+    @IBOutlet weak var clearFiltersButton: UIButton!
+    @IBOutlet weak var toneButton: UIButton!
+    @IBOutlet weak var vintageButton: UIButton!
+    @IBOutlet weak var noirButton: UIButton!
+    @IBOutlet weak var tweakLabel: UILabel!
+    @IBOutlet weak var exposureLabel: UILabel!
+    @IBOutlet weak var exposureSlider: UISlider!
+    @IBOutlet weak var vibranceLabel: UILabel!
+    @IBOutlet weak var vibranceSlider: UISlider!
+    @IBOutlet weak var posterizeLabel: UILabel!
+    @IBOutlet weak var posterizeSlider: UISlider!
+    
+    private let context = CIContext()
+    private let toneFilter = CIFilter.sRGBToneCurveToLinear()
+    private let vintageFilter = CIFilter.photoEffectInstant()
+    private let noirFilter = CIFilter.photoEffectNoir()
+    private let exposureFilter = CIFilter.exposureAdjust()
+    private let vibranceFilter = CIFilter.vibrance()
+    private let posterizeFilter = CIFilter.colorPosterize()
+    
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    var selectedFilter: CIFilter?
+    
+    var originalImage: UIImage? {
+        didSet {
+            guard let originalImage = originalImage else {
+                scaledImage = nil
+                return
+            }
+            
+            var scaledSize = imageView.bounds.size
+            let scale = imageView.contentScaleFactor
+            
+            scaledSize.width *= scale
+            scaledSize.height *= scale
+            
+            guard let scaledUIImage = originalImage.imageByScaling(toSize: scaledSize) else {
+                scaledImage = nil
+                return
+            }
+            
+            scaledImage = CIImage(image: scaledUIImage)
+        }
+    }
+    
+    var scaledImage: CIImage? {
+        didSet {
+            updateImage()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setImageViewHeight(with: 1.0)
+        
+        addFilterLabel.isHidden = true
+        clearFiltersButton.isHidden = true
+        toneButton.isHidden = true
+        vintageButton.isHidden = true
+        noirButton.isHidden = true
+        tweakLabel.isHidden = true
+        exposureLabel.isHidden = true
+        exposureSlider.isHidden = true
+        vibranceLabel.isHidden = true
+        vibranceSlider.isHidden = true
+        posterizeLabel.isHidden = true
+        posterizeSlider.isHidden = true
     }
     
     private func presentImagePickerController() {
@@ -34,11 +99,51 @@ class ImagePostViewController: ShiftableViewController {
             return
         }
         
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
+        DispatchQueue.main.async {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            
+            self.present(imagePicker, animated: true, completion: nil)
+        }
+    }
+    
+    private func image(byFiltering inputImage: CIImage, withFilter inputFilter: CIFilter?) -> UIImage? {
+        var output = inputImage
         
-        present(imagePicker, animated: true, completion: nil)
+        if inputFilter == toneFilter {
+            toneFilter.inputImage = inputImage
+            output = toneFilter.outputImage!
+        } else if inputFilter == vintageFilter {
+            vintageFilter.inputImage = inputImage
+            output = vintageFilter.outputImage!
+        } else if inputFilter == noirFilter {
+            noirFilter.inputImage = inputImage
+            output = noirFilter.outputImage!
+        }
+        
+        exposureFilter.inputImage = output
+        exposureFilter.ev = exposureSlider.value
+        
+        vibranceFilter.inputImage = exposureFilter.outputImage
+        vibranceFilter.amount = vibranceSlider.value
+        
+        posterizeFilter.inputImage = vibranceFilter.outputImage
+        posterizeFilter.levels = posterizeSlider.value
+        
+        guard let outputImage = posterizeFilter.outputImage else { return nil }
+        
+        guard let renderedCGImage = context.createCGImage(outputImage, from: inputImage.extent) else { return nil }
+        
+        return UIImage(cgImage: renderedCGImage)
+    }
+    
+    private func updateImage() {
+        if let scaledImage = scaledImage {
+            imageView.image = image(byFiltering: scaledImage, withFilter: selectedFilter)
+        } else {
+            imageView.image = nil
+        }
     }
     
     @IBAction func createPost(_ sender: Any) {
@@ -96,6 +201,41 @@ class ImagePostViewController: ShiftableViewController {
         
         view.layoutSubviews()
     }
+    
+    @IBAction func clearFilters(_ sender: Any) {
+        selectedFilter = nil
+        exposureSlider.value = 0.5
+        vibranceSlider.value = 0
+        posterizeSlider.value = 50
+        updateImage()
+    }
+    
+    @IBAction func addToneFilter(_ sender: Any) {
+        selectedFilter = toneFilter
+        updateImage()
+    }
+    
+    @IBAction func addVintageFilter(_ sender: Any) {
+        selectedFilter = vintageFilter
+        updateImage()
+    }
+    
+    @IBAction func addNoirFilter(_ sender: Any) {
+        selectedFilter = noirFilter
+        updateImage()
+    }
+    
+    @IBAction func expoureChanged(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func vibranceChanged(_ sender: Any) {
+        updateImage()
+    }
+    
+    @IBAction func posterizeChanged(_ sender: Any) {
+        updateImage()
+    }
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -111,6 +251,25 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         imageView.image = image
         
         setImageViewHeight(with: image.ratio)
+        
+        addFilterLabel.isHidden = false
+        clearFiltersButton.isHidden = false
+        toneButton.isHidden = false
+        vintageButton.isHidden = false
+        noirButton.isHidden = false
+        tweakLabel.isHidden = false
+        exposureLabel.isHidden = false
+        exposureSlider.isHidden = false
+        vibranceLabel.isHidden = false
+        vibranceSlider.isHidden = false
+        posterizeLabel.isHidden = false
+        posterizeSlider.isHidden = false
+        
+        exposureSlider.value = 0.5
+        vibranceSlider.value = 0
+        posterizeSlider.value = 50
+        
+        originalImage = imageView.image
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
