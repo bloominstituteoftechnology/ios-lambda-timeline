@@ -22,6 +22,9 @@
 		46D1A48924FF0BC4008D1CA7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46D1A48824FF0BC4008D1CA7 /* Main.storyboard */; };
 		46D571F52173CF3E00E7FF73 /* UIImage+Ratio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D571F42173CF3E00E7FF73 /* UIImage+Ratio.swift */; };
 		46D571F82173FC2700E7FF73 /* ImagePostDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */; };
+		61311928255BC5500054D457 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61311927255BC5500054D457 /* CameraViewController.swift */; };
+		6131192B255BC5C40054D457 /* CameraPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6131192A255BC5C40054D457 /* CameraPreviewView.swift */; };
+		6131192E255BC5E90054D457 /* VideoPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6131192D255BC5E90054D457 /* VideoPlayerView.swift */; };
 		61736DE3255A83D1005112BE /* AudioRecorderController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61736DE2255A83D1005112BE /* AudioRecorderController.swift */; };
 		61736DE6255A8485005112BE /* AudioVisualizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61736DE5255A8485005112BE /* AudioVisualizer.swift */; };
 /* End PBXBuildFile section */
@@ -44,6 +47,9 @@
 		46D1A48824FF0BC4008D1CA7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		46D571F42173CF3E00E7FF73 /* UIImage+Ratio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Ratio.swift"; sourceTree = "<group>"; };
 		46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePostDetailTableViewController.swift; sourceTree = "<group>"; };
+		61311927255BC5500054D457 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		6131192A255BC5C40054D457 /* CameraPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPreviewView.swift; sourceTree = "<group>"; };
+		6131192D255BC5E90054D457 /* VideoPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerView.swift; sourceTree = "<group>"; };
 		61736DE2255A83D1005112BE /* AudioRecorderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRecorderController.swift; sourceTree = "<group>"; };
 		61736DE5255A8485005112BE /* AudioVisualizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioVisualizer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -133,6 +139,7 @@
 				46CFE6F421707D0000E7FF73 /* ImagePostViewController.swift */,
 				46D571F72173FC2700E7FF73 /* ImagePostDetailTableViewController.swift */,
 				61736DE2255A83D1005112BE /* AudioRecorderController.swift */,
+				61311927255BC5500054D457 /* CameraViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -142,6 +149,8 @@
 			children = (
 				46CFE7022171572600E7FF73 /* ImagePostCollectionViewCell.swift */,
 				61736DE5255A8485005112BE /* AudioVisualizer.swift */,
+				6131192A255BC5C40054D457 /* CameraPreviewView.swift */,
+				6131192D255BC5E90054D457 /* VideoPlayerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -240,14 +249,17 @@
 				46A0366D2170158900E7FF73 /* SignInViewController.swift in Sources */,
 				46CFE6F92170862C00E7FF73 /* ShiftableViewController.swift in Sources */,
 				4646377C216FDE4B00E7FF73 /* AppDelegate.swift in Sources */,
+				6131192E255BC5E90054D457 /* VideoPlayerView.swift in Sources */,
 				46CFE6F521707D0000E7FF73 /* ImagePostViewController.swift in Sources */,
 				46463790216FFD1B00E7FF73 /* Post.swift in Sources */,
+				6131192B255BC5C40054D457 /* CameraPreviewView.swift in Sources */,
 				61736DE3255A83D1005112BE /* AudioRecorderController.swift in Sources */,
 				46D571F82173FC2700E7FF73 /* ImagePostDetailTableViewController.swift in Sources */,
 				46CFE7032171572600E7FF73 /* ImagePostCollectionViewCell.swift in Sources */,
 				4646379C2170091A00E7FF73 /* PostController.swift in Sources */,
 				46A0366A21700F5100E7FF73 /* PostsCollectionViewController.swift in Sources */,
 				46D571F52173CF3E00E7FF73 /* UIImage+Ratio.swift in Sources */,
+				61311928255BC5500054D457 /* CameraViewController.swift in Sources */,
 				46463792216FFDD900E7FF73 /* Comment.swift in Sources */,
 				46CFE6F721707FA600E7FF73 /* UIViewController+InformationalAlert.swift in Sources */,
 			);
@@ -388,14 +400,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 5Z7LY99W88;
 				INFOPLIST_FILE = "$(SRCROOT)/LambdaTimeline/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.LambdaSchool.LambdaTimeline;
+				PRODUCT_BUNDLE_IDENTIFIER = com.omihek.LambdaTimeline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -407,14 +419,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 5Z7LY99W88;
 				INFOPLIST_FILE = "$(SRCROOT)/LambdaTimeline/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.LambdaSchool.LambdaTimeline;
+				PRODUCT_BUNDLE_IDENTIFIER = com.omihek.LambdaTimeline;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

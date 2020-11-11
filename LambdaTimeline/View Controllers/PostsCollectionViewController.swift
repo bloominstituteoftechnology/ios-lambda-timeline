@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -26,12 +27,48 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
         
+        let videoPostAction = UIAlertAction(title: "Video", style: .default) { (_) in
+            self.requestPermissionAndShowCamera()
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(imagePostAction)
+        alert.addAction(videoPostAction)
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func requestPermissionAndShowCamera() {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .notDetermined:
+            requestVideoPermission()
+        case .restricted:
+            preconditionFailure("Video is disabled, please review device restrictions.")
+        case .denied:
+            preconditionFailure("Hey you denied us, but you can't use the app without giving permission, so go in Settings and make this right.")
+        case .authorized:
+            showCamera()
+        @unknown default:
+            preconditionFailure("A new status code was added that we need to handle.")
+        }
+    }
+    
+    private func requestVideoPermission() {
+        AVCaptureDevice.requestAccess(for: .video) { (isGranted) in
+            guard isGranted else {
+                preconditionFailure("UI: Tell the user to enable permissions for Video/Camera")
+            }
+            
+            DispatchQueue.main.async {
+                self.showCamera()
+            }
+        }
+    }
+    
+    private func showCamera() {
+        performSegue(withIdentifier: "AddVideoPost", sender: self)
     }
     
     // MARK: UICollectionViewDataSource
@@ -44,15 +81,11 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         
         let post = postController.posts[indexPath.row]
         
-        switch post.mediaType {
-            
-        case .image:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
-            
-            cell.post = post
-            
-            return cell
-        }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
+        
+        cell.post = post
+        
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -86,15 +119,16 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         if segue.identifier == "AddImagePost" {
             let destinationVC = segue.destination as? ImagePostViewController
             destinationVC?.postController = postController
-            
         } else if segue.identifier == "ViewImagePost" {
-            
             let destinationVC = segue.destination as? ImagePostDetailTableViewController
             
             guard let indexPath = collectionView.indexPathsForSelectedItems?.first else { return }
             
             destinationVC?.postController = postController
             destinationVC?.post = postController.posts[indexPath.row]
+        } else if segue.identifier == "AddVideoPost" {
+            let destinationVC = segue.destination as? CameraViewController
+            destinationVC?.postController = postController
         }
     }
 }

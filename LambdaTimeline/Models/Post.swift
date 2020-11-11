@@ -10,11 +10,13 @@ import UIKit
 
 enum MediaType {
     case image(UIImage)
+    case video(URL)
 }
 
 class Post: Equatable {
     
     let mediaType: MediaType
+    let frameCap: UIImage?
     let author: String
     let timestamp: Date
     var comments: [Comment]
@@ -25,8 +27,9 @@ class Post: Equatable {
         return comments.first?.text
     }
     
-    init(title: String, mediaType: MediaType, ratio: CGFloat?, author: String, timestamp: Date = Date()) {
+    init(title: String, mediaType: MediaType, frameCap: UIImage? = nil, ratio: CGFloat?, author: String, timestamp: Date = Date()) {
         self.mediaType = mediaType
+        self.frameCap = frameCap
         self.ratio = ratio
         self.author = author
         self.comments = [Comment(text: title, author: author)]

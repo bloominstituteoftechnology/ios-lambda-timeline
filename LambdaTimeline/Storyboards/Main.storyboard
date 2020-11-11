@@ -98,6 +98,7 @@
                     <connections>
                         <segue destination="1Aw-4e-BW2" kind="show" identifier="AddImagePost" id="jaI-fq-Woc"/>
                         <segue destination="OyM-8q-Icp" kind="show" identifier="ViewImagePost" id="hhs-es-AdQ"/>
+                        <segue destination="kjw-3o-FZQ" kind="show" identifier="AddVideoPost" id="Mty-Ka-XLd"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WRz-lg-pQU" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -576,7 +577,7 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZgW-s0-dRh" customClass="AudioVisualizer" customModule="SimpleAudioRecorder" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZgW-s0-dRh" customClass="AudioVisualizer" customModule="LambdaTimeline" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="88" width="390" height="638"/>
                             </view>
                         </subviews>
@@ -613,8 +614,61 @@
             </objects>
             <point key="canvasLocation" x="3728" y="-254"/>
         </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="Bod-Da-Wt6">
+            <objects>
+                <viewController storyboardIdentifier="CameraView" id="kjw-3o-FZQ" customClass="CameraViewController" customModule="VideoRecorder" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xlf-5b-LhD">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S7K-Zp-bIt" customClass="CameraPreviewView" customModule="VideoRecorder" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lJi-KN-cAO">
+                                <rect key="frame" x="145" y="650" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="4oK-si-KEQ"/>
+                                    <constraint firstAttribute="width" constant="100" id="Mz5-mT-l8z"/>
+                                </constraints>
+                                <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" image="Record"/>
+                                <state key="selected" image="Stop"/>
+                                <connections>
+                                    <action selector="recordButtonPressed:" destination="kjw-3o-FZQ" eventType="touchUpInside" id="Ibq-WK-XzO"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="IAx-wp-Ss1"/>
+                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="S7K-Zp-bIt" firstAttribute="top" secondItem="xlf-5b-LhD" secondAttribute="top" id="88A-dO-Mb5"/>
+                            <constraint firstItem="S7K-Zp-bIt" firstAttribute="trailing" secondItem="IAx-wp-Ss1" secondAttribute="trailing" id="9zY-jp-eQW"/>
+                            <constraint firstItem="S7K-Zp-bIt" firstAttribute="top" secondItem="xlf-5b-LhD" secondAttribute="top" id="Gsu-wx-jQq"/>
+                            <constraint firstItem="S7K-Zp-bIt" firstAttribute="leading" secondItem="IAx-wp-Ss1" secondAttribute="leading" id="PuE-KU-psD"/>
+                            <constraint firstItem="IAx-wp-Ss1" firstAttribute="bottom" secondItem="lJi-KN-cAO" secondAttribute="bottom" constant="60" id="Qlg-Fb-Uac"/>
+                            <constraint firstItem="S7K-Zp-bIt" firstAttribute="leading" secondItem="IAx-wp-Ss1" secondAttribute="leading" id="RET-6g-Sf6"/>
+                            <constraint firstItem="S7K-Zp-bIt" firstAttribute="trailing" secondItem="IAx-wp-Ss1" secondAttribute="trailing" id="ZmD-uz-T1z"/>
+                            <constraint firstItem="lJi-KN-cAO" firstAttribute="centerX" secondItem="IAx-wp-Ss1" secondAttribute="centerX" id="rph-sD-cY2"/>
+                            <constraint firstAttribute="bottom" secondItem="S7K-Zp-bIt" secondAttribute="bottom" id="uxR-ag-PLu"/>
+                            <constraint firstAttribute="bottom" secondItem="S7K-Zp-bIt" secondAttribute="bottom" id="zel-kW-1TO"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="e98-kD-rad"/>
+                    <connections>
+                        <outlet property="cameraView" destination="S7K-Zp-bIt" id="aOP-F6-caE"/>
+                        <outlet property="recordButton" destination="lJi-KN-cAO" id="lAa-Ja-vjV"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="trw-qQ-8kc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2943" y="417"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="Record" width="116" height="116"/>
+        <image name="Stop" width="116" height="116"/>
         <image name="house" catalog="system" width="128" height="106"/>
         <image name="mic.fill" catalog="system" width="108" height="128"/>
         <image name="pause.fill" catalog="system" width="116" height="128"/>
@@ -622,6 +676,9 @@
         <image name="stop.fill" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

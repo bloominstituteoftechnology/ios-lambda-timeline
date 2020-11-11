@@ -13,6 +13,10 @@ extension UIImage {
         return size.height / size.width
     }
     
+    var vidRatio: CGFloat {
+        return (size.height / 2) / size.width
+    }
+    
     /// Resize the image to a max dimension from size parameter
     func imageByScaling(toSize size: CGSize) -> UIImage? {
         guard size.width > 0 && size.height > 0 else { return nil }

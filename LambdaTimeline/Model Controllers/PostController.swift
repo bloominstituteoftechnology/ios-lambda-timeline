@@ -17,7 +17,6 @@ class PostController {
     }
     
     func createImagePost(with title: String, image: UIImage, ratio: CGFloat?) {
-        
         guard let currentUser = currentUser else { return }
         
         let post = Post(title: title, mediaType: .image(image), ratio: ratio, author: currentUser)
@@ -25,8 +24,15 @@ class PostController {
         posts.append(post)
     }
     
-    func addComment(with text: String, to post: inout Post) {
+    func createVideoPost(with title: String, image: UIImage, video: URL, ratio: CGFloat?) {
+        guard let currentUser = currentUser else { return }
         
+        let post = Post(title: title, mediaType: .video(video), frameCap: image, ratio: ratio, author: currentUser)
+        
+        posts.append(post)
+    }
+    
+    func addComment(with text: String, to post: inout Post) {
         guard let currentUser = currentUser else { return }
         
         let comment = Comment(text: text, author: currentUser)

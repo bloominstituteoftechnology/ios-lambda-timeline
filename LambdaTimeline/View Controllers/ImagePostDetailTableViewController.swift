@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import AVKit
 
 class ImagePostDetailTableViewController: UITableViewController {
     
@@ -20,6 +21,9 @@ class ImagePostDetailTableViewController: UITableViewController {
     var post: Post!
     var postController: PostController!
     var imageData: Data?
+    
+    lazy private var player = AVPlayer()
+    private var playerView: VideoPlayerView!
     
     var audioPlayer: AVAudioPlayer? {
         didSet {
@@ -47,15 +51,49 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     func updateViews() {
-        
-        guard case MediaType.image(let image) = post.mediaType else { return }
+        if case MediaType.image(let image) = post.mediaType {
+            imageView.image = image
+        } else if case MediaType.video(let url) = post.mediaType {
+            imageView.image = post.frameCap
+            playMovie(url: url)
+        }
         
         title = post?.title
         
-        imageView.image = image
-        
         titleLabel.text = post.title
         authorLabel.text = post.author
+    }
+    
+    func playMovie(url: URL) {
+        player.replaceCurrentItem(with: AVPlayerItem(url: url))
+        
+        if playerView == nil {
+            playerView = VideoPlayerView()
+            playerView.player = player
+            
+            var topRect = view.bounds
+            topRect.size.width /= 4
+            topRect.size.height /= 4
+            topRect.origin.y = view.layoutMargins.top
+            topRect.origin.x = view.bounds.size.width - topRect.size.width
+            
+            playerView.frame = topRect
+            view.addSubview(playerView)
+            
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(playRecording(_:)))
+            playerView.addGestureRecognizer(tapGesture)
+        }
+        
+        player.play()
+    }
+    
+    @IBAction func playRecording(_ sender: UITapGestureRecognizer) {
+        guard sender.state == .ended else { return }
+        
+        let playerVC = AVPlayerViewController()
+        playerVC.player = player
+        
+        self.present(playerVC, animated: true, completion: nil)
     }
     
     // MARK: - Table view data source

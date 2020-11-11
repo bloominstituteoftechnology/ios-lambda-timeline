@@ -35,12 +35,16 @@ class ImagePostCollectionViewCell: UICollectionViewCell {
     }
     
     func updateViews() {
-        guard let post = post,
-            case MediaType.image(let image) = post.mediaType else { return }
+        guard let post = post else { return }
         
         titleLabel.text = post.title
         authorLabel.text = post.author
-        imageView.image = image
+        
+        if case MediaType.image(let image) = post.mediaType {
+            imageView.image = image
+        } else {
+            imageView.image = post.frameCap
+        }
     }
     
     func setupLabelBackgroundView() {
