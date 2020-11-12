@@ -10,10 +10,22 @@ import UIKit
 
 class ImagePostCollectionViewCell: UICollectionViewCell {
     
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var labelBackgroundView: UIView!
+    
+    var post: Post? {
+        didSet {
+            updateViews()
+        }
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         setupLabelBackgroundView()
     }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         
@@ -24,31 +36,24 @@ class ImagePostCollectionViewCell: UICollectionViewCell {
     
     func updateViews() {
         guard let post = post else { return }
-    
+        
         titleLabel.text = post.title
-        authorLabel.text = post.author.displayName
+        authorLabel.text = post.author
+        
+        if case MediaType.image(let image) = post.mediaType {
+            imageView.image = image
+        } else {
+            imageView.image = post.frameCap
+        }
     }
-
+    
     func setupLabelBackgroundView() {
         labelBackgroundView.layer.cornerRadius = 8
-//        labelBackgroundView.layer.borderColor = UIColor.white.cgColor
-//        labelBackgroundView.layer.borderWidth = 0.5
         labelBackgroundView.clipsToBounds = true
     }
     
     func setImage(_ image: UIImage?) {
         imageView.image = image
     }
-
-    var post: Post? {
-        didSet {
-            updateViews()
-        }
-    }
-
-@IBOutlet weak var imageView: UIImageView!
-@IBOutlet weak var titleLabel: UILabel!
-@IBOutlet weak var authorLabel: UILabel!
-@IBOutlet weak var labelBackgroundView: UIView!
-
 }
+
