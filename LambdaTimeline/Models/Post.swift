@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 enum MediaType {
     case image(UIImage)
@@ -22,18 +23,20 @@ class Post: Equatable {
     var comments: [Comment]
     var ratio: CGFloat?
     var id: String?
+    var geotag: CLLocationCoordinate2D?
     
     var title: String? {
         return comments.first?.text
     }
     
-    init(title: String, mediaType: MediaType, frameCap: UIImage? = nil, ratio: CGFloat?, author: String, timestamp: Date = Date()) {
+    init(title: String, mediaType: MediaType, frameCap: UIImage? = nil, ratio: CGFloat?, author: String, timestamp: Date = Date(), geotag: CLLocationCoordinate2D?) {
         self.mediaType = mediaType
         self.frameCap = frameCap
         self.ratio = ratio
         self.author = author
         self.comments = [Comment(text: title, author: author)]
         self.timestamp = timestamp
+        self.geotag = geotag
         self.id = UUID().uuidString
     }
     

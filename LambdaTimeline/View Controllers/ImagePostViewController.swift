@@ -13,6 +13,10 @@ import Photos
 
 class ImagePostViewController: ShiftableViewController {
     
+    // TODO: - Add ability to include location in image post
+    // Probably add a switch or something simple like that
+    // Also add this functionality to video posts
+    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!

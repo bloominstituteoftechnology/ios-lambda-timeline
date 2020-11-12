@@ -12,6 +12,10 @@ import AVFoundation
 
 class CameraViewController: UIViewController {
     
+    // TODO: - Add ability to include location in video post
+    // Basically I'm thinking when adding a title then also have an alert asking if they want to add a location
+    // Also do the same thing in the image post
+    
     var postController: PostController!
     var postTitle = "No Title"
     

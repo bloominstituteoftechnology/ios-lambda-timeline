@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class PostController {
     
@@ -16,18 +17,18 @@ class PostController {
         UserDefaults.standard.string(forKey: "username")
     }
     
-    func createImagePost(with title: String, image: UIImage, ratio: CGFloat?) {
+    func createImagePost(with title: String, image: UIImage, ratio: CGFloat?, geotag: CLLocationCoordinate2D? = nil) {
         guard let currentUser = currentUser else { return }
         
-        let post = Post(title: title, mediaType: .image(image), ratio: ratio, author: currentUser)
+        let post = Post(title: title, mediaType: .image(image), ratio: ratio, author: currentUser, geotag: geotag)
         
         posts.append(post)
     }
     
-    func createVideoPost(with title: String, image: UIImage, video: URL, ratio: CGFloat?) {
+    func createVideoPost(with title: String, image: UIImage, video: URL, ratio: CGFloat?, geotag: CLLocationCoordinate2D? = nil) {
         guard let currentUser = currentUser else { return }
         
-        let post = Post(title: title, mediaType: .video(video), frameCap: image, ratio: ratio, author: currentUser)
+        let post = Post(title: title, mediaType: .video(video), frameCap: image, ratio: ratio, author: currentUser, geotag: geotag)
         
         posts.append(post)
     }
