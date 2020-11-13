@@ -15,6 +15,12 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     
     var postController: PostController!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let tabBC = self.tabBarController as! TabBarController
+        postController = tabBC.postController
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -22,12 +28,13 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     }
     
     @IBAction func toggleGeotagging(_ sender: UIBarButtonItem) {
-        if postController.geotagging {
-            postController.geotagging = false
+        if LocationController.shared.geotagging {
+            LocationController.shared.geotagging = false
             geotagButton.title = "Geotagging Off"
         } else {
-            postController.geotagging = true
+            LocationController.shared.geotagging = true
             geotagButton.title = "Geotagging On"
+            LocationController.shared.getUserLocation()
         }
     }
     

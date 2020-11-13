@@ -8,6 +8,7 @@
 
 import UIKit
 import Photos
+import MapKit
 
 class ImagePostViewController: ShiftableViewController {
     
@@ -70,8 +71,14 @@ class ImagePostViewController: ShiftableViewController {
                 presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
                 return
         }
+        
+        var geotag: CLLocationCoordinate2D?
+        if LocationController.shared.geotagging {
+            LocationController.shared.getUserLocation()
+            geotag = LocationController.shared.userLocation
+        }
 
-        postController.createImagePost(with: title, image: image, ratio: image.ratio, geotag: nil)
+        postController.createImagePost(with: title, image: image, ratio: image.ratio, geotag: geotag)
         
         navigationController?.popViewController(animated: true)
     }

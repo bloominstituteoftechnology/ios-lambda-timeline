@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import AVKit
+import MapKit
 
 class CameraViewController: UIViewController {
     
@@ -147,7 +148,14 @@ class CameraViewController: UIViewController {
         
         let postVideoAction = UIAlertAction(title: "Post Video", style: .default) { (_) in
             guard let title = titleTextField?.text else { return }
-            self.postController.createVideoPost(with: title, videoURL: outputUrl, geotag: nil)
+            
+            var geotag: CLLocationCoordinate2D?
+            if LocationController.shared.geotagging {
+                LocationController.shared.getUserLocation()
+                geotag = LocationController.shared.userLocation
+            }
+            
+            self.postController.createVideoPost(with: title, videoURL: outputUrl, geotag: geotag)
             self.navigationController?.popViewController(animated: true)
         }
         

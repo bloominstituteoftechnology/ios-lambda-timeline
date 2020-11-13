@@ -8,11 +8,11 @@
 
 import UIKit
 import MapKit
+import AVFoundation
 
 class PostController {
-    
+        
     var posts: [Post] = []
-    var geotagging: Bool = false
     
     var currentUser: String? {
         UserDefaults.standard.string(forKey: "username")
@@ -46,6 +46,29 @@ class PostController {
         guard let currentUser = currentUser else { return }
         let comment = Comment(audioURL: url, author: currentUser)
         post.comments.append(comment)
+    }
+    
+    func imageFromVideo(url: URL, at time: TimeInterval, completion: @escaping (UIImage?) -> Void) {
+        DispatchQueue.global(qos: .background).async {
+            let asset = AVURLAsset(url: url)
+
+            let assetIG = AVAssetImageGenerator(asset: asset)
+            assetIG.appliesPreferredTrackTransform = true
+            assetIG.apertureMode = AVAssetImageGenerator.ApertureMode.encodedPixels
+
+            let cmTime = CMTime(seconds: time, preferredTimescale: 60)
+            let thumbnailImageRef: CGImage
+            do {
+                thumbnailImageRef = try assetIG.copyCGImage(at: cmTime, actualTime: nil)
+            } catch let error {
+                print("Error: \(error)")
+                return completion(nil)
+            }
+
+            DispatchQueue.main.async {
+                completion(UIImage(cgImage: thumbnailImageRef))
+            }
+        }
     }
     
 }

@@ -30,7 +30,7 @@ class ImagePostDetailTableViewController: UITableViewController {
         case .image(let image):
             imageView.image = image
         case .video(let videoURL):
-            imageFromVideo(url: videoURL, at: 0) { image in
+            postController.imageFromVideo(url: videoURL, at: 0) { image in
                 self.imageView.image = image
             }
         }
@@ -109,29 +109,7 @@ class ImagePostDetailTableViewController: UITableViewController {
             }
         }
     }
-    
-    private func imageFromVideo(url: URL, at time: TimeInterval, completion: @escaping (UIImage?) -> Void) {
-        DispatchQueue.global(qos: .background).async {
-            let asset = AVURLAsset(url: url)
 
-            let assetIG = AVAssetImageGenerator(asset: asset)
-            assetIG.appliesPreferredTrackTransform = true
-            assetIG.apertureMode = AVAssetImageGenerator.ApertureMode.encodedPixels
-
-            let cmTime = CMTime(seconds: time, preferredTimescale: 60)
-            let thumbnailImageRef: CGImage
-            do {
-                thumbnailImageRef = try assetIG.copyCGImage(at: cmTime, actualTime: nil)
-            } catch let error {
-                print("Error: \(error)")
-                return completion(nil)
-            }
-
-            DispatchQueue.main.async {
-                completion(UIImage(cgImage: thumbnailImageRef))
-            }
-        }
-    }
 }
 
 extension ImagePostDetailTableViewController: AudioRecorderDelegate {

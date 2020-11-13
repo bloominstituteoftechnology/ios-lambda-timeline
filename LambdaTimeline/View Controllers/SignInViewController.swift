@@ -36,9 +36,10 @@ class SignInViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ModalPostsVC" {
-            guard let postsVC = (segue.destination as? UINavigationController)?.topViewController as? PostsCollectionViewController else { return }
-            
-            postsVC.postController = postController
+//            guard let postsVC = (segue.destination as? UINavigationController)?.topViewController as? PostsCollectionViewController else { return }
+//            postsVC.postController = postController
+            guard let tabBC = segue.destination as? TabBarController else { return }
+            tabBC.postController = postController
         }
     }
 }
