@@ -8,32 +8,44 @@
 
 import UIKit
 import Photos
+import MapKit
 
 class ImagePostViewController: ShiftableViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setImageViewHeight(with: 1.0)
-        
-        updateViews()
+    @IBOutlet private var imageView: UIImageView!
+    @IBOutlet private var titleTextField: UITextField!
+    @IBOutlet private var chooseImageButton: UIButton!
+    @IBOutlet private var imageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private var postButton: UIBarButtonItem!
+    
+    @IBOutlet private var filterImageButton: UIButton!
+    @IBOutlet private var filterAgainButton: UIButton!
+    @IBOutlet private var clearFiltersButton: UIButton!
+    
+    var postController: PostController!
+    var post: Post?
+    var imageData: Data?
+    
+    var originalImage: UIImage? {
+        didSet {
+            filterImageButton.isHidden = false
+        }
+    }
+    var filteredImage: UIImage? {
+        didSet {
+            self.filterImageButton.isHidden = true
+            self.filterAgainButton.isHidden = false
+            self.clearFiltersButton.isHidden = false
+            self.imageView.image = self.filteredImage
+        }
     }
     
-    func updateViews() {
-        
-        guard let imageData = imageData,
-            let image = UIImage(data: imageData) else {
-                title = "New Post"
-                return
-        }
-        
-        title = post?.title
-        
-        setImageViewHeight(with: image.ratio)
-        
-        imageView.image = image
-        
-        chooseImageButton.setTitle("", for: [])
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setImageViewHeight(with: 1.0)
+        filterImageButton.isHidden = true
+        filterAgainButton.isHidden = true
+        clearFiltersButton.isHidden = true
     }
     
     private func presentImagePickerController() {
@@ -42,38 +54,33 @@ class ImagePostViewController: ShiftableViewController {
             presentInformationalAlertController(title: "Error", message: "The photo library is unavailable")
             return
         }
-        
-        let imagePicker = UIImagePickerController()
-        
-        imagePicker.delegate = self
-        
-        imagePicker.sourceType = .photoLibrary
-
-        present(imagePicker, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .photoLibrary
+            self.present(imagePicker, animated: true, completion: nil)
+        }
     }
     
     @IBAction func createPost(_ sender: Any) {
         
         view.endEditing(true)
         
-        guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
+        guard let image = imageView.image,
             let title = titleTextField.text, title != "" else {
-            presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
-            return
+                presentInformationalAlertController(title: "Uh-oh", message: "Make sure that you add a photo and a caption before posting.")
+                return
         }
         
-        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
-            guard success else {
-                DispatchQueue.main.async {
-                    self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
-                }
-                return
-            }
-            
-            DispatchQueue.main.async {
-                self.navigationController?.popViewController(animated: true)
-            }
+        var geotag: CLLocationCoordinate2D?
+        if LocationController.shared.geotagging {
+            LocationController.shared.getUserLocation()
+            geotag = LocationController.shared.userLocation
         }
+
+        postController.createImagePost(with: title, image: image, ratio: image.ratio, geotag: geotag)
+        
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func chooseImage(_ sender: Any) {
@@ -100,11 +107,36 @@ class ImagePostViewController: ShiftableViewController {
             self.presentInformationalAlertController(title: "Error", message: "In order to access the photo library, you must allow this application access to it.")
         case .restricted:
             self.presentInformationalAlertController(title: "Error", message: "Unable to access the photo library. Your device's restrictions do not allow access.")
-            
-        @unknown default:
-            print("FatalError")
+        default:
+            break
         }
         presentImagePickerController()
+    }
+    
+    @IBAction func filterImage(_ sender: UIButton) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let filterVC = storyBoard.instantiateViewController(withIdentifier: "ImageFilterViewController") as! ImageFilterViewController
+        filterVC.originalImage = originalImage
+        filterVC.filteredImage = nil
+        filterVC.delegate = self
+        self.present(filterVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func filterAgain(_ sender: UIButton) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let filterVC = storyBoard.instantiateViewController(withIdentifier: "ImageFilterViewController") as! ImageFilterViewController
+        filterVC.originalImage = originalImage
+        filterVC.filteredImage = filteredImage
+        filterVC.delegate = self
+        self.present(filterVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func clearFilters(_ sender: UIButton) {
+        filteredImage = nil
+        imageView.image = originalImage
+        filterImageButton.isHidden = false
+        filterAgainButton.isHidden = true
+        clearFiltersButton.isHidden = true
     }
     
     func setImageViewHeight(with aspectRatio: CGFloat) {
@@ -113,16 +145,6 @@ class ImagePostViewController: ShiftableViewController {
         
         view.layoutSubviews()
     }
-    
-    var postController: PostController!
-    var post: Post?
-    var imageData: Data?
-    
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var chooseImageButton: UIButton!
-    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var postButton: UIBarButtonItem!
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -136,11 +158,18 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
         imageView.image = image
-        
+        originalImage = image
         setImageViewHeight(with: image.ratio)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ImagePostViewController: FilterVCDelegate {
+    func updateImage(originalImage: UIImage, filteredImage: UIImage?) {
+        self.originalImage = originalImage
+        self.filteredImage = filteredImage
     }
 }
