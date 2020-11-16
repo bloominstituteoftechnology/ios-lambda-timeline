@@ -8,22 +8,19 @@
 
 import UIKit
 import AVFoundation
-//import AVKit
+import MapKit
 
 class CameraViewController: UIViewController {
-    
-    // TODO: - Add ability to include location in video post
-    // Basically I'm thinking when adding a title then also have an alert asking if they want to add a location
-    // Also do the same thing in the image post
     
     var postController: PostController!
     var postTitle = "No Title"
     
+    let locationManager = CLLocationManager()
+    var currentLocation: CLLocationCoordinate2D?
+    var getLocation = false
+    
     lazy private var captureSession = AVCaptureSession()
     lazy private var fileOutput = AVCaptureMovieFileOutput()
-    
-//    lazy private var player = AVPlayer()
-//    private var playerView: VideoPlayerView!
 
     @IBOutlet var recordButton: UIButton!
     @IBOutlet var cameraView: CameraPreviewView!
@@ -46,38 +43,6 @@ class CameraViewController: UIViewController {
         
         captureSession.stopRunning()
     }
-    
-//    func playMovie(url: URL) {
-//        player.replaceCurrentItem(with: AVPlayerItem(url: url))
-//
-//        if playerView == nil {
-//            playerView = VideoPlayerView()
-//            playerView.player = player
-//
-//            var topRect = view.bounds
-//            topRect.size.width /= 4
-//            topRect.size.height /= 4
-//            topRect.origin.y = view.layoutMargins.top
-//            topRect.origin.x = view.bounds.size.width - topRect.size.width
-//
-//            playerView.frame = topRect
-//            view.addSubview(playerView)
-//
-//            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(playRecording(_:)))
-//            playerView.addGestureRecognizer(tapGesture)
-//        }
-//
-//        player.play()
-//    }
-//
-//    @IBAction func playRecording(_ sender: UITapGestureRecognizer) {
-//        guard sender.state == .ended else { return }
-//
-//        let playerVC = AVPlayerViewController()
-//        playerVC.player = player
-//
-//        self.present(playerVC, animated: true, completion: nil)
-//    }
 
     private func setupCamera() {
         let camera = bestCamera
@@ -186,6 +151,31 @@ class CameraViewController: UIViewController {
         
         present(alert, animated: true, completion: nil)
     }
+    
+    func addLocation() {
+        let alert = UIAlertController(title: "Add a location", message: "Would you like to include your location in the post?", preferredStyle: .alert)
+        
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { (_) in
+            self.locationManager.requestWhenInUseAuthorization()
+            self.getLocation = true
+            
+            if CLLocationManager.locationServicesEnabled() {
+                self.locationManager.delegate = self
+                self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                self.locationManager.startUpdatingLocation()
+            }
+        }
+        
+        let noAction = UIAlertAction(title: "No", style: .cancel) { (_) in
+            self.getLocation = false
+            self.currentLocation = nil
+        }
+        
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        
+        present(alert, animated: true, completion: nil)
+    }
 }
 
 
@@ -202,14 +192,25 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         
         print("Video URL: \(outputFileURL)")
         
-//        playMovie(url: outputFileURL)
         addTitle()
+        addLocation()
         imageFromVideo(url: outputFileURL, at: 0) { (image) in
-            self.postController.createVideoPost(with: self.postTitle, image: image!, video: outputFileURL, ratio: image?.vidRatio)
+            self.postController.createVideoPost(with: self.postTitle, image: image!, video: outputFileURL, ratio: image?.vidRatio, geotag: self.currentLocation)
         }
         updateViews()
     }
     
+}
+
+
+extension CameraViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        
+        if getLocation {
+            currentLocation = locValue
+        }
+    }
 }
 
 
