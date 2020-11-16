@@ -12,6 +12,7 @@ import MapKit
 class PostController {
     
     var posts: [Post] = []
+    var mapPosts: [PostAnnotation] = []
     
     var currentUser: String? {
         UserDefaults.standard.string(forKey: "username")
@@ -31,6 +32,14 @@ class PostController {
         let post = Post(title: title, mediaType: .video(video), frameCap: image, ratio: ratio, author: currentUser, geotag: geotag)
         
         posts.append(post)
+    }
+    
+    func createMapPost(with title: String, location: CLLocationCoordinate2D) {
+        guard let currentUser = currentUser else { return }
+        
+        let mapPost = PostAnnotation(coordinate: location, title: title, subtitle: currentUser)
+        
+        mapPosts.append(mapPost)
     }
     
     func addComment(with text: String, to post: inout Post) {

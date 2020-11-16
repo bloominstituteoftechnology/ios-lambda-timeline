@@ -32,7 +32,6 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var posterizeLabel: UILabel!
     @IBOutlet weak var posterizeSlider: UISlider!
     
-    @IBOutlet weak var addLocationLabel: UILabel!
     @IBOutlet weak var addLocationSwitch: UISwitch!
     
     private let context = CIContext()
@@ -165,6 +164,10 @@ class ImagePostViewController: ShiftableViewController {
         }
 
         postController.createImagePost(with: title, image: image, ratio: image.ratio, geotag: currentLocation)
+        
+        if currentLocation != nil {
+            postController.createMapPost(with: title, location: currentLocation!)
+        }
         
         navigationController?.popViewController(animated: true)
     }

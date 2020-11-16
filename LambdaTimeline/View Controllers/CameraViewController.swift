@@ -196,6 +196,10 @@ extension CameraViewController: AVCaptureFileOutputRecordingDelegate {
         addLocation()
         imageFromVideo(url: outputFileURL, at: 0) { (image) in
             self.postController.createVideoPost(with: self.postTitle, image: image!, video: outputFileURL, ratio: image?.vidRatio, geotag: self.currentLocation)
+            
+            if self.currentLocation != nil {
+                self.postController.createMapPost(with: self.postTitle, location: self.currentLocation!)
+            }
         }
         updateViews()
     }
