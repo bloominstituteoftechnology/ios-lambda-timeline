@@ -13,10 +13,6 @@ import Photos
 
 class ImagePostViewController: ShiftableViewController {
     
-    // TODO: - Add ability to include location in image post
-    // Probably add a switch or something simple like that
-    // Also add this functionality to video posts
-    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
@@ -36,6 +32,9 @@ class ImagePostViewController: ShiftableViewController {
     @IBOutlet weak var posterizeLabel: UILabel!
     @IBOutlet weak var posterizeSlider: UISlider!
     
+    @IBOutlet weak var addLocationLabel: UILabel!
+    @IBOutlet weak var addLocationSwitch: UISwitch!
+    
     private let context = CIContext()
     private let toneFilter = CIFilter.sRGBToneCurveToLinear()
     private let vintageFilter = CIFilter.photoEffectInstant()
@@ -48,6 +47,9 @@ class ImagePostViewController: ShiftableViewController {
     var post: Post?
     var imageData: Data?
     var selectedFilter: CIFilter?
+    var getLocation = false
+    var currentLocation: CLLocationCoordinate2D?
+    let locationManager = CLLocationManager()
     
     var originalImage: UIImage? {
         didSet {
@@ -81,6 +83,8 @@ class ImagePostViewController: ShiftableViewController {
         super.viewDidLoad()
         
         setImageViewHeight(with: 1.0)
+        
+        addLocationSwitch.setOn(false, animated: true)
         
         addFilterLabel.isHidden = true
         clearFiltersButton.isHidden = true
@@ -160,13 +164,12 @@ class ImagePostViewController: ShiftableViewController {
                 return
         }
 
-        postController.createImagePost(with: title, image: image, ratio: image.ratio)
+        postController.createImagePost(with: title, image: image, ratio: image.ratio, geotag: currentLocation)
         
         navigationController?.popViewController(animated: true)
     }
     
     @IBAction func chooseImage(_ sender: Any) {
-        
         let authorizationStatus = PHPhotoLibrary.authorizationStatus()
         
         switch authorizationStatus {
@@ -195,8 +198,20 @@ class ImagePostViewController: ShiftableViewController {
         presentImagePickerController()
     }
     
-    @IBAction func addFilter(_ sender: Any) {
-        
+    @IBAction func toggleLocation(_ sender: Any) {
+        if addLocationSwitch.isOn {
+            locationManager.requestWhenInUseAuthorization()
+            getLocation = true
+            
+            if CLLocationManager.locationServicesEnabled() {
+                locationManager.delegate = self
+                locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                locationManager.startUpdatingLocation()
+            }
+        } else {
+            getLocation = false
+            currentLocation = nil
+        }
     }
     
     func setImageViewHeight(with aspectRatio: CGFloat) {
@@ -278,5 +293,16 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+
+extension ImagePostViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        
+        if getLocation {
+            currentLocation = locValue
+        }
     }
 }
