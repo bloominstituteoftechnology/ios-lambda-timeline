@@ -129,6 +129,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         } else if segue.identifier == "AddVideoPost" {
             let destinationVC = segue.destination as? CameraViewController
             destinationVC?.postController = postController
+        } else if segue.identifier == "MapViewSegue" {
+            let destinationVC = segue.destination as? PostMapViewController
+            destinationVC?.postController = postController
         }
     }
 }

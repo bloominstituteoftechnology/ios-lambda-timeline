@@ -13,7 +13,7 @@ enum ReuseIdentifier {
     static let postAnnotation = "PostAnnotationView"
 }
 
-class PostMapViewController: UIViewController {
+class PostMapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     
@@ -21,18 +21,7 @@ class PostMapViewController: UIViewController {
     
     private let locationManager = CLLocationManager()
     
-    var posts: [PostAnnotation] = [] {
-        didSet {
-            let oldPosts = Set(oldValue)
-            let newPosts = Set(posts)
-            
-            let addedPosts = newPosts.subtracting(oldPosts)
-            let removedPosts = oldPosts.subtracting(newPosts)
-            
-            mapView.removeAnnotations(Array(removedPosts))
-            mapView.addAnnotations(Array(addedPosts))
-        }
-    }
+    var postController: PostController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,22 +44,7 @@ class PostMapViewController: UIViewController {
         }
         
         mapView.register(MKMarkerAnnotationView.self, forAnnotationViewWithReuseIdentifier: ReuseIdentifier.postAnnotation)
-    }
-}
-
-extension PostMapViewController: MKMapViewDelegate, CLLocationManagerDelegate {
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard let post = annotation as? PostAnnotation else { return nil }
         
-        let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: ReuseIdentifier.postAnnotation, for: post) as! MKMarkerAnnotationView
-        
-        annotationView.glyphImage = #imageLiteral(resourceName: "QuakeIcon")
-        
-        return annotationView
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        mapView.addAnnotations(postController.mapPosts)
     }
 }
