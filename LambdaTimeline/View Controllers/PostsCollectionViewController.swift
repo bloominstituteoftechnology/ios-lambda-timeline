@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 import FirebaseAuth
 import FirebaseUI
 
@@ -29,13 +30,39 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         let imagePostAction = UIAlertAction(title: "Image", style: .default) { (_) in
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
+
+        let videoPostAction = UIAlertAction(title: "Video", style: .default) { (_) in
+            switch AVCaptureDevice.authorizationStatus(for: .video) {
+            case .authorized:
+                self.showCamera()
+                break
+
+            case .notDetermined:
+                AVCaptureDevice.requestAccess(for: .video) { (granted) in
+                    if !granted { fatalError("VideoFilters needs camera access") }
+                    self.showCamera()
+                }
+
+            case .restricted:
+                fallthrough //go to whatever case is below
+
+            case .denied:
+                fatalError("VideoFilters needs camera access")
+
+            }
+        }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(imagePostAction)
+        alert.addAction(videoPostAction)
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true, completion: nil)
+    }
+
+    private func showCamera() {
+        performSegue(withIdentifier: "AddVideoPost", sender: self)
     }
     
     // MARK: UICollectionViewDataSource
@@ -57,7 +84,17 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
+        case .audio:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
+
+            return cell
+        case .video:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
+            return cell
         }
+
+
+
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -73,6 +110,12 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             guard let ratio = post.ratio else { return size }
             
             size.height = size.width * ratio
+
+        case .audio:
+            break
+        case .video:
+            break
+
         }
         
         return size
@@ -159,6 +202,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             destinationVC?.postController = postController
             destinationVC?.post = postController.posts[indexPath.row]
             destinationVC?.imageData = cache.value(for: postID)
+        } else if segue.identifier == "AddVideoPost" {
+            let destinationVC = segue.destination as? CameraViewController
+            destinationVC?.postController = postController
         }
     }
     
