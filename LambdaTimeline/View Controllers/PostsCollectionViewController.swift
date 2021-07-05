@@ -9,11 +9,21 @@
 import UIKit
 import FirebaseAuth
 import FirebaseUI
+import AuthenticationServices
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    
+    private let postController = PostController()
+    private var operations = [String : Operation]()
+    private let mediaFetchQueue = OperationQueue()
+    private let cache = Cache<String, Data>()
+    
+    //MARK:- View Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "Lambda Timeline"
         
         postController.observePosts { (_) in
             DispatchQueue.main.async {
@@ -21,28 +31,44 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             }
         }
     }
+   //MARK:- Actions
+  
     
     @IBAction func signout(_ sender: Any) {
+        
         let firebaseAuth = Auth.auth()
         do {
           try firebaseAuth.signOut()
+           
         } catch let signOutError as NSError {
           print ("Error signing out: %@", signOutError)
         }
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func addPost(_ sender: Any) {
+     let videoRecordingViewController : UINavigationController = {
+        let vc = VideoRecordingViewController()
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
+        return nav
+    }()
+    
+    @IBAction func addPost(_ sender: UIBarButtonItem) {
         
         let alert = UIAlertController(title: "New Post", message: "Which kind of post do you want to create?", preferredStyle: .actionSheet)
         
         let imagePostAction = UIAlertAction(title: "Image", style: .default) { (_) in
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
+        let videoPostAction = UIAlertAction(title: "Video", style: .default) { (_) in
+         
+            self.requestPermissionAndShowCamera()
+        }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive, handler: nil)
         
         alert.addAction(imagePostAction)
+        alert.addAction(videoPostAction)
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true, completion: nil)
@@ -67,7 +93,11 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             loadImage(for: cell, forItemAt: indexPath)
             
             return cell
+            
+            case .audio:
+            break
         }
+       return UICollectionViewCell()
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -81,13 +111,15 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         case .image:
             
             guard let ratio = post.ratio else { return size }
-            
             size.height = size.width * ratio
+
+            // configure audio cell
+            case .audio:
+            break
         }
         
         return size
     }
-    
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
@@ -172,8 +204,4 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         }
     }
     
-    private let postController = PostController()
-    private var operations = [String : Operation]()
-    private let mediaFetchQueue = OperationQueue()
-    private let cache = Cache<String, Data>()
 }

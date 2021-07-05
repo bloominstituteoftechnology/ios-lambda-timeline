@@ -13,6 +13,14 @@ import FirebaseStorage
 
 class PostController {
     
+    //MARK:- Properties
+    
+      var posts: [Post] = []
+      let currentUser = Auth.auth().currentUser
+      let postsRef = Database.database().reference().child("posts")
+    
+      let storageRef = Storage.storage().reference()
+    
     func createPost(with title: String, ofType mediaType: MediaType, mediaData: Data, ratio: CGFloat? = nil, completion: @escaping (Bool) -> Void = { _ in }) {
         
         guard let currentUser = Auth.auth().currentUser,
@@ -40,7 +48,7 @@ class PostController {
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
         
-        let comment = Comment(text: text, author: author)
+        let comment = Comment(text: text, author: author, audioURL: nil)
         post.comments.append(comment)
         
         savePostToFirebase(post)
@@ -116,12 +124,7 @@ class PostController {
         
         uploadTask.resume()
     }
-    
-    var posts: [Post] = []
-    let currentUser = Auth.auth().currentUser
-    let postsRef = Database.database().reference().child("posts")
-    
-    let storageRef = Storage.storage().reference()
+  
     
     
 }

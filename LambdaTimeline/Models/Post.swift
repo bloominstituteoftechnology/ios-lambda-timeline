@@ -11,16 +11,38 @@ import FirebaseAuth
 
 enum MediaType: String {
     case image
+    case audio
 }
 
 class Post {
+    
+    
+    var mediaURL: URL
+      let mediaType: MediaType
+      let author: Author
+      let timestamp: Date
+      var comments: [Comment]
+      var id: String?
+      var ratio: CGFloat?
+      
+      var title: String? {
+          return comments.first?.text
+      }
+      static private let audioKey = "audio"
+      static private let mediaKey = "media"
+      static private let ratioKey = "ratio"
+      static private let mediaTypeKey = "mediaType"
+      static private let authorKey = "author"
+      static private let commentsKey = "comments"
+      static private let timestampKey = "timestamp"
+      static private let idKey = "id"
     
     init(title: String, mediaURL: URL, ratio: CGFloat? = nil, author: Author, timestamp: Date = Date()) {
         self.mediaURL = mediaURL
         self.ratio = ratio
         self.mediaType = .image
         self.author = author
-        self.comments = [Comment(text: title, author: author)]
+        self.comments = [Comment(text: title, author: author, audioURL: nil)]
         self.timestamp = timestamp
     }
     
@@ -44,11 +66,15 @@ class Post {
     }
     
     var dictionaryRepresentation: [String : Any] {
-        var dict: [String: Any] = [Post.mediaKey: mediaURL.absoluteString,
+        var dict: [String: Any] = [
+            Post.mediaKey: mediaURL.absoluteString,
                 Post.mediaTypeKey: mediaType.rawValue,
                 Post.commentsKey: comments.map({ $0.dictionaryRepresentation }),
                 Post.authorKey: author.dictionaryRepresentation,
-                Post.timestampKey: timestamp.timeIntervalSince1970]
+                Post.timestampKey: timestamp.timeIntervalSince1970,
+             
+        
+        ]
         
         guard let ratio = self.ratio else { return dict }
         
@@ -57,23 +83,5 @@ class Post {
         return dict
     }
     
-    var mediaURL: URL
-    let mediaType: MediaType
-    let author: Author
-    let timestamp: Date
-    var comments: [Comment]
-    var id: String?
-    var ratio: CGFloat?
-    
-    var title: String? {
-        return comments.first?.text
-    }
-    
-    static private let mediaKey = "media"
-    static private let ratioKey = "ratio"
-    static private let mediaTypeKey = "mediaType"
-    static private let authorKey = "author"
-    static private let commentsKey = "comments"
-    static private let timestampKey = "timestamp"
-    static private let idKey = "id"
+  
 }
