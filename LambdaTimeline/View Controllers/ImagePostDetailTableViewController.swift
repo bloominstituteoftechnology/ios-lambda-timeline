@@ -10,9 +10,31 @@ import UIKit
 
 class ImagePostDetailTableViewController: UITableViewController {
     
+    
+    var post: Post!
+    var postController: PostController!
+    var imageData: Data?
+    
+    private var operations = [URL : Operation]()
+    private let mediaFetchQueue = OperationQueue()
+    private let cache = Cache<URL, Data>()
+    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
+        
+        self.tableView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.tableView.reloadData()
     }
     
     func updateViews() {
@@ -31,33 +53,41 @@ class ImagePostDetailTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     @IBAction func createComment(_ sender: Any) {
+       
+        let actionSheet = UIAlertController(title: "Add a comment", message: "Choose type:", preferredStyle: .alert)
         
-        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
+        actionSheet.addAction(UIAlertAction(title: "Text", style: .default, handler: { (action) in
+            self.performSegue(withIdentifier: "ShowTextCommentVC", sender: self)
+        }))
         
-        var commentTextField: UITextField?
+        actionSheet.addAction(UIAlertAction(title: "Audio", style: .default, handler: { (action) in
+            self.performSegue(withIdentifier: "ShowAudioCommentVC", sender: self)
+        }))
         
-        alert.addTextField { (textField) in
-            textField.placeholder = "Comment:"
-            commentTextField = textField
-        }
+//        var commentTextField: UITextField?
+//
+//        alert.addTextField { (textField) in
+//            textField.placeholder = "Comment:"
+//            commentTextField = textField
+//        }
         
-        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
-            
-            guard let commentText = commentTextField?.text else { return }
-            
-            self.postController.addComment(with: commentText, to: &self.post!)
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
+//        let addCommentAction = UIAlertAction(title: "Add Comment", style: .default) { (_) in
+//
+//            guard let commentText = commentTextField?.text else { return }
+//
+//            self.postController.addComment(with: commentText, to: &self.post!)
+//
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//            }
+//        }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        alert.addAction(addCommentAction)
-        alert.addAction(cancelAction)
-        
-        present(alert, animated: true, completion: nil)
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+
+//        alert.addAction(addCommentAction)
+//        alert.addAction(cancelAction)
+
+        self.present(actionSheet, animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -65,24 +95,91 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
         
         let comment = post?.comments[indexPath.row + 1]
         
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author.displayName
-        
-        return cell
+        if let text = comment?.text {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "TextCommentCell", for: indexPath)
+            cell.textLabel?.text = text
+            cell.detailTextLabel?.text = comment?.author.displayName
+            return cell
+        } else if comment?.url != nil {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "AudioCommentCell", for: indexPath) as! AudioCommentTableViewCell
+            
+            // load from server
+            loadAudio(for: cell, forItemAt: indexPath)
+            
+            cell.authorLabel?.text = comment?.author.displayName
+            return cell
+        } else {
+            // should never get to this step (comment is always either a text or audio). this is so swift can be happy.
+            return UITableViewCell()
+        }
     }
     
-    var post: Post!
-    var postController: PostController!
-    var imageData: Data?
+    func loadAudio(for audioCell: AudioCommentTableViewCell, forItemAt indexPath: IndexPath) {
+        let comment = post?.comments[indexPath.row + 1]
+        
+        guard let url = comment?.url else { return }
+        
+        if let mediaData = cache.value(for: url) {
+            audioCell.data = mediaData
+            self.tableView.reloadRows(at: [indexPath], with: .automatic)
+            return
+        }
+        
+        // if there's no data in the cache, we want to fetch the data from the server at the url
+        let fetchOp = FetchMediaOperation(mediaURL: url, postController: postController)
+        
+        let cacheOp = BlockOperation {
+            if let data = fetchOp.mediaData {
+                self.cache.cache(value: data, for: url)
+                DispatchQueue.main.async {
+                    self.tableView.reloadRows(at: [indexPath], with: .automatic)
+                }
+            }
+        }
+        
+        // once everything completes
+        let completionOp = BlockOperation {
+            defer { self.operations.removeValue(forKey: url) }
+            
+            // make sure cell is still the same cell
+            if let currentIndexPath = self.tableView.indexPath(for: audioCell),
+                currentIndexPath != indexPath {
+                print("Got image for now-reused cell")
+                return
+            }
+            
+            // make sure there is data, and saves it to the cell
+            if let data = fetchOp.mediaData {
+                audioCell.data = data
+                self.tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+        }
+        
+        cacheOp.addDependency(fetchOp) // cache wont get call until fetch is done
+        completionOp.addDependency(fetchOp) // completion wont get call until fetch is done
+        
+        // ok for completion to be called when cache isnt done
+        
+        mediaFetchQueue.addOperation(fetchOp)
+        mediaFetchQueue.addOperation(cacheOp)
+        OperationQueue.main.addOperation(completionOp)
+        
+        // assign the fetching of audio data to operations dictionary at that url, so we could cancel when we need to
+        operations[url] = fetchOp
+    }
     
+    // MARK: - Navigation
     
-    
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var authorLabel: UILabel!
-    @IBOutlet weak var imageViewAspectRatioConstraint: NSLayoutConstraint!
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let textVC = segue.destination as? TextCommentViewController {
+            textVC.postController = postController
+            textVC.post = post
+        } else if let audioVC = segue.destination as? AudioCommentViewController {
+            audioVC.postController = postController
+            audioVC.post = post
+        }
+    }
 }
