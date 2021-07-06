@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseUI
+import AVKit
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -30,10 +31,17 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
         
+        let videoPostAction = UIAlertAction(title: "Video", style: .default) { _ in
+            self.performSegue(withIdentifier: "AddVideoPost", sender: nil)
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(imagePostAction)
+        alert.addAction(videoPostAction)
         alert.addAction(cancelAction)
+        
+        alert.pruneNegativeWidthConstraints()
         
         self.present(alert, animated: true, completion: nil)
     }
@@ -47,17 +55,20 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let post = postController.posts[indexPath.row]
         
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
+        
+        cell.post = post
+        
         switch post.mediaType {
-            
         case .image:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
-            
-            cell.post = post
-            
             loadImage(for: cell, forItemAt: indexPath)
-            
-            return cell
+        case .video:
+            break
+        default:
+            break
         }
+        
+        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -73,6 +84,8 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             guard let ratio = post.ratio else { return size }
             
             size.height = size.width * ratio
+        default:
+            break
         }
         
         return size
@@ -85,6 +98,12 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         if let cell = cell as? ImagePostCollectionViewCell,
             cell.imageView.image != nil {
             self.performSegue(withIdentifier: "ViewImagePost", sender: nil)
+        }
+        
+        let post = postController.posts[indexPath.row]
+        if post.mediaType == .video {
+            print(post.mediaURL)
+            presentVideo(forPost: post)
         }
     }
     
@@ -141,6 +160,18 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         
         operations[postID] = fetchOp
     }
+    
+    func presentVideo(forPost post: Post) {
+        let player = AVPlayer(url: post.mediaURL)
+        
+        let controller = AVPlayerViewController()
+        controller.player = player
+        
+        present(controller, animated: true) {
+            player.play()
+        }
+    }
+    
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -159,6 +190,9 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             destinationVC?.postController = postController
             destinationVC?.post = postController.posts[indexPath.row]
             destinationVC?.imageData = cache.value(for: postID)
+        } else if segue.identifier == "AddVideoPost" {
+            let destinationVC = segue.destination as? CameraViewController
+            destinationVC?.postController = postController
         }
     }
     

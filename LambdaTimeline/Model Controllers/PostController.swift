@@ -22,7 +22,7 @@ class PostController {
             
             guard let mediaURL = mediaURL else { completion(false); return }
             
-            let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
+            let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, mediaType: mediaType, author: author)
             
             self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
                 if let error = error {
@@ -35,7 +35,7 @@ class PostController {
         }
     }
     
-    func addComment(with text: String, to post: inout Post) {
+    func addComment(with text: String, to post: Post) {
         
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
@@ -44,6 +44,60 @@ class PostController {
         post.comments.append(comment)
         
         savePostToFirebase(post)
+    }
+    
+    func addComment(with url: URL, to post: Post, completion: @escaping () -> Void) {
+        guard let currentUser = Auth.auth().currentUser,
+            let author = Author(user: currentUser) else { return }
+        
+        
+        let soundData = try! FileHandle(forUpdating: url).readDataToEndOfFile()
+        
+        store(mediaData: soundData, mediaType: .audio) { mediaURL in
+            guard let mediaURL = mediaURL,
+                let newFileLocation = self.getDocumentsURLFromURL(mediaURL) else { return }
+            
+            do {
+                try FileManager.default.moveItem(at: url, to: newFileLocation)
+            } catch {
+                NSLog("Error moving audio file: \(error)")
+            }
+            
+            let comment = Comment(audioURL: mediaURL, author: author)
+            post.comments.append(comment)
+            self.savePostToFirebase(post)
+            completion()
+        }
+        
+    }
+    
+    func getIDFromURL(_ url: URL) -> String? {
+        let urlString = url.absoluteString
+        print(urlString)
+        
+        let range = NSRange(location: 0, length: urlString.utf16.count)
+        do {
+            let regex = try NSRegularExpression(pattern: "(?<=(audio%2F))[A-Z0-9-]*(?=(.alt))")
+            if let match = regex.firstMatch(in: urlString, options: [], range: range) {
+                let id = urlString[Range(match.range, in: urlString)!]
+                return "\(id)"
+            }
+        } catch {
+            NSLog("Error getting ID from URL: \(error)")
+        }
+        
+        return nil
+    }
+    
+    func getDocumentsURLFromURL(_ url: URL) -> URL? {
+        guard let id = getIDFromURL(url) else { return nil }
+        
+        let fileManager = FileManager.default
+        let documentsDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        
+        let newFileLocation = documentsDirectory.appendingPathComponent(id)
+        
+        return newFileLocation
     }
 
     func observePosts(completion: @escaping (Error?) -> Void) {
