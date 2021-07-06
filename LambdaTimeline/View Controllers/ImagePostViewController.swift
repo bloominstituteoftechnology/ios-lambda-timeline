@@ -16,6 +16,8 @@ class ImagePostViewController: ShiftableViewController {
         
         setImageViewHeight(with: 1.0)
         
+        locationController.delegate = self
+        
         updateViews()
     }
     
@@ -24,6 +26,11 @@ class ImagePostViewController: ShiftableViewController {
         guard let imageData = imageData,
             let image = UIImage(data: imageData) else {
                 title = "New Post"
+                
+                colorSlider.isEnabled = false
+                colorSegmentedControl.isEnabled = false
+                effectSegmentedControl.isEnabled = false
+                
                 return
         }
         
@@ -32,6 +39,8 @@ class ImagePostViewController: ShiftableViewController {
         setImageViewHeight(with: image.ratio)
         
         imageView.image = image
+        
+        originalImage = image
         
         chooseImageButton.setTitle("", for: [])
     }
@@ -53,8 +62,16 @@ class ImagePostViewController: ShiftableViewController {
     }
     
     @IBAction func createPost(_ sender: Any) {
-        
+        if geotagSwitch.isOn {
+            locationController.requestLocation()
+        } else {
+            savePost()
+        }
+    }
+    
+    private func savePost(locations: [CLLocation] = []) {
         view.endEditing(true)
+        
         
         guard let imageData = imageView.image?.jpegData(compressionQuality: 0.1),
             let title = titleTextField.text, title != "" else {
@@ -62,7 +79,9 @@ class ImagePostViewController: ShiftableViewController {
             return
         }
         
-        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio) { (success) in
+        let geotag = locations.first?.coordinate
+        
+        postController.createPost(with: title, ofType: .image, mediaData: imageData, ratio: imageView.image?.ratio, at: geotag) { (success) in
             guard success else {
                 DispatchQueue.main.async {
                     self.presentInformationalAlertController(title: "Error", message: "Unable to create post. Try again.")
@@ -105,6 +124,18 @@ class ImagePostViewController: ShiftableViewController {
         presentImagePickerController()
     }
     
+    @IBAction func effectChanged(_ sender: UISegmentedControl) {
+        updateFilters()
+    }
+    
+    @IBAction func colorModeChanged(_ sender: UISegmentedControl) {
+        updateFilters()
+    }
+    
+    @IBAction func colorChanged(_ sender: UISlider) {
+        updateFilters()
+    }
+    
     func setImageViewHeight(with aspectRatio: CGFloat) {
         
         imageHeightConstraint.constant = imageView.frame.size.width * aspectRatio
@@ -112,15 +143,85 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
+    func updateFilters() {
+        guard let originalImage = originalImage else { return }
+        
+        let filteredImage = filterImage(originalImage)
+        imageView.image = filteredImage
+    }
+    
+    func filterImage(_ image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage else { return image }
+        
+        var ciImage = CIImage(cgImage: cgImage)
+        
+        if colorSegmentedControl.selectedSegmentIndex == 0 {
+            colorControlsFilter.setValue(ciImage, forKey: "inputImage")
+            // Saturation is from 0 to 2, which is what the slider is set to
+            colorControlsFilter.setValue(colorSlider.value, forKey: "inputSaturation")
+            
+            if let outputCIImage = colorControlsFilter.outputImage {
+                ciImage = outputCIImage
+            }
+        } else {
+            vibranceFilter.setValue(ciImage, forKey: "inputImage")
+            // Vibrance is from -1 to 1, so subtract 1 from the slider value
+            vibranceFilter.setValue(colorSlider.value - 1, forKey: "inputAmount")
+            
+            if let outputCIImage = vibranceFilter.outputImage {
+                ciImage = outputCIImage
+            }
+        }
+        
+        effect: if effectSegmentedControl.selectedSegmentIndex > 0 {
+            let effectFilter: CIFilter
+            
+            switch effectSegmentedControl.selectedSegmentIndex {
+            case 1:
+                effectFilter = sepiaFilter
+            case 2:
+                effectFilter = monoFilter
+            case 3:
+                effectFilter = noirFilter
+            default:
+                break effect
+            }
+            
+            effectFilter.setValue(ciImage, forKey: "inputImage")
+            if let outputCIImage = effectFilter.outputImage {
+                ciImage = outputCIImage
+            }
+        }
+        
+        let bounds = CGRect(origin: CGPoint.zero, size: image.size)
+        guard let outputCGImage = context.createCGImage(ciImage, from: bounds) else { return image }
+        
+        return UIImage(cgImage: outputCGImage)
+    }
+    
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    var locationController = LocationController()
+    
+    private var originalImage: UIImage?
+    
+    private let context = CIContext(options: nil)
+    private let colorControlsFilter = CIFilter(name: "CIColorControls")!
+    private let vibranceFilter = CIFilter(name: "CIVibrance")!
+    private let monoFilter = CIFilter(name: "CIPhotoEffectMono")!
+    private let noirFilter = CIFilter(name: "CIPhotoEffectNoir")!
+    private let sepiaFilter = CIFilter(name: "CISepiaTone")!
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    @IBOutlet weak var effectSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var colorSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var colorSlider: UISlider!
+    @IBOutlet weak var geotagSwitch: UISwitch!
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -135,10 +236,26 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         
         imageView.image = image
         
+        originalImage = image
+        
+        colorSlider.isEnabled = true
+        colorSegmentedControl.isEnabled = true
+        effectSegmentedControl.isEnabled = true
+        
+        effectSegmentedControl.selectedSegmentIndex = 0
+        colorSlider.value = 1
+        
+        
         setImageViewHeight(with: image.ratio)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension ImagePostViewController: LocationControllerDelegate {
+    func update(locations: [CLLocation]) {
+        savePost(locations: locations)
     }
 }
