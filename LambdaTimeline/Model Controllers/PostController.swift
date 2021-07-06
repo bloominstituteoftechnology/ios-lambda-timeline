@@ -22,7 +22,7 @@ class PostController {
             
             guard let mediaURL = mediaURL else { completion(false); return }
             
-            let imagePost = Post(title: title, mediaURL: mediaURL, ratio: ratio, author: author)
+            let imagePost = Post(title: title, mediaURL: mediaURL, mediaType: mediaType, ratio: ratio, author: author)
             
             self.postsRef.childByAutoId().setValue(imagePost.dictionaryRepresentation) { (error, ref) in
                 if let error = error {
@@ -45,7 +45,31 @@ class PostController {
         
         savePostToFirebase(post)
     }
-
+    
+    func addAudioComment(with url: URL, to post: Post) {
+        
+        var post = post
+        
+        guard let currentUser = Auth.auth().currentUser,
+            let author = Author(user: currentUser) else { return }
+        
+        do {
+            let audioData = try Data(contentsOf: url)
+            store(mediaData: audioData, mediaType: .audio) { (mediaURL) in
+                guard let mediaURL = mediaURL else { return }
+                
+                let comment = Comment(url: mediaURL, author: author)
+                post.comments.append(comment)
+                
+                self.savePostToFirebase(post)
+            }
+        } catch {
+            NSLog("No audio data: \(error)")
+        }
+        
+//
+    }
+    
     func observePosts(completion: @escaping (Error?) -> Void) {
         
         postsRef.observe(.value, with: { (snapshot) in
@@ -81,7 +105,7 @@ class PostController {
 
     private func store(mediaData: Data, mediaType: MediaType, completion: @escaping (URL?) -> Void) {
         
-        let mediaID = UUID().uuidString
+        let mediaID = UUID().uuidString + ".mov"
         
         let mediaRef = storageRef.child(mediaType.rawValue).child(mediaID)
         
