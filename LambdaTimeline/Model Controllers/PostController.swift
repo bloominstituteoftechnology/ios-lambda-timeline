@@ -35,12 +35,25 @@ class PostController {
         }
     }
     
-    func addComment(with text: String, to post: inout Post) {
+    func addAudioComment(with audio: URL, to post: Post) {
+        guard let currentUser = Auth.auth().currentUser,
+            let author = Author(user: currentUser) else { return }
+        guard let data = try? Data(contentsOf: audio) else { return }
+        
+        store(mediaData: data, mediaType: .image) { (mediaData) in
+            guard let mediaData = mediaData else { return }
+            let addAudioComment = Comment(author: author, audio: mediaData)
+        post.comments.append(addAudioComment)
+        }
+        savePostToFirebase(post)
+    }
+    
+    func addComment(with text: String, audio: URL? = nil, video: URL? = nil, to post: Post) {
         
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
         
-        let comment = Comment(text: text, author: author)
+        let comment = Comment(text: text, author: author, audio: post.mediaURL)
         post.comments.append(comment)
         
         savePostToFirebase(post)
@@ -79,7 +92,7 @@ class PostController {
         ref.setValue(post.dictionaryRepresentation)
     }
 
-    private func store(mediaData: Data, mediaType: MediaType, completion: @escaping (URL?) -> Void) {
+     func store(mediaData: Data, mediaType: MediaType, completion: @escaping (URL?) -> Void) {
         
         let mediaID = UUID().uuidString
         
