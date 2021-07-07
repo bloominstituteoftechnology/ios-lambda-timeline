@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8o6-kk-gOn">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Loading View Controller-->
+        <scene sceneID="AHU-k3-N1T">
+            <objects>
+                <viewController id="8o6-kk-gOn" customClass="LoadingViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="WXZ-Az-1Ob">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="rhU-FJ-Dlj"/>
+                    </view>
+                    <connections>
+                        <segue destination="zDc-Z7-r1B" kind="presentation" identifier="showCamera" modalPresentationStyle="fullScreen" id="n4O-Bd-BBl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kOK-u7-LEU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="535" y="-179"/>
+        </scene>
+        <!--Video View Controller-->
+        <scene sceneID="cP8-My-x9W">
+            <objects>
+                <viewController id="zDc-Z7-r1B" customClass="VideoViewController" customModule="LambdaTimeline" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vUC-3X-Dp3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qei-eo-kPX" customClass="CameraPreviewView" customModule="LambdaTimeline" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jih-ds-in5">
+                                <rect key="frame" x="132" y="587" width="150" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="HAg-dj-fDj"/>
+                                    <constraint firstAttribute="height" constant="150" id="OLg-sO-Bn5"/>
+                                    <constraint firstAttribute="width" secondItem="Jih-ds-in5" secondAttribute="height" multiplier="1:1" id="d7m-jy-K3S"/>
+                                </constraints>
+                                <state key="normal" image="RecordBlack">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <state key="selected" image="Record"/>
+                                <connections>
+                                    <action selector="recordButtonTapped:" destination="zDc-Z7-r1B" eventType="touchUpInside" id="uSG-qn-F07"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Jih-ds-in5" firstAttribute="centerX" secondItem="U2A-5z-ERa" secondAttribute="centerX" id="0nF-qH-uTQ"/>
+                            <constraint firstItem="Qei-eo-kPX" firstAttribute="top" secondItem="vUC-3X-Dp3" secondAttribute="top" id="8bd-qC-zY1"/>
+                            <constraint firstAttribute="bottom" secondItem="Qei-eo-kPX" secondAttribute="bottom" id="DK1-3V-mhI"/>
+                            <constraint firstItem="U2A-5z-ERa" firstAttribute="trailing" secondItem="Qei-eo-kPX" secondAttribute="trailing" id="Pv6-PY-ReA"/>
+                            <constraint firstItem="U2A-5z-ERa" firstAttribute="bottom" secondItem="Jih-ds-in5" secondAttribute="bottom" constant="125" id="mlX-bK-ZSe"/>
+                            <constraint firstItem="Qei-eo-kPX" firstAttribute="leading" secondItem="U2A-5z-ERa" secondAttribute="leading" id="uZb-mx-oAW"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="U2A-5z-ERa"/>
+                    </view>
+                    <connections>
+                        <outlet property="cameraView" destination="Qei-eo-kPX" id="apo-TL-wsh"/>
+                        <outlet property="recordButton" destination="Jih-ds-in5" id="dbG-6z-cjq"/>
+                        <segue destination="YLW-TZ-MWf" kind="presentation" identifier="mainSegue" modalPresentationStyle="fullScreen" id="sgp-I6-m4j"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wYn-sZ-H1a" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1369.5652173913045" y="-179.46428571428569"/>
+        </scene>
+        <!--Main-->
+        <scene sceneID="VVO-WZ-XBC">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main" id="YLW-TZ-MWf" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gAd-MV-1hv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2077" y="-179"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Record" width="450" height="450"/>
+        <image name="RecordBlack" width="450" height="450"/>
+    </resources>
+</document>
