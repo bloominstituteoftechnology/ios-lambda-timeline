@@ -10,6 +10,32 @@ import UIKit
 import Photos
 
 class ImagePostViewController: ShiftableViewController {
+    var postController: PostController!
+    var post: Post?
+    var imageData: Data?
+    
+    private let context = CIContext(options:nil)
+    private let colorControlFilter = CIFilter(name: "CIColorControls")!
+    private let colorInvertFilter = CIFilter(name: "CIColorInvert")!
+    private let colorBloomFilter = CIFilter(name: "CIBloom")!
+    
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var chooseImageButton: UIButton!
+    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var postButton: UIBarButtonItem!
+    @IBOutlet weak var filterSelector: UISegmentedControl!
+    @IBOutlet weak var slider: UISlider!
+    @IBOutlet weak var toggleSwitch: UISwitch!
+    @IBOutlet weak var typeLabel: UILabel!
+    @IBOutlet weak var toolBoxView: UIView!
+    
+    var brightnessValue: Float = 0
+    var contrastValue: Float = 0.5
+    var saturationValue: Float = 0.5
+    var isColorInverted = false
+    var bloomIntensity: Float = 0.5
+    var imageWithoutColorChange: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,6 +43,9 @@ class ImagePostViewController: ShiftableViewController {
         setImageViewHeight(with: 1.0)
         
         updateViews()
+        updateSlider()
+        
+        toolBoxView.isHidden = true
     }
     
     func updateViews() {
@@ -33,8 +62,147 @@ class ImagePostViewController: ShiftableViewController {
         
         imageView.image = image
         
+        toolBoxView.isHidden = false
+        
         chooseImageButton.setTitle("", for: [])
     }
+    
+    private func updateSlider() {
+        switch filterSelector.selectedSegmentIndex {
+        case 0:
+            slider.value = brightnessValue
+            slider.minimumValue = -1
+            slider.maximumValue = 1
+            slider.isHidden = false
+            toggleSwitch.isHidden = true
+            typeLabel.text = "Adjust brightness"
+        case 1:
+            slider.value = contrastValue
+            slider.minimumValue = 0.25
+            slider.maximumValue = 4
+            slider.isHidden = false
+            toggleSwitch.isHidden = true
+            typeLabel.text = "Adjust contrast"
+        case 2:
+            slider.value = saturationValue
+            slider.minimumValue = 0
+            slider.maximumValue = 1
+            slider.isHidden = false
+            toggleSwitch.isHidden = true
+            typeLabel.text = "Adjust saturation"
+        case 3:
+            slider.isHidden = true
+            toggleSwitch.isHidden = false
+            typeLabel.text = "Invert color"
+        case 4:
+            slider.value = bloomIntensity
+            slider.minimumValue = 0
+            slider.maximumValue = 1
+            slider.isHidden = false
+            toggleSwitch.isHidden = true
+            typeLabel.text = "Smooth edges"
+        default:
+            break
+        }
+    }
+    
+    private func colorControlFilterImage(_ image: UIImage) -> UIImage {
+        //let CIImage = image.ciImage //nil, not going to work
+        guard let cgImage = image.cgImage else { fatalError("No image available for filtering")}
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        colorControlFilter.setValue(ciImage, forKey: kCIInputImageKey)
+        colorControlFilter.setValue(brightnessValue, forKey: kCIInputBrightnessKey)
+        colorControlFilter.setValue(contrastValue, forKey: kCIInputContrastKey)
+        colorControlFilter.setValue(saturationValue, forKey: kCIInputSaturationKey)
+        
+        guard let outputCIImage = colorControlFilter.outputImage else { fatalError("cant make out put CI image") }
+        //outputCIImage.cgImage // nil with a CIImage
+        
+        //render the image
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else { fatalError("cant make out put CG image")}
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    
+    private func colorBloomFilterImage(_ image: UIImage) -> UIImage {
+        //let CIImage = image.ciImage //nil, not going to work
+        guard let cgImage = image.cgImage else { fatalError("No image available for filtering")}
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        colorBloomFilter.setValue(ciImage, forKey: kCIInputImageKey)
+        colorBloomFilter.setValue(bloomIntensity, forKey: kCIInputIntensityKey)
+        
+        
+        guard let outputCIImage = colorBloomFilter.outputImage else { fatalError("cant make out put CI image") }
+        //outputCIImage.cgImage // nil with a CIImage
+        
+        //render the image
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else { fatalError("cant make out put CG image")}
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    private func colorInvertFilterImage(_ image: UIImage) -> UIImage {
+        guard let cgImage = image.cgImage else { fatalError("No image available for filtering")}
+        let ciImage = CIImage(cgImage: cgImage)
+        
+        colorInvertFilter.setValue(ciImage, forKey: kCIInputImageKey)
+        
+        guard let outputCIImage = colorInvertFilter.outputImage else { fatalError("cant make out put ci image with color invert filter")}
+        guard let outputCGImage = context.createCGImage(outputCIImage, from: CGRect(origin: .zero, size: image.size)) else { fatalError("cant make out put CG image with color invert filter")}
+        return UIImage(cgImage: outputCGImage)
+    }
+    
+    @IBAction func toggleChanged(_ sender: Any) {
+        if filterSelector.selectedSegmentIndex == 3 {
+            if let image = imageView.image {
+                let colorInvertedImage = colorInvertFilterImage(image)
+                imageView.image = colorInvertedImage
+                isColorInverted.toggle()
+            }
+        }
+    }
+    
+    @IBAction func sliderChanged(_ sender: Any) {
+        switch filterSelector.selectedSegmentIndex {
+        case 0:
+            brightnessValue = slider.value
+            print("change brightness")
+        case 1:
+            contrastValue = slider.value
+            print("change contrast")
+        case 2:
+            saturationValue = slider.value
+            print("change saturation")
+        case 4:
+            bloomIntensity = slider.value
+            if let image = imageWithoutColorChange {
+                let bloomedImage = colorBloomFilterImage(image)
+                imageView.image = bloomedImage
+                return
+            }
+            
+            
+        default:
+            return
+        }
+        if let image = imageWithoutColorChange {
+            let filteredImage = colorControlFilterImage(image)
+            if isColorInverted {
+                let invertedImage = colorInvertFilterImage(filteredImage)
+                
+                imageView.image = invertedImage
+            } else {
+                imageView.image = filteredImage
+            }
+        }
+    }
+    
+    
+    @IBAction func filterSelectorChanged(_ sender: Any) {
+        updateSlider()
+    }
+    
     
     private func presentImagePickerController() {
         
@@ -112,15 +280,7 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
-    var postController: PostController!
-    var post: Post?
-    var imageData: Data?
-    
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var chooseImageButton: UIButton!
-    @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var postButton: UIBarButtonItem!
+
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -134,6 +294,10 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         guard let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage else { return }
         
         imageView.image = image
+        
+        imageWithoutColorChange = image
+        
+        toolBoxView.isHidden = false
         
         setImageViewHeight(with: image.ratio)
     }
