@@ -9,10 +9,52 @@
 import UIKit
 import Photos
 
-class ImagePostViewController: ShiftableViewController {
+class ImagePostViewController: ShiftableViewController, FilterControlsViewControllerDelegate {
+    
+    func sliderChangedValues() {
+        filter()
+    }
+    
+    func filter() {
+        guard let viewController = filterTabBarController?.selectedViewController else { return }
+        guard let filterViewController = viewController as? FilterControlsViewController else { return }
+        
+        guard let image = originalImage else { return }
+        imageView.image = apply(filter: filterViewController.filter, to: image)
+    }
+    
+    private func apply(filter: CIFilter, to image: UIImage) -> UIImage {
+    
+        let inputImage: CIImage
+        
+        if let ciImage = image.ciImage {
+            inputImage = ciImage
+        } else if let cgImage = image.cgImage {
+            inputImage = CIImage(cgImage: cgImage)
+        } else {
+            // shrug emoji
+            return image
+        }
+        
+        filter.setValue(inputImage, forKey: kCIInputImageKey)
+        
+        guard let outputImage = filter.outputImage else {
+            return image
+        }
+        
+        guard let cgImage = context.createCGImage(outputImage, from: outputImage.extent) else {
+            return image
+        }
+        
+        return UIImage(cgImage: cgImage)
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        filterSegmentedControl.isHidden = true
+        filterTabs.isHidden = true
         
         setImageViewHeight(with: 1.0)
         
@@ -112,15 +154,39 @@ class ImagePostViewController: ShiftableViewController {
         view.layoutSubviews()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "filterTabBar" {
+            let tabBar = segue.destination as! UITabBarController
+            filterTabBarController = tabBar
+            
+            for controllers in filterTabBarController?.viewControllers ?? [] {
+                if let controller = controllers as? FilterControlsViewController {
+                    controller.delegate = self
+                }
+            }
+        }
+    }
+    
+    @IBAction func didSelectFilter(_ sender: Any) {
+        filterTabBarController?.selectedIndex = filterSegmentedControl.selectedSegmentIndex
+        filter()
+        
+    }
+    
     var postController: PostController!
     var post: Post?
     var imageData: Data?
+    var filterTabBarController: UITabBarController?
+    private var originalImage: UIImage?
+    private let context = CIContext(options: nil)
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var chooseImageButton: UIButton!
     @IBOutlet weak var imageHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var postButton: UIBarButtonItem!
+    @IBOutlet weak var filterSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var filterTabs: UIView!
 }
 
 extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -135,7 +201,12 @@ extension ImagePostViewController: UIImagePickerControllerDelegate, UINavigation
         
         imageView.image = image
         
+        originalImage = image
+        
         setImageViewHeight(with: image.ratio)
+        
+        filterSegmentedControl.isHidden = false
+        filterTabs.isHidden = false
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
