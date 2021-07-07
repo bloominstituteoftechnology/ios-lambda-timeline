@@ -7,10 +7,19 @@
 //
 
 import UIKit
+import AVFoundation
 import FirebaseAuth
 import FirebaseUI
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+    
+    // MARK: - Properties
+    private let postController = PostController()
+    private var operations = [String : Operation]()
+    private let mediaFetchQueue = OperationQueue()
+    private let cache = Cache<String, Data>()
+    private let cacheVideoThumbnail = Cache<String, UIImage>()
+    private let cacheVideoURL = Cache<String, URL>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,9 +39,14 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
         
+        let videoPostAction = UIAlertAction(title: "Video", style: .default) { (_) in
+            self.performSegue(withIdentifier: "AddVideoPost", sender: nil)
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(imagePostAction)
+        alert.addAction(videoPostAction)
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true, completion: nil)
@@ -48,13 +62,20 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         let post = postController.posts[indexPath.row]
         
         switch post.mediaType {
-            
-        case .image:
+        case .image, .audio:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
             
             cell.post = post
             
             loadImage(for: cell, forItemAt: indexPath)
+            
+            return cell
+        case .video:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImagePostCell", for: indexPath) as? ImagePostCollectionViewCell else { return UICollectionViewCell() }
+            
+            cell.post = post
+            
+            loadVideo(for: cell, forItemAt: indexPath)
             
             return cell
         }
@@ -67,24 +88,26 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         let post = postController.posts[indexPath.row]
         
         switch post.mediaType {
-            
         case .image:
-            
             guard let ratio = post.ratio else { return size }
-            
             size.height = size.width * ratio
+        case .audio:
+            break
+        case .video:
+            break
         }
-        
         return size
     }
     
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
         
-        if let cell = cell as? ImagePostCollectionViewCell,
-            cell.imageView.image != nil {
+        let post = postController.posts[indexPath.row]
+        
+        if post.mediaType == .image {
             self.performSegue(withIdentifier: "ViewImagePost", sender: nil)
+        } else if post.mediaType == .video {
+            self.performSegue(withIdentifier: "ViewVideoPost", sender: nil)
         }
     }
     
@@ -106,7 +129,7 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             return
         }
         
-        let fetchOp = FetchMediaOperation(post: post, postController: postController)
+        let fetchOp = FetchMediaOperation(url: post.mediaURL)
         
         let cacheOp = BlockOperation {
             if let data = fetchOp.mediaData {
@@ -141,6 +164,52 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         
         operations[postID] = fetchOp
     }
+    
+    func loadVideo(for imagePostCell: ImagePostCollectionViewCell, forItemAt indexPath: IndexPath) {
+        let post = postController.posts[indexPath.row]
+        
+        guard let postID = post.id else { return }
+        
+        if let mediaThumbnail = cacheVideoThumbnail.value(for: postID) {
+            imagePostCell.setImage(mediaThumbnail)
+            self.collectionView.reloadItems(at: [indexPath])
+            return
+        }
+        
+        let fetchOp = FetchMediaOperation(url: post.mediaURL)
+        
+        let completionOp = BlockOperation {
+            if let data = fetchOp.mediaData {
+                let directory = NSTemporaryDirectory()
+                let fileName = "\(NSUUID().uuidString).mov"
+                guard let fullURL = NSURL.fileURL(withPathComponents: [directory, fileName]) else {
+                    return
+                }
+                    
+                do {
+                    try data.write(to: fullURL)
+                    let asset = AVAsset(url: fullURL)
+                    let imgGenerator = AVAssetImageGenerator(asset: asset)
+                    let cgImage = try imgGenerator.copyCGImage(at: CMTimeMake(value: 0, timescale: 1), actualTime: nil)
+                    let thumbnail = UIImage(cgImage: cgImage)
+                    
+                    self.cacheVideoThumbnail.cache(value: thumbnail, for: postID)
+                    
+                    // to send it to the detail segue
+                    self.cacheVideoURL.cache(value: fullURL, for: postID)
+                    
+                    imagePostCell.setImage(thumbnail)
+                } catch let error {
+                    print("Error generating thumbnail: \(error.localizedDescription)")
+                }
+            }
+        }
+        
+        completionOp.addDependency(fetchOp)
+        
+        mediaFetchQueue.addOperation(fetchOp)
+        OperationQueue.main.addOperation(completionOp)
+    }
     // MARK: - Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -159,11 +228,16 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             destinationVC?.postController = postController
             destinationVC?.post = postController.posts[indexPath.row]
             destinationVC?.imageData = cache.value(for: postID)
+
+        } else if segue.identifier == "ViewVideoPost" {
+            let destinationVC = segue.destination as? VideoPostDetailTableViewController
+            
+            guard let indexPath = collectionView.indexPathsForSelectedItems?.first,
+                let postID = postController.posts[indexPath.row].id else { return }
+            
+            destinationVC?.postController = postController
+            destinationVC?.post = postController.posts[indexPath.row]
+            destinationVC?.videoURL = cacheVideoURL.value(for: postID)
         }
     }
-    
-    private let postController = PostController()
-    private var operations = [String : Operation]()
-    private let mediaFetchQueue = OperationQueue()
-    private let cache = Cache<String, Data>()
 }
