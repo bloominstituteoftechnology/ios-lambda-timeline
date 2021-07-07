@@ -27,8 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = postsNavigationController
             window?.makeKeyAndVisible()
         }
-        
-        
+        let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        print(documentDirectory.path)
         return true
     }
     
