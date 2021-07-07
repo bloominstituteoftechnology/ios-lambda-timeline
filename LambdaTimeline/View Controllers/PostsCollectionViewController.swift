@@ -9,6 +9,8 @@
 import UIKit
 import FirebaseAuth
 import FirebaseUI
+import AVFoundation
+
 
 class PostsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
@@ -22,6 +24,8 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
         }
     }
     
+
+    
     @IBAction func addPost(_ sender: Any) {
         
         let alert = UIAlertController(title: "New Post", message: "Which kind of post do you want to create?", preferredStyle: .actionSheet)
@@ -30,12 +34,39 @@ class PostsCollectionViewController: UICollectionViewController, UICollectionVie
             self.performSegue(withIdentifier: "AddImagePost", sender: nil)
         }
         
+        let videoPostAction = UIAlertAction(title: "Video", style: .default) { (_) in
+            
+            switch AVCaptureDevice.authorizationStatus(for: .video) {
+            case .authorized:
+                self.showCamera()
+                break
+            case .notDetermined:
+                AVCaptureDevice.requestAccess(for: .video) { (granted) in
+                    if !granted { fatalError("VideoFilters needs camera access")}  // should do more with access request
+                    
+                    self.showCamera()
+                }
+                break
+            case .denied:
+                fallthrough
+            case .restricted:
+                fatalError("VideoFilters needs camera access")
+            }
+            
+//            self.performSegue(withIdentifier: "AddVideoPost", sender: nil)
+        }
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(imagePostAction)
+        alert.addAction(videoPostAction)
         alert.addAction(cancelAction)
         
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    private func showCamera() {
+        performSegue(withIdentifier: "AddVideoPost", sender: nil)
     }
     
     // MARK: UICollectionViewDataSource
