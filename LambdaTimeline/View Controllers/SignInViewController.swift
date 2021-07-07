@@ -11,7 +11,6 @@ import Firebase
 import GoogleSignIn
 
 class SignInViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,8 +43,8 @@ class SignInViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDele
             
             DispatchQueue.main.async {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let postsNavigationController = storyboard.instantiateViewController(withIdentifier: "PostsNavigationController")
-                self.present(postsNavigationController, animated: true, completion: nil)
+                let timelineTabController = storyboard.instantiateViewController(withIdentifier: "TimelineTabController")
+                self.present(timelineTabController, animated: true, completion: nil)
             }
         }
     }

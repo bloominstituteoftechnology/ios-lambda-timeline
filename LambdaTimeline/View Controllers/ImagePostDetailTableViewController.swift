@@ -10,6 +10,13 @@ import UIKit
 
 class ImagePostDetailTableViewController: UITableViewController {
     
+    //MARK: - Properties
+    
+    var recordingURL: URL?
+    var name: String?
+    
+    //MARK: - Views
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViews()
@@ -32,11 +39,13 @@ class ImagePostDetailTableViewController: UITableViewController {
     
     @IBAction func createComment(_ sender: Any) {
         
-        let alert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
+        // Text Comment Alert
+        
+        let textCommentAlert = UIAlertController(title: "Add a comment", message: "Write your comment below:", preferredStyle: .alert)
         
         var commentTextField: UITextField?
         
-        alert.addTextField { (textField) in
+        textCommentAlert.addTextField { (textField) in
             textField.placeholder = "Comment:"
             commentTextField = textField
         }
@@ -54,10 +63,24 @@ class ImagePostDetailTableViewController: UITableViewController {
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
-        alert.addAction(addCommentAction)
-        alert.addAction(cancelAction)
+        textCommentAlert.addAction(addCommentAction)
+        textCommentAlert.addAction(cancelAction)
         
-        present(alert, animated: true, completion: nil)
+        
+        // Comment Alert
+        
+        let commentAlert = UIAlertController(title: "Would you like to write or record a comment?", message: "", preferredStyle: .alert)
+        
+        commentAlert.addAction(UIAlertAction(title: "Write", style: .default, handler: { (_) in
+            self.present(textCommentAlert, animated: true, completion: nil)
+        }))
+        
+        commentAlert.addAction(UIAlertAction(title: "Record", style: .default, handler: { (_) in
+            self.performSegue(withIdentifier: "recordSegue", sender: self)
+        }))
+        
+        present(commentAlert, animated: true, completion: nil)
+        
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -65,12 +88,16 @@ class ImagePostDetailTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CommentCell", for: indexPath) as? CommentTableViewCell else { return UITableViewCell() }
         
         let comment = post?.comments[indexPath.row + 1]
+        if name != nil {
+            cell.nameLabel.text = name
+        } else {
+            cell.nameLabel.text = comment?.text
+        }
+        cell.recordingURL = recordingURL
         
-        cell.textLabel?.text = comment?.text
-        cell.detailTextLabel?.text = comment?.author.displayName
         
         return cell
     }
