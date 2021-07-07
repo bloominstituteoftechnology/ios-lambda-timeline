@@ -9,7 +9,9 @@ target 'LambdaTimeline' do
 pod 'Firebase/Core'
 pod 'Firebase/Database'
 pod 'Firebase/Storage'
-pod 'Firebase/Auth'
+pod 'FirebaseUI/Auth'
 pod 'FirebaseUI/Google'
-
+pod 'FirebaseUI/Facebook'
+pod 'FirebaseUI/Twitter'
+pod 'FirebaseUI/Phone'
 end
