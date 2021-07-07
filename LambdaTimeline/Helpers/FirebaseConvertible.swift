@@ -9,5 +9,5 @@
 import Foundation
 
 protocol FirebaseConvertible {
-    var dictionaryRepresentation: [String: Any] { get }
+	var dictionaryRepresentation: [String: Any] { get }
 }
