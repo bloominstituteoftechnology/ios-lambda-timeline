@@ -35,12 +35,23 @@ class PostController {
         }
     }
     
-    func addComment(with text: String, to post: inout Post) {
+    func addComment(with text: String, to post: Post) {
         
         guard let currentUser = Auth.auth().currentUser,
             let author = Author(user: currentUser) else { return }
         
-        let comment = Comment(text: text, author: author)
+        let comment = Comment(text: text, author: author, audioURL: nil)
+        post.comments.append(comment)
+        
+        savePostToFirebase(post)
+    }
+    
+    func addCommentWithAudio(with text: String, audioURL: URL, to post: Post) {
+        
+        guard let currentUser = Auth.auth().currentUser,
+            let author = Author(user: currentUser) else { return }
+        
+        let comment = Comment(text: text, author: author, audioURL: audioURL)
         post.comments.append(comment)
         
         savePostToFirebase(post)
@@ -58,6 +69,7 @@ class PostController {
                 
                 guard let post = Post(dictionary: value, id: key) else { continue }
                 
+                print(post.comments)
                 posts.append(post)
             }
             
@@ -79,7 +91,7 @@ class PostController {
         ref.setValue(post.dictionaryRepresentation)
     }
 
-    private func store(mediaData: Data, mediaType: MediaType, completion: @escaping (URL?) -> Void) {
+    func store(mediaData: Data, mediaType: MediaType, completion: @escaping (URL?) -> Void) {
         
         let mediaID = UUID().uuidString
         
@@ -120,7 +132,6 @@ class PostController {
     var posts: [Post] = []
     let currentUser = Auth.auth().currentUser
     let postsRef = Database.database().reference().child("posts")
-    
     let storageRef = Storage.storage().reference()
     
     
