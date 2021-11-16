@@ -3,7 +3,7 @@
 //  LambdaTimeline
 //
 //  Created by Andrew Madsen
-//  Copyright © 2018 Lambda School. All rights reserved.
+//  Copyright © 2018 BloomTech. All rights reserved.
 //
 
 import Foundation

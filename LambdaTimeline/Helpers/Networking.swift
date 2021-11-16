@@ -3,7 +3,7 @@
 //  LambdaTimeline
 //
 //  Created by Spencer Curtis on 10/12/18.
-//  Copyright © 2018 Lambda School. All rights reserved.
+//  Copyright © 2018 BloomTech. All rights reserved.
 //
 
 import Foundation
